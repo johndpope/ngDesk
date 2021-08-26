@@ -1,0 +1,33 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<div fxLayout="column" fxLayoutGap="20px" class="pad10">
+	<ng-template #headerTemplateRef>
+		<app-title-bar class="light-grey-color" [title]="'SOCIAL_SIGN_IN_SETTINGS' | translate" [buttonText]="'SAVE' | translate"
+			(buttonRightOnClick)="saveSocialSignInSettings()" [buttonColor]="'primary'"></app-title-bar>
+	</ng-template>
+	<div [formGroup]="socialSignInForm" fxLayout="row" fxLayoutAlign="center">
+		<div fxFlex fxLayoutAlign="start center" fxLayoutGap="5px">
+			<div fxLayout="column" fxLayoutGap="10px">
+				<div fxLayout="row" style="margin-bottom: 10%">
+					<mat-checkbox formControlName="ENABLE_FACEBOOK" class="mat-body-strong" color="primary">
+						{{'FACEBOOK' | translate}}
+					</mat-checkbox>
+				</div>
+				<div fxLayout="row">
+					<mat-checkbox formControlName="ENABLE_GOOGLE" class="mat-body-strong" color="primary">
+						{{'GOOGLE' | translate}}
+					</mat-checkbox>
+				</div>
+				<div fxLayout="row">
+					<mat-checkbox formControlName="ENABLE_MICROSOFT" class="mat-body-strong" color="primary">
+						{{'MICROSOFT' | translate}}
+					</mat-checkbox>
+				</div>
+				<div fxLayout="row">
+					<mat-checkbox formControlName="ENABLE_TWITTER" class="mat-body-strong" color="primary">
+						{{'TWITTER' | translate}}
+					</mat-checkbox>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

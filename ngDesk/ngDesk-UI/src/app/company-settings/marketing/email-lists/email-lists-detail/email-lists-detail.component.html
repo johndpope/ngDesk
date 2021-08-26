@@ -1,0 +1,38 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef>
+	<app-title-bar class="light-grey-color" *ngIf="route.snapshot.params['emailListId'] === 'new'" title="{{'NEW_EMAIL_LIST' | translate}}"
+		buttonText="{{'SAVE' | translate}}" (buttonRightOnClick)="save()"></app-title-bar>
+	<app-title-bar class="light-grey-color" *ngIf="route.snapshot.params['emailListId'] !== 'new'" title="{{'EDIT_EMAIL_LIST' | translate}}"
+		buttonText="{{'SAVE' | translate}}" (buttonRightOnClick)="save()"></app-title-bar>
+</ng-template>
+<form [formGroup]="emailListForm" fxLayout="column" (ngSubmit)="save()" style="overflow: auto;">
+	<div class="pad10">
+		<app-new-name-description></app-new-name-description>
+	</div>
+	<div fxLayout="row" fxLayout.xs="column" style="min-height: calc(100vh - 45px); border-top: 1px solid rgba(0,0,0,.12)">
+		<div class="pad10" fxLayout="column" fxLayout.xs="row" fxFlex="calc(35-5px)" fxFlex.xs="30"
+			style="background: rgb(248, 249, 249); border-right: 1px solid rgba(0,0,0,.12)">
+			<div fxLayout.md="row wrap" fxLayout.sm="row wrap" fxLayout.xs="row wrap">
+				<app-conditions *ngIf="emailListLoaded" [parentName]="'emailListDetailComponent'" [conditions]="emailList.conditions"
+					[passedInModule]="moduleId" [fields]="fields"></app-conditions>
+			</div>
+		</div>
+		<div fxLayoutAlign="center center" fxFlex="60" fxLayout="column" fxLayout.xs="row" fxFlex.xs="60"
+			*ngIf="emailListForm.value.CONDITIONS.length === 0">
+			<h3 class="mat-h3">
+				Please set the conditions to get list of users
+			</h3>
+
+		</div>
+		<div *ngIf="emailListForm.value.CONDITIONS.length > 0" class="pad10" fxFlex="60" fxLayout="column" fxLayout.xs="row" fxFlex.xs="60">
+			<div fxFlex>
+				<app-custom-table [templateRef]="columnTemplateRef" (sortData)="sortData();customTableService.isLoading = true"
+					(pageChangeEmit)="pageChangeEmit($event);customTableService.isLoading = true">
+					<ng-template #columnTemplateRef let-element="element" let-col="col">
+						{{element[col.NAME]}}
+					</ng-template>
+				</app-custom-table>
+			</div>
+		</div>
+	</div>
+</form>

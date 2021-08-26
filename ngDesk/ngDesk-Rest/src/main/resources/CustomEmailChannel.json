@@ -1,0 +1,117 @@
+{
+  "NAME": "CustomEmailChannel",
+  "DESCRIPTION": "Email channel for custom modules",
+  "SOURCE_TYPE": "email",
+  "WORKFLOW": {
+    "NODES": [
+      {
+        "POSITION_X": "100px",
+        "POSITION_Y": "100px",
+        "VALUES": {},
+        "ID": "node-id-7592a496-af6d-8269-1123-42fc70d20b3b",
+        "TYPE": "Start",
+        "CONNECTIONS_TO": [
+          {
+            "TITLE": "START",
+            "FROM": "OUT",
+            "TO_NODE": "node-id-43dbe5ce-d3a7-4fb3-b4df-07cf69fa75bec"
+          }
+        ],
+        "NAME": "Start",
+        "PLUGS": [
+          {
+            "NAME": "OUT",
+            "ID": "output-plug-a4e68ec2-3316-7c1e-8521-ab293598c137",
+            "ORDER": 1
+          }
+        ]
+      },
+      {
+        "POSITION_X": "100px",
+        "POSITION_Y": "100px",
+        "VALUES": {
+          "CODE": "if(inputMessage.DATA_ID==null){PROPOGATE_TO OUT-1;}else{PROPOGATE_TO NO-MATCH;}"
+        },
+        "ID": "node-id-43dbe5ce-d3a7-4fb3-b4df-07cf69fa75bec",
+        "TYPE": "Javascript",
+        "CONNECTIONS_TO": [
+          {
+            "TITLE": "IF NO CONDITION MATCHES",
+            "FROM": "NO-MATCH",
+            "TO_NODE": "node-id-28a6e3f4-969f-a824-3948-8d0995ad4ab5"
+          },
+          {
+            "TITLE": "MATCH",
+            "FROM": "OUT-1",
+            "TO_NODE": "node-id-28a6e3f4-988f-a824-3948-8d0995ad4ab5"
+          }
+        ],
+        "NAME": "Javascript 1",
+        "PLUGS": [
+          {
+            "NAME": "INPUT",
+            "ID": "node-id-28a6e3f4-988f-a824-3948-8d0995ad4ab5",
+            "ORDER": 0
+          },
+          {
+            "NAME": "NO-MATCH",
+            "ID": "node-id-28a6e3f4-969f-a824-3948-8d0995ad4ab5",
+            "ORDER": 1
+          }
+        ]
+      },
+      {
+        "POSITION_X": "308px",
+        "POSITION_Y": "448px",
+        "VALUES": {
+          "MODULE": "MODULE_ID",
+          "FIELDS": []
+        },
+        "ID": "node-id-28a6e3f4-988f-a824-3948-8d0995ad4ab5",
+        "TYPE": "CreateEntry",
+        "CONNECTIONS_TO": [],
+        "NAME": "Create Entry 1",
+        "PLUGS": [
+          {
+            "NAME": "INPUT",
+            "ID": "input-plug-4df6987f-4f74-b799-cc44-c3043966ec2f",
+            "ORDER": 0
+          },
+          {
+            "NAME": "OUT-1",
+            "ID": "output-plug-93bfbd67-f994-96fe-98ca-f0aa151716e9",
+            "ORDER": 1
+          }
+        ]
+      },
+      {
+        "POSITION_X": "400px",
+        "POSITION_Y": "500px",
+        "VALUES": {
+          "MODULE": "MODULE_ID",
+          "ENTRY_ID": "{{inputMessage.DATA_ID}}",
+          "FIELDS": []
+        },
+        "ID": "node-id-28a6e3f4-969f-a824-3948-8d0995ad4ab5",
+        "TYPE": "UpdateEntry",
+        "CONNECTIONS_TO": [],
+        "NAME": "Update Entry 1",
+        "PLUGS": [
+          {
+            "NAME": "INPUT",
+            "ID": "input-plug-4df6987f-4f74-b799-cc44-c3043966ec2f",
+            "ORDER": 0
+          },
+          {
+            "NAME": "OUT-1",
+            "ID": "output-plug-93bfbd67-f994-96fe-98ca-f0aa151716e9",
+            "ORDER": 1
+          }
+        ]
+      }
+    ]
+  },
+  "EMAIL_ADDRESS": "support@SUPPORT_EMAIL_ADDRESS.ngdesk.com",
+  "TYPE": "Internal",
+  "IS_VERIFIED": true
+}

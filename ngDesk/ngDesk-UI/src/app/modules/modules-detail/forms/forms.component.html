@@ -1,0 +1,71 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<div class="pad10">
+	<ng-template #headerTemplateRef>
+		<app-title-bar title="{{'FORMS' | translate}}"></app-title-bar>
+	</ng-template>
+	<ng-container *ngIf="isLoading; else elseTemplate">
+		<mat-spinner style="position:relative;top:20%;left:50%"></mat-spinner>
+	</ng-container>
+	<ng-template #elseTemplate>
+		<div fxLayout="column" fxLayoutGap="10px">
+			<div fxLayout="row" fxLayoutWrap fxLayoutGap="10px" fxLayoutAlign="flex-start">
+				<!-- module detail sidebar table -->
+				<div fxFlex fxLayoutAlign="flex-start" class="module-detail-sidebar-table">
+					<table fxFlex.lt-lg="100" *ngIf="showSideNav" mat-table [dataSource]="navigations" class="mat-elevation-z8">
+						<ng-container matColumnDef="NAME">
+							<th class="custom-theme-icon-color" mat-header-cell *matHeaderCellDef>
+								<div fxLayout="row" fxLayoutGap="4%">
+									<div fxLayout="column" fxFlex="90" fxFlexAlign="center" class="trim-info" matTooltip="{{module.PLURAL_NAME}}">
+										{{ module.PLURAL_NAME | truncate : 15}}
+										{{'MODULE' | translate}}</div>
+									<div fxLayout="column" *ngIf="showSideNav" fxFlex="10">
+										<button mat-icon-button [ngStyle]="{'border': (showSideNav) ? '1px solid white' : '1px solid #3f51b5'}"
+											(click)="showSideNav = !showSideNav" style="border-radius: 3px;">
+											<mat-icon class="custom-theme-icon-color" style="margin-bottom: 15px;font-size: 20px;">
+												keyboard_arrow_left</mat-icon>
+										</button>
+									</div>
+								</div>
+							</th>
+							<td matRipple class="no-wrap" mat-cell *matCellDef="let element" class="pointer"
+								[ngClass]="{ 'module-page-active': element.NAME == 'FORMS'}">
+								{{element.NAME | translate}} </td>
+						</ng-container>
+
+						<tr class="custom-theme-primary-color" mat-header-row *matHeaderRowDef="['NAME']"></tr>
+						<tr mat-row *matRowDef="let row; columns: ['NAME'];" [routerLink]="row.PATH" [appHighlight]="{BACKGROUND: '#ececec'}"></tr>
+					</table>
+
+					<div>
+						<button mat-icon-button *ngIf="!showSideNav"
+							[ngStyle]="{'border': (showSideNav) ? '1px solid white' : '1px solid #3f51b5', 'margin-left' : (showSideNav) ? '-48px' : '0px'}"
+							(click)="showSideNav = !showSideNav" style="border-radius: 3px;">
+							<mat-icon color="primary" style="margin-bottom: 15px;font-size: 20px;">
+								keyboard_arrow_right</mat-icon>
+						</button>
+					</div>
+					<span fxFlex="1 1 auto"></span>
+				</div>
+				<!-- End module detail sidebar table -->
+				<div fxFlex="22"></div>
+				<!-- mat card for layout -->
+
+				<div fxLayoutGap="20px" fxLayout="row" fxFlex="1 1 auto" fxFlexFill style="padding: 10px;">
+					<div style="width: 200px; cursor: pointer;">
+						<app-feature-description-card src="description" name="{{'EXTERNAL_FORMS' | translate}}"
+							description="{{'DESCRIPTION' | translate}}" (click)="navigate('forms')">
+						</app-feature-description-card>
+					</div>
+					<div style="width: 200px;cursor: pointer;">
+						<app-feature-description-card src="assignment" name="{{'SERVICE_CATALOGUE' | translate}}"
+							description="{{'DESCRIPTION' | translate}}" (click)="navigate('service-catalogue')">
+						</app-feature-description-card>
+					</div>
+				</div>
+
+				<!-- End mat card for layout -->
+			</div>
+		</div>
+	</ng-template>
+
+</div>

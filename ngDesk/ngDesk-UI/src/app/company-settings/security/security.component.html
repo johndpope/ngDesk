@@ -1,0 +1,29 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<form [formGroup]="securityForm" class="pad10">
+	<ng-template #headerTemplateRef>
+		<app-title-bar class="light-grey-color" title="{{'SECURITY' | translate}}" buttonText="{{'SAVE' | translate}}"
+			(buttonRightOnClick)="save()">
+		</app-title-bar>
+	</ng-template>
+	<mat-card fxLayout="column" fxLayoutGap="20px" style="overflow:auto">
+		<div fxLayout="row">
+			<div fxFlex fxLayoutAlign="flex-start center">
+				<label class="mat-h3">{{'OPEN_ENROLLMENT' | translate}}</label>
+			</div>
+			<div fxFlex fxLayoutAlign="flex-start center">
+				<mat-checkbox color="primary" class="mat-h3" formControlName="ENABLE_SIGNUPS">{{'ALLOW_USER_SIGNUP' | translate}}</mat-checkbox>
+			</div>
+		</div>
+		<div fxLayout="row">
+			<div fxFlex fxLayoutAlign="flex-start center">
+				<label class="mat-h3">{{'MAX_LOGIN_RETRIES' | translate}}</label>
+			</div>
+			<div fxFlex fxLayoutAlign="flex-start center">
+				<mat-form-field fxLayoutAlign="flex-start center">
+					<input type="number" min="1" matInput placeholder="{{'MAX_RETRIES' | translate}}" formControlName="MAX_LOGIN_RETRIES">
+					<mat-error *ngIf="!securityForm.valid">{{'PLEASE_ENETER_VALUE' | translate}}</mat-error>
+				</mat-form-field>
+			</div>
+		</div>
+	</mat-card>
+</form>

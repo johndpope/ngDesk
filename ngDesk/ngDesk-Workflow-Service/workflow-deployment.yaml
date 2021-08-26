@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: workflow
+  namespace: NAMESPACE_REPLACE
+spec:
+  selector:
+    matchLabels:
+      app: workflow
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: workflow
+    spec:
+      containers:
+        - name: workflow
+          image: gitlab.bluemsp.com:5050/ngdesk/ngdesk/workflow:latest
+          env:
+          - name: SPRING_PROFILES_ACTIVE
+            value: prod
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8084

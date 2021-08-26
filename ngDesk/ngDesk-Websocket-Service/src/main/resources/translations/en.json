@@ -1,0 +1,4 @@
+{
+	"SUBDOMAIN_MISSING": "Subdomain is missing on sessions map",
+	"SESSIONS_NULL": "User Sessions for this subdomain is null"
+}

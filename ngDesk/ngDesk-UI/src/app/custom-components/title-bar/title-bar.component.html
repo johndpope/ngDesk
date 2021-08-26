@@ -1,0 +1,20 @@
+<div fxLayout="row" fxLayoutAlign="space-between center" style="height: 36px;">
+	<div>
+		<label class="mat-body light-grey-color" style="font-weight:400;" fxShow.lt-md fxHide.lt-md="false" fxHide.gt-sm="true"> {{title}}
+		</label>
+		<label class="mat-body-1 light-grey-color" style="font-size: 25px;" fxShow.gt-sm fxHide.lt-md="true" fxHide.gt-sm="false"> {{title}}
+		</label>
+		<ng-container *ngTemplateOutlet="labelTemplateRef">
+		</ng-container>
+	</div>
+	<div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="space-between center">
+		<ng-container *ngTemplateOutlet="templateRef">
+		</ng-container>
+		<ng-container *ngTemplateOutlet="buttonsTemplateRef">
+		</ng-container>
+		<app-loader [buttonText]="buttonText" (buttonRightOnClick)="customEmit()" [buttonColor]="buttonColor"
+			[customButtonShow]="customButtonShow" [disabled]="disable" [enableButton2]="enableButton2" [buttonText2]=buttonText2
+			(buttonRightOnClick2)=customEmit2() [enableButton3]="enableButton3" [buttonText3]=buttonText3
+			(buttonRightOnClick3)=customEmit3() ></app-loader>
+	</div>
+</div>

@@ -1,0 +1,72 @@
+<!-- TODO: USE CORRECT COLOR AND FIX FOR SMALL SCREEN SCROLL -->
+<div class="custom-theme-primary-color" style="min-height:100vh;" [ngClass]=" { z9999: fpos.hostElement==='' }">
+	<!--Desktop device-->
+	<div [@openClose]="isOpen ? 'open' : 'closed'" (mouseenter)="isOpen = true" (mouseleave)="isOpen = false; expandedIndex = -1"
+		*ngIf="!mobileDevice">
+		<ng-container *ngTemplateOutlet="menuList"></ng-container>
+	</div>
+	<!--Mobile device-->
+	<div *ngIf="mobileDevice">
+		<ng-container *ngTemplateOutlet="menuList"></ng-container>
+	</div>
+</div>
+<ng-content></ng-content>
+
+<ng-template #menuList>
+	<mat-list fxFlexFill style="padding:0">
+		<mat-list-item class="pointer" matRipple [matRippleCentered]="false" [matRippleDisabled]="false" [matRippleUnbounded]="false"
+			matRippleColor="primary">
+			<img *ngIf="userService.sidebarLogo" [src]="userService.sidebarLogo" width="26" height="26" />
+			<span class="no-wrap custom-theme-icon-color" *ngIf="isOpen">&nbsp;&nbsp;{{ userService.sidebarTitle }}</span>
+		</mat-list-item>
+		<div *ngFor="let menuItem of companiesService.userSidebar.MENU_ITEMS; let menuItemIndex = index;" class="pointer" fxLayout="column"
+			(click)="expandCollapseMenu(menuItemIndex)">
+			<mat-list-item *ngIf="generateRouterLink(menuItem) !== null" [appHighlight]="{ BACKGROUND: 'var(--hoverColor)' }" matRipple
+				[matRippleCentered]="false" [matRippleDisabled]="false" [matRippleUnbounded]="false" [matRippleColor]="primary"
+				(click)="trackViaMixpanel(menuItem)" [routerLink]="generateRouterLink(menuItem)" [routerLinkActive]="['is-active']"
+				[routerLinkActiveOptions]="{exact: true}">
+				<ng-container *ngTemplateOutlet="sidebarMenuContent; context: {menuItemObj: menuItem}"></ng-container>
+			</mat-list-item>
+			<mat-list-item *ngIf="generateRouterLink(menuItem) === null" [appHighlight]="{ BACKGROUND: 'var(--hoverColor)' }">
+				<ng-container *ngTemplateOutlet="sidebarMenuContent; context: {menuItemObj: menuItem}"></ng-container>
+			</mat-list-item>
+			<ng-template #sidebarMenuContent let-menuItem="menuItemObj">
+				<mat-icon class="custom-theme-icon-color notranslate">{{ menuItem.ICON }}</mat-icon>
+				<div fxLayout="row" fxLayoutAlign=" center" fxFlex>
+					<div>
+						<span
+							*ngIf="(menuItem.NAME === 'DASHBOARDS' || menuItem.NAME === 'MY_ACTION_ITEMS'|| menuItem.NAME === 'TICKETS' || menuItem.NAME === 'CHATS' || menuItem.NAME === 'TEAMS' || menuItem.NAME === 'MANAGE_USERS' || menuItem.NAME === 'ACCOUNTS' || menuItem.NAME === 'KNOWLEDGE_BASE' || menuItem.NAME === 'MODULES' || menuItem.NAME === 'SCHEDULES' || menuItem.NAME === 'ESCALATIONS' || menuItem.NAME === 'REPORTS' || menuItem.NAME === 'COMPANY_SETTINGS' || menuItem.NAME === 'PAGER' || menuItem.NAME === 'HR')&&(isOpen)"
+							class="no-wrap custom-theme-icon-color">&nbsp;&nbsp;{{ menuItem.NAME | translate }}</span>
+						<span
+							*ngIf="(menuItem.NAME !== 'DASHBOARDS' && menuItem.NAME !== 'MY_ACTION_ITEMS' && menuItem.NAME !== 'TICKETS' && menuItem.NAME !== 'CHATS' && menuItem.NAME !== 'TEAMS' && menuItem.NAME !== 'MANAGE_USERS' && menuItem.NAME !== 'ACCOUNTS' && menuItem.NAME !== 'KNOWLEDGE_BASE' && menuItem.NAME !== 'MODULES' && menuItem.NAME !== 'SCHEDULES' && menuItem.NAME !== 'ESCALATIONS' && menuItem.NAME !== 'REPORTS' && menuItem.NAME !== 'COMPANY_SETTINGS' && menuItem.NAME !== 'PAGER' && menuItem.NAME !== 'HR')&&(isOpen)"
+							class="no-wrap custom-theme-icon-color">
+							&nbsp;&nbsp;{{ menuItem.NAME}}
+						</span>
+					</div>
+					<div fxFlex></div>
+					<div *ngIf="menuItem.SUB_MENU_ITEMS.length > 0 && isOpen" fxLayoutAlign="center" class="no-wrap custom-theme-icon-color">
+						<mat-icon [@indicatorRotate]="expandedIndex === menuItemIndex ? 'expanded': 'collapsed'">
+							expand_more
+						</mat-icon>
+					</div>
+				</div>
+			</ng-template>
+			<div *ngIf="expandedIndex === menuItemIndex && menuItem.SUB_MENU_ITEMS.length > 0">
+				<mat-list>
+					<mat-list-item [appHighlight]="{ BACKGROUND: 'var(--hoverColor)' }" *ngFor="let subMenuItem of menuItem.SUB_MENU_ITEMS"
+						[routerLink]="generateRouterLink(subMenuItem)" [routerLinkActive]="['is-active']" [routerLinkActiveOptions]="{exact: true}">
+						<mat-icon class="custom-theme-icon-color notranslate" style="padding-left: 30px">{{ subMenuItem.ICON }}</mat-icon>
+						<span
+							*ngIf="(subMenuItem.NAME === 'DASHBOARDS' || menuItem.NAME === 'MY_ACTION_ITEMS' || subMenuItem.NAME === 'TICKETS' || subMenuItem.NAME === 'CHATS' || subMenuItem.NAME === 'TEAMS' || subMenuItem.NAME === 'MANAGE_USERS' || subMenuItem.NAME === 'ACCOUNTS' || subMenuItem.NAME === 'KNOWLEDGE_BASE' || subMenuItem.NAME === 'MODULES' || subMenuItem.NAME === 'SCHEDULES' || subMenuItem.NAME === 'ESCALATIONS' || subMenuItem.NAME === 'EMPLOYEES' || subMenuItem.NAME === 'ONBOARDINGS' || subMenuItem.NAME === 'REPORTS' || subMenuItem.NAME === 'COMPANY_SETTINGS')&&(isOpen)"
+							class="no-wrap custom-theme-icon-color">&nbsp;&nbsp;{{ subMenuItem.NAME | translate }}</span>
+						<span
+							*ngIf="(subMenuItem.NAME !== 'DASHBOARDS' && menuItem.NAME !== 'MY_ACTION_ITEMS' && subMenuItem.NAME !== 'TICKETS' && subMenuItem.NAME !== 'CHATS' && subMenuItem.NAME !== 'TEAMS' && subMenuItem.NAME !== 'MANAGE_USERS' && subMenuItem.NAME !== 'ACCOUNTS' && subMenuItem.NAME !== 'KNOWLEDGE_BASE' && subMenuItem.NAME !== 'MODULES' && subMenuItem.NAME !== 'SCHEDULES' && subMenuItem.NAME !== 'ESCALATIONS' && subMenuItem.NAME !== 'EMPLOYEES' && subMenuItem.NAME !== 'ONBOARDINGS' && subMenuItem.NAME !== 'REPORTS' && subMenuItem.NAME !== 'COMPANY_SETTINGS')&&(isOpen)"
+							class="no-wrap custom-theme-icon-color">
+							&nbsp;&nbsp;{{ subMenuItem.NAME}}
+						</span>
+					</mat-list-item>
+				</mat-list>
+			</div>
+		</div>
+	</mat-list>
+</ng-template>

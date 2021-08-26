@@ -1,0 +1,20 @@
+
+<ActionBar  title="{{'USER' | translate}} {{'DETAILS' | translate}}">
+    <NavigationButton text="Back" android.systemIcon="ic_menu_back" (tap)="onBackTap()" (touch)="onBackTap()"></NavigationButton> 
+</ActionBar>
+<StackLayout>
+    <StackLayout style="padding: 40px;">
+    <label style="font-weight: bold;font-size: 20;" text="{{ 'NAME' | translate}}"></label>
+    <label style="font-size: 18;"  text="{{userName}}"></label>
+    </StackLayout>
+
+    <StackLayout style="padding: 40px;">
+    <label  style="font-weight: bold;font-size: 20;" text="{{ 'EMAIL' | translate}}"></label>
+    <label style="font-size: 18;" text="{{userEmail}}"></label>
+    </StackLayout>
+
+    <StackLayout>
+    <Button class ="-outline -rounded-sm"  [isEnabled]="!isSubmitting" style="width:92%;" text="{{'LOGOUT' | translate}}" (tap)="logout()"></Button>
+    <ActivityIndicator [busy]="isSubmitting"></ActivityIndicator>
+    </StackLayout>
+</StackLayout>

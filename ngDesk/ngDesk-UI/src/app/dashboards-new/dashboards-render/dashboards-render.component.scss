@@ -1,0 +1,79 @@
+.container {
+    position: relative;
+}
+
+.widgets{
+    padding: 10px;
+    border-radius: 2px;
+    display: inline-block;
+    margin: 1rem;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    position: absolute;
+}
+
+.widgets:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
+  }
+
+.score {
+    width: 200px;
+    height: 100px;
+}
+
+.bar-horizontal{
+    width: 600px;
+    height: 400px;
+}
+
+.pie {
+    width: 600px;
+    height: 400px;
+}
+.advanced-pie {
+    width: 600px;
+    height: 400px;
+}
+
+.multi-score {
+    width: 600px;
+    height: 400px;
+}
+
+.highlight {
+    background-color: #e8eaf6;
+}
+
+::ng-deep {
+    .chart-legend .legend-label-text{
+        font-family: Arial, Helvetica, sans-serif !important;
+    }
+    .legend-title-text{
+        font-family: Arial, Helvetica, sans-serif !important;
+    }
+    .pie-label{
+        font-family: Arial, Helvetica, sans-serif !important;
+    } 
+    .ng-star-inserted text{
+        font-family: Arial, Helvetica, sans-serif !important;
+    }
+    nb-card-header{
+        font: 400 16px/28px Roboto, "Helvetica Neue", sans-serif !important;
+    }
+
+    ngx-charts-legend{
+        padding-top: 10px !important;
+    }
+
+    nb-card-header{
+    // padding: 5px;
+    border-bottom: 1px solid #edf1f7;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    color: #222b45;
+    font-family: Open Sans, sans-serif;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1.5rem;
+    }
+  
+}

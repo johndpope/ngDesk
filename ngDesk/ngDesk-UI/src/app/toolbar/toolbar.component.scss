@@ -1,0 +1,22 @@
+.app-toolbar {
+	position: sticky;
+	position: -webkit-sticky;
+	/* For macOS/iOS Safari */
+	top: 0;
+	/* Sets the sticky toolbar to be on top */
+	z-index: 10;
+	background: white;
+	display: flex;
+}
+
+
+::-webkit-scrollbar {
+    width: 5px;
+    background: white;
+    box-shadow: inset 0 0 1px #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: lightgray;
+    border-radius: 10px;
+}

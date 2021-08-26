@@ -1,0 +1,31 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef>
+	<app-title-bar title="{{ 'LIST_LAYOUTS' | translate }}" buttonText="{{'SAVE' | translate}}" (buttonRightOnClick)="save()">
+	</app-title-bar>
+</ng-template>
+<form [formGroup]="listLayoutForm" (ngSubmit)="save()" class="pad10" style="overflow: auto;">
+	<app-new-name-description *ngIf="roles" [additionalFields]="additionalFields" [additionalCheckboxFields]="additionalCheckboxFields">
+	</app-new-name-description>
+	<app-conditions *ngIf="listLayoutLoaded" [parentName]="'listLayoutComponent'" [conditions]="conditions" [fields]="fields">
+	</app-conditions>
+	<div fxLayoutGap="10px" formGroupName="ORDER_BY">
+		<mat-form-field>
+			<mat-select placeholder="{{'ORDER_BY' | translate}}" formControlName="COLUMN" required>
+				<mat-option *ngFor="let column of shownColumns" [value]="column.FIELD_ID">
+					{{column.DISPLAY_LABEL}}
+				</mat-option>
+			</mat-select>
+			<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params.orderBy"></mat-error>
+		</mat-form-field>
+		<mat-form-field floatLabel="always" class="mat-form-field--no-underline">
+			<!-- TODO: the matInput with display:none makes the magic. It's ugly, I've warned you -->
+			<input matInput placeholder="{{'ORDER' | translate}}" formControlName="ORDER" style="display: none" required>
+			<mat-radio-group formControlName="ORDER" fxLayoutGap="10px" #order>
+				<mat-radio-button value="Asc">Asc</mat-radio-button>
+				<mat-radio-button value="Desc">Desc</mat-radio-button>
+			</mat-radio-group>
+			<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params.order"></mat-error>
+		</mat-form-field>
+	</div>
+	<app-drag-drop-fields [availableFields]="availableFields" [shownColumns]="shownColumns"></app-drag-drop-fields>
+</form>

@@ -1,0 +1,133 @@
+{
+    "CREATED_BY": "CREATED_BY_REPLACE",
+    "DATE_CREATED": "DATE_CREATED_REPLACE",
+    "BROWSER": "Firefox",
+    "DATE_UPDATED": "DATE_CREATED_REPLACE",
+    "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:69.0) Gecko/20100101 Firefox/69.0",
+    "REQUESTOR": "REQUESTOR_REPLACE",
+    "CHAT": [
+        {
+            "MESSAGE": "<html>\n <head></head>\n <body>\n  <div class=\"mat-caption\" style=\"color: #68737D; font-weight: 500;\">\n    System has joined the chat \n  </div>\n </body>\n</html>",
+            "DATE_CREATED": "DATE_CREATED_REPLACE",
+            "SENDER": {
+                "ROLE": "SYSTEM_ROLE_REPLACE",
+                "USER_UUID": "SYSTEM_UUID_REPLACE",
+                "LAST_NAME": "",
+                "FIRST_NAME": "System"
+            },
+            "MESSAGE_ID": "MESSAGE_ID_REPLACE",
+            "MESSAGE_TYPE": "META_DATA"
+        },
+         {
+            "MESSAGE": "\n        <div class='mat-caption' style='color:#68737D ;'>\n            <div style='display:inline-block;vertical-align:top;'>\n                This\n            </div>\n            <div style='display:inline-block;vertical-align:top;'>\n                Chat\n            </div>\n            <div style='display:inline-block;vertical-align:top;'>\n                has been modified by\n            </div>\n            <div style='display:inline-block;vertical-align:top;'>\n              USER_REPLACE\n            </div>\n        </div>\n\n    \n        <div class='mat-caption' style='color:#68737D'>\n            <div style='display:inline-block;vertical-align:top;'>\n                Status\n            </div>\n            <div style='display:inline-block;vertical-align:top;'>\n                has been changed from\n            </div>\n            <div style='display:inline-block;vertical-align:top;'>\n                Browsing\n            </div>\n            <div style='display:inline-block;vertical-align:top;'>\n                to\n            </div>\n            <div style='display:inline-block;vertical-align:top;'>\n                Chatting\n            </div>\n        </div>\n    ",
+            "DATE_CREATED": "DATE_CREATED_REPLACE",
+            "SENDER": {
+                "FIRST_NAME": "System",
+                "LAST_NAME": "",
+                "USER_UUID": "SYSTEM_UUID_REPLACE",
+                "ROLE": "SYSTEM_ROLE_REPLACE"
+            },
+            "MESSAGE_ID": "MESSAGE_ID_REPLACE",
+            "MESSAGE_TYPE": "META_DATA"
+        },
+        {
+            "MESSAGE": "<html><head></head> <body>Hello, can you please assist me with setting up the widget on my website. </body></html>",
+            "DATE_CREATED": "DATE_CREATED_REPLACE",
+            "SENDER": {
+                "ROLE": "FIRST_USER_ROLE_REPLACE",
+                "USER_UUID": "FIRST_USER_UUID_REPLACE",
+                "LAST_NAME": "USER_LAST_NAME",
+                "FIRST_NAME": "USER_FIRST_NAME"
+            },
+            "MESSAGE_ID": "MESSAGE_ID_REPLACE",
+            "ATTACHMENTS": [],
+            "MESSAGE_TYPE": "MESSAGE"
+        },
+          {
+            "MESSAGE": "<html><head></head> <body>Hello USER_FIRST_NAME, I can definitely help you with that. </body></html>",
+            "DATE_CREATED": "DATE_CREATED_REPLACE",
+            "SENDER": {
+                "ROLE": "SYSTEM_ROLE_REPLACE",
+                "USER_UUID": "SYSTEM_UUID_REPLACE",
+                "LAST_NAME": "",
+                "FIRST_NAME": "System"
+            },
+            "MESSAGE_ID": "MESSAGE_ID_REPLACE",
+            "ATTACHMENTS": [],
+            "MESSAGE_TYPE": "MESSAGE"
+        },
+        
+         {
+            "MESSAGE": "<html><head></head> <body> Please follow the link here -<a href = \"https://support.ngdesk.com/guide/articles/5cf75b62ff43060001999c58/Embedding%20Live%20Chat%20Widget%20on%20your%20Website\"> Help Guide For Chats</a>.The steps to embed the widget are outlined in this article. </body></html>",
+            "DATE_CREATED": "DATE_CREATED_REPLACE",
+            "SENDER": {
+                "ROLE": "SYSTEM_ROLE_REPLACE",
+                "USER_UUID": "SYSTEM_UUID_REPLACE",
+                "LAST_NAME": "",
+                "FIRST_NAME": "System"
+            },
+            "MESSAGE_ID": "MESSAGE_ID_REPLACE",
+            "ATTACHMENTS": [],
+            "MESSAGE_TYPE": "MESSAGE"
+        },
+		{
+            "MESSAGE": "<html><head></head> <body> Thank you <br> </body></html>",
+            "DATE_CREATED": "DATE_CREATED_REPLACE",
+            "SENDER": {
+                "ROLE": "FIRST_USER_ROLE_REPLACE",
+                "USER_UUID": "FIRST_USER_UUID_REPLACE",
+                "LAST_NAME": "USER_LAST_NAME",
+                "FIRST_NAME": "USER_FIRST_NAME"
+            },
+            "MESSAGE_ID": "MESSAGE_ID_REPLACE",
+            "ATTACHMENTS": [],
+            "MESSAGE_TYPE": "MESSAGE"
+        },
+        {
+            "MESSAGE": "<html><head></head> <body>You are most welcome, for further assistance you can chat with us by clicking on the Chat icon below or email us on <a href=\"mailto:support@ngdesk.com\">support@ngdesk.com</a>. </body></html>",
+            "DATE_CREATED": "DATE_CREATED_REPLACE",
+            "SENDER": {
+                "ROLE": "SYSTEM_ROLE_REPLACE",
+                "USER_UUID": "SYSTEM_UUID_REPLACE",
+                "LAST_NAME": "",
+                "FIRST_NAME": "System"
+            },
+            "MESSAGE_ID": "MESSAGE_ID_REPLACE",
+            "ATTACHMENTS": [],
+            "MESSAGE_TYPE": "MESSAGE"
+        },
+         {
+            "MESSAGE": "<html><head></head> <body> We are happy to help. Have a good day!! </body></html>",
+            "DATE_CREATED": "DATE_CREATED_REPLACE",
+            "SENDER": {
+                "ROLE": "SYSTEM_ROLE_REPLACE",
+                "USER_UUID": "SYSTEM_UUID_REPLACE",
+                "LAST_NAME": "",
+                "FIRST_NAME": "System"
+            },
+            "MESSAGE_ID": "MESSAGE_ID_REPLACE",
+            "ATTACHMENTS": [],
+            "MESSAGE_TYPE": "MESSAGE"
+        }
+        
+    ],
+    "REFERRER": "",
+    "PAGES_VISITED": [
+        
+    ],
+    "DELETED": false,
+    "PLATFORM": "Win32",
+    "STATUS": "Browsing",
+    "CHANNEL": "CHANNEL_REPLACE",
+    "COUNTRY": "COUNTRY_CODE",
+    "SOURCE_TYPE": "chat",
+    "TEAMS": [
+        "GLOBAL_TEAM_ID_REPLACE"
+    ],
+    "CHAT_ID": 1,
+    "AGENTS": [
+        
+    ],
+    "SESSION_UUID": "SESSION_UUID_REPLACE"
+}
+

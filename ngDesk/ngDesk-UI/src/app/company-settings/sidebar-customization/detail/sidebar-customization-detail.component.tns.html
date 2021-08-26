@@ -1,0 +1,78 @@
+<StackLayout>
+  <Label text="sidebar-customization-detail works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<app-toolbar [templateRef]="headerTemplateRef">
+</app-toolbar>
+<ng-template #headerTemplateRef>
+	<app-title-bar (buttonRightOnClick)="save()" [title]="'SIDEBAR_CUSTOMIZATION' | translate" [buttonText]="'SAVE' | translate"
+		[buttonColor]="'primary'"></app-title-bar>
+</ng-template>
+<div fxLayout="column" fxLayoutGap="20px" class="pad10">
+	<div *ngIf="sidebarLoaded" fxLayout="row" fxLayoutAlign="center center">
+		<div fxLayout="column" fxFlex="70">
+			<mat-card fxLayout="column" fxFlex="100">
+				<div fxLayout="row" fxLayoutAlign="space-around center">
+					<div fxLayoutAlign="center center" fxFlex>
+						<label><b> {{'ICON' | translate}} </b></label>
+					</div>
+					<div fxLayoutAlign="center center" fxFlex>
+						<label><b> {{'NAME' | translate}} </b></label>
+					</div>
+					<div fxLayoutAlign="center center" fxFlex>
+						<label><b> {{'MODULE' | translate}} </b></label>
+					</div>
+					<div fxLayoutAlign="center center" fxFlex>
+						<label><b> {{'EDIT' | translate}} </b></label>
+					</div>
+					<div fxLayoutAlign="center center" fxFlex>
+						<label><b> {{'ORDER' | translate}} </b></label>
+					</div>
+					<div fxLayoutAlign="center center" fxFlex>
+						<label><b> {{'DELETE' | translate}} </b></label>
+					</div>
+				</div>
+				<div fxLayout="row" fxLayoutAlign="space-around center" *ngFor="let menu of sidebar.MENU_ITEMS; let menuIndex = index">
+					<div fxLayoutAlign="center center" fxFlex>
+						<mat-icon>{{menu.ICON}}</mat-icon>
+					</div>
+					<div fxLayoutAlign="center center" fxFlex>
+						<label>{{menu.NAME}}</label>
+					</div>
+					<div fxLayoutAlign="center center" fxFlex>
+						<label>{{menu.MODULE}}</label>
+					</div>
+					<div fxLayoutAlign="center center" fxFlex>
+						<button mat-button mat-icon-button aria-label="close" *ngIf="menu.EDITABLE" (click)="editMenu(menu, menuIndex)">
+							<mat-icon>edit</mat-icon>
+						</button>
+					</div>
+					<div fxLayoutAlign="center center" fxFlex>
+						<button mat-button mat-icon-button aria-label="close" *ngIf="menuIndex != 0" (click)="changeOrder(menuIndex, menuIndex-1)">
+							<mat-icon>arrow_upward</mat-icon>
+						</button>
+						<button mat-button mat-icon-button aria-label="close" *ngIf="menuIndex != sidebar.MENU_ITEMS.length-1"
+							(click)="changeOrder(menuIndex, menuIndex+1)">
+							<mat-icon>arrow_downward</mat-icon>
+						</button>
+					</div>
+					<div fxLayoutAlign="center center" fxFlex>
+						<button mat-button mat-icon-button aria-label="close" (click)="deleteMenu(menuIndex)" *ngIf="menu.EDITABLE">
+							<mat-icon>close</mat-icon>
+						</button>
+					</div>
+				</div>
+				<button mat-button aria-label="close" (click)="addMenu(menu)">
+					<mat-icon>add</mat-icon>Add Module
+				</button>
+			</mat-card>
+		</div>
+	</div>
+</div>
+
+-->

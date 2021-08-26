@@ -1,0 +1,32 @@
+<ng-container>
+	<div>
+		<p class="mat-h4">{{label+" "+"Node"}}</p>
+		<mat-form-field style="width: 100%">
+			<input type="text" matInput placeholder="{{'LABEL' | translate}}" [(ngModel)]="label"
+				(ngModelChange)="changeCellProp(props.label, label)">
+		</mat-form-field>
+
+		<mat-form-field style="width: 100%">
+			<input type="text" matInput placeholder="{{'DESCRIPTION' | translate}}" [(ngModel)]="description"
+				(ngModelChange)="changeCellProp(props.description, description)">
+		</mat-form-field>
+
+		<button mat-raised-button color="primary" (click)="customize(cell)">
+			{{"CUSTOMIZE" | translate}}
+		</button>
+	</div>
+	<div class="ports">
+		<div class="out-ports-bar">
+			<span>Out Ports</span>
+			<button *ngIf="false" [disabled]="!canAddPort" (click)="addCellPort()" class="add-port" data-toggle="tooltip" data-placement="top" title="Add Output Port">
+			</button>
+		</div>
+		<div class="port" *ngFor="let port of ports; trackBy: trackByPortId">
+			<mat-form-field fxFlex=100>
+			<input [disabled]="cell.attributes.type ==='app.Approval'" matInput placeholder="Label" batch [(ngModel)]="port.label" (ngModelChange)="changeCellPort(port)" />
+			<button *ngIf="false" class="remove-port" (click)="removeCellPort(port.id)" data-toggle="tooltip" data-placement="top" title="Remove Output Port">
+			</button>
+		    </mat-form-field>    
+		</div>
+	</div>
+</ng-container>

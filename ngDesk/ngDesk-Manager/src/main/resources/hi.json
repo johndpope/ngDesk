@@ -1,0 +1,6 @@
+{
+	"REPLY_ABOVE": "कृपया इस पंक्ति के ऊपर अपने उत्तर को टाइप करें",
+	"UNAUTHORIZED_ERROR": "Invalid Credentials",
+	"INTERNAL_ERROR": "Server Error",
+	"FILE_NOT_FOUND": "File does not exist"
+}

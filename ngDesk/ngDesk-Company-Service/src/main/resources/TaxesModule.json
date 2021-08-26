@@ -1,0 +1,1154 @@
+{
+  "NAME": "Taxes",
+  "DESCRIPTION": "Taxes Module",
+  "SINGULAR_NAME": "Tax",
+  "PLURAL_NAME": "Taxes",
+  "VALIDATIONS": [],
+  "FIELDS": [
+    {
+      "FIELD_ID": "15044d64-e3f6-4000-b12a-abb8ea418906",
+      "NAME": "DATE_CREATED",
+      "DISPLAY_LABEL": "Date Created",
+      "HELP_TEXT": "",
+      "DATA_TYPE": {
+        "DISPLAY": "Date/Time",
+        "BACKEND": "Date"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "76aaee8a-294a-4bf1-8760-3a14efa745fe",
+      "NAME": "EFFECTIVE_TO",
+      "DISPLAY_LABEL": "Effective to",
+      "HELP_TEXT": "",
+      "DATA_TYPE": {
+        "DISPLAY": "Date/Time",
+        "BACKEND": "Date"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "2219475d-0c31-4d94-9951-c9f6eaf30654",
+      "NAME": "DATA_ID",
+      "DISPLAY_LABEL": "Data ID",
+      "DEFAULT_VALUE": "",
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "VISIBILITY": true,
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "a9bb32e2-e709-4f34-8596-4ef35510cb75",
+      "NAME": "EFFECTIVE_FROM",
+      "DISPLAY_LABEL": "Effective from",
+      "HELP_TEXT": "",
+      "DATA_TYPE": {
+        "DISPLAY": "Date/Time",
+        "BACKEND": "Date"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "9b63054f-139f-48ef-b1ae-29e4c5b270f5",
+      "NAME": "DATE_UPDATED",
+      "DISPLAY_LABEL": "Date Updated",
+      "HELP_TEXT": "",
+      "DATA_TYPE": {
+        "DISPLAY": "Date/Time",
+        "BACKEND": "Date"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "11906a71-0b45-4e59-917c-0172df6ec360",
+      "NAME": "LAST_UPDATED_BY",
+      "DISPLAY_LABEL": "Last Updated by",
+      "RELATIONSHIP_TYPE": "Many to One",
+      "PRIMARY_DISPLAY_FIELD": "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+      "RELATIONSHIP_FIELD": "",
+      "MODULE": "USERS_MODULE_REPLACE",
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "String"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "71220976-6403-4016-919e-acff30ce1256",
+      "NAME": "CREATED_BY",
+      "DISPLAY_LABEL": "Created by",
+      "RELATIONSHIP_TYPE": "Many to One",
+      "PRIMARY_DISPLAY_FIELD": "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+      "RELATIONSHIP_FIELD": "",
+      "MODULE": "USERS_MODULE_REPLACE",
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "String"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "b6eef848-39e4-47e6-91d9-7f219d6eb07f",
+      "NAME": "TEAMS",
+      "DISPLAY_LABEL": "Teams",
+      "DEFAULT_VALUE": "GLOBAL_TEAM_REPLACE",
+      "RELATIONSHIP_TYPE": "Many to Many",
+      "PRIMARY_DISPLAY_FIELD": "b1c48961-43e0-4071-b30c-0f7be5daa7a9",
+      "RELATIONSHIP_FIELD": "",
+      "MODULE": "TEAMS_MODULE_REPLACE",
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "Array"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": true,
+      "INTERNAL": true,
+      "NOT_EDITABLE": false,
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "f1041c25-c928-4d30-b2fb-9c843dbe9f95",
+      "NAME": "DELETED",
+      "DISPLAY_LABEL": "Deleted",
+      "DATA_TYPE": {
+        "DISPLAY": "Checkbox",
+        "BACKEND": "Boolean"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "96bf35ea-dcb5-4183-8679-f27f776b92df",
+      "NAME": "SOURCE_TYPE",
+      "DISPLAY_LABEL": "Source Type",
+      "DEFAULT_VALUE": "web",
+      "DATA_TYPE": {
+        "DISPLAY": "Picklist",
+        "BACKEND": "String"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "PICKLIST_VALUES": [
+        "chat",
+        "email",
+        "facebook",
+        "forms",
+        "mobile",
+        "sms",
+        "twitter",
+        "web",
+        "whatsapp"
+      ],
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "a5accd94-cc42-4ba5-aaff-79ae5524bcb8",
+      "NAME": "CHANNEL",
+      "DISPLAY_LABEL": "Channel",
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "a571463c-f3b7-4b6b-91ae-8bca81049910",
+      "NAME": "APPROVAL",
+      "DISPLAY_LABEL": "Approval",
+      "HELP_TEXT": "",
+      "DATA_TYPE": {
+        "DISPLAY": "Approval",
+        "BACKEND": "Approval"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": false,
+      "NOT_EDITABLE": false,
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "858ed3a6-9b74-4b07-aac1-43bce4695599",
+      "NAME": "NAME",
+      "DISPLAY_LABEL": "Name",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": " ",
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": true,
+      "INTERNAL": false,
+      "NOT_EDITABLE": false,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_VALUES": [],
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "31a2992c-32e2-4591-be9e-f74212293d5f",
+      "NAME": "RATE",
+      "DISPLAY_LABEL": "Rate",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": "0",
+      "DATA_TYPE": {
+        "DISPLAY": "Currency",
+        "BACKEND": "Float"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": true,
+      "INTERNAL": false,
+      "NOT_EDITABLE": false,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_VALUES": [],
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      "PREFIX": "",
+      "SUFFIX": "",
+      "NUMERIC_FORMAT": ""
+    },
+    {
+      "FIELD_ID": "92167190-f8b4-4a91-bb40-65f8517f53a3",
+      "NAME": "RECLAIMABLE",
+      "DISPLAY_LABEL": "Reclaimable",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": "false",
+      "DATA_TYPE": {
+        "DISPLAY": "Checkbox",
+        "BACKEND": "Boolean"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": false,
+      "NOT_EDITABLE": false,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_VALUES": [],
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "22ea8d66-72a4-4aab-88b2-5998608a4154",
+      "NAME": "GL_DEFAULT",
+      "DISPLAY_LABEL": "GL Default",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": "false",
+      "DATA_TYPE": {
+        "DISPLAY": "Checkbox",
+        "BACKEND": "Boolean"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": false,
+      "NOT_EDITABLE": false,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_VALUES": [],
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "30dc5336-2d7f-41e7-ae31-c4609962b983",
+      "NAME": "COUNTRY",
+      "DISPLAY_LABEL": "Country",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": "Canada",
+      "DATA_TYPE": {
+        "DISPLAY": "Picklist",
+        "BACKEND": "String"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": true,
+      "INTERNAL": false,
+      "NOT_EDITABLE": false,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": true,
+      "PICKLIST_USE_FIRST_VALUE": true,
+      "PICKLIST_VALUES": [
+        "Canada",
+        "India"
+      ],
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "56a58885-fc29-4397-a0e4-5292f2937e7b",
+      "NAME": "REGION",
+      "DISPLAY_LABEL": "Region",
+      "HELP_TEXT": "",
+      "DATA_TYPE": {
+        "DISPLAY": "Picklist",
+        "BACKEND": "String"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": false,
+      "NOT_EDITABLE": false,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_VALUES": [
+        "TX"
+      ],
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "61374bda-430f-49c5-a1cf-5262dc0c3485",
+      "NAME": "CATEGORY",
+      "DISPLAY_LABEL": "Category",
+      "RELATIONSHIP_TYPE": "One to One",
+      "PRIMARY_DISPLAY_FIELD": "b7ca529a-4450-40ad-9c69-c9c9522a9bfb",
+      "RELATIONSHIP_FIELD": "5ebcf811-a90b-4e69-9ffc-657f7765fc96",
+      "MODULE": "CATEGORIES_MODULE_REPLACE",
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "String"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": false,
+      "NOT_EDITABLE": false,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_VALUES": [],
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "7dc2d5a3-3480-4429-aa6b-0ba9fec26a24",
+      "NAME": "TAX",
+      "DISPLAY_LABEL": "tax",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "LENGTH": 0,
+      "DECIMAL_PLACES": 0,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "MODULE": "EXPENSES_MODULE_REPLACE",
+      "RELATIONSHIP_TYPE": "One to Many",
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": false,
+      "PRIMARY_DISPLAY_FIELD": "cf83d104-c53f-440f-877f-762bd0b4729c",
+      "RELATIONSHIP_FIELD": "a84f3931-2b87-47ef-ae19-6aeb8c702160",
+      "FORMULA": null,
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "String"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      "MESSAGES": null,
+      "INTERNAL": false,
+      "NOT_EDITABLE": false,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false,
+      "WORKFLOW": null,
+      "DATA_FILTER": null,
+      "AGGREGATION_TYPE": null,
+      "AGGREGATION_FIELD": null,
+      "AGGREGATION_RELATED_FIELD": null,
+      "INHERITANCE_MAPPING": null,
+      "FIELDS_MAPPING": null,
+      "UNIQUE": false,
+      "PREFIX": null,
+      "SUFFIX": null,
+      "NUMERIC_FORMAT": null,
+      "PICKLIST_VALUES": []
+    },
+    {
+      "FIELD_ID": "ec928c4f-f1f6-424d-b120-7e7747360ff2",
+      "NAME": "TIME_WINDOW",
+      "DISPLAY_LABEL": "Time Window",
+      "HELP_TEXT": "",
+      "DATA_TYPE": {
+        "DISPLAY": "Time Window",
+        "BACKEND": "Timestamp"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_VALUES": [],
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+     {
+      "FIELD_ID": "4024c953-87aa-4d4e-97ae-2a467b83db3a",
+      "NAME": "PDFS",
+      "DISPLAY_LABEL": "PDFS",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": null,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": [],
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": true,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "RELATIONSHIP_FIELD": null,
+      "FORMULA": null,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "DATA_TYPE": {
+        "DISPLAY": "PDF",
+        "BACKEND": "BLOB"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": "DATE_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "MESSAGES": null,
+      "INTERNAL": false,
+      "NOT_EDITABLE": true,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false,
+      "WORKFLOW": null,
+      "DATA_FILTER": null,
+      "AGGREGATION_TYPE": null,
+      "AGGREGATION_FIELD": null,
+      "AGGREGATION_RELATED_FIELD": null,
+      "INHERITANCE_MAPPING": null,
+      "UNIQUE": false,
+      "DATE_UPDATED": "DATE_REPLACE"
+     }
+  ],
+  "LIST_LAYOUTS": [
+    {
+      "LAYOUT_ID": "aaf65818-03d6-41fe-8872-54c9747e0cf8",
+      "NAME": "Taxes",
+      "DESCRIPTION": "",
+      "ID": "",
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "IS_DEFAULT": true,
+      "ORDER_BY": {
+        "COLUMN": "15044d64-e3f6-4000-b12a-abb8ea418906",
+        "ORDER": "Desc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "858ed3a6-9b74-4b07-aac1-43bce4695599",
+          "31a2992c-32e2-4591-be9e-f74212293d5f",
+          "30dc5336-2d7f-41e7-ae31-c4609962b983",
+          "92167190-f8b4-4a91-bb40-65f8517f53a3",
+          "15044d64-e3f6-4000-b12a-abb8ea418906"
+        ]
+      },
+      "CONDITIONS": [],
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "LAYOUT_ID": "692e907f-138e-4728-b66e-65e2ae0943f0",
+      "NAME": "Taxes",
+      "DESCRIPTION": "",
+      "ID": "",
+      "ROLE": "ACCOUNTING_MANAGER_ROLE_REPLACE",
+      "IS_DEFAULT": true,
+      "ORDER_BY": {
+        "COLUMN": "15044d64-e3f6-4000-b12a-abb8ea418906",
+        "ORDER": "Desc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "858ed3a6-9b74-4b07-aac1-43bce4695599",
+          "31a2992c-32e2-4591-be9e-f74212293d5f",
+          "30dc5336-2d7f-41e7-ae31-c4609962b983",
+          "92167190-f8b4-4a91-bb40-65f8517f53a3",
+          "15044d64-e3f6-4000-b12a-abb8ea418906"
+        ]
+      },
+      "CONDITIONS": [],
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    }
+  ],
+  "CREATE_LAYOUTS": [
+    {
+      "LAYOUT_ID": "f495ca68-6b68-4403-a94c-46f1f5097519",
+      "NAME": "Taxes",
+      "DESCRIPTION": "Add taxes",
+      "PANELS": [
+        {
+          "SETTINGS": {
+            "COLLAPSABLE": false,
+            "ACTION": "",
+            "CONDITIONS": []
+          },
+          "ID": "PANEL_1",
+          "PANEL_NAME": "Taxes",
+          "GRIDS": [
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "858ed3a6-9b74-4b07-aac1-43bce4695599",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "31a2992c-32e2-4591-be9e-f74212293d5f",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "30dc5336-2d7f-41e7-ae31-c4609962b983",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "56a58885-fc29-4397-a0e4-5292f2937e7b",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "92167190-f8b4-4a91-bb40-65f8517f53a3",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "22ea8d66-72a4-4aab-88b2-5998608a4154",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ]
+          ],
+          "DISPLAY_TYPE": "Panel"
+        }
+      ],
+      "TITLE_BAR": [],
+      "PREDEFINED_TEMPLATE": null,
+      "CUSTOM_LAYOUT": null,
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAYOUT_STYLE": "standard"
+    },
+    {
+      "LAYOUT_ID": "fc8fc79a-bc27-42bf-8ee4-3b426987615d",
+      "NAME": "Taxes",
+      "DESCRIPTION": "Add taxes",
+      "PANELS": [
+        {
+          "SETTINGS": {
+            "COLLAPSABLE": false,
+            "ACTION": "",
+            "CONDITIONS": []
+          },
+          "ID": "PANEL_1",
+          "PANEL_NAME": "Taxes",
+          "GRIDS": [
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "858ed3a6-9b74-4b07-aac1-43bce4695599",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "31a2992c-32e2-4591-be9e-f74212293d5f",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "30dc5336-2d7f-41e7-ae31-c4609962b983",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "56a58885-fc29-4397-a0e4-5292f2937e7b",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "92167190-f8b4-4a91-bb40-65f8517f53a3",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "22ea8d66-72a4-4aab-88b2-5998608a4154",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ]
+          ],
+          "DISPLAY_TYPE": "Panel"
+        }
+      ],
+      "TITLE_BAR": [],
+      "PREDEFINED_TEMPLATE": null,
+      "CUSTOM_LAYOUT": null,
+      "ROLE": "ACCOUNTING_MANAGER_ROLE_REPLACE",
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAYOUT_STYLE": "standard"
+    }
+  ],
+  "EDIT_LAYOUTS": [
+    {
+      "LAYOUT_ID": "2bf7a64e-87a7-49dc-ae69-af27b2b70ed1",
+      "NAME": "Taxes",
+      "DESCRIPTION": "Taxes",
+      "PANELS": [
+        {
+          "SETTINGS": {
+            "COLLAPSABLE": false,
+            "ACTION": "",
+            "CONDITIONS": []
+          },
+          "ID": "PANEL_1",
+          "PANEL_NAME": "Taxes",
+          "GRIDS": [
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "858ed3a6-9b74-4b07-aac1-43bce4695599",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "31a2992c-32e2-4591-be9e-f74212293d5f",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "30dc5336-2d7f-41e7-ae31-c4609962b983",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "56a58885-fc29-4397-a0e4-5292f2937e7b",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "92167190-f8b4-4a91-bb40-65f8517f53a3",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "22ea8d66-72a4-4aab-88b2-5998608a4154",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ]
+          ],
+          "DISPLAY_TYPE": "Panel"
+        }
+      ],
+      "TITLE_BAR": [],
+      "PREDEFINED_TEMPLATE": null,
+      "CUSTOM_LAYOUT": null,
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAYOUT_STYLE": "standard"
+    },
+    {
+      "LAYOUT_ID": "67b75843-7336-4331-94bb-3e051184f006",
+      "NAME": "Taxes",
+      "DESCRIPTION": "Taxes",
+      "PANELS": [
+        {
+          "SETTINGS": {
+            "COLLAPSABLE": false,
+            "ACTION": "",
+            "CONDITIONS": []
+          },
+          "ID": "PANEL_1",
+          "PANEL_NAME": "Taxes",
+          "GRIDS": [
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "858ed3a6-9b74-4b07-aac1-43bce4695599",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "31a2992c-32e2-4591-be9e-f74212293d5f",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "30dc5336-2d7f-41e7-ae31-c4609962b983",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "56a58885-fc29-4397-a0e4-5292f2937e7b",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "92167190-f8b4-4a91-bb40-65f8517f53a3",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "22ea8d66-72a4-4aab-88b2-5998608a4154",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ]
+          ],
+          "DISPLAY_TYPE": "Panel"
+        }
+      ],
+      "TITLE_BAR": [],
+      "PREDEFINED_TEMPLATE": null,
+      "CUSTOM_LAYOUT": null,
+      "ROLE": "ACCOUNTING_MANAGER_ROLE_REPLACE",
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAYOUT_STYLE": "standard"
+    }
+  ],
+  "LIST_MOBILE_LAYOUTS": [
+    {
+      "LAYOUT_ID": "ab7b1337-28c7-4697-88bc-b973ce307b50",
+      "NAME": "Taxes",
+      "DESCRIPTION": "taxes",
+      "ID": "",
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "ORDER_BY": {
+        "COLUMN": "15044d64-e3f6-4000-b12a-abb8ea418906",
+        "ORDER": "Asc"
+      },
+      "FIELDS": [
+        "858ed3a6-9b74-4b07-aac1-43bce4695599",
+        "15044d64-e3f6-4000-b12a-abb8ea418906"
+      ],
+      "CONDITIONS": [],
+      "IS_DEFAULT": true
+    },
+    {
+      "LAYOUT_ID": "ab7b1337-28c7-4697-88bc-b973ce307b50",
+      "NAME": "Taxes",
+      "DESCRIPTION": "taxes",
+      "ID": "",
+      "ROLE": "ACCOUNTING_MANAGER_ROLE_REPLACE",
+      "ORDER_BY": {
+        "COLUMN": "15044d64-e3f6-4000-b12a-abb8ea418906",
+        "ORDER": "Asc"
+      },
+      "FIELDS": [
+        "858ed3a6-9b74-4b07-aac1-43bce4695599",
+        "15044d64-e3f6-4000-b12a-abb8ea418906"
+      ],
+      "CONDITIONS": [],
+      "IS_DEFAULT": true
+    }
+  ],
+  "CREATE_MOBILE_LAYOUTS": [
+    {
+      "LAYOUT_ID": "d60e8b49-ae9f-4148-9228-b7a5257d6470",
+      "NAME": "Taxes",
+      "DESCRIPTION": "taxes",
+      "FIELDS": [
+        "858ed3a6-9b74-4b07-aac1-43bce4695599",
+        "30dc5336-2d7f-41e7-ae31-c4609962b983",
+        "56a58885-fc29-4397-a0e4-5292f2937e7b",
+        "31a2992c-32e2-4591-be9e-f74212293d5f",
+        "92167190-f8b4-4a91-bb40-65f8517f53a3",
+        "b6eef848-39e4-47e6-91d9-7f219d6eb07f"
+      ],
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE"
+    },
+    {
+      "LAYOUT_ID": "1cd1d989-3941-48dc-b144-6089610d705c",
+      "NAME": "Taxes",
+      "DESCRIPTION": "taxes",
+      "FIELDS": [
+        "858ed3a6-9b74-4b07-aac1-43bce4695599",
+        "30dc5336-2d7f-41e7-ae31-c4609962b983",
+        "56a58885-fc29-4397-a0e4-5292f2937e7b",
+        "31a2992c-32e2-4591-be9e-f74212293d5f",
+        "92167190-f8b4-4a91-bb40-65f8517f53a3",
+        "b6eef848-39e4-47e6-91d9-7f219d6eb07f"
+      ],
+      "ROLE": "ACCOUNTING_MANAGER_ROLE_REPLACE"
+    }
+  ],
+  "EDIT_MOBILE_LAYOUTS": [
+    {
+      "LAYOUT_ID": "1795f8bc-5564-46eb-ba7c-a2b30358c8f7",
+      "NAME": "Taxes",
+      "DESCRIPTION": "taxes",
+      "FIELDS": [
+        "858ed3a6-9b74-4b07-aac1-43bce4695599",
+        "30dc5336-2d7f-41e7-ae31-c4609962b983",
+        "56a58885-fc29-4397-a0e4-5292f2937e7b",
+        "31a2992c-32e2-4591-be9e-f74212293d5f",
+        "92167190-f8b4-4a91-bb40-65f8517f53a3",
+        "b6eef848-39e4-47e6-91d9-7f219d6eb07f"
+      ],
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE"
+    },
+    {
+      "LAYOUT_ID": "fdcbc981-9267-44fb-bff6-75d8101511c4",
+      "NAME": "Taxes",
+      "DESCRIPTION": "taxes",
+      "FIELDS": [
+        "858ed3a6-9b74-4b07-aac1-43bce4695599",
+        "30dc5336-2d7f-41e7-ae31-c4609962b983",
+        "56a58885-fc29-4397-a0e4-5292f2937e7b",
+        "31a2992c-32e2-4591-be9e-f74212293d5f",
+        "92167190-f8b4-4a91-bb40-65f8517f53a3",
+        "b6eef848-39e4-47e6-91d9-7f219d6eb07f"
+      ],
+      "ROLE": "ACCOUNTING_MANAGER_ROLE_REPLACE"
+    }
+  ],
+  "DATE_CREATED": "DATE_REPLACE",
+  "DATE_UPDATED": "DATE_REPLACE",
+  "CREATED_BY": "CREATED_BY_REPLACE",
+  "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+}

@@ -1,0 +1,47 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef>
+	<app-title-bar class="light-grey-color" title="{{'WORKFLOWS' | translate}}" buttonText="{{'SAVE' | translate}}"
+		(buttonRightOnClick)="save()">
+	</app-title-bar>
+</ng-template>
+<div  [formGroup]="workflowForm" fxLayoutAlign="space=between center" class="pad10" fxLayout="row" fxLayoutGap="10px">
+	<mat-form-field fxFlex=15>
+		<input type="text" matInput placeholder="{{'NAME' | translate}}" [(ngModel)]="workflow.NAME" formControlName="NAME" required>
+		<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params.name"></mat-error>
+	</mat-form-field>
+	<mat-form-field fxFlex=35>
+		<input type="text" matInput placeholder="{{'DESCRIPTION' | translate}}" [(ngModel)]="workflow.DESCRIPTION" formControlName="DESCRIPTION">
+	</mat-form-field>
+	<mat-form-field fxFlex>
+		<mat-select [(ngModel)]="workflow.TYPE" placeholder="{{'TYPE' | translate}}" formControlName="TYPE" required>
+			<mat-option *ngFor="let type of types" [value]="type">
+				{{type | translate}}
+			</mat-option>
+		</mat-select>
+		<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params.type"></mat-error>
+	</mat-form-field>
+	<mat-form-field fxFlex>
+		<input type="number" matInput placeholder="{{'ORDER' | translate}}" [(ngModel)]="workflow.ORDER" formControlName="ORDER" required>
+		<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params.order"></mat-error>
+	</mat-form-field>
+	<mat-checkbox [(ngModel)]="workflow.DISPLAY_ON_ENTRY" formControlName="DISPLAY_ON_ENTRY" color="primary">
+		{{'DISPLAY_ON_ENTRY' | translate}}
+	</mat-checkbox>
+	<div fxLayoutGap="10px" fxLayout="row">
+		<button mat-raised-button color="primary" (click)="openStagesDialog()">{{'STAGES' | translate}}</button>
+		<button mat-raised-button color="primary" (click)="openConditionsDialog()">{{'CONDITIONS' | translate}}</button>
+	</div>
+</div>
+<div class="rappid-app">
+	<div class="app-body">
+		<div #toolbar></div>
+		<div class="side-bar">
+			<div #stencil class="stencil-container"></div>
+		</div>
+		<div class="main-container">
+			<div #paper class="paper-container"></div>
+		</div>
+		<app-inspector (nodeCustomizeEvent)="customizeNode($event)"></app-inspector>
+	</div>
+
+</div>

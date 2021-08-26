@@ -1,0 +1,170 @@
+<StackLayout>
+  <Label text="DetailLayoutComponent works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef>
+	<app-title-bar title="{{ layoutType.toUpperCase() | translate }}">
+	</app-title-bar>
+</ng-template>
+
+<div class="pad10">
+	<form [formGroup]="layoutForm" (ngSubmit)="save()">
+		<app-new-name-description buttonText="{{'SAVE' | translate}}" (modelChange)="save()"></app-new-name-description>
+		<mat-form-field>
+			<mat-select placeholder="{{'ROLE' | translate}}" formControlName="ROLE" required (selectionChange)="setRole()">
+				<mat-option *ngFor="let role of roles" [value]="role.ROLE_ID">
+					{{ role.NAME }}
+				</mat-option>
+			</mat-select>
+			<mat-error>{{'FIELD_IS' | translate:params}} <strong>{{'REQUIRED' | translate}}</strong></mat-error>
+		</mat-form-field>
+	</form>
+</div>
+<mat-tab-group>
+	<mat-tab label="Layout Builder">
+
+		<!-- <div *ngIf='gridLayout' [p3x-compile]="customLayout" [p3x-compile-ctx]="this" [p3x-compile-module]="dataMaterialModule"
+  class="p3x-angular-compile-element"></div> ->
+
+		<div *ngIf='!gridLayout' fxLayout="row" fxLayoutGap="2px">
+			<div fxLayout="column" fxFlex="20">
+				<div class="scroll" style="position: sticky; top: 1vh; overflow-y: auto; max-height: 72vh;
+					margin-left: 5px; border: solid; border-color: #e0e0e0; background: white;" *ngIf="this.module.FIELDS">
+					<div style="width: 18vw; max-width: 100%; min-height: 60px; overflow: hidden;" cdkDropList
+						[cdkDropListConnectedTo]="this.dropList">
+						<div class="pad10 pointer" *ngFor="let field of this.module.FIELDS" fxLayout="row" fxLayoutAlign=" center"
+							[ngStyle]="{'border-bottom': '1px solid #9e9e9e'}" cdkDrag id="{{field.FIELD_ID}}"
+							style="padding: 12px 10px; box-sizing: border-box; cursor: move;">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+								<path fill="none" d="M0 0h24v24H0V0z" />
+								<path
+									d="M11 18c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zm-2-8c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 4c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
+							</svg>
+							<label class="mat-body pointer" style="cursor:move;">{{ field.DISPLAY_LABEL }}</label>
+							<div *cdkDragPreview class="pad10 pointer" [ngStyle]="{'border-bottom': '1px solid rgba(0,0,0,.12)'}">
+								<div class="mat-body">{{ field.DISPLAY_LABEL }}<span class='mat-caption'> ({{ field.DATA_TYPE.DISPLAY }})</span></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<mat-divider [vertical]="true"></mat-divider>
+			</div>
+			<!-- <mat-divider [vertical]="true" style="margin-left: 10px;" fxFlex></mat-divider> ->
+
+			<div fxFlex="80">
+				<div [p3x-compile]="layout.customLayout" [p3x-compile-ctx]="this" [p3x-compile-module]="dataMaterialModule"
+					class="p3x-angular-compile-element">
+				</div>
+			</div>
+		</div>
+
+
+
+		<!-- <div *ngIf='!gridLayout' [p3x-compile]="layout.customLayout" [p3x-compile-ctx]="this" [p3x-compile-module]="dataMaterialModule"></div> ->
+
+		<div *ngIf='gridLayout' fxLayout="row" fxLayoutGap="10px">
+			<div fxLayout="column" fxFlex="20">
+
+				<div class="scroll" style="position: sticky; top: 1vh; overflow-y: auto; max-height: 72vh;
+              margin-left: 5px; border: solid; border-color: #e0e0e0; background: white;">
+					<div style="width: 18vw; max-width: 100%; min-height: 60px; overflow: hidden;" *ngIf="this.module" cdkDropList
+						[cdkDropListConnectedTo]="this.dropList">
+						<div class="pad10 pointer" *ngFor="let field of this.module.FIELDS" fxLayout="row" fxLayoutAlign=" center"
+							[ngStyle]="{'border-bottom': '1px solid #9e9e9e'}" cdkDrag id="{{field.FIELD_ID}}"
+							style="padding: 12px 10px; box-sizing: border-box; cursor: move;">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+								<path fill="none" d="M0 0h24v24H0V0z" />
+								<path
+									d="M11 18c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zm-2-8c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 4c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
+							</svg>
+							<label class="mat-body pointer" style="cursor:move;">{{ field.DISPLAY_LABEL }}</label>
+							<div *cdkDragPreview class="pad10 pointer" [ngStyle]="{'border-bottom': '1px solid rgba(0,0,0,.12)'}">
+								<div class="mat-body">{{ field.DISPLAY_LABEL }}<span class='mat-caption'> ({{ field.DATA_TYPE.DISPLAY }})</span></div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<!-- <mat-divider [vertical]="true" style="margin-left: 10px;" fxFlex></mat-divider> ->
+
+			<div fxFlex="80">
+
+				<div *ngFor="let customLayout of customLayouts; let i = index"
+					style="border-top: 1px solid #BDBDBD; border-left: 1px solid #BDBDBD; border-bottom: 1px solid #BDBDBD;">
+					<div style="margin: 10px;" fxLayout="row" fxLayoutAlign="space-between center">
+						<mat-form-field>
+							<input matInput placeholder="Panel name" [(ngModel)]="customLayout.displayName">
+						</mat-form-field>
+						<div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
+							<mat-checkbox [(ngModel)]="customLayout.collapse">Collapsed?</mat-checkbox>
+							<button mat-icon-button style="border-radius: 20px;" *ngIf="i!==0" (click)="openSettings(customLayout)"
+								matTooltip="Panel Settings">
+								<mat-icon>settings</mat-icon>
+							</button>
+							<button mat-icon-button style="border-radius: 20px;" *ngIf="i!==0" (click)="removeLayout(i)" matTooltip="Remove Panel">
+								<mat-icon>close</mat-icon>
+							</button>
+						</div>
+					</div>
+					<div style="padding: 10px;" [p3x-compile]="customLayout.customLayout" [p3x-compile-ctx]="this"
+						[p3x-compile-module]="dataMaterialModule" class="p3x-angular-compile-element">
+					</div>
+					<div style="padding-bottom: 10px; margin: 0px 12px" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
+						<button mat-raised-button fxFlex fxLayoutAlign="center center" *ngIf="customLayout.grids.length < 21"
+							style="cursor: pointer; height: 5vh;" (click)="gridRow(customLayout.name, i, 1)">
+							<span>
+								<mat-icon style="vertical-align: middle;">add</mat-icon> Add row
+							</span>
+						</button>
+					</div>
+				</div>
+				<div style="margin: 12px;" fxLayoutAlign="center center">
+					<button mat-raised-button fxFlex fxLayoutAlign="center center" style="cursor: pointer; height: 5vh;" (click)="newLayout()">
+						<div>
+							<mat-icon style="vertical-align: middle;">add</mat-icon> Add a new panel
+						</div>
+					</button>
+				</div>
+			</div>
+		</div>
+	</mat-tab>
+	<mat-tab label="Style and Preview" fxFlex>
+		<div fxLayout="row" fxFlex="100" style="margin-top: 2%;">
+			<div fxFlex="33" fxLayoutAlign="center center" fxLayout="column">
+				<label id="example-radio-group-label">Select a style</label>
+				<mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" [(ngModel)]="layoutStyle">
+					<mat-radio-button class="example-radio-button" value="fill">
+						{{"FILL" | translate}}
+					</mat-radio-button>
+					<mat-radio-button class="example-radio-button" value="standard">
+						{{"STANDARD" | translate}}
+					</mat-radio-button>
+					<mat-radio-button class="example-radio-button" value="outline">
+						{{"OUTLINE" | translate}}
+					</mat-radio-button>
+				</mat-radio-group>
+			</div>
+			<div fxFlex="40" fxLayoutAlign="center center" style="width: 50px;">
+				<mat-form-field appearance="outline" fxFlex floatLabel="always" *ngIf="layoutStyle === 'outline'">
+					<input matInput type="text" placeholder="Placeholder">
+				</mat-form-field>
+				<mat-form-field appearance="standard" fxFlex floatLabel="always" *ngIf="layoutStyle === 'standard'">
+					<input matInput type="text" placeholder="Placeholder">
+				</mat-form-field>
+				<mat-form-field appearance="fill" fxFlex floatLabel="always" *ngIf="layoutStyle === 'fill'">
+					<input matInput type="text" placeholder="Placeholder">
+				</mat-form-field>
+			</div>
+		</div>
+	</mat-tab>
+</mat-tab-group>
+
+-->

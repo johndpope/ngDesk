@@ -1,0 +1,1896 @@
+{
+	"NAME": "Time Off Requests",
+	"DESCRIPTION": "Default time off requests module",
+	"MODULE_ID": null,
+	"DATE_CREATED": null,
+	"DATE_UPDATED": null,
+	"LAST_UPDATED_BY": null,
+	"CREATED_BY": null,
+	"FIELDS": [
+		    {
+      "DISPLAY_LABEL": "Requested in Paybooks",
+      "FIELD_ID": "b100c9ab-7db2-4943-84fb-3f44c6c99517",
+      "INTERNAL": true,
+      "REQUIRED": false,
+      "HELP_TEXT": "",
+      "NOT_EDITABLE": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Checkbox",
+        "BACKEND": "Boolean"
+      },
+      "NAME": "REQUESTED_IN_PAYBOOKS"
+    },
+    {
+      "DISPLAY_LABEL": "Requested in uAttend",
+      "FIELD_ID": "64a14270-14c9-4006-a50f-eb8ed33424f3",
+      "INTERNAL": true,
+      "REQUIRED": false,
+      "HELP_TEXT": "",
+      "NOT_EDITABLE": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Checkbox",
+        "BACKEND": "Boolean"
+      },
+      "NAME": "REQUESTED_IN_UATTEND"
+    },
+	 {
+      "FIELD_ID": "05d6a748-5fc9-4d82-8a17-0f0f60332eb2",
+      "NAME": "EMPLOYEE",
+      "DISPLAY_LABEL": "Employee",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "LENGTH": 0,
+      "DECIMAL_PLACES": 0,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": "Many to One",
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": null,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": false,
+      "PRIMARY_DISPLAY_FIELD": "13f8973d-aa57-4bb7-bb35-905e639a725b",
+      "RELATIONSHIP_FIELD": "",
+      "FORMULA": null,
+      "MODULE": "EMPLOYEES_MODULE_REPLACE",
+      "VISIBILITY": false,
+      "REQUIRED": true,
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "String"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": null,
+      "LAST_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "NOT_EDITABLE": false,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false
+    },
+    {
+      "FIELD_ID": "d18b89d6-746a-42f6-853f-a6259c03141d",
+      "NAME": "TOTAL_HOURS",
+      "DISPLAY_LABEL": "Total Hours",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "LENGTH": 0,
+      "DECIMAL_PLACES": 0,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": null,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": [],
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": true,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "RELATIONSHIP_FIELD": null,
+      "FORMULA": null,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "REQUIRED": true,
+      "DATA_TYPE": {
+        "DISPLAY": "Currency",
+        "BACKEND": "Float"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": "",
+      "LAST_UPDATED": "",
+      "LAST_UPDATED_BY": "",
+      "CREATED_BY": "",
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "NOT_EDITABLE": false,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false,
+      "WORKFLOW": null,
+      "DATA_FILTER": null,
+	  "PREFIX": "",
+	  "SUFFIX": "",
+	  "NUMERIC_FORMAT": ""
+    },
+	{
+      "DEFAULT_VALUE": null,
+      "DATE_CREATED": null,
+      "HELP_TEXT": "",
+      "LAST_UPDATED": null,
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": "",
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+     "DATA_TYPE": {
+        "DISPLAY": "Date",
+        "BACKEND": "Timestamp"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": "Enter Values",
+      "PICKLIST_RESTRICT": true,
+      "LAST_UPDATED_BY": null,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "177b330c-f28f-458f-ae2f-634fcf77b062",
+      "MAX_SIZE": 0,
+      "REQUIRED": true,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "FROM",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "From",
+      "EXAMPLE": null
+    },
+{
+      "DEFAULT_VALUE": null,
+      "DATE_CREATED": null,
+      "HELP_TEXT": "",
+      "LAST_UPDATED": null,
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": "",
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+     "DATA_TYPE": {
+        "DISPLAY": "Date",
+        "BACKEND": "Timestamp"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": "Enter Values",
+      "PICKLIST_RESTRICT": true,
+      "LAST_UPDATED_BY": null,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "7a2883c3-5814-427e-8b25-cdcb9256d215",
+      "MAX_SIZE": 0,
+      "REQUIRED": true,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "TO",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "To",
+      "EXAMPLE": null
+    },
+	   {
+      "FIELD_ID": "fc6c365f-0620-41e2-9e2a-1f8904499448",
+      "NAME": "LEAVE_TYPE",
+      "DISPLAY_LABEL": "Leave Type",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "LENGTH": 0,
+      "DECIMAL_PLACES": 0,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": null,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": [
+        "Family and Medical Leave",
+        "Funeral Leave",
+		"Holidays",
+		"Jury Duty",
+		"Personal Leave",
+		"Vacation"
+      ],
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": false,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "RELATIONSHIP_FIELD": null,
+      "FORMULA": null,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "REQUIRED": true,
+      "DATA_TYPE": {
+        "DISPLAY": "Picklist",
+        "BACKEND": "String"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": null,
+      "LAST_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null,
+      "MESSAGES": null,
+      "INTERNAL": false,
+      "NOT_EDITABLE": false,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false
+    },
+	{
+      "DEFAULT_VALUE": null,
+      "DATE_CREATED": null,
+      "HELP_TEXT": "",
+      "LAST_UPDATED": null,
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": "",
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": "Enter Values",
+      "PICKLIST_RESTRICT": true,
+      "LAST_UPDATED_BY": null,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "59ee695b-3198-496e-b89c-1eebfa8eef56",
+      "MAX_SIZE": 0,
+      "REQUIRED": true,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "REASON_FOR_LEAVE",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Reason for Leave",
+      "EXAMPLE": null
+    },
+	{
+			"DISPLAY_LABEL": "Deleted",
+			"FIELD_ID": "fed364df-9809-4684-b229-88a2e24e6088",
+			"INTERNAL": true,
+			"REQUIRED": false,
+			"NOT_EDITABLE": true,
+			"DATA_TYPE": {
+				"DISPLAY": "Checkbox",
+				"BACKEND": "Boolean"
+			},
+			"NAME": "DELETED"
+		},{
+			"FIELD_ID": "9bc02f42-85dc-45f6-99e1-25e14a5f255b",
+			"NAME": "DATE_CREATED",
+			"DISPLAY_LABEL": "Date Created",
+			"HELP_TEXT": "",
+			"DEFAULT_VALUE": null,
+			"LENGTH": 0,
+			"DECIMAL_PLACES": 0,
+			"MAX_SIZE": 0,
+			"MASK_TYPE": null,
+			"MASK_CHARACTER": null,
+			"EXAMPLE": null,
+			"RELATIONSHIP_TYPE": null,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"GEOLOCATION_LATITUDE_LONGTITUDE": "",
+			"PICKLIST": "Enter Values",
+			"PICKLIST_GLOBAL_LIST": null,
+			"PICKLIST_VALUES": null,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_RESTRICT": true,
+			"PRIMARY_DISPLAY_FIELD": null,
+			"RELATIONSHIP_FIELD": null,
+			"FORMULA": null,
+			"MODULE": null,
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"DATA_TYPE": {
+				"DISPLAY": "Date/Time",
+				"BACKEND": "Date"
+			},
+			"ORDER": 0,
+			"TYPE": 0,
+			"DATE_CREATED": null,
+			"LAST_UPDATED": null,
+			"LAST_UPDATED_BY": null,
+			"CREATED_BY": null,
+			"MESSAGES": null,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"GROUP_ID": null,
+			"IS_LIST_TEXT_UNIQUE": false,
+			"WORKFLOW": null,
+			"DATA_FILTER": null,
+			"AGGREGATION_TYPE": null,
+			"AGGREGATION_FIELD": null,
+			"AGGREGATION_RELATED_FIELD": null,
+			"INHERITANCE_MAPPING": null,
+			"UNIQUE": false
+		},
+		{
+			"FIELD_ID": "eaa34546-646c-4462-9d82-298cee5ec2bc",
+			"NAME": "EFFECTIVE_TO",
+			"DISPLAY_LABEL": "Effective to",
+			"HELP_TEXT": "",
+			"DEFAULT_VALUE": null,
+			"LENGTH": 0,
+			"DECIMAL_PLACES": 0,
+			"MAX_SIZE": 0,
+			"MASK_TYPE": null,
+			"MASK_CHARACTER": null,
+			"EXAMPLE": null,
+			"RELATIONSHIP_TYPE": null,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"GEOLOCATION_LATITUDE_LONGTITUDE": null,
+			"PICKLIST": null,
+			"PICKLIST_GLOBAL_LIST": null,
+			"PICKLIST_VALUES": [],
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_RESTRICT": true,
+			"PRIMARY_DISPLAY_FIELD": null,
+			"RELATIONSHIP_FIELD": null,
+			"FORMULA": null,
+			"MODULE": null,
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"DATA_TYPE": {
+				"DISPLAY": "Date/Time",
+				"BACKEND": "Date"
+			},
+			"ORDER": 0,
+			"TYPE": 0,
+			"DATE_CREATED": null,
+			"LAST_UPDATED": null,
+			"LAST_UPDATED_BY": null,
+			"CREATED_BY": null,
+			"MESSAGES": null,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"GROUP_ID": null,
+			"IS_LIST_TEXT_UNIQUE": false,
+			"WORKFLOW": null,
+			"DATA_FILTER": null,
+			"AGGREGATION_TYPE": null,
+			"AGGREGATION_FIELD": null,
+			"AGGREGATION_RELATED_FIELD": null,
+			"INHERITANCE_MAPPING": null,
+			"UNIQUE": false
+		},
+		{
+			"FIELD_ID": "42cb2be2-3265-4730-be18-a819ddde1487",
+			"NAME": "EFFECTIVE_FROM",
+			"DISPLAY_LABEL": "Effective from",
+			"HELP_TEXT": "",
+			"DEFAULT_VALUE": null,
+			"LENGTH": 0,
+			"DECIMAL_PLACES": 0,
+			"MAX_SIZE": 0,
+			"MASK_TYPE": null,
+			"MASK_CHARACTER": null,
+			"EXAMPLE": null,
+			"RELATIONSHIP_TYPE": null,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"GEOLOCATION_LATITUDE_LONGTITUDE": null,
+			"PICKLIST": null,
+			"PICKLIST_GLOBAL_LIST": null,
+			"PICKLIST_VALUES": [],
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_RESTRICT": true,
+			"PRIMARY_DISPLAY_FIELD": null,
+			"RELATIONSHIP_FIELD": null,
+			"FORMULA": null,
+			"MODULE": null,
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"DATA_TYPE": {
+				"DISPLAY": "Date/Time",
+				"BACKEND": "Date"
+			},
+			"ORDER": 0,
+			"TYPE": 0,
+			"DATE_CREATED": null,
+			"LAST_UPDATED": null,
+			"LAST_UPDATED_BY": null,
+			"CREATED_BY": null,
+			"MESSAGES": null,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"GROUP_ID": null,
+			"IS_LIST_TEXT_UNIQUE": false,
+			"WORKFLOW": null,
+			"DATA_FILTER": null,
+			"AGGREGATION_TYPE": null,
+			"AGGREGATION_FIELD": null,
+			"AGGREGATION_RELATED_FIELD": null,
+			"INHERITANCE_MAPPING": null,
+			"UNIQUE": false
+		},
+		{
+			"FIELD_ID": "500221c1-27cb-490e-bce2-c54739a09ba9",
+			"NAME": "DATE_UPDATED",
+			"DISPLAY_LABEL": "Date Updated",
+			"HELP_TEXT": "",
+			"DEFAULT_VALUE": null,
+			"LENGTH": 0,
+			"DECIMAL_PLACES": 0,
+			"MAX_SIZE": 0,
+			"MASK_TYPE": null,
+			"MASK_CHARACTER": null,
+			"EXAMPLE": null,
+			"RELATIONSHIP_TYPE": null,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"GEOLOCATION_LATITUDE_LONGTITUDE": "",
+			"PICKLIST": "Enter Values",
+			"PICKLIST_GLOBAL_LIST": null,
+			"PICKLIST_VALUES": null,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_RESTRICT": true,
+			"PRIMARY_DISPLAY_FIELD": null,
+			"RELATIONSHIP_FIELD": null,
+			"FORMULA": null,
+			"MODULE": null,
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"DATA_TYPE": {
+				"DISPLAY": "Date/Time",
+				"BACKEND": "Date"
+			},
+			"ORDER": 0,
+			"TYPE": 0,
+			"DATE_CREATED": null,
+			"LAST_UPDATED": null,
+			"LAST_UPDATED_BY": null,
+			"CREATED_BY": null,
+			"MESSAGES": null,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"GROUP_ID": null,
+			"IS_LIST_TEXT_UNIQUE": false,
+			"WORKFLOW": null,
+			"DATA_FILTER": null,
+			"AGGREGATION_TYPE": null,
+			"AGGREGATION_FIELD": null,
+			"AGGREGATION_RELATED_FIELD": null,
+			"INHERITANCE_MAPPING": null,
+			"UNIQUE": false
+		},
+		{
+			"FIELD_ID": "49e122fc-5fcd-4d26-8013-b33a8789f01f",
+			"NAME": "LAST_UPDATED_BY",
+			"DISPLAY_LABEL": "Last Updated by",
+			"HELP_TEXT": null,
+			"DEFAULT_VALUE": null,
+			"LENGTH": 0,
+			"DECIMAL_PLACES": 0,
+			"MAX_SIZE": 0,
+			"MASK_TYPE": null,
+			"MASK_CHARACTER": null,
+			"EXAMPLE": null,
+			"RELATIONSHIP_TYPE": "Many to One",
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"GEOLOCATION_LATITUDE_LONGTITUDE": null,
+			"PICKLIST": null,
+			"PICKLIST_GLOBAL_LIST": null,
+			"PICKLIST_VALUES": null,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_RESTRICT": false,
+			"PRIMARY_DISPLAY_FIELD": "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+			"RELATIONSHIP_FIELD": "",
+			"FORMULA": null,
+			"MODULE": "USERS_MODULE_REPLACE",
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"DATA_TYPE": {
+				"DISPLAY": "Relationship",
+				"BACKEND": "String"
+			},
+			"ORDER": 0,
+			"TYPE": 0,
+			"DATE_CREATED": null,
+			"LAST_UPDATED": null,
+			"LAST_UPDATED_BY": null,
+			"CREATED_BY": null,
+			"MESSAGES": null,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"GROUP_ID": null,
+			"IS_LIST_TEXT_UNIQUE": false,
+			"WORKFLOW": null,
+			"DATA_FILTER": null,
+			"AGGREGATION_TYPE": null,
+			"AGGREGATION_FIELD": null,
+			"AGGREGATION_RELATED_FIELD": null,
+			"INHERITANCE_MAPPING": null,
+			"UNIQUE": false
+		},
+		{
+			"FIELD_ID": "bbbafb78-180c-46ca-9ff2-7c8793448944",
+			"NAME": "CREATED_BY",
+			"DISPLAY_LABEL": "Created by",
+			"HELP_TEXT": null,
+			"DEFAULT_VALUE": null,
+			"LENGTH": 0,
+			"DECIMAL_PLACES": 0,
+			"MAX_SIZE": 0,
+			"MASK_TYPE": null,
+			"MASK_CHARACTER": null,
+			"EXAMPLE": null,
+			"RELATIONSHIP_TYPE": "Many to One",
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"GEOLOCATION_LATITUDE_LONGTITUDE": null,
+			"PICKLIST": null,
+			"PICKLIST_GLOBAL_LIST": null,
+			"PICKLIST_VALUES": null,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_RESTRICT": false,
+			"PRIMARY_DISPLAY_FIELD": "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+			"RELATIONSHIP_FIELD": "",
+			"FORMULA": null,
+			"MODULE": "USERS_MODULE_REPLACE",
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"DATA_TYPE": {
+				"DISPLAY": "Relationship",
+				"BACKEND": "String"
+			},
+			"ORDER": 0,
+			"TYPE": 0,
+			"DATE_CREATED": null,
+			"LAST_UPDATED": null,
+			"LAST_UPDATED_BY": null,
+			"CREATED_BY": null,
+			"MESSAGES": null,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"GROUP_ID": null,
+			"IS_LIST_TEXT_UNIQUE": false,
+			"WORKFLOW": null,
+			"DATA_FILTER": null,
+			"AGGREGATION_TYPE": null,
+			"AGGREGATION_FIELD": null,
+			"AGGREGATION_RELATED_FIELD": null,
+			"INHERITANCE_MAPPING": null,
+			"UNIQUE": false
+		},
+		{
+			"FIELD_ID": "296d5947-7771-4cfd-9386-a89417f7dfa7",
+			"NAME": "TEAMS",
+			"DISPLAY_LABEL": "Teams",
+			"HELP_TEXT": null,
+			"DEFAULT_VALUE": "GLOBAL_TEAM_REPLACE",
+			"LENGTH": 0,
+			"DECIMAL_PLACES": 0,
+			"MAX_SIZE": 0,
+			"MASK_TYPE": null,
+			"MASK_CHARACTER": null,
+			"EXAMPLE": null,
+			"RELATIONSHIP_TYPE": "Many to Many",
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"GEOLOCATION_LATITUDE_LONGTITUDE": null,
+			"PICKLIST": null,
+			"PICKLIST_GLOBAL_LIST": null,
+			"PICKLIST_VALUES": null,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_RESTRICT": false,
+			"PRIMARY_DISPLAY_FIELD": "b1c48961-43e0-4071-b30c-0f7be5daa7a9",
+			"RELATIONSHIP_FIELD": "",
+			"FORMULA": null,
+			"MODULE": "TEAMS_MODULE_REPLACE",
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"DATA_TYPE": {
+				"DISPLAY": "Relationship",
+				"BACKEND": "Array"
+			},
+			"ORDER": 0,
+			"TYPE": 0,
+			"DATE_CREATED": null,
+			"LAST_UPDATED": null,
+			"LAST_UPDATED_BY": null,
+			"CREATED_BY": null,
+			"MESSAGES": null,
+			"INTERNAL": true,
+			"NOT_EDITABLE": false,
+			"GROUP_ID": null,
+			"IS_LIST_TEXT_UNIQUE": false,
+			"WORKFLOW": null,
+			"DATA_FILTER": null,
+			"AGGREGATION_TYPE": null,
+			"AGGREGATION_FIELD": null,
+			"AGGREGATION_RELATED_FIELD": null,
+			"INHERITANCE_MAPPING": null,
+			"UNIQUE": false
+		},
+			{
+			"DEFAULT_VALUE": "",
+			"DATE_CREATED": null,
+			"HELP_TEXT": "",
+			"LAST_UPDATED": null,
+			"LENGTH": 0,
+			"PICKLIST_GLOBAL_LIST": null,
+			"ORDER": 0,
+			"PICKLIST_VALUES": null,
+			"MESSAGES": null,
+			"INTERNAL": true,
+			"GEOLOCATION_LATITUDE_LONGTITUDE": null,
+			"DECIMAL_PLACES": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"DATA_TYPE": {
+				"DISPLAY": "Text",
+				"BACKEND": "String"
+			},
+			"TYPE": 0,
+			"MASK_CHARACTER": null,
+			"PICKLIST": null,
+			"PICKLIST_RESTRICT": false,
+			"LAST_UPDATED_BY": "",
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"FIELD_ID": "bcc06317-82d9-498d-93a9-be75c027981f",
+			"MAX_SIZE": 100,
+			"REQUIRED": false,
+			"MASK_TYPE": null,
+			"NOT_EDITABLE": true,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"FORMULA": null,
+			"NAME": "DATA_ID",
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"MODULE": null,
+			"VISIBILITY": true,
+			"DISPLAY_LABEL": "Data ID",
+			"EXAMPLE": null
+		},
+		{
+			"FIELD_ID": "6ecf5985-21e2-46a5-81eb-abac7c51ab0d",
+			"NAME": "SOURCE_TYPE",
+			"DISPLAY_LABEL": "Source Type",
+			"HELP_TEXT": null,
+			"DEFAULT_VALUE": "web",
+			"LENGTH": 0,
+			"DECIMAL_PLACES": 0,
+			"MAX_SIZE": 0,
+			"MASK_TYPE": null,
+			"MASK_CHARACTER": null,
+			"EXAMPLE": null,
+			"RELATIONSHIP_TYPE": null,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"GEOLOCATION_LATITUDE_LONGTITUDE": null,
+			"PICKLIST": null,
+			"PICKLIST_GLOBAL_LIST": null,
+			"PICKLIST_VALUES": [
+				"chat",	
+				"email",
+				"facebook",
+				"forms",
+				"mobile",
+				"sms",	
+				"twitter",	
+				"web",	
+				"whatsapp"
+			],
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_RESTRICT": false,
+			"PRIMARY_DISPLAY_FIELD": null,
+			"RELATIONSHIP_FIELD": null,
+			"FORMULA": null,
+			"MODULE": null,
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"DATA_TYPE": {
+				"DISPLAY": "Picklist",
+				"BACKEND": "String"
+			},
+			"ORDER": 0,
+			"TYPE": 0,
+			"DATE_CREATED": null,
+			"LAST_UPDATED": null,
+			"LAST_UPDATED_BY": null,
+			"CREATED_BY": null,
+			"MESSAGES": null,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"GROUP_ID": null,
+			"IS_LIST_TEXT_UNIQUE": false,
+			"WORKFLOW": null,
+			"DATA_FILTER": null,
+			"AGGREGATION_TYPE": null,
+			"AGGREGATION_FIELD": null,
+			"AGGREGATION_RELATED_FIELD": null,
+			"INHERITANCE_MAPPING": null,
+			"UNIQUE": false
+		},
+		{
+			"FIELD_ID": "5dcf0be6-c69d-46c8-b559-aea0c437f105",
+			"NAME": "CHANNEL",
+			"DISPLAY_LABEL": "Channel",
+			"HELP_TEXT": null,
+			"DEFAULT_VALUE": null,
+			"LENGTH": 0,
+			"DECIMAL_PLACES": 0,
+			"MAX_SIZE": 0,
+			"MASK_TYPE": null,
+			"MASK_CHARACTER": null,
+			"EXAMPLE": null,
+			"RELATIONSHIP_TYPE": null,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"GEOLOCATION_LATITUDE_LONGTITUDE": null,
+			"PICKLIST": null,
+			"PICKLIST_GLOBAL_LIST": null,
+			"PICKLIST_VALUES": null,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_RESTRICT": false,
+			"PRIMARY_DISPLAY_FIELD": null,
+			"RELATIONSHIP_FIELD": null,
+			"FORMULA": null,
+			"MODULE": null,
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"DATA_TYPE": {
+				"DISPLAY": "Text",
+				"BACKEND": "String"
+			},
+			"ORDER": 0,
+			"TYPE": 0,
+			"DATE_CREATED": null,
+			"LAST_UPDATED": null,
+			"LAST_UPDATED_BY": null,
+			"CREATED_BY": null,
+			"MESSAGES": null,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"GROUP_ID": null,
+			"IS_LIST_TEXT_UNIQUE": false,
+			"WORKFLOW": null,
+			"DATA_FILTER": null,
+			"AGGREGATION_TYPE": null,
+			"AGGREGATION_FIELD": null,
+			"AGGREGATION_RELATED_FIELD": null,
+			"INHERITANCE_MAPPING": null,
+			"UNIQUE": false
+		},
+		 {
+      "FIELD_ID": "ec928c4f-f1f6-424d-b120-7e7747360ff2",
+      "NAME": "TIME_WINDOW",
+      "DISPLAY_LABEL": "Time Window",
+      "HELP_TEXT": "",
+      "DATA_TYPE": {
+        "DISPLAY": "Time Window",
+        "BACKEND": "Timestamp"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_VALUES": [],
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+     {
+      "FIELD_ID": "4024c953-87aa-4d4e-97ae-2a467b83db3a",
+      "NAME": "PDFS",
+      "DISPLAY_LABEL": "PDFS",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": null,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": [],
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": true,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "RELATIONSHIP_FIELD": null,
+      "FORMULA": null,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "DATA_TYPE": {
+        "DISPLAY": "PDF",
+        "BACKEND": "BLOB"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": "DATE_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "MESSAGES": null,
+      "INTERNAL": false,
+      "NOT_EDITABLE": true,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false,
+      "WORKFLOW": null,
+      "DATA_FILTER": null,
+      "AGGREGATION_TYPE": null,
+      "AGGREGATION_FIELD": null,
+      "AGGREGATION_RELATED_FIELD": null,
+      "INHERITANCE_MAPPING": null,
+      "UNIQUE": false,
+      "DATE_UPDATED": "DATE_REPLACE"
+     }
+	],
+	"LIST_LAYOUTS": [
+		{
+			"LAYOUT_ID": "756ce4fd-be04-451c-9d28-f760cf3bcb04",
+			"NAME": "Time Off Request",
+			"DESCRIPTION": "Default time off request layout for Admins",
+			"ID": "",
+			"ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+			"ORDER_BY": {
+				"COLUMN": "05d6a748-5fc9-4d82-8a17-0f0f60332eb2",
+				"ORDER": "Asc"
+			},
+			"COLUMN_SHOW": {
+				"FIELDS": [
+					"05d6a748-5fc9-4d82-8a17-0f0f60332eb2",
+					"fc6c365f-0620-41e2-9e2a-1f8904499448"
+				]
+			},
+			"CONDITIONS": [],
+			"IS_DEFAULT": true,
+			"DATE_CREATED": null,
+			"DATE_UPDATED": null,
+			"LAST_UPDATED_BY": null,
+			"CREATED_BY": null
+		},
+			{
+			"LAYOUT_ID": "cb2783e3-95dd-4f41-9d38-5cfeffb68558",
+			"NAME": "Time Off Request",
+			"DESCRIPTION": "Default time off request layout for Agents",
+			"ID": "",
+			"ROLE": "AGENT_ROLE_REPLACE",
+			"ORDER_BY": {
+				"COLUMN": "05d6a748-5fc9-4d82-8a17-0f0f60332eb2",
+				"ORDER": "Asc"
+			},
+			"COLUMN_SHOW": {
+				"FIELDS": [
+					"05d6a748-5fc9-4d82-8a17-0f0f60332eb2",
+					"fc6c365f-0620-41e2-9e2a-1f8904499448"
+				]
+			},
+			"CONDITIONS": [],
+			"IS_DEFAULT": true,
+			"DATE_CREATED": null,
+			"DATE_UPDATED": null,
+			"LAST_UPDATED_BY": null,
+			"CREATED_BY": null
+		}
+	],
+	"DETAIL_LAYOUTS": [],
+	"LIST_MOBILE_LAYOUTS": [],
+	"DETAIL_MOBILE_LAYOUTS": [],
+	"CREATE_MOBILE_LAYOUTS": [],
+	"EDIT_MOBILE_LAYOUTS": [],
+	"CREATE_LAYOUTS": [
+		{
+			"LAYOUT_ID": "499aae32-612c-4a22-ab14-8dd8bc7d7233",
+			"NAME": "Time Off Request",
+			"DESCRIPTION": "",
+			"PANELS": [
+				{
+					"SETTINGS": {
+						"COLLAPSABLE": false,
+						"ACTION": "",
+						"CONDITIONS": []
+					},
+					"ID": "PANEL_1",
+					"PANEL_NAME": "Time Off Request",
+					"GRIDS": [
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 50,
+								"FIELD_ID": "05d6a748-5fc9-4d82-8a17-0f0f60332eb2"
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 0,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 50,
+								"FIELD_ID": "fc6c365f-0620-41e2-9e2a-1f8904499448"
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 0,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 50,
+								"FIELD_ID": "177b330c-f28f-458f-ae2f-634fcf77b062"
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 0,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 50,
+								"FIELD_ID": "7a2883c3-5814-427e-8b25-cdcb9256d215"
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 0,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 50,
+								"FIELD_ID": "d18b89d6-746a-42f6-853f-a6259c03141d"
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 0,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 50,
+								"FIELD_ID": "59ee695b-3198-496e-b89c-1eebfa8eef56"
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 0,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 50,
+								"FIELD_ID": "b100c9ab-7db2-4943-84fb-3f44c6c99517"
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 0,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 50,
+								"FIELD_ID": "64a14270-14c9-4006-a50f-eb8ed33424f3"
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 0,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							}
+						]
+					],
+					"DISPLAY_TYPE": "Panel"
+				}
+			],
+			"TITLE_BAR": [],
+			"PREDEFINED_TEMPLATE": null,
+			"CUSTOM_LAYOUT": null,
+			"ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+			"DATE_CREATED": null,
+			"DATE_UPDATED": null,
+			"LAST_UPDATED_BY": null,
+			"CREATED_BY": null,
+			"LAYOUT_STYLE": "outline"
+		},
+		{
+			"LAYOUT_ID": "a2872769-858f-411b-be27-31e637a97425",
+			"NAME": "Time Off Request",
+			"DESCRIPTION": "",
+			"PANELS": [
+				{
+					"SETTINGS": {
+						"COLLAPSABLE": false,
+						"ACTION": "",
+						"CONDITIONS": []
+					},
+					"ID": "PANEL_1",
+					"PANEL_NAME": "Time Off Request",
+					"GRIDS": [
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 50,
+								"FIELD_ID": "05d6a748-5fc9-4d82-8a17-0f0f60332eb2"
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 0,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 50,
+								"FIELD_ID": "fc6c365f-0620-41e2-9e2a-1f8904499448"
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 0,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 50,
+								"FIELD_ID": "177b330c-f28f-458f-ae2f-634fcf77b062"
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 0,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 50,
+								"FIELD_ID": "7a2883c3-5814-427e-8b25-cdcb9256d215"
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 0,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 50,
+								"FIELD_ID": "d18b89d6-746a-42f6-853f-a6259c03141d"
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 0,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 50,
+								"FIELD_ID": "59ee695b-3198-496e-b89c-1eebfa8eef56"
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 0,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 50,
+								"FIELD_ID": "b100c9ab-7db2-4943-84fb-3f44c6c99517"
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 0,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 50,
+								"FIELD_ID": "64a14270-14c9-4006-a50f-eb8ed33424f3"
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 0,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							}
+						]
+					],
+					"DISPLAY_TYPE": "Panel"
+				}
+			],
+			"TITLE_BAR": [],
+			"PREDEFINED_TEMPLATE": null,
+			"CUSTOM_LAYOUT": null,
+			"ROLE": "AGENT_ROLE_REPLACE",
+			"DATE_CREATED": null,
+			"DATE_UPDATED": null,
+			"LAST_UPDATED_BY": null,
+			"CREATED_BY": null,
+			"LAYOUT_STYLE": "outline"
+		}
+	],
+	"EDIT_LAYOUTS": [
+		{
+			"LAYOUT_ID": "58b4f221-af37-46fd-9c6b-63a512ec12e8",
+			"NAME": "Time Off Request",
+			"DESCRIPTION": "",
+			"PANELS": [
+				{
+					"SETTINGS": {
+						"COLLAPSABLE": false,
+						"ACTION": "",
+						"CONDITIONS": []
+					},
+					"ID": "PANEL_1",
+					"PANEL_NAME": "Time Off Request",
+					"GRIDS": [
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 50,
+								"FIELD_ID": "05d6a748-5fc9-4d82-8a17-0f0f60332eb2"
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 0,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 50,
+								"FIELD_ID": "fc6c365f-0620-41e2-9e2a-1f8904499448"
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 0,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 50,
+								"FIELD_ID": "177b330c-f28f-458f-ae2f-634fcf77b062"
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 0,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 50,
+								"FIELD_ID": "7a2883c3-5814-427e-8b25-cdcb9256d215"
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 0,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 50,
+								"FIELD_ID": "d18b89d6-746a-42f6-853f-a6259c03141d"
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 0,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 50,
+								"FIELD_ID": "59ee695b-3198-496e-b89c-1eebfa8eef56"
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 0,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 50,
+								"FIELD_ID": "b100c9ab-7db2-4943-84fb-3f44c6c99517"
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 0,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 50,
+								"FIELD_ID": "64a14270-14c9-4006-a50f-eb8ed33424f3"
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 0,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							}
+						]
+					],
+					"DISPLAY_TYPE": "Panel"
+				}
+			],
+			"TITLE_BAR": [],
+			"PREDEFINED_TEMPLATE": null,
+			"CUSTOM_LAYOUT": null,
+			"ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+			"DATE_CREATED": null,
+			"DATE_UPDATED": null,
+			"LAST_UPDATED_BY": null,
+			"CREATED_BY": null,
+			"LAYOUT_STYLE": "outline"
+		},
+		{
+			"LAYOUT_ID": "c1b07793-10cb-47ee-b140-c8edb44a6687",
+			"NAME": "Time Off Request",
+			"DESCRIPTION": "",
+			"PANELS": [
+				{
+					"SETTINGS": {
+						"COLLAPSABLE": false,
+						"ACTION": "",
+						"CONDITIONS": []
+					},
+					"ID": "PANEL_1",
+					"PANEL_NAME": "Time Off Request",
+					"GRIDS": [
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 50,
+								"FIELD_ID": "05d6a748-5fc9-4d82-8a17-0f0f60332eb2"
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 0,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 50,
+								"FIELD_ID": "fc6c365f-0620-41e2-9e2a-1f8904499448"
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 0,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 50,
+								"FIELD_ID": "177b330c-f28f-458f-ae2f-634fcf77b062"
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 0,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 50,
+								"FIELD_ID": "7a2883c3-5814-427e-8b25-cdcb9256d215"
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 0,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 50,
+								"FIELD_ID": "d18b89d6-746a-42f6-853f-a6259c03141d"
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 0,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 50,
+								"FIELD_ID": "59ee695b-3198-496e-b89c-1eebfa8eef56"
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 0,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 50,
+								"FIELD_ID": "b100c9ab-7db2-4943-84fb-3f44c6c99517"
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 0,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 50,
+								"FIELD_ID": "64a14270-14c9-4006-a50f-eb8ed33424f3"
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 0,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": ""
+							}
+						]
+					],
+					"DISPLAY_TYPE": "Panel"
+				}
+			],
+			"TITLE_BAR": [],
+			"PREDEFINED_TEMPLATE": null,
+			"CUSTOM_LAYOUT": null,
+			"ROLE": "AGENT_ROLE_REPLACE",
+			"DATE_CREATED": null,
+			"DATE_UPDATED": null,
+			"LAST_UPDATED_BY": null,
+			"CREATED_BY": null,
+			"LAYOUT_STYLE": "outline"
+		}
+	],
+	"FIELD_RULES": [],
+	"MONITORS": [],
+	"VALIDATIONS": [],
+	"WORKFLOWS": [],
+	"SINGULAR_NAME": "Time Off Request",
+	"PLURAL_NAME": "Time Off Requests",
+	"SLAS": [],
+	"SETTINGS": null,
+	"CHAT_BOTS": [],
+	"FORMS": null
+}

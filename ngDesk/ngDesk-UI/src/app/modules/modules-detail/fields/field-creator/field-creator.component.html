@@ -1,0 +1,1100 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<div fxLayout="column" fxLayoutGap="30px" class="pad10">
+	<ng-template #headerTemplateRef>
+		<app-title-bar [title]="'FIELD_CREATOR' | translate"></app-title-bar>
+	</ng-template>
+	<!-- First Page (Field name and type)-->
+	<div fxLayout="row" fxLayoutAlign="center" *ngIf="stepName == 'Field name and type'">
+		<mat-card fxFlex="70">
+			<mat-error fxLayoutAlign="center start" class="mat-body">{{errorMessage}}</mat-error>
+			<form [formGroup]="fieldNameFormGroup" (ngSubmit)="nextStep()">
+				<div fxLayout="row" fxLayoutAlign="center">
+					<mat-label class="mat-h2">{{'FIELD_NAME_TYPE' | translate}}</mat-label>
+				</div>
+				<div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="center" fxLayoutGap="20px">
+					<mat-form-field>
+						<input matInput placeholder="Display label" formControlName="displayLabel" (keyup)="updateSystemLabel()" required>
+						<mat-error>{{'REQUIRED_FIELD' | translate}}</mat-error>
+					</mat-form-field>
+					<mat-form-field>
+						<input matInput placeholder="System label" formControlName="systemLabel" (blur)="overrideSysLabel = false" required>
+						<mat-error *ngIf="fieldNameFormGroup.controls.systemLabel.errors?.required">
+							{{'REQUIRED_FIELD' | translate}}</mat-error>
+						<mat-error *ngIf="fieldNameFormGroup.controls.systemLabel.errors?.pattern">
+							{{'SPACE_SPECIAL_CHARACTERS_NOT_ALLOWED' | translate}}</mat-error>
+					</mat-form-field>
+					<mat-form-field>
+						<mat-select placeholder="Data type" [compareWith]="compareFn" formControlName="dataType" required>
+							<mat-option *ngFor="let fieldType of fieldTypes" [value]="fieldType">
+								{{fieldType.DISPLAY}}
+							</mat-option>
+						</mat-select>
+						<mat-error>{{'REQUIRED_FIELD' | translate}}</mat-error>
+					</mat-form-field>
+				</div>
+
+
+				<div fxLayout="row" fxLayoutAlign="flex-end">
+					<button
+						*ngIf="fieldNameFormGroup.value.dataType.DISPLAY !== 'Discussion' && fieldNameFormGroup.value.dataType.DISPLAY !== 'Image' && fieldNameFormGroup.value.dataType.DISPLAY !== 'Approval' "
+						mat-raised-button color="primary" (click)="nextStep()">{{'NEXT' |
+						translate}}</button>
+					<button
+						*ngIf="fieldNameFormGroup.value.dataType.DISPLAY === 'Discussion' || fieldNameFormGroup.value.dataType.DISPLAY === 'Image' || fieldNameFormGroup.value.dataType.DISPLAY === 'Approval'"
+						mat-raised-button color="primary" (click)="save()">{{'SAVE' |
+						translate}}</button>
+				</div>
+			</form>
+		</mat-card>
+	</div>
+
+	<!-- Second Page (Field details)-->
+	<div fxLayout="row" fxLayoutAlign="center" *ngIf="stepName == 'Field details'">
+		<mat-card fxFlex="70">
+			<div fxLayout="column" fxLayoutAlign="center center" *ngIf='errorMessage != undefined || successMessage != undefined'>
+				<mat-error class="mat-body">{{errorMessage}}</mat-error>
+				<label class="green-color mat-body">{{successMessage}}</label>
+			</div>
+			<div fxLayout="row" fxLayoutAlign="center">
+				<div style="padding-left: 45%;" fxFlex fxLayoutAlign="space-between center">
+					<mat-label class="mat-h2">{{field.dispayLabel}} details</mat-label>
+					<div *ngIf="stepName === 'Field details' && fieldNameFormGroup.value.dataType.DISPLAY === 'Relationship'">
+						<span class="mat-icon-button" (click)="openSettings()">
+							<mat-icon matTooltip="{{'DATA_FILTER_CONDITIONS' | translate}}">settings</mat-icon>
+						</span>
+					</div>
+				</div>
+			</div>
+			<ng-container *ngTemplateOutlet="fieldDetails"></ng-container>
+			<!--Chronometer sample text-->
+			<div style="margin-top: 1%;" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="2%"
+				*ngIf="stepName === 'Field details' && fieldNameFormGroup.value.dataType.DISPLAY === 'Chronometer'">
+				<div>
+					<h4 class="mat-h4" style="margin-bottom: 0px;">{{'SAMPLE_CHRONOMETER_TEXT' | translate}}</h4>
+				</div>
+				<mat-form-field>
+					<input disabled type="text" matInput tabindex="1" value="0mo 1w 2d 13h 45m">
+				</mat-form-field>
+			</div>
+			<div fxLayout="row" fxLayoutAlign="flex-end" fxLayoutGap="10px">
+				<button mat-button (click)="back()">{{'BACK' | translate}}</button>
+				<button mat-raised-button color="primary" (click)="save()">{{'SAVE' | translate}}</button>
+			</div>
+		</mat-card>
+	</div>
+</div>
+
+<!-- this template goes in container-->
+<ng-template #fieldDetails>
+	<ng-container [ngSwitch]="field.dataType.DISPLAY">
+
+		<!--CHECKBOX-->
+		<div *ngSwitchCase="'Checkbox'">
+			<div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="20px">
+				<div fxLayout="row" fxLayoutGap="20px">
+					<div fxLayout="column" fxLayoutGap="20px">
+						<mat-form-field fxflex>
+							<input type="text" matInput tabindex="1" placeholder="{{'HELP_TEXT' | translate}}" [(ngModel)]="field.helpText">
+						</mat-form-field>
+						<div fxLayout="row" fxLayoutAlign="start center">
+							<mat-checkbox [labelPosition]="'after'" tabindex="3" [(ngModel)]="field.visibility">
+								{{'HIDDEN' | translate}}
+							</mat-checkbox>
+							<mat-icon style="transform: scale(0.7);" matTooltip="{{'HIDDEN_FIELD_HINT' | translate}}">
+								help_outline</mat-icon>
+						</div>
+						<div fxLayout="row">
+							<mat-checkbox [labelPosition]="'after'" (change)="enableFieldMapping($event.checked)">
+								{{'ENABLE_FIELD_MAPPING' | translate}}
+							</mat-checkbox>
+							<mat-icon style="transform: scale(0.7);" matTooltip="{{'FIELD_MAPPING_HINT' | translate}}">
+								help_outline
+							</mat-icon>
+						</div>
+					</div>
+					<div fxLayout="column" fxLayoutGap="20px">
+						<mat-form-field fxFlex>
+							<mat-select placeholder="{{'DEFAULT_VALUE' | translate}}" tabindex="2" [(ngModel)]="field.defaultValue">
+								<mat-option [value]="'true'">
+									Checked
+								</mat-option>
+								<mat-option [value]="'false'">
+									Unchecked
+								</mat-option>
+							</mat-select>
+						</mat-form-field>
+						<mat-checkbox [labelPosition]="'after'" tabindex="4" [(ngModel)]="field.required">
+							{{'REQUIRED_FIELD' | translate}}
+						</mat-checkbox>
+						<div fxFlex="25px"></div>
+					</div>
+				</div>
+			</div>
+			<div *ngIf="showFieldMapping">
+				<div fxLayout="row" fxLayoutAlign="center center">
+					<h1 style="margin: 0px;" mat-dialog-title class="mat-h1">{{'FIELD_MAPPING' | translate}}</h1>
+					<button mat-icon-button (click)="addFieldMappingOption()" type="button">
+						<mat-icon>add_circle</mat-icon>
+					</button>
+				</div>
+				<form [formGroup]="fieldMappingFormGroup">
+					<div style="max-height: 200px;margin-bottom: 10px;margin-top: 10px;" fxFlex>
+						<div formArrayName="fieldMapping" fxLayoutAlign="center center"
+							*ngFor=" let fieldMapping of fieldMappingFormData.controls; let i = index">
+							<div [formGroupName]="i" style="height: 65px" fxLayoutAlign="space-between" fxFlex fxLayoutGap="20px" fxFlex fxLayout="row">
+								<mat-form-field fxFlex="50" appearance="outline">
+									<mat-label>Field from {{parentModuleNameForFieldMapping}} module</mat-label>
+									<mat-select [value]="fieldMapping.value.FIELD_FROM_PARENT_MODULE"
+										(selectionChange)="filterChildModuleFieldsForFieldMapping(i,$event)" formControlName="FIELD_FROM_PARENT_MODULE">
+										<mat-option *ngFor="let parentField of parentFielsForFieldMapping" [value]="parentField.FIELD_ID">
+											{{parentField.DISPLAY_LABEL}}
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+								<mat-form-field fxFlex="50" appearance="outline">
+									<mat-label>Field from {{childModuleName}} module</mat-label>
+									<mat-select [value]="fieldMapping.value.FIELD_FROM_CHILD_MODULE" formControlName="FIELD_FROM_CHILD_MODULE">
+										<mat-option *ngFor="let childField of originalModuleFieldsMapping[i]" [value]="childField.FIELD_ID">
+											{{childField.DISPLAY_LABEL}}
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+								<div fxLayoutAlign="center center">
+									<button mat-icon-button (click)="removeFieldMappingOption(i)" type="button">
+										<mat-icon>remove_circle</mat-icon>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<!--File Upload-->
+		<div fxLayout="column" fxLayoutAlign="center center" *ngSwitchCase="'File Upload'" fxLayoutGap="20px" style="margin-bottom:10px">
+			<div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
+				<mat-form-field>
+					<input type="text" matInput tabindex="1" placeholder="{{'HELP_TEXT' | translate}}" [(ngModel)]="field.helpText">
+				</mat-form-field>
+				<mat-checkbox [labelPosition]="'after'" tabindex="5" [(ngModel)]="showPreviewOfFiles">
+					{{'SHOW_PREVIEW_OF_FILES' | translate}}
+				</mat-checkbox>
+			</div>
+		</div>
+
+		<div fxLayout="row" fxLayoutAlign="center" *ngIf="showPreviewOfFiles" style="margin-top: 20PX;">
+			<form [formGroup]="fieldFilePreviewNameFormGroup" (ngSubmit)="nextStep()">
+				<div fxLayout="row" fxLayoutAlign="center">
+					<mat-label class="mat-h2">{{'FILE_PREVIEW_NAME' | translate}}</mat-label>
+				</div>
+				<div fxLayout="row" fxLayoutAlign="center">
+					<div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="center" fxLayoutGap="20px">
+						<mat-form-field>
+							<input matInput placeholder="Display label" formControlName="displayLabel" (keyup)="updateFilePreviewSystemLabel()" required>
+							<mat-error>{{'REQUIRED_FIELD' | translate}}</mat-error>
+						</mat-form-field>
+						<mat-form-field>
+							<input matInput placeholder="System label" formControlName="systemLabel" required>
+							<mat-error *ngIf="fieldFilePreviewNameFormGroup.controls.systemLabel.errors?.required">
+								{{'REQUIRED_FIELD' | translate}}</mat-error>
+							<mat-error *ngIf="fieldFilePreviewNameFormGroup.controls.systemLabel.errors?.pattern">
+								{{'SPACE_SPECIAL_CHARACTERS_NOT_ALLOWED' | translate}}</mat-error>
+						</mat-form-field>
+						<mat-form-field>
+							<mat-select placeholder="Data type" [compareWith]="compareFn" formControlName="dataType" required disabled>
+								<mat-option *ngFor="let fieldType of fieldTypes" [value]="fieldType">
+									{{fieldType.DISPLAY}}
+								</mat-option>
+							</mat-select>
+							<mat-error>{{'REQUIRED_FIELD' | translate}}</mat-error>
+						</mat-form-field>
+					</div>
+				</div>
+			</form>
+		</div>
+		<!--Receipt Capture-->
+		<div fxLayout="column" fxLayoutAlign="center center" *ngSwitchCase="'Receipt Capture'" fxLayoutGap="20px" style="margin-bottom:10px">
+			<div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
+				<mat-form-field>
+					<input type="text" matInput tabindex="1" placeholder="{{'HELP_TEXT' | translate}}" [(ngModel)]="field.helpText">
+				</mat-form-field>
+			</div>
+		</div>
+
+		<!--AUTONUMBER-->
+		<div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="20px" *ngSwitchCase="'Auto Number'">
+			<div fxLayout="column" fxLayoutGap="20px">
+				<mat-form-field>
+					<input type="text" matInput tabindex="1" placeholder="{{'HELP_TEXT' | translate}}" [(ngModel)]="field.helpText">
+				</mat-form-field>
+				<mat-checkbox [labelPosition]="'after'" tabindex="4" [(ngModel)]="field.autoNumberGeneration">
+					{{'GENERATE_AUTONUMBER' | translate}}
+				</mat-checkbox>
+			</div>
+			<div fxLayout="column" fxLayoutGap="20px">
+				<mat-form-field>
+					<input type="number" matInput tabindex="2" placeholder="{{'STARTING_NUMBER' | translate}}"
+						[(ngModel)]="field.autoNumberStartingNumber">
+				</mat-form-field>
+				<div fxLayout="row" fxLayoutAlign="start center">
+					<mat-checkbox [labelPosition]="'after'" tabindex="5" [(ngModel)]="field.visibility">
+						{{'HIDDEN' | translate}}
+					</mat-checkbox>
+					<mat-icon style="transform: scale(0.7);" matTooltip="{{'HIDDEN_FIELD_HINT' | translate}}">
+						help_outline</mat-icon>
+				</div>
+			</div>
+		</div>
+
+		<!--ZOOM-->
+		<div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="20px" *ngSwitchCase="'Zoom'">
+			<div fxLayout="column" fxLayoutGap="20px">
+				<mat-form-field>
+					<input type="text" matInput tabindex="1" placeholder="{{'HELP_TEXT' | translate}}" [(ngModel)]="field.helpText">
+				</mat-form-field>
+			</div>
+			<div fxLayout="column" fxLayoutGap="20px">
+				<mat-form-field>
+					<input type="text" matInput tabindex="2" placeholder="{{'DEFAULT_VALUE' | translate}}" [(ngModel)]="field.defaultValue">
+				</mat-form-field>
+			</div>
+		</div>
+
+		<!--DATE-->
+		<div fxLayout="row" fxLayoutAlign="center center" *ngSwitchCase="'Date'" fxLayoutGap="20px">
+			<div fxLayout="column" fxLayoutGap="20px">
+				<mat-form-field>
+					<input type="text" matInput tabindex="1" placeholder="{{'HELP_TEXT' | translate}}" [(ngModel)]="field.helpText">
+				</mat-form-field>
+				<div fxLayout="row" fxLayoutAlign="start center">
+					<mat-checkbox [labelPosition]="'after'" tabindex="3" [(ngModel)]="field.visibility">
+						{{'HIDDEN' | translate}}
+					</mat-checkbox>
+					<mat-icon style="transform: scale(0.7);" matTooltip="{{'HIDDEN_FIELD_HINT' | translate}}">
+						help_outline</mat-icon>
+				</div>
+			</div>
+			<div fxLayout="column" fxLayoutGap="20px">
+				<mat-form-field>
+					<input placeholder="{{ 'DEFAULT_VALUE' | translate}}" matInput [owlDateTimeTrigger]="dt" [owlDateTime]="dt"
+						[(ngModel)]="field.defaultValue" (keypress)="false">
+					<owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
+				</mat-form-field>
+				<mat-checkbox [labelPosition]="'after'" tabindex="4" [(ngModel)]="field.required">
+					{{'REQUIRED_FIELD' | translate}}
+				</mat-checkbox>
+			</div>
+		</div>
+
+		<!--DATE/TIME-->
+		<div fxLayout="row" fxLayoutAlign="center center" *ngSwitchCase="'Date/Time'" fxLayoutGap="20px">
+			<div fxLayout="column" fxLayoutGap="20px">
+				<mat-form-field>
+					<input type="text" matInput tabindex="1" placeholder="{{'HELP_TEXT' | translate}}" [(ngModel)]="field.helpText">
+				</mat-form-field>
+				<div fxLayout="row" fxLayoutAlign="start center">
+					<mat-checkbox [labelPosition]="'after'" tabindex="3" [(ngModel)]="field.visibility">
+						{{'HIDDEN' | translate}}
+					</mat-checkbox>
+					<mat-icon style="transform: scale(0.7);" matTooltip="{{'HIDDEN_FIELD_HINT' | translate}}">
+						help_outline</mat-icon>
+				</div>
+			</div>
+			<div fxLayout="column" fxLayoutGap="20px">
+				<mat-form-field>
+					<input placeholder="{{ 'DEFAULT_VALUE' | translate}}" matInput [owlDateTimeTrigger]="dt" [owlDateTime]="dt"
+						[(ngModel)]="field.defaultValue" (keypress)="false">
+					<owl-date-time #dt></owl-date-time>
+				</mat-form-field>
+				<mat-checkbox [labelPosition]="'after'" tabindex="4" [(ngModel)]="field.required">
+					{{'REQUIRED_FIELD' | translate}}
+				</mat-checkbox>
+			</div>
+		</div>
+
+		<!--NUMBER-->
+		<div fxLayout="row" fxLayoutAlign="center" *ngSwitchCase="'Number'" fxLayoutGap="2%">
+			<div fxLayout="column" fxLayoutGap="20px" fxFlex="32">
+				<mat-form-field>
+					<input type="text" matInput tabindex="1" placeholder="{{'HELP_TEXT' | translate}}" [(ngModel)]="field.helpText">
+				</mat-form-field>
+				<!-- <mat-form-field>
+					<input tabindex="3" type="number" matInput placeholder="{{'DECIMAL_PLACES' | translate}}" [(ngModel)]="field.decimalPlaces">
+				</mat-form-field> -->
+				<mat-form-field>
+					<mat-select placeholder="{{'NUMERIC_FORMAT' | translate}}" [(ngModel)]="field.NUMERIC_FORMAT">
+						<mat-option *ngFor="let numericFormat of numericFormats" [value]="numericFormat">
+							{{numericFormat}}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+				<div fxLayout="row" fxLayoutAlign="start center">
+					<mat-checkbox [labelPosition]="'after'" tabindex="5" [(ngModel)]="field.visibility">
+						{{'HIDDEN' | translate}}
+					</mat-checkbox>
+					<mat-icon style="transform: scale(0.7);" matTooltip="{{'HIDDEN_FIELD_HINT' | translate}}">
+						help_outline</mat-icon>
+				</div>
+			</div>
+			<div fxLayout="column" fxLayoutGap="20px" fxFlex="32">
+				<mat-form-field>
+					<input matInput type="number" placeholder="{{'DEFAULT_VALUE' | translate}}" tabindex="2" [(ngModel)]="field.defaultValue">
+				</mat-form-field>
+				<mat-form-field>
+					<input type="text" matInput tabindex="1" placeholder="{{'PREFIX' | translate}}" [(ngModel)]="field.PREFIX">
+				</mat-form-field>
+				<mat-checkbox [labelPosition]="'after'" tabindex="6" [(ngModel)]="field.required">
+					{{'REQUIRED_FIELD' | translate}}
+				</mat-checkbox>
+			</div>
+			<div fxLayout="column" fxLayoutGap="20px" fxFlex="32">
+				<mat-form-field>
+					<input tabindex="4" type="number" matInput placeholder="Maximum length" [(ngModel)]="field.length">
+				</mat-form-field>
+				<mat-form-field>
+					<input type="text" matInput tabindex="1" placeholder="{{'SUFFIX' | translate}}" [(ngModel)]="field.SUFFIX">
+				</mat-form-field>
+			</div>
+		</div>
+
+		<!--PICKLIST-->
+		<div fxLayout="column" *ngSwitchCase="'Picklist'" fxLayoutGap="20px">
+			<div fxLayout="row" fxLayoutGap="20px">
+				<mat-form-field fxFlex="50">
+					<input type="text" matInput placeholder="{{'HELP_TEXT' | translate}}" [(ngModel)]="field.helpText">
+				</mat-form-field>
+				<mat-form-field fxFlex="50">
+					<input matInput type="tel" placeholder="{{'DEFAULT_VALUE' | translate}}" [(ngModel)]="field.defaultValue">
+				</mat-form-field>
+			</div>
+			<div fxLayout="row">
+				<mat-form-field fxFlex>
+					<mat-chip-list #chipList>
+						<mat-chip *ngFor="let value of field.picklistValues; let i = index;" [selectable]="true" [removable]="true"
+							(removed)="removeItem(i)">
+							{{value}}
+							<mat-icon matChipRemove>cancel</mat-icon>
+						</mat-chip>
+						<input placeholder="{{'ENTER_LIST_OPTIONS' | translate}}" [matChipInputFor]="chipList"
+							[matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
+							(matChipInputTokenEnd)="addPicklistOption($event)">
+					</mat-chip-list>
+				</mat-form-field>
+			</div>
+			<div fxLayout="row" fxLayout.lt-lg="column" fxLayoutGap="20px">
+				<mat-checkbox fxFlex="50" [labelPosition]="'after'" [(ngModel)]="field.picklistDisplayAlphabetically"
+					(change)="optionAlphabetizeChange()">
+					{{'DISPLAY_VALUES_ALPHABETICALLY' | translate}}
+				</mat-checkbox>
+				<mat-checkbox fxFlex="50" [labelPosition]="'after'" [(ngModel)]="field.picklistUseFirstValue" (change)="firstValueDefaultChange()">
+					{{'USE_FIRST_VALUE_AS_DEFAULT' | translate}}
+				</mat-checkbox>
+			</div>
+			<div fxLayout="row" fxLayout.lt-lg="column" fxLayoutGap="20px">
+				<div fxLayoutAlign="start center" fxLayout="row">
+					<mat-checkbox [labelPosition]="'after'" [(ngModel)]="field.visibility">
+						{{'HIDDEN' | translate}}
+					</mat-checkbox>
+					<mat-icon style="transform: scale(0.7);" matTooltip="{{'HIDDEN_FIELD_HINT' | translate}}">
+						help_outline</mat-icon>
+				</div>
+				<mat-checkbox fxFlex="50" [labelPosition]="'after'" [(ngModel)]="field.required">
+					{{'REQUIRED_FIELD' | translate}}
+				</mat-checkbox>
+			</div>
+		</div>
+
+		<!--PICKLIST(MULTI-SELECT)-->
+		<div fxLayout="column" *ngSwitchCase="'Picklist (Multi-Select)'" fxLayoutGap="20px">
+			<div fxLayout="row" fxLayoutGap="20px">
+				<mat-form-field fxFlex="50">
+					<input type="text" matInput placeholder="{{'HELP_TEXT' | translate}}" [(ngModel)]="field.helpText">
+				</mat-form-field>
+				<mat-form-field fxFlex="50">
+					<input matInput type="tel" placeholder="{{'DEFAULT_VALUE' | translate}}" [(ngModel)]="field.defaultValue">
+				</mat-form-field>
+			</div>
+			<div fxLayout="row">
+				<mat-form-field fxFlex>
+					<mat-chip-list #chipList>
+						<mat-chip *ngFor="let value of field.picklistValues; let i = index;" [selectable]="true" [removable]="true"
+							(removed)="field.picklistValues.splice(i, 1)">
+							{{value}}
+							<mat-icon matChipRemove>cancel</mat-icon>
+						</mat-chip>
+						<input placeholder="{{'ENTER_LIST_OPTIONS' | translate}}" [matChipInputFor]="chipList"
+							[matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
+							(matChipInputTokenEnd)="addPicklistOption($event)">
+					</mat-chip-list>
+				</mat-form-field>
+			</div>
+			<div fxLayout="row" fxLayout.lt-lg="column" fxLayoutGap="20px">
+				<mat-checkbox fxFlex="50" [labelPosition]="'after'" [(ngModel)]="field.picklistDisplayAlphabetically"
+					(change)="optionAlphabetizeChange()">
+					{{'DISPLAY_VALUES_ALPHABETICALLY' | translate}}
+				</mat-checkbox>
+				<mat-checkbox fxFlex=" 50" [labelPosition]="'after'" [(ngModel)]="field.picklistUseFirstValue" (change)="firstValueDefaultChange()">
+					{{'USE_FIRST_VALUE_AS_DEFAULT' | translate}}
+				</mat-checkbox>
+			</div>
+			<div fxLayout=" row" fxLayout.lt-lg="column" fxLayoutGap="20px">
+				<mat-checkbox fxFlex="50" [labelPosition]="'after'" [(ngModel)]="field.visibility">
+					{{'HIDDEN' | translate}}
+				</mat-checkbox>
+				<mat-checkbox fxFlex="50" [labelPosition]="'after'" [(ngModel)]="field.required">
+					{{'REQUIRED_FIELD' | translate}}
+				</mat-checkbox>
+			</div>
+		</div>
+
+		<!--RELATIONSHIP-->
+		<div fxLayout="column" *ngSwitchCase="'Relationship'" style="margin-bottom: 10px;">
+			<div fxLayout="row">
+				<div fxLayout="column" fxLayoutAlign="start" fxFlex="33">
+					<mat-form-field fxFlex="1 1 auto">
+						<input disabled matInput placeholder="Current Module" [(ngModel)]=moduleName>
+					</mat-form-field>
+					<mat-form-field>
+						<input disabled matInput placeholder="Display label" [(ngModel)]=field.DISPLAY_LABEL>
+					</mat-form-field>
+					<mat-form-field>
+						<input disabled matInput placeholder="System label" [(ngModel)]=field.NAME>
+					</mat-form-field>
+					<mat-form-field
+						*ngIf="field.relationshipType==='One to One' || field.relationshipType==='Many to Many' || field.relationshipType==='One to Many'"
+						fxFlex="30">
+						<mat-select placeholder="Primary display field of {{relationshipObj.MODULE.NAME}} module"
+							[(ngModel)]="field.primaryDisplayField" [disabled]="relationshipObj.MODULE == ''">
+							<mat-option *ngFor="let field of selectedModuleFields" [value]="field.FIELD_ID">
+								{{field.DISPLAY_LABEL}}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+					<div fxLayoutAlign="start" fxLayout="column" fxLayoutGap="20px">
+						<mat-form-field
+							*ngIf="field.relationshipType==='One to One' || field.relationshipType==='Many to Many' || field.relationshipType==='Many to One'">
+							<input type="text" matInput tabindex="1" placeholder="{{'HELP_TEXT' | translate}}" [(ngModel)]="field.helpText">
+						</mat-form-field>
+						<mat-checkbox fxFlex="30" [labelPosition]="'after'" [(ngModel)]="field.notEditable">
+							{{'NOT_EDITABLE' | translate}}
+						</mat-checkbox>
+						<mat-checkbox fxFlex="30" [labelPosition]="'after'" [(ngModel)]="field.required">
+							{{'REQUIRED_FIELD' | translate}}
+						</mat-checkbox>
+					</div>
+				</div>
+				<div fxLayoutAlign="center center" fxFlex="27">
+					<mat-radio-group fxFlex="30" fxLayout="column" fxLayoutGap="10px" [(ngModel)]="field.relationshipType"
+						(ngModelChange)="changeType()">
+						<mat-radio-button *ngFor="let relationship of relationshipTypes" [value]="relationship.TYPE">
+							{{relationship.DISPLAY}}
+						</mat-radio-button>
+					</mat-radio-group>
+				</div>
+				<div fxLayout="column" fxLayoutAlign="start start" fxFlex="40" style="margin-left: 15%;">
+					<mat-form-field style="width: 100%;">
+						<mat-select placeholder="{{'MODULE_REALATE_TO' | translate}}" [(ngModel)]="relationshipObj.MODULE"
+							(ngModelChange)="moduleChange()">
+							<mat-option *ngFor="let module of modules" [value]="module" [disabled]="module.MODULE_ID == moduleId">
+								{{module.NAME}}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+					<mat-form-field style="width: 100%;">
+						<input type="text" matInput placeholder="Display label" [(ngModel)]="relationshipObj.DISPLAY_LABEL"
+							(keyup)="updateRelationFieldName()">
+					</mat-form-field>
+					<mat-form-field style="width: 100%;">
+						<input matInput type="text" placeholder="System label" [(ngModel)]="relationshipObj.NAME">
+					</mat-form-field>
+					<mat-form-field
+						*ngIf="field.relationshipType==='One to One'|| field.relationshipType==='Many to Many'|| field.relationshipType==='One to Many'"
+						style="width: 100%;">
+						<mat-select placeholder="{{'PRIMARY_DISPLAY_FIELD' | translate}}" [(ngModel)]="relationshipObj.PRIMARY_DISPLAY_FIELD">
+							<mat-option *ngFor="let field of parentModuleFields" [value]="field.FIELD_ID">
+								{{field.DISPLAY_LABEL}}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+					<div fxLayoutAlign="start" fxLayout="column" fxLayoutGap="20px">
+						<mat-checkbox [labelPosition]="'after'" [(ngModel)]="relationshipObj.REQUIRED">
+							{{'REQUIRED_FIELD' | translate}}
+						</mat-checkbox>
+						<mat-checkbox *ngIf="field.relationshipType==='One to One'" [labelPosition]="'after'"
+							(change)="enableInheritance($event.checked)">
+							{{'ENABLE_INHERITANCE' | translate}}
+						</mat-checkbox>
+					</div>
+				</div>
+			</div>
+			<div *ngIf="showInheritance && field.relationshipType==='One to One'">
+				<div style="margin-bottom: 0px;" fxLayoutAlign="center center">
+					<label class="mat-h1" style="padding-top: 15px;">{{'INHERITANCE_MAPPING' | translate}}</label>
+					<button mat-icon-button (click)="addInheritanceOption()" type="button">
+						<mat-icon>add_circle</mat-icon>
+					</button>
+				</div>
+				<form [formGroup]="inheritanceFormGroup">
+					<div style="max-height: 200px;">
+						<div formArrayName="inheritances" fxLayoutAlign="center center"
+							*ngFor=" let inheritance of inheritanceFormData.controls; let i = index">
+							<div [formGroupName]="i" style="height: 65px" fxLayoutAlign="space-between" fxFlex fxLayoutGap="20px" fxFlex fxLayout="row">
+								<mat-form-field fxFlex="50" appearance="outline">
+									<mat-label>Field from {{parentModuleName}} module</mat-label>
+									<mat-select [value]="inheritance.value.FIELD_FROM_PARENT_MODULE" (selectionChange)="filterChildModuleFields(i,$event)"
+										formControlName="FIELD_FROM_PARENT_MODULE">
+										<mat-option *ngFor="let parentField of parentFields" [value]="parentField.FIELD_ID">
+											{{parentField.DISPLAY_LABEL}}
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+								<mat-form-field fxFlex="50" appearance="outline">
+									<mat-label>Field from {{childModuleName}} module</mat-label>
+									<mat-select [value]="inheritance.value.FIELD_FROM_CHILD_MODULE" formControlName="FIELD_FROM_CHILD_MODULE">
+										<mat-option *ngFor="let childField of originalModuleFields[i]" [value]="childField.FIELD_ID">
+											{{childField.DISPLAY_LABEL}}
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+								<div fxLayoutAlign="center center">
+									<button mat-icon-button (click)="removeInheritanceOption(i)" type="button">
+										<mat-icon>remove_circle</mat-icon>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<!-- AGGREGATE FIELD-->
+		<div *ngSwitchCase="'Aggregate'" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="20px">
+			<div fxLayout="row" fxLayoutAlign="center center" style="width: 75%;" fxLayoutGap="20px">
+				<mat-label class="mat-caption" fxFlex *ngIf="oneToManyFields.length <= 0">{{'CREATE_ONE_TO_MANY_FIELD' |
+					translate}}
+				</mat-label>
+				<mat-form-field fxFlex *ngIf="oneToManyFields.length > 0">
+					<mat-select (selectionChange)="getFieldsForModule()" placeholder="{{'FIELD_FOR_AGGREGATION' | translate}}"
+						[(ngModel)]="field.AGGREGATION_FIELD">
+						<mat-option *ngFor="let oneToManyField of oneToManyFields" [value]="oneToManyField.FIELD_ID">
+							{{oneToManyField.DISPLAY_LABEL}}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+
+				<mat-form-field fxFlex>
+					<mat-select placeholder="{{'AGGREGATION_TYPE' | translate}}" [(ngModel)]="field.AGGREGATION_TYPE">
+						<mat-option *ngFor="let type of aggregationType" [value]="type">
+							{{type}}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+				<mat-label class="mat-caption" fxFlex *ngIf="aggregationRelatedFields.length <= 0">
+					{{'CHOOSE_FIELD_FOR_AGGREGATE' | translate}}
+				</mat-label>
+				<mat-form-field fxFlex *ngIf="aggregationRelatedFields.length > 0">
+					<mat-select placeholder="{{'FIELD_TO_AGGREGATE' | translate}}" [(ngModel)]="field.AGGREGATION_RELATED_FIELD">
+						<mat-option *ngFor="let aggregationRelatedField of aggregationRelatedFields" [value]="aggregationRelatedField.FIELD_ID">
+							{{aggregationRelatedField.DISPLAY_LABEL}}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</div>
+			<div fxLayout="row" fxLayoutGap="20px" style="width: 75%;">
+				<mat-form-field fxFlex="30">
+					<input type="text" matInput tabindex="1" placeholder="{{'PREFIX' | translate}}" [(ngModel)]="field.PREFIX">
+				</mat-form-field>
+				<mat-form-field fxFlex="30">
+					<input type="text" matInput tabindex="1" placeholder="{{'SUFFIX' | translate}}" [(ngModel)]="field.SUFFIX">
+				</mat-form-field>
+				<mat-form-field fxFlex="40">
+					<mat-select placeholder="{{'NUMERIC_FORMAT' | translate}}" [(ngModel)]="field.NUMERIC_FORMAT">
+						<mat-option *ngFor="let numericFormat of numericFormats" [value]="numericFormat">
+							{{numericFormat}}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</div>
+			<div fxLayout="row" fxLayoutGap="20px" style="width: 75%;" fxLayoutAlign="start center">
+				<mat-form-field>
+					<input type="text" matInput tabindex="1" placeholder="{{'HELP_TEXT' | translate}}" [(ngModel)]="field.helpText">
+				</mat-form-field>
+				<mat-checkbox fxFlex="30" [disabled]="true" [labelPosition]="'after'" [(ngModel)]="field.notEditable">
+					{{'NOT_EDITABLE' | translate}}
+				</mat-checkbox>
+				<div *ngIf="field.AGGREGATION_FIELD && field.AGGREGATION_RELATED_FIELD" fxLayout="row" style="margin-bottom: 24px">
+					<button mat-raised-button color="primary" (click)="openConditionsDialog()">
+						{{ 'CONDITIONS' | translate }}
+					</button>
+				</div>
+			</div>
+		</div>
+		<!--END-->
+
+		<!--TEXT-->
+		<div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="20px" *ngSwitchCase="'Text'">
+			<div fxLayout="column" fxLayoutGap="20px">
+				<mat-form-field>
+					<input type="text" matInput tabindex="1" placeholder="{{'HELP_TEXT' | translate}}" [(ngModel)]="field.helpText">
+				</mat-form-field>
+				<div fxLayout="row" fxLayoutAlign="start center">
+					<mat-checkbox [labelPosition]="'after'" tabindex="3" [(ngModel)]="field.visibility">
+						{{'HIDDEN' | translate}}
+					</mat-checkbox>
+					<mat-icon style="transform: scale(0.7);" matTooltip="{{'HIDDEN_FIELD_HINT' | translate}}">
+						help_outline</mat-icon>
+				</div>
+			</div>
+			<div fxLayout="column" fxLayoutGap="20px">
+				<mat-form-field>
+					<input type="text" matInput tabindex="2" placeholder="{{'DEFAULT_VALUE' | translate}}" [(ngModel)]="field.defaultValue">
+				</mat-form-field>
+				<mat-checkbox [labelPosition]="'after'" tabindex="4" [(ngModel)]="field.required">
+					{{'REQUIRED_FIELD' | translate}}
+				</mat-checkbox>
+			</div>
+			<div fxLayout="column" fxLayoutGap="20px">
+				<mat-form-field>
+					<input type="number" matInput tabindex="3" placeholder="{{'MAX_LENGTH' | translate}}" [(ngModel)]="field.length">
+				</mat-form-field>
+			</div>
+		</div>
+
+		<!--TEXTAREA-->
+		<div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px" *ngSwitchCase="'Text Area'">
+			<div fxLayout="column" fxLayoutGap="20px">
+				<mat-form-field>
+					<input type="text" matInput tabindex="1" placeholder="{{'HELP_TEXT' | translate}}" [(ngModel)]="field.helpText">
+				</mat-form-field>
+				<div fxLayout="row" fxLayoutAlign="start center">
+					<mat-checkbox [labelPosition]="'after'" tabindex="3" [(ngModel)]="field.visibility">
+						{{'HIDDEN' | translate}}
+					</mat-checkbox>
+					<mat-icon style="transform: scale(0.7);" matTooltip="{{'HIDDEN_FIELD_HINT' | translate}}">
+						help_outline</mat-icon>
+				</div>
+			</div>
+			<div fxLayout="column" fxLayoutGap="20px">
+				<mat-form-field>
+					<input matInput type="text" placeholder="{{'DEFAULT_VALUE' | translate}}" tabindex="2" [(ngModel)]="field.defaultValue">
+				</mat-form-field>
+				<mat-checkbox [labelPosition]="'after'" tabindex="4" [(ngModel)]="field.required">
+					{{'REQUIRED_FIELD' | translate}}
+				</mat-checkbox>
+			</div>
+		</div>
+
+		<!--TIME-->
+		<div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px" *ngSwitchCase="'Time'">
+			<div fxLayout="column" fxLayoutGap="20px">
+				<mat-form-field>
+					<input type="text" matInput tabindex="1" placeholder="{{'HELP_TEXT' | translate}}" [(ngModel)]="field.helpText">
+				</mat-form-field>
+				<div>
+					<mat-checkbox [labelPosition]="'after'" tabindex="3" [(ngModel)]="field.visibility">
+						{{'HIDDEN' | translate}}
+					</mat-checkbox>
+					<mat-icon style="transform: scale(0.7);" matTooltip="{{'HIDDEN_FIELD_HINT' | translate}}">
+						help_outline</mat-icon>
+				</div>
+			</div>
+			<div fxLayout="column" fxLayoutGap="20px">
+				<mat-form-field>
+					<input placeholder="{{ 'DEFAULT_VALUE' | translate}}" matInput [owlDateTimeTrigger]="dt" [owlDateTime]="dt"
+						[(ngModel)]="field.defaultValue" (keypress)="false">
+					<owl-date-time [pickerType]="'timer'" #dt></owl-date-time>
+				</mat-form-field>
+				<mat-checkbox [labelPosition]="'after'" tabindex="4" [(ngModel)]="field.required">
+					{{'REQUIRED_FIELD' | translate}}
+				</mat-checkbox>
+			</div>
+		</div>
+
+		<!-- EMAIL -->
+		<div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px" *ngSwitchCase="'Email'">
+			<div fxLayout="column" fxLayoutGap="20px">
+				<mat-form-field>
+					<input type="text" matInput tabindex="1" placeholder="{{'HELP_TEXT' | translate}}" [(ngModel)]="field.helpText">
+				</mat-form-field>
+				<div fxLayout="row" fxLayoutAlign="start center">
+					<mat-checkbox [labelPosition]="'after'" tabindex="3" [(ngModel)]="field.visibility">
+						{{'HIDDEN' | translate}}
+					</mat-checkbox>
+					<mat-icon style="transform: scale(0.7);" matTooltip="{{'HIDDEN_FIELD_HINT' | translate}}">
+						help_outline</mat-icon>
+				</div>
+			</div>
+			<div fxLayout="column" fxLayoutGap="20px">
+				<mat-form-field>
+					<input matInput type="email" placeholder="{{'DEFAULT_VALUE' | translate}}" tabindex="2" [(ngModel)]="field.defaultValue"
+						pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+					<mat-error>{{'EMAIL_MUST_BE_VALID' | translate}}</mat-error>
+				</mat-form-field>
+				<mat-checkbox [labelPosition]="'after'" tabindex="4" [(ngModel)]="field.required">
+					{{'REQUIRED_FIELD' | translate}}
+				</mat-checkbox>
+			</div>
+		</div>
+
+		<!--List Text-->
+		<div fxLayout="column" fxLayoutAlign="center center" *ngSwitchCase="'List Text'">
+			<div fxLayout="row" fxFlexFill>
+				<mat-form-field fxFlex>
+					<input type="text" matInput placeholder="{{'HELP_TEXT' | translate}}" [(ngModel)]="field.helpText">
+				</mat-form-field>
+			</div>
+			<div fxLayout="row" fxLayoutGap="20px" fxFlexFill>
+				<mat-checkbox [labelPosition]="'after'" [(ngModel)]="field.isListTextUnique" fxFlex>
+					{{'ITEMS_IN_LIST_MUST_UNIQUE' | translate}}
+				</mat-checkbox>
+				<mat-checkbox [labelPosition]="'after'" [(ngModel)]="field.required" fxFlex>
+					{{'REQUIRED_FIELD' | translate}}
+				</mat-checkbox>
+			</div>
+		</div>
+
+		<!--Phone-->
+		<div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="center center" *ngSwitchCase="'Phone'" fxLayoutGap="20px">
+			<div fxLayout="column" fxLayoutGap="20px">
+				<mat-form-field>
+					<input type="text" matInput tabindex="1" placeholder="{{'HELP_TEXT' | translate}}" [(ngModel)]="field.helpText">
+				</mat-form-field>
+				<mat-checkbox [labelPosition]="'after'" tabindex="3" [(ngModel)]="field.visibility">
+					{{'HIDDEN' | translate}}
+				</mat-checkbox>
+			</div>
+			<div fxLayout="column" fxLayoutGap="20px">
+				<div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
+					<mat-form-field>
+						<mat-select [(ngModel)]="defaultCountry" placeholder="{{'DEFAULT_VALUE_COUNTRY' | translate}}">
+							<mat-option *ngFor="let country of renderLayoutService.countries" [value]="country">
+								<img [ngStyle]="{'margin-right': '10px'}" aria-hidden [src]="'../../assets/images/country-flags/' + country.COUNTRY_FLAG"
+									height="25">
+								<span>{{country.COUNTRY_NAME}}</span> | <small>{{country.COUNTRY_DIAL_CODE}}</small>
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+					<mat-form-field>
+						<input matInput type="number" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+							placeholder="{{'DEFAULT_VALUE_PHONE_NUMBER' | translate}}" [(ngModel)]="defaultPhoneNumber">
+					</mat-form-field>
+				</div>
+				<mat-checkbox [labelPosition]="'after'" tabindex="4" [(ngModel)]="field.required">
+					{{'REQUIRED_FIELD' | translate}}
+				</mat-checkbox>
+			</div>
+		</div>
+
+		<!-- Formula -->
+		<div fxLayout="column" *ngSwitchCase="'Formula'">
+			<form [formGroup]="fieldSelectFormGroup" (ngSubmit)="save()">
+				<div fxLayout="row">
+					<mat-form-field fxFlex="100">
+						<textarea matInput cdkTextareaAutosize #myTextArea (click)="onClickOfTextArea(myTextArea)" cdkAutosizeMinRows="5"
+							placeholder="Create a Formula *" formControlName="formulaString" (keydown)="onkeydownOfFormula($event)"> </textarea>
+					</mat-form-field>
+				</div>
+				<div fxLayout="row wrap">
+					<div *ngFor="let field of formulaFields; index as i">
+						<button
+							*ngIf="field.DATA_TYPE.DISPLAY  !== 'Relationship' && field.RELATIONSHIP_TYPE !== 'One to Many'  || isDefaultField(field)"
+							type="button" style="margin-top:5px; margin-right:5px" mat-raised-button color="primary"
+							(click)="insertInToBody(field)">{{field.DISPLAY_LABEL}}
+						</button>
+
+						<button
+							*ngIf="field.DATA_TYPE.DISPLAY  === 'Relationship' && field.RELATIONSHIP_TYPE !== 'One to Many' && field.RELATIONSHIP_TYPE !== 'Many to Many' && !isDefaultField(field)"
+							type="button" style="margin-top:5px; margin-right:5px" mat-raised-button color="primary"
+							[matMenuTriggerFor]="relationshipVars">{{field.DISPLAY_LABEL}}</button>
+						<mat-menu #relationshipVars="matMenu">
+							<ng-container *ngFor="let relField of relatedFields[field.MODULE]; index as j">
+								<button *ngIf="field.DATA_TYPE.DISPLAY !== 'Relationship'  || isDefaultField(relField)" mat-menu-item
+									(click)="concatenateVariables(field, relField)">{{relField.DISPLAY_LABEL}}</button>
+								<button
+									*ngIf="relField.DATA_TYPE.DISPLAY === 'Relationship' && relField.RELATIONSHIP_TYPE !== 'Many to Many' && relField.RELATIONSHIP_TYPE !== 'One to Many' && !isDefaultField(relField)"
+									mat-menu-item [matMenuTriggerFor]="subRelationshipVars">{{relField.DISPLAY_LABEL}}</button>
+								<mat-menu #subRelationshipVars="matMenu">
+									<ng-container *ngFor="let levelTwoRelField of relatedFields[relField.MODULE]; index as k">
+										<button *ngIf="levelTwoRelField.DATA_TYPE.DISPLAY !== 'Relationship' || isDefaultField(levelTwoRelField)" mat-menu-item
+											(click)="concatenateVariables(field, relField, levelTwoRelField)">{{levelTwoRelField.DISPLAY_LABEL}}</button>
+										<button
+											*ngIf="levelTwoRelField.DATA_TYPE.DISPLAY === 'Relationship' && levelTwoRelField.RELATIONSHIP_TYPE !== 'Many to Many' && !isDefaultField(levelTwoRelField)"
+											mat-menu-item [matMenuTriggerFor]="subSubRelationshipVars">{{levelTwoRelField.DISPLAY_LABEL}}</button>
+										<mat-menu #subSubRelationshipVars="matMenu">
+											<ng-container *ngFor="let levelThreeRelField of relatedFields[levelTwoRelField.MODULE]; index as l">
+												<button *ngIf="levelThreeRelField.DATA_TYPE.DISPLAY  !== 'Relationship'" mat-menu-item
+													(click)="concatenateVariables(field, relField, levelTwoRelField, levelThreeRelField)">{{levelThreeRelField.DISPLAY_LABEL}}</button>
+											</ng-container>
+										</mat-menu>
+									</ng-container>
+								</mat-menu>
+							</ng-container>
+						</mat-menu>
+					</div>
+				</div>
+
+				<mat-divider style="margin-top: 10px" fxLayout="row wrap"></mat-divider>
+				<div style="padding: 20px 10px 0 10px;" fxLayout="row wrap" fxLayoutGap="10px grid">
+					<mat-chip-list>
+						<mat-chip class="mat-h4" *ngFor="let field of formulaOperators" (click)="insertInToBody(field)" color="primary" selected>
+							{{field.DISPLAY_LABEL}}</mat-chip>
+					</mat-chip-list>
+				</div>
+				<mat-divider style="margin-top: 10px" fxLayout="row wrap"></mat-divider>
+				<div style="padding: 20px 10px 0 10px;" fxLayout="row wrap" fxLayoutGap="10px grid">
+					<mat-chip-list>
+						<mat-chip class="mat-h4" *ngFor="let field of formulaSpecialOperators" (click)="insertInToBody(field)" color="primary" selected>
+							{{field.DISPLAY_LABEL}}</mat-chip>
+					</mat-chip-list>
+				</div>
+			</form>
+			<div fxLayout="row" fxLayoutGap="50px" fxFlex="32">
+				<mat-form-field fxFlex="32">
+					<input type="text" matInput tabindex="1" placeholder="{{'PREFIX' | translate}}" [(ngModel)]="field.PREFIX">
+				</mat-form-field>
+				<mat-form-field fxFlex="32">
+					<input type="text" matInput tabindex="1" placeholder="{{'SUFFIX' | translate}}" [(ngModel)]="field.SUFFIX">
+				</mat-form-field>
+				<mat-form-field fxFlex="32">
+					<mat-select placeholder="{{'NUMERIC_FORMAT' | translate}}" [(ngModel)]="field.NUMERIC_FORMAT">
+						<mat-option *ngFor="let numericFormat of numericFormats" [value]="numericFormat">
+							{{numericFormat}}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</div>
+		</div>
+
+		<!-- Currency Exchange -->
+		<div fxLayout="column" fxLayoutGap="20px" *ngSwitchCase="'Currency Exchange'">
+			<div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="20px">
+				<mat-form-field fxFlex="25">
+					<mat-select placeholder="{{'TO_CURRENCY' | translate}}" [(ngModel)]="field.TO_CURRENCY">
+						<mat-option *ngFor="let field of currencyExchangefields" [value]="field.FIELD_ID">
+							{{field.DISPLAY_LABEL}}
+						</mat-option>
+					</mat-select>
+					<mat-error>{{'REQUIRED_FIELD' | translate}}</mat-error>
+				</mat-form-field>
+				<mat-form-field fxFlex="25">
+					<mat-select placeholder="{{'FROM_CURRENCY' | translate}}" [(ngModel)]="field.FROM_CURRENCY">
+						<mat-option *ngFor="let field of currencyExchangefields" [value]="field.FIELD_ID">
+							{{field.DISPLAY_LABEL}}
+						</mat-option>
+					</mat-select>
+					<mat-error>{{'REQUIRED_FIELD' | translate}}</mat-error>
+				</mat-form-field>
+				<mat-form-field fxFlex="25">
+					<mat-select placeholder="{{'DATE_INCURRED' | translate}}" [(ngModel)]="field.DATE_INCURRED">
+						<mat-option *ngFor="let field of dateFields" [value]="field.FIELD_ID">
+							{{field.DISPLAY_LABEL}}
+						</mat-option>
+					</mat-select>
+					<mat-error>{{'REQUIRED_FIELD' | translate}}</mat-error>
+				</mat-form-field>
+			</div>
+			<div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="20px">
+				<mat-form-field fxFlex="33">
+					<input type="text" matInput tabindex="1" placeholder="{{'HELP_TEXT' | translate}}" [(ngModel)]="field.helpText">
+				</mat-form-field>
+				<mat-form-field fxFlex="33">
+					<input type="text" matInput tabindex="1" placeholder="{{'PREFIX' | translate}}" [(ngModel)]="field.PREFIX">
+				</mat-form-field>
+				<div fxLayoutAlign="center center">
+					<mat-checkbox [labelPosition]="'after'" tabindex="3" [(ngModel)]="field.visibility">
+						{{'HIDDEN' | translate}}
+					</mat-checkbox>
+					<mat-icon style="transform: scale(0.7);" matTooltip="{{'HIDDEN_FIELD_HINT' | translate}}">
+						help_outline</mat-icon>
+				</div>
+			</div>
+			<div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="20px">
+				<mat-form-field fxFlex="32">
+					<input matInput type="number" placeholder="{{'DEFAULT_VALUE' | translate}}" [(ngModel)]="field.defaultValue">
+				</mat-form-field>
+				<mat-form-field fxFlex="32">
+					<input type="text" matInput tabindex="1" placeholder="{{'SUFFIX' | translate}}" [(ngModel)]="field.SUFFIX">
+				</mat-form-field>
+				<div fxLayoutAlign="center center">
+					<mat-checkbox [labelPosition]="'after'" tabindex="4" [(ngModel)]="field.required">
+						{{'REQUIRED_FIELD' | translate}}
+					</mat-checkbox>
+				</div>
+			</div>
+		</div>
+		<!--Address-->
+		<div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px" *ngSwitchCase="'Address'">
+			<div fxLayout="column" fxLayoutGap="20px">
+				<mat-form-field>
+					<input type="text" matInput tabindex="1" placeholder="{{'HELP_TEXT' | translate}}" [(ngModel)]="field.helpText">
+				</mat-form-field>
+			</div>
+			<div fxLayout="column" fxLayoutGap="20px">
+				<mat-checkbox [labelPosition]="'after'" tabindex="4" [(ngModel)]="field.required">
+					{{'REQUIRED_FIELD' | translate}}
+				</mat-checkbox>
+			</div>
+		</div>
+
+		<!--Chronometer-->
+		<div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px" *ngSwitchCase="'Chronometer'">
+			<div fxLayout="column" fxLayoutGap="20px">
+				<mat-form-field>
+					<input type="text" matInput tabindex="1" placeholder="{{'HELP_TEXT' | translate}}" [(ngModel)]="field.helpText">
+				</mat-form-field>
+				<div fxLayout="row" fxLayoutAlign="start center">
+					<mat-checkbox [labelPosition]="'after'" tabindex="3" [(ngModel)]="field.visibility">
+						{{'HIDDEN' | translate}}
+					</mat-checkbox>
+					<mat-icon style="transform: scale(0.7);" matTooltip="{{'HIDDEN_FIELD_HINT' | translate}}">
+						help_outline</mat-icon>
+				</div>
+			</div>
+			<div fxLayout="column" fxLayoutGap="20px">
+				<div fxLayout="row" fxLayoutAlign="start center">
+					<mat-form-field>
+						<input matInput type="text" placeholder="{{'DEFAULT_VALUE' | translate}}" tabindex="2" [(ngModel)]="field.defaultValue">
+					</mat-form-field>
+					<mat-icon style="transform: scale(0.7);" matTooltip="{{'SAMPLE_CHRONOMETER_HINT' | translate}}">
+						help_outline</mat-icon>
+				</div>
+				<mat-checkbox [labelPosition]="'after'" tabindex="4" [(ngModel)]="field.required">
+					{{'REQUIRED_FIELD' | translate}}
+				</mat-checkbox>
+			</div>
+		</div>
+
+		<!--Currency-->
+		<div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="20px" *ngSwitchCase="'Currency'">
+			<div fxLayout="column" fxLayoutGap="20px">
+				<mat-form-field>
+					<input type="text" matInput tabindex="1" placeholder="{{'HELP_TEXT' | translate}}" [(ngModel)]="field.helpText">
+				</mat-form-field>
+				<mat-form-field>
+					<input type="text" matInput tabindex="1" placeholder="{{'PREFIX' | translate}}" [(ngModel)]="field.PREFIX">
+				</mat-form-field>
+				<div fxLayout="row" fxLayoutAlign="start center">
+					<mat-checkbox [labelPosition]="'after'" tabindex="3" [(ngModel)]="field.visibility">
+						{{'HIDDEN' | translate}}
+					</mat-checkbox>
+					<mat-icon style="transform: scale(0.7);" matTooltip="{{'HIDDEN_FIELD_HINT' | translate}}">
+						help_outline</mat-icon>
+				</div>
+			</div>
+			<div fxLayout="column" fxLayoutGap="20px">
+				<div fxLayout="row" fxLayoutAlign="start center">
+					<mat-form-field>
+						<input matInput type="text" placeholder="{{'DEFAULT_VALUE' | translate}}" tabindex="2" [(ngModel)]="field.defaultValue">
+					</mat-form-field>
+					<mat-icon style="transform: scale(0.7);" matTooltip="{{'DEFAULT_CURRENCY_HINT' | translate}}">
+						help_outline</mat-icon>
+				</div>
+				<mat-form-field>
+					<input type="text" matInput tabindex="1" placeholder="{{'SUFFIX' | translate}}" [(ngModel)]="field.SUFFIX">
+				</mat-form-field>
+				<mat-checkbox [labelPosition]="'after'" tabindex="4" [(ngModel)]="field.required">
+					{{'REQUIRED_FIELD' | translate}}
+				</mat-checkbox>
+			</div>
+			<div fxLayout="column" fxLayoutGap="20px">
+				<mat-form-field>
+					<mat-select placeholder="{{'NUMERIC_FORMAT' | translate}}" [(ngModel)]="field.NUMERIC_FORMAT">
+						<mat-option *ngFor="let numericFormat of numericFormats" [value]="numericFormat">
+							{{numericFormat}}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</div>
+		</div>
+		<!-- BUTTON -->
+		<div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="20px" *ngSwitchCase="'Button'">
+			<div fxLayout="column" fxLayoutGap="20px">
+				<mat-form-field>
+					<input type="text" matInput tabindex="1" placeholder="{{'HELP_TEXT' | translate}}" [(ngModel)]="field.helpText">
+				</mat-form-field>
+			</div>
+
+			<div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">
+				<mat-form-field *ngIf="workflows.length > 0">
+					<mat-select placeholder="{{'WORKFLOWS' | translate}}" [(ngModel)]="field.workflow">
+						<mat-option *ngFor="let workflow of workflows " [value]="workflow.WORKFLOW_ID">
+							{{workflow.NAME}}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+				<a mat-button (click)="createnew()">Create new workflow</a>
+			</div>
+		</div>
+
+		<!-- Password -->
+		<div fxLayout="column" fxLayoutGap="20px" *ngSwitchCase="'Password'">
+			<div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
+				<mat-form-field fxFlex>
+					<input autocomplete="off" type="text" matInput tabindex="1" placeholder="{{'HELP_TEXT' | translate}}"
+						[(ngModel)]="field.helpText">
+				</mat-form-field>
+			</div>
+			<div fxLayout="row" fxLayoutGap="20px">
+				<div fxLayout="row" fxLayoutGap="5px" fxFlex>
+					<mat-checkbox [labelPosition]="'after'" tabindex="3" [(ngModel)]="field.visibility">
+						{{'HIDDEN' | translate}}
+					</mat-checkbox>
+					<mat-icon style="transform: scale(0.7);" matTooltip="{{'HIDDEN_FIELD_HINT' | translate}}">
+						help_outline</mat-icon>
+				</div>
+				<mat-checkbox [labelPosition]="'after'" tabindex="4" [(ngModel)]="field.required" fxFlex>
+					{{'REQUIRED_FIELD' | translate}}
+				</mat-checkbox>
+			</div>
+		</div>
+
+		<!--URL, PHONE, DISCUSSION-->
+		<div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px" *ngSwitchDefault>
+			<div fxLayout="column" fxLayoutGap="20px">
+				<mat-form-field>
+					<input type="text" matInput tabindex="1" placeholder="{{'HELP_TEXT' | translate}}" [(ngModel)]="field.helpText">
+				</mat-form-field>
+				<div fxLayout="row" fxLayoutAlign="start center">
+					<mat-checkbox [labelPosition]="'after'" tabindex="3" [(ngModel)]="field.visibility">
+						{{'HIDDEN' | translate}}
+					</mat-checkbox>
+					<mat-icon style="transform: scale(0.7);" matTooltip="{{'HIDDEN_FIELD_HINT' | translate}}">
+						help_outline</mat-icon>
+				</div>
+			</div>
+			<div fxLayout="column" fxLayoutGap="20px">
+				<mat-form-field>
+					<input matInput type="text" placeholder="{{'DEFAULT_VALUE' | translate}}" tabindex="2" [(ngModel)]="field.defaultValue">
+				</mat-form-field>
+				<mat-checkbox [labelPosition]="'after'" tabindex="4" [(ngModel)]="field.required">
+					{{'REQUIRED_FIELD' | translate}}
+				</mat-checkbox>
+			</div>
+		</div>
+
+		<!--APPROVAL-->
+		<div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px" *ngSwitchCase="'Approval'">
+			<div fxLayout="column" fxLayoutGap="20px">
+				<mat-form-field>
+					<input type="text" matInput tabindex="1" placeholder="{{'HELP_TEXT' | translate}}" [(ngModel)]="field.helpText">
+				</mat-form-field>
+				<div fxLayout="row" fxLayoutAlign="start center">
+					<mat-checkbox [labelPosition]="'after'" tabindex="3" [(ngModel)]="field.visibility">
+						{{'HIDDEN' | translate}}
+					</mat-checkbox>
+					<mat-icon style="transform: scale(0.7);" matTooltip="{{'HIDDEN_FIELD_HINT' | translate}}">
+						help_outline</mat-icon>
+				</div>
+			</div>
+			<div fxLayout="column" fxLayoutGap="20px">
+				<mat-form-field>
+					<input matInput type="text" placeholder="{{'DEFAULT_VALUE' | translate}}" tabindex="2" [(ngModel)]="field.defaultValue">
+				</mat-form-field>
+				<mat-checkbox [labelPosition]="'after'" tabindex="4" [(ngModel)]="field.required">
+					{{'REQUIRED_FIELD' | translate}}
+				</mat-checkbox>
+			</div>
+		</div>
+	</ng-container>
+</ng-template>

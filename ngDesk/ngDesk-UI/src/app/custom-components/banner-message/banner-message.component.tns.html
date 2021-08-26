@@ -1,0 +1,34 @@
+<StackLayout>
+  <Label text="banner-message works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<div fxLayout="column" fxFlexOffset="20" fxFlex="60" class="banner-message-component pad10"
+    fxLayoutGap="10px">
+  <div fxLayout="row" fxLayoutAlign="space-between center" *ngFor="let successNotification of bannerMessageService.successNotifications; let i = index"
+      [@fadeInOut] style="background: #D2E7C8; color: #538B2A; border-radius: 5px;">
+    <div fxFlexOffset="1" fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="center center">
+      <mat-icon>check_circle</mat-icon>
+      <label class="mat-body">{{successNotification.message}}</label>
+    </div>
+    <button mat-icon-button (click)="bannerMessageService.successNotifications.splice(i, 1)">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="space-between center" *ngFor="let errorNotification of bannerMessageService.errorNotifications; let i = index"
+      [@fadeInOut] style="background: #f8d7da; color: #721c24; border-radius: 5px;">
+    <div fxFlexOffset="1" fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="center center">
+      <mat-icon>error</mat-icon>
+      <label class="mat-body" *ngIf="errorNotification.message">{{errorNotification.message}}</label>
+      <label class="mat-body" *ngIf="!errorNotification.message">{{'INTERNAL_SERVER_ERROR' | translate}}</label>
+    </div>
+    <button mat-icon-button (click)="bannerMessageService.errorNotifications.splice(i, 1)">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+</div>
+-->

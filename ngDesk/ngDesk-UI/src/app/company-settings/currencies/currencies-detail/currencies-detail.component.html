@@ -1,0 +1,71 @@
+<app-toolbar></app-toolbar>
+<div fxLayout="column" fxLayoutGap="20px" class="pad10">
+	<app-title-bar class="light-grey-color" [title]="'CURRENCIES' | translate" [buttonText]="'SAVE' | translate"
+		(buttonRightOnClick)="saveCurrency()" [buttonColor]="'primary'"></app-title-bar>
+	<ng-container *ngIf="isLoading; else elseTemplate">
+		<mat-spinner style="position:relative;top:20%;left:50%"></mat-spinner>
+	</ng-container>
+	<ng-template #elseTemplate>
+		<div [formGroup]="currencyForm" fxLayout="row" fxLayoutAlign="center">
+			<mat-card fxLayout="column" fxFlex="100" fxLayoutGap="40px">
+				<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+					<div fxFlex fxLayoutAlign="flex-start center">
+						<label class="mat-h3" [ngStyle]="{'margin-bottom':'0px'}">{{'ISO_4217_CODE' | translate}}</label>
+					</div>
+					<div fxFlex fxLayoutAlign="flex-start center">
+						<mat-form-field fxFlex=40>
+							<mat-label>{{SELECT_ISO_CODE | translate}}</mat-label>
+							<mat-select formControlName="ISO_CODE">
+								<mat-option *ngFor="let isoCode of isoCodes.sort(sortByCode())" [value]="isoCode.code">
+									{{isoCode.code}}
+								</mat-option>
+							</mat-select>
+							<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params.isoCode"></mat-error>
+						</mat-form-field>
+
+					</div>
+				</div>
+				<div fxLayout="row" fxLayoutAlign="flex-start center" fxLayoutGap="20px">
+					<div fxFlex fxLayoutAlign="flex-start">
+						<label class="mat-h3" [ngStyle]="{'margin-bottom':'0px'}">{{'CURRENCY_SYMBOL' | translate}}</label>
+					</div>
+					<div fxFlex fxLayoutAlign="flex-start center">
+						<mat-form-field fxFlex=40>
+							<input formControlName="CURRENCY_SYMBOL" matInput placeholder="{{'CURRENCY_SYMBOL' | translate}}">
+							<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params.currencySymbol"></mat-error>
+						</mat-form-field>
+
+					</div>
+				</div>
+				<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+					<div fxFlex fxLayoutAlign="flex-start center">
+						<label class="mat-h3" [ngStyle]="{'margin-bottom':'0px'}">{{'CONVERTION_RATE' | translate}}</label>
+					</div>
+					<div fxFlex fxLayoutAlign="flex-start center">
+						<mat-form-field fxFlex=40>
+							<input formControlName="CONVERTION_RATE" matInput placeholder="{{'CONVERTION_RATE' | translate}}">
+							<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params.convertionRate"></mat-error>
+						</mat-form-field>
+
+					</div>
+				</div>
+				<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+					<div fxFlex fxLayoutAlign="flex-start center">
+						<label class="mat-h3" [ngStyle]="{'margin-bottom':'0px'}">{{'STATUS' | translate}}</label>
+					</div>
+					<div fxFlex fxLayoutAlign="flex-start center">
+						<mat-form-field fxFlex=40>
+							<mat-label>{{SELECT_STATUS | translate}}</mat-label>
+							<mat-select formControlName="STATUS">
+								<mat-option value="Active">Active</mat-option>
+								<mat-option value="Inactive">Inactive</mat-option>
+							</mat-select>
+							<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params.status"></mat-error>
+						</mat-form-field>
+
+					</div>
+				</div>
+			</mat-card>
+		</div>
+	</ng-template>
+</div>

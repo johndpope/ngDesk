@@ -1,0 +1,215 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef>
+	<app-title-bar class="light-grey-color" title="{{'TASK_DETAIL' | translate}}" buttonText="{{'SAVE' | translate}}"
+		(buttonRightOnClick)="save()"></app-title-bar>
+</ng-template>
+<form [formGroup]="taskForm" class="pad10">
+	<app-new-name-description>
+	</app-new-name-description>
+	<!-- <app-conditions *ngIf="taskLoaded" [parentName]="'taskComponent'" [conditions]="conditions" [fields]="fields">
+	</app-conditions> -->
+	<div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="20px">
+		<mat-form-field fxFlex="25">
+			<mat-select placeholder="{{ 'TIMEZONE' | translate }}" formControlName="TIMEZONE" (ngModelChange)="setStartDate()" required>
+				<mat-option *ngFor="let timezone of timezones" [value]="timezone">
+					{{timezone}}
+				</mat-option>
+			</mat-select>
+			<mat-error *ngIf="taskForm.controls.TIMEZONE.invalid"
+				[innerHTML]="'FIELD_REQUIRED' | translate:{ field: translateService.instant('TIMEZONE') }"></mat-error>
+		</mat-form-field>
+		<mat-form-field fxFlex="25">
+			<input placeholder="{{ 'START_DATE' | translate }}" formControlName="START_DATE" matInput [owlDateTimeTrigger]="stdt"
+				[owlDateTime]="stdt" required>
+			<owl-date-time #stdt></owl-date-time>
+			<mat-error *ngIf="taskForm.controls.START_DATE.invalid"
+				[innerHTML]="'FIELD_REQUIRED' | translate:{ field: translateService.instant('START_DATE') }"></mat-error>
+		</mat-form-field>
+	</div>
+	<div fxLayout="column" fxLayoutAlign="start" fxLayoutGap="20px">
+		<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="50px">
+			<div>
+				<label class="mat-body" style="font-size: 16px;"> {{ 'RECURRANCE' | translate }} </label>
+				<mat-slide-toggle (change)="clearFields($event)" formControlName="RECURRENCE"></mat-slide-toggle>
+			</div>
+		</div>
+
+		<div fxLayoutGap="10px" fxLayout="column" *ngIf="taskForm.get('RECURRENCE').value">
+			<mat-card fxFlex="50" fxLayoutGap="30px" style="padding: 20px;">
+				<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="25px">
+					<label class="mat-body" style="font-size: 16px;">{{ 'STOP_DATE' | translate }}</label>
+					<mat-form-field fxFlex="40">
+						<input appearance="outline" formControlName="STOP_DATE" matInput [owlDateTimeTrigger]="spdt" [owlDateTime]="spdt">
+						<owl-date-time #spdt></owl-date-time>
+					</mat-form-field>
+				</div>
+				<div formGroupName="INTERVALS" fxLayoutAlign="start center" fxLayoutGap="10px">
+					<label>Recur Every</label>
+					<mat-form-field fxFlex="40">
+						<input type="number" onkeypress="return event.charCode >= 48 && event.charCode <= 57" matInput formControlName="INTERVAL_VALUE">
+					</mat-form-field>
+					<mat-form-field fxFlex="40">
+						<mat-label>{{ 'SELECT' | translate }}</mat-label>
+						<mat-select formControlName="INTERVAL_TYPE">
+							<mat-option *ngFor="let intervalTypeValue of selectIntervalType" [value]="intervalTypeValue">
+								{{ intervalTypeValue }}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+			</mat-card>
+			<label class="mat-caption" style="color: rgb(104, 115, 125);">
+				Recur every {{taskForm.get('INTERVALS').get('INTERVAL_VALUE').value}} {{taskForm.get('INTERVALS').get('INTERVAL_TYPE').value}}(s)
+				perform action CreateEntry and stop on {{taskForm.get('STOP_DATE').value | dateFormat:'mediumDate'}}
+			</label>
+		</div>
+
+		<div *ngIf="((taskForm.get('LAST_EXECUTED').value !== null || undefined) && this.taskId !== 'new')">
+			<mat-form-field fxFlex="20">
+				<input appearance="outline" placeholder="Last executed date" (blur)="overrideSysLabel = false" formControlName="LAST_EXECUTED"
+					matInput [owlDateTimeTrigger]="ledt" [owlDateTime]="ledt" readonly>
+				<owl-date-time #ledt [disabled]="true"></owl-date-time>
+			</mat-form-field>
+		</div>
+
+		<div formArrayName="actions">
+			<div *ngFor="let action of taskForm.get('actions')['controls']; let actionIndex = index" [formGroupName]="actionIndex">
+				<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="50px">
+					<label class="mat-body" style="font-size: 16px;"> Action </label>
+					<mat-form-field fxFlex="15">
+						<mat-select [(ngModel)]="actionName" formControlName="type" placeholder="{{'SELECT_AN_ACTION' | translate}}">
+							<mat-option *ngFor="let name of actionNames" [value]="name.TYPE">
+								<label> {{ name.ACTION }} </label>
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+
+				<mat-card fxLayout="column" style="padding: 20px;">
+					<div fxLayout="row" fxFlex fxLayoutAlign="start center">
+						<mat-form-field fxFlex="30">
+							<mat-select formControlName="moduleId" placeholder="{{'SELECT_MODULE' | translate}}"
+								(selectionChange)="changeModule($event.value)">
+								<mat-option *ngFor="let module of modules" [value]="module.MODULE_ID">
+									{{ module.NAME }}
+								</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+					<div fxLayout="column" fxLayoutGap="10px">
+						<div fxLayoutAlign="start center">
+							<label>{{'FIELDS' | translate}}</label>
+							<button mat-icon-button (click)="addField(action)">
+								<mat-icon>add_circle</mat-icon>
+							</button>
+						</div>
+						<div formArrayName="fields" fxFlex fxLayout="column" fxLayoutGap="10px">
+							<div fxFlex *ngFor="let item of action.get('fields')['controls']; let fieldIndex = index" [formGroupName]="fieldIndex"
+								fxLayoutGap="10px">
+								<!-- FIELDS -->
+								<mat-form-field fxFlex>
+									<input matInput formControlName="fieldId" (ngModelChange)="resetValue($event,item,'conditions')"
+										placeholder="{{'FIELD' | translate}}" type="text" [matAutocomplete]="auto" (closed)="resetOptions('conditions')"
+										required>
+									<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFieldName">
+										<mat-option *ngFor="let variable of createEntryFields" [value]="variable"
+											[disabled]="variable.DATA_TYPE.DISPLAY==='Discussion' && variable.RELATIONSHIP_TYPE==='Many to Many'">
+											{{variable.DISPLAY_LABEL}}
+										</mat-option>
+									</mat-autocomplete>
+									<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params.fieldId"></mat-error>
+								</mat-form-field>
+
+								<!-- VALUES -->
+								<mat-form-field fxFlex *ngIf="specialDataTypes.indexOf(item.value.fieldId.DATA_TYPE?.DISPLAY) === -1 ">
+									<input matInput formControlName="value" placeholder="{{'ENTER_VALUE' | translate}}" type="text" required>
+									<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params.value"></mat-error>
+								</mat-form-field>
+								<mat-form-field fxFlex *ngIf="item.value.fieldId.DATA_TYPE?.DISPLAY ==='Picklist'">
+									<input matInput formControlName="value" placeholder="{{'VALUE' | translate}}" type="text" [matAutocomplete]="picklistAuto"
+										required>
+									<mat-autocomplete #picklistAuto="matAutocomplete">
+										<mat-option *ngFor="let picklistValue of item.value.fieldId.PICKLIST_VALUES" [value]="picklistValue">
+											{{picklistValue}}
+										</mat-option>
+									</mat-autocomplete>
+									<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params.value"></mat-error>
+								</mat-form-field>
+								<mat-form-field fxFlex *ngIf="item.value.fieldId.DATA_TYPE?.DISPLAY ==='Picklist (Multi-Select)'">
+									<mat-select formControlName="value" placeholder="{{'VALUE' | translate}}" multiple required>
+										<mat-option *ngFor="let picklistValue of item.value.fieldId.PICKLIST_VALUES" [value]="picklistValue">
+											{{picklistValue}}</mat-option>
+									</mat-select>
+									<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params.value"></mat-error>
+								</mat-form-field>
+								<mat-form-field *ngIf="item.value.fieldId.DATA_TYPE?.DISPLAY == 'Date/Time'" fxFlex>
+									<input placeholder="{{ 'PLEASE_SELECT_A_DATE' | translate}}" matInput [owlDateTimeTrigger]="dt" [owlDateTime]="dt"
+										formControlName="value" required>
+									<owl-date-time #dt></owl-date-time>
+									<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params.value"></mat-error>
+								</mat-form-field>
+								<mat-form-field *ngIf="item.value.fieldId.DATA_TYPE?.DISPLAY === 'Date' " fxFlex>
+									<input placeholder="{{ 'PLEASE_SELECT_A_DATE' | translate}}" matInput [owlDateTimeTrigger]="dt" [owlDateTime]="dt"
+										formControlName="value" required>
+									<owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
+									<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params.value"></mat-error>
+								</mat-form-field>
+								<mat-form-field *ngIf="item.value.fieldId.DATA_TYPE?.DISPLAY == 'Time' " fxFlex>
+									<input placeholder="{{ 'PLEASE_SELECT_A_TIME' | translate}}" matInput [owlDateTimeTrigger]="dt" [owlDateTime]="dt"
+										formControlName="value" required>
+									<owl-date-time [pickerType]="'timer'" #dt></owl-date-time>
+									<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params.value"></mat-error>
+								</mat-form-field>
+								<mat-form-field fxFlex
+									*ngIf="item.value.fieldId.DATA_TYPE?.DISPLAY ==='Relationship' && item.value.fieldId.RELATIONSHIP_TYPE !== 'Many to Many'">
+									<input matInput formControlName="value" placeholder="{{'VALUE' | translate}}" type="text" required
+										[matAutocomplete]="picklistRelationship" (ngModelChange)="search(item.value.fieldId, item.value.value)">
+									<mat-autocomplete (closed)="autocompleteClosed(item.value.fieldId, item.value.value)"
+										(appAutocompleteScroll)="onScroll(item.value.fieldId, item.value.value)" #picklistRelationship="matAutocomplete"
+										[displayWith]="displayPrimaryDisplayField">
+										<mat-option *ngFor="let relationshipValue of taskDetailService.relationshipData[item.value.fieldId.NAME]"
+											[value]="relationshipValue">
+											{{relationshipValue.PRIMARY_DISPLAY_FIELD}}
+										</mat-option>
+									</mat-autocomplete>
+									<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params.value"></mat-error>
+								</mat-form-field>
+								<mat-form-field floatLabel="always" fxFlex
+									*ngIf="item.value.fieldId.DATA_TYPE?.DISPLAY ==='Relationship' && item.value.fieldId.RELATIONSHIP_TYPE === 'Many to Many'">
+									<mat-chip-list #teamChipList>
+										<mat-chip *ngFor="let team of selectedTeams" [selectable]="true" [removable]="true" (removed)="removeTeams(team)">
+											{{team.PRIMARY_DISPLAY_FIELD}}
+											<mat-icon matChipRemove>cancel</mat-icon>
+										</mat-chip>
+										<input #teamInput [matAutocomplete]="autoTeam" [matChipInputFor]="teamChipList"
+											[matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
+											(matChipInputTokenEnd)="resetInput($event)" (ngModelChange)="search(item.value.fieldId, item.value.value)"
+											formControlName="value">
+									</mat-chip-list>
+									<mat-autocomplete #autoTeam="matAutocomplete" (appAutocompleteScroll)="onScroll(item.value.fieldId, item.value.value)"
+										(optionSelected)="onTeamSelect($event)" (closed)="autocompleteClosed(item.value.fieldId, item.value.value)">
+										<mat-option *ngFor="let team of taskDetailService.relationshipData[item.value.fieldId.NAME]" [value]="team"
+											[disabled]="disabledTeamCheck(team, teams)">
+											{{team.PRIMARY_DISPLAY_FIELD}}
+										</mat-option>
+									</mat-autocomplete>
+									<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params.value"></mat-error>
+								</mat-form-field>
+								<!-- VALUES END -->
+
+								<!-- REMOVE BUTTON -->
+								<div fxLayoutAlign="center center">
+									<button mat-icon-button (click)="deleteField(action,fieldIndex)" type="button">
+										<mat-icon>remove_circle</mat-icon>
+									</button>
+								</div>
+							</div>
+							<!-- REMOVE BUTTON END -->
+						</div>
+					</div>
+				</mat-card>
+			</div>
+		</div>
+
+	</div>
+</form>

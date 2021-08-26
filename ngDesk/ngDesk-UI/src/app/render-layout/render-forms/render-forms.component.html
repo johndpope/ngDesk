@@ -1,0 +1,24 @@
+<div fxLayout='column'>
+	<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+	<ng-template #headerTemplateRef>
+		<app-title-bar class="light-grey-color" title="{{formName}}" buttonText="{{'SAVE' | translate}}" (buttonRightOnClick)="save()">
+		</app-title-bar>
+	</ng-template>
+	<div fxLayout='row' [ngClass]="themeColorObserver | async" fxFlex>
+		<div *ngIf="gridLayout" fxLayout="column" style="padding: 10px;width: 100%;">
+			<div style="padding-bottom: 10px;" *ngFor="let panel of panels">
+				<ng-container *ngIf="panel['display']">
+					<mat-accordion>
+						<mat-expansion-panel style="overflow-x: auto;" [expanded]="!panel['collapse']">
+							<mat-expansion-panel-header>
+								<mat-panel-title> {{panel['displayName']}}</mat-panel-title>
+							</mat-expansion-panel-header>
+							<app-dynamic [context]="this" [material-module]="dataMaterialModule" [template]="panel['template']">
+							</app-dynamic>
+						</mat-expansion-panel>
+					</mat-accordion>
+				</ng-container>
+			</div>
+		</div>
+	</div>
+</div>

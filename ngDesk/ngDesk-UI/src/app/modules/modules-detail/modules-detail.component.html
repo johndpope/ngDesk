@@ -1,0 +1,80 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef> 
+	<app-title-bar *ngIf="moduleId == 'new'" title="{{'MODULE_DETAIL' | translate}}" buttonText="{{'SAVE' | translate}}"
+		(buttonRightOnClick)="save()">
+	</app-title-bar>
+	<app-title-bar *ngIf="moduleId != 'new'" [title]="moduleName">
+	</app-title-bar>
+</ng-template>
+<div fxLayout="column" fxLayoutGap="10px" class="pad10">
+	<div fxLayout="row" fxLayoutAlign="flex-start">
+		<div *ngIf="moduleId == 'new' && moduleForm" fxFlex="25" fxLayoutAlign="flex-start"></div>
+		<!-- Layout from when module is not new -->
+		<div *ngIf="moduleId != 'new' && module" fxFlex>
+			<div fxLayout="row" fxLayoutGap="5px">
+				<div>
+					<label class="mat-caption" style="color: #888;font-style: italic;">{{module.DESCRIPTION}}</label>
+				</div>
+			</div>
+
+			<!-- matcard for all the components like fields,layout etc -->
+			<div fxLayout="column" fxLayoutAlign="center center" style="padding-top: 10px;" fxLayout.lt-md="row" fxLayoutGap="20px">
+				<div fxLayoutAlign="center" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
+					<div style="width: 200px; height: 245px;cursor: pointer;" *ngFor="let nav of navigationList1" (click)="clicked(nav)">
+						<app-feature-description-card src="{{nav.SRC | translate}}" name="{{nav.NAME | translate}}"
+							description="{{nav.DESCRIPTION | translate}}"></app-feature-description-card>
+					</div>
+				</div>
+				<div fxLayoutAlign="center" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
+					<div style="width: 200px; height: 245px;cursor: pointer;" *ngFor="let nav of navigationList2" (click)="clicked(nav)">
+						<app-feature-description-card src="{{nav.SRC | translate}}" name="{{nav.NAME | translate}}"
+							description="{{nav.DESCRIPTION | translate}}"></app-feature-description-card>
+					</div>
+				</div>
+				<div fxLayoutAlign="center" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
+					<div style="width: 200px; height: 245px;cursor: pointer;" *ngFor="let nav of navigationList3" (click)="clicked(nav)">
+						<app-feature-description-card src="{{nav.SRC | translate}}" name="{{nav.NAME | translate}}"
+							description="{{nav.DESCRIPTION | translate}}"></app-feature-description-card>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- moduleFrom when module is new -->
+		<mat-card *ngIf="moduleId === 'new'" fxFlex="50">
+			<div fxLayout="column" fxLayoutAlign="center center" *ngIf='errorMessage != undefined || successMessage != undefined'>
+				<mat-error class="mat-body">{{errorMessage}}</mat-error>
+				<label class="green-color mat-body">{{successMessage}}</label>
+			</div>
+			<form [formGroup]="moduleForm" (ngSubmit)="save()">
+				<div fxLayout="row" fxLayoutAlign="center">
+					<mat-label class="mat-h2">{{'CREATE_NEW_MODULE' | translate}}
+					</mat-label>
+				</div>
+				<div fxLayout="row" fxLayoutAlign="center">
+					<mat-form-field fxFlex="70">
+						<input matInput placeholder="{{'MODULE_NAME' | translate}}" formControlName="NAME" required>
+						<mat-error [innerHTML]="getRequiredFieldErrorMessage('REQUIRED_MODULE_NAME')"></mat-error>
+					</mat-form-field>
+				</div>
+				<div fxLayout="row" fxLayoutAlign="center">
+					<mat-form-field fxFlex="70">
+						<input matInput placeholder="{{'MODULE_NAME_SINGULAR' | translate}}" formControlName="SINGULAR_NAME" required>
+						<mat-error [innerHTML]="getRequiredFieldErrorMessage('REQUIRED_MODULE_SINGULAR_NAME')"></mat-error>
+					</mat-form-field>
+				</div>
+				<div fxLayout="row" fxLayoutAlign="center">
+					<mat-form-field fxFlex="70">
+						<input matInput placeholder="{{'MODULE_NAME_PLURAL' | translate}}" formControlName="PLURAL_NAME" required>
+						<mat-error [innerHTML]="getRequiredFieldErrorMessage('REQUIRED_MODULE_PLURAL_NAME')"></mat-error>
+					</mat-form-field>
+				</div>
+				<div fxLayout="row" fxLayoutAlign="center">
+					<mat-form-field fxFlex="70">
+						<input matInput placeholder="{{'DESCRIPTION' | translate}}" formControlName="DESCRIPTION">
+					</mat-form-field>
+				</div>
+				<div></div>
+			</form>
+		</mat-card>
+	</div>
+</div>

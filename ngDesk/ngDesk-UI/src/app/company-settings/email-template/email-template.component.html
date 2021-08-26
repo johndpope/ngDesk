@@ -1,0 +1,25 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<div class="pad10">
+	<form [formGroup]="emailTemplateForm" fxLayout="column" fxLayoutGap="10px">
+		<ng-template #headerTemplateRef>
+			<app-title-bar class="light-grey-color" title="{{'CUSTOMER_SIGNUP_EMAIL' | translate }}" buttonText="{{'SAVE'|translate}}"
+				(buttonRightOnClick)="saveSignupMessage()"></app-title-bar>
+		</ng-template>
+		<mat-card fxLayout="column" fxLayoutGap="10px">
+			<div fxLayout="row">
+				<mat-form-field fxFlex="50">
+					<input matInput placeholder="{{'SUBJECT' | translate}}" value="" formControlName="SUBJECT">
+					<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:errors.subject"></mat-error>
+				</mat-form-field>
+			</div>
+
+			<div fxLayout="row">
+				<mat-form-field fxFlex="100">
+					<textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="5" placeholder="{{'BODY' | translate}}"
+						formControlName="BODY"> </textarea>
+					<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:errors.body"></mat-error>
+				</mat-form-field>
+			</div>
+		</mat-card>
+	</form>
+</div>

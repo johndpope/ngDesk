@@ -1,0 +1,285 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~material-design-icons/iconfont/material-icons.css';
+
+.circle {
+	border-radius: 50%;
+	border: 1px solid #d3d3d3;
+}
+
+.box {
+	position: absolute;
+	background: #fafafa;
+	border: 2px solid #e7e7e7;
+	width: 200px;
+	height: 100px;
+}
+
+.droppable-area {
+	border-style: dashed;
+	border-color: #3895d3;
+	color: #a0a0a0;
+	padding: 20px;
+	font-weight: 400;
+	cursor: default;
+	transition: box-shadow 0.5s ease-in-out, -webkit-box-shadow 0.5s ease-in-out,
+		-moz-box-shadow 0.5s ease-in-out;
+	border-radius: 8px;
+}
+
+#workflow-wrapper {
+	border-top: 1px solid #f4f4f4;
+	overflow: hidden;
+	height: 100%;
+	background-size: 20px 20px;
+	background-image: linear-gradient(to right, #d8e9e6 1px, transparent 1px),
+		linear-gradient(to bottom, #d8e9e6 1px, transparent 1px);
+	background-color: #eceff1;
+}
+
+#workflow-container {
+	overflow: auto;
+	margin-right: -17px;
+}
+
+#container {
+	transform-origin: top left;
+}
+
+.gray {
+	color: #505962;
+}
+
+.no-margin {
+	margin: 0;
+}
+
+.sidebar-icons {
+	margin-left: 25px;
+}
+
+#zoom-controls {
+	width: 100px;
+	height: 30px;
+	border-radius: 5px;
+	right: 0;
+	position: absolute;
+	margin-top: 10px;
+	background: white;
+	z-index: 20;
+}
+
+#chevron {
+	position: absolute;
+	background: white;
+	width: 30px;
+	height: 25px;
+	color: white;
+	margin-left: 5px;
+	margin-top: 5px;
+	border-radius: 5px;
+	background: #3895d3;
+	z-index: 20;
+}
+
+.no-select {
+	user-select: none;
+}
+
+#node-container {
+	background: white;
+	border-right: 1px solid #c7d0d7;
+	transition: width 0.3s;
+}
+
+.sidebar-node:hover {
+	background: #f1f1f1;
+}
+
+::-webkit-scrollbar {
+	width: 10px;
+}
+
+.node {
+	transition: box-shadow 0.5s ease-in-out, -webkit-box-shadow 0.5s ease-in-out,
+		-moz-box-shadow 0.5s ease-in-out;
+	border: 2px solid #e7e7e7;
+	background: #fafafa;
+	border-radius: 8px;
+	cursor: pointer;
+	width: 200px;
+	height: 90px;
+	position: absolute;
+	z-index: 1;
+	user-select: none;
+	padding: 10px;
+	box-sizing: border-box;
+}
+
+.custom-mat-icon {
+	height: 20px;
+	width: 20px;
+	font-size: 20px;
+}
+
+.mat-icon-15 {
+	height: 15px;
+	width: 15px;
+	font-size: 15px;
+	font-weight: 800;
+}
+
+.mat-icon-18 {
+	height: 15px;
+	width: 15px;
+	font-size: 15px;
+	font-weight: 800;
+}
+
+.add-node {
+	position: absolute;
+	height: 25px;
+	width: 100px;
+	border-radius: 15px;
+	border: 2px solid #e7e7e7;
+	background: #fafafa;
+	padding: 10px;
+	z-index: 1;
+	user-select: none;
+}
+
+.trash-wrapper {
+	color: #ff6464;
+	position: absolute;
+	z-index: 3;
+	border-radius: 50%;
+	width: 25px;
+	height: 25px;
+	background: #ffffff;
+}
+
+.option {
+	width: 125px;
+	height: 35px;
+	background: #fafafa;
+	border: 2px solid #e7e7e7;
+	padding: 10px;
+	border-radius: 8px;
+	position: absolute;
+	user-select: none;
+}
+
+div.add-node:hover {
+	border-color: #3895d3;
+}
+
+.pad10 {
+	padding: 10px;
+}
+
+.white-text {
+	color: white;
+}
+
+.pointer {
+	cursor: pointer;
+}
+
+.mat-form-field--remove-padding .mat-form-field-wrapper {
+	padding-bottom: 15px;
+
+	.mat-form-field-infix {
+		padding: 6px 0;
+	}
+}
+
+.mat-form-field--message-textarea .mat-form-field-wrapper {
+	padding-bottom: 0px;
+
+	.mat-form-field-infix {
+		padding: 5px 0;
+	}
+}
+
+.mat-checkbox--small {
+	.mat-checkbox-inner-container {
+		height: 12px;
+		width: 12px;
+		margin-right: 5px;
+	}
+
+	font-size: 13px;
+}
+
+.mat-dialog-container {
+	padding: 15px !important;
+}
+
+.adjusted-backdrop {
+	width: 355px;
+	height: 631px;
+	top: 55px;
+	left: 5px;
+	background: rgba(0, 0, 0, 0.32);
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+
+#links-text-white a {
+	color: #fff !important;
+	-webkit-text-fill-color: #fff !important;
+	text-decoration-color: #fff !important;
+}
+
+body {
+	overflow-x: hidden;
+}
+
+p {
+	margin: 0 !important;
+}
+
+.text-area {
+	-webkit-box-shadow: 0 -3px 6px 0px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: 0 -3px 6px 0px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 -3px 6px 0px rgba(0, 0, 0, 0.2);
+}
+
+.mat-form-field--message-textarea .mat-form-field-wrapper {
+	padding-bottom: 0px;
+
+	.mat-form-field-infix {
+		padding: 5px 0;
+	}
+}
+
+.chat-reply {
+	::ng-deep {
+		.mat-form-field-wrapper {
+			.mat-form-field-underline {
+				display: none;
+			}
+		}
+	}
+}
+
+.message-on-button {
+	border-bottom-style: inset;
+	border-bottom-color: white;
+	margin-bottom: 4px;
+	margin-left: 5px;
+
+	::ng-deep {
+		.mat-button-wrapper {
+			display: block;
+			white-space: normal;
+			line-height: 24px;
+			word-break: break-word;
+			font-size: 14px;
+			position: relative;
+			width: 100%;
+			min-height: 28px;
+			text-align: left;
+			padding: 2px;
+		}
+	}
+}

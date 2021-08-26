@@ -1,0 +1,30 @@
+<StackLayout>
+  <Label text="spf-records works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<app-toolbar></app-toolbar>
+<div fxLayout="column" fxLayoutGap="10px" class="pad10">
+	<app-title-bar (buttonRightOnClick)="openDialog()" title="{{'ALLOW_NGDESK_TO_SEND_EMAILS' | translate}}"
+		buttonText="{{'NEW' | translate}}">
+	</app-title-bar>
+	<div fxLayout="row">
+		<div fxFlex>
+			<app-custom-table [templateRef]="columnTemplateRef" (rowClickedEvent)="openDialog($event)" [actions]="spfRecordsActions.actions"
+				(menuItemTrigger)="spfRecordsActions[$event.ACTION.NAME]($event.ROW_DATA);"
+				noRecordsMessage="{{'NO_SPF_RECORDS_FOUND' | translate}}"
+				(pageChangeEmit)="pageChangeEmit($event);customTableService.isLoading = true"
+				(sortData)="sortData();customTableService.isLoading = true">
+				<ng-template #columnTemplateRef let-element="element" let-col="col">
+					{{element[col.NAME]}}
+				</ng-template>
+			</app-custom-table>
+		</div>
+	</div>
+</div>
+
+-->

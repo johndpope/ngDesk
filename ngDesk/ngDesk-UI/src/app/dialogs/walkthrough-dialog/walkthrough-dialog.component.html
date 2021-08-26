@@ -1,0 +1,11 @@
+<div [ngClass]="data.arrowDirection" fxLayout="row" fxLayoutAlign="center center">
+	<div class="arrow_box" fxLayout="column" fxLayoutAlign="center center" style="padding: 15px;text-align: center">
+		<h2 class="mat-h2">{{data.title}}</h2>
+		<label class="mat-subheading-2" [innerHTML]="data.description"></label>
+		<div *ngIf="data.progress && data.buttonText" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center"
+			fxLayoutGap="20px">
+			<span class="mat-body-2" fxLayout="column">{{data.progress}}</span>
+			<button mat-raised-button color="primary" (click)="next()">{{data.buttonText}}</button>
+		</div>
+	</div>
+</div>

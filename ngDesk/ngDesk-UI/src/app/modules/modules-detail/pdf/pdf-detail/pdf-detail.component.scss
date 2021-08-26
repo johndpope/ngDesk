@@ -1,0 +1,9 @@
+.field-padding ::ng-deep {
+	.mat-form-field-wrapper {
+		padding-bottom: 10px !important;
+	}
+
+	.mat-form-field-infix {
+		padding: 3px 0 5px 0 !important;
+	}
+}

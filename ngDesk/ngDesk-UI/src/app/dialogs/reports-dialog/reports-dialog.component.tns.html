@@ -1,0 +1,47 @@
+<StackLayout>
+  <Label text="ReportsDialogComponent works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<div fxLayout="column">
+  <div class="mat-h1" fxLayoutAlign="center">
+    {{data.dialogTitle}}
+  </div>
+</div>
+
+<form fxLayoutAlign="center" [formGroup]="data.reportForm" fxLayout="column">
+  <mat-form-field fxFlex="80">
+    <input type="text" matInput formControlName="NAME" placeholder="{{'REPORT_NAME' | translate}}">
+    <mat-error *ngIf="data.reportForm.controls.NAME.hasError('required')">{{'REPORT_NAME_REQUIRED' | translate}}</mat-error>
+  </mat-form-field>
+  <mat-form-field fxFlex="80" [ngStyle]="{'margin-top':'10%'}">
+    <input type="text" placeholder="{{'SELECT_REPORT_MODULE' | translate}}" matInput
+        formControlName="MODULE" [value]="data.reportForm.get('MODULE').value | moduleidToName"
+        [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let module of filteredOptions | async" [value]="module">
+        {{module.NAME}}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="data.reportForm.controls.MODULE.hasError('required')">
+      {{'PLEASE_SELECT_MODULE' | translate}}
+    </mat-error>
+    <mat-error *ngIf="data.reportForm.controls.MODULE.hasError('moduleError') && !data.reportForm.controls.MODULE.hasError('required')">
+      {{'PLEASE_SELECT_A_VALID_MODULE' | translate }}
+    </mat-error>
+    </ mat-form-field>
+</form>
+
+<div fxLayout="row" fxLayoutGap="10px" [ngStyle]="{'height':'30%'}" fxLayoutAlign="end">
+  <div fxFlexAlign="end">
+    <button mat-raised-button type="button" [mat-dialog-close]="data.closeDialog">{{data.closeDialog}}</button>
+  </div>
+  <div fxFlexAlign="end">
+    <button mat-raised-button color="primary" type="button" [mat-dialog-close]="data" [disabled]=" data.reportForm.controls.MODULE.hasError('required') || data.reportForm.controls.MODULE.hasError('moduleError') || data.reportForm.controls.NAME.hasError('required')">{{data.buttonText}}</button>
+  </div>
+</div>
+-->

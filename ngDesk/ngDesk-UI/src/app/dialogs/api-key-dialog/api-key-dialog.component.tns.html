@@ -1,0 +1,86 @@
+<StackLayout>
+  <Label text="api-key-dialog works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<mat-horizontal-stepper #stepper>
+  <mat-step [stepControl]="generateKeyForm">
+    <div class="mat-h1" fxLayoutAlign="center">
+      {{'NEW' | translate}} {{'KEY' | translate}}
+    </div>
+    <div fxLayoutAlign="center">
+      <mat-error>{{errorMessage}}</mat-error>
+    </div>
+    <form [formGroup]="generateKeyForm" (ngSubmit)="generateKey()">
+      <div>
+        <mat-form-field fxFlex>
+          <input matInput placeholder="{{'KEY_NAME' | translate}}" formControlName="KEY_NAME" type="text">
+          <mat-error *ngIf="generateKeyForm.controls.KEY_NAME.hasError('required')">
+            {{'PLEASE_ENTER_KEY_NAME' | translate}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div fxLayoutAlign="center">
+        <mat-form-field fxFlex="100">
+          <input type="text" placeholder="{{'SELECT_USER' | translate}}" matInput formControlName="USER"
+              value="{{generateKeyForm.value.USER.FIRST_NAME}} {{generateKeyForm.value.USER.LAST_NAME}}"
+              [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let user of filteredOptions | async" [value]="user">
+              {{user.FIRST_NAME}} {{user.LAST_NAME}}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-error *ngIf="generateKeyForm.controls.USER.hasError('required')">
+            {{'PLEASE_SELECT_USER' | translate}}
+          </mat-error>
+          <mat-error *ngIf="generateKeyForm.controls.USER.hasError('userError') && !generateKeyForm.controls.USER.hasError('required')">
+            {{'NOT_A_VALID_USER_PLEASE_SELECT_A_VALID_USER' | translate }}
+          </mat-error>
+          </ mat-form-field>
+      </div>
+      <div fxLayoutAlign="center" style="margin-top:30px" fxLayoutGap="10px">
+        <button mat-raised-button type="button" [mat-dialog-close]="'close'">{{'CANCEL' | translate}}</button>
+        <button mat-raised-button color="primary" style="text-overflow: ellipsis;overflow: hidden;" matStepperNext type="submit" [disabled]="generateKeyForm.controls.KEY_NAME.hasError('required') || generateKeyForm.controls.USER.hasError('required') || generateKeyForm.controls.USER.hasError('userError')">
+          {{'GENERATE_KEY' | translate}}
+        </button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step>
+    <div fxLayout="column" fxLayoutAlign="center center" [ngStyle]="{'height': '15rem'}">
+      <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
+    </div>
+  </mat-step>
+  <mat-step>
+    <div fxLayout="column">
+      <div class="mat-h1" fxLayoutAlign="center">
+        {{'KEY_GENERATED' | translate}}
+      </div>
+    </div>
+    <div fxLayout="column" fxLayoutAlign="space-evenly center" fxFlex="100" fxLayoutGap="20px">
+      <div fxLayout="row" fxFlex="20">
+        <div>
+          <strong [ngStyle]="{'color':'#d24646'}">{{'GENERATED_KEY_WARNING' | translate}}</strong>
+        </div>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="start center" fxFlex="50" [ngStyle]="{'background-color': '#f6f8fa', 'width': '100%'}">
+        <div class="highlight">
+          {{apiKey}}
+        </div>
+        <button mat-icon-button #tooltip="matTooltip" matTooltip="{{copyTooltip}}" (mouseenter)="copyTooltip=translateService.instant('COPY_TO_CLIPBOARD')"
+            (click)="copyKey();tooltip.show()">
+          <mat-icon>content_copy</mat-icon>
+        </button>
+      </div>
+      <div fxLayout="row" fxFlex="30">
+        <button mat-raised-button type="button" [mat-dialog-close]="'close'">{{'CLOSE' | translate}}</button>
+      </div>
+    </div>
+  </mat-step>
+  <mat-horizontal-stepper>
+-->

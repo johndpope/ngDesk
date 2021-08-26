@@ -1,0 +1,92 @@
+{
+  "NAME": "Transfer Chat",
+  "MODULE": "MODULE_ID",
+  "WORKFLOW": {
+    "NODES": [
+      {
+        "POSITION_X": "100px",
+        "POSITION_Y": "100px",
+        "VALUES": {},
+        "ID": "node-id-de79e976-6dd1-4141-8e97-7385782850f6",
+        "TYPE": "Start",
+        "CONNECTIONS_TO": [
+          {
+            "TITLE": "START",
+            "FROM": "OUT",
+            "TO_NODE": "node-id-05a7641a-d412-4da7-97b8-fe1a1f958b2e"
+          }
+        ],
+        "NAME": "Start",
+        "PLUGS": [
+          {
+            "NAME": "OUT",
+            "ID": "output-plug-fd1a1250-5fb7-4e22-9d34-83c09bb6e663",
+            "ORDER": 1
+          }
+        ]
+      },
+      {
+        "POSITION_X": "808px",
+        "POSITION_Y": "448px",
+        "VALUES": {
+          "MODULE": "MODULE_ID",
+          "ENTRY_ID": "{{inputMessage.DATA_ID}}"
+        },
+        "ID": "node-id-05a7641a-d412-4da7-97b8-fe1a1f958b2e",
+        "TYPE": "FindAgentAndAssign",
+        "CONNECTIONS_TO": [
+          {
+            "TITLE": "OUT 1",
+            "FROM": "OUT-1",
+            "TO_NODE": "node-id-573e8b96-1a1a-49b1-8156-04a06a1b1536"
+          } 
+        ],
+        "NAME": "Find Agent And Assign",
+        "PLUGS": [
+          {
+            "NAME": "INPUT",
+            "ID": "input-plug-f8db5f00-a9b8-4e0c-acca-31c543d8128e",
+            "ORDER": 0
+          },
+          {
+            "NAME": "OUT-1",
+            "ID": "output-plug-61dc786f-26c5-4396-8acb-91e21e3b2e82",
+            "ORDER": 1
+          }
+        ]
+      },
+      {
+        "POSITION_X": "708px",
+        "POSITION_Y": "448px",
+        "VALUES": {
+          "MODULE": "MODULE_ID",
+          "ENTRY_ID": "{{inputMessage.DATA_ID}}",
+          "FIELDS": [
+            {
+              "FIELD": "08c272b5-3fd6-4d11-8410-c5caa89fb9a3",
+              "VALUE": [
+                "{{inputMessage.AGENTS}}"
+              ]
+            }
+          ]
+        },
+        "ID": "node-id-573e8b96-1a1a-49b1-8156-04a06a1b1536",
+        "TYPE": "UpdateEntry",
+        "CONNECTIONS_TO": [ ],
+        "NAME": "Update Entry",
+        "PLUGS": [
+          {
+            "NAME": "INPUT",
+            "ID": "input-plug-6724f228-d948-47b8-a420-15d062b2b75a",
+            "ORDER": 0
+          },
+          {
+            "NAME": "OUT-1",
+            "ID": "output-plug-5abe7fa3-a93b-4170-97f1-fbf182018da0",
+            "ORDER": 1
+          }
+        ]
+      }
+    ]
+  }
+}

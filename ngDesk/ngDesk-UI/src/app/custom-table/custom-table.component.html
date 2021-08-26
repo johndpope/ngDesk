@@ -1,0 +1,98 @@
+<!--hide and show the table if there are no records and table is not loading. ngIf would not work as some properties of table would work correctly  -->
+<div fxLayout="column" class="mat-elevation-z8" [ngStyle]=" customTableService.totalRecords> 0 &&
+  !customTableService.isLoading?{'display': 'block'} : {'display': 'none'}">
+	<table mat-table [dataSource]="customTableService.customTableDataSource" matSort (matSortChange)="sortTableData($event)"
+		[matSortActive]="customTableService.activeSort.SORT_BY" [matSortDirection]="customTableService.activeSort.ORDER_BY"
+		matSortDisableClear="true"
+		[ngStyle]="customTableService.totalRecords > 0 && !customTableService.isLoading?{'width':'100%'}:{'width':'0%'}">
+		<!-- Checkbox Column -->
+		<ng-container matColumnDef="select">
+			<th mat-header-cell *matHeaderCellDef style="padding-right: 10px;">
+				<mat-checkbox (change)="$event ? customTableService.masterToggle() : null"
+					[checked]="customTableService.selection.hasValue() && customTableService.isAllSelected()"
+					[indeterminate]="customTableService.selection.hasValue() && !customTableService.isAllSelected()">
+				</mat-checkbox>
+			</th>
+			<td mat-cell *matCellDef="let row" class="pointer">
+				<mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? customTableService.selection.toggle(row) : null"
+					[checked]="customTableService.selection.isSelected(row)">
+				</mat-checkbox>
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="{{col.DISPLAY}}" *ngFor="let col of customTableService.columnsHeadersObj ">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header class="custom-theme-icon-color"> {{col.DISPLAY}}
+			</th>
+			<td mat-cell *matCellDef="let element" (mouseenter)=" rowHovered($event.target, 'enter')"
+				(mouseleave)="rowHovered($event.target, 'leave')" class="pointer" [matTooltip]="customTableService.showTooltip(element,col)"
+				matTooltipClass="custom-tooltip">
+				<!--this container has the data to populate the rows of each column  -->
+				<ng-container *ngTemplateOutlet="templateRef; context:{element:element, col:col, row:row}"></ng-container>
+				<!--this container the buttons for when table has action column  -->
+				<ng-container *ngTemplateOutlet="menuTemplate; context:{col:col,row:element}"></ng-container>
+				<div *ngIf="col.NAME ==='Add Entry OTM'">
+					<button *ngIf="customTableService.dataIds !== undefined && !customTableService.dataIds.includes(element.DATA_ID)"
+						(click)="clicked(element)" style="color: #00E676;" mat-button>
+						<mat-icon matTooltip="Add">add_circle_outline</mat-icon>
+					</button>
+					<button *ngIf="customTableService.dataIds !== undefined && customTableService.dataIds.includes(element.DATA_ID)"
+						(click)="clicked(element)" style="color: #F50057;" mat-button>
+						<mat-icon matTooltip="Remove">remove_circle_outline</mat-icon>
+					</button>
+				</div>
+			</td>
+		</ng-container>
+		<tr mat-header-row *matHeaderRowDef="customTableService.columnsHeaders;sticky:true;" class="custom-theme-primary-color">
+		</tr>
+		<tr class="light-grey-color" mat-row *matRowDef="let row; columns: customTableService.columnsHeaders" (click)="rowClicked(row)">
+		</tr>
+	</table>
+	<mat-paginator class="mat-paginator-height" (page)="pageChanged($event)" [length]="customTableService.totalRecords"
+		[pageSize]="customTableService.pageSize" [pageIndex]="customTableService.pageIndex" [pageSizeOptions]="[5, 10, 20, 50]"
+		showFirstLastButtons [ngStyle]=" customTableService.totalRecords> 0 &&
+		customTableService.showPaginator?{'display': 'block'} : {'display': 'none'}"></mat-paginator>
+</div>
+<!--spinner for when retrieving data from back end  -->
+<div flxLayout="row" fxLayoutAlign="center" *ngIf="customTableService.isLoading" style="margin-top:30px">
+	<mat-progress-spinner color="primary" mode="indeterminate">
+	</mat-progress-spinner>
+</div>
+<!-- no records for when table is empty  -->
+<div fxLayoutAlign="center center" [ngStyle]="isModalTable?{'height':'400px'}:{'height':'86vh'}"
+	*ngIf="customTableService.totalRecords === 0 && !customTableService.isLoading">
+	<div class="mat-h1" fxLayout="row" fxLayoutAlign="center center">
+		<div fxFlex="50" fxLayoutAlign="end center">
+			<div fxLayout="column" fxFlex="40" fxLayoutGap="5px">
+				<div style="text-align: left;">
+					<label class="mat-h3">{{noRecordsMessage}}{{notFoundMessage | translate}}</label>
+				</div>
+				<div fxLayoutAlign="start start">
+					<button (click)="navigate()" *ngIf="notFoundMessage === 'NO_CHATS_FOUND_MESSAGE'" mat-raised-button
+						color="primary">{{'CHAT_WIDGETS_TABLE_TITLE' | translate}}</button>
+					<button (click)="navigate()" *ngIf="notFoundMessage === 'NO_CONTROLLERS_FOUND_MESSAGE'" mat-raised-button
+						color="primary">{{'DOWNLOAD_INSTALLER' | translate}}</button>
+				</div>
+			</div>
+		</div>
+		<div fxFlex="50" fxLayout="column">
+			<div fxFlex=50>
+			</div>
+			<img src="../../assets/images/notFoundImage.png" style="width:35%;" alt="">
+		</div>
+	</div>
+</div>
+<!--action buttons template  -->
+<ng-template #menuTemplate let-row="row" let-col="col">
+	<div *ngIf="col.NAME === 'ACTION'">
+		<button [disabled]="customTableService.selection.hasValue()" mat-button [matMenuTriggerFor]="menu"
+			(click)="$event.preventDefault(); $event.stopPropagation(); setSlaActions(row);">
+			<mat-icon class="light-grey-color">more_horiz</mat-icon>
+		</button>
+		<mat-menu #menu="matMenu" yPosition="below">
+			<button style="padding: 0px 10px;line-height: 35px;height: 35px;" mat-menu-item *ngFor="let action of actions"
+				(click)="menuItemClicked(action,row)">
+				<mat-icon style="font-size: 18px;vertical-align: text-top;">{{action.ICON}}</mat-icon><span
+					style="font-size: 12px;font-weight: normal;">{{action.NAME}}</span>
+			</button>
+		</mat-menu>
+	</div>
+</ng-template>

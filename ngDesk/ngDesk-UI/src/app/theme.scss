@@ -1,0 +1,108 @@
+@use '~@angular/material' as mat;
+
+@include mat.core();
+
+@mixin non-material-element-theme($theme) {
+	$primary: map-get($theme, primary);
+
+	.custom-theme-primary-color {
+		background: mat.get-color-from-palette($primary);
+	}
+
+	.custom-theme-primary-font-color {
+		color: mat.get-color-from-palette($primary);
+	}
+
+	.custom-theme-icon-color {
+		color: mat.get-color-from-palette($primary, '600-contrast');
+	}
+
+	.custom-theme-offset-Primary-Color {
+		background: mat.get-color-from-palette($primary, lighter);
+	}
+}
+
+.theme-wrapper {
+	--primaryColor: #ffff;
+	--hoverColor: #ffff;
+	--secondaryColor: #ffff;
+	--blendColor: #ffff;
+}
+
+$variables: (--primaryColor: var(--primaryColor),
+	--hoverColor: var(--hoverColor),
+	--secondaryColor: var(--secondaryColor),
+	--blendColor: var(--blendColor));
+
+.blue-theme {
+	$blue-primary: mat.define-palette(mat.$indigo-palette);
+	$blue-accent: mat.define-palette(mat.$indigo-palette, 300);
+	$blue-warn: mat.define-palette(mat.$red-palette);
+	$blue-theme: mat.define-light-theme($blue-primary, $blue-accent, $blue-warn);
+
+	@include mat.all-component-themes($blue-theme);
+	@include non-material-element-theme($blue-theme);
+}
+
+.green-theme {
+	$green-primary: mat.define-palette(mat.$green-palette, 600);
+	$green-accent: mat.define-palette(mat.$green-palette, 200);
+	$green-warn: mat.define-palette(mat.$red-palette);
+	$green-theme: mat.define-light-theme($green-primary, $green-accent, $green-warn);
+
+	@include mat.all-component-themes($green-theme);
+	@include non-material-element-theme($green-theme);
+}
+
+.red-theme {
+	$red-primary: mat.define-palette(mat.$red-palette);
+	$red-accent: mat.define-palette(mat.$red-palette, 200);
+	$red-warn: mat.define-palette(mat.$red-palette);
+	$red-theme: mat.define-light-theme($red-primary, $red-accent, $red-warn);
+
+	@include mat.all-component-themes($red-theme);
+	@include non-material-element-theme($red-theme);
+}
+
+.red1-theme {
+	$red-primary: mat.define-palette(mat.$red-palette, 600);
+	$red-accent: mat.define-palette(mat.$red-palette, 200);
+	$red-warn: mat.define-palette(mat.$red-palette);
+	$red-theme: mat.define-light-theme($red-primary, $red-accent, $red-warn);
+
+	@include mat.all-component-themes($red-theme);
+	@include non-material-element-theme($red-theme);
+}
+
+.yellow-theme {
+
+	$yellow-primary: mat.define-palette(mat.$yellow-palette, A400);
+	$yellow-accent: mat.define-palette(mat.$yellow-palette, 300);
+	$yellow-warn: mat.define-palette(mat.$red-palette);
+	$yellow-theme: mat.define-light-theme($yellow-primary, $yellow-accent, $yellow-warn);
+
+	@include mat.all-component-themes($yellow-theme);
+	@include non-material-element-theme($yellow-theme);
+}
+
+.purple-theme {
+	$purple-primary: mat.define-palette(mat.$purple-palette);
+	$purple-accent: mat.define-palette(mat.$purple-palette, 200);
+	$purple-warn: mat.define-palette(mat.$red-palette);
+	$purple-theme: mat.define-light-theme($purple-primary, $purple-accent, $purple-warn);
+
+	@include mat.all-component-themes($purple-theme);
+	@include non-material-element-theme($purple-theme);
+}
+
+$mat-black: (50: #000000, 200: #c0c0c0, 600: #a9a9a9, contrast: (50: white, 200: rgba(black, 0.87), 600: white));
+
+.black-theme {
+	$black-primary: mat.define-palette($mat-black, 50);
+	$black-accent: mat.define-palette($mat-black, 200);
+	$black-warn: mat.define-palette(mat.$red-palette);
+	$black-theme: mat.define-light-theme($black-primary, $black-accent, $black-warn);
+
+	@include mat.all-component-themes($black-theme);
+	@include non-material-element-theme($black-theme);
+}

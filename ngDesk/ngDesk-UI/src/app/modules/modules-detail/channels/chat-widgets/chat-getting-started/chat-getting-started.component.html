@@ -1,0 +1,487 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<div *ngIf="chatChannel" class="pad10">
+	<ng-template #headerTemplateRef>
+		<app-title-bar title="{{chatChannel.NAME}}"></app-title-bar>
+	</ng-template>
+	<div fxLayout="column" fxLayoutAlign="center center">
+		<mat-error class="mat-body">{{errorMessage}}</mat-error>
+	</div>
+	<div fxLayout="column">
+		<mat-tab-group #chatSettingsTabs>
+			<!-- SETUP TAB -->
+			<mat-tab label="Setup">
+				<div class="mat-h2" style="text-align: center">{{'INSTALL_WIDGET' | translate}}</div>
+				<div id="chat-script"
+					[ngClass]="{'z9999': fpos.hostElement === 'chat-script', 'white-background': fpos.hostElement === 'chat-script'}" #chatScript>
+					<h3 class="mat-h3" style="text-align: center" [innerHTML]="'COPY_CHAT_DISCLAIMER' | translate"></h3>
+					<div style="padding-left: 25%; padding-right: 25%;">
+						<pre
+							style="background-color: rgb(7, 7, 7); border-radius: 8px; padding-right: 2%; cursor: pointer; white-space: pre-wrap; margin: 0;"
+							(click)="copyToClipboard()">
+			  <ol style=" margin-top: 0; margin-bottom: 0; cursor: pointer; color: rgb(255, 255, 255); word-break: break-word;" fxLayout="column" fxLayoutGap="5px" >
+				<div fxLayoutAlign="end start">	<mat-icon aria-hidden="false"  matTooltip="{{'COPY_TO_CLIPBOARD' | translate}}">content_copy</mat-icon></div>
+				<li><span><span>&lt;script&gt;</span></span></li><li><span>var script = document.createElement(&#34;script&#34;);</span></li><li><span>script.type = &#34;text/javascript&#34;;</span></li><li><span>script.src = &#34;https://{{subdomain}}.ngdesk.com/widgets/chat/{{chatChannel.CHANNEL_ID}}/chat_widget.js&#34;;</span></li><li><span>document.getElementsByTagName(&#34;head&#34;)[0].appendChild(script);</span></li><li><span class="tag">&lt;/script&gt;</span></li>
+			  </ol>
+			</pre>
+					</div>
+					<br>
+					<h3 class="mat-h3" style="text-align: center" [innerHTML]="'USE_PLUGIN' | translate"></h3>
+					<div id="chat-plugin" style="padding-left: 40%"
+						[ngClass]="{'z9999': fpos.hostElement === 'chat-plugin', 'white-background': fpos.hostElement === 'chat-plugin'}" #chatPlugin
+						fxLayout="row" fxLayoutGap="10px">
+						<div fxLayout="row" fxLayoutGap="10px">
+							<mat-form-field>
+								<mat-label>{{'SELECT_PLUGIN' | translate}}</mat-label>
+								<mat-select [(ngModel)]="selectedPlugin">
+									<mat-option *ngFor="let plugin of this.plugins" [value]="plugin">
+										{{plugin.NAME}}
+									</mat-option>
+								</mat-select>
+							</mat-form-field>
+							<div fxLayoutAlign="center center">
+								<button mat-raised-button color="primary" style="margin-left: 2%;" (click)="downloadPlugin()">
+									<mat-icon aria-hidden="false">archive</mat-icon>
+								</button> </div>
+						</div>
+					</div>
+					<mat-divider style="margin-left: 25%; margin-right: 25%;"></mat-divider><br>
+					<h3 class="mat-h3" style="text-align: center" [innerHTML]="'EMAIL_INSTRUCTIONS' | translate"></h3>
+					<div style="padding-left: 30%" id="chat-email-developers"
+						[ngClass]="{'z9999': fpos.hostElement === 'chat-email-developers', 'white-background': fpos.hostElement === 'chat-email-developers'}"
+						#chatEmailDevelopers>
+						<mat-form-field style="width: 50%;">
+							<mat-chip-list #developerEmail>
+								<mat-chip *ngFor="let email of developerEmails" [selectable]="true" [removable]="true" (removed)="remove(email)">
+									{{email}}
+									<mat-icon matChipRemove>cancel</mat-icon>
+								</mat-chip>
+								<input placeholder="{{'ENTER_EMAIL_HERE' | translate}}" [matChipInputFor]="developerEmail"
+									[matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="add($event)">
+							</mat-chip-list>
+						</mat-form-field>
+						<button mat-raised-button color="primary" style="margin-left: 2%;" (click)="sendEmailToDevelopers()">
+							<mat-icon aria-hidden="false">send</mat-icon>
+						</button>
+					</div>
+					<h3 class="mat-small" style="text-align: center" [innerHTML]="'MULTIPLE_EMAIL' | translate"></h3>
+				</div>
+			</mat-tab>
+
+			<!-- CUSTOMIZATION TAB -->
+			<mat-tab label="Customization">
+				<!-- SAVE CHAT WIDGET CUSTOMIZATION CHANGES -->
+				<br>
+				<div fxLayoutAlign="end center">
+					<button
+						[disabled]="!headerColor.validity.valid || !textColor.validity.valid || !senderBubbleColor.validity.valid || !senderTextColor.validity.valid || !receiverTextColor.validity.valid || !receiverBubbleColor.validity.valid"
+						mat-raised-button mat-primary color="primary" (click)="saveCustomization()">
+						{{'SAVE' | translate}}
+					</button>
+				</div><br>
+				<!-- PANELS-->
+				<mat-accordion style="margin-top: 50px">
+					<mat-expansion-panel style="padding-top: 5vh" id="chat-customize-details"
+						[ngClass]="{'z9999': fpos.hostElement === 'chat-customize-details', 'white-background': fpos.hostElement === 'chat-customize-details'}"
+						#chatCustomizeDetails>
+						<mat-expansion-panel-header>
+							<mat-panel-title fxFlex="30">
+								{{ 'CUSTOMIZE_WIDGET' | translate}}
+							</mat-panel-title>
+							<mat-panel-description>
+								{{ 'CUSTOMIZE_WIDGET_DESCRIPTION' | translate}}
+							</mat-panel-description>
+						</mat-expansion-panel-header>
+						<!-- USER INPUT FIELDS FOR CHAT WIDGET CUSTOMIZATION -->
+						<div fxFlex.lt-lg="1100px">
+							<div fxLayoutGap="50px" fxLayout="row" fxLayout.lt-lg="column" style="margin-top: 20px;">
+								<div fxLayout="column" id="chat-customize-details"
+									[ngClass]="{'z9999': fpos.hostElement === 'chat-customize-details', 'white-background': fpos.hostElement === 'chat-customize-details'}"
+									#chatCustomizeDetails>
+									<div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign=" center" style="padding-top: 15px;">
+										<label class="mat-body" style="width:175px;">{{'HEADER_NAME' | translate}}</label>
+										<mat-form-field style="width: 230px;">
+											<input placeholder="Max 25 Characters" matInput #headerColor fxLayout="column" [(ngModel)]="this.chatChannel.TITLE"
+												style="color:black;" maxlength="25">
+										</mat-form-field>
+									</div>
+									<div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign=" center">
+										<label class="mat-body" style="width:175px;">{{'HEADER_COLOR' | translate}}</label>
+										<input type="color" [(ngModel)]="this.chatChannel.HEADER_COLOR" />
+										<mat-form-field>
+											<input matInput #headerColor fxLayout="column" [(ngModel)]="this.chatChannel.HEADER_COLOR" style="color:black;"
+												value="{{this.chatChannel.HEADER_COLOR}}" pattern="^#+([a-fA-F0-9]{6})$" required />
+											<mat-error>{{ "HEX_ERROR" | translate }}</mat-error>
+										</mat-form-field>
+									</div>
+									<div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign=" center" style="margin-bottom: 0px;">
+										<label class="mat-body" style="width:175px;">{{'HEADER_TEXT_COLOR' | translate}}</label>
+										<input type="color" [(ngModel)]="this.chatChannel.HEADER_TEXT_COLOR" />
+										<mat-form-field>
+											<input matInput #textColor fxLayout="column" [(ngModel)]="this.chatChannel.HEADER_TEXT_COLOR" style="color:black;"
+												value="{{this.chatChannel.HEADER_TEXT_COLOR}}" pattern="^#+([a-fA-F0-9]{6})$" required />
+											<mat-error>{{ "HEX_ERROR" | translate }}</mat-error>
+										</mat-form-field>
+									</div>
+									<div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign=" center" style="padding-top: 15px;">
+										<label class="mat-body" style="width:175px;">{{'HEADER_ICON' | translate}}</label>
+										<button mat-raised-button color="basic" (click)="fileInput.click()">
+											<span>Choose File</span>
+											<input #fileInput type="file" (change)="onFileChanged($event)" style="display:none;" />
+										</button>
+										<span style="width:200px;word-wrap: break-word;">{{fileName}}</span>
+									</div>
+									<div style="margin-top: 4%;">
+										<button *ngIf="!showMore" mat-raised-button color="basic" (click)="showMoreToggle(true)">
+											<mat-icon>keyboard_arrow_down</mat-icon> {{'SHOW_MORE' | translate}}
+										</button>
+										<button *ngIf="showMore" mat-raised-button color="basic" (click)="showMoreToggle(false)">
+											<mat-icon>keyboard_arrow_up</mat-icon> {{'SHOW_LESS' | translate}}
+										</button>
+									</div>
+									<div id="moreSettings" style="display: none;">
+										<div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign=" center" style="padding-top: 15px;margin-bottom: 0px;">
+											<label class="mat-body" style="width:175px;">{{'SENDER_BUBBLE_COLOR' | translate}}</label>
+											<input type="color" [(ngModel)]="this.chatChannel.SENDER_BUBBLE_COLOR" />
+											<mat-form-field>
+												<input matInput #senderBubbleColor fxLayout="column" [(ngModel)]="this.chatChannel.SENDER_BUBBLE_COLOR"
+													style="color:black;" value="{{this.chatChannel.SENDER_BUBBLE_COLOR}}" pattern="^#+([a-fA-F0-9]{6})$" required />
+												<mat-error>{{ "HEX_ERROR" | translate }}</mat-error>
+											</mat-form-field>
+										</div>
+										<div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign=" center" style="margin-bottom: 0px;">
+											<label class="mat-body" style="width:175px;">{{'SENDER_TEXT_COLOR' | translate}}</label>
+											<input type="color" [(ngModel)]="this.chatChannel.SENDER_TEXT_COLOR" />
+											<mat-form-field>
+												<input matInput #senderTextColor fxLayout="column" [(ngModel)]="this.chatChannel.SENDER_TEXT_COLOR"
+													style="color:black;" value="{{this.chatChannel.SENDER_TEXT_COLOR}}" pattern="^#+([a-fA-F0-9]{6})$" required />
+												<mat-error>{{ "HEX_ERROR" | translate }}</mat-error>
+											</mat-form-field>
+										</div>
+										<div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign=" center" style="margin-bottom: 0px;">
+											<label class="mat-body" style="width:175px;">{{'RECEIVER_BUBBLE_COLOR' | translate}}</label>
+											<input type="color" [(ngModel)]="this.chatChannel.RECEIVER_BUBBLE_COLOR" />
+											<mat-form-field>
+												<input matInput #receiverBubbleColor fxLayout="column" [(ngModel)]="this.chatChannel.RECEIVER_BUBBLE_COLOR"
+													style="color:black;" value="{{this.chatChannel.RECEIVER_BUBBLE_COLOR}}" pattern="^#+([a-fA-F0-9]{6})$" required />
+												<mat-error>{{ "HEX_ERROR" | translate }}</mat-error>
+											</mat-form-field>
+										</div>
+										<div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign=" center" style="margin-bottom: 0px;">
+											<label class="mat-body" style="width:175px;">{{'RECEIVER_TEXT_COLOR' | translate}}</label>
+											<input type="color" [(ngModel)]="this.chatChannel.RECEIVER_TEXT_COLOR" />
+											<mat-form-field>
+												<input matInput #receiverTextColor fxLayout="column" [(ngModel)]="this.chatChannel.RECEIVER_TEXT_COLOR"
+													style="color:black;" value="{{this.chatChannel.RECEIVER_TEXT_COLOR}}" pattern="^#+([a-fA-F0-9]{6})$" required />
+												<mat-error>{{ "HEX_ERROR" | translate }}</mat-error>
+											</mat-form-field>
+										</div>
+									</div>
+								</div>
+								<!-- PREVIEW OF CHAT WIDGET AFTER CUSTOMIZATION -->
+
+								<div fxLayout="row" fxLayoutGap="30px">
+									<div fxLayout="column"
+										style="height: 550px; width: 320px; background-color: white; border: 1px solid #b0b0b0; border-radius: 5px;">
+										<div fxLayoutAlign="space-between center"
+											[ngStyle]="{'background-color': this.chatChannel.HEADER_COLOR, 'color': this.chatChannel.HEADER_TEXT_COLOR}">
+											<div fxFlex="15" fxLayoutAlign="center">
+												<img src="{{this.chatChannel.FILE}}" style="height: 25px; width: 25px;" />
+											</div>
+											<div fxLayout="column" fxLayoutAlign="center center" style="margin: 10px 0px" fxFlex>
+												<h3 class="mat-h3" style="margin: 0px;">{{this.chatChannel.TITLE}}</h3>
+											</div>
+											<div fxLayoutAlign="center" fxFlex="15">
+												<span fxLayoutAlign="center" class="pointer">
+													<mat-icon matTooltip="Minimize">remove</mat-icon>
+												</span>
+												<span fxLayoutAlign="center" class="pointer" style="margin-right: 10px">
+													<mat-icon matTooltip="Close">close</mat-icon>
+												</span>
+											</div>
+										</div>
+										<mat-divider></mat-divider>
+										<div fxFlex style="padding: 15px;" fxLayout="column">
+											<div fxFlex fxLayout="column">
+												<form fxLayout="column" fxFlex="100">
+													<div fxLayoutAlign="center center" style="text-align: center;margin-bottom: 10px">
+														<label class="mat-body">{{'CHAT_WITH_US' | translate}}</label>
+													</div>
+													<mat-form-field [floatLabel]="'always'" class="mat-form-field--remove-padding" appearance="outline"
+														style="padding-bottom: 0px">
+														<mat-label>{{'FIRST_NAME' | translate}}</mat-label>
+														<input type="text" matInput required />
+													</mat-form-field>
+													<mat-form-field [floatLabel]="'always'" class="mat-form-field--remove-padding" appearance="outline"
+														style="padding-bottom: 0px">
+														<mat-label>{{'LAST_NAME' | translate}}</mat-label>
+														<input type="text" matInput />
+													</mat-form-field>
+													<mat-form-field [floatLabel]="'always'" class="mat-form-field--remove-padding" appearance="outline"
+														style="padding-bottom: 0px">
+														<mat-label>{{'EMAIL_ADDRESS' | translate}}</mat-label>
+														<input type="text" matInput required />
+													</mat-form-field>
+													<div fxFlex></div>
+													<button
+														[ngStyle]="{'background-color': this.chatChannel.HEADER_COLOR, 'color': this.chatChannel.HEADER_TEXT_COLOR}"
+														mat-raised-button color="primary" style="min-height:11%">
+														{{'START_CHAT' | translate}}
+													</button>
+												</form>
+											</div>
+										</div>
+									</div>
+
+									<!-- CHAT CHANNEL PREVIEW -->
+									<div fxLayout="column"
+										style="height: 550px; width: 320px; background-color: white; border: 1px solid #b0b0b0; border-radius: 5px;">
+										<div fxLayoutAlign="space-between center"
+											[ngStyle]="{'background-color': this.chatChannel.HEADER_COLOR, 'color': this.chatChannel.HEADER_TEXT_COLOR}">
+											<div fxFlex="15" fxLayoutAlign="center">
+												<img src="{{this.chatChannel.FILE}}" style="height: 25px; width: 25px;" />
+											</div>
+											<div fxLayout="column" fxLayoutAlign="center center" style="margin: 10px 0px" fxFlex>
+												<h3 class="mat-h3" style="margin: 0px;">{{this.chatChannel.TITLE}}</h3>
+											</div>
+											<div fxLayoutAlign="center" fxFlex="15">
+												<span fxLayoutAlign="center" class="pointer">
+													<mat-icon matTooltip="Minimize">remove</mat-icon>
+												</span>
+												<span fxLayoutAlign="center" class="pointer" style="margin-right: 10px">
+													<mat-icon matTooltip="Close">close</mat-icon>
+												</span>
+											</div>
+										</div>
+										<mat-divider></mat-divider>
+										<div fxFlex fxLayout="column" fxLayoutGap="10px">
+											<div class="pad10" fxLayoutAlign="center center" style="text-align: center;margin-bottom: 10px">
+												<div class="container">
+													<div class="divider">
+														<mat-divider></mat-divider>
+													</div>
+													<div class="mat-small">{{'USER_JOINS_CHAT' | translate}} <br>May 19,2020,8:07:34 PM</div>
+													<div class="divider">
+														<mat-divider></mat-divider>
+													</div>
+												</div>
+											</div>
+											<div style="padding: 5px;" fxLayout="column" fxLayoutGap="10px">
+												<div style="place-content: flex-end;align-items: flex-end;" fxLayout="column">
+													<div>
+														<label class="mat-caption">8.07 PM</label>
+													</div>
+													<div class="mat-body"
+														[ngStyle]="{'background-color': this.chatChannel.SENDER_BUBBLE_COLOR, 'color': this.chatChannel.SENDER_TEXT_COLOR}"
+														style="border-radius: 7px; padding: 8px;">
+														<span>{{'AGENT_REPLY' | translate}} </span>
+													</div>
+												</div>
+												<div fxLayoutAlign="start start" fxLayout="column">
+													<div>
+														<label class="mat-caption">8.08 PM</label>
+													</div>
+													<div class="mat-body"
+														[ngStyle]="{'background-color': this.chatChannel.RECEIVER_BUBBLE_COLOR, 'color': this.chatChannel.RECEIVER_TEXT_COLOR}"
+														style="border-radius: 7px; padding: 8px;">
+														<span>{{'USER_REPLY' | translate}}</span>
+													</div>
+												</div>
+												<div style="place-content: flex-end;align-items: flex-end;" fxLayout="column">
+													<div>
+														<label class="mat-caption">8.09 PM</label>
+													</div>
+													<div class="mat-body"
+														[ngStyle]="{'background-color': this.chatChannel.SENDER_BUBBLE_COLOR, 'color': this.chatChannel.SENDER_TEXT_COLOR}"
+														style="border-radius: 7px; padding: 8px;">
+														<span>{{'THANK_YOU' | translate}} </span>
+													</div>
+												</div>
+											</div>
+											<div fxFlex></div>
+											<mat-divider></mat-divider>
+											<div style="min-height:10%; padding: 5px;" fxLayout="column" fxLayoutGap="10px">
+												<div>
+													<label class="mat-body">{{'TYPE_A_MESSAGE' | translate}}</label>
+												</div>
+												<div fxLayout="row" fxLayoutAlign="space-between center">
+													<div fxLayoutAlign=" start start">
+														<mat-icon style="transform: scale(0.8);">mail_outline</mat-icon>
+														<mat-icon style="transform: scale(0.8);">attach_file</mat-icon>
+													</div>
+													<div>
+														<label style="font-size: 12px;">{{'NGDESK' | translate}}</label>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- END CHAT CHANNEL PREVIEW -->
+								</div>
+							</div>
+						</div>
+					</mat-expansion-panel>
+
+					<mat-expansion-panel style="padding-top: 1vh" id="chat-prechat-survey"
+						[ngClass]="{'z9999': fpos.hostElement === 'chat-prechat-survey', 'white-background': fpos.hostElement === 'chat-prechat-survey'}"
+						#chatPrechatSurvey>
+						<mat-expansion-panel-header>
+							<mat-panel-title fxFlex="30">
+								{{ 'PRE_CHAT_SURVEY' | translate}}
+							</mat-panel-title>
+							<mat-panel-description>
+								{{ 'PRE_CHAT_SURVEY_DESCRIPTION' | translate}}
+							</mat-panel-description>
+						</mat-expansion-panel-header>
+
+						<!-- ENABLE PRE-CHAT SURVEY -->
+						<div fxFlex fxLayout="column" fxLayoutGap="3%">
+							<label class="mat-body" style="color: #9e9e9e;">{{'PRE_CHAT_SURVEY_SUBTITLE' | translate}}</label>
+							<div fxLayout="row" fxFlex>
+								<div fxFlex="60" fxLayoutAlign="center start">
+									<img src="../../../../../../assets/images/pre-chat.jpg" style="width:80%;height:80%;" alt="">
+								</div>
+								<div fxLayoutAlign="center start" fxFlex="30" fxLayoutGap="2%">
+									<div fxLayoutAlign="start center">
+										<label class="mat-body">{{'ENABLE_PRE_CHAT_SURVEY' | translate}}</label> </div>
+									<mat-slide-toggle class="mat-body" [color]="'primary'" [(ngModel)]="this.chatChannel.SETTINGS.PRE_SURVEY_REQUIRED">
+									</mat-slide-toggle>
+								</div>
+							</div>
+						</div>
+					</mat-expansion-panel>
+					<mat-expansion-panel style="padding-top: 1vh" id="chat-business-rules"
+						[ngClass]="{'z9999': fpos.hostElement === 'chat-business-rules', 'white-background': fpos.hostElement === 'chat-business-rules'}"
+						#chatBusinessRules>
+						<mat-expansion-panel-header>
+							<mat-panel-title fxFlex="30">
+								{{ 'BUSINESS_RULES' | translate}}
+							</mat-panel-title>
+							<mat-panel-description>
+								{{ 'BUSINESS_RULES_DESCRIPTION' | translate}}
+							</mat-panel-description>
+						</mat-expansion-panel-header>
+						<div fxFlex fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="5%">
+							<!-- Operating Hours-->
+							<div fxLayoutAlign="start start">
+								<label class="mat-body" style="color: #9e9e9e;">{{'BUSINESS_HOURS_SUBTITLE' | translate}}</label>
+							</div>
+							<div fxFlex="100%" fxLayout="row" fxLayoutAlign="center start">
+								<div fxLayoutAlign="center start" fxFlex="50">
+									<img src="../../../../../../assets/images/work-hours.jpg" style="width:70%;height:50%;" alt="">
+								</div>
+								<!-- Operating hours settings display -->
+								<div fxFlex="50" fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="2%" style="width: 100%;">
+									<div fxFlex="40" fxLayout="row" id="chat-operating-hours-switch"
+										[ngClass]="{'z9999': fpos.hostElement === 'chat-operating-hours-switch'}" #chatOperatingHoursSwitch
+										fxLayoutAlign="center center" fxLayoutGap="2%" style="width: 100%;">
+										<div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="2%">
+											<mat-slide-toggle [(ngModel)]="buttonValue" (ngModelChange)="chatBusinessToggled()">Operating Hours
+											</mat-slide-toggle>
+											<div (click)="activateBusinessRule(true,true)"
+												*ngIf="(chatBusinessRule.ACTIVE || chatBusinessRule.RESTRICTIONS.length > 0)"
+												style="padding: 5px;cursor: pointer;color: #757575;">
+												<mat-icon>edit</mat-icon>
+											</div>
+										</div>
+									</div>
+									<!-- Timezone -->
+									<div fxFlex="35" fxLayout="row" *ngIf="chatBusinessRule.ACTIVE" fxLayoutGap="5%" fxLayoutAlign="center center"
+										style="width: 100%;">
+										<label class="mat-body">Select Timezone </label>
+										<mat-form-field>
+											<mat-select [disabled]="disableButtons" placeholder="Timezone" [(ngModel)]="timezone">
+												<mat-option *ngFor="let timezone of timeZones" [value]="timezone">
+													{{timezone}}
+												</mat-option>
+											</mat-select>
+										</mat-form-field>
+									</div>
+									<div fxFlex fxLayout="column" fxLayoutAlign="start center" fxFlex="25" style="margin-right: 5%;"
+										*ngIf="chatBusinessRule.RESTRICTIONS.length > 0 && chatBusinessRule.RESTRICTIONS[0]['START_TIME'] !== ''"
+										fxLayoutGap="5px">
+										<div fxLayout="row" style="color: #ffffff; background-color: #1A69AC; border-radius: 5px; padding: 5px;"
+											fxLayoutAlign="center center" *ngFor="let restriction of chatBusinessRule.RESTRICTIONS;">
+											<label>From &nbsp;</label>
+											<label *ngIf="chatBusinessRule.RESTRICTION_TYPE == 'Week'">{{ restriction.START_DAY}}&nbsp;</label>
+											<label>{{ restriction.START_TIME}}&nbsp;</label>
+											<label>to&nbsp;</label>
+											<label *ngIf="chatBusinessRule.RESTRICTION_TYPE == 'Week'">{{ restriction.END_DAY}}&nbsp;</label>
+											<label>{{ restriction.END_TIME}}&nbsp;</label>
+											<div *ngIf="chatBusinessRule.RESTRICTION_TYPE !== 'Week'">everyday&nbsp;</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</mat-expansion-panel>
+					<!-- Chat bot yet to be designed -->
+					<!-- <mat-expansion-panel style="padding-top: 1vh" id="chat-bot">
+						<mat-expansion-panel-header>
+							<mat-panel-title fxFlex="30">
+								{{ 'CHAT_BOTS' | translate}}
+							</mat-panel-title>
+							<mat-panel-description>
+								{{ 'CHAT_BOTS_DESCRIPTION' | translate}}
+							</mat-panel-description>
+						</mat-expansion-panel-header>
+						<div fxFlex fxLayout="column" fxLayoutAlign="start start">
+							<div fxLayoutGap="10px" fxLayout="column">
+								<label class="mat-body" style="color: #9e9e9e;">{{'CHAT_BOT_SUBTITLE' | translate}}</label>
+								<div style="padding-top: 2%;" fxLayoutAlign="start start" fxLayout="row">
+									<div fxLayoutAlign="center center" fxFlex="50">
+										<img src="../../../../../../assets/images/chat-bot.jpg" style="width:70%;height:40%;" alt="">
+									</div>
+									<div fxLayoutAlign="center center" fxFlex="50" fxLayout="column">
+										<div fxLayoutGap="10px" fxLayout="row" fxFlex="50" *ngIf="chatBotsExist" fxFlex="30" fxLayoutAlign="start start">
+											<label class="mat-body"> {{ 'ENABLE_BOT' | translate}} </label>
+											<mat-slide-toggle [color]="'primary'" [(ngModel)]="this.chatChannel.SETTINGS.BOT_SETTINGS.BOT_ENABLED"
+												(ngModelChange)="chatBotToggled()">
+											</mat-slide-toggle>
+										</div>
+										<div fxFlex="50" *ngIf="this.chatChannel.SETTINGS.BOT_SETTINGS.BOT_ENABLED" fxLayoutAlign="start start">
+											<mat-form-field>
+												<mat-label>{{'CHAT_BOT' | translate}}</mat-label>
+												<mat-select [(ngModel)]="this.chatChannel.SETTINGS.BOT_SETTINGS.CHAT_BOT">
+													<mat-option *ngFor="let bot of chatBots" [value]="bot.CHAT_BOT_ID">{{ bot.NAME }}</mat-option>
+												</mat-select>
+											</mat-form-field>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div *ngIf="!chatBotsExist"><label class="mat-body"> {{ 'CHATBOT_NOT_PRESENT' | translate}}
+								</label>
+								<label (click)="createBot()"
+									style="text-decoration: underline blue; color: blue; font-size: 12px; cursor: pointer; ">{{ 'CREATE_CHATBOT_LINK' | translate}}</label>
+							</div>
+						</div>
+					</mat-expansion-panel> -->
+				</mat-accordion>
+			</mat-tab>
+
+			<!-- Prompt -->
+			<mat-tab label="Prompts">
+				<div fxLayout="column" fxLayoutGap="10px" class="pad10" id="chat-prompts-details"
+					[ngClass]="{'z9999': fpos.hostElement === 'chat-prompts-details', 'white-background': fpos.hostElement === 'chat-prompts-details'}"
+					#chatPromptsDetails>
+					<app-title-bar title="{{'CHAT_PROMPTS' | translate}}" buttonText="{{'NEW' | translate}}" (buttonRightOnClick)="newPrompt()"
+						id="chat-prompts-details" [ngClass]="{'z9999': fpos.hostElement === 'chat-prompts-details'}" #chatPromptsDetails>
+					</app-title-bar>
+
+					<app-custom-table [templateRef]="columnTemplateRef" (rowClickedEvent)="rowClicked($event)" [actions]="promptsActions.actions"
+						noRecordsMessage="{{'NO_CHAT_PROMPTS_FOUND' | translate}}"
+						(menuItemTrigger)="promptsActions[$event.ACTION.NAME]($event.ROW_DATA);" (pageChangeEmit)="pageChangeEmit($event);" fxFlex>
+						<ng-template #columnTemplateRef let-element="element" let-col="col">
+							{{element[col.NAME] }}
+						</ng-template>
+					</app-custom-table>
+				</div>
+			</mat-tab>
+		</mat-tab-group>
+	</div>
+</div>
+<ng-template #loading>
+	<div fxLayout="column" fxLayoutAlign="center center" style="margin-top: 20px;">
+		<mat-spinner></mat-spinner>
+	</div>
+</ng-template>

@@ -1,0 +1,14 @@
+{
+	"COMPANY_SUBDOMAIN_NOT_FOUND": "company with '${1}' subdomain not found, please contact support with the URL",
+	"ZOOM_INTEGRATION_ERROR": "The provided zoom account might already contain ngDesk application, please uninstall and try again. If the issue persists, please contact support with error code ${1}",
+	"UNABLE_TO_CREATE_MEETING": "Zoom meeting creation error. Error code ${1}, please contact support", 
+	"MICROSOFT_TEAMS_CHANNEL_NOT_FOUND" : "The Microsoft channel that you are trying to get does not exist , Please try again" , 
+	"AUTHENTICATION_FAILED" : "Authentication failed, Please try again",
+	"COMPANY_ID": "company id",
+	"HTML_DOCUMENT": "html document",
+	"DATA_ID": "data id",
+	"MODULE": "module",
+	"INVALID_MODULE_ID": "The module you have selected may have been deleted, please select a valid module",
+	"INVALID_DATA_ID": "The data id you have selected may have been deleted, please select a valid data id",
+	"DOCUMENT_IS_SIGNED": "The document you are trying to access might have been deleted or might have been signed."
+}

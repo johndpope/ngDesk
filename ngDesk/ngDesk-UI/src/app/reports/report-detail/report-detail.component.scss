@@ -1,0 +1,70 @@
+#report-table {
+  .mat-header-cell {
+    padding-left: 10px;
+    border-right: 1px solid rgba(0, 0, 0, .12);
+  }
+
+  .mat-cell {
+    padding-left: 10px;
+    border-right: 1px solid rgba(0, 0, 0, .12);
+  }
+}
+
+::ng-deep .mat-tab-label,
+::ng-deep .mat-tab-label-active {
+  min-width: 0 !important;
+  padding: 3px !important !important;
+  margin: 3px !important !important;
+  width: 50% !important;
+  height: 55px !important;
+}
+
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+#content::-webkit-scrollbar {
+	width: 7px;
+	height: 7px;
+}
+
+#content::-webkit-scrollbar-track {
+	background: #f1f1f1;
+}
+
+/* Handle */
+#content::-webkit-scrollbar-thumb {
+	background: #888;
+}
+
+/* Handle on hover */
+#content::-webkit-scrollbar-thumb:hover {
+	background: #555;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+tr.example-detail-row {
+  height: 0;
+}
+
+#custom {
+  width: 100%;
+}
+
+
+
+

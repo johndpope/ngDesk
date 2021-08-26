@@ -1,0 +1,26 @@
+<StackLayout>
+  <Label text="api-keys works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<app-toolbar></app-toolbar>
+<div fxLayout="column" fxLayoutGap="10px" class="pad10">
+  <app-title-bar title="{{'API_KEYS' | translate }}" buttonText="{{'NEW'|translate}}"
+      (buttonRightOnClick)="NewApiKey()"></app-title-bar>
+  <div fxLayout="row">
+    <div fxFlex>
+      <app-custom-table [templateRef]="columnTemplateRef" noRecordsMessage="{{'NO_API_KEYS_FOUND' | translate}}"
+          [actions]="apiKeysActions.actions" (menuItemTrigger)="apiKeysActions[$event.ACTION.NAME]($event.ROW_DATA);"
+          (pageChangeEmit)="pageChangeEmit($event);customTableService.isLoading = true" (sortData)="sortData($event)">
+        <ng-template #columnTemplateRef let-element="element" let-col="col">
+          {{element[col.NAME]}}
+        </ng-template>
+      </app-custom-table>
+    </div>
+  </div>
+</div>
+-->

@@ -1,0 +1,184 @@
+<app-toolbar *ngIf="!(checkGettingStarted > 0)" [templateRef]="headerTemplateRef"></app-toolbar>
+<!--Page feature start-->
+<form [formGroup]="customizationForm" id="customization" class="pad10">
+	<ng-template #headerTemplateRef>
+		<app-title-bar class="light-grey-color" (buttonRightOnClick)="save()" title="{{'CUSTOMIZATION' | translate}}"
+			buttonText="{{'SAVE' | translate}}">
+		</app-title-bar>
+	</ng-template>
+	<div *ngIf="checkGettingStarted > 0" fxLayoutAlign="space-between flex-start">
+		<h1 class="mat-h1" style="font-weight: 550; margin: 0px;">{{'CUSTOMIZATION_GETTING_STARTED' | translate}}</h1>
+		<button mat-raised-button color="primary" (click)="save()">{{'SAVE' | translate}}</button>
+	</div>
+	<h3 *ngIf="(checkGettingStarted > 0)" class="mat-h3" style="color: #9e9e9e;">{{'CUSTOMIZATION_SUBTITLE' | translate}}</h3>
+	<div id="colorPicker" fxLayout="column">
+		<div fxLayout="column" style="margin-top: 2%; margin-left: 2%;" fxLayoutGap="2%" fxFlex="50">
+			<div *ngIf='errorMessage != undefined || successMessage != undefined' fxLayoutAlign="center">
+				<mat-error class="mat-body">{{errorMessage}}</mat-error>
+				<label class="green-color mat-body">{{successMessage}}</label>
+			</div>
+			<div fxLayout="row" style="width: 100%;" fxLayoutGap="5%">
+				<div fxLayout="column" style="width: 50%;" fxLayoutGap="5%">
+					<!--Side bar title start-->
+					<div fxLayout="row" fxLayoutGap="35px" formGroupName="SIDEBAR">
+						<div class="mat-card-padding" fxLayoutAlign="center center" fxLayout="column" fxLayoutGap="10px">
+							<mat-card fxLayout="column" fxLayoutGap="5px" (click)="sidebarFileInput.click()" style="cursor: pointer;"
+								fxLayoutAlign="center center">
+
+								<img *ngIf="customizationForm.value.SIDEBAR.FILE" [src]="customizationForm.value.SIDEBAR.FILE" alt="logo" height="60"
+									width="60">
+								<div fxLayout="row" fxLayoutAlign="center end">
+									<label style="cursor: pointer; color: #64B5F6;font-size: 12px;">{{'UPLOAD_IMAGE' | translate}}</label>
+									<mat-icon fxLayoutAlign="end end" style="color: #64B5F6;font-size: 18px;">cloud_upload</mat-icon>
+								</div>
+
+
+								<input type="file" hidden #sidebarFileInput accept="image/x-png, image/png, image/jpeg"
+									(change)="onFileChange($event, 'SIDEBAR')">
+								<mat-error class="mat-small" *ngIf="!fileSizeError.SIDEBAR || !fileTypeError.SIDEBAR">
+									{{getError(!fileTypeError.SIDEBAR, !fileSizeError.SIDEBAR)}}</mat-error>
+
+							</mat-card>
+						</div>
+						<div fxLayoutAlign="start center">
+							<mat-form-field>
+								<input type="text" matInput formControlName="HEADER" placeholder="{{'SIDEBAR_TITLE'| translate}}">
+								<mat-error>{{'SIDEBAR_TITLE_REQUIRED' | translate}}</mat-error>
+							</mat-form-field>
+						</div>
+					</div>
+					<!--Side bar title end-->
+					<!--Login page title start-->
+					<div fxLayout="row" fxLayoutGap="35px" formGroupName="LOGIN_PAGE">
+						<div class="mat-card-padding" fxLayoutAlign="center center" fxLayout="column" fxLayoutGap="10px">
+							<mat-card fxLayout="column" fxLayoutGap="5px" (click)="loginFileInput.click()" style="cursor: pointer;"
+								fxLayoutAlign="center center">
+
+								<img *ngIf="customizationForm.value.LOGIN_PAGE.FILE" [src]="customizationForm.value.LOGIN_PAGE.FILE" alt="logo" height="60"
+									width="60">
+								<div fxLayout="row" fxLayoutAlign="center end">
+									<label style="cursor: pointer; color: #64B5F6;font-size: 12px;">{{'UPLOAD_IMAGE' | translate}}</label>
+									<mat-icon fxLayoutAlign="end end" style="color: #64B5F6;font-size: 18px;">cloud_upload</mat-icon>
+								</div>
+
+
+								<input type="file" hidden #loginFileInput accept="image/x-png, image/png, image/jpeg"
+									(change)="onFileChange($event, 'LOGIN_PAGE')">
+								<mat-error class="mat-small" *ngIf="!fileSizeError.LOGIN_PAGE || !fileTypeError.LOGIN_PAGE">
+									{{getError(!fileTypeError.LOGIN_PAGE, !fileSizeError.LOGIN_PAGE)}}</mat-error>
+
+							</mat-card>
+						</div>
+						<div fxLayoutAlign="start center">
+							<mat-form-field>
+								<input type="text" matInput formControlName="HEADER" placeholder="{{'LOGIN_PAGE_TITLE'| translate}}">
+								<mat-error>{{'LOGIN_PAGE_TITLE_REQUIRED' | translate}}</mat-error>
+							</mat-form-field>
+						</div>
+
+
+					</div>
+					<!--Login page title end-->
+					<!--Signup page title start-->
+					<div fxLayout="row" fxLayoutGap="35px" formGroupName="SIGNUP_PAGE">
+						<div class="mat-card-padding" fxLayoutAlign="center center" fxLayout="column" fxLayoutGap="10px">
+							<mat-card fxLayout="column" fxLayoutGap="5px" (click)="signupFileInput.click()" style="cursor: pointer;"
+								fxLayoutAlign="center center">
+
+								<img *ngIf="customizationForm.value.SIGNUP_PAGE.FILE" [src]="customizationForm.value.SIGNUP_PAGE.FILE" alt="logo"
+									height="60" width="60">
+								<div fxLayout="row" fxLayoutAlign="center end">
+									<label style="cursor: pointer; color: #64B5F6;font-size: 12px;">{{'UPLOAD_IMAGE' | translate}}</label>
+									<mat-icon fxLayoutAlign="end end" style="color: #64B5F6;font-size: 18px;">cloud_upload</mat-icon>
+								</div>
+
+
+								<input type="file" hidden #signupFileInput accept="image/x-png, image/png, image/jpeg"
+									(change)="onFileChange($event, 'SIGNUP_PAGE')">
+								<mat-error class="mat-small" *ngIf="!fileSizeError.SIGNUP_PAGE || !fileTypeError.SIGNUP_PAGE">
+									{{getError(!fileTypeError.SIGNUP_PAGE, !fileSizeError.SIGNUP_PAGE)}}</mat-error>
+
+							</mat-card>
+						</div>
+						<div fxLayoutAlign="start center">
+							<mat-form-field>
+								<input type="text" matInput formControlName="HEADER" placeholder="{{'SIGNUP_PAGE_TITLE'| translate}}">
+								<mat-error>{{'SIGNUP_PAGE_TITLE_REQUIRED' | translate}}</mat-error>
+							</mat-form-field>
+						</div>
+
+					</div>
+					<!--Signup page title end-->
+					<!--Tab title start-->
+					<div fxLayout="row" fxLayoutGap="35px" formGroupName="FAVICON">
+						<div class="mat-card-padding" fxLayoutAlign="center center" fxLayout="column" fxLayoutGap="10px">
+							<mat-card fxLayout="column" fxLayoutGap="5px" (click)="faviconFileInput.click()" style="cursor: pointer;"
+								fxLayoutAlign="center center">
+
+								<img *ngIf="customizationForm.value.FAVICON.FILE" [src]="customizationForm.value.FAVICON.FILE" alt="logo" height="60"
+									width="60">
+								<div fxLayout="row" fxLayoutAlign="center end">
+									<label style="cursor: pointer; color: #64B5F6;font-size: 12px;">{{'UPLOAD_IMAGE' | translate}}</label>
+									<mat-icon fxLayoutAlign="end end" style="color: #64B5F6;font-size: 18px;">cloud_upload</mat-icon>
+								</div>
+
+
+
+								<input type="file" hidden #faviconFileInput accept="image/x-png, image/png, image/jpeg"
+									(change)="onFileChange($event, 'FAVICON')">
+								<mat-error class="mat-small" *ngIf="!fileSizeError.FAVICON || !fileTypeError.FAVICON">
+									{{getError(!fileTypeError.FAVICON, !fileSizeError.FAVICON)}}</mat-error>
+
+							</mat-card>
+						</div>
+
+
+						<div fxLayoutAlign="start center">
+							<mat-form-field>
+								<input type="text" matInput formControlName="HEADER" placeholder="{{'TAB_TITLE'| translate}}">
+								<mat-error>{{'TAB_TITLE_REQUIRED' | translate}}</mat-error>
+							</mat-form-field>
+						</div>
+					</div>
+					<!--Tab title end-->
+				</div>
+				<div fxLayout="column" style="width: 50%;">
+					<!--Primary color start-->
+					<div fxLayout="column" fxLayoutGap="20px">
+						<h3 class="mat-h3">{{'PRIMARY_COLOR' | translate}}</h3>
+						<div fxLayout="row" fxLayout="start start">
+							<ng-container *ngTemplateOutlet="primaryColorTemplate"></ng-container>
+						</div>
+					</div>
+					<!--Primary color end-->
+
+					<!--Secondary color start-->
+					<div fxLayout="column" fxLayoutGap="20px">
+						<h3 class="mat-h3">{{'SECONDARY_COLOR' | translate}}</h3>
+						<div fxLayout="row" fxLayout="start start">
+							<ng-container *ngTemplateOutlet="secondaryColorTemplate"></ng-container>
+						</div>
+					</div>
+					<!--Secondary color end-->
+				</div>
+				<div></div>
+				<!-- Template for primary Color -->
+				<ng-template #primaryColorTemplate>
+					<button *ngFor="let theme of primaryColor" (click)="setColor('primary',theme)" [ngStyle]="{'background-color': theme}"
+						style="color: #ffffff;  width: 50px; height: 50px; border: none;margin: 0px 30px 25px 0px;border-radius: 50%;">
+						<mat-icon *ngIf="primaryColorValue === theme" style="line-height: 25px;">done</mat-icon>
+					</button>
+				</ng-template>
+
+				<!-- Template for Secondary Color -->
+				<ng-template #secondaryColorTemplate>
+					<button *ngFor="let theme of secondaryColor" (click)="setColor('secondary', theme)" [ngStyle]="{'background-color': theme}"
+						style="border-style: solid;border-color: darkgray;margin: 0px 30px 25px 0px; width: 50px; height: 50px;border-radius: 50%;">
+						<mat-icon *ngIf="secondaryColorValue === theme" style="line-height: 25px;color: grey;">done</mat-icon>
+					</button>
+				</ng-template>
+			</div>
+		</div>
+	</div>
+</form>
+<!--Page feature end-->

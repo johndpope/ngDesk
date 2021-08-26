@@ -1,0 +1,2065 @@
+{
+  "TEMPLATES": [
+    {
+      "NAME": "Live Chat",
+      "DESCRIPTION": "",
+      "WORKFLOW": {
+        "NODES": [
+          {
+            "POSITION_X": 30,
+            "POSITION_Y": 100,
+            "VALUES": {
+              "MESSAGE": "Hello how can I help you today?",
+              "OPTIONS": [
+                {
+                  "CONNECTS_TO": "a00b6f0a-49d3-34c2-2db8-7b04fff80fd3",
+                  "OPTION": "I want to chat with an agent",
+                  "OPTION_ID": "4baef44d-6d6d-ebbb-8943-c689835812d6"
+                },
+                {
+                  "CONNECTS_TO": "3ac973c9-3da5-ee2a-6f93-b1e1be9affe7",
+                  "OPTION": "I do not want to chat with an agent",
+                  "OPTION_ID": "c7d324d8-ce55-6409-dd26-39869a96343d"
+                }
+              ],
+              "MAPPING": "",
+              "DISABLE_TEXT_INPUT": false
+            },
+            "ID": "5bd782cf-e75c-7801-8f25-3adadad5bb01",
+            "TYPE": "QuestionNode",
+            "CONNECTS_TO": "",
+            "NAME": "1. Multiple Choice",
+            "SUB_TYPE": "Buttons"
+          },
+          {
+            "POSITION_X": 255,
+            "POSITION_Y": 340,
+            "VALUES": {
+              "MESSAGE": "Please tell me an email address to reach out to you",
+              "OPTIONS": null,
+              "MAPPING": "",
+              "DISABLE_TEXT_INPUT": false
+            },
+            "ID": "3ac973c9-3da5-ee2a-6f93-b1e1be9affe7",
+            "TYPE": "QuestionNode",
+            "CONNECTS_TO": "370081ad-33f3-9128-604f-8bca068bd62a",
+            "NAME": "7. Email Address",
+            "SUB_TYPE": "Email"
+          },
+          {
+            "POSITION_X": 255,
+            "POSITION_Y": 530,
+            "VALUES": {
+              "MESSAGE": "Briefly tell me about the issue you are facing",
+              "OPTIONS": null,
+              "MAPPING": "",
+              "DISABLE_TEXT_INPUT": false
+            },
+            "ID": "370081ad-33f3-9128-604f-8bca068bd62a",
+            "TYPE": "QuestionNode",
+            "CONNECTS_TO": "11840fba-2b30-29af-c73c-2bb511328c84",
+            "NAME": "8. Free Text Reply",
+            "SUB_TYPE": "FreeText"
+          },
+          {
+            "POSITION_X": 255,
+            "POSITION_Y": 720,
+            "VALUES": {
+              "MESSAGE": "Great thank you, we will be in touch with you shortly.",
+              "OPTIONS": null,
+              "MAPPING": "",
+              "DISABLE_TEXT_INPUT": false
+            },
+            "ID": "11840fba-2b30-29af-c73c-2bb511328c84",
+            "TYPE": "SendMessage",
+            "CONNECTS_TO": "",
+            "NAME": "9. Send Message",
+            "SUB_TYPE": "SendMessage"
+          },
+          {
+            "POSITION_X": 30,
+            "POSITION_Y": 340,
+            "VALUES": {
+              "MESSAGE": "Please tell me your email address",
+              "OPTIONS": null,
+              "MAPPING": "",
+              "DISABLE_TEXT_INPUT": false
+            },
+            "ID": "a00b6f0a-49d3-34c2-2db8-7b04fff80fd3",
+            "TYPE": "QuestionNode",
+            "CONNECTS_TO": "ef255ce0-bba4-4749-0258-6daf7f62d687",
+            "NAME": "2. Email Address",
+            "SUB_TYPE": "Email"
+          },
+          {
+            "POSITION_X": 30,
+            "POSITION_Y": 530,
+            "VALUES": {
+              "MESSAGE": "Please tell me your name",
+              "OPTIONS": null,
+              "MAPPING": "",
+              "DISABLE_TEXT_INPUT": false
+            },
+            "ID": "ef255ce0-bba4-4749-0258-6daf7f62d687",
+            "TYPE": "QuestionNode",
+            "CONNECTS_TO": "cb5e3e45-e281-61c4-07f9-1df49867ba64",
+            "NAME": "3. User's Name",
+            "SUB_TYPE": "Name"
+          },
+          {
+            "POSITION_X": 30,
+            "POSITION_Y": 720,
+            "VALUES": {
+              "MESSAGE": "Briefly tell me about the issue that you are facing today?",
+              "OPTIONS": null,
+              "MAPPING": "",
+              "DISABLE_TEXT_INPUT": false
+            },
+            "ID": "cb5e3e45-e281-61c4-07f9-1df49867ba64",
+            "TYPE": "QuestionNode",
+            "CONNECTS_TO": "2713d788-dfd6-066f-1d6e-e77c8e63ff7f",
+            "NAME": "4. Free Text Reply",
+            "SUB_TYPE": "FreeText"
+          },
+          {
+            "POSITION_X": 30,
+            "POSITION_Y": 910,
+            "VALUES": {
+              "MESSAGE": "Great thank you, one of our agents will be assisting you shortly.",
+              "OPTIONS": null,
+              "MAPPING": "",
+              "DISABLE_TEXT_INPUT": false
+            },
+            "ID": "2713d788-dfd6-066f-1d6e-e77c8e63ff7f",
+            "TYPE": "SendMessage",
+            "CONNECTS_TO": "15df4392-edcc-bfcb-8cb7-a7e603e690db",
+            "NAME": "5. Send Message",
+            "SUB_TYPE": "SendMessage"
+          },
+          {
+            "POSITION_X": 30,
+            "POSITION_Y": 1100,
+            "VALUES": {
+              "MESSAGE": "",
+              "OPTIONS": null,
+              "MAPPING": "",
+              "DISABLE_TEXT_INPUT": false
+            },
+            "ID": "15df4392-edcc-bfcb-8cb7-a7e603e690db",
+            "TYPE": "TransferToAgent",
+            "CONNECTS_TO": "",
+            "NAME": "6. Transfer To Agent",
+            "SUB_TYPE": "TransferToAgent"
+          }
+        ]
+      },
+      "CHAT_BOT_ID": "312cf3d5-05b4-4ffd-bd33-8aea9f6b80b5"
+    },
+    {
+      "NAME": "Customer Support",
+      "DESCRIPTION": "",
+      "WORKFLOW": {
+        "NODES": [
+          {
+            "POSITION_X": 30,
+            "POSITION_Y": 100,
+            "VALUES": {
+              "MESSAGE": "Hello , How can I help you today",
+              "OPTIONS": null,
+              "MAPPING": "",
+              "DISABLE_TEXT_INPUT": false
+            },
+            "ID": "9c1894bd-3d11-10bc-05ee-02a3b13c8d87",
+            "TYPE": "SendMessage",
+            "CONNECTS_TO": "dc16be5e-6e63-a853-0267-5547163511a4",
+            "NAME": "1. Send Message",
+            "SUB_TYPE": "SendMessage"
+          },
+          {
+            "POSITION_X": 30,
+            "POSITION_Y": 290,
+            "VALUES": {
+              "MESSAGE": "I want to chat with agent  ",
+              "OPTIONS": [
+                {
+                  "CONNECTS_TO": "f76e31a2-9bdf-40af-3110-7307d3dfdf08",
+                  "OPTION": "Yes",
+                  "OPTION_ID": "f926cb0f-c721-9a7a-6057-01d0935dd56d"
+                },
+                {
+                  "CONNECTS_TO": "a7973227-0af6-f905-7da3-d6df2620a237",
+                  "OPTION": "No",
+                  "OPTION_ID": "ab43f4c4-11f2-ce02-acad-f90fc0ac791a"
+                }
+              ],
+              "MAPPING": "",
+              "DISABLE_TEXT_INPUT": false
+            },
+            "ID": "dc16be5e-6e63-a853-0267-5547163511a4",
+            "TYPE": "QuestionNode",
+            "CONNECTS_TO": "",
+            "NAME": "2. Multiple Choice",
+            "SUB_TYPE": "Buttons"
+          },
+          {
+            "POSITION_X": 255,
+            "POSITION_Y": 530,
+            "VALUES": {
+              "MESSAGE": "Ok. Can you tell me about what you need help with?",
+              "OPTIONS": null,
+              "MAPPING": "",
+              "DISABLE_TEXT_INPUT": false
+            },
+            "ID": "a7973227-0af6-f905-7da3-d6df2620a237",
+            "TYPE": "QuestionNode",
+            "CONNECTS_TO": "60bdf12f-f64f-491b-e77a-c8ca1aa88fb5",
+            "NAME": "5. Free Text Reply",
+            "SUB_TYPE": "FreeText"
+          },
+          {
+            "POSITION_X": 255,
+            "POSITION_Y": 720,
+            "VALUES": {
+              "MESSAGE": "Thank you , Our team will reach out to you with the help .",
+              "OPTIONS": null,
+              "MAPPING": "",
+              "DISABLE_TEXT_INPUT": false
+            },
+            "ID": "60bdf12f-f64f-491b-e77a-c8ca1aa88fb5",
+            "TYPE": "SendMessage",
+            "CONNECTS_TO": "5a0277e2-2a93-6419-d8b2-c8d62a21c908",
+            "NAME": "9. Send Message",
+            "SUB_TYPE": "SendMessage"
+          },
+          {
+            "POSITION_X": 255,
+            "POSITION_Y": 910,
+            "VALUES": {
+              "MESSAGE": "Please leave your email address.",
+              "OPTIONS": null,
+              "MAPPING": "",
+              "DISABLE_TEXT_INPUT": false
+            },
+            "ID": "5a0277e2-2a93-6419-d8b2-c8d62a21c908",
+            "TYPE": "QuestionNode",
+            "CONNECTS_TO": "b07040f0-b8c9-1253-adc5-0cef494acb6b",
+            "NAME": "2. Email Address",
+            "SUB_TYPE": "Email"
+          },
+          {
+            "POSITION_X": 255,
+            "POSITION_Y": 1100,
+            "VALUES": {
+              "MESSAGE": "Great, thanks. ",
+              "OPTIONS": null,
+              "MAPPING": "",
+              "DISABLE_TEXT_INPUT": false
+            },
+            "ID": "b07040f0-b8c9-1253-adc5-0cef494acb6b",
+            "TYPE": "SendMessage",
+            "CONNECTS_TO": "",
+            "NAME": "3. Send Message",
+            "SUB_TYPE": "SendMessage"
+          },
+          {
+            "POSITION_X": 30,
+            "POSITION_Y": 530,
+            "VALUES": {
+              "MESSAGE": "Thank you, Let me connect you! Just need some quick information.",
+              "OPTIONS": null,
+              "MAPPING": "",
+              "DISABLE_TEXT_INPUT": false
+            },
+            "ID": "f76e31a2-9bdf-40af-3110-7307d3dfdf08",
+            "TYPE": "SendMessage",
+            "CONNECTS_TO": "78dfb4a0-02e6-405b-b18b-05deb81e9b67",
+            "NAME": "3. Send Message",
+            "SUB_TYPE": "SendMessage"
+          },
+          {
+            "POSITION_X": 30,
+            "POSITION_Y": 720,
+            "VALUES": {
+              "MESSAGE": "Please provide me your contact  email address",
+              "OPTIONS": null,
+              "MAPPING": "",
+              "DISABLE_TEXT_INPUT": false
+            },
+            "ID": "78dfb4a0-02e6-405b-b18b-05deb81e9b67",
+            "TYPE": "QuestionNode",
+            "CONNECTS_TO": "1f9b70fa-1471-bc37-f153-03f90b6a1634",
+            "NAME": "1. Email Address",
+            "SUB_TYPE": "Email"
+          },
+          {
+            "POSITION_X": 30,
+            "POSITION_Y": 910,
+            "VALUES": {
+              "MESSAGE": "",
+              "OPTIONS": null,
+              "MAPPING": "",
+              "DISABLE_TEXT_INPUT": false
+            },
+            "ID": "1f9b70fa-1471-bc37-f153-03f90b6a1634",
+            "TYPE": "TransferToAgent",
+            "CONNECTS_TO": "",
+            "NAME": "8. Transfer To Agent",
+            "SUB_TYPE": "TransferToAgent"
+          }
+        ]
+      },
+      "CHAT_BOT_ID": null
+    },
+    {
+  "NAME": "Net Promoter Score",
+  "DESCRIPTION": "",
+  "WORKFLOW": {
+    "NODES": [
+      {
+        "POSITION_X": 30,
+        "POSITION_Y": 100,
+        "VALUES": {
+          "MESSAGE": "Hello there,Thank you for using our service.",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "b81d03ba-01e1-b989-32bb-af8060e1e5d1",
+        "TYPE": "SendMessage",
+        "CONNECTS_TO": "136880c9-1051-bab5-5471-9d11f62a792f",
+        "NAME": "1. Send Message",
+        "SUB_TYPE": "SendMessage"
+      },
+      {
+        "POSITION_X": 30,
+        "POSITION_Y": 290,
+        "VALUES": {
+          "MESSAGE": "I would love to hear your feedback on it.",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "136880c9-1051-bab5-5471-9d11f62a792f",
+        "TYPE": "SendMessage",
+        "CONNECTS_TO": "039db8e1-dfd0-5601-5272-edf97ec22598",
+        "NAME": "3. Send Message",
+        "SUB_TYPE": "SendMessage"
+      },
+      {
+        "POSITION_X": 30,
+        "POSITION_Y": 480,
+        "VALUES": {
+          "MESSAGE": "Do you have a few seconds to spare?",
+          "OPTIONS": [
+            {
+              "CONNECTS_TO": "226f5105-2b0f-87de-4e13-8a86b6adef9f",
+              "OPTION": "Sure, I Don't mind",
+              "OPTION_ID": "be8c6c59-2a25-352c-7d95-132140299ec8"
+            },
+            {
+              "CONNECTS_TO": "43335ca2-71bd-379a-f019-d47b3b1917f6",
+              "OPTION": "No ",
+              "OPTION_ID": "bf0f6af5-bf29-6c51-9df2-bdc5f846034b"
+            }
+          ],
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "039db8e1-dfd0-5601-5272-edf97ec22598",
+        "TYPE": "QuestionNode",
+        "CONNECTS_TO": "",
+        "NAME": "5. Multiple Choice",
+        "SUB_TYPE": "Buttons"
+      },
+      {
+        "POSITION_X": 255,
+        "POSITION_Y": 720,
+        "VALUES": {
+          "MESSAGE": "That's fine.Lets resume when your free .Thank you",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "43335ca2-71bd-379a-f019-d47b3b1917f6",
+        "TYPE": "SendMessage",
+        "CONNECTS_TO": "",
+        "NAME": "24. Send Message",
+        "SUB_TYPE": "SendMessage"
+      },
+      {
+        "POSITION_X": 30,
+        "POSITION_Y": 720,
+        "VALUES": {
+          "MESSAGE": "First things first, I'd like to know about you.",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "226f5105-2b0f-87de-4e13-8a86b6adef9f",
+        "TYPE": "SendMessage",
+        "CONNECTS_TO": "170482ef-8946-30cd-9ca3-6ed42aa7f37c",
+        "NAME": "6. Send Message",
+        "SUB_TYPE": "SendMessage"
+      },
+      {
+        "POSITION_X": 30,
+        "POSITION_Y": 910,
+        "VALUES": {
+          "MESSAGE": "Please enter your name",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "170482ef-8946-30cd-9ca3-6ed42aa7f37c",
+        "TYPE": "QuestionNode",
+        "CONNECTS_TO": "221c7c4e-72c3-7a30-b0ce-d66d1f8ae961",
+        "NAME": "7. User's Name",
+        "SUB_TYPE": "Name"
+      },
+      {
+        "POSITION_X": 30,
+        "POSITION_Y": 1100,
+        "VALUES": {
+          "MESSAGE": "Please tell me an email address to reach out to you",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "221c7c4e-72c3-7a30-b0ce-d66d1f8ae961",
+        "TYPE": "QuestionNode",
+        "CONNECTS_TO": "8c0dbda8-19e2-205f-3e26-bbeedbea97a5",
+        "NAME": "8. Email Address",
+        "SUB_TYPE": "Email"
+      },
+      {
+        "POSITION_X": 30,
+        "POSITION_Y": 1290,
+        "VALUES": {
+          "MESSAGE": "I'll ask you few questions ,so I can understand your experience better.",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "8c0dbda8-19e2-205f-3e26-bbeedbea97a5",
+        "TYPE": "SendMessage",
+        "CONNECTS_TO": "e541d826-f612-b476-8b29-a0fb4d814eda",
+        "NAME": "10. Send Message",
+        "SUB_TYPE": "SendMessage"
+      },
+      {
+        "POSITION_X": 30,
+        "POSITION_Y": 1480,
+        "VALUES": {
+          "MESSAGE": "How likely are you to recommend us to a friend or colleague?",
+          "OPTIONS": [
+            {
+              "CONNECTS_TO": "0b26a528-598c-e673-1a16-704be453a848",
+              "OPTION": "1",
+              "OPTION_ID": "952623b7-3639-bd48-af1d-882bff4f6f00"
+            },
+            {
+              "CONNECTS_TO": "f5d66d68-446e-cfc0-cbb5-5d8f0a6b73eb",
+              "OPTION": "2",
+              "OPTION_ID": "eed475a8-3339-ee56-0eb2-e73ff3463ef0"
+            },
+            {
+              "CONNECTS_TO": "cc6e0b39-eb00-c8aa-fe39-206e7277a6a2",
+              "OPTION": "3",
+              "OPTION_ID": "bbf1278b-0e66-a250-363e-679bf1a05098"
+            },
+            {
+              "CONNECTS_TO": "da399570-1bcc-7ffb-c1ed-30dbbef117ef",
+              "OPTION": "4",
+              "OPTION_ID": "bc474e70-42d3-adb6-f84e-b2a65a510ed7"
+            },
+            {
+              "CONNECTS_TO": "5d90d184-ed2e-90aa-6944-67c8089148d0",
+              "OPTION": "5",
+              "OPTION_ID": "491d4491-c18e-d155-fe3f-884802a5b993"
+            },
+            {
+              "CONNECTS_TO": "653a85d6-45f9-7ac0-2023-2749e63a8fa2",
+              "OPTION": "6",
+              "OPTION_ID": "8d5c51b4-b341-12b3-cc40-9c321774a7e9"
+            },
+            {
+              "CONNECTS_TO": "ac2f091e-91ce-27be-3549-0556e52c25a8",
+              "OPTION": "7",
+              "OPTION_ID": "1cd91c08-bb54-dd03-c46b-e6274fd1b227"
+            },
+            {
+              "CONNECTS_TO": "bb39819d-09f6-97c8-ff3a-c039355d44c5",
+              "OPTION": "8",
+              "OPTION_ID": "e9351915-07c3-1bba-3ff0-f8c697b681e6"
+            },
+            {
+              "CONNECTS_TO": "8e2901b2-0698-b911-be1d-5e7e8bd1bcde",
+              "OPTION": "9",
+              "OPTION_ID": "466937c9-0d00-975a-2809-634c4e6b5c59"
+            },
+            {
+              "CONNECTS_TO": "2280df40-e40a-cd9b-2ab6-69f148b72513",
+              "OPTION": "10",
+              "OPTION_ID": "5a41df56-ae3c-8681-25b3-acbe3a82389d"
+            }
+          ],
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "e541d826-f612-b476-8b29-a0fb4d814eda",
+        "TYPE": "QuestionNode",
+        "CONNECTS_TO": "",
+        "NAME": "11. Multiple Choice",
+        "SUB_TYPE": "Buttons"
+      },
+      {
+        "POSITION_X": 1380,
+        "POSITION_Y": 1720,
+        "VALUES": {
+          "MESSAGE": "I'm glad you liked our service. we would love to do better than that. Do you have suggestions for us?",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "ac2f091e-91ce-27be-3549-0556e52c25a8",
+        "TYPE": "QuestionNode",
+        "CONNECTS_TO": "31af5206-14d9-5bd8-e2c0-f0b379513c9f",
+        "NAME": "56. Free Text Reply",
+        "SUB_TYPE": "FreeText"
+      },
+      {
+        "POSITION_X": 1380,
+        "POSITION_Y": 1910,
+        "VALUES": {
+          "MESSAGE": "Thank you for the input.We always strive to be better.",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "31af5206-14d9-5bd8-e2c0-f0b379513c9f",
+        "TYPE": "SendMessage",
+        "CONNECTS_TO": "",
+        "NAME": "57. Send Message",
+        "SUB_TYPE": "SendMessage"
+      },
+      {
+        "POSITION_X": 1605,
+        "POSITION_Y": 1720,
+        "VALUES": {
+          "MESSAGE": "That's really nice of you. I am so glad you liked our service. Could you tell me what you liked about us?",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "bb39819d-09f6-97c8-ff3a-c039355d44c5",
+        "TYPE": "QuestionNode",
+        "CONNECTS_TO": "9abcc671-b86e-4564-30a7-831052739e46",
+        "NAME": "52. Free Text Reply",
+        "SUB_TYPE": "FreeText"
+      },
+      {
+        "POSITION_X": 1605,
+        "POSITION_Y": 1910,
+        "VALUES": {
+          "MESSAGE": "Thank you for the input.We always strive to be better.",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "9abcc671-b86e-4564-30a7-831052739e46",
+        "TYPE": "SendMessage",
+        "CONNECTS_TO": "",
+        "NAME": "53. Send Message",
+        "SUB_TYPE": "SendMessage"
+      },
+      {
+        "POSITION_X": 2055,
+        "POSITION_Y": 1720,
+        "VALUES": {
+          "MESSAGE": "That's really nice of you. I am so glad you liked our service. Could you tell me what you liked about us?",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "2280df40-e40a-cd9b-2ab6-69f148b72513",
+        "TYPE": "QuestionNode",
+        "CONNECTS_TO": "db67d5e8-4b29-decf-7ae4-0c99e080f738",
+        "NAME": "48. Free Text Reply",
+        "SUB_TYPE": "FreeText"
+      },
+      {
+        "POSITION_X": 2055,
+        "POSITION_Y": 1910,
+        "VALUES": {
+          "MESSAGE": "Thank you for the input.We always strive to be better.",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "db67d5e8-4b29-decf-7ae4-0c99e080f738",
+        "TYPE": "SendMessage",
+        "CONNECTS_TO": "",
+        "NAME": "49. Send Message",
+        "SUB_TYPE": "SendMessage"
+      },
+      {
+        "POSITION_X": 1155,
+        "POSITION_Y": 1720,
+        "VALUES": {
+          "MESSAGE": "We would love to do better than that.Do you have suggestions or improvements for us?",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "653a85d6-45f9-7ac0-2023-2749e63a8fa2",
+        "TYPE": "QuestionNode",
+        "CONNECTS_TO": "4c3109ea-5fca-6c1a-ece7-4889a3d2585b",
+        "NAME": "43. Free Text Reply",
+        "SUB_TYPE": "FreeText"
+      },
+      {
+        "POSITION_X": 1155,
+        "POSITION_Y": 1910,
+        "VALUES": {
+          "MESSAGE": "Thank you for the input.We always strive to be better.",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "4c3109ea-5fca-6c1a-ece7-4889a3d2585b",
+        "TYPE": "SendMessage",
+        "CONNECTS_TO": "",
+        "NAME": "44. Send Message",
+        "SUB_TYPE": "SendMessage"
+      },
+      {
+        "POSITION_X": 930,
+        "POSITION_Y": 1720,
+        "VALUES": {
+          "MESSAGE": "We would love to do better than that.Do you have suggestions or improvements for us?",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "5d90d184-ed2e-90aa-6944-67c8089148d0",
+        "TYPE": "QuestionNode",
+        "CONNECTS_TO": "6ab6a70f-434f-9920-6e5b-8d6145f32bc5",
+        "NAME": "39. Free Text Reply",
+        "SUB_TYPE": "FreeText"
+      },
+      {
+        "POSITION_X": 930,
+        "POSITION_Y": 1910,
+        "VALUES": {
+          "MESSAGE": "Thank you for the input.We always strive to be better.",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "6ab6a70f-434f-9920-6e5b-8d6145f32bc5",
+        "TYPE": "SendMessage",
+        "CONNECTS_TO": "",
+        "NAME": "40. Send Message",
+        "SUB_TYPE": "SendMessage"
+      },
+      {
+        "POSITION_X": 705,
+        "POSITION_Y": 1720,
+        "VALUES": {
+          "MESSAGE": "We would love to do better than that.Do you have suggestions or improvements for us?",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "da399570-1bcc-7ffb-c1ed-30dbbef117ef",
+        "TYPE": "QuestionNode",
+        "CONNECTS_TO": "d6e06710-3250-5578-74f7-b7bd2dc9ce79",
+        "NAME": "32. Free Text Reply",
+        "SUB_TYPE": "FreeText"
+      },
+      {
+        "POSITION_X": 705,
+        "POSITION_Y": 1910,
+        "VALUES": {
+          "MESSAGE": "Thank you for the input.We always strive to be better.",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "d6e06710-3250-5578-74f7-b7bd2dc9ce79",
+        "TYPE": "SendMessage",
+        "CONNECTS_TO": "",
+        "NAME": "33. Send Message",
+        "SUB_TYPE": "SendMessage"
+      },
+      {
+        "POSITION_X": 480,
+        "POSITION_Y": 1720,
+        "VALUES": {
+          "MESSAGE": "I'm sorry that you had a bad experience. I want to make sure that doesn't happen again.Could you tell me how we failed you?",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "cc6e0b39-eb00-c8aa-fe39-206e7277a6a2",
+        "TYPE": "QuestionNode",
+        "CONNECTS_TO": "c6027925-5831-8a94-8822-d349a2551aef",
+        "NAME": "35. Free Text Reply",
+        "SUB_TYPE": "FreeText"
+      },
+      {
+        "POSITION_X": 480,
+        "POSITION_Y": 1910,
+        "VALUES": {
+          "MESSAGE": "Thank you for the input.We always strive to be better.",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "c6027925-5831-8a94-8822-d349a2551aef",
+        "TYPE": "SendMessage",
+        "CONNECTS_TO": "",
+        "NAME": "36. Send Message",
+        "SUB_TYPE": "SendMessage"
+      },
+      {
+        "POSITION_X": 255,
+        "POSITION_Y": 1720,
+        "VALUES": {
+          "MESSAGE": "I'm sorry that you had a bad experience. I want to make sure that doesn't happen again.Could you tell me how we failed you?",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "f5d66d68-446e-cfc0-cbb5-5d8f0a6b73eb",
+        "TYPE": "QuestionNode",
+        "CONNECTS_TO": "5ca3d05c-67c6-f23f-b552-e9f50ba5b310",
+        "NAME": "28. Free Text Reply",
+        "SUB_TYPE": "FreeText"
+      },
+      {
+        "POSITION_X": 255,
+        "POSITION_Y": 1910,
+        "VALUES": {
+          "MESSAGE": "Thank you for the input.We always strive to be better.",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "5ca3d05c-67c6-f23f-b552-e9f50ba5b310",
+        "TYPE": "SendMessage",
+        "CONNECTS_TO": "",
+        "NAME": "29. Send Message",
+        "SUB_TYPE": "SendMessage"
+      },
+      {
+        "POSITION_X": 30,
+        "POSITION_Y": 1720,
+        "VALUES": {
+          "MESSAGE": "I'm sorry that you had a bad experience. I want to make sure that doesn't happen again.Could you tell me how we failed you?",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "0b26a528-598c-e673-1a16-704be453a848",
+        "TYPE": "QuestionNode",
+        "CONNECTS_TO": "581d82e9-6cc1-2512-5a22-2f4860018add",
+        "NAME": "1. Free Text Reply",
+        "SUB_TYPE": "FreeText"
+      },
+      {
+        "POSITION_X": 30,
+        "POSITION_Y": 1910,
+        "VALUES": {
+          "MESSAGE": "Thank you for the input.We always strive to be better.",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "581d82e9-6cc1-2512-5a22-2f4860018add",
+        "TYPE": "SendMessage",
+        "CONNECTS_TO": "",
+        "NAME": "18. Send Message",
+        "SUB_TYPE": "SendMessage"
+      },
+      {
+        "POSITION_X": 1830,
+        "POSITION_Y": 1720,
+        "VALUES": {
+          "MESSAGE": "That's really nice of you. I am so glad you liked our service. Could you tell me what you liked about us?",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "8e2901b2-0698-b911-be1d-5e7e8bd1bcde",
+        "TYPE": "QuestionNode",
+        "CONNECTS_TO": "8780fa7a-dddc-aa86-3372-0d04d2b76f35",
+        "NAME": "22. Free Text Reply",
+        "SUB_TYPE": "FreeText"
+      },
+      {
+        "POSITION_X": 1830,
+        "POSITION_Y": 1910,
+        "VALUES": {
+          "MESSAGE": "Thank you for the input.We always strive to be better.",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "8780fa7a-dddc-aa86-3372-0d04d2b76f35",
+        "TYPE": "QuestionNode",
+        "CONNECTS_TO": "",
+        "NAME": "23. Free Text Reply",
+        "SUB_TYPE": "FreeText"
+      }
+    ]
+ 	 },
+  "CHAT_BOT_ID": null
+	},
+    {
+      "NAME": "Quote Request",
+      "DESCRIPTION": "",
+      "WORKFLOW": {
+        "NODES": [
+          {
+            "POSITION_X": 30,
+            "POSITION_Y": 100,
+            "VALUES": {
+              "MESSAGE": "Hi there, Nice to meet you",
+              "OPTIONS": null,
+              "MAPPING": "",
+              "DISABLE_TEXT_INPUT": false
+            },
+            "ID": "85b996a7-955d-18c5-c406-32911adfac1c",
+            "TYPE": "SendMessage",
+            "CONNECTS_TO": "b550bf47-48e7-69a6-9e9b-873ae4ac0c14",
+            "NAME": "1. Send Message",
+            "SUB_TYPE": "SendMessage"
+          },
+          {
+            "POSITION_X": 30,
+            "POSITION_Y": 290,
+            "VALUES": {
+              "MESSAGE": "What service are you interested in getting a quote for?",
+              "OPTIONS": [
+                {
+                  "CONNECTS_TO": "81c07567-da60-91e5-5528-99c9ea270767",
+                  "OPTION": "Service A",
+                  "OPTION_ID": "efbe7cfe-4780-f096-fd30-73c91b32b5be"
+                },
+                {
+                  "CONNECTS_TO": "d5e92028-d979-05c0-9b32-3f874ad7fe05",
+                  "OPTION": "Service B",
+                  "OPTION_ID": "b85e850e-3087-b353-abe1-276d7f971a97"
+                },
+                {
+                  "CONNECTS_TO": "96f8978b-e098-da93-162e-9926c39011f7",
+                  "OPTION": "Service C",
+                  "OPTION_ID": "09e095ff-5333-d916-5362-8fcedbb7ca69"
+                }
+              ],
+              "MAPPING": "",
+              "DISABLE_TEXT_INPUT": false
+            },
+            "ID": "b550bf47-48e7-69a6-9e9b-873ae4ac0c14",
+            "TYPE": "QuestionNode",
+            "CONNECTS_TO": "",
+            "NAME": "2. Multiple Choice",
+            "SUB_TYPE": "Buttons"
+          },
+          {
+            "POSITION_X": 480,
+            "POSITION_Y": 530,
+            "VALUES": {
+              "MESSAGE": "OK, what options are you interested in?",
+              "OPTIONS": [
+                {
+                  "CONNECTS_TO": "346aadd0-0a8c-0b36-58ee-702e35132cf2",
+                  "OPTION": "Option A",
+                  "OPTION_ID": "03ecda1c-f1a8-01ea-826e-155acf01ca87"
+                },
+                {
+                  "CONNECTS_TO": "ddb2bfcb-6673-a6db-791c-3f91fac9cdf9",
+                  "OPTION": "Option B",
+                  "OPTION_ID": "9660179c-f20c-41c0-f04e-7c75e7c25530"
+                }
+              ],
+              "MAPPING": "",
+              "DISABLE_TEXT_INPUT": false
+            },
+            "ID": "96f8978b-e098-da93-162e-9926c39011f7",
+            "TYPE": "QuestionNode",
+            "CONNECTS_TO": "",
+            "NAME": "5. Multiple Choice",
+            "SUB_TYPE": "Buttons"
+          },
+          {
+            "NAME": "6. Send Message",
+            "TYPE": "SendMessage",
+            "SUB_TYPE": "SendMessage",
+            "POSITION_X": 705,
+            "POSITION_Y": 770,
+            "ID": "ddb2bfcb-6673-a6db-791c-3f91fac9cdf9",
+            "CONNECTS_TO": "38085c50-1a2f-f4ed-c3b5-a9d132a1af30",
+            "VALUES": {
+              "MESSAGE": "I'd love to chat with you more about your request to see if there are any discounts or special promotions that you could take advantage of.",
+              "MAPPING": "",
+              "DISABLE_TEXT_INPUT": false
+            }
+          },
+          {
+            "NAME": "11. Email Address",
+            "TYPE": "QuestionNode",
+            "SUB_TYPE": "Email",
+            "POSITION_X": 705,
+            "POSITION_Y": 960,
+            "ID": "38085c50-1a2f-f4ed-c3b5-a9d132a1af30",
+            "CONNECTS_TO": "0b570d97-4c8c-8fb2-87b2-7bba8ce3b6d1",
+            "VALUES": {
+              "MESSAGE": "Please providing me your email so we can get in touch.",
+              "MAPPING": "",
+              "DISABLE_TEXT_INPUT": false
+            }
+          },
+          {
+            "NAME": "12. Send Message",
+            "TYPE": "SendMessage",
+            "SUB_TYPE": "SendMessage",
+            "POSITION_X": 705,
+            "POSITION_Y": 1150,
+            "ID": "0b570d97-4c8c-8fb2-87b2-7bba8ce3b6d1",
+            "CONNECTS_TO": "",
+            "VALUES": {
+              "MESSAGE": "Thanks! We'll be in touch",
+              "MAPPING": "",
+              "DISABLE_TEXT_INPUT": false
+            }
+          },
+          {
+            "NAME": "5. Send Message",
+            "TYPE": "SendMessage",
+            "SUB_TYPE": "SendMessage",
+            "POSITION_X": 480,
+            "POSITION_Y": 770,
+            "ID": "346aadd0-0a8c-0b36-58ee-702e35132cf2",
+            "CONNECTS_TO": "ad0499d6-1f60-2b2e-953b-6d73d6a132d6",
+            "VALUES": {
+              "MESSAGE": "I'd love to chat with you more about your request to see if there are any discounts or special promotions that you could take advantage of.",
+              "MAPPING": "",
+              "DISABLE_TEXT_INPUT": false
+            }
+          },
+          {
+            "NAME": "8. Email Address",
+            "TYPE": "QuestionNode",
+            "SUB_TYPE": "Email",
+            "POSITION_X": 480,
+            "POSITION_Y": 960,
+            "ID": "ad0499d6-1f60-2b2e-953b-6d73d6a132d6",
+            "CONNECTS_TO": "97a0785e-8803-daaa-71c9-4e049b73dfe3",
+            "VALUES": {
+              "MESSAGE": "Please providing me your email so we can get in touch.",
+              "MAPPING": "",
+              "DISABLE_TEXT_INPUT": false
+            }
+          },
+          {
+            "NAME": "10. Send Message",
+            "TYPE": "SendMessage",
+            "SUB_TYPE": "SendMessage",
+            "POSITION_X": 480,
+            "POSITION_Y": 1150,
+            "ID": "97a0785e-8803-daaa-71c9-4e049b73dfe3",
+            "CONNECTS_TO": "",
+            "VALUES": {
+              "MESSAGE": "Thanks! We'll be in touch",
+              "MAPPING": "",
+              "DISABLE_TEXT_INPUT": false
+            }
+          },
+          {
+            "POSITION_X": 255,
+            "POSITION_Y": 530,
+            "VALUES": {
+              "MESSAGE": "OK, what options are you interested in?",
+              "OPTIONS": [
+                {
+                  "CONNECTS_TO": "b99649dd-8e12-85e6-4b99-a7d3ec9b0b6b",
+                  "OPTION": "Option A",
+                  "OPTION_ID": "069a2335-aa08-51d5-6c61-6b5ad474f4d0"
+                },
+                {
+                  "CONNECTS_TO": "d7bd4e61-ed4f-ec54-4a71-e10cac68cc5b",
+                  "OPTION": "Option B",
+                  "OPTION_ID": "e8268be4-27b0-2254-5d20-2eea7f9c3966"
+                }
+              ],
+              "MAPPING": "",
+              "DISABLE_TEXT_INPUT": false
+            },
+            "ID": "d5e92028-d979-05c0-9b32-3f874ad7fe05",
+            "TYPE": "QuestionNode",
+            "CONNECTS_TO": "",
+            "NAME": "4. Multiple Choice",
+            "SUB_TYPE": "Buttons"
+          },
+          {
+            "NAME": "4. Send Message",
+            "TYPE": "SendMessage",
+            "SUB_TYPE": "SendMessage",
+            "POSITION_X": 480,
+            "POSITION_Y": 770,
+            "ID": "d7bd4e61-ed4f-ec54-4a71-e10cac68cc5b",
+            "CONNECTS_TO": "7540ce16-d73b-6bd2-bd17-494eed939ed0",
+            "VALUES": {
+              "MESSAGE": "I'd love to chat with you more about your request to see if there are any discounts or special promotions that you could take advantage of.",
+              "MAPPING": "",
+              "DISABLE_TEXT_INPUT": false
+            }
+          },
+          {
+            "NAME": "7. Email Address",
+            "TYPE": "QuestionNode",
+            "SUB_TYPE": "Email",
+            "POSITION_X": 480,
+            "POSITION_Y": 960,
+            "ID": "7540ce16-d73b-6bd2-bd17-494eed939ed0",
+            "CONNECTS_TO": "",
+            "VALUES": {
+              "MESSAGE": "Please providing me your email so we can get in touch.",
+              "MAPPING": "",
+              "DISABLE_TEXT_INPUT": false
+            }
+          },
+          {
+            "NAME": "1. Send Message",
+            "TYPE": "SendMessage",
+            "SUB_TYPE": "SendMessage",
+            "POSITION_X": 255,
+            "POSITION_Y": 770,
+            "ID": "b99649dd-8e12-85e6-4b99-a7d3ec9b0b6b",
+            "CONNECTS_TO": "95dbdba2-94c8-06d8-e67d-c9570c1edd29",
+            "VALUES": {
+              "MESSAGE": "I'd love to chat with you more about your request to see if there are any discounts or special promotions that you could take advantage of.",
+              "MAPPING": "",
+              "DISABLE_TEXT_INPUT": false
+            }
+          },
+          {
+            "NAME": "2. Email Address",
+            "TYPE": "QuestionNode",
+            "SUB_TYPE": "Email",
+            "POSITION_X": 255,
+            "POSITION_Y": 960,
+            "ID": "95dbdba2-94c8-06d8-e67d-c9570c1edd29",
+            "CONNECTS_TO": "d2f7898d-fd86-3340-bc2d-95b06e48b1e1",
+            "VALUES": {
+              "MESSAGE": "Please providing me your email so we can get in touch.",
+              "MAPPING": "",
+              "DISABLE_TEXT_INPUT": false
+            }
+          },
+          {
+            "NAME": "3. Send Message",
+            "TYPE": "SendMessage",
+            "SUB_TYPE": "SendMessage",
+            "POSITION_X": 255,
+            "POSITION_Y": 1150,
+            "ID": "d2f7898d-fd86-3340-bc2d-95b06e48b1e1",
+            "CONNECTS_TO": "",
+            "VALUES": {
+              "MESSAGE": "Thanks! We'll be in touch",
+              "MAPPING": "",
+              "DISABLE_TEXT_INPUT": false
+            }
+          },
+          {
+            "POSITION_X": 30,
+            "POSITION_Y": 530,
+            "VALUES": {
+              "MESSAGE": "OK, what options are you interested in?",
+              "OPTIONS": [
+                {
+                  "CONNECTS_TO": "372bdbdf-1b63-4fcb-56e5-d3afa74e93b2",
+                  "OPTION": "Option A",
+                  "OPTION_ID": "c1c2fbf8-931d-5b5c-c453-ef0820b9df88"
+                },
+                {
+                  "CONNECTS_TO": "257beedd-e047-d058-9e04-b57ced5f7c50",
+                  "OPTION": "Option B",
+                  "OPTION_ID": "77412b1e-96f4-57d3-86d2-953e5e7dae49"
+                }
+              ],
+              "MAPPING": "",
+              "DISABLE_TEXT_INPUT": false
+            },
+            "ID": "81c07567-da60-91e5-5528-99c9ea270767",
+            "TYPE": "QuestionNode",
+            "CONNECTS_TO": "",
+            "NAME": "3. Multiple Choice",
+            "SUB_TYPE": "Buttons"
+          },
+          {
+            "POSITION_X": 255,
+            "POSITION_Y": 770,
+            "VALUES": {
+              "MESSAGE": "I'd love to chat with you more about your request to see if there are any discounts or special promotions that you could take advantage of.",
+              "OPTIONS": null,
+              "MAPPING": "",
+              "DISABLE_TEXT_INPUT": false
+            },
+            "ID": "257beedd-e047-d058-9e04-b57ced5f7c50",
+            "TYPE": "SendMessage",
+            "CONNECTS_TO": "0a43e159-4564-ee69-d083-3e7f04f041e2",
+            "NAME": "2. Send Message",
+            "SUB_TYPE": "SendMessage"
+          },
+          {
+            "POSITION_X": 255,
+            "POSITION_Y": 960,
+            "VALUES": {
+              "MESSAGE": "Please providing me your email so we can get in touch.",
+              "OPTIONS": null,
+              "MAPPING": "",
+              "DISABLE_TEXT_INPUT": false
+            },
+            "ID": "0a43e159-4564-ee69-d083-3e7f04f041e2",
+            "TYPE": "QuestionNode",
+            "CONNECTS_TO": "03bafb83-2aeb-3c85-29e3-36af0a54fffb",
+            "NAME": "4. Email Address",
+            "SUB_TYPE": "Email"
+          },
+          {
+            "POSITION_X": 255,
+            "POSITION_Y": 1150,
+            "VALUES": {
+              "MESSAGE": "Thanks! We'll be in touch",
+              "OPTIONS": null,
+              "MAPPING": "",
+              "DISABLE_TEXT_INPUT": false
+            },
+            "ID": "03bafb83-2aeb-3c85-29e3-36af0a54fffb",
+            "TYPE": "SendMessage",
+            "CONNECTS_TO": "",
+            "NAME": "6. Send Message",
+            "SUB_TYPE": "SendMessage"
+          },
+          {
+            "POSITION_X": 30,
+            "POSITION_Y": 770,
+            "VALUES": {
+              "MESSAGE": "I'd love to chat with you more about your request to see if there are any discounts or special promotions that you could take advantage of.",
+              "OPTIONS": null,
+              "MAPPING": "",
+              "DISABLE_TEXT_INPUT": false
+            },
+            "ID": "372bdbdf-1b63-4fcb-56e5-d3afa74e93b2",
+            "TYPE": "SendMessage",
+            "CONNECTS_TO": "e786c4b7-4dfc-392c-0746-207456daef92",
+            "NAME": "1. Send Message",
+            "SUB_TYPE": "SendMessage"
+          },
+          {
+            "POSITION_X": 30,
+            "POSITION_Y": 960,
+            "VALUES": {
+              "MESSAGE": "Please providing me your email so we can get in touch.",
+              "OPTIONS": null,
+              "MAPPING": "",
+              "DISABLE_TEXT_INPUT": false
+            },
+            "ID": "e786c4b7-4dfc-392c-0746-207456daef92",
+            "TYPE": "QuestionNode",
+            "CONNECTS_TO": "bc13baf6-d6fd-d432-70dc-b59f32cf5d75",
+            "NAME": "3. Email Address",
+            "SUB_TYPE": "Email"
+          },
+          {
+            "POSITION_X": 30,
+            "POSITION_Y": 1150,
+            "VALUES": {
+              "MESSAGE": "Thanks! We'll be in touch",
+              "OPTIONS": null,
+              "MAPPING": "",
+              "DISABLE_TEXT_INPUT": false
+            },
+            "ID": "bc13baf6-d6fd-d432-70dc-b59f32cf5d75",
+            "TYPE": "SendMessage",
+            "CONNECTS_TO": "",
+            "NAME": "5. Send Message",
+            "SUB_TYPE": "SendMessage"
+          }
+        ]
+      },
+      "CHAT_BOT_ID": null
+    },
+   {
+  "NAME": "Brand Awareness Feedback",
+  "DESCRIPTION": "",
+  "WORKFLOW": {
+    "NODES": [
+      {
+        "POSITION_X": 30,
+        "POSITION_Y": 100,
+        "VALUES": {
+          "MESSAGE": "Hi there, Welcome",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "5c1c202e-2e04-8df0-d75b-8bafad8b1111",
+        "TYPE": "SendMessage",
+        "CONNECTS_TO": "6457789b-c78b-f369-2458-8403d88345db",
+        "NAME": "1. Send Message",
+        "SUB_TYPE": "SendMessage"
+      },
+      {
+        "POSITION_X": 30,
+        "POSITION_Y": 290,
+        "VALUES": {
+          "MESSAGE": "When was the last time you used this product category?",
+          "OPTIONS": [
+            {
+              "CONNECTS_TO": "99966eee-d25a-5de4-3895-4431e4bef54b",
+              "OPTION": "Last month ",
+              "OPTION_ID": "d7a8a388-3de2-1515-8024-8fc874093a54"
+            },
+            {
+              "CONNECTS_TO": "f79c67a2-36ba-d341-e432-ea8397a80d5a",
+              "OPTION": "In last 12 months",
+              "OPTION_ID": "5e1e2be1-fe7f-6d90-b421-3b5d370b2321"
+            },
+            {
+              "CONNECTS_TO": "4e91e8e4-1626-9a80-53d9-c67e51fc5c55",
+              "OPTION": "More than 12 months",
+              "OPTION_ID": "d36f46c9-934f-f0cf-81a3-af044f3f328d"
+            }
+          ],
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "6457789b-c78b-f369-2458-8403d88345db",
+        "TYPE": "QuestionNode",
+        "CONNECTS_TO": "",
+        "NAME": "2. Multiple Choice",
+        "SUB_TYPE": "Buttons"
+      },
+      {
+        "POSITION_X": 480,
+        "POSITION_Y": 530,
+        "VALUES": {
+          "MESSAGE": "When you think of this product type, what brands come to mind?",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "4e91e8e4-1626-9a80-53d9-c67e51fc5c55",
+        "TYPE": "QuestionNode",
+        "CONNECTS_TO": "b06e998e-f86b-1562-44be-31bfd5786dc0",
+        "NAME": "12. Free Text Reply",
+        "SUB_TYPE": "FreeText"
+      },
+      {
+        "POSITION_X": 480,
+        "POSITION_Y": 720,
+        "VALUES": {
+          "MESSAGE": "How has your perception of our brand changed ",
+          "OPTIONS": [
+            {
+              "CONNECTS_TO": "ba6c57a7-b8ed-e372-a592-c145b815b52c",
+              "OPTION": "More favorable",
+              "OPTION_ID": "3c9b605a-1cb8-5d92-8cc3-23740d487a31"
+            },
+            {
+              "CONNECTS_TO": "3359601f-9cb7-f8fc-8129-419b02b83a50",
+              "OPTION": "Stayed the same",
+              "OPTION_ID": "b78d543a-92e7-05d8-1943-132c34e7fbd8"
+            },
+            {
+              "CONNECTS_TO": "6b9353e4-c74b-47e9-53bf-b78a03d16cd0",
+              "OPTION": "Less favorable",
+              "OPTION_ID": "d7f11f38-88d3-04ab-d988-c51e8e8d92cb"
+            }
+          ],
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "b06e998e-f86b-1562-44be-31bfd5786dc0",
+        "TYPE": "QuestionNode",
+        "CONNECTS_TO": "",
+        "NAME": "14. Multiple Choice",
+        "SUB_TYPE": "Buttons"
+      },
+      {
+        "POSITION_X": 930,
+        "POSITION_Y": 960,
+        "VALUES": {
+          "MESSAGE": "Thank you for taking the time to provide feedback. It is extremely helpful.",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "6b9353e4-c74b-47e9-53bf-b78a03d16cd0",
+        "TYPE": "SendMessage",
+        "CONNECTS_TO": "",
+        "NAME": "20. Send Message",
+        "SUB_TYPE": "SendMessage"
+      },
+      {
+        "POSITION_X": 705,
+        "POSITION_Y": 960,
+        "VALUES": {
+          "MESSAGE": "Thank you for taking the time to provide feedback. It is extremely helpful.",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "3359601f-9cb7-f8fc-8129-419b02b83a50",
+        "TYPE": "SendMessage",
+        "CONNECTS_TO": "",
+        "NAME": "19. Send Message",
+        "SUB_TYPE": "SendMessage"
+      },
+      {
+        "POSITION_X": 480,
+        "POSITION_Y": 960,
+        "VALUES": {
+          "MESSAGE": "Thank you for taking the time to provide feedback. It is extremely helpful.",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "ba6c57a7-b8ed-e372-a592-c145b815b52c",
+        "TYPE": "SendMessage",
+        "CONNECTS_TO": "",
+        "NAME": "18. Send Message",
+        "SUB_TYPE": "SendMessage"
+      },
+      {
+        "POSITION_X": 255,
+        "POSITION_Y": 530,
+        "VALUES": {
+          "MESSAGE": "When you think of this product type, what brands come to mind?",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "f79c67a2-36ba-d341-e432-ea8397a80d5a",
+        "TYPE": "QuestionNode",
+        "CONNECTS_TO": "250b0c6a-41e3-170a-eced-9eee86d41f83",
+        "NAME": "11. Free Text Reply",
+        "SUB_TYPE": "FreeText"
+      },
+      {
+        "POSITION_X": 255,
+        "POSITION_Y": 720,
+        "VALUES": {
+          "MESSAGE": "How has your perception of our brand changed ",
+          "OPTIONS": [
+            {
+              "CONNECTS_TO": "35852fc5-af64-3cc9-fe31-bb2f65fe69fc",
+              "OPTION": "More favorable",
+              "OPTION_ID": "caeaf91d-a6a8-ba68-3af5-05e0f997c178"
+            },
+            {
+              "CONNECTS_TO": "0a8ba5d4-78e6-465d-6b9a-b44fa92c4a32",
+              "OPTION": "Stayed the same ",
+              "OPTION_ID": "ae224998-f5e7-7b5c-84d3-caeb2a881cb6"
+            },
+            {
+              "CONNECTS_TO": "5b506dcd-0fee-c13d-3af9-7ef311efad45",
+              "OPTION": "Less favorable",
+              "OPTION_ID": "16d0bcf8-2ae7-130b-e71d-bec199b9401b"
+            }
+          ],
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "250b0c6a-41e3-170a-eced-9eee86d41f83",
+        "TYPE": "QuestionNode",
+        "CONNECTS_TO": "",
+        "NAME": "13. Multiple Choice",
+        "SUB_TYPE": "Buttons"
+      },
+      {
+        "POSITION_X": 705,
+        "POSITION_Y": 960,
+        "VALUES": {
+          "MESSAGE": "Thank you for taking the time to provide feedback. It is extremely helpful.",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "5b506dcd-0fee-c13d-3af9-7ef311efad45",
+        "TYPE": "SendMessage",
+        "CONNECTS_TO": "",
+        "NAME": "17. Send Message",
+        "SUB_TYPE": "SendMessage"
+      },
+      {
+        "POSITION_X": 480,
+        "POSITION_Y": 960,
+        "VALUES": {
+          "MESSAGE": "Thank you for taking the time to provide feedback. It is extremely helpful.",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "0a8ba5d4-78e6-465d-6b9a-b44fa92c4a32",
+        "TYPE": "SendMessage",
+        "CONNECTS_TO": "",
+        "NAME": "16. Send Message",
+        "SUB_TYPE": "SendMessage"
+      },
+      {
+        "POSITION_X": 255,
+        "POSITION_Y": 960,
+        "VALUES": {
+          "MESSAGE": "Thank you for taking the time to provide feedback. It is extremely helpful.",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "35852fc5-af64-3cc9-fe31-bb2f65fe69fc",
+        "TYPE": "SendMessage",
+        "CONNECTS_TO": "",
+        "NAME": "15. Send Message",
+        "SUB_TYPE": "SendMessage"
+      },
+      {
+        "POSITION_X": 30,
+        "POSITION_Y": 530,
+        "VALUES": {
+          "MESSAGE": "When you think of this product type, what brands come to mind?",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "99966eee-d25a-5de4-3895-4431e4bef54b",
+        "TYPE": "QuestionNode",
+        "CONNECTS_TO": "42aa500c-d347-c0c8-57fc-f6ff02970cdc",
+        "NAME": "4. Free Text Reply",
+        "SUB_TYPE": "FreeText"
+      },
+      {
+        "POSITION_X": 30,
+        "POSITION_Y": 720,
+        "VALUES": {
+          "MESSAGE": "How has your perception of our brand changed ",
+          "OPTIONS": [
+            {
+              "CONNECTS_TO": "1956efd0-7319-9535-b29d-43f2afa47128",
+              "OPTION": "More favorable",
+              "OPTION_ID": "7208196e-fce7-be57-c69b-b272a1177d40"
+            },
+            {
+              "CONNECTS_TO": "f7c42d9a-25f5-c6a5-0bbc-075625bb5e99",
+              "OPTION": "Stayed the same",
+              "OPTION_ID": "bf6f0f06-4ddc-4c15-17d5-24f505ac5d10"
+            },
+            {
+              "CONNECTS_TO": "abcfd5d4-5d84-b392-a25c-782a9e3c0b5d",
+              "OPTION": "less favorable",
+              "OPTION_ID": "5fc4ba53-1eba-cc6e-cd6d-4f6db5928de3"
+            }
+          ],
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "42aa500c-d347-c0c8-57fc-f6ff02970cdc",
+        "TYPE": "QuestionNode",
+        "CONNECTS_TO": "",
+        "NAME": "5. Multiple Choice",
+        "SUB_TYPE": "Buttons"
+      },
+      {
+        "POSITION_X": 480,
+        "POSITION_Y": 960,
+        "VALUES": {
+          "MESSAGE": "Thank you for taking the time to provide feedback. It is extremely helpful. ",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "abcfd5d4-5d84-b392-a25c-782a9e3c0b5d",
+        "TYPE": "SendMessage",
+        "CONNECTS_TO": "",
+        "NAME": "8. Send Message",
+        "SUB_TYPE": "SendMessage"
+      },
+      {
+        "POSITION_X": 255,
+        "POSITION_Y": 960,
+        "VALUES": {
+          "MESSAGE": "Thank you for taking the time to provide feedback. It is extremely helpful. ",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "f7c42d9a-25f5-c6a5-0bbc-075625bb5e99",
+        "TYPE": "SendMessage",
+        "CONNECTS_TO": "",
+        "NAME": "7. Send Message",
+        "SUB_TYPE": "SendMessage"
+      },
+      {
+        "POSITION_X": 30,
+        "POSITION_Y": 960,
+        "VALUES": {
+          "MESSAGE": "Thank you for taking the time to provide feedback. It is extremely helpful. ",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "1956efd0-7319-9535-b29d-43f2afa47128",
+        "TYPE": "SendMessage",
+        "CONNECTS_TO": "",
+        "NAME": "6. Send Message",
+        "SUB_TYPE": "SendMessage"
+      }
+    ]
+  },
+  "CHAT_BOT_ID": null
+},
+    {
+  "NAME": "Target Market Demographics",
+  "DESCRIPTION": "",
+  "WORKFLOW": {
+    "NODES": [
+      {
+        "POSITION_X": 30,
+        "POSITION_Y": 100,
+        "VALUES": {
+          "MESSAGE": "Hi there, Nice to meet you.",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "eb7dce48-a7c0-2fb0-a172-1012fe4db84d",
+        "TYPE": "SendMessage",
+        "CONNECTS_TO": "fd20df09-53b6-f2df-0c02-3b3b0404f178",
+        "NAME": "1. Send Message",
+        "SUB_TYPE": "SendMessage"
+      },
+      {
+        "POSITION_X": 30,
+        "POSITION_Y": 290,
+        "VALUES": {
+          "MESSAGE": "Do you have few seconds to spare ?",
+          "OPTIONS": [
+            {
+              "CONNECTS_TO": "64d1da97-4d3d-7630-e0ee-d190187eca74",
+              "OPTION": "Sure,I don't mind",
+              "OPTION_ID": "697ec5bc-2044-cb63-6a75-0b006d0489c7"
+            },
+            {
+              "CONNECTS_TO": "2ce7c677-97f9-7261-76d9-0061bf961821",
+              "OPTION": "No",
+              "OPTION_ID": "9e3cd323-9cfa-df64-f17a-9259865f2acc"
+            }
+          ],
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "fd20df09-53b6-f2df-0c02-3b3b0404f178",
+        "TYPE": "QuestionNode",
+        "CONNECTS_TO": "",
+        "NAME": "2. Multiple Choice",
+        "SUB_TYPE": "Buttons"
+      },
+      {
+        "POSITION_X": 30,
+        "POSITION_Y": 530,
+        "VALUES": {
+          "MESSAGE": "Help us with your valuable inputs for few questions.",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "64d1da97-4d3d-7630-e0ee-d190187eca74",
+        "TYPE": "SendMessage",
+        "CONNECTS_TO": "8e54d785-24c2-b955-7efe-b135e48ef06f",
+        "NAME": "4. Send Message",
+        "SUB_TYPE": "SendMessage"
+      },
+      {
+        "POSITION_X": 30,
+        "POSITION_Y": 720,
+        "VALUES": {
+          "MESSAGE": "How often do you use this product category?",
+          "OPTIONS": [
+            {
+              "CONNECTS_TO": "e8cd3f9b-2d08-e6f7-083d-59d3a0c0a972",
+              "OPTION": "Several times a week",
+              "OPTION_ID": "9b07f653-3f7f-71c7-74c7-faa8ee642af8"
+            },
+            {
+              "CONNECTS_TO": "215b51a7-6bbd-914b-279c-04fce51d830b",
+              "OPTION": "Several times a month",
+              "OPTION_ID": "a37ab2fd-3203-24bf-57b2-2f0ae84e3aba"
+            },
+            {
+              "CONNECTS_TO": "cff18cc3-abab-5b1f-6cff-6533da17c340",
+              "OPTION": "Less than once a month",
+              "OPTION_ID": "253ed272-0a86-d0f5-85cf-58bd9052322d"
+            },
+            {
+              "CONNECTS_TO": "f5196102-b4da-1bed-04a5-c0de718ca624",
+              "OPTION": "Never",
+              "OPTION_ID": "549a6abd-a3c5-c3bf-1d5a-63b841e34059"
+            }
+          ],
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "8e54d785-24c2-b955-7efe-b135e48ef06f",
+        "TYPE": "QuestionNode",
+        "CONNECTS_TO": "",
+        "NAME": "5. Multiple Choice",
+        "SUB_TYPE": "Buttons"
+      },
+      {
+        "POSITION_X": 705,
+        "POSITION_Y": 960,
+        "VALUES": {
+          "MESSAGE": "What is your age?",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "f5196102-b4da-1bed-04a5-c0de718ca624",
+        "TYPE": "QuestionNode",
+        "CONNECTS_TO": "8d61ba05-16e2-f2f8-ddb5-c88af3d2f1ef",
+        "NAME": "24. Free Text Reply",
+        "SUB_TYPE": "FreeText"
+      },
+      {
+        "POSITION_X": 705,
+        "POSITION_Y": 1150,
+        "VALUES": {
+          "MESSAGE": "What is your gender?",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "8d61ba05-16e2-f2f8-ddb5-c88af3d2f1ef",
+        "TYPE": "QuestionNode",
+        "CONNECTS_TO": "0e846ac4-17ef-9305-e0d0-602894f33a8d",
+        "NAME": "30. Free Text Reply",
+        "SUB_TYPE": "FreeText"
+      },
+      {
+        "POSITION_X": 705,
+        "POSITION_Y": 1340,
+        "VALUES": {
+          "MESSAGE": "What race/ethnicity best describes you? ",
+          "OPTIONS": [
+            {
+              "CONNECTS_TO": "b2cb66d4-8801-76ba-7f4d-b8ebd9f2dd49",
+              "OPTION": "American Indian or Alaskan Native",
+              "OPTION_ID": "3c58972f-879a-9981-f84f-3837ac565628"
+            },
+            {
+              "CONNECTS_TO": "4826a2b7-79e7-96f0-5ca2-fc4a273e3acd",
+              "OPTION": "Asian / Pacific Islander",
+              "OPTION_ID": "09da20c2-95fe-8752-6cdd-54d64a375da0"
+            },
+            {
+              "CONNECTS_TO": "20d64e7c-7f47-edbf-c6a5-6d469e8e76ae",
+              "OPTION": "Multiple ethnicity / Other",
+              "OPTION_ID": "3811ea58-4688-9370-6e97-c62a0b8d8a74"
+            }
+          ],
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "0e846ac4-17ef-9305-e0d0-602894f33a8d",
+        "TYPE": "QuestionNode",
+        "CONNECTS_TO": "",
+        "NAME": "33. Multiple Choice",
+        "SUB_TYPE": "Buttons"
+      },
+      {
+        "POSITION_X": 1155,
+        "POSITION_Y": 1580,
+        "VALUES": {
+          "MESSAGE": "Thank you for inputs. It will extremely help us.",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "20d64e7c-7f47-edbf-c6a5-6d469e8e76ae",
+        "TYPE": "SendMessage",
+        "CONNECTS_TO": "",
+        "NAME": "51. Send Message",
+        "SUB_TYPE": "SendMessage"
+      },
+      {
+        "POSITION_X": 930,
+        "POSITION_Y": 1580,
+        "VALUES": {
+          "MESSAGE": "Thank you for inputs. It will extremely help us.",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "4826a2b7-79e7-96f0-5ca2-fc4a273e3acd",
+        "TYPE": "SendMessage",
+        "CONNECTS_TO": "",
+        "NAME": "47. Send Message",
+        "SUB_TYPE": "SendMessage"
+      },
+      {
+        "POSITION_X": 705,
+        "POSITION_Y": 1580,
+        "VALUES": {
+          "MESSAGE": "Thank you for inputs. It will extremely help us.",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "b2cb66d4-8801-76ba-7f4d-b8ebd9f2dd49",
+        "TYPE": "SendMessage",
+        "CONNECTS_TO": "",
+        "NAME": "46. Send Message",
+        "SUB_TYPE": "SendMessage"
+      },
+      {
+        "POSITION_X": 480,
+        "POSITION_Y": 960,
+        "VALUES": {
+          "MESSAGE": "What is your age?",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "cff18cc3-abab-5b1f-6cff-6533da17c340",
+        "TYPE": "QuestionNode",
+        "CONNECTS_TO": "14273a02-5318-e498-d6a1-3fbcfedadf86",
+        "NAME": "23. Free Text Reply",
+        "SUB_TYPE": "FreeText"
+      },
+      {
+        "POSITION_X": 480,
+        "POSITION_Y": 1150,
+        "VALUES": {
+          "MESSAGE": "What is your gender?",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "14273a02-5318-e498-d6a1-3fbcfedadf86",
+        "TYPE": "QuestionNode",
+        "CONNECTS_TO": "9a2d70b9-4055-148f-d855-1d92dd829bcd",
+        "NAME": "29. Free Text Reply",
+        "SUB_TYPE": "FreeText"
+      },
+      {
+        "POSITION_X": 480,
+        "POSITION_Y": 1340,
+        "VALUES": {
+          "MESSAGE": "What race/ethnicity best describes you? ",
+          "OPTIONS": [
+            {
+              "CONNECTS_TO": "9bb76c16-c851-9e84-2fcb-6be937eb41c9",
+              "OPTION": "American Indian or Alaskan Native",
+              "OPTION_ID": "9b0557af-5292-e753-c654-434cd2c91f92"
+            },
+            {
+              "CONNECTS_TO": "1b9eb29a-a3ab-489f-cc74-ce712a7d49e4",
+              "OPTION": "Asian / Pacific Islander",
+              "OPTION_ID": "81074449-f428-b461-e073-8a2d2b7f0cfb"
+            },
+            {
+              "CONNECTS_TO": "b169ac77-006b-7667-3103-4d74d92bd18c",
+              "OPTION": "Multiple ethnicity / Other",
+              "OPTION_ID": "3f7d51c3-5d64-c909-cb95-0d41479f74fa"
+            }
+          ],
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "9a2d70b9-4055-148f-d855-1d92dd829bcd",
+        "TYPE": "QuestionNode",
+        "CONNECTS_TO": "",
+        "NAME": "32. Multiple Choice",
+        "SUB_TYPE": "Buttons"
+      },
+      {
+        "POSITION_X": 930,
+        "POSITION_Y": 1580,
+        "VALUES": {
+          "MESSAGE": "Thank you for inputs. It will extremely help us.",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "b169ac77-006b-7667-3103-4d74d92bd18c",
+        "TYPE": "SendMessage",
+        "CONNECTS_TO": "",
+        "NAME": "45. Send Message",
+        "SUB_TYPE": "SendMessage"
+      },
+      {
+        "POSITION_X": 705,
+        "POSITION_Y": 1580,
+        "VALUES": {
+          "MESSAGE": "Thank you for inputs. It will extremely help us.",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "1b9eb29a-a3ab-489f-cc74-ce712a7d49e4",
+        "TYPE": "SendMessage",
+        "CONNECTS_TO": "",
+        "NAME": "41. Send Message",
+        "SUB_TYPE": "SendMessage"
+      },
+      {
+        "POSITION_X": 480,
+        "POSITION_Y": 1580,
+        "VALUES": {
+          "MESSAGE": "Thank you for inputs. It will extremely help us.",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "9bb76c16-c851-9e84-2fcb-6be937eb41c9",
+        "TYPE": "SendMessage",
+        "CONNECTS_TO": "",
+        "NAME": "40. Send Message",
+        "SUB_TYPE": "SendMessage"
+      },
+      {
+        "POSITION_X": 255,
+        "POSITION_Y": 960,
+        "VALUES": {
+          "MESSAGE": "What is your age?",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "215b51a7-6bbd-914b-279c-04fce51d830b",
+        "TYPE": "QuestionNode",
+        "CONNECTS_TO": "ea445393-4440-a0b9-bf00-1619280fca20",
+        "NAME": "22. Free Text Reply",
+        "SUB_TYPE": "FreeText"
+      },
+      {
+        "POSITION_X": 255,
+        "POSITION_Y": 1150,
+        "VALUES": {
+          "MESSAGE": "What is your gender?",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "ea445393-4440-a0b9-bf00-1619280fca20",
+        "TYPE": "QuestionNode",
+        "CONNECTS_TO": "c0c3df7d-af3d-eeb9-e2ba-d4e5dbd002b7",
+        "NAME": "28. Free Text Reply",
+        "SUB_TYPE": "FreeText"
+      },
+      {
+        "POSITION_X": 255,
+        "POSITION_Y": 1340,
+        "VALUES": {
+          "MESSAGE": "What race/ethnicity best describes you?",
+          "OPTIONS": [
+            {
+              "CONNECTS_TO": "27b9dc16-9198-018d-c6d8-aaf55515f003",
+              "OPTION": "American Indian or Alaskan Native",
+              "OPTION_ID": "4db6459d-7395-bf90-bf97-7498358785f6"
+            },
+            {
+              "CONNECTS_TO": "2842261f-7155-2c7e-9c24-1110702104e8",
+              "OPTION": "Asian / Pacific Islander",
+              "OPTION_ID": "88ab8a24-023e-b69d-4912-78df947067a6"
+            },
+            {
+              "CONNECTS_TO": "72427157-36e3-c954-eeb4-a78fce0373df",
+              "OPTION": "Multiple ethnicity / Other",
+              "OPTION_ID": "dda58318-d332-0dbc-9bda-0a1bfea47572"
+            }
+          ],
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "c0c3df7d-af3d-eeb9-e2ba-d4e5dbd002b7",
+        "TYPE": "QuestionNode",
+        "CONNECTS_TO": "",
+        "NAME": "31. Multiple Choice",
+        "SUB_TYPE": "Buttons"
+      },
+      {
+        "POSITION_X": 705,
+        "POSITION_Y": 1580,
+        "VALUES": {
+          "MESSAGE": "Thank you for inputs. It will extremely help us.",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "72427157-36e3-c954-eeb4-a78fce0373df",
+        "TYPE": "SendMessage",
+        "CONNECTS_TO": "",
+        "NAME": "39. Send Message",
+        "SUB_TYPE": "SendMessage"
+      },
+      {
+        "POSITION_X": 480,
+        "POSITION_Y": 1580,
+        "VALUES": {
+          "MESSAGE": "Thank you for inputs. It will extremely help us.",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "2842261f-7155-2c7e-9c24-1110702104e8",
+        "TYPE": "SendMessage",
+        "CONNECTS_TO": "",
+        "NAME": "35. Send Message",
+        "SUB_TYPE": "SendMessage"
+      },
+      {
+        "POSITION_X": 255,
+        "POSITION_Y": 1580,
+        "VALUES": {
+          "MESSAGE": "Thank you for inputs. It will extremely help us.",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "27b9dc16-9198-018d-c6d8-aaf55515f003",
+        "TYPE": "SendMessage",
+        "CONNECTS_TO": "",
+        "NAME": "34. Send Message",
+        "SUB_TYPE": "SendMessage"
+      },
+      {
+        "POSITION_X": 30,
+        "POSITION_Y": 960,
+        "VALUES": {
+          "MESSAGE": "What is your age?",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "e8cd3f9b-2d08-e6f7-083d-59d3a0c0a972",
+        "TYPE": "QuestionNode",
+        "CONNECTS_TO": "490d45b3-c411-0dbd-4453-fa9e54cc1c93",
+        "NAME": "7. Free Text Reply",
+        "SUB_TYPE": "FreeText"
+      },
+      {
+        "POSITION_X": 30,
+        "POSITION_Y": 1150,
+        "VALUES": {
+          "MESSAGE": "What is your gender?",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "490d45b3-c411-0dbd-4453-fa9e54cc1c93",
+        "TYPE": "QuestionNode",
+        "CONNECTS_TO": "f832746b-ac1f-8545-1c46-534f1f870211",
+        "NAME": "11. Free Text Reply",
+        "SUB_TYPE": "FreeText"
+      },
+      {
+        "POSITION_X": 30,
+        "POSITION_Y": 1340,
+        "VALUES": {
+          "MESSAGE": "What race/ethnicity best describes you? ",
+          "OPTIONS": [
+            {
+              "CONNECTS_TO": "0ec313f6-19f4-dee9-503c-d371f3d6cb7a",
+              "OPTION": "American Indian or Alaskan Native",
+              "OPTION_ID": "d89a3e10-8b0c-2a08-c6c0-9680c50d2875"
+            },
+            {
+              "CONNECTS_TO": "a073e7f3-df8d-8975-791a-52833d27f49c",
+              "OPTION": "Asian / Pacific Islander",
+              "OPTION_ID": "b8371fdd-5932-e92a-f101-ae23f3f35da4"
+            },
+            {
+              "CONNECTS_TO": "64ebc15a-29a8-1a24-594c-21acdb26895b",
+              "OPTION": "Multiple ethnicity / Other",
+              "OPTION_ID": "45069ef2-df08-65a7-f4ba-94d0e7c44587"
+            }
+          ],
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "f832746b-ac1f-8545-1c46-534f1f870211",
+        "TYPE": "QuestionNode",
+        "CONNECTS_TO": "",
+        "NAME": "12. Multiple Choice",
+        "SUB_TYPE": "Buttons"
+      },
+      {
+        "POSITION_X": 480,
+        "POSITION_Y": 1580,
+        "VALUES": {
+          "MESSAGE": "Thank you for inputs. It will extremely help us.",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "64ebc15a-29a8-1a24-594c-21acdb26895b",
+        "TYPE": "SendMessage",
+        "CONNECTS_TO": "",
+        "NAME": "18. Send Message",
+        "SUB_TYPE": "SendMessage"
+      },
+      {
+        "POSITION_X": 255,
+        "POSITION_Y": 1580,
+        "VALUES": {
+          "MESSAGE": "Thank you for inputs. It will extremely help us.",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "a073e7f3-df8d-8975-791a-52833d27f49c",
+        "TYPE": "SendMessage",
+        "CONNECTS_TO": "",
+        "NAME": "14. Send Message",
+        "SUB_TYPE": "SendMessage"
+      },
+      {
+        "POSITION_X": 30,
+        "POSITION_Y": 1580,
+        "VALUES": {
+          "MESSAGE": "Thank you for inputs. It will extremely help us.",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "0ec313f6-19f4-dee9-503c-d371f3d6cb7a",
+        "TYPE": "SendMessage",
+        "CONNECTS_TO": "",
+        "NAME": "13. Send Message",
+        "SUB_TYPE": "SendMessage"
+      },
+      {
+        "POSITION_X": 255,
+        "POSITION_Y": 530,
+        "VALUES": {
+          "MESSAGE": "Thank you, Hope to see you soon.\n",
+          "OPTIONS": null,
+          "MAPPING": "",
+          "DISABLE_TEXT_INPUT": false
+        },
+        "ID": "2ce7c677-97f9-7261-76d9-0061bf961821",
+        "TYPE": "SendMessage",
+        "CONNECTS_TO": "",
+        "NAME": "3. Send Message",
+        "SUB_TYPE": "SendMessage"
+      }
+    ]
+  },
+  "CHAT_BOT_ID": null
+	}
+  ]
+}

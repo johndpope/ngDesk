@@ -1,0 +1,21 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<div fxLayout="column" fxLayoutGap="20px" class="pad10">
+	<ng-template #headerTemplateRef>
+		<app-title-bar class="light-grey-color" [title]="'ACCOUNT_LEVEL_ACCESS' | translate" [buttonText]="'SAVE' | translate"
+			(buttonRightOnClick)="save()" [buttonColor]="'primary'"></app-title-bar>
+	</ng-template>
+	<div  fxLayout="row" fxLayoutAlign="center">
+		<div fxFlex fxLayoutAlign="center center" fxLayoutGap="5px">
+			<mat-card fxLayout="column" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="100" style="overflow: auto;">
+				<div fxLayout="row" style="padding: 20px;">
+					<mat-checkbox [(ngModel)]="accountLevelAccess" class="mat-body-strong" color="primary">
+						{{'ACCOUNT_LEVEL_ACCESS' | translate}}
+					</mat-checkbox>
+				</div>
+				<div fxLayout="row"  fxLayoutAlign="start center">
+					<p class="mat-body">{{'ACCOUNT_LEVEL_ACCESS_DESCRIPTION' | translate}}</p>
+				</div>
+			</mat-card>
+		</div>
+	</div>
+</div>

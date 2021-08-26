@@ -1,0 +1,86 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef>
+  <app-title-bar></app-title-bar>
+</ng-template>
+<div fxLayout="column" class="pad10">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <img src="../../assets/images/Zoom.png" style="width:140px;padding: 20px;">
+  </div>
+  <div fxLayout="column" fxLayoutGap="20px">
+    <mat-card fxLayout="column" fxFlex="100" fxLayoutGap="20px">
+      <div fxLayoutAlign="center center">
+        <div class="addToZoomButton">
+          <button class="mat-body" mat-raised-button color="primary" class="pointer" [disabled]="disableTheButton"
+              rel="noopener noreferrer" (click)="addToZoom()">
+              {{'ADD_NGDESK_TO_ZOOM' | translate}}
+          </button>
+        </div>
+      </div>
+
+    <div fxLayout="row" fxLayoutAlign="start start">
+      <div *ngIf="zoomIntegrated; else elseBlock" fxLayout="column" fxLayoutAlign="start start">
+        <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="start start">
+          <div class="mat-body-strong" style="font-size: 24px;">{{'ZOOM_INTEGRATION_DETAILS' | translate}}</div>
+            <div fxLayout="column" fxLayoutGap="10px">
+              <div fxLayout="row" fxLayoutGap="10px">
+                <label class="mat-body" style="font-size: 16px;font-weight: 500;">Company Name : </label>
+                <label>{{companyName}}</label>
+              </div>
+              <div fxLayout="row" fxLayoutGap="10px">
+                <label class="mat-body" style="font-size: 16px;font-weight: 500;">First Name : </label>
+                <label>{{firstName}}</label>
+              </div>
+              <div fxLayout="row" fxLayoutGap="10px">
+                <label class="mat-body" style="font-size: 16px;font-weight: 500;">Last name : </label>
+                <label>{{lastName}}</label>
+              </div>
+              <div fxLayout="row" fxLayoutGap="10px">
+                <label class="mat-body" style="font-size: 16px;font-weight: 500;">Email address : </label>
+                <label>{{emailAddress}}</label>
+              </div>
+              <div fxLayout="row" fxLayoutGap="10px">
+                <label class="mat-body" style="font-size: 16px;font-weight: 500;">Role Name : </label>
+                <label>{{roleNAme}}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ng-template #elseBlock>
+        <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px">
+          <div class="mat-body-strong" style="font-size: 24px;">{{'ADVANTAGES' | translate}}</div>
+            <div fxLayout="column" fxLayoutGap="10px">
+              <div class="mat-body" style="font-size: 16px;">{{'ADVANTAGES_1' | translate}}</div>
+              <div class="mat-body" style="font-size: 16px;">{{'ADVANTAGES_2' | translate}}</div>
+              <div class="mat-body" style="font-size: 16px;">{{'ADVANTAGES_3' | translate}}</div>
+              <div class="mat-body" style="font-size: 16px;">{{'ADVANTAGES_4' | translate}}</div>
+              <div class="mat-body" style="font-size: 16px;">{{'ADVANTAGES_5' | translate}}</div>
+            </div>
+        </div>
+      </ng-template>
+    </mat-card>
+      <mat-accordion>
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <div fxLayout="row" fxLayoutGap="10px">
+                <div class="mat-body-strong" style="font-size: 24px;line-height: 36px;">{{'INTEGRATION_STEPS' | translate}}</div>
+                  <a href="https://support.ngdesk.com/guide/articles/5d26ce29ba62460001704703/Integrating%20Zoom%20to%20your%20ngDesk%20subdomain" target="_blank" style="color: inherit;">
+                    <button mat-button style="padding: 0px; min-width: 40px;" matTooltip="{{ 'CHECK_DOCUMENTATION' | translate }}">
+                      <mat-icon class="light-grey-color">help_outline</mat-icon>
+                    </button>
+                  </a>
+              </div>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div fxLayout="column" fxLayoutGap="10px">
+            <div class="mat-body" style="font-size: 16px;" [innerHTML]="'INTEGRATION_STEPS_1' | translate"></div>
+            <div class="mat-body" style="font-size: 16px;" [innerHTML]="'INTEGRATION_STEPS_2' | translate"></div>
+            <div class="mat-body" style="font-size: 16px;" [innerHTML]="'INTEGRATION_STEPS_3' | translate"></div>
+            <div class="mat-body" style="font-size: 16px;" [innerHTML]="'INTEGRATION_STEPS_4' | translate"></div>
+            <div class="mat-body" style="font-size: 16px;" [innerHTML]="'INTEGRATION_STEPS_5' | translate"></div>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+  </div>
+</div>

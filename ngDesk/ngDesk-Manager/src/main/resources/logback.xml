@@ -1,0 +1,12 @@
+<configuration>
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <!-- <pattern>%-4r [%t] %5p %c{1} - %m - tx.id=%X{transaction.id} %n</pattern> -->
+            <layout class="com.ngdesk.CustomLayout" />
+    	</encoder>
+    </appender>
+    <root level="TRACE">
+        <appender-ref ref="stdout" />
+    </root>
+</configuration>
+

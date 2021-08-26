@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: schedule
+  namespace: NAMESPACE_REPLACE
+spec:
+  selector:
+    matchLabels:
+      app: schedule
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: schedule
+    spec:
+      containers:
+        - name: schedule
+          image: gitlab.bluemsp.com:5050/ngdesk/ngdesk/schedule:latest
+          env:
+          - name: SPRING_PROFILES_ACTIVE
+            value: prod
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8082

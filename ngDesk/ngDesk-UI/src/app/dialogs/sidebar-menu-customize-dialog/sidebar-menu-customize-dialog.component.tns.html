@@ -1,0 +1,45 @@
+<StackLayout>
+  <Label text="sidebar-menu-customize-dialog works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<div fxLayout="column">
+	<label mat-dialog-title>Sidebar Menu
+	</label>
+	<div mat-dialog-content>
+		<div fxLayoutAlign="center center" fxLayoutGap="10px">
+			<mat-icon fxLayoutAlign="center center" fxFlex="50">{{data.MENU.ICON}}</mat-icon>
+			<label fxLayoutAlign="center center" fxFlex="50" *ngIf="false">No icon Selected.</label>
+			<mat-form-field fxFlex="50">
+				<input matInput placeholder="Menu Name" value="{{data.MENU.NAME}}" [(ngModel)]="data.MENU.NAME">
+			</mat-form-field>
+		</div>
+		<div fxLayoutGap="10px">
+			<mat-form-field fxFlex="50">
+				<mat-select placeholder="Select an icon" [(ngModel)]="data.MENU.ICON">
+					<mat-option *ngFor="let availableIcon of availableIcons" [value]="availableIcon">
+						{{availableIcon}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<mat-form-field fxFlex="50">
+				<mat-select placeholder="Select a module" [(ngModel)]="data.MENU.MODULE">
+					<mat-option *ngFor="let module of data.MODULES.MODULES" [value]="module.NAME">
+						{{module.NAME}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+		</div>
+		<div fxLayoutAlign="flex-end center" fxLayoutGap="10px">
+			<button mat-button (click)="onNoClick()">Cancel</button>
+			<button mat-button color="primary" [mat-dialog-close]="data.MENU"
+				[disabled]="data.MENU.NAME == null || data.MENU.NAME == '' || data.MENU.MODULE == null || data.MENU.ICON == null">Done</button>
+		</div>
+	</div>
+</div>
+
+-->

@@ -1,0 +1,51 @@
+<div fxLayout="column" fxLayoutAlign="space around center" paneOne>
+        <h1 mat-dialog-title class="mat-headline" fxLayoutAlign="center">
+          {{ 'WHATSAPP_CHANNEL' | translate }}
+        </h1>
+        <div fxLayoutAlign="center" *ngIf="errorMessage != ''">
+          <mat-error class="mat-h3" fxLayoutAlign="center">{{
+            errorMessage
+          }}</mat-error>
+        </div>
+        <form [formGroup]="smsChannelForm">
+          <div mat-dialog-content fxLayout="column">
+            <mat-form-field>
+              <input matInput placeholder="{{ 'NAME' | translate }}" formControlName="name" required />
+              <mat-error [innerHTML]="'FIELD_REQUIRED' | translate: errorParams.name"></mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="{{ 'DESCRIPTION' | translate }}" formControlName="description" />
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="{{ 'PHONE_NUMBER' | translate }}" formControlName="phoneNumber" [disabled]='true' />
+            </mat-form-field>
+            <div *ngIf="!smsChannel.whatsappRequested" fxLayout="column" fxLayoutGap="5px">
+               <div fxLayout="row">
+                  <button mat-raised-button color="primary" (click)="enableWhatsapp()">{{ "WHATSAPP_REQUEST" | translate}}</button>
+               </div>
+               <div fxLayout="row">
+                 <mat-icon style="font-size: 16px; margin-top: 2px">info</mat-icon>
+                 <label class="mat-small">{{ "WHATSAPP_REQUEST_INFO" | translate }}</label>
+               </div>
+            </div>
+            <div *ngIf="smsChannel.WHATSAPP_REQUESTED">
+              <div fxLayout="row" *ngIf="!smsChannel.WHATSAPP_ENABLED">
+                <mat-icon style="font-size: 16px; margin-top: 2px">info</mat-icon>
+                <label class="mat-small" > {{ "WHATSAPP_REQUESTED_INFO" | translate }}</label>
+              </div>
+              <div fxLayout="row" *ngIf="smsChannel.WHATSAPP_ENABLED">
+                <mat-icon style="font-size: 16px; margin-top: 2px">info</mat-icon>
+                <label class="mat-small" > {{ "WHATSAPP_ENABLED_INFO" | translate }}</label>
+              </div>
+            </div>
+          </div>
+          <div mat-dialog-actions fxLayoutAlign="center center">
+            <button mat-raised-button [mat-dialog-close]="smsChannelForm" cdkFocusInitial>
+              {{ 'CLOSE' | translate }}
+            </button>
+            <button mat-raised-button color="primary" (click)="save()">
+              {{ 'SAVE' | translate }}
+            </button>
+          </div>
+        </form>
+      </div>

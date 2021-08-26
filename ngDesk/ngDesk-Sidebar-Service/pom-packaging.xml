@@ -1,0 +1,19 @@
+<project>
+        <modelVersion>4.0.0</modelVersion>
+        <groupId>com.ngdesk</groupId>
+        <artifactId>ngDesk-Main</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <name>ngDesk-Main</name>
+        <packaging>pom</packaging>
+
+        <properties>
+            <sonar.sources></sonar.sources>
+            <sonar.tests></sonar.tests>
+        </properties>
+
+
+        <modules>
+                <module>../ngDesk-Commons</module>
+                <module>./</module>
+        </modules>
+</project>

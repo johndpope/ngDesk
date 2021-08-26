@@ -1,0 +1,60 @@
+<app-toolbar [templateRef]="template"></app-toolbar>
+<ng-template #template>
+  <app-title-bar class="light-grey-color" title="{{'DISCOVERY_MAP' | translate}}" buttonText="{{'SAVE' | translate}}"
+    (buttonRightOnClick)="save()" style="min-width: 100%"></app-title-bar>
+</ng-template>
+
+<div fxLayout="column" class="pad10">
+  <mat-card>
+    <form [formGroup]="discoveryMapForm">
+      <div fxLayout="column" fxLayoutGap="5px">
+        <app-new-name-description>
+        </app-new-name-description>
+        <div fxLayout="row" fxFlex="100" fxLayoutGap="10px">
+          <div fxLayout="column" fxFlex="33.33">
+            <mat-form-field fxFlex>
+              <mat-label>{{'PRODUCTS' | translate}} *</mat-label>
+              <mat-chip-list #products_ChipList>
+                <mat-chip *ngFor="let product of discoveryMap.products" [selectable]='true' [removable]=true
+                  (removed)="removeProduct(product)">
+                  {{product.name}}
+                  <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip>
+                <input matInput [matAutocomplete]="auto_products" formControlName="PRODUCTS" [matChipInputFor]="products_ChipList"
+                  [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="resetInput($event)" (keyup)="onSearch()" required>
+              </mat-chip-list>
+              <mat-error *ngIf="discoveryMapForm.controls.PRODUCTS.hasError('required')"
+                [innerHTML]="'FIELD_REQUIRED' | translate:params.PRODUCTS">
+              </mat-error>
+              <mat-autocomplete #auto_products="matAutocomplete" (appAutocompleteScroll)="onScrollSoftwareProducts();" (optionSelected)="addProduct($event);">
+                <mat-option *ngFor="let product of softwareProducts" [value]="product">
+                  {{product.name}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <div fxLayout="column" fxFlex="33.33">
+            <mat-form-field fxFlex>
+              <mat-label>{{'PLATFORM' | translate}}</mat-label>
+              <mat-select formControlName="PLATFORM">
+                <mat-option *ngFor="let platform of platforms" [value]="platform">
+                  {{platform}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div fxLayout="column" fxFlex="33.33">
+            <mat-form-field fxFlex>
+              <mat-label>{{'LANGUAGE' | translate}}</mat-label>
+              <mat-select formControlName="LANGUAGE">
+                <mat-option *ngFor="let language of languages" [value]="language.CODE">
+                  {{language.NAME}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </form>
+  </mat-card>
+</div>

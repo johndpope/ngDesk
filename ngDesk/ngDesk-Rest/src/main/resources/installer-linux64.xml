@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+   <shortName>ngdeskcontroller</shortName>
+   <fullName>ngDesk Controller</fullName>
+   <version>1.0</version>
+   <installerFilename>FILE_NAME_REPLACE.${platform_exec_suffix}</installerFilename>
+   <debugLevel>4</debugLevel>
+   <componentList>
+      <component>
+         <name>default</name>
+         <description>Default Component</description>
+         <canBeEdited>1</canBeEdited>
+         <selected>1</selected>
+         <show>1</show>
+         <folderList>
+            <folder>
+               <description>Program Files</description>
+               <destination>${installdir}</destination>
+               <name>programfiles</name>
+               <platforms>all</platforms>
+               <shortcutList>
+                  <shortcut>
+                     <comment>Uninstall</comment>
+                     <exec>${installdir}/${uninstallerName}</exec>
+                     <icon />
+                     <name>Uninstall ${product_fullname}</name>
+                     <path>${installdir}</path>
+                     <platforms>all</platforms>
+                     <runAsAdmin>0</runAsAdmin>
+                     <runInTerminal>0</runInTerminal>
+                     <windowsExec>${installdir}/${uninstallerName}.exe</windowsExec>
+                     <windowsExecArgs />
+                     <windowsIcon />
+                     <windowsPath>${installdir}</windowsPath>
+                  </shortcut>
+               </shortcutList>
+            </folder>
+            <folder>
+               <description>Program Files</description>
+               <destination>${installdir}</destination>
+               <name>programfileslinux</name>
+               <platforms>linux</platforms>
+            </folder>
+            <folder>
+               <description>Program Files</description>
+               <destination>${installdir}</destination>
+               <name>programfileslinux64</name>
+               <platforms>linux-x64</platforms>
+               <distributionFileList>
+                  <distributionFile>
+                     <origin>CONTROLLER_JAR_PATH_REPLACE</origin>
+                  </distributionFile>
+                  <distributionFile>
+                     <origin>UPDATER_JAR_PATH_REPLACE</origin>
+                  </distributionFile>
+                  <distributionFile>
+                     <origin>GENERATOR_JAR_PATH_REPLACE</origin>
+                  </distributionFile>
+                  <distributionDirectory>
+                     <origin>LINUX_JAVA_PATH_REPLACE</origin>
+                  </distributionDirectory>
+               </distributionFileList>
+            </folder>
+            <folder>
+               <description>Program Files</description>
+               <destination>${installdir}</destination>
+               <name>programfileswindows</name>
+               <platforms>windows</platforms>
+            </folder>
+            <folder>
+               <description>Program Files</description>
+               <destination>${installdir}</destination>
+               <name>programfileswindows64</name>
+               <platforms>windows-x64</platforms>
+            </folder>
+            <folder>
+               <description>Program Files</description>
+               <destination>${installdir}</destination>
+               <name>programfilesosx</name>
+               <platforms>osx</platforms>
+            </folder>
+         </folderList>
+         <startMenuShortcutList>
+            <startMenuShortcut>
+               <comment>Uninstall ${product_fullname}</comment>
+               <name>Uninstall ${product_fullname}</name>
+               <runAsAdmin>0</runAsAdmin>
+               <runInTerminal>0</runInTerminal>
+               <windowsExec>${installdir}/${uninstallerName}.exe</windowsExec>
+               <windowsExecArgs />
+               <windowsIcon />
+               <windowsPath>${installdir}/</windowsPath>
+            </startMenuShortcut>
+         </startMenuShortcutList>
+      </component>
+   </componentList>
+   <postInstallationActionList>
+      <propertiesFileSet>
+         <file>${installdir}/application.properties</file>
+         <key>subdomain</key>
+         <value>SUBDOMAIN_REPLACE</value>
+      </propertiesFileSet>
+      <propertiesFileSet>
+         <file>${installdir}/application.properties</file>
+         <key>registration.api.key</key>
+         <value>REGISTRATION_API_KEY_REPLACE</value>
+      </propertiesFileSet>
+      <runProgram>
+         <program>${installdir}/jdk-11.0.6/bin/java</program>
+         <programArguments>-jar ngDesk-Uuid-Generator.jar</programArguments>
+         <workingDirectory>${installdir}</workingDirectory>
+      </runProgram>
+      <writeFile>
+         <path>${installdir}/${product_shortname}</path>
+         <text>#!/bin/bash
+
+# chkconfig: 235 30 90
+# description: Please do not modify this script
+
+start () {
+  nohup ${installdir}/jdk-11.0.6/bin/java -jar ${installdir}/ngDesk-Controller-Updater.jar &gt; /dev/null &amp;
+  nohup ${installdir}/jdk-11.0.6/bin/java -jar ${installdir}/ngDesk-Controller.jar &gt; /dev/null &amp;
+}
+
+stop () {
+    # Put here the command to stop your application
+    controllerProcess=`ps -ef | grep -v awk | awk -e '/java.*ngDesk-Controller/ { print $2 }'`
+    kill $controllerProcess
+    controllerUpdaterProcess=`ps -ef | grep -v awk | awk -e '/java.*ngDesk-ControllerUpdater/ { print $2 }'`
+    kill $controllerUpdaterProcess
+    assetProcess=`ps -ef | grep -v awk | awk -e '/java.*ngDesk-Asset-Probe/ { print $2 }'`
+    kill $assetProcess
+    softwareProcess=`ps -ef | grep -v awk | awk -e '/java.*ngDesk-Software-Probe/ { print $2 }'`
+    kill $softwareProcess
+}
+
+status () {
+    controllerProcess=`ps -ef | grep -v awk | awk -e '/java.*ngDesk-Controller/ { print $2 }'`
+    controllerUpdaterProcess=`ps -ef | grep -v awk | awk -e '/java.*ngDesk-Controller-Updater/ { print $2 }'`
+    if [ -z "$controllerProcess" ] ;
+    then
+        return 2
+    else
+        return 0
+    fi
+}
+
+
+case "$1" in
+start)
+        start
+        ;;
+stop)
+        stop
+        ;;
+restart)
+        stop
+        sleep 1
+        start
+        ;;
+status)
+        status
+        code=$?
+        if [ $code -eq 0 ] ; then
+         echo "ngDesk Controller is running"
+        else
+         echo "ngDesk-Controller is not running"
+        fi
+        exit $code
+        ;;
+*)
+        echo "Usage: $0 { start | stop | restart | status }"
+        exit 1
+        ;;
+esac
+
+			exit 0
+		</text>
+      </writeFile>
+      <addUnixService>
+         <description>Product description</description>
+         <name>${product_shortname}</name>
+         <program>${installdir}/${product_shortname}</program>
+      </addUnixService>
+      <runProgram>
+         <program>service</program>
+         <programArguments>${product_shortname} start</programArguments>
+      </runProgram>
+   </postInstallationActionList>
+   <preUninstallationActionList>
+      <runProgram>
+         <program>service</program>
+         <programArguments>${product_shortname} stop</programArguments>
+      </runProgram>
+   </preUninstallationActionList>
+   <postUninstallationActionList>
+      <removeUnixService>
+         <name>${product_shortname}</name>
+      </removeUnixService>
+      <deleteFile>
+         <path>${installdir}</path>
+      </deleteFile>
+   </postUninstallationActionList>
+   <enableRollback>1</enableRollback>
+   <enableTimestamp>1</enableTimestamp>
+   <installationLogFile>${installdir}/install.log</installationLogFile>
+   <outputDirectory>INSTALL_PATH</outputDirectory>
+   <requireInstallationByRootUser>1</requireInstallationByRootUser>
+   <parameterList>
+      <directoryParameter>
+         <name>installdir</name>
+         <description>Installer.Parameter.installdir.description</description>
+         <explanation>Installer.Parameter.installdir.explanation</explanation>
+         <value />
+         <default>${platform_install_prefix}/${product_shortname}-${product_version}</default>
+         <allowEmptyValue>0</allowEmptyValue>
+         <ask>yes</ask>
+         <cliOptionName>prefix</cliOptionName>
+         <mustBeWritable>yes</mustBeWritable>
+         <mustExist>0</mustExist>
+         <width>40</width>
+      </directoryParameter>
+   </parameterList>
+</project>

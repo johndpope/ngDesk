@@ -1,0 +1,13 @@
+{
+	"VISIBILITY": true,
+	"FIELD_ID": "FIELD_ID_REPLACE",
+	"DISPLAY_LABEL": "DISPLAY_LABEL_REPLACE",
+	"INTERNAL": true,
+	"REQUIRED": false,
+	"NOT_EDITABLE": true,
+	"DATA_TYPE": {
+		"DISPLAY": "Date/Time",
+		"BACKEND": "Timestamp"
+	},
+	"NAME": "SLA_NAME_REPLACE"
+}

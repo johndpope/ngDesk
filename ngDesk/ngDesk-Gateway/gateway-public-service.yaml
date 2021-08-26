@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: gateway-public-service
+  namespace: NAMESPACE_REPLACE
+spec:
+  ports:
+    - protocol: TCP
+      port: 8443
+      targetPort: 8443
+  selector:
+    app: gateway
+  type: NodePort

@@ -1,0 +1,20 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef>
+	<app-title-bar class="light-grey-color" (buttonRightOnClick)="import()" title="{{'CSV_IMPORTS' | translate}}"
+		[buttonText]="'IMPORT' | translate" [buttonColor]="'primary'">
+	</app-title-bar>
+</ng-template>
+<div fxLayout="column" fxLayoutGap="10px" class="pad10">
+	<div fxLayout="row">
+		<div fxFlex>
+			<app-custom-table [templateRef]="columnTemplateRef" (rowClickedEvent)="rowClicked($event)"
+				noRecordsMessage="{{'NO_IMPORTS_FOUND' | translate}}" (sortData)="sortData($event);customTableService.isLoading = true"
+				(pageChangeEmit)="pageChangeEmit($event);customTableService.isLoading = true">
+				<ng-template #columnTemplateRef let-element="element" let-col="col">
+					<span *ngIf="col.NAME === 'DATE_CREATED'">{{element[col.NAME] | dateFormat: 'medium'}}</span>
+					<span *ngIf="col.NAME !== 'DATE_CREATED'">{{element[col.NAME]}}</span>
+				</ng-template>
+			</app-custom-table>
+		</div>
+	</div>
+</div>

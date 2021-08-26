@@ -1,0 +1,968 @@
+schema {
+    query: Query
+}
+
+type Query {
+	count(moduleId: String, layoutId: String, search: String,includeConditions: Boolean): Int
+	countSchedules: Int
+	getSchedules(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [Schedule]
+	getSchedule(scheduleId: String!): Schedule
+	getNormalizationRulesCount: Int
+	getDiscoveryMap(id: String): DiscoveryMap
+	getDiscoveryMaps(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String, search: String): [DiscoveryMap]
+	getUnApprovedDiscoveryMaps(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [DiscoveryMap]
+	getNormalizationRules(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [NormalizationRule]
+	getNormalizationRule(ruleId: String): NormalizationRule
+	getUnapprovedNormalizationRules(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [NormalizationRule]
+	getSamFileRule(id: String): SamFileRule
+	getSamFileRules(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [SamFileRule]
+	getSamFileRulesCount: Int
+	getDashboard(dashboardId: String): Dashboard
+	getDashboards(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [Dashboard]
+	getDashboardsCount: Int
+	getScoreCardValue(dashboardId: String, widgetId: String): Float
+	getMultiScoreCardValue(dashboardId: String, widgetId: String): [FieldValueCount]
+	getBarChartValue(dashboardId: String, widgetId: String): [FieldValueCount]
+	getPieChartValue(dashboardId: String, widgetId: String): [FieldValueCount]
+	getAdvancePieChartValue(dashboardId: String, widgetId: String):[AdvancePieChart]
+	getDistinctValues(moduleId: String,fieldId: String,search: String,pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [String]
+	getModules(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [Module]
+	getWorkflow(id: String): Workflow
+	getCurrency(currencyId: String): Currency
+	getAllCurrencies(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [Currency]
+	getEnterpriseSearch(enterpriseSearchId: String): EnterpriseSearch
+	getEnterpriseSearchCount: Int
+	getEnterpriseSearches(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [EnterpriseSearch]
+	getUnapprovedEnterpriseSearches(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [EnterpriseSearch]
+	getRoleLayout(id: String): RoleLayout
+	getRoleLayouts(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [RoleLayout]
+	getWorkflowInstancesByWorkflowIdAndDataId(workflowId: String,dataId: String): WorkflowInstance
+	getWorkflowInstance(moduleId: String,dataId: String): [WorkflowInstance]
+	getRoleLayoutCount: Int
+	getSignatureDocuments(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [SignatureDocument]
+	getSignatureDocument(templateId: String): SignatureDocument
+	getSignatureDocumentsCount: Int
+    getTasks(moduleId: String, pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [Task]
+	getTask(taskId: String, moduleId: String): Task
+	getTasksCount(moduleId: String): Int
+	getNotification(notificationId: String): Notification
+	getNotifications(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [Notification]
+	getUnreadNotifications(read: Boolean,pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [Notification] 
+    getUnReadNotificationsDataFetcherCount: Int
+    getCatalogues(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [Catalogue]
+	getCatalogue(catalogueId: String): Catalogue
+	getCatalogueCount:Int
+	getOneToManyCountDataFetcher(moduleId: String, fieldId: String, dataId: String): Int
+	getOneToManyUnmappedCountDataFetcher(moduleId: String, fieldId: String, dataId: String, search: String): Int
+	getWidgetEntriesCount(dasboardId: String,widgetId: String, value: String): Int
+    getUserPlugin(id: String): UserPlugin
+	getUserPluginsByStatus(status: String,pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [UserPlugin]
+	getApprovalOngoingData(id: String, moduleId: String) : ApprovalDetails
+	getApprovalDeniedData(id: String, moduleId: String) : ApprovalDetails
+	getReports(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [Report]
+	getReport(id: String): Report
+	getReportsCount: Int
+	getFieldPermissions(moduleId: String, layout: String, dataId: String): [EditablePermission]
+	getRoleLayoutValuesCount(layoutId: String, tabId: String): Int
+	getForms(moduleId: String, pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [Form]
+	getForm(formId: String, moduleId: String): Form
+	getFormsCount(moduleId: String): Int
+	getSlas(moduleId: String, pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [SLA]
+	getSla(slaId: String, moduleId: String): SLA
+	getSlasCount(moduleId: String): Int
+	getCountForReportsData(moduleId: String): Int
+	getCompanyDetails: Company
+	getKbSection(sectionId:String):Section
+	getKbSections(category: String,pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String):[Section]
+    getKbSectionsCount(category: String):Int
+	getChatChannels(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [ChatChannel]
+	getChatChannel(name: String): ChatChannel
+	getChatPrompts(channelName: String): [ChatPrompt]
+	getChatPrompt(channelName: String, promptId: String): ChatPrompt
+	getKbArticle(articleId:String):Article
+	getAllKbArticles(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String, search: String):[Article]
+	getAllKbArticlesCount(search: String): Int
+	getKbCategory(categoryId: String): Category
+	getKbCategories(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [Category]
+	getKbCountCategories: Int
+	getEscalation(escalationId: String): Escalation
+	getEscalations(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [Escalation]
+	getEscalationsCount: Int
+	MODULE_FUNCTIONS_REPLACE
+}
+
+scalar DateTime
+
+
+type FieldValueCount{
+	name: String
+	value: Float
+	id: String	
+}
+
+type AdvancePieChart{
+	name: String
+	percentage: Float
+	count: Float
+	totalCount: Int
+}
+	
+type Schedule {
+	id: String
+	name: String
+	description: String
+	layers: [Layer]
+	dateCreated: DateTime
+	dateUpdated: DateTime
+	createdBy: Users
+	lastUpdatedBy: Users
+	timezone: String
+} 
+
+
+
+type Layer {
+	users: [Users]
+	rotationType: String
+	startTime: String
+	endTime: String
+	startDate: DateTime
+	endDate: DateTime
+	hasRestrictions: Boolean
+	restrictionType: String
+	restrictions: [Restriction]
+}
+
+type Restriction {
+	startTime: String
+	endTime: String
+	startDay: String
+	endDay: String
+}
+
+type Rule{
+     key: String
+     operator: String
+     value: String
+}
+
+type NormalizationRule{
+     normalizationRuleId: String
+     name: String
+     description: String
+     companyId: String
+     publisher: Rule
+     product: Rule
+     version: Rule
+     status: String
+     dateCreated: DateTime
+
+}
+
+type DiscoveryMap{
+    id: String
+    name: String
+    description: String
+    number: String
+    products: [String]
+    version:Rule
+    edition:Rule
+    platform: String
+    language: String
+    approved: String
+    companyId: String
+    dateCreated: DateTime
+    dateUpdated: DateTime
+    createdBy: Users
+    lastUpdatedBy: Users
+
+}
+type SamFileRule{
+    id: String
+    fileName: String
+    filePath: String
+    ruleCondition: String
+    hash: String
+    companyId: String
+    version: String
+    publisher: String
+    edition: String
+    softwareName: String
+    dateCreated: DateTime
+    dateUpdated: DateTime
+    createdBy: Users
+    lastUpdatedBy: Users
+}
+
+type Channel {
+	channelId: String
+	name: String
+}
+
+type Dashboard{
+	dashboardId: String
+    name: String
+    role: Role
+    description: String
+    widgets: [Widget]
+    companyId: String
+    dateCreated: DateTime
+    dateUpdated: DateTime
+    createdBy: Users
+    lastUpdatedBy: Users
+    
+}
+type Widget{
+	widgetId: String
+	title: String
+    moduleId: String
+	type: String
+	positionX: Int
+	positionY: Int 
+	width: Int
+	height: Int
+	dashboardconditions: [DashboardCondition]
+	orderBy: OrderByDashboard
+	limit: Int
+	limitEntries: Boolean
+	field: String
+	multiScorecards:[Widget]
+	aggregateType: String
+	aggregateField: String
+}
+
+type DashboardCondition{
+	condition: String
+	operator: String
+	value: String
+	requirementType: String
+}
+
+type Module{
+	moduleId: String
+	name: String
+	description: String
+	parentModule: Module
+	singularName: String
+	pluralName: String
+	fields: [ModuleField]
+	listMobileLayouts: [ListMobileLayout]
+	createMobileLayouts: [CreateEditMobileLayout]
+	editMobileLayouts: [CreateEditMobileLayout]
+	createdBy: Users
+	lastUpdatedBy: Users
+	dateCreated: DateTime
+	dateUpdated: DateTime
+}
+
+type ModuleField {
+	fieldId: String
+	name: String
+	displayLabel: String
+	helpText: String
+	defaultValue: String
+	relationshipType: String
+	primaryDisplayField: ModuleField
+	relationshipField: ModuleField
+	module: Module
+	dataType: DataType
+	visibility: Boolean
+	required: Boolean
+	notEditable: Boolean
+	maxSize: Int
+	autonumberGeneration: Boolean
+	autonumberStartingNumber: Int
+	picklistDisplayAlphabetically: Boolean
+	picklistUseFirstValue: Boolean
+	picklistValues: [String]
+	groupId: String
+	dataFilter: [DataFilter]
+	aggregationType: String
+	aggregationField: String
+	aggregationRelatedField: ModuleField
+	createdBy: Users
+	lastUpdatedBy: Users
+	dateCreated: DateTime
+	dateUpdated: DateTime
+	toCurrency:   ModuleField
+	fromCurrency: ModuleField
+	dateIncurred: ModuleField
+}
+
+type ListMobileLayout {
+	layoutId: String
+	name: String
+	description: String
+	role: Role
+	id: String
+	orderBy: OrderBy
+	fields: [ModuleField]
+	conditions: [ModuleCondition]
+	isDefault: Boolean
+	createdBy: Users
+	lastUpdatedBy: Users
+	dateCreated: DateTime
+	dateUpdated: DateTime
+}
+
+type CreateEditMobileLayout {
+	layoutId: String
+	name: String
+	description: String
+	role: Role
+	fields: [ModuleField]
+	createdBy: Users
+	lastUpdatedBy: Users
+	dateCreated: DateTime
+	dateUpdated: DateTime
+}
+
+type Role {
+	roleId: String
+	name: String
+}
+
+type OrderBy {
+	column: ModuleField
+	order: String
+}
+
+type OrderByDashboard {
+	column: String
+	order: String
+}
+
+type DataType {
+	display: String
+	backend: String
+}
+
+type DataFilter {
+	conditions: [ModuleCondition]
+}
+
+type ModuleCondition {
+	requirementType: String
+	condition: ModuleField
+	operator: String
+	conditionValue: String
+}
+
+type EnterpriseSearch {
+	enterpriseSearchId: String
+	name: String
+	description: String
+	tags: [String]
+	filePath: String
+	regex: String
+	status: String
+	companyId: String
+	createdBy: Users
+	lastUpdatedBy: Users
+	dateCreated: DateTime
+	dateUpdated: DateTime
+}
+
+type Discussion{
+ 	MESSAGE: String
+ 	MESSAGE_ID: String
+ 	MESSAGE_TYPE: String
+ 	SENDER: Sender
+ 	ATTACHMENTS: [MessageAttachment]
+ 	DATE_CREATED: DateTime
+}
+
+type MetaData{
+	EVENTS:[Discussion]
+}
+	
+type Sender{
+	ROLE: Role
+	USER_UUID: String
+	LAST_NAME: String
+	FIRST_NAME: String
+}
+
+type MessageAttachment{
+	FILE_NAME: String
+	HASH: String
+	FILE_EXTENSION: String
+	ATTACHMENT_UUID: String
+
+}
+
+type Workflow{
+	id: String
+	module: Module
+	type: String
+	name: String
+	description: String
+	conditions: [ModuleCondition]
+	stages: [Stage]
+	order: Int
+	dateCreated: DateTime
+	dateUpdated: DateTime
+	lastUpdated: Users
+	createdBy: Users
+	rapidUiPayload: String
+	displayOnEntry: Boolean
+
+}
+
+type Node{
+	nodeId: String
+	type: String
+	connections: [Connection]
+	name: String
+	preConditions: [ModuleCondition]
+
+}
+
+type Stage{
+	id: String
+	name: String
+	conditions: [ModuleCondition]
+	nodes: [Node]
+
+}
+
+type Connection{
+	title: String
+	from: String
+	toNode: Node
+	onError: Boolean
+
+}
+
+type WorkflowInstance{
+	instanceId: String
+	workflow: Workflow
+	module: Module
+	stage: Stage
+	dataId: String
+	node: Node
+	dateCreated: DateTime
+	dateUpdated: DateTime
+	workflowKickedOffBy: Users
+	nodesExecuted: [NodesExecuted]
+    status: String
+}
+type NodesExecuted{
+	nodeId: String
+	nodeExecutionInfo: NodeExecutionInfo
+
+}
+
+type NodeExecutionInfo{
+	firstExecutionDate: DateTime
+	currentTimeStamp: DateTime
+	numberOfExecutions: Int
+
+}
+
+type Approval{
+ 	STATUS: String
+	DISABLE_ENTRY: Boolean
+}
+
+type Currency{
+	currencyId: String
+    currencyName: String
+    isoCode: String
+    currencySymbol: String
+    status: String
+    isDefault: Boolean
+    teams: [String]
+    dateCreated: DateTime
+	dateUpdated: DateTime
+	createdBy: Users
+	lastUpdatedBy: Users
+}
+
+type RoleLayout{
+	layoutId: String
+	companyId: String
+	role: Role
+	name: String
+	description: String
+	defaultLayout: Boolean
+	tabs: [Tab]
+}
+
+type Tab{
+	tabId: String
+	module: Module
+	columnsShow: [ModuleField]
+	orderBy: OrderBy
+	conditions: [ModuleCondition]
+}
+
+type Phone{
+	COUNTRY_CODE: String
+	DIAL_CODE: String
+	PHONE_NUMBER: String
+	COUNTRY_FLAG: String
+
+}
+type SignatureDocument {
+	templateId: String
+	companyId: String
+	htmlDocument: String
+	dataId:String
+	moduleId:String
+	name:String
+	signed:Boolean
+	dateCreated:DateTime
+	dateSigned:DateTime
+	emailAddress:String
+	
+} 
+
+type Notification {
+	notificationId: String
+	companyId: String
+	moduleId:String
+	dataId:String
+	recipientId: String
+	dateCreated:DateTime
+	dateUpdated:DateTime
+	read:Boolean
+	message:String
+	}
+
+type UserPlugin{
+	id: String
+	name: String
+	modules: [String]
+	status: String
+	dateCreated: DateTime
+	dateUpdated: DateTime
+	createdBy: Users
+	lastUpdatedBy: Users
+}
+
+type Task{
+     taskId:String
+     companyId: String
+     moduleId:String
+     conditions:[Condition]
+     recurrence:Boolean
+     intervals:Interval
+     stopDate:DateTime
+     actions:[Action]
+     taskName:String
+     lastExecuted:DateTime
+     taskDescription:String
+     startDate:DateTime
+     timezone:String
+}
+
+type Condition{
+  requirementType:String
+  operator:String
+  condition:String
+  conditionValue:String
+}
+
+type Interval{
+	intervalType:String
+	intervalValue:Int
+}
+
+type Action{
+	type:String
+	moduleId:String
+	fields:[TaskFields]
+}
+
+type TaskFields{
+	fieldId:String
+	value:String	
+}
+
+type Catalogue{
+   catalogueId:String
+   name:String
+   catalogueForms:[CatalogueForm]
+   description:String
+   displayImage:String
+   dateCreated: DateTime
+   dateUpdated: DateTime
+   createdBy: Users
+   lastUpdatedBy: Users
+   visibleTo: [Teams]
+}
+
+type CatalogueForm{
+   moduleId:String
+   formId:Form
+}
+type ApprovalDetails {
+status: String
+deniedBy: [DeniedBy]
+approvedBy: [String]
+teamsWhoCanApprove:[String]
+approvers:[String]
+displayButton: Boolean
+}
+
+type DeniedBy{
+deniedUser:Users
+deniedComments: String
+}
+ 
+type Report {
+	reportId: String
+	reportName: String
+	reportDescription: String
+	module: String
+	fields: [ReportField]
+	filters:[Filter]
+	dateCreated: DateTime
+	dateUpdated: DateTime
+	createdBy: Users
+	lastUpdatedBy: Users
+	sortBy: ReportField
+	type: String
+	order: String
+	schedules: ReportSchedule
+	
+}
+
+type ReportField {
+	fieldId: String
+	data: [String]
+}
+type Filter{
+	field: ReportField
+	requirementType: String
+	operator: String
+	value: String
+}
+type ReportSchedule{
+	cron: String
+	emails: [String]
+}
+
+type Form {  
+	formId: String
+	name: String
+	description: String
+	panels:[FormPanel]
+	layoutStyle: String
+	saveButton: SaveButton
+	dateCreated: DateTime
+	dateUpdated: DateTime
+	createdBy: Users
+	lastUpdatedBy: Users
+	companyId: String
+	moduleId: String
+	displayImage: String
+	visibleTo: [Teams]
+	workflow: Workflow
+}
+
+type FormPanel {
+    grids: [[Grid]]
+    collapse: Boolean
+    panelDisplayName : String
+    ID: String
+}
+
+type SaveButton {
+    label: String
+    alignment: String
+    afterSave: String
+    saveMessage: String
+    url: String
+}
+
+type Grid {
+    empty: Boolean
+    height: Int
+    width: Int
+	fieldId: String
+	settings: FieldSettings
+}
+
+type FieldSettings {
+    action: String
+    conditions: [FormCondition]
+}
+
+type FormCondition {
+	requirementType: String
+	condition: String
+	operator: String
+	conditionValue: String
+}
+
+type EditablePermission{
+	fieldId: String
+	notEditable: Boolean
+}
+
+type SLA{
+        slaId: String
+		companyId: String
+		moduleId: String
+		name: String
+		description: String
+		conditions: [SLAConditions]
+		violation: Violation
+		slaExpiry: Int
+		isRecurring: Boolean
+		recurrence: Recurrence
+		isRestricted: Boolean
+		businessRules: SLABusinessRules
+		workflow: Workflow
+		dateCreated: DateTime
+		dateUpdated: DateTime
+		lastUpdatedBy: Users
+		createdBy: Users
+		deleted: Boolean
+
+}
+
+type SLAConditions{
+    requirementType: String
+	condition: String
+	operator: String
+	conditionValue: String
+}
+
+type Violation{
+    condition: String
+	operator: String
+	conditionValue: String	
+}
+	
+type Recurrence {
+	maxRecurrence: Int
+	intervalTime: Int
+}
+	
+type SLABusinessRules{	
+	restrictionType: String
+	restrictions: [SLARestriction]	
+}
+	
+type SLARestriction{
+	startTime: String
+	endTime: String
+	startDay: String
+	endDay: String
+}
+	
+type Company{
+	companyId: String
+	companyName: String
+	companySubdomain: String
+	language: String
+	timezone: String
+	companyUuid: String	
+	accountLevelAccess: Boolean
+	maxChatsPerAgent: Int
+    rolesWithChat: [String]
+}
+
+
+type ChatChannel{
+	name: String
+	id: String
+	description: String
+	sourceType: String
+	title: String
+	subTitle: String
+	file: String
+	color: String
+	textColor: String
+	senderBubbleColor: String
+	receiverBubbleColor: String
+	senderTextColor: String
+	receiverTextColor: String
+	settings: ChatChannelSettings
+	channelId: String
+	dateCreated: DateTime
+	dateUpdated: DateTime
+	lastUpdated: Users
+	module: Module
+	workflow: ChatChannelWorkflow
+	chatPrompt :[ChatPrompt]
+}
+
+type ChatChannelSettings{
+	businessRules: BusinessRules	
+	enable: Boolean
+	preSurveyRequired: Boolean
+	botSettings: BotSettings
+
+}
+
+type BusinessRules{
+	timezone: String
+	active: Boolean
+	restrictionType: String
+	restrictions: [ChatRestriction]
+
+}
+
+type ChatRestriction{
+	startTime: String
+	endTime: String
+	startDay: String
+	endDay: String
+
+}
+
+type BotSettings{ 
+	enabled: Boolean
+	chatBot: String
+
+}
+
+type ChatPrompt{
+	promptName: String
+	promptdescription: String
+	promptId: String
+	conditions: [Condition]
+	workflow: ChatChannelWorkflow
+	dateUpdated: DateTime
+	lastUpdatedBy: String
+	runTrigger: String
+
+}
+
+type ChatChannelWorkflow{
+	type: String
+	name: String
+	description: String
+	conditions: [Condition]
+	stages: [ChatChannelStage]
+	order: Int
+}
+
+type ChatChannelStage{
+	id: String
+	name: String
+	conditions: [Condition]
+	nodes: [ChatChannelNode]
+}
+
+
+type ChatChannelNode{
+	nodeId: String
+	type: String
+	connections: [ChatChannelConnection]
+	name: String
+	preConditions: [Condition]
+    value: Message	
+}
+
+type ChatChannelConnection{
+	title: String
+	from: String
+	toNode: String
+	onError: Boolean
+
+}
+
+type Message{
+	message: String
+}
+
+
+type CommentMessage{
+	messageId:String
+	message:String
+	sender:String
+	dateCreated:DateTime
+}
+
+type Attachment{
+	file:String
+	hash:String
+	attachmentUuid: String
+	fileName:String
+}
+
+type Article{
+	articleId:String
+	title:String
+	body:String
+	author:Users
+	visibleTo:[Teams]
+	openForComments:Boolean
+	sourceLanguage:String
+	labels:[String]
+	order:Int
+	section:String
+	dateCreated:DateTime
+	dateUpdated:DateTime
+	lastUpdatedBy:Users
+	createdBy:Users
+	publish:Boolean
+	comments:[CommentMessage]
+	attachments:[Attachment]
+}
+type Section{
+
+   sectionId: String
+   name:String
+   description:String
+   sortBy:String
+   category:Category
+   dateCreated:DateTime
+   dateUpdated:DateTime
+   lastUpdatedBy:Users
+   createdBy:Users
+   order:Int
+   isDraft:Boolean
+   visibleTo:[Teams]
+   managedBy:[Teams]
+
+}
+
+
+type Category{
+	categoryId: String
+	name: String
+	description: String
+	sourceLanguage: String
+	dateCreated: DateTime
+	dateUpdated: DateTime
+	createdBy: Users
+	lastUpdatedBy: Users
+	isDraft: Boolean
+	order: Int
+    visibleTo: [Teams]
+}
+
+
+type Escalation{
+
+   esclalationId: String
+   name: String
+   description: String
+   rules: [EscalationRule]
+   dateCreated:DateTime
+   dateUpdated:DateTime
+   lastUpdatedBy:Users
+   createdBy:Users
+
+}	
+type EscalationRule{
+
+   minsAfter:Int
+   order: Int
+   escalateTo: EscalateTo
+
+}
+
+type EscalateTo{
+
+  scheduleIds: [String]
+  userIds: [String]
+  teamIds: [String]
+}
+

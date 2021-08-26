@@ -1,0 +1,97 @@
+<StackLayout>
+  <Label text="signup works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<div fxLayout="column" fxLayoutAlign="center" style="margin-top:50px;height:relative;" fxFlex="100"
+  fxLayoutGap="30px">
+  <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
+    <img *ngIf="signupIcon" [src]="signupIcon" alt="logo" height="64" width="64">
+    <div><label class="mat-h1">{{ header }}</label></div>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="center">
+    <form [formGroup]="signupForm" (ngSubmit)="signUp()" fxFlex="40" fxFlex.lt-md="450px">
+      <mat-card fxLayout="column" fxLayoutGap="10px">
+        <div fxLayout="row" fxLayoutAlign="center">
+          <mat-error>{{errorMessage}}</mat-error>
+        </div>
+        <mat-form-field>
+          <input type="email" matInput placeholder="{{'EMAIL' | translate}}" name="email"
+            formControlName="signupEmailAddress">
+          <mat-error *ngIf="signupForm.controls.signupEmailAddress.invalid" [innerHTML]="getEmailErrorMessage()"></mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input type="password" matInput placeholder="{{'PASSWORD' | translate}}" name="password"
+            formControlName="signupPassword">
+          <mat-error *ngIf="signupForm.controls.signupPassword.hasError('minlength') &&
+          !signupForm.controls.signupPassword.hasError('required')">{{'PASSWORD_SHOULD_MINIMUM_8_CHARACTERS' | translate}}</mat-error>
+          <mat-error translate [translateParams]="{requirement: translateService.instant('CAPITAL_LETTER')}"
+            *ngIf="signupForm.controls.signupPassword.hasError('uppercaseReq') &&
+            !signupForm.controls.signupPassword.hasError('required')">PASSWORD_MISSING_REQUIREMENT</mat-error>
+          <mat-error translate [translateParams]="{requirement: translateService.instant('NUMBER')}"
+            *ngIf="signupForm.controls.signupPassword.hasError('numberReq') &&
+            !signupForm.controls.signupPassword.hasError('required')">PASSWORD_MISSING_REQUIREMENT</mat-error>
+          <mat-error translate [translateParams]="{requirement: translateService.instant('SPECIAL_CHARACTER')}"
+            *ngIf="signupForm.controls.signupPassword.hasError('specialCharReq') &&
+            !signupForm.controls.signupPassword.hasError('required')">PASSWORD_MISSING_REQUIREMENT</mat-error>
+          <mat-error *ngIf="signupForm.controls.signupPassword.hasError('required')" [innerHTML]="'FIELD_REQUIRED' | translate:{ field: translateService.instant('PASSWORD') }"></mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input type="password" matInput placeholder="{{'CONFIRM_PASSWORD' | translate}}" name="confirm_password"
+            formControlName="signupConfirmPassword" [errorStateMatcher]="matcher">
+          <mat-error *ngIf="signupForm.controls.signupConfirmPassword.invalid" [innerHTML]="'FIELD_REQUIRED' | translate:{ field: translateService.instant('CONFIRM_PASSWORD') }"></mat-error>
+          <mat-error *ngIf="signupForm.hasError('notSame')">{{'PASSWORD_DO_NOT_MATCH' | translate}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input type="text" matInput placeholder="{{'FIRST_NAME' | translate}}" name="first_name"
+            formControlName="signupFirstName">
+          <mat-error *ngIf="signupForm.controls.signupFirstName.invalid" [innerHTML]="'FIELD_REQUIRED' | translate:{ field: translateService.instant('FIRST_NAME') }"></mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input type="text" matInput placeholder="{{'LAST_NAME' | translate }}" name="last_name"
+            formControlName="signupLastName">
+          <mat-error *ngIf="signupForm.controls.signupLastName.invalid" [innerHTML]="'FIELD_REQUIRED' | translate:{ field: translateService.instant('LAST_NAME') }"></mat-error>
+        </mat-form-field>
+        <div>
+          <div fxFlex=100%>
+            <mat-label [ngStyle]="{'color': 'rgba(0,0,0,.54)', 'position': 'absolute', 'font-size': '12px', 'font-family': 'Roboto, Helvetica Neue, sans-serif'}" >{{'PHONE_NUMBER' | translate }}</mat-label>
+            <mat-form-field class="no-line" fxLayout="row" fxFlex="7.8%" [ngStyle]="{'margin-top': '5px'}">
+              <div class="pointer" matPrefix>
+                <img aria-hidden [src]="'../../assets/images/country-flags/' + signupForm.value.signupPhoneNumber.COUNTRY_FLAG"
+                  height="25">
+                <mat-select (selectionChange)="updatePhoneInfo($event.value)">
+                  <mat-option *ngFor="let country of renderLayoutService.countries; index as i"
+                    [value]="country">
+                    <img class="example-option-img" aria-hidden [src]="'../../assets/images/country-flags/' + country.COUNTRY_FLAG"
+                      height="25">
+                    <span>{{country.COUNTRY_NAME}}</span> | <small>{{country.COUNTRY_DIAL_CODE}}</small>
+                  </mat-option>
+                </mat-select>
+              </div>
+            </mat-form-field>
+            <mat-form-field fxFlex="92.2%" [ngStyle]="{'margin-top': '5px'}">
+                <div fxLayout="row">
+                    <span>{{signupForm.value.signupPhoneNumber.DIAL_CODE}}</span>
+                    <input type="tel" matInput name="phone"  aria-label="Phone" formControlName="phoneNumber">
+                </div>
+              <mat-error *ngIf="signupForm.controls.signupPhoneNumber.invalid" [innerHTML]="'FIELD_REQUIRED' | translate:{ field: translateService.instant('PHONE_NUMBER') }"></mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div fxLayoutAlign="center" id="ngdesk_gcaptcah"></div>
+        <span *ngIf="captchaError" fxLayoutAlign="center">{{'PLEASE_CONFIRM_HUMANITY' | translate}}.</span>
+        <button type="submit" mat-raised-button color="primary">{{'SUBMIT' | translate}}</button><br />
+      </mat-card>
+    </form>
+  </div>
+  <div fxFlex></div>
+  <div fxLayoutAlign="flex-end end" style="padding: 20px">
+    <label class="mat-body" [innerHTML]="'BACKLINK_TEXT' | translate"></label>
+  </div>
+</div>
+-->

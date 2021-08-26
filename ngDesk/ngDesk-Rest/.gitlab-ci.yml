@@ -1,0 +1,125 @@
+# stages:
+#   - compile
+#   - docker_build
+#   - helm_deploy
+#   - helm_delete
+
+# compile:
+#   stage: compile
+#   image: abs-kuber-1:5000/ngdesk:1
+#   artifacts:
+#     expire_in: 1 hour
+#     paths:
+#       - ngdesk-helm/
+#   except:
+#     - schedules
+#   before_script:
+#     - export JAVA_HOME=/usr/java/openjdk-12
+#     - npm -v
+#     - node -v
+#   script:
+#     - BRANCH_NAME=$(echo $CI_COMMIT_REF_NAME | sed 's/[0-9]\+-//g')
+#     - BRANCH_NAME=$(printf $BRANCH_NAME | cut -c 1-35)
+#     - git clone https://gpull:PennyTaste1@gitlab.bluemsp.com/ngDesk/ngdesk-helm.git
+#     # angular project
+#     - ./ngdesk-helm/ngdesk-angular/build/build.sh
+#     # rest project
+#     - ./ngdesk-helm/ngdesk-rest/build/build.sh
+#     # manager project
+#     - ./ngdesk-helm/ngdesk-manager/build/build.sh
+    
+    
+# docker_build:
+#   stage: docker_build
+#   image: docker:stable
+# #   only:
+# #     - develop
+#   except:
+#     - schedules
+#   variables:
+#     DOCKER_HOST: tcp://docker:2375
+#     DOCKER_DRIVER: overlay2
+#   services:
+#     - name: docker:dind
+#       command: ["--insecure-registry=ngdesk-tst.ngdesk.com:5000"]
+#   script:
+#     - BRANCH_NAME=$(echo $CI_COMMIT_REF_NAME | sed 's/[0-9]\+-//g')
+#     - BRANCH_NAME=$(printf BRANCH_NAME | cut -c 1-35)
+#     # pull base docker
+#     - docker pull ngdesk-tst.ngdesk.com:5000/java-base:1
+#     # rest project
+#     - docker build -t ngdesk-tst.ngdesk.com:5000/ngdesk-rest:$BRANCH_NAME ./ngdesk-helm/ngdesk-rest/build/docker
+#     - docker push ngdesk-tst.ngdesk.com:5000/ngdesk-rest:$BRANCH_NAME
+#     # manager project
+#     - docker build -t ngdesk-tst.ngdesk.com:5000/ngdesk-manager:$BRANCH_NAME ./ngdesk-helm/ngdesk-manager/build/docker
+#     - docker push ngdesk-tst.ngdesk.com:5000/ngdesk-manager:$BRANCH_NAME
+#     # angular project
+#     - docker pull ngdesk-tst.ngdesk.com:5000/nginx-base:1
+#     - docker build -t ngdesk-tst.ngdesk.com:5000/ngdesk-angular:$BRANCH_NAME ./ngdesk-helm/ngdesk-angular/build/docker
+#     - docker push ngdesk-tst.ngdesk.com:5000/ngdesk-angular:$BRANCH_NAME
+    
+# helm_deploy:
+#   stage: helm_deploy
+#   image: dtzar/helm-kubectl:2.10.0
+# #   only:
+# #     - develop
+#   except:
+#     - schedules
+#   before_script:
+#     - apk add curl
+#   script:
+#     - BRANCH_NAME=$(echo $CI_COMMIT_REF_NAME | sed 's/[0-9]\+-//g')
+#     - BRANCH_NAME=$(printf $BRANCH_NAME | cut -c 1-35)
+#     - kubectl config set-cluster k8s --server=https://ngdesk-tst.ngdesk.com:6443 --insecure-skip-tls-verify
+#     - kubectl config set-credentials gitlab --token=eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJnaXRsYWItYWRtaW4tdG9rZW4tcXpzcWgiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoiZ2l0bGFiLWFkbWluIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQudWlkIjoiNjNlNmYzMDItOGMyMi0xMWU5LTlhZTktMDA1MDU2YjU0MTQzIiwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50Omt1YmUtc3lzdGVtOmdpdGxhYi1hZG1pbiJ9.IixySv6FMzTaha1N3Y3JiU2Gv7kT2XnawXmesiKhBvelmF02-oBWZnKDZgAmPYnseFdIopbB14rnSE3cONiD3iNsrwj4d1TkNx_LB_PUaiZ0u5-hY3Q2b0T2WQSroGqNyPitgwDFDc9_S27kota5CvzkbMSCCln2RqZw4es-H0ujO9q_LRNw_iMQl4gPM55pWebZ3mWeNEqKtLp66mBJx7UuYomeV6bivJ4IMqKfTJK5mTv3fhS4vv9aGCdUVrPsumSIliI3F15pLVkZ8ApUs28WlNP3uX7r7zDc8y1_UU5RG9X0XZoLc0lHPCBzYK9PimmS6OeiezGnROfyl_44sg
+#     - kubectl config set-context default --cluster=k8s --user=gitlab
+#     - kubectl config use-context default
+#     - CURRENT_DATE=$(date +%s)
+#     - helm init --client-only
+#     # rest project
+#     - helm upgrade --install --namespace $BRANCH_NAME --set image.name=master:5000/ngdesk-rest:$BRANCH_NAME,timestamp=$CURRENT_DATE ngdesk-rest-$BRANCH_NAME ./ngdesk-helm/ngdesk-rest/helm 
+#     # manager project
+#     - helm upgrade --install --namespace $BRANCH_NAME --set image.name=master:5000/ngdesk-manager:$BRANCH_NAME,timestamp=$CURRENT_DATE ngdesk-manager-$BRANCH_NAME  ./ngdesk-helm/ngdesk-manager/helm 
+#     # angular project
+#     - helm upgrade --install --namespace $BRANCH_NAME --set image.name=master:5000/ngdesk-angular:$BRANCH_NAME,timestamp=$CURRENT_DATE ngdesk-angular-$BRANCH_NAME ./ngdesk-helm/ngdesk-angular/helm 
+#     # mongo install
+#     - helm upgrade --install --namespace $BRANCH_NAME --set usePassword=false,mongodbExtraFlags='--wiredTigerCacheSizeGB=1' mongodb-$BRANCH_NAME stable/mongodb  
+#     # elasticsearch install
+#     - helm repo add elastic https://helm.elastic.co
+#     - (if [ $(helm ls  | grep elasticsearch-$BRANCH_NAME | awk '{print $1}') == "elasticsearch-$BRANCH_NAME" ]; then helm del --purge elasticsearch-$BRANCH_NAME; fi);
+#     - helm install --namespace $BRANCH_NAME --name elasticsearch-$BRANCH_NAME --set esJavaOpts='-Xmx1g -Xms1g',volumeClaimTemplate.resources.requests.storage=1Gi elastic/elasticsearch --version 7.1.1
+#     # redis install
+#     - helm upgrade --install --namespace $BRANCH_NAME --set master.persistence.size='1Gi',slave.persistence.size='1Gi' redis-$BRANCH_NAME stable/redis
+#     # make sure external IP created
+#     - source ./ngdesk-helm/scripts/check-angular-external-ip.sh
+#     - echo $ANGULAR_EXTERNAL_IP
+#     # make sure elasticsearch is running
+#     - source ./ngdesk-helm/scripts/check-elasticsearch-is-running.sh
+#     # curl to add dns
+#     - curl -I -X POST "https://prod.ngdesk.com/ngdesk-rest/ngdesk/companies/dns?secret=9cada280-1700-47bd-b00e-fcf8b098f085&subdomain=$BRANCH_NAME&ip_address=$ANGULAR_EXTERNAL_IP"
+#     - sleep 10s
+#     # load elasticsearch index
+#     - source ./ngdesk-helm/scripts/load-elasticsearch-index.sh
+
+# helm_delete:
+#   stage: helm_delete
+#   image: dtzar/helm-kubectl:2.10.0
+#   only:
+#     - schedules
+#   script:
+#     - BRANCH_NAME=$(echo $CI_COMMIT_REF_NAME | sed 's/[0-9]\+-//g')
+#     - BRANCH_NAME=$(printf $BRANCH_NAME | cut -c 1-35)
+#     - git clone https://gpull:PennyTaste1@gitlab.bluemsp.com/ngDesk/ngdesk-helm.git
+#     - kubectl config set-cluster k8s --server=https://ngdesk-tst.ngdesk.com:6443 --insecure-skip-tls-verify
+#     - kubectl config set-credentials gitlab --token=eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJnaXRsYWItYWRtaW4tdG9rZW4tcXpzcWgiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoiZ2l0bGFiLWFkbWluIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQudWlkIjoiNjNlNmYzMDItOGMyMi0xMWU5LTlhZTktMDA1MDU2YjU0MTQzIiwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50Omt1YmUtc3lzdGVtOmdpdGxhYi1hZG1pbiJ9.IixySv6FMzTaha1N3Y3JiU2Gv7kT2XnawXmesiKhBvelmF02-oBWZnKDZgAmPYnseFdIopbB14rnSE3cONiD3iNsrwj4d1TkNx_LB_PUaiZ0u5-hY3Q2b0T2WQSroGqNyPitgwDFDc9_S27kota5CvzkbMSCCln2RqZw4es-H0ujO9q_LRNw_iMQl4gPM55pWebZ3mWeNEqKtLp66mBJx7UuYomeV6bivJ4IMqKfTJK5mTv3fhS4vv9aGCdUVrPsumSIliI3F15pLVkZ8ApUs28WlNP3uX7r7zDc8y1_UU5RG9X0XZoLc0lHPCBzYK9PimmS6OeiezGnROfyl_44sg
+#     - kubectl config set-context default --cluster=k8s --user=gitlab
+#     - kubectl config use-context default
+#     - ./ngdesk-helm/scripts/remove-old-helm-envs.sh
+
+
+
+
+
+
+  
+  

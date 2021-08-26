@@ -1,0 +1,63 @@
+#!/bin/bash
+
+
+# chkconfig: 235 30 90
+# description: Please do not modify this script
+
+
+start () {
+   . ~/.bashrc
+   nohup $NGDESK_HOME/jdk-11.0.6/bin/java -jar $NGDESK_HOME/ngDesk-Controller-Updater.jar > /dev/null &
+   nohup $NGDESK_HOME/jdk-11.0.6/bin/java -jar $NGDESK_HOME/ngDesk-Controller.jar > /dev/null &
+}
+
+
+stop () {
+    # Put here the command to stop your application
+    fuser -k 9099/tcp
+    fuser -k 10000/tcp
+}
+
+
+status () {
+    controllerProcess=`ps -ef | grep -v awk | awk -e '/java.*installer-test/ { print $2 }'`
+    controllerUpdaterProcess=`ps -ef | grep -v awk | awk -e '/java.*ngDesk-Controller-Updater/ { print $2 }'`
+    if [ -z "$controllerProcess" ] ;
+    then
+        return 2
+    else
+        return 0
+    fi
+}
+
+
+case "$1" in
+start)
+        start
+        ;;
+stop)
+        stop
+        ;;
+restart)
+        stop
+        sleep 1
+        start
+        ;;
+status)
+        status
+        code=$?
+        if [ $code -eq 0 ] ; then
+         echo "ngDesk Controller is running"
+        else
+         echo "ngDesk-Controller is not running"
+        fi
+        exit $code
+        ;;
+*)
+        echo "Usage: $0 { start | stop | restart | status }"
+        exit 1
+        ;;
+esac
+
+
+exit 0

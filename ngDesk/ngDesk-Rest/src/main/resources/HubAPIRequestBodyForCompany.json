@@ -1,0 +1,12 @@
+{
+	"properties": [
+		{
+			"name": "name",
+			"value": "SUBDOMAIN_REPLACE"
+		},
+		{
+			"name": "domain",
+			"value": "SUBDOMAIN_REPLACE.ngdesk.com"
+		}
+	]
+}

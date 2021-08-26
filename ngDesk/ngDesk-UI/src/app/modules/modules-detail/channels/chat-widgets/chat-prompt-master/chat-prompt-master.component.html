@@ -1,0 +1,59 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef>
+	<app-title-bar *ngIf="promptId === 'new'" title="{{'CHAT_PROMPT_NEW' | translate}}" buttonText="{{'SAVE' | translate}}"
+		(buttonRightOnClick)="savePrompt()">
+	</app-title-bar>
+	<app-title-bar *ngIf="promptId !== 'new'" title="{{'CHAT_PROMPT_UPDATE' | translate}}" buttonText="{{'SAVE' | translate}}"
+		(buttonRightOnClick)="savePrompt()">
+	</app-title-bar>
+</ng-template>
+<div>
+	<form [formGroup]="promptForm" (ngSubmit)="savePrompt()">
+		<div fxFlex style="padding: 15px;" fxLayout="column">
+			<app-new-name-description></app-new-name-description>
+			<div fxLayout="row" fxLayoutAlign="normal center" fxLayoutGap='20px'>
+				<label class="mat-body-2">{{'RUN_WORKFLOW'|translate}}</label>
+				<mat-form-field style="width:340px">
+					<mat-select placeholder="{{'SELECT_WHEN_TO_WORKFLOW' | translate}}" formControlName="RUN_TRIGGER" required>
+						<mat-option *ngFor="let when of runTriggers" [value]="when">
+							<label> {{ when | translate }} </label>
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</div>
+			<div fxLayout="row" fxLayoutAlign="space-between start">
+				<app-conditions *ngIf="promptLoaded"  [conditions]="prompt.CONDITIONS" [parentName]="'promptsComponent'" [fields]="fields"
+					[pageInfo]="pageInfo">
+				</app-conditions>
+			</div>
+		</div>
+	</form>
+	<div fxLayout="column" style="margin-left: 20px;">
+		<div fxLayout="row" fxLayoutAlign="normal center" fxLayoutGap='5px'>
+			<div><label class="mat-h1">{{'ACTIONS'|translate}}</label></div>
+			<mat-icon class="pointer" (click)="addAction()">add_circle</mat-icon>
+		</div>
+		<div
+			*ngFor="let action of actions; let actionIndex = index;">
+			<div>
+				<div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign=" center">
+					<mat-form-field>
+						<mat-select placeholder="{{'SELECT_AN_ACTION' | translate}}" [(ngModel)]="action.TYPE" name="action">
+							<mat-option *ngFor="let name of actionNames" [value]="name.TYPE">
+								<label> {{ name.ACTION }} </label>
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+					<button mat-icon-button (click)="removeActions(actionIndex + 1)">
+						<mat-icon>remove_circle</mat-icon>
+					</button>
+				</div>
+				<div *ngIf="action.TYPE === 'ShowPopUpMessage'">
+					<mat-form-field>
+						<input matInput placeholder="Enter a message" [(ngModel)]="action.VALUES.MESSAGE" name="message">
+					</mat-form-field>
+				</div>
+			</div>
+	  </div>
+	</div>
+</div>

@@ -1,0 +1,83 @@
+gridster-item div.button-holder {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.options {
+	padding: 10px;
+	display: grid;
+}
+
+.options-header {
+	padding: 10px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+
+.source-code-button {
+	justify-self: end;
+}
+
+
+.dashboard-grid .display-grid .gridster-column,
+.dashboard-grid .display-grid .gridster-row {
+		display: block;
+		border : 2px dotted black;
+	}
+
+[draggable] {
+	user-select: none;
+	cursor: pointer;
+}
+
+app-parent-dynamic,
+app-widget-a,
+app-widget-b,
+app-widget-c {
+	display: flex;
+	height: 100%;
+	width: 100%;
+	color: white;
+	font-weight: bold;
+	font-size: 24px;
+	align-items: center;
+	justify-content: center;
+}
+
+.widget-header {
+	background-color: white;
+	cursor: pointer;
+}
+
+.widget-header-btn {
+	cursor: pointer;
+}
+
+.header-margin-left {
+	margin-left: 5px;
+}
+
+mat-form-field {
+	::ng-deep {
+		.mat-form-field-outline {
+			background-color: #ffffff;
+		}
+	}
+}
+
+.gridster-preview{
+display: none;
+}
+
+.parent-tag {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}

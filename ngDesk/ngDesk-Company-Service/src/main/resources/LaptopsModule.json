@@ -1,0 +1,1885 @@
+{
+	"NAME": "Laptops",
+	"PARENT_MODULE": "ASSETS_MODULE_REPLACE",
+	"DESCRIPTION": "Default Laptops Module",
+	"SINGULAR_NAME": "Laptop",
+	"PLURAL_NAME": "Laptops",
+	"VALIDATIONS": [],
+	"FIELDS": [
+		{
+			"FIELD_ID": "66d108ef-e062-4c37-9079-8c2a2a67ec68",
+			"NAME": "SITE",
+			"DISPLAY_LABEL": "Site",
+			"HELP_TEXT": "",
+			"DATA_TYPE": {
+				"DISPLAY": "Text",
+				"BACKEND": "String"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": false,
+			"NOT_EDITABLE": false,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_VALUES": [],
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE"
+		},
+		{
+			"FIELD_ID": "9fc1aa05-27ae-44c6-86a2-ab3aa7c80f59",
+			"NAME": "MANUFACTURER",
+			"DISPLAY_LABEL": "Manufacturer",
+			"HELP_TEXT": "",
+			"DATA_TYPE": {
+				"DISPLAY": "Text",
+				"BACKEND": "String"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": false,
+			"NOT_EDITABLE": false,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_VALUES": [],
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE"
+		},
+		{
+			"FIELD_ID": "82a1edb8-e559-4d83-8ad4-6c7deec01eda",
+			"NAME": "MODEL_NUMBER",
+			"DISPLAY_LABEL": "Model Number",
+			"HELP_TEXT": "",
+			"DATA_TYPE": {
+				"DISPLAY": "Text",
+				"BACKEND": "String"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": false,
+			"NOT_EDITABLE": false,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_VALUES": [],
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE"
+		},
+		{
+			"FIELD_ID": "80674d52-bded-47d3-85d1-331b1546a6c6",
+			"NAME": "SERIAL_NUMBER",
+			"DISPLAY_LABEL": "Serial Number",
+			"HELP_TEXT": "",
+			"DATA_TYPE": {
+				"DISPLAY": "Text",
+				"BACKEND": "String"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": false,
+			"NOT_EDITABLE": false,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_VALUES": [],
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE"
+		},
+		{
+			"FIELD_ID": "b677b815-0a27-43bf-9f2c-20f198561f03",
+			"NAME": "CPU_SPEED",
+			"DISPLAY_LABEL": "CPU Speed",
+			"HELP_TEXT": "",
+			"DATA_TYPE": {
+				"DISPLAY": "Text",
+				"BACKEND": "String"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": false,
+			"NOT_EDITABLE": false,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_VALUES": [],
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE"
+		},
+		{
+			"FIELD_ID": "89f1e33b-bb5e-47a0-8b35-3506b0d13eea",
+			"NAME": "RAM",
+			"DISPLAY_LABEL": "RAM",
+			"HELP_TEXT": "in megabytes",
+			"DATA_TYPE": {
+				"DISPLAY": "Number",
+				"BACKEND": "Integer"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": false,
+			"NOT_EDITABLE": false,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_VALUES": [],
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE",
+	  		"PREFIX": "",
+	  		"SUFFIX": "",
+	  		"NUMERIC_FORMAT": ""
+		},
+		{
+			"FIELD_ID": "b24d6bf8-66ec-4e0e-a96d-67b97e05bc37",
+			"NAME": "OS_TYPE",
+			"DISPLAY_LABEL": "OS Type",
+			"HELP_TEXT": "",
+			"DATA_TYPE": {
+				"DISPLAY": "Text",
+				"BACKEND": "String"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": false,
+			"NOT_EDITABLE": false,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_VALUES": [],
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE"
+		},
+		{
+			"FIELD_ID": "6f6b3ea8-2bcb-43c9-a88b-dda793c3d297",
+			"NAME": "LAST_LOGIN_NAME",
+			"DISPLAY_LABEL": "Last Login Name",
+			"HELP_TEXT": "",
+			"DATA_TYPE": {
+				"DISPLAY": "Text",
+				"BACKEND": "String"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": false,
+			"NOT_EDITABLE": false,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_VALUES": [],
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE"
+		},
+		{
+			"FIELD_ID": "e168763b-c57f-4a38-b72a-ba4601b0f140",
+			"NAME": "PURCHASE_DATE",
+			"DISPLAY_LABEL": "Purchase Date",
+			"HELP_TEXT": "",
+			"DATA_TYPE": {
+				"DISPLAY": "Date",
+				"BACKEND": "Timestamp"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": false,
+			"NOT_EDITABLE": false,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_VALUES": [],
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE"
+		},
+		{
+			"FIELD_ID": "d014d881-8936-4a61-920b-3ced3029c402",
+			"NAME": "WARRANTY_EXPIRATION_DATE",
+			"DISPLAY_LABEL": "Warranty Expiration Date",
+			"HELP_TEXT": "",
+			"DATA_TYPE": {
+				"DISPLAY": "Date",
+				"BACKEND": "Timestamp"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": false,
+			"NOT_EDITABLE": false,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_VALUES": [],
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE"
+		},
+		{
+			"FIELD_ID": "c7ad0eb5-0fc2-4200-803a-0399b4884daa",
+			"NAME": "WARRANTY_COVERAGE_POLICY",
+			"DISPLAY_LABEL": "Warranty Coverage Policy",
+			"HELP_TEXT": "",
+			"DATA_TYPE": {
+				"DISPLAY": "Text",
+				"BACKEND": "String"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": false,
+			"NOT_EDITABLE": false,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_VALUES": [],
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE"
+		},
+		{
+			"FIELD_ID": "c0c2c7b6-9313-44eb-b9e8-7fa21ba6caff",
+			"NAME": "WARRANTY_COVERAGE_YEARS",
+			"DISPLAY_LABEL": "Warranty Coverage Years",
+			"HELP_TEXT": "",
+			"DATA_TYPE": {
+				"DISPLAY": "Number",
+				"BACKEND": "Integer"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": false,
+			"NOT_EDITABLE": false,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_VALUES": [],
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE",
+	  		"PREFIX": "",
+	  		"SUFFIX": "",
+	  		"NUMERIC_FORMAT": ""
+		},
+		{
+			"FIELD_ID": "b8439fca-d029-4a08-b941-b3e87b192d63",
+			"NAME": "WARRANTY_ANNUAL_COST",
+			"DISPLAY_LABEL": "Warranty Annual Cost",
+			"HELP_TEXT": "",
+			"DATA_TYPE": {
+				"DISPLAY": "Currency",
+				"BACKEND": "Float"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": false,
+			"NOT_EDITABLE": false,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_VALUES": [],
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE",
+			"PREFIX": "",
+			"SUFFIX": "",
+			"NUMERIC_FORMAT": ""
+		},
+		{
+			"FIELD_ID": "a9de3329-aab3-4510-a0aa-c82c6d8ed971",
+			"NAME": "WARRANTY_MAX_YEARS_PER_RENEWAL",
+			"DISPLAY_LABEL": "Warranty Max Years Per Renewal",
+			"HELP_TEXT": "",
+			"DATA_TYPE": {
+				"DISPLAY": "Number",
+				"BACKEND": "Integer"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": false,
+			"NOT_EDITABLE": false,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_VALUES": [],
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE",
+	  		"PREFIX": "",
+	  		"SUFFIX": "",
+	  		"NUMERIC_FORMAT": ""
+		},
+		{
+			"FIELD_ID": "c563066d-5573-4e35-b163-aa9d07249cd8",
+			"NAME": "END_OF_LIFE_DATE",
+			"DISPLAY_LABEL": "End Of Life Date",
+			"HELP_TEXT": "",
+			"DATA_TYPE": {
+				"DISPLAY": "Date",
+				"BACKEND": "Timestamp"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": false,
+			"NOT_EDITABLE": false,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_VALUES": [],
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE"
+		},
+		{
+			"FIELD_ID": "c74ba7b6-3f52-49dd-b67a-68ac1850ed5c",
+			"NAME": "LIFE_SPAN",
+			"DISPLAY_LABEL": "Life Span",
+			"HELP_TEXT": "in years",
+			"DATA_TYPE": {
+				"DISPLAY": "Number",
+				"BACKEND": "Integer"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": false,
+			"NOT_EDITABLE": false,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_VALUES": [],
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE",
+	  		"PREFIX": "",
+	  		"SUFFIX": "",
+	  		"NUMERIC_FORMAT": ""
+		},
+		{
+			"FIELD_ID": "f14243e0-6361-4abd-879d-baa98d88dbcb",
+			"NAME": "REPLACEMENT_PRICE",
+			"DISPLAY_LABEL": "Replacement Price",
+			"HELP_TEXT": "",
+			"DATA_TYPE": {
+				"DISPLAY": "Currency",
+				"BACKEND": "Float"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": false,
+			"NOT_EDITABLE": false,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_VALUES": [],
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE",
+			"PREFIX": "",
+			"SUFFIX": "",
+			"NUMERIC_FORMAT": ""
+		},
+		{
+			"FIELD_ID": "1e9b5e74-15c5-4c1f-9a49-57e26d0c6b5f",
+			"NAME": "OS_END_OF_LIFE_DATE",
+			"DISPLAY_LABEL": "OS End Of Life Date",
+			"HELP_TEXT": "",
+			"DATA_TYPE": {
+				"DISPLAY": "Date",
+				"BACKEND": "Timestamp"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": false,
+			"NOT_EDITABLE": false,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_VALUES": [],
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE"
+		},
+		{
+			"FIELD_ID": "10c5c8d7-1087-43d2-8cd0-bea1c1d0301b",
+			"NAME": "OS_END_OF_LIFE_ACTION",
+			"DISPLAY_LABEL": "OS End Of Life Action",
+			"HELP_TEXT": "",
+			"DATA_TYPE": {
+				"DISPLAY": "Text",
+				"BACKEND": "String"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": false,
+			"NOT_EDITABLE": false,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_VALUES": [],
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE"
+		},
+		{
+			"FIELD_ID": "a5a2a95c-dc35-4926-adb1-ba241c401201",
+			"NAME": "OS_UPGRADE_PRICE",
+			"DISPLAY_LABEL": "OS Upgrade Price",
+			"HELP_TEXT": "",
+			"DATA_TYPE": {
+				"DISPLAY": "Currency",
+				"BACKEND": "Float"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": false,
+			"NOT_EDITABLE": false,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_VALUES": [],
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE",
+			"PREFIX": "",
+			"SUFFIX": "",
+			"NUMERIC_FORMAT": ""
+		},
+		{
+			"FIELD_ID": "68f2d383-dba3-4229-bbb8-3328d7baa251",
+			"NAME": "LAST_SYNCED_ON",
+			"DISPLAY_LABEL": "Last Synced ON",
+			"HELP_TEXT": "",
+			"DATA_TYPE": {
+				"DISPLAY": "Date/Time",
+				"BACKEND": "Date"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": false,
+			"NOT_EDITABLE": false,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_VALUES": [],
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE"
+		},
+		{
+			"FIELD_ID": "7ab54482-6d04-4a10-8a4e-8b98db5fcdba",
+			"NAME": "ASSET",
+			"DISPLAY_LABEL": "Asset",
+			"RELATIONSHIP_TYPE": "Many to One",
+			"PRIMARY_DISPLAY_FIELD": "2c4baddc-5c00-4ebe-b424-a068ccf8a14e",
+			"RELATIONSHIP_FIELD": "fa0b5a52-978c-4980-99b8-8a6b0b152ac8",
+			"MODULE": "ASSETS_MODULE_REPLACE",
+			"DATA_TYPE": {
+				"DISPLAY": "Relationship",
+				"BACKEND": "String"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": false,
+			"NOT_EDITABLE": false,
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"_class": "com.ngdesk.module.field.dao.ModuleField"
+		},
+		{
+      "FIELD_ID": "ec928c4f-f1f6-424d-b120-7e7747360ff2",
+      "NAME": "TIME_WINDOW",
+      "DISPLAY_LABEL": "Time Window",
+      "HELP_TEXT": "",
+      "DATA_TYPE": {
+        "DISPLAY": "Time Window",
+        "BACKEND": "Timestamp"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_VALUES": [],
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+     {
+      "FIELD_ID": "4024c953-87aa-4d4e-97ae-2a467b83db3a",
+      "NAME": "PDFS",
+      "DISPLAY_LABEL": "PDFS",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": null,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": [],
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": true,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "RELATIONSHIP_FIELD": null,
+      "FORMULA": null,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "DATA_TYPE": {
+        "DISPLAY": "PDF",
+        "BACKEND": "BLOB"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": "DATE_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "MESSAGES": null,
+      "INTERNAL": false,
+      "NOT_EDITABLE": true,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false,
+      "WORKFLOW": null,
+      "DATA_FILTER": null,
+      "AGGREGATION_TYPE": null,
+      "AGGREGATION_FIELD": null,
+      "AGGREGATION_RELATED_FIELD": null,
+      "INHERITANCE_MAPPING": null,
+      "UNIQUE": false,
+      "DATE_UPDATED": "DATE_REPLACE"
+     }
+	],
+	"LIST_LAYOUTS": [
+		{
+			"LAYOUT_ID": "4dfe117b-a2a4-40e8-82d9-e6435a2b1ddd",
+			"NAME": "Laptops",
+			"DESCRIPTION": "",
+			"ID": "",
+			"ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+			"IS_DEFAULT": true,
+			"ORDER_BY": {
+				"COLUMN": "82a1edb8-e559-4d83-8ad4-6c7deec01eda",
+				"ORDER": "Desc"
+			},
+			"COLUMN_SHOW": {
+				"FIELDS": [
+					"89f1e33b-bb5e-47a0-8b35-3506b0d13eea",
+					"b677b815-0a27-43bf-9f2c-20f198561f03",
+					"80674d52-bded-47d3-85d1-331b1546a6c6",
+					"82a1edb8-e559-4d83-8ad4-6c7deec01eda",
+					"9fc1aa05-27ae-44c6-86a2-ab3aa7c80f59"
+				]
+			},
+			"CONDITIONS": [],
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE"
+		}
+	],
+	"CREATE_LAYOUTS": [
+		{
+			"LAYOUT_ID": "3722e04e-67cf-4bf7-b708-8685593ea93c",
+			"NAME": "Laptop",
+			"DESCRIPTION": "create laptop layout for admin",
+			"PANELS": [
+				{
+					"SETTINGS": {
+						"COLLAPSABLE": false,
+						"ACTION": "",
+						"CONDITIONS": []
+					},
+					"ID": "PANEL_1",
+					"PANEL_NAME": "General Information",
+					"GRIDS": [
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "9fc1aa05-27ae-44c6-86a2-ab3aa7c80f59",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "82a1edb8-e559-4d83-8ad4-6c7deec01eda",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "80674d52-bded-47d3-85d1-331b1546a6c6",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "e168763b-c57f-4a38-b72a-ba4601b0f140",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "7ab54482-6d04-4a10-8a4e-8b98db5fcdba",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "6f6b3ea8-2bcb-43c9-a88b-dda793c3d297",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						]
+					],
+					"DISPLAY_TYPE": "Panel"
+				},
+				{
+					"SETTINGS": {
+						"COLLAPSABLE": false,
+						"ACTION": "",
+						"CONDITIONS": []
+					},
+					"ID": "PANEL_2",
+					"PANEL_NAME": "Specifications",
+					"GRIDS": [
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "b677b815-0a27-43bf-9f2c-20f198561f03",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "89f1e33b-bb5e-47a0-8b35-3506b0d13eea",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "b24d6bf8-66ec-4e0e-a96d-67b97e05bc37",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "a5a2a95c-dc35-4926-adb1-ba241c401201",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						]
+					],
+					"DISPLAY_TYPE": "Panel"
+				},
+				{
+					"SETTINGS": {
+						"COLLAPSABLE": false,
+						"ACTION": "",
+						"CONDITIONS": []
+					},
+					"ID": "PANEL_3",
+					"PANEL_NAME": "Warranty Details",
+					"GRIDS": [
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "d014d881-8936-4a61-920b-3ced3029c402",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "c7ad0eb5-0fc2-4200-803a-0399b4884daa",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "c0c2c7b6-9313-44eb-b9e8-7fa21ba6caff",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "c74ba7b6-3f52-49dd-b67a-68ac1850ed5c",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						]
+					],
+					"DISPLAY_TYPE": "Panel"
+				}
+			],
+			"TITLE_BAR": [],
+			"PREDEFINED_TEMPLATE": null,
+			"CUSTOM_LAYOUT": null,
+			"ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAYOUT_STYLE": "standard"
+		},
+		{
+			"LAYOUT_ID": "c31af4d9-621e-4452-bbe5-f886a54847fd",
+			"NAME": "Laptop",
+			"DESCRIPTION": "create layout for agent",
+			"PANELS": [
+				{
+					"SETTINGS": {
+						"COLLAPSABLE": false,
+						"ACTION": "",
+						"CONDITIONS": []
+					},
+					"ID": "PANEL_1",
+					"PANEL_NAME": "General details",
+					"GRIDS": [
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "9fc1aa05-27ae-44c6-86a2-ab3aa7c80f59",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "82a1edb8-e559-4d83-8ad4-6c7deec01eda",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "80674d52-bded-47d3-85d1-331b1546a6c6",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "e168763b-c57f-4a38-b72a-ba4601b0f140",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "7ab54482-6d04-4a10-8a4e-8b98db5fcdba",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "6f6b3ea8-2bcb-43c9-a88b-dda793c3d297",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						]
+					],
+					"DISPLAY_TYPE": "Panel"
+				},
+				{
+					"SETTINGS": {
+						"COLLAPSABLE": false,
+						"ACTION": "",
+						"CONDITIONS": []
+					},
+					"ID": "PANEL_2",
+					"PANEL_NAME": "Specifications",
+					"GRIDS": [
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "b677b815-0a27-43bf-9f2c-20f198561f03",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "89f1e33b-bb5e-47a0-8b35-3506b0d13eea",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "b24d6bf8-66ec-4e0e-a96d-67b97e05bc37",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "a5a2a95c-dc35-4926-adb1-ba241c401201",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						]
+					],
+					"DISPLAY_TYPE": "Panel"
+				},
+				{
+					"SETTINGS": {
+						"COLLAPSABLE": false,
+						"ACTION": "",
+						"CONDITIONS": []
+					},
+					"ID": "PANEL_3",
+					"PANEL_NAME": "Warranty Details",
+					"GRIDS": [
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "c7ad0eb5-0fc2-4200-803a-0399b4884daa",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "c0c2c7b6-9313-44eb-b9e8-7fa21ba6caff",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "d014d881-8936-4a61-920b-3ced3029c402",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "c74ba7b6-3f52-49dd-b67a-68ac1850ed5c",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						]
+					],
+					"DISPLAY_TYPE": "Panel"
+				}
+			],
+			"TITLE_BAR": [],
+			"PREDEFINED_TEMPLATE": null,
+			"CUSTOM_LAYOUT": null,
+			"ROLE": "AGENT_ROLE_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAYOUT_STYLE": "standard"
+		}
+	],
+	"EDIT_LAYOUTS": [
+		{
+			"LAYOUT_ID": "1a02c525-3d47-49d8-9de3-686024fc2308",
+			"NAME": "Latop",
+			"DESCRIPTION": "Laptop edit for admin",
+			"PANELS": [
+				{
+					"SETTINGS": {
+						"COLLAPSABLE": false,
+						"ACTION": "",
+						"CONDITIONS": []
+					},
+					"ID": "PANEL_1",
+					"PANEL_NAME": "General Details",
+					"GRIDS": [
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "9fc1aa05-27ae-44c6-86a2-ab3aa7c80f59",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "82a1edb8-e559-4d83-8ad4-6c7deec01eda",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "80674d52-bded-47d3-85d1-331b1546a6c6",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "e168763b-c57f-4a38-b72a-ba4601b0f140",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "7ab54482-6d04-4a10-8a4e-8b98db5fcdba",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "6f6b3ea8-2bcb-43c9-a88b-dda793c3d297",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						]
+					],
+					"DISPLAY_TYPE": "Panel"
+				},
+				{
+					"SETTINGS": {
+						"COLLAPSABLE": false,
+						"ACTION": "",
+						"CONDITIONS": []
+					},
+					"ID": "PANEL_2",
+					"PANEL_NAME": "Specifications",
+					"GRIDS": [
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "b677b815-0a27-43bf-9f2c-20f198561f03",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "89f1e33b-bb5e-47a0-8b35-3506b0d13eea",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "b24d6bf8-66ec-4e0e-a96d-67b97e05bc37",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "a5a2a95c-dc35-4926-adb1-ba241c401201",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						]
+					],
+					"DISPLAY_TYPE": "Panel"
+				},
+				{
+					"SETTINGS": {
+						"COLLAPSABLE": false,
+						"ACTION": "",
+						"CONDITIONS": []
+					},
+					"ID": "PANEL_3",
+					"PANEL_NAME": "Warranty",
+					"GRIDS": [
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "c7ad0eb5-0fc2-4200-803a-0399b4884daa",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "c0c2c7b6-9313-44eb-b9e8-7fa21ba6caff",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "d014d881-8936-4a61-920b-3ced3029c402",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "c74ba7b6-3f52-49dd-b67a-68ac1850ed5c",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						]
+					],
+					"DISPLAY_TYPE": "Panel"
+				}
+			],
+			"TITLE_BAR": [],
+			"PREDEFINED_TEMPLATE": null,
+			"CUSTOM_LAYOUT": null,
+			"ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAYOUT_STYLE": "standard"
+		},
+		{
+			"LAYOUT_ID": "7070ae8f-5be1-4a18-9316-35ae56d3d2e2",
+			"NAME": "Laptop",
+			"DESCRIPTION": "Laptop edit layout for agent",
+			"PANELS": [
+				{
+					"SETTINGS": {
+						"COLLAPSABLE": false,
+						"ACTION": "",
+						"CONDITIONS": []
+					},
+					"ID": "PANEL_1",
+					"PANEL_NAME": "General Details",
+					"GRIDS": [
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "9fc1aa05-27ae-44c6-86a2-ab3aa7c80f59",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "82a1edb8-e559-4d83-8ad4-6c7deec01eda",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "80674d52-bded-47d3-85d1-331b1546a6c6",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "e168763b-c57f-4a38-b72a-ba4601b0f140",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "7ab54482-6d04-4a10-8a4e-8b98db5fcdba",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "6f6b3ea8-2bcb-43c9-a88b-dda793c3d297",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						]
+					],
+					"DISPLAY_TYPE": "Panel"
+				},
+				{
+					"SETTINGS": {
+						"COLLAPSABLE": false,
+						"ACTION": "",
+						"CONDITIONS": []
+					},
+					"ID": "PANEL_2",
+					"PANEL_NAME": "Specifications",
+					"GRIDS": [
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "b677b815-0a27-43bf-9f2c-20f198561f03",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "89f1e33b-bb5e-47a0-8b35-3506b0d13eea",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "b24d6bf8-66ec-4e0e-a96d-67b97e05bc37",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "a5a2a95c-dc35-4926-adb1-ba241c401201",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						]
+					],
+					"DISPLAY_TYPE": "Panel"
+				},
+				{
+					"SETTINGS": {
+						"COLLAPSABLE": false,
+						"ACTION": "",
+						"CONDITIONS": []
+					},
+					"ID": "PANEL_3",
+					"PANEL_NAME": "Warranty",
+					"GRIDS": [
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "c7ad0eb5-0fc2-4200-803a-0399b4884daa",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "c0c2c7b6-9313-44eb-b9e8-7fa21ba6caff",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "d014d881-8936-4a61-920b-3ced3029c402",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "c74ba7b6-3f52-49dd-b67a-68ac1850ed5c",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						]
+					],
+					"DISPLAY_TYPE": "Panel"
+				}
+			],
+			"TITLE_BAR": [],
+			"PREDEFINED_TEMPLATE": null,
+			"CUSTOM_LAYOUT": null,
+			"ROLE": "AGENT_ROLE_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAYOUT_STYLE": "standard"
+		}
+	],
+	"LIST_MOBILE_LAYOUTS": [],
+	"CREATE_MOBILE_LAYOUTS": [],
+	"EDIT_MOBILE_LAYOUTS": [],
+	"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+	"_class": "com.ngdesk.company.module.dao.Module",
+	"CREATED_BY": "CREATED_BY_REPLACE",
+	"DATE_CREATED": "DATE_REPLACE",
+	"DATE_UPDATED": "DATE_REPLACE"
+}

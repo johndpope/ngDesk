@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<div fxLayout="column" fxFlex="100" style="margin-top:50px;">
+  <div fxLayout="row" fxLayoutAlign="center">
+    <div class="mat-h1" color="primary" >{{'WELCOME_TO_NGDESK' | translate}}!</div>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="center" fxFlex="100">
+    <div fxFlex>
+
+    </div>
+    <form [formGroup]="subdomainForm" fxFlex="50" fxFlex.lt-md="450px" (ngSubmit)="checkSubdomain()">
+      <mat-card fxLayout="column">
+        <mat-form-field fxFlex>
+          <input type="text" matInput formControlName="subdomain" placeholder="Subdomain">
+          <mat-error *ngIf="subdomainForm.controls.subdomain.invalid" [innerHTML]="'FIELD_REQUIRED' | translate:{ field: translateService.instant('SUBDOMAIN') }"></mat-error>
+        </mat-form-field>
+        <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
+          <button fxFlex fxFlex.lt-sm="40px" mat-raised-button color="primary" type="submit" >{{'LOGIN' | translate}}</button>
+        </div>
+      </mat-card>
+    </form>
+    <div fxFlex>
+
+    </div>
+
+  </div>
+</div>

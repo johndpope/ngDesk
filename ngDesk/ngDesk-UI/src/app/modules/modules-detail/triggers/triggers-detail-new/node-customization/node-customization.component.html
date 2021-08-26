@@ -1,0 +1,443 @@
+<div mat-dialog-content>
+	<mat-tab-group class="overview">
+		<mat-tab label="{{'VALUES' | translate}}" class="new">
+			<mat-form-field>
+				<mat-select matInput [(ngModel)]="stageId" placeholder="{{'STAGE' | translate}}">
+					<mat-option *ngFor="let stage of stages" [value]="stage.STAGE_ID" [title]="stage.NAME">
+						{{stage.NAME}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<div fxFlex fxLayout="column" *ngIf="node.attributes.type !== 'app.UpdateEntry'">
+				<!-- NEEDED ONLY FOR SIGNATURE NODE-->
+				<div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center">
+					<div *ngIf="node.attributes.type === 'app.SignatureDocument'">
+						<mat-form-field style="padding: 0 10px 0 10px">
+							<mat-select matInput [(ngModel)]="storeTemplate" placeholder="{{'STORE' | translate}}">
+								<mat-option *ngFor="let fieldType of fieldTypes" [value]="fieldType.FIELD_ID">
+									{{fieldType.DISPLAY_LABEL}}
+								</mat-option>
+							</mat-select>
+
+						</mat-form-field>
+						<a class="mat-caption" *ngIf="fieldTypes.length === 0" (click)="createnew()"
+							style="cursor: pointer"><span class="custom-theme-primary-font-color">{{'CREATE_NEW_FIELD_OF_DATA_TYPE_FILE_UPLOAD_TO_STORE_SIGNED_PDF'|translate}}</span></a>
+					</div>
+				</div>
+				<!-- NEEDED FOR SEND EMAIL NODE AND SIGNATURE NODE-->
+				<mat-form-field style="padding: 0 10px 0 10px"
+					*ngIf="node.attributes.type === 'app.SendEmail' || node.attributes.type === 'app.SignatureDocument'">
+					<input matInput [(ngModel)]="to" placeholder="{{'TO' | translate}}" (ngModelChange)="searchField($event,'To')"
+						type="text" [matAutocomplete]="auto" required>
+					<mat-autocomplete #auto="matAutocomplete" (closed)="resetVariables()">
+						<mat-option *ngFor="let variable of toAddressFields" [value]="variable.NAME">
+							{{variable.DISPLAY_LABEL}}
+						</mat-option>
+					</mat-autocomplete>
+					<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:errors.to"></mat-error>
+				</mat-form-field>
+
+				<!-- NEEDED FOR SEND SMS NODE AND MAKE PHONE CALL NODE-->
+				<mat-form-field fxFlex="90" style="padding: 0 10px 0 10px"
+					*ngIf="node.attributes.type === 'app.SendSms' || node.attributes.type === 'app.MakePhoneCall'">
+					<input matInput placeholder="{{'TO' | translate}}" type="text" [matAutocomplete]="auto" [(ngModel)]="to"
+						(ngModelChange)="searchContact()" (matChipInputTokenEnd)="resetInput($event)" required>
+					<mat-autocomplete (closed)="contactAutocompleteClosed()" (appAutocompleteScroll)="onContactsScroll()"
+						#auto="matAutocomplete" [displayWith]="contactName">
+						<mat-option *ngFor="let entry of contactsStore" [value]="entry" [title]="toolTips(entry)">
+							<span *ngIf="entry.PHONE_NUMBER && entry.PHONE_NUMBER.PHONE_NUMBER!=nul">
+								{{entry.FULL_NAME+'<'+entry.PHONE_NUMBER.DIAL_CODE+' '+entry.PHONE_NUMBER.PHONE_NUMBER+'>'}}</span>
+							<span *ngIf="entry.PHONE_NUMBER && entry.PHONE_NUMBER.PHONE_NUMBER==nul">{{entry.FULL_NAME}}</span>
+						</mat-option>
+					</mat-autocomplete>
+					<mat-icon *ngIf="to.PHONE_NUMBER && to.PHONE_NUMBER.PHONE_NUMBER==null" matSuffix class="color-primary"
+						matTooltip="{{'SELECTED_CONTACT_PHONE_NULL' | translate}}">
+						warning</mat-icon>
+					<mat-hint *ngIf="node.attributes.type === 'app.MakePhoneCall'">
+						{{'WARNING_FOR_TO_FIELD_IN_PHONE_NODE' | translate}}
+					</mat-hint>
+					<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:errors.to"></mat-error>
+				</mat-form-field>
+
+				<!-- NEEDED FOR SEND EMAIL NODE AND SIGNATURE NODE-->
+				<mat-form-field style="padding: 0 10px 0 10px"
+					*ngIf="node.attributes.type === 'app.SendEmail' || node.attributes.type === 'app.SignatureDocument'">
+					<mat-select matInput [(ngModel)]="from" placeholder="{{'FROM' | translate}}" required>
+						<mat-option *ngFor="let channel of emailChannels" [value]="channel.EMAIL_ADDRESS" [title]="channel.EMAIL_ADDRESS">
+							{{channel.EMAIL_ADDRESS}}
+						</mat-option>
+					</mat-select>
+					<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:errors.from"></mat-error>
+				</mat-form-field>
+
+				<!-- NEEDED ONLY FOR START AND STOP ESCALATION NODE-->
+
+				<mat-form-field style="padding: 0 10px 0 10px"
+					*ngIf="node.attributes.type === 'app.StartEscalation' || node.attributes.type === 'app.StopEscalation'">
+					<mat-select matInput [(ngModel)]="escalation" placeholder="{{'ESCALATION' | translate}}" required>
+						<mat-option *ngFor="let escalation of escalations" [value]="escalation.ESCALATION_ID" [title]="escalation.NAME">
+							{{escalation.NAME}}
+						</mat-option>
+					</mat-select>
+
+					<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:errors.escalation"></mat-error>
+
+				</mat-form-field>
+				<div class="mat-caption" *ngIf="node.attributes.type === 'app.StartEscalation'|| node.attributes.type === 'app.StopEscalation'">
+					<a class="color-primary" *ngIf="escalations.length === 0" (click)="createEsclation()"
+						style="cursor: pointer;padding-left:10px;">{{'NO_ESCALATION_FOUND' | translate}}</a>
+				</div>
+
+				<!-- NEEDED FOR START ESCALATION NODE AND SEND EMAIL AND SIGNATURE NODE -->
+				<mat-form-field style="padding: 0 10px 0 10px"
+					*ngIf="node.attributes.type === 'app.SendEmail' || node.attributes.type === 'app.StartEscalation' || node.attributes.type === 'app.SignatureDocument' ">
+					<input matInput [(ngModel)]="subject" placeholder="{{'SUBJECT' | translate}}"
+						(ngModelChange)="searchField($event,'subject')" type="text" [matAutocomplete]="subjectAuto" required>
+					<mat-autocomplete #subjectAuto="matAutocomplete" (closed)="resetVariables()">
+						<mat-option *ngFor="let variable of subjectFields" [value]="variable.NAME">
+							{{variable.DISPLAY_LABEL}}
+						</mat-option>
+					</mat-autocomplete>
+					<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:errors.subject"></mat-error>
+				</mat-form-field>
+
+				<!-- NEEDED ONLY FOR GENERATE PDF NODE-->
+				<div *ngIf="node.attributes.type === 'app.GeneratePdf' ">
+					<div fxFlex="100">
+					<mat-form-field style="padding: 0 10px 0 10px;width: 100%;">
+						<mat-select matInput [(ngModel)]="htmlTemplate" placeholder="{{'PDF' | translate}}">
+							<mat-option *ngFor="let template of htmlTemplates" [value]="template.TEMPLATE_ID" [title]="template.TITLE">
+								{{template.TITLE}}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+					</div>
+					<div fxFlex="50" fxLayoutAlign="center center"  *ngIf="htmlTemplates.length === 0">
+					<a class="mat-caption"  (click)="createnewPdf()" 
+							style="cursor: pointer"><span class="custom-theme-primary-font-color">{{'NO_PDFS_FOUND_CLICK_HERE_TO_CREATE_NEW'| translate}}</span></a>
+						</div>
+					</div>
+				<mat-form-field style="padding: 0 10px 0 10px" *ngIf="node.attributes.type === 'app.GeneratePdf'">
+					<textarea matInput placeholder="PDF Name" rows="4" [(ngModel)]="pdfName" required></textarea>
+					<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:errors.pdfName"></mat-error>
+				</mat-form-field>
+				<div style="padding: 0 10px 0 10px" fxLayout="row wrap" fxLayoutGap="10px grid"
+					*ngIf="node.attributes.type === 'app.GeneratePdf'">
+					<div>
+						<ng-container *ngFor="let field of this.pdfFields; index as i">
+							<ng-container *ngTemplateOutlet="dynamicMenuForPDF; context: {field: field, index: i, item: action}">
+							</ng-container>
+						</ng-container>
+					</div>
+				</div>
+
+				<!-- NEEDED FOR START ESCALATION NODE AND SEND EMAIL-->
+				<!-- BODY SECTION START-->
+				<mat-form-field style="padding: 0 10px 0 10px"
+					*ngIf="node.attributes.type === 'app.SendEmail' || node.attributes.type === 'app.StartEscalation' || node.attributes.type === 'app.SendSms' || node.attributes.type === 'app.MakePhoneCall'">
+					<textarea matInput placeholder="Body" rows="4" [(ngModel)]="body" required></textarea>
+					<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:errors.body"></mat-error>
+				</mat-form-field>
+
+				<div style="padding: 0 10px 0 10px" fxLayout="row wrap" fxLayoutGap="10px"
+					*ngIf="node.attributes.type === 'app.SendEmail' || node.attributes.type === 'app.StartEscalation'|| node.attributes.type === 'app.SendSms' || node.attributes.type === 'app.MakePhoneCall'">
+					<div>
+						<ng-container *ngFor="let field of this.bodyFields; index as i">
+							<ng-container *ngTemplateOutlet="dynamicMenu; context: {field: field, index: i, item: action}">
+							</ng-container>
+						</ng-container>
+					</div>
+				</div>
+				<!-- BODY SECTION END -->
+
+				<!-- NEEDED FOR ONLY SIGNATURE NODE-->
+				<div *ngIf="node.attributes.type === 'app.SignatureDocument'">
+					<div fxFlex="100">
+				<mat-form-field style="padding: 0 10px 0 10px;width: 100%;">
+					<mat-select matInput [(ngModel)]="signTemplate" placeholder="{{'TEMPLATE' | translate}}">
+						<mat-option *ngFor="let template of htmlTemplates" [value]="template.TEMPLATE_ID" [title]="template.TITLE">
+							{{template.TITLE}}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</div>
+			<div fxFlex="50" fxLayoutAlign="center center" *ngIf="htmlTemplates.length === 0" >
+			    <a class="mat-caption"  (click)="createnewPdf()" 
+					style="cursor: pointer"><span class="custom-theme-primary-font-color">{{'NO_TEMPLATES_FOUND_CLICK_HERE_TO_CREATE_NEW'|translate}}</span></a>
+					</div>
+				</div>
+
+			</div>
+
+			<div style="padding-left: 10px;" fxFlex fxLayout="column"
+				*ngIf="node.attributes.type === 'app.UpdateEntry' || node.attributes.type === 'app.CreateEntry'">
+
+				<!--Replace Checkbox-->
+				<div style="padding: 5px 0 5px 0" *ngIf="node.attributes.type === 'app.UpdateEntry'">
+					<div fxLayoutAlign="start center">
+						<mat-checkbox [(ngModel)]="replace" color="primary" style="padding: 5px 0 5px 0">
+							{{'REPLACE' | translate}}
+						</mat-checkbox>
+					</div>
+					<div class="mat-caption">{{'REPLACE_HINT' | translate}}</div>
+				</div>
+				<div *ngIf="node.attributes.type === 'app.CreateEntry'" fxLayout="row" fxFlex fxLayoutAlign="start center">
+					<mat-form-field>
+						<mat-select [(ngModel)]="createEntryModuleId" placeholder="{{'SELECT_MODULE' | translate}}"
+							(selectionChange)="changeModule($event.value)">
+							<mat-option *ngFor="let module of modules" [value]="module.MODULE_ID">
+								{{ module.NAME }}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+
+				<!-- BUTTON -->
+				<div fxLayoutAlign="start center">
+					<label>{{'ADD_FIELD' | translate}}</label>
+					<button mat-icon-button (click)="addField()">
+						<mat-icon>add_circle</mat-icon>
+					</button>
+				</div>
+				<!-- BUTTON END -->
+
+
+				<!-- FOR LOOP FOR FIELDS -->
+				<div *ngFor="let item of updateFields; let i = index" fxFlex fxLayout="row" fxLayoutGap="10px">
+					<!-- FIELDS -->
+					<mat-form-field fxFlex>
+						<input matInput [(ngModel)]="item.FIELD" (ngModelChange)="resetValue($event,item,'UpdateEntry')"
+							placeholder="{{'FIELD' | translate}}" type="text" [matAutocomplete]="auto">
+						<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFieldName">
+							<mat-option *ngFor="let variable of updateEntryFields" [value]="variable"
+								[disabled]="variable.DATA_TYPE.DISPLAY==='Discussion' && variable.RELATIONSHIP_TYPE==='Many to Many'">
+								{{variable.DISPLAY_LABEL}}
+							</mat-option>
+						</mat-autocomplete>
+					</mat-form-field>
+
+					<!-- VALUES -->
+					<mat-form-field fxFlex *ngIf="specialDataTypes.indexOf(item.FIELD.DATA_TYPE?.DISPLAY) === -1 ">
+						<input matInput [(ngModel)]="item.VALUE" placeholder="{{'ENTER_VALUE' | translate}}" type="text">
+					</mat-form-field>
+					<mat-form-field fxFlex *ngIf="item.FIELD.DATA_TYPE?.DISPLAY ==='Picklist'">
+						<input matInput [(ngModel)]="item.VALUE" placeholder="{{'VALUE' | translate}}" type="text"
+							[matAutocomplete]="picklistAuto">
+						<mat-autocomplete #picklistAuto="matAutocomplete">
+							<mat-option *ngFor="let picklistValue of item.FIELD.PICKLIST_VALUES" [value]="picklistValue">
+								{{picklistValue}}
+							</mat-option>
+						</mat-autocomplete>
+					</mat-form-field>
+					<mat-form-field fxFlex *ngIf="item.FIELD.DATA_TYPE?.DISPLAY ==='Picklist (Multi-Select)'">
+						<mat-select [(ngModel)]="item.VALUE" placeholder="{{'VALUE' | translate}}" multiple>
+							<mat-option *ngFor="let picklistValue of item.FIELD.PICKLIST_VALUES" [value]="picklistValue">
+								{{picklistValue}}</mat-option>
+						</mat-select>
+					</mat-form-field>
+					<mat-form-field *ngIf="item.FIELD.DATA_TYPE?.DISPLAY == 'Date/Time'" fxFlex>
+						<input placeholder="{{ 'PLEASE_SELECT_A_DATE' | translate}}" matInput [owlDateTimeTrigger]="dt" [owlDateTime]="dt"
+							[(ngModel)]="item.VALUE">
+						<owl-date-time #dt></owl-date-time>
+					</mat-form-field>
+					<mat-form-field *ngIf="item.FIELD.DATA_TYPE?.DISPLAY === 'Date' " fxFlex>
+						<input placeholder="{{ 'PLEASE_SELECT_A_DATE' | translate}}" matInput [owlDateTimeTrigger]="dt" [owlDateTime]="dt"
+							[(ngModel)]="item.VALUE">
+						<owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
+					</mat-form-field>
+					<mat-form-field *ngIf="item.FIELD.DATA_TYPE?.DISPLAY == 'Time' " fxFlex>
+						<input placeholder="{{ 'PLEASE_SELECT_A_TIME' | translate}}" matInput [owlDateTimeTrigger]="dt" [owlDateTime]="dt"
+							[(ngModel)]="item.VALUE">
+						<owl-date-time [pickerType]="'timer'" #dt></owl-date-time>
+					</mat-form-field>
+					<mat-form-field fxFlex *ngIf="item.FIELD.DATA_TYPE?.DISPLAY ==='Relationship'">
+						<input matInput [(ngModel)]="item.VALUE" placeholder="{{'VALUE' | translate}}" type="text"
+							[matAutocomplete]="picklistRelationship" (ngModelChange)="search(item.FIELD, item.VALUE)">
+						<mat-autocomplete (closed)="autocompleteClosed(item.FIELD, item.VALUE)"
+							(appAutocompleteScroll)="onScroll(item.FIELD, item.VALUE)" #picklistRelationship="matAutocomplete"
+							[displayWith]="displayPrimaryDisplayField">
+							<mat-option *ngFor="let relationshipValue of triggerDetailService.relationshipData[item.FIELD.NAME]"
+								[value]="relationshipValue">
+								{{relationshipValue.PRIMARY_DISPLAY_FIELD}}
+							</mat-option>
+						</mat-autocomplete>
+					</mat-form-field>
+					<!-- VALUES END -->
+
+					<!-- REMOVE BUTTON -->
+					<button mat-icon-button type="button" (click)="removeField(i)">
+						<mat-icon>remove_circle</mat-icon>
+					</button>
+					<!-- REMOVE BUTTON END -->
+				</div>
+			</div>
+
+			<div style="padding-left: 10px;" fxFlex fxLayout="column" *ngIf="node.attributes.type === 'app.MicrosoftTeamsNotification'">
+				<div fxLayoutAlign="row">
+					<mat-form-field fxLayout="row">
+						<mat-select matInput [(ngModel)]="channelId" placeholder="{{'CHANNEL_DATA' | translate}}">
+							<mat-option *ngFor="let nav of channels;let i=index" [value]="nav.CHANNEL_ID" [title]="nav.CHANNEL_NAME ">
+								{{nav.CHANNEL_NAME}}
+							</mat-option>
+						</mat-select>
+						<mat-icon matSuffix matTooltip="{{'AUTHENTICATED_CHANNELS_SHOWN' | translate}}">information
+						</mat-icon>
+					</mat-form-field>
+
+
+				</div>
+				<!-- BUTTON -->
+				<div fxLayoutAlign="start center">
+					<label>{{'ADD_FIELD' | translate}}</label>
+					<button mat-icon-button (click)="addField()">
+						<mat-icon>add_circle</mat-icon>
+					</button>
+				</div>
+				<!-- BUTTON END -->
+
+				<!-- FOR LOOP FOR FIELDS -->
+				<div *ngFor="let item of updateFields; let i = index" fxFlex fxLayout="row" fxLayoutGap="10px">
+					<!-- FIELDS -->
+					<mat-form-field fxFlex>
+						<input matInput [(ngModel)]="item.FIELD" (ngModelChange)="resetValue($event,item,'microsoftTeamsNotification')"
+							placeholder="{{'FIELD_TO_DISPLAY' | translate}}" type="text" [matAutocomplete]="auto">
+						<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFieldName">
+							<mat-option *ngFor="let variable of teamNotificationFields" [value]="variable"
+								[disabled]="variable.DATA_TYPE.DISPLAY==='Discussion' || variable.RELATIONSHIP_TYPE==='Many to Many'">
+								{{variable.DISPLAY_LABEL}}
+							</mat-option>
+						</mat-autocomplete>
+					</mat-form-field>
+
+					<!-- REMOVE BUTTON -->
+					<button mat-icon-button type="button" (click)="removeField(i)">
+						<mat-icon>remove_circle</mat-icon>
+					</button>
+					<!-- REMOVE BUTTON END -->
+				</div>
+			</div>
+
+			<!-- NEEDED ONLY FOR Approval NODE-->
+			<div style="padding: 0 10px 0 10px" fxFlex fxLayout="column" *ngIf="node.attributes.type === 'app.Approval'">
+				<div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px" style="padding-bottom: 12px;">
+					<mat-checkbox [(ngModel)]="disableEntry">
+						{{'DISABLE_ENTRY' | translate}}
+					</mat-checkbox>
+					<mat-checkbox [(ngModel)]="notifyUsersForApproval">
+						{{'NOTIFY_USERS_FOR_APPROVAL' | translate}}
+					</mat-checkbox>
+					<mat-checkbox [(ngModel)]="notifyUsersAfterApproval">
+						{{'NOTIFY_USERS_AFTER_APPROVAL' | translate}}
+					</mat-checkbox>
+				</div>
+				<mat-form-field floatLabel="always" fxFlex>
+					<mat-label>{{"USERS_TO_APPROVE" | translate}}</mat-label>
+					<mat-chip-list #approvalChipList>
+						<mat-chip *ngFor="let entry of selectedUsers" [selectable]='true' [removable]=true (removed)="remove(entry)">
+							{{entry['EMAIL_ADDRESS']}}
+							<mat-icon matChipRemove>cancel</mat-icon>
+						</mat-chip>
+						<input #${field.NAME}Input [matAutocomplete]="approval_auto" [(ngModel)]="tempUserInput"
+							[matChipInputFor]="approvalChipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+							[matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="resetInput($event)" (ngModelChange)="searchUser()">
+					</mat-chip-list>
+					<mat-autocomplete (closed)="userAutocompleteClosed()" (appAutocompleteScroll)="onUsersScroll()"
+						#approval_auto="matAutocomplete" (optionSelected)="onSelect($event)">
+						<mat-option *ngFor="let entry of triggerDetailService.usersStore" [value]="entry"
+							[disabled]="disabledCheck(entry, users)">
+							{{entry['EMAIL_ADDRESS']}}
+						</mat-option>
+					</mat-autocomplete>
+					<mat-error>{{ "IS_REQUIRED" | translate }}.</mat-error>
+				</mat-form-field>
+				<mat-form-field floatLabel="always" fxFlex>
+					<mat-label>{{"TEAMS_TO_APPROVE" | translate}}</mat-label>
+					<mat-chip-list #teamChipList>
+						<mat-chip *ngFor="let team of selectedTeams" [selectable]="true" [removable]="true" (removed)="removeTeams(team)">
+							{{team.NAME}}
+							<mat-icon matChipRemove>cancel</mat-icon>
+						</mat-chip>
+						<input #teamInput [matAutocomplete]="autoTeam" [matChipInputFor]="teamChipList" [(ngModel)]="tempTeamInput"
+							[matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
+							(matChipInputTokenEnd)="resetInput($event)" (ngModelChange)="searchTeam()">
+					</mat-chip-list>
+					<mat-autocomplete #autoTeam="matAutocomplete" (appAutocompleteScroll)="onTeamsScroll()"
+						(optionSelected)="onTeamSelect($event)" (closed)="teamAutocompleteClosed()">
+						<mat-option *ngFor="let team of triggerDetailService.teamsStore" [value]="team"
+							[disabled]="disabledTeamCheck(team, teams)">
+							{{team.NAME}}
+						</mat-option>
+					</mat-autocomplete>
+					<mat-error>{{ "IS_REQUIRED" | translate }}.</mat-error>
+				</mat-form-field>
+				<div fxLayout="row" fxLayoutGap="20px" fxFlex="100">
+					<mat-form-field floatLabel="always" fxFlex>
+						<mat-label>{{"APPROVAL_CONDITION" | translate}}</mat-label>
+						<mat-select [(ngModel)]="approvalCondition" required>
+							<mat-option *ngFor="let type of approverConditionValue" [value]="type">
+								{{type}}
+							</mat-option>
+						</mat-select>
+						<mat-error>{{ "IS_REQUIRED" | translate }}.</mat-error>
+					</mat-form-field>
+					<div *ngIf="approvalCondition === 'Minimum No. of Approvals'">
+						<mat-form-field floatLabel="always" fxFlex>
+							<mat-label>{{"NUMBER_OF_APPROVALS_REQUIRED" | translate}}</mat-label>
+							<input type="number" min="0" [(ngModel)]="numberOfApprovalsRequired" matInput (keypress)="numberOnly($event)"
+								required>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+		</mat-tab>
+		<!-- CONDITIONS TAB -->
+		<mat-tab label="{{'CONDITIONS' | translate}}">
+			<form [formGroup]="conditionsForm" class="pad10">
+				<app-conditions [parentName]="'triggersComponent'" [conditions]="conditions" [passedInModule]="moduleId"
+					[fields]="moduleFields">
+				</app-conditions>
+			</form>
+		</mat-tab>
+	</mat-tab-group>
+	<!-- CONDITIONS TAB -->
+</div>
+<div fxLayoutAlign="end end" fxLayoutGap="10px">
+	<button mat-raised-button color="primary" (click)="saveData()">{{'SAVE' | translate}}</button>
+	<button mat-raised-button type="button" [mat-dialog-close]="'close'">{{'CANCEL' | translate}}</button>
+</div>
+
+<!-- IMPLEMENTED ONLY ONE LEVEL OF MAT MENU FOR BODY AS PER PRODUCTION-->
+<ng-template #dynamicMenu let-field="field" let-index="j" let-item="item">
+	<button *ngIf="field.RELATIONSHIP_TYPE ===null" type="button" style="margin-top:5px; margin-right:5px; border-radius: 20px"
+		mat-raised-button color="primary" (click)="insertBodyVariable(field)">{{field.DISPLAY_LABEL}}</button>
+	<button *ngIf="field.RELATIONSHIP_TYPE !== null && field.RELATIONSHIP_TYPE !== 'Many to Many'" type="button"
+		style="margin-top:5px; margin-right:5px; border-radius: 20px" mat-raised-button color="primary"
+		[matMenuTriggerFor]="relationshipVars">{{field.DISPLAY_LABEL}}</button>
+	<mat-menu #relationshipVars="matMenu">
+		<ng-container *ngFor="let relField of relatedFields[field.MODULE]; index as j">
+			<button *ngIf="!nestedRelatedFields[relField.MODULE]" (click)="concatenateVariables(field, relField)"
+				mat-menu-item>{{relField.DISPLAY_LABEL}}</button>
+			<button *ngIf="nestedRelatedFields[relField.MODULE]" [matMenuTriggerFor]="nestedRelationshipVars"
+				mat-menu-item>{{relField.DISPLAY_LABEL}}</button>
+			<mat-menu #nestedRelationshipVars="matMenu">
+				<ng-container *ngFor="let nestedFields of nestedRelatedFields[relField.MODULE]; index as j">
+					<button mat-menu-item
+						(click)="concatenateVariables(field, relField, nestedFields)">{{nestedFields.DISPLAY_LABEL}}</button>
+				</ng-container>
+			</mat-menu>
+		</ng-container>
+	</mat-menu>
+</ng-template>
+
+<ng-template #dynamicMenuForPDF let-field="field" let-index="j" let-item="item">
+	<button *ngIf="field.RELATIONSHIP_TYPE ===null" type="button" style="margin-top:5px; margin-right:5px; border-radius: 20px"
+		mat-raised-button color="primary" (click)="insertPDFVariable(field)">{{field.DISPLAY_LABEL}}</button>
+	<button *ngIf="field.RELATIONSHIP_TYPE !== null && field.RELATIONSHIP_TYPE !== 'Many to Many'" type="button"
+		style="margin-top:5px; margin-right:5px; border-radius: 20px" mat-raised-button color="primary"
+		[matMenuTriggerFor]="relationshipVars">{{field.DISPLAY_LABEL}}</button>
+	<mat-menu #relationshipVars="matMenu">
+		<ng-container *ngFor="let relField of relatedFields[field.MODULE]; index as j">
+			<button mat-menu-item (click)="concatenateVariables(field, relField)">{{relField.DISPLAY_LABEL}}</button>
+		</ng-container>
+	</mat-menu>
+</ng-template>

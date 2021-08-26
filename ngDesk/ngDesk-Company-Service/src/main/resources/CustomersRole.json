@@ -1,0 +1,171 @@
+{
+	"PERMISSIONS": [
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Normal",
+				"EDIT": "None",
+				"VIEW": "All",
+				"ACCESS": "Enabled"
+			},
+			"MODULE": "ACCOUNTS_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Not Set",
+				"EDIT": "None",
+				"VIEW": "All",
+				"ACCESS": "Enabled"
+			},
+			"MODULE": "USERS_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Not Set",
+				"EDIT": "None",
+				"VIEW": "All",
+				"ACCESS": "Enabled"
+			},
+			"MODULE": "CONTACTS_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Not Set",
+				"EDIT": "None",
+				"VIEW": "All",
+				"ACCESS": "Enabled"
+			},
+			"MODULE": "TEAMS_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Not Set",
+				"EDIT": "All",
+				"VIEW": "All",
+				"ACCESS": "Enabled"
+			},
+			"MODULE": "TICKETS_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Normal",
+				"EDIT": "None",
+				"VIEW": "None",
+				"ACCESS": "Disabled"
+			},
+			"MODULE": "Schedules",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Normal",
+				"EDIT": "None",
+				"VIEW": "None",
+				"ACCESS": "Disabled"
+			},
+			"MODULE": "Escalations",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Not Set",
+				"EDIT": "None",
+				"VIEW": "All",
+				"ACCESS": "Enabled"
+			},
+			"MODULE": "OPPORTUNITIES_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Not Set",
+				"EDIT": "None",
+				"VIEW": "All",
+				"ACCESS": "Enabled"
+			},
+			"MODULE": "QUOTES_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Not Set",
+				"EDIT": "None",
+				"VIEW": "All",
+				"ACCESS": "Enabled"
+			},
+			"MODULE": "REVENUE_LINE_ITEMS_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Not Set",
+				"EDIT": "None",
+				"VIEW": "All",
+				"ACCESS": "Enabled"
+			},
+			"MODULE": "INVOICES_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Not Set",
+				"EDIT": "None",
+				"VIEW": "All",
+				"ACCESS": "Enabled"
+			},
+			"MODULE": "PRODUCTS_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Not Set",
+				"EDIT": "All",
+				"VIEW": "All",
+				"ACCESS": "Enabled"
+			},
+			"MODULE": "CONTRACTS_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Not Set",
+				"EDIT": "All",
+				"VIEW": "All",
+				"ACCESS": "Enabled"
+			},
+			"MODULE": "CHANGE_REQUEST_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Not Set",
+				"EDIT": "All",
+				"VIEW": "All",
+				"ACCESS": "Enabled"
+			},
+			"MODULE": "CHAT_REPLACE",
+			"FIELD_PERMISSIONS": []
+		}
+	],
+	"DESCRIPTION": "This is for the default Customers",
+	"NAME": "Customers"
+}

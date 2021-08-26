@@ -1,0 +1,10 @@
+::ng-deep .mat-header-row {
+	height: 45px !important;
+}
+
+.underline-on-hover:hover {
+	text-decoration: underline;
+}
+#layouts-sidebar{
+	display: block !important;
+}

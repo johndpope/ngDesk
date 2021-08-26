@@ -1,0 +1,74 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<div fxLayout="column" fxLayoutGap="10px" class="pad10">
+  <ng-template #headerTemplateRef>
+    <app-title-bar title="{{'WORKFLOWS' | translate}}">
+    </app-title-bar>
+  </ng-template>
+
+  <div style="padding-top: 10px;" fxLayoutGap="20px" fxLayoutAlign="center">
+    <div fxLayout="column" fxFlex=50 [formGroup]="workflowForm" fxLayoutGap="20px">
+      <mat-form-field fxFlex=100>
+        <input type="text" matInput placeholder="{{'NAME' | translate}}" [(ngModel)]="workflow.NAME" formControlName="NAME" required>
+        <mat-hint>{{'NAME_HINT' | translate}}</mat-hint>
+        <mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params.name"></mat-error>
+      </mat-form-field>
+      <mat-form-field fxFlex=100>
+        <input type="text" matInput placeholder="{{'DESCRIPTION' | translate}}" [(ngModel)]="workflow.DESCRIPTION"
+          formControlName="DESCRIPTION">
+        <mat-hint>{{'DESCRIPTION_HINT' | translate}}</mat-hint>
+      </mat-form-field>
+      <mat-form-field fxFlex fxFlex=100>
+        <mat-select [(ngModel)]="workflow.TYPE" placeholder="{{'TYPE' | translate}}" formControlName="TYPE" required>
+          <mat-option *ngFor="let type of types" [value]="type">
+            {{type | translate}}
+          </mat-option>
+        </mat-select>
+        <mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params.type"></mat-error>
+        <mat-hint>{{'TYPE_HINT' | translate}}</mat-hint>
+      </mat-form-field>
+      <mat-form-field fxFlex=100>
+        <input type="number" matInput placeholder="{{'ORDER' | translate}}" [(ngModel)]="workflow.ORDER" formControlName="ORDER" required>
+        <mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params.order"></mat-error>
+        <mat-hint>{{'ORDER_HINT' | translate}}</mat-hint>
+      </mat-form-field>
+      <mat-checkbox [(ngModel)]="workflow.DISPLAY_ON_ENTRY" formControlName="DISPLAY_ON_ENTRY" color="primary">
+        {{'DISPLAY_ON_ENTRY' | translate}}
+      </mat-checkbox>
+    </div>
+  </div>
+  <div fxLayoutAlign="center">
+    <div fxFlex=50 fxLayout="column" fxLayoutGap=20px>
+      <mat-accordion multi>
+        <label class="mat-body">Add Stages <button mat-icon-button (click)="addStages()">
+            <mat-icon>add_circle</mat-icon>
+          </button></label>
+        <mat-expansion-panel *ngFor="let item of workflow.STAGES">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{item.NAME}}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <mat-form-field>
+            <input matInput type="text" [(ngModel)]="item.NAME" placeholder="{{'STAGE_NAME' | translate}}">
+          </mat-form-field>
+
+        </mat-expansion-panel>
+        <span class="mat-caption" style="color:#68737D;">{{'STAGE_HINT' | translate}}</span>
+
+      </mat-accordion>
+      <form [formGroup]="conditionsForm">
+
+        <app-conditions [parentName]="'triggersComponent'" [conditions]="conditions" [passedInModule]="moduleId" [fields]="moduleFields">
+        </app-conditions>
+        <span class="mat-caption" style="color:#68737D;">{{'CONDITION_HINT' | translate}}</span>
+
+      </form>
+    </div>
+  </div>
+  <div class="pad10" fxLayoutGap="20px">
+    <div fxFlex=75 fxLayoutAlign="end end">
+      <button (click)="save()" mat-raised-button color="primary">{{'SAVE_CONTINUE' | translate}} </button>
+    </div>
+  </div>
+</div>

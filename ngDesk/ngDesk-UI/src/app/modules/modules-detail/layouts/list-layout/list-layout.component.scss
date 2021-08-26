@@ -1,0 +1,19 @@
+/* Hide scrollbar for Chrome, Safari and Opera */
+form::-webkit-scrollbar {
+	width: 7px;
+	height: 7px;
+}
+
+form::-webkit-scrollbar-track {
+	background: #f1f1f1;
+}
+
+/* Handle */
+form::-webkit-scrollbar-thumb {
+	background: #888;
+}
+
+/* Handle on hover */
+form::-webkit-scrollbar-thumb:hover {
+	background: #555;
+}

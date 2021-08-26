@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Version=0.9.4
+Name=BitRock InstallBuilder Enterprise
+Comment=BitRock InstallBuilder Enterprise
+Icon=/opt/installbuilder-19.12.0/bin/logo.png
+Exec=/opt/installbuilder-19.12.0/bin/builder
+Terminal=false

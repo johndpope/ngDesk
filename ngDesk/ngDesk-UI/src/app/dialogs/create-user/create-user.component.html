@@ -1,0 +1,50 @@
+<div class="pad10" fxLayout="column" fxLayoutGap="10px" *ngIf="showLayout">
+	<div fxLayout="row">
+		<label class="mat-h1">{{'CREATE_USER' | translate}}</label>
+	</div>
+	<mat-form-field fxFlex appearance="outline" floatLabel="always">
+		<mat-label>{{'FIRST_NAME' | translate}}</mat-label>
+		<input matInput [(ngModel)]="user.FIRST_NAME" [required]="true">
+	</mat-form-field>
+	<mat-form-field fxFlex appearance="outline" floatLabel="always">
+		<mat-label>{{'LAST_NAME' | translate}}</mat-label>
+		<input matInput [(ngModel)]="user.LAST_NAME" [required]="true">
+	</mat-form-field>
+	<div fxLayout="row">
+		<mat-form-field class="no-line" fxLayout="row" fxFlex="7.8%">
+			<div class="pointer" matPrefix>
+				<img aria-hidden [src]="'../../../assets/images/country-flags/' + user.PHONE_NUMBER.COUNTRY_FLAG" height="25">
+				<mat-select class="phone" (selectionChange)="updatePhoneInfo($event.value)">
+					<mat-option *ngFor="let country of renderLayoutService.countries; index as i" [value]="country">
+						<img class="flag-img" aria-hidden [src]="'../../../assets/images/country-flags/' + country.COUNTRY_FLAG" height="25">
+						<span>{{country.COUNTRY_NAME}}</span> | <small>{{country.COUNTRY_DIAL_CODE}}</small>
+					</mat-option>
+				</mat-select>
+			</div>
+		</mat-form-field>
+		<mat-form-field class="field-no-bottom-padding" fxFlex="92.2%" [ngStyle]="{'margin-top': '5px'}" appearance="outline"
+			floatLabel="always">
+			<mat-label>{{'PHONE_NUMBER' | translate }}</mat-label>
+			<div fxLayout="row">
+				<span>{{user.PHONE_NUMBER.DIAL_CODE}}</span>
+				<input type="tel" matInput name="phone" aria-label="Phone" [(ngModel)]="user.PHONE_NUMBER.PHONE_NUMBER">
+			</div>
+		</mat-form-field>
+	</div>
+	<mat-form-field appearance="outline" floatLabel="always">
+		<mat-label>{{'EMAIL_ADDRESS' | translate}}</mat-label>
+		<input matInput [(ngModel)]="user.EMAIL_ADDRESS" [required]="true">
+	</mat-form-field>
+	<mat-form-field appearance="outline" floatLabel="always">
+		<mat-label>{{'ROLE' | translate}}</mat-label>
+		<mat-select [(value)]="user.ROLE">
+			<mat-option *ngFor="let role of roles" [value]="role.ROLE_ID">
+				{{role.NAME}}
+			</mat-option>
+		</mat-select>
+	</mat-form-field>
+	<div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="10px" mat-dialog-actions>
+		<button mat-raised-button color="warn" (click)="onNoClick()">{{'CANCEL'|translate}}</button>
+		<button mat-raised-button color="primary" (click)="createUser()">{{'SAVE'|translate}}</button>
+	</div>
+</div>

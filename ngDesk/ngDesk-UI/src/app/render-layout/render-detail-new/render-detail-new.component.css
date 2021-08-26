@@ -1,0 +1,251 @@
+::ng-deep .phone-select-search .mat-select-arrow {
+	display: none !important;
+}
+
+.disabled {
+	cursor: not-allowed;
+	pointer-events: none;
+	opacity: 0.6;
+}
+
+::ng-deep .gg-pentagon {
+	box-sizing: border-box;
+	position: relative;
+	display: block;
+	transform: scale(var(--ggs, 1));
+	width: 200px;
+	height: 50px
+}
+
+::ng-deep  .gg-pentagon:before {
+	height: 51%
+}
+
+::ng-deep  .gg-pentagon:after, ::ng-deep 
+.gg-pentagon:before {
+	content: ' ';
+	position: absolute;
+	left: 0;
+	width: 100%
+}
+
+::ng-deep  .gg-pentagon:before {
+	top: -2px;
+	border-top: 1px solid;
+	border-right: 1px solid;
+	/* border-left: 2px solid; */
+	transform: skewX(45deg)
+}
+
+::ng-deep  .gg-pentagon:after {
+	bottom: -2px;
+	height: 50%;
+	border-right: 1px solid;
+	border-bottom: 1px solid;
+	/* border-left: 2px solid; */
+	transform: skewX(-45deg)
+}
+
+
+::ng-deep  .gg-pentagon-start {
+	transform: rotate(90deg) scale(var(--ggs, 1));
+	margin-right: 10px;
+}
+
+::ng-deep  .gg-pentagon-start, ::ng-deep 
+.gg-pentagon-start::before {
+	box-sizing: border-box;
+	position: relative;
+	display: block;
+	width: 52px;
+	/* height: 0px */
+}
+
+::ng-deep  .gg-pentagon-start::before {
+	content: "";
+	/* position: absolute; */
+	height: 2px;
+	top: 7px;
+	/* border-top: 1px solid */
+}
+
+::ng-deep  .gg-pentagon-end {
+	box-sizing: border-box;
+	position: relative;
+	display: block;
+	transform: scale(var(--ggs, 1));
+	width: 250px;
+	height: 50px;
+	margin-left: -20px;
+}
+
+::ng-deep  .gg-pentagon-end:before {
+	height: 51%
+}
+
+::ng-deep  .gg-pentagon-end:after,
+::ng-deep  .gg-pentagon-end:before {
+	content: ' ';
+	position: absolute;
+	left: 0;
+	width: 100%
+}
+
+::ng-deep  .gg-pentagon-end:before {
+	top: -2px;
+	border-top: 1px solid;
+	border-right: 1px solid;
+	/* border-left: 2px solid; */
+	/* transform: skewX(45deg) */
+}
+
+::ng-deep  .gg-pentagon-end:after {
+	bottom: -2px;
+	height: 50%;
+	border-right: 1px solid;
+	border-bottom: 1px solid;
+	/* border-left: 2px solid; */
+	/* transform: skewX(-45deg) */
+}
+
+
+::ng-deep  .gg-pentagon-current {
+	box-sizing: border-box;
+	position: relative;
+	display: block;
+	transform: scale(var(--ggs, 1));
+	width: 200px;
+	height: 50px;
+}
+
+::ng-deep  .gg-pentagon-current:before {
+	height: 51%
+}
+
+::ng-deep  .gg-pentagon-current:after,
+::ng-deep  .gg-pentagon-current:before {
+	content: ' ';
+	position: absolute;
+	left: 0;
+	width: 100%;
+	background-color: #BDBDBD;
+}
+
+::ng-deep .gg-pentagon-current:before {
+	top: -2px;
+	border-top: 1px solid;
+	border-right: 1px solid;
+	border-bottom:1px solid #BDBDBD;
+	border-left: 1px solid; 
+	transform: skewX(45deg)
+}
+
+::ng-deep .gg-pentagon-current:after {
+	bottom: -2px;
+	height: 50%;
+	border-right: 1px solid;
+	border-bottom: 1px solid;
+	border-top: 1px solid #BDBDBD;
+	border-left: 1px solid;
+	transform: skewX(-45deg);
+}
+
+::ng-deep  .gg-pentagon-end-current {
+	box-sizing: border-box;
+	position: relative;
+	display: block;
+	transform: scale(var(--ggs, 1));
+	width: 250px;
+	height: 50px;
+	margin-left: -15px;
+}
+
+::ng-deep  .gg-pentagon-end-current:before {
+	height: 51%
+}
+
+::ng-deep  .gg-pentagon-end-current:after,
+::ng-deep  .gg-pentagon-end-current:before {
+	content: ' ';
+	position: absolute;
+	left: 0;
+	width: 100%;
+	background-color: #BDBDBD;
+}
+
+::ng-deep  .gg-pentagon-end-current:before {
+	top: -2px;
+	border-top: 1px solid;
+	border-right: 1px solid;
+	border-bottom:1px solid #BDBDBD;
+	border-left: 1px solid; 
+	/* transform: skewX(45deg) */
+}
+
+::ng-deep  .gg-pentagon-end-current:after {
+	bottom: -2px;
+	height: 50%;
+	border-right: 1px solid;
+	border-bottom:1px solid #BDBDBD;
+	border-left: 1px solid;
+	/* transform: skewX(-45deg) */
+}
+
+
+  ::ng-deep  .tooltip {
+	position: relative;
+	display: inline-block;
+
+  }
+  
+  ::ng-deep  .tooltip .tooltiptext {
+	visibility: hidden;
+	width: 120px;
+	background-color: #555;
+	color: #fff;
+	text-align: center;
+	border-radius: 6px;
+	padding: 5px 0;
+	padding-bottom: 10px;
+	position: absolute;
+	z-index: 1;
+	bottom: 125%;
+	left: 50%;
+	margin-left: -60px;
+	opacity: 0;
+	transition: opacity 0.3s;
+  }
+  
+  ::ng-deep  .tooltip .tooltiptext::after {
+	content: "";
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	margin-left: -10px;
+	border-width: 10px;
+	border-style: solid;
+	border-color: #555 transparent transparent transparent;
+  }
+  
+  ::ng-deep  .tooltip:hover .tooltiptext {
+	visibility: visible;
+	opacity: 1;
+  }
+  
+  ::ng-deep .mat-standard-chip {
+	height:auto !important;
+  }
+
+  ::ng-deep .mat-chip-list-wrapper {
+	word-break: break-all !important;
+  }
+
+
+
+
+
+
+
+
+
+  

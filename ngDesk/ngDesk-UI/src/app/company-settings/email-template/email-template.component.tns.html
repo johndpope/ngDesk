@@ -1,0 +1,34 @@
+<StackLayout>
+  <Label text="email-template works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<app-toolbar></app-toolbar>
+<div class="pad10">
+  <form [formGroup]="emailTemplateForm" fxLayout="column" fxLayoutGap="10px">
+    <app-title-bar title="{{'CUSTOMER_SIGNUP_EMAIL' | translate }}" buttonText="{{'SAVE'|translate}}"
+      (buttonRightOnClick)="saveSignupMessage()"></app-title-bar>
+    <mat-card fxLayout="column" fxLayoutGap="10px">
+      <div fxLayout="row">
+        <mat-form-field fxFlex="50">
+          <input matInput placeholder="{{'SUBJECT' | translate}}" value="" formControlName="SUBJECT">
+          <mat-error [innerHTML]="'FIELD_REQUIRED' | translate:errors.subject"></mat-error>
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="row">
+        <mat-form-field fxFlex="100">
+          <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="5" placeholder="{{'BODY' | translate}}"
+            formControlName="BODY"> </textarea>
+          <mat-error [innerHTML]="'FIELD_REQUIRED' | translate:errors.body"></mat-error>
+        </mat-form-field>
+      </div>
+    </mat-card>
+  </form>
+</div>
+
+-->

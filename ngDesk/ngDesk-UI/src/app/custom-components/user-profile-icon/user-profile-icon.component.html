@@ -1,0 +1,5 @@
+<div class="mat-body sender-avatar">
+  {{user.FIRST_NAME.charAt(0).toUpperCase()}}{{user.LAST_NAME.charAt(0).toUpperCase()}}
+  <div class="status-circle" [ngStyle]="setStatusStyles(user.STATUS)">
+  </div>
+</div>

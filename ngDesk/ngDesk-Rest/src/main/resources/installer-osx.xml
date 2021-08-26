@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+   <shortName>ngdeskcontroller</shortName>
+   <fullName>ngDesk Controller</fullName>
+   <version>1.0</version>
+   <installerFilename>FILE_NAME_REPLACE.${platform_exec_suffix}</installerFilename>
+   <debugLevel>4</debugLevel>
+   <componentList>
+      <component>
+         <name>default</name>
+         <description>Default Component</description>
+         <canBeEdited>1</canBeEdited>
+         <selected>1</selected>
+         <show>1</show>
+         <folderList>
+            <folder>
+               <description>Program Files</description>
+               <destination>${installdir}</destination>
+               <name>programfiles</name>
+               <platforms>all</platforms>
+               <shortcutList>
+                  <shortcut>
+                     <comment>Uninstall</comment>
+                     <exec>${installdir}/${uninstallerName}</exec>
+                     <icon />
+                     <name>Uninstall ${product_fullname}</name>
+                     <path>${installdir}</path>
+                     <platforms>all</platforms>
+                     <runAsAdmin>0</runAsAdmin>
+                     <runInTerminal>0</runInTerminal>
+                     <windowsExec>${installdir}/${uninstallerName}.exe</windowsExec>
+                     <windowsExecArgs />
+                     <windowsIcon />
+                     <windowsPath>${installdir}</windowsPath>
+                  </shortcut>
+               </shortcutList>
+            </folder>
+            <folder>
+               <description>Program Files</description>
+               <destination>${installdir}</destination>
+               <name>programfileslinux</name>
+               <platforms>linux</platforms>
+            </folder>
+            <folder>
+               <description>Program Files</description>
+               <destination>${installdir}</destination>
+               <name>programfileslinux64</name>
+               <platforms>linux-x64</platforms>
+            </folder>
+            <folder>
+               <description>Program Files</description>
+               <destination>${installdir}</destination>
+               <name>programfileswindows</name>
+               <platforms>windows</platforms>
+            </folder>
+            <folder>
+               <description>Program Files</description>
+               <destination>${installdir}</destination>
+               <name>programfileswindows64</name>
+               <platforms>windows-x64</platforms>
+            </folder>
+            <folder>
+               <description>Program Files</description>
+               <destination>${installdir}</destination>
+               <name>programfilesosx</name>
+               <platforms>osx</platforms>
+               <distributionFileList>
+                  <distributionFile>
+                     <origin>CONTROLLER_JAR_PATH_REPLACE</origin>
+                  </distributionFile>
+                  <distributionFile>
+                     <origin>UPDATER_JAR_PATH_REPLACE</origin>
+                  </distributionFile>
+                  <distributionFile>
+                     <origin>GENERATOR_JAR_PATH_REPLACE</origin>
+                  </distributionFile>
+                  <distributionDirectory>
+                     <origin>OSX_JAVA_PATH_REPLACE</origin>
+                  </distributionDirectory>
+                  <distributionFile>
+                     <origin>LOGO_PATH_REPLACE</origin>
+                  </distributionFile>
+               </distributionFileList>
+            </folder>
+         </folderList>
+         <startMenuShortcutList>
+            <startMenuShortcut>
+               <comment>Uninstall ${product_fullname}</comment>
+               <name>Uninstall ${product_fullname}</name>
+               <runAsAdmin>0</runAsAdmin>
+               <runInTerminal>0</runInTerminal>
+               <windowsExec>${installdir}/${uninstallerName}.exe</windowsExec>
+               <windowsExecArgs />
+               <windowsIcon />
+               <windowsPath>${installdir}/</windowsPath>
+            </startMenuShortcut>
+         </startMenuShortcutList>
+      </component>
+   </componentList>
+   <style>standard</style>
+   <logoImage>${installdir}/ngdesk-logo.png</logoImage>
+   <leftImage>${installdir}/ngdesk-logo.png</leftImage>
+   <postInstallationActionList>
+      <propertiesFileSet>
+         <file>${installdir}/application.properties</file>
+         <key>subdomain</key>
+         <value>SUBDOMAIN_REPLACE</value>
+      </propertiesFileSet>
+      <propertiesFileSet>
+         <file>${installdir}/application.properties</file>
+         <key>registration.api.key</key>
+         <value>REGISTRATION_API_KEY_REPLACE</value>
+      </propertiesFileSet>
+      <runProgram>
+         <program>${installdir}/jdk-11.0.6/bin/java</program>
+         <programArguments>-jar ngDesk-Uuid-Generator.jar</programArguments>
+         <workingDirectory>${installdir}</workingDirectory>
+      </runProgram>
+      <createOSXService>
+         <abandonProcessGroup>0</abandonProcessGroup>
+         <groupname />
+         <keepAlive>1</keepAlive>
+         <program>${installdir}/jdk-11.0.6.jdk/Contents/Home/bin/java</program>
+         <programArguments>-jar ${installdir}/ngDesk-Controller-Updater.jar</programArguments>
+         <scope>system</scope>
+         <serviceName>ngDeskControllerUpdater</serviceName>
+         <username />
+      </createOSXService>
+      <createOSXService>
+         <abandonProcessGroup>0</abandonProcessGroup>
+         <groupname />
+         <keepAlive>1</keepAlive>
+         <program>${installdir}/jdk-11.0.6.jdk/Contents/Home/bin/java</program>
+         <programArguments>-jar ${installdir}/ngDesk-Controller.jar</programArguments>
+         <scope>system</scope>
+         <serviceName>ngDeskController</serviceName>
+         <username />
+      </createOSXService>
+      <startOSXService>
+         <serviceName>ngDeskControllerUpdater</serviceName>
+      </startOSXService>
+      <startOSXService>
+         <serviceName>ngDeskController</serviceName>
+      </startOSXService>
+   </postInstallationActionList>
+   <preUninstallationActionList>
+      <stopOSXService>
+         <serviceName>ngDeskController</serviceName>
+      </stopOSXService>
+      <stopOSXService>
+         <serviceName>ngDeskControllerUpdater</serviceName>
+      </stopOSXService>
+   </preUninstallationActionList>
+   <postUninstallationActionList>
+      <deleteOSXService>
+         <scope>system</scope>
+         <serviceName>ngDeskControllerUpdater</serviceName>
+      </deleteOSXService>
+      <deleteOSXService>
+         <scope>system</scope>
+         <serviceName>ngDeskController</serviceName>
+      </deleteOSXService>
+      <deleteFile>
+         <path>${installdir}</path>
+      </deleteFile>
+   </postUninstallationActionList>
+   <enableRollback>1</enableRollback>
+   <enableTimestamp>1</enableTimestamp>
+   <installationLogFile>${installdir}/install.log</installationLogFile>
+   <outputDirectory>/opt/installers/</outputDirectory>
+   <requireInstallationByRootUser>1</requireInstallationByRootUser>
+   <parameterList>
+      <directoryParameter>
+         <name>installdir</name>
+         <description>Installer.Parameter.installdir.description</description>
+         <explanation>Installer.Parameter.installdir.explanation</explanation>
+         <value />
+         <default>${platform_install_prefix}/${product_shortname}-${product_version}</default>
+         <allowEmptyValue>0</allowEmptyValue>
+         <ask>yes</ask>
+         <cliOptionName>prefix</cliOptionName>
+         <mustBeWritable>yes</mustBeWritable>
+         <mustExist>0</mustExist>
+         <width>40</width>
+      </directoryParameter>
+   </parameterList>
+</project>

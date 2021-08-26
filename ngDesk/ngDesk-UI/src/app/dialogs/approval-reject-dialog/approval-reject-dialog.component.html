@@ -1,0 +1,7 @@
+<div style="width: 100%; height: 100%;" fxLayoutAlign="center center" fxLayout="column">
+	<mat-form-field style="width: 60%" class="example-full-width">
+		<mat-label>{{'REASON_FOR_REJECTION' | translate}}</mat-label>
+		<textarea required matInput [(ngModel)]="comment"></textarea>
+	  </mat-form-field>
+	  <button mat-raised-button color="primary" (click)="setComment()">{{'SUBMIT' | translate}}</button>
+</div>

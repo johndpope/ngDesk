@@ -1,0 +1,36 @@
+{
+  "extends": "../tslint.json",
+  "rules": {
+    "adjacent-overload-signatures": true,
+    "member-access": true,
+    "no-unused-variable": true,
+    "no-unused-expression": true,
+    "type-literal-delimiter": true,
+    "prefer-switch": [true, {
+      "min-cases": 4
+    }],
+    "quotemark": [true, "single", "backtick"],
+    "whitespace": [true, "check-branch", "check-decl", "check-module", "check-separator",
+      "check-operator", "check-preblock"
+    ],
+    "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"],
+    "directive-selector": [
+      true,
+      "attribute",
+      "app",
+      "camelCase"
+    ],
+    "component-selector": [
+      true,
+      "element",
+      "app",
+      "kebab-case"
+    ],
+    "ordered-imports": true,
+    "one-variable-per-declaration": [true, "ignore-for-loop"],
+    "no-unnecessary-initializer": true,
+    "no-trailing-whitespace": true,
+    "class-name": true,
+    "align": true
+  }
+}

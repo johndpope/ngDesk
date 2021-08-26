@@ -1,0 +1,56 @@
+<StackLayout>
+  <Label text="ValidationsDetailComponent works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef>
+	<app-title-bar title="{{'VALIDATIONS' | translate}}" buttonText="{{'SAVE' | translate}}" (buttonRightOnClick)="save()"></app-title-bar>
+</ng-template>
+<form [formGroup]="validationForm" (ngSubmit)="save()" class="pad10" fxLayout="column">
+	<div fxLayoutAlign="center">
+		<mat-error class="mat-body">{{errorMessage}}</mat-error>
+		<label class="green-color mat-body">{{successMessage}}</label>
+	</div>
+	<div fxLayout="row" fxLayoutGap="40px">
+		<mat-form-field>
+			<input matInput type="text" formControlName="NAME" name="NAME" placeholder="Name" required />
+			<mat-error>{{'FIELD_IS' | translate:params.name}} <strong>{{'REQUIRED' | translate}}</strong></mat-error>
+		</mat-form-field>
+		<mat-form-field>
+			<input matInput type="text" formControlName="DESCRIPTION" name="DESCRIPTION" placeholder="Description" />
+		</mat-form-field>
+	</div>
+	<div fxLayout="row" fxLayoutGap="40px">
+		<mat-form-field>
+			<mat-select placeholder="Trigger type" formControlName="TYPE" required>
+				<mat-option *ngFor="let type of triggerTypes" [value]="type.BACKEND">
+					{{type.DISPLAY}}
+				</mat-option>
+			</mat-select>
+			<mat-error>{{'FIELD_IS' | translate:params.triggerType}} <strong>{{'REQUIRED' | translate}}</strong></mat-error>
+		</mat-form-field>
+		<mat-form-field>
+			<mat-select placeholder="Roles" formControlName="ROLES" multiple required>
+				<mat-option *ngFor="let role of roles" [value]="role.ROLE_ID">{{role.NAME}}</mat-option>
+			</mat-select>
+			<mat-error>{{'FIELD_IS' | translate:params.roles}} <strong>{{'REQUIRED' | translate}}</strong></mat-error>
+		</mat-form-field>
+	</div>
+	<app-conditions *ngIf="validationLoaded" [parentName]="'validationComponent'" [conditions]="conditions" [fields]="fields">
+	</app-conditions>
+	<label class="mat-h1"> {{'EXPRESSION_OF_CONDITIONS' | translate}} </label>
+	<label class="mat-body" *ngIf="validationForm.get('CONDITIONS').value.length < 1 ">
+		{{'NO_CONDITIONS_ADDED' | translate}} </label>
+	<div *ngIf="conditionMessage !== '' && conditionMessage !=='<strong>If </strong>( '" [innerHTML]="conditionMessage" class="mat-body"
+		style="line-height: 25px"></div>
+	<span *ngIf="validationForm.get('CONDITIONS').value.length > 0" class="mat-h3" fxLayoutGap="5px">
+		<strong>{{'THEN' | translate}}</strong><label>{{'MODULE_FIELDS_ARE_VALID' | translate}}</label>
+	</span>
+</form>
+
+-->

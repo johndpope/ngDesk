@@ -1,0 +1,39 @@
+<div fxLayout="column" fxLayoutGap="15px" class="pad10">
+	<div fxLayout="row" fxLayoutAlign="center">
+		<div fxLayout="column" fxFlex="100" fxFlex.sm="80">
+
+			<div fxLayout="row" fxLayoutAlign="center" *ngIf="errorMessage !== ''">
+				<mat-error class="mat-body">{{errorMessage}}</mat-error>
+			</div>
+			<div fxLayout="row" fxFlex="100">
+				<div fxLayout="column" fxFlex="50" style="margin-top: 4%;">
+					<mat-label for="singleFile" class="mat-h3">Select Module to import</mat-label>
+				</div>
+				<div fxLayout="column" fxFlex="50">
+					<mat-form-field>
+						<mat-select placeholder="Select a module" [(ngModel)]="selectedModule">
+							<mat-option *ngFor="let module of modules" [value]="module">
+								{{module.NAME}}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+			</div>
+			<div fxLayout="row" fxFlex="100" style="margin-top: 4%;">
+				<div fxLayout="column" fxFlex="50">
+					<mat-label for="singleFile" class="mat-h3">Upload file</mat-label>
+				</div>
+				<div fxLayout="column" fxFlex="50">
+					<input id="singleFile" type="file" accept=".csv, .xls, .xlsx" value="fileUploadQueue" (change)="fileChangeListener($event)" />
+				</div>
+			</div>
+			<div fxLayout="row" fxLayout.sm="column" fxLayoutAlign="flex-end" fxLayoutGap="10px" style="margin-top: 4%;">
+				<!-- <button mat-raised-button color="primary" (click)="openLogs()">{{'EXISTING_IMPORTS' | translate}}</button> -->
+				<button mat-raised-button type="button" (click)="onNoClick()">{{'CLOSE' | translate}}</button>
+				<button mat-raised-button matTooltip="Supported formats: .csv .xls .xlsx" type="submit" color="primary"
+					(click)="uploadCSV()">{{'NEXT' | translate}}</button>
+			</div>
+
+		</div>
+	</div>
+</div>

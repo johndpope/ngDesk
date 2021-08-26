@@ -1,0 +1,3537 @@
+{
+  "NAME": "Employees",
+  "DESCRIPTION": "Default employee module",
+  "MODULE_ID": null,
+  "DATE_CREATED": null,
+  "DATE_UPDATED": null,
+  "LAST_UPDATED_BY": null,
+  "CREATED_BY": null,
+  "FIELDS": [
+    {
+      "FIELD_ID": "13f8973d-aa57-4bb7-bb35-905e639a725b",
+      "NAME": "FULL_NAME",
+      "DISPLAY_LABEL": "Full Name",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "LENGTH": 0,
+      "DECIMAL_PLACES": 0,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": null,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": [],
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": true,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "RELATIONSHIP_FIELD": null,
+      "FORMULA": null,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "REQUIRED": true,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": null,
+      "LAST_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null,
+      "MESSAGES": null,
+      "INTERNAL": false,
+      "NOT_EDITABLE": false,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false
+    },
+    {
+      "FIELD_ID": "682cbfaf-c878-425f-ad03-8e052d771f37",
+      "NAME": "EMPLOYEE_ID",
+      "DISPLAY_LABEL": "Employee ID",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "LENGTH": 0,
+      "DECIMAL_PLACES": 0,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": null,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": [],
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": true,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "RELATIONSHIP_FIELD": null,
+      "FORMULA": null,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "REQUIRED": true,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": null,
+      "LAST_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null,
+      "MESSAGES": null,
+      "INTERNAL": false,
+      "NOT_EDITABLE": false,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false
+    },
+    {
+      "FIELD_ID": "bc170011-cb7d-4f6a-9aa6-d597a64172dd",
+      "NAME": "BIRTH_DATE",
+      "DISPLAY_LABEL": "Birth Date",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "LENGTH": 0,
+      "DECIMAL_PLACES": 0,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": null,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": [],
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": true,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "RELATIONSHIP_FIELD": null,
+      "FORMULA": null,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "REQUIRED": true,
+      "DATA_TYPE": {
+        "DISPLAY": "Date",
+        "BACKEND": "Timestamp"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": null,
+      "LAST_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "NOT_EDITABLE": false,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false
+    },
+    {
+      "FIELD_ID": "68c618e2-fda7-4636-9e6c-6978d70f3c7f",
+      "NAME": "GENDER",
+      "DISPLAY_LABEL": "Gender",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "LENGTH": 0,
+      "DECIMAL_PLACES": 0,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": null,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": [
+        "Male",
+        "Female"
+      ],
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": false,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "RELATIONSHIP_FIELD": null,
+      "FORMULA": null,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "REQUIRED": true,
+      "DATA_TYPE": {
+        "DISPLAY": "Picklist",
+        "BACKEND": "String"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": null,
+      "LAST_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null,
+      "MESSAGES": null,
+      "INTERNAL": false,
+      "NOT_EDITABLE": false,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false
+    },
+    {
+      "FIELD_ID": "380524be-04d7-4975-bc4a-0a2431a0cbfc",
+      "NAME": "PERSONAL_EMAIL",
+      "DISPLAY_LABEL": "Personal Email",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "LENGTH": 0,
+      "DECIMAL_PLACES": 0,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": null,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": [],
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": true,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "RELATIONSHIP_FIELD": null,
+      "FORMULA": null,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "REQUIRED": true,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "LAST_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null,
+      "MESSAGES": null,
+      "INTERNAL": false,
+      "NOT_EDITABLE": false,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false
+    },
+    {
+      "FIELD_ID": "1b2559e5-bc01-47c6-9bed-45620ea0579f",
+      "NAME": "EMPLOYEE_STATUS",
+      "DISPLAY_LABEL": "Employee Status",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "LENGTH": 0,
+      "DECIMAL_PLACES": 0,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": null,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": [
+        "Active",
+        "Inactive"
+      ],
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": false,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "RELATIONSHIP_FIELD": null,
+      "FORMULA": null,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "REQUIRED": true,
+      "DATA_TYPE": {
+        "DISPLAY": "Picklist",
+        "BACKEND": "String"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": null,
+      "LAST_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null,
+      "MESSAGES": null,
+      "INTERNAL": false,
+      "NOT_EDITABLE": false,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false
+    },
+    {
+      "FIELD_ID": "19e80e49-8825-41b7-a980-d559ceba2d7c",
+      "NAME": "PERSONAL_PHONE_NUMBER",
+      "DISPLAY_LABEL": "Personal Phone Number",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "LENGTH": 0,
+      "DECIMAL_PLACES": 0,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": null,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": [],
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": true,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "RELATIONSHIP_FIELD": null,
+      "FORMULA": null,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "REQUIRED": true,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "LAST_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null,
+      "MESSAGES": null,
+      "INTERNAL": false,
+      "NOT_EDITABLE": false,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false
+    },
+    {
+      "FIELD_ID": "1fff69f2-5769-4538-86d5-eeade1077360",
+      "NAME": "STREET_ADDRESS_1",
+      "DISPLAY_LABEL": "Street Address 1",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "LENGTH": 0,
+      "DECIMAL_PLACES": 0,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": null,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": [],
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": true,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "RELATIONSHIP_FIELD": null,
+      "FORMULA": null,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "REQUIRED": true,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "LAST_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null,
+      "MESSAGES": null,
+      "INTERNAL": false,
+      "NOT_EDITABLE": false,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false
+    },
+    {
+      "FIELD_ID": "5cff5040-debd-4973-b28c-3682642669f0",
+      "NAME": "STREET_ADDRESS_2",
+      "DISPLAY_LABEL": "Street Address 2",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "LENGTH": 0,
+      "DECIMAL_PLACES": 0,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": null,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": [],
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": true,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "RELATIONSHIP_FIELD": null,
+      "FORMULA": null,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "LAST_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null,
+      "MESSAGES": null,
+      "INTERNAL": false,
+      "NOT_EDITABLE": false,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false
+    },
+    {
+      "FIELD_ID": "31cf2bc2-bb44-436e-8472-c1eed83f1ad2",
+      "NAME": "CITY",
+      "DISPLAY_LABEL": "City",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "LENGTH": 0,
+      "DECIMAL_PLACES": 0,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": null,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": [],
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": true,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "RELATIONSHIP_FIELD": null,
+      "FORMULA": null,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "REQUIRED": true,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "LAST_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null,
+      "MESSAGES": null,
+      "INTERNAL": false,
+      "NOT_EDITABLE": false,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false
+    },
+    {
+      "FIELD_ID": "cae98135-90a4-46ab-9c0e-89ea78e76353",
+      "NAME": "STATE",
+      "DISPLAY_LABEL": "State",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "LENGTH": 0,
+      "DECIMAL_PLACES": 0,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": null,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": [],
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": true,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "RELATIONSHIP_FIELD": null,
+      "FORMULA": null,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "REQUIRED": true,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "LAST_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null,
+      "MESSAGES": null,
+      "INTERNAL": false,
+      "NOT_EDITABLE": false,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false
+    },
+	    {
+      "FIELD_ID": "21327b67-5e36-4289-a15f-b5739d00f7c1",
+      "NAME": "COUNTRY",
+      "DISPLAY_LABEL": "Country",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "LENGTH": 0,
+      "DECIMAL_PLACES": 0,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": null,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": [],
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": true,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "RELATIONSHIP_FIELD": null,
+      "FORMULA": null,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "REQUIRED": true,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "LAST_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null,
+      "MESSAGES": null,
+      "INTERNAL": false,
+      "NOT_EDITABLE": false,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false
+    },
+    {
+      "FIELD_ID": "ed411f2a-1d71-49b5-811c-59f92db89ad4",
+      "NAME": "ZIP_POSTAL_CODE",
+      "DISPLAY_LABEL": "Zip/Postal Code",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "LENGTH": 0,
+      "DECIMAL_PLACES": 0,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": null,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": [],
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": true,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "RELATIONSHIP_FIELD": null,
+      "FORMULA": null,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "REQUIRED": true,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "LAST_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null,
+      "MESSAGES": null,
+      "INTERNAL": false,
+      "NOT_EDITABLE": false,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false
+    },
+    {
+      "FIELD_ID": "36b814b7-9a08-4b61-97f0-4e4a1c474212",
+      "NAME": "EMERGENCY_CONTACT_NAME",
+      "DISPLAY_LABEL": "Emergency Contact Name",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "LENGTH": 0,
+      "DECIMAL_PLACES": 0,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": null,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": [],
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": true,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "RELATIONSHIP_FIELD": null,
+      "FORMULA": null,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "REQUIRED": true,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "LAST_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null,
+      "MESSAGES": null,
+      "INTERNAL": false,
+      "NOT_EDITABLE": false,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false
+    },
+    {
+      "FIELD_ID": "ec686eb7-8802-49a7-b7cb-340e8293ae0e",
+      "NAME": "EMERGENCY_CONTACT_NUMBER",
+      "DISPLAY_LABEL": "Emergency Contact Number",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "LENGTH": 0,
+      "DECIMAL_PLACES": 0,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": null,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": [],
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": true,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "RELATIONSHIP_FIELD": null,
+      "FORMULA": null,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "REQUIRED": true,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "LAST_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null,
+      "MESSAGES": null,
+      "INTERNAL": false,
+      "NOT_EDITABLE": false,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false
+    },
+    {
+      "FIELD_ID": "e78eeaed-a0ca-4a12-86c6-7da96c75d5bc",
+      "NAME": "EMERGENCY_CONTACT_RELATIONSHIP",
+      "DISPLAY_LABEL": "Emergency Contact Relationship",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "LENGTH": 0,
+      "DECIMAL_PLACES": 0,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": null,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": [],
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": true,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "RELATIONSHIP_FIELD": null,
+      "FORMULA": null,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "REQUIRED": true,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "LAST_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null,
+      "MESSAGES": null,
+      "INTERNAL": false,
+      "NOT_EDITABLE": false,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false
+    },
+    {
+      "FIELD_ID": "82f5b683-ccdb-46d7-a02f-dbec004216d9",
+      "AUTO_NUMBER_GENERATION": null,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "CREATED_BY": null,
+      "DECIMAL_PLACES": 0,
+      "MAX_SIZE": 0,
+      "DATA_TYPE": {
+        "DISPLAY": "Checkbox",
+        "BACKEND": "Boolean"
+      },
+      "DATE_CREATED": null,
+      "DISPLAY_LABEL": "Resume Uploaded",
+      "DEFAULT_VALUE": null,
+      "FORMULA": null,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "GROUP_ID": null,
+      "HELP_TEXT": "",
+      "INTERNAL": null,
+      "LAST_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "MODULE": null,
+      "NAME": "RESUME_UPLOADED",
+      "MESSAGES": null,
+      "PICKLIST": null,
+      "PICKLIST_VALUES": [],
+      "PICKLIST_GLOBAL_LIST": null,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": true,
+      "ORDER": 0,
+      "RELATIONSHIP_FIELD": null,
+      "RELATIONSHIP_TYPE": null,
+      "NOT_EDITABLE": false,
+      "REQUIRED": false,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "LENGTH": 0,
+      "TYPE": 0,
+      "VISIBILITY": false,
+      "IS_LIST_TEXT_UNIQUE": false,
+      "WORKFLOW": null
+    },
+    	{
+      "DEFAULT_VALUE": null,
+      "DATE_CREATED": null,
+      "HELP_TEXT": "",
+      "LAST_UPDATED": null,
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": "",
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": "Enter Values",
+      "PICKLIST_RESTRICT": true,
+      "LAST_UPDATED_BY": null,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "8e5eba25-dfed-4bc0-8f36-f2c59b2b5d80",
+      "MAX_SIZE": 0,
+      "REQUIRED": true,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "WORK_LOCATION",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Work Location",
+      "EXAMPLE": null
+    },
+    {
+      "FIELD_ID": "3c20c406-82c3-4d8e-9d63-e05ec98eb7e7",
+      "AUTO_NUMBER_GENERATION": null,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "CREATED_BY": null,
+      "DECIMAL_PLACES": 0,
+      "MAX_SIZE": 0,
+      "DATA_TYPE": {
+        "DISPLAY": "Checkbox",
+        "BACKEND": "Boolean"
+      },
+      "DATE_CREATED": null,
+      "DISPLAY_LABEL": "Interview Notes Uploaded",
+      "DEFAULT_VALUE": null,
+      "FORMULA": null,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "GROUP_ID": null,
+      "HELP_TEXT": "",
+      "INTERNAL": null,
+      "LAST_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "MODULE": null,
+      "NAME": "INTERVIEW_NOTES_UPLOADED",
+      "MESSAGES": null,
+      "PICKLIST": null,
+      "PICKLIST_VALUES": [],
+      "PICKLIST_GLOBAL_LIST": null,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": true,
+      "ORDER": 0,
+      "RELATIONSHIP_FIELD": null,
+      "RELATIONSHIP_TYPE": null,
+      "NOT_EDITABLE": false,
+      "REQUIRED": false,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "LENGTH": 0,
+      "TYPE": 0,
+      "VISIBILITY": false,
+      "IS_LIST_TEXT_UNIQUE": false,
+      "WORKFLOW": null
+    },
+    {
+      "FIELD_ID": "a0dde3ab-1910-439c-a924-3d68d91d7c07",
+      "AUTO_NUMBER_GENERATION": null,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "CREATED_BY": null,
+      "DECIMAL_PLACES": 0,
+      "MAX_SIZE": 0,
+      "DATA_TYPE": {
+        "DISPLAY": "Checkbox",
+        "BACKEND": "Boolean"
+      },
+      "DATE_CREATED": null,
+      "DISPLAY_LABEL": "Test Result Uploaded",
+      "DEFAULT_VALUE": null,
+      "FORMULA": null,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "GROUP_ID": null,
+      "HELP_TEXT": "",
+      "INTERNAL": null,
+      "LAST_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "MODULE": null,
+      "NAME": "TEST_RESULT_UPLOADED",
+      "MESSAGES": null,
+      "PICKLIST": null,
+      "PICKLIST_VALUES": [],
+      "PICKLIST_GLOBAL_LIST": null,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": true,
+      "ORDER": 0,
+      "RELATIONSHIP_FIELD": null,
+      "RELATIONSHIP_TYPE": null,
+      "NOT_EDITABLE": false,
+      "REQUIRED": false,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "LENGTH": 0,
+      "TYPE": 0,
+      "VISIBILITY": false,
+      "IS_LIST_TEXT_UNIQUE": false,
+      "WORKFLOW": null
+    },
+	 {
+      "DEFAULT_VALUE": null,
+      "DATE_CREATED": null,
+      "HELP_TEXT": "",
+      "LAST_UPDATED": null,
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": "",
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "File Upload",
+        "BACKEND": "String"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": "Enter Values",
+      "PICKLIST_RESTRICT": true,
+      "LAST_UPDATED_BY": null,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "68b5071c-2ecd-48e4-9e64-1e187f563821",
+      "MAX_SIZE": 0,
+      "REQUIRED": false,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "DOCUMENT_UPLOAD",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Document Upload",
+      "EXAMPLE": null
+    },
+	{
+			"DISPLAY_LABEL": "Deleted",
+			"FIELD_ID": "838c3e6e-fb5a-4f04-9fd9-3d4583de29f0",
+			"INTERNAL": true,
+			"REQUIRED": false,
+			"NOT_EDITABLE": true,
+			"DATA_TYPE": {
+				"DISPLAY": "Checkbox",
+				"BACKEND": "Boolean"
+			},
+			"NAME": "DELETED"
+		},{
+			"FIELD_ID": "4e140ce1-456a-46cb-b37c-c06b985de754",
+			"NAME": "DATE_CREATED",
+			"DISPLAY_LABEL": "Date Created",
+			"HELP_TEXT": "",
+			"DEFAULT_VALUE": null,
+			"LENGTH": 0,
+			"DECIMAL_PLACES": 0,
+			"MAX_SIZE": 0,
+			"MASK_TYPE": null,
+			"MASK_CHARACTER": null,
+			"EXAMPLE": null,
+			"RELATIONSHIP_TYPE": null,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"GEOLOCATION_LATITUDE_LONGTITUDE": "",
+			"PICKLIST": "Enter Values",
+			"PICKLIST_GLOBAL_LIST": null,
+			"PICKLIST_VALUES": null,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_RESTRICT": true,
+			"PRIMARY_DISPLAY_FIELD": null,
+			"RELATIONSHIP_FIELD": null,
+			"FORMULA": null,
+			"MODULE": null,
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"DATA_TYPE": {
+				"DISPLAY": "Date/Time",
+				"BACKEND": "Date"
+			},
+			"ORDER": 0,
+			"TYPE": 0,
+			"DATE_CREATED": "2020-07-27T15:05:10.850Z",
+			"LAST_UPDATED": "2020-07-27T15:05:10.850Z",
+			"LAST_UPDATED_BY": null,
+			"CREATED_BY": null,
+			"MESSAGES": null,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"GROUP_ID": null,
+			"IS_LIST_TEXT_UNIQUE": false,
+			"WORKFLOW": null,
+			"DATA_FILTER": null,
+			"AGGREGATION_TYPE": null,
+			"AGGREGATION_FIELD": null,
+			"AGGREGATION_RELATED_FIELD": null,
+			"INHERITANCE_MAPPING": null,
+			"UNIQUE": false
+		},
+		{
+			"FIELD_ID": "21b26989-0e5f-4e59-bba4-5ad27edf4844",
+			"NAME": "EFFECTIVE_TO",
+			"DISPLAY_LABEL": "Effective to",
+			"HELP_TEXT": "",
+			"DEFAULT_VALUE": null,
+			"LENGTH": 0,
+			"DECIMAL_PLACES": 0,
+			"MAX_SIZE": 0,
+			"MASK_TYPE": null,
+			"MASK_CHARACTER": null,
+			"EXAMPLE": null,
+			"RELATIONSHIP_TYPE": null,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"GEOLOCATION_LATITUDE_LONGTITUDE": null,
+			"PICKLIST": null,
+			"PICKLIST_GLOBAL_LIST": null,
+			"PICKLIST_VALUES": [],
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_RESTRICT": true,
+			"PRIMARY_DISPLAY_FIELD": null,
+			"RELATIONSHIP_FIELD": null,
+			"FORMULA": null,
+			"MODULE": null,
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"DATA_TYPE": {
+				"DISPLAY": "Date/Time",
+				"BACKEND": "Date"
+			},
+			"ORDER": 0,
+			"TYPE": 0,
+			"DATE_CREATED": null,
+			"LAST_UPDATED": null,
+			"LAST_UPDATED_BY": null,
+			"CREATED_BY": null,
+			"MESSAGES": null,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"GROUP_ID": null,
+			"IS_LIST_TEXT_UNIQUE": false,
+			"WORKFLOW": null,
+			"DATA_FILTER": null,
+			"AGGREGATION_TYPE": null,
+			"AGGREGATION_FIELD": null,
+			"AGGREGATION_RELATED_FIELD": null,
+			"INHERITANCE_MAPPING": null,
+			"UNIQUE": false
+		},
+		{
+			"FIELD_ID": "a5d8a2ad-41a7-4f88-9442-3453d45c3785",
+			"NAME": "EFFECTIVE_FROM",
+			"DISPLAY_LABEL": "Effective from",
+			"HELP_TEXT": "",
+			"DEFAULT_VALUE": null,
+			"LENGTH": 0,
+			"DECIMAL_PLACES": 0,
+			"MAX_SIZE": 0,
+			"MASK_TYPE": null,
+			"MASK_CHARACTER": null,
+			"EXAMPLE": null,
+			"RELATIONSHIP_TYPE": null,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"GEOLOCATION_LATITUDE_LONGTITUDE": null,
+			"PICKLIST": null,
+			"PICKLIST_GLOBAL_LIST": null,
+			"PICKLIST_VALUES": [],
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_RESTRICT": true,
+			"PRIMARY_DISPLAY_FIELD": null,
+			"RELATIONSHIP_FIELD": null,
+			"FORMULA": null,
+			"MODULE": null,
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"DATA_TYPE": {
+				"DISPLAY": "Date/Time",
+				"BACKEND": "Date"
+			},
+			"ORDER": 0,
+			"TYPE": 0,
+			"DATE_CREATED": null,
+			"LAST_UPDATED": null,
+			"LAST_UPDATED_BY": null,
+			"CREATED_BY": null,
+			"MESSAGES": null,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"GROUP_ID": null,
+			"IS_LIST_TEXT_UNIQUE": false,
+			"WORKFLOW": null,
+			"DATA_FILTER": null,
+			"AGGREGATION_TYPE": null,
+			"AGGREGATION_FIELD": null,
+			"AGGREGATION_RELATED_FIELD": null,
+			"INHERITANCE_MAPPING": null,
+			"UNIQUE": false
+		},
+		{
+			"FIELD_ID": "5a70e27b-07da-49df-bc4b-5573b7766961",
+			"NAME": "DATE_UPDATED",
+			"DISPLAY_LABEL": "Date Updated",
+			"HELP_TEXT": "",
+			"DEFAULT_VALUE": null,
+			"LENGTH": 0,
+			"DECIMAL_PLACES": 0,
+			"MAX_SIZE": 0,
+			"MASK_TYPE": null,
+			"MASK_CHARACTER": null,
+			"EXAMPLE": null,
+			"RELATIONSHIP_TYPE": null,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"GEOLOCATION_LATITUDE_LONGTITUDE": "",
+			"PICKLIST": "Enter Values",
+			"PICKLIST_GLOBAL_LIST": null,
+			"PICKLIST_VALUES": null,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_RESTRICT": true,
+			"PRIMARY_DISPLAY_FIELD": null,
+			"RELATIONSHIP_FIELD": null,
+			"FORMULA": null,
+			"MODULE": null,
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"DATA_TYPE": {
+				"DISPLAY": "Date/Time",
+				"BACKEND": "Date"
+			},
+			"ORDER": 0,
+			"TYPE": 0,
+			"DATE_CREATED": null,
+			"LAST_UPDATED": null,
+			"LAST_UPDATED_BY": null,
+			"CREATED_BY": null,
+			"MESSAGES": null,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"GROUP_ID": null,
+			"IS_LIST_TEXT_UNIQUE": false,
+			"WORKFLOW": null,
+			"DATA_FILTER": null,
+			"AGGREGATION_TYPE": null,
+			"AGGREGATION_FIELD": null,
+			"AGGREGATION_RELATED_FIELD": null,
+			"INHERITANCE_MAPPING": null,
+			"UNIQUE": false
+		},
+		{
+			"FIELD_ID": "a5e2cfca-38d4-4e19-a59a-f95a9c29b2ee",
+			"NAME": "LAST_UPDATED_BY",
+			"DISPLAY_LABEL": "Last Updated by",
+			"HELP_TEXT": null,
+			"DEFAULT_VALUE": null,
+			"LENGTH": 0,
+			"DECIMAL_PLACES": 0,
+			"MAX_SIZE": 0,
+			"MASK_TYPE": null,
+			"MASK_CHARACTER": null,
+			"EXAMPLE": null,
+			"RELATIONSHIP_TYPE": "Many to One",
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"GEOLOCATION_LATITUDE_LONGTITUDE": null,
+			"PICKLIST": null,
+			"PICKLIST_GLOBAL_LIST": null,
+			"PICKLIST_VALUES": null,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_RESTRICT": false,
+			"PRIMARY_DISPLAY_FIELD": "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+			"RELATIONSHIP_FIELD": "",
+			"FORMULA": null,
+			"MODULE": "USERS_MODULE_REPLACE",
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"DATA_TYPE": {
+				"DISPLAY": "Relationship",
+				"BACKEND": "String"
+			},
+			"ORDER": 0,
+			"TYPE": 0,
+			"DATE_CREATED": null,
+			"LAST_UPDATED": null,
+			"LAST_UPDATED_BY": null,
+			"CREATED_BY": null,
+			"MESSAGES": null,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"GROUP_ID": null,
+			"IS_LIST_TEXT_UNIQUE": false,
+			"WORKFLOW": null,
+			"DATA_FILTER": null,
+			"AGGREGATION_TYPE": null,
+			"AGGREGATION_FIELD": null,
+			"AGGREGATION_RELATED_FIELD": null,
+			"INHERITANCE_MAPPING": null,
+			"UNIQUE": false
+		},
+		{
+			"FIELD_ID": "7f189045-97a7-477d-b270-d2d582c599a0",
+			"NAME": "CREATED_BY",
+			"DISPLAY_LABEL": "Created by",
+			"HELP_TEXT": null,
+			"DEFAULT_VALUE": null,
+			"LENGTH": 0,
+			"DECIMAL_PLACES": 0,
+			"MAX_SIZE": 0,
+			"MASK_TYPE": null,
+			"MASK_CHARACTER": null,
+			"EXAMPLE": null,
+			"RELATIONSHIP_TYPE": "Many to One",
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"GEOLOCATION_LATITUDE_LONGTITUDE": null,
+			"PICKLIST": null,
+			"PICKLIST_GLOBAL_LIST": null,
+			"PICKLIST_VALUES": null,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_RESTRICT": false,
+			"PRIMARY_DISPLAY_FIELD": "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+			"RELATIONSHIP_FIELD": "",
+			"FORMULA": null,
+			"MODULE": "USERS_MODULE_REPLACE",
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"DATA_TYPE": {
+				"DISPLAY": "Relationship",
+				"BACKEND": "String"
+			},
+			"ORDER": 0,
+			"TYPE": 0,
+			"DATE_CREATED": null,
+			"LAST_UPDATED": null,
+			"LAST_UPDATED_BY": null,
+			"CREATED_BY": null,
+			"MESSAGES": null,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"GROUP_ID": null,
+			"IS_LIST_TEXT_UNIQUE": false,
+			"WORKFLOW": null,
+			"DATA_FILTER": null,
+			"AGGREGATION_TYPE": null,
+			"AGGREGATION_FIELD": null,
+			"AGGREGATION_RELATED_FIELD": null,
+			"INHERITANCE_MAPPING": null,
+			"UNIQUE": false
+		},
+		{
+			"FIELD_ID": "6ee56682-89ee-4d88-bc44-4749cad84072",
+			"NAME": "TEAMS",
+			"DISPLAY_LABEL": "Teams",
+			"HELP_TEXT": null,
+			"DEFAULT_VALUE": "GLOBAL_TEAM_REPLACE",
+			"LENGTH": 0,
+			"DECIMAL_PLACES": 0,
+			"MAX_SIZE": 0,
+			"MASK_TYPE": null,
+			"MASK_CHARACTER": null,
+			"EXAMPLE": null,
+			"RELATIONSHIP_TYPE": "Many to Many",
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"GEOLOCATION_LATITUDE_LONGTITUDE": null,
+			"PICKLIST": null,
+			"PICKLIST_GLOBAL_LIST": null,
+			"PICKLIST_VALUES": null,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_RESTRICT": false,
+			"PRIMARY_DISPLAY_FIELD": "b1c48961-43e0-4071-b30c-0f7be5daa7a9",
+			"RELATIONSHIP_FIELD": "",
+			"FORMULA": null,
+			"MODULE": "TEAMS_MODULE_REPLACE",
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"DATA_TYPE": {
+				"DISPLAY": "Relationship",
+				"BACKEND": "Array"
+			},
+			"ORDER": 0,
+			"TYPE": 0,
+			"DATE_CREATED": null,
+			"LAST_UPDATED": null,
+			"LAST_UPDATED_BY": null,
+			"CREATED_BY": null,
+			"MESSAGES": null,
+			"INTERNAL": true,
+			"NOT_EDITABLE": false,
+			"GROUP_ID": null,
+			"IS_LIST_TEXT_UNIQUE": false,
+			"WORKFLOW": null,
+			"DATA_FILTER": null,
+			"AGGREGATION_TYPE": null,
+			"AGGREGATION_FIELD": null,
+			"AGGREGATION_RELATED_FIELD": null,
+			"INHERITANCE_MAPPING": null,
+			"UNIQUE": false
+		},
+			{
+			"DEFAULT_VALUE": "",
+			"DATE_CREATED": null,
+			"HELP_TEXT": "",
+			"LAST_UPDATED": null,
+			"LENGTH": 0,
+			"PICKLIST_GLOBAL_LIST": null,
+			"ORDER": 0,
+			"PICKLIST_VALUES": null,
+			"MESSAGES": null,
+			"INTERNAL": true,
+			"GEOLOCATION_LATITUDE_LONGTITUDE": null,
+			"DECIMAL_PLACES": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"DATA_TYPE": {
+				"DISPLAY": "Text",
+				"BACKEND": "String"
+			},
+			"TYPE": 0,
+			"MASK_CHARACTER": null,
+			"PICKLIST": null,
+			"PICKLIST_RESTRICT": false,
+			"LAST_UPDATED_BY": "",
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"FIELD_ID": "f3b57d4f-185e-4975-bcc7-4946086a9048",
+			"MAX_SIZE": 100,
+			"REQUIRED": false,
+			"MASK_TYPE": null,
+			"NOT_EDITABLE": true,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"FORMULA": null,
+			"NAME": "DATA_ID",
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"MODULE": null,
+			"VISIBILITY": true,
+			"DISPLAY_LABEL": "Data ID",
+			"EXAMPLE": null
+		},
+		{
+			"FIELD_ID": "d4ca63e4-55c0-462a-ba34-87f9ac80d344",
+			"NAME": "SOURCE_TYPE",
+			"DISPLAY_LABEL": "Source Type",
+			"HELP_TEXT": null,
+			"DEFAULT_VALUE": "web",
+			"LENGTH": 0,
+			"DECIMAL_PLACES": 0,
+			"MAX_SIZE": 0,
+			"MASK_TYPE": null,
+			"MASK_CHARACTER": null,
+			"EXAMPLE": null,
+			"RELATIONSHIP_TYPE": null,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"GEOLOCATION_LATITUDE_LONGTITUDE": null,
+			"PICKLIST": null,
+			"PICKLIST_GLOBAL_LIST": null,
+			"PICKLIST_VALUES": [
+				"chat",	
+				"email",	
+				"facebook",	
+				"forms",
+				"mobile",	
+				"sms",	
+				"twitter",	
+				"web",	
+				"whatsapp"
+			],
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_RESTRICT": false,
+			"PRIMARY_DISPLAY_FIELD": null,
+			"RELATIONSHIP_FIELD": null,
+			"FORMULA": null,
+			"MODULE": null,
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"DATA_TYPE": {
+				"DISPLAY": "Picklist",
+				"BACKEND": "String"
+			},
+			"ORDER": 0,
+			"TYPE": 0,
+			"DATE_CREATED": null,
+			"LAST_UPDATED": null,
+			"LAST_UPDATED_BY": null,
+			"CREATED_BY": null,
+			"MESSAGES": null,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"GROUP_ID": null,
+			"IS_LIST_TEXT_UNIQUE": false,
+			"WORKFLOW": null,
+			"DATA_FILTER": null,
+			"AGGREGATION_TYPE": null,
+			"AGGREGATION_FIELD": null,
+			"AGGREGATION_RELATED_FIELD": null,
+			"INHERITANCE_MAPPING": null,
+			"UNIQUE": false
+		},
+		{
+			"FIELD_ID": "edf7c28f-249b-4797-8342-40957ad161e4",
+			"NAME": "CHANNEL",
+			"DISPLAY_LABEL": "Channel",
+			"HELP_TEXT": null,
+			"DEFAULT_VALUE": null,
+			"LENGTH": 0,
+			"DECIMAL_PLACES": 0,
+			"MAX_SIZE": 0,
+			"MASK_TYPE": null,
+			"MASK_CHARACTER": null,
+			"EXAMPLE": null,
+			"RELATIONSHIP_TYPE": null,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"GEOLOCATION_LATITUDE_LONGTITUDE": null,
+			"PICKLIST": null,
+			"PICKLIST_GLOBAL_LIST": null,
+			"PICKLIST_VALUES": null,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_RESTRICT": false,
+			"PRIMARY_DISPLAY_FIELD": null,
+			"RELATIONSHIP_FIELD": null,
+			"FORMULA": null,
+			"MODULE": null,
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"DATA_TYPE": {
+				"DISPLAY": "Text",
+				"BACKEND": "String"
+			},
+			"ORDER": 0,
+			"TYPE": 0,
+			"DATE_CREATED": null,
+			"LAST_UPDATED": null,
+			"LAST_UPDATED_BY": null,
+			"CREATED_BY": null,
+			"MESSAGES": null,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"GROUP_ID": null,
+			"IS_LIST_TEXT_UNIQUE": false,
+			"WORKFLOW": null,
+			"DATA_FILTER": null,
+			"AGGREGATION_TYPE": null,
+			"AGGREGATION_FIELD": null,
+			"AGGREGATION_RELATED_FIELD": null,
+			"INHERITANCE_MAPPING": null,
+			"UNIQUE": false
+		},
+		{
+      "FIELD_ID": "ec928c4f-f1f6-424d-b120-7e7747360ff2",
+      "NAME": "TIME_WINDOW",
+      "DISPLAY_LABEL": "Time Window",
+      "HELP_TEXT": "",
+      "DATA_TYPE": {
+        "DISPLAY": "Time Window",
+        "BACKEND": "Timestamp"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_VALUES": [],
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+     {
+      "FIELD_ID": "4024c953-87aa-4d4e-97ae-2a467b83db3a",
+      "NAME": "PDFS",
+      "DISPLAY_LABEL": "PDFS",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": null,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": [],
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": true,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "RELATIONSHIP_FIELD": null,
+      "FORMULA": null,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "DATA_TYPE": {
+        "DISPLAY": "PDF",
+        "BACKEND": "BLOB"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": "DATE_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "MESSAGES": null,
+      "INTERNAL": false,
+      "NOT_EDITABLE": true,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false,
+      "WORKFLOW": null,
+      "DATA_FILTER": null,
+      "AGGREGATION_TYPE": null,
+      "AGGREGATION_FIELD": null,
+      "AGGREGATION_RELATED_FIELD": null,
+      "INHERITANCE_MAPPING": null,
+      "UNIQUE": false,
+      "DATE_UPDATED": "DATE_REPLACE"
+     }
+  ],
+  "LIST_LAYOUTS": [
+    {
+      "LAYOUT_ID": "35841929-982e-44df-9b12-71d8cfd9c857",
+      "NAME": "All Employees",
+      "DESCRIPTION": "Default employee layout for Admins",
+      "ID": "",
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "ORDER_BY": {
+        "COLUMN": "13f8973d-aa57-4bb7-bb35-905e639a725b",
+        "ORDER": "Asc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "13f8973d-aa57-4bb7-bb35-905e639a725b",
+          "19e80e49-8825-41b7-a980-d559ceba2d7c"
+        ]
+      },
+      "CONDITIONS": [],
+      "IS_DEFAULT": true,
+      "DATE_CREATED": null,
+      "DATE_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null
+    },
+	    {
+      "LAYOUT_ID": "699fda21-f9e9-4c2a-bf16-e7f50bde88bf",
+      "NAME": "All Employees",
+      "DESCRIPTION": "Default employee layout for Agents",
+      "ID": "",
+      "ROLE": "AGENT_ROLE_REPLACE",
+      "ORDER_BY": {
+        "COLUMN": "13f8973d-aa57-4bb7-bb35-905e639a725b",
+        "ORDER": "Asc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "13f8973d-aa57-4bb7-bb35-905e639a725b",
+          "19e80e49-8825-41b7-a980-d559ceba2d7c"
+        ]
+      },
+      "CONDITIONS": [],
+      "IS_DEFAULT": true,
+      "DATE_CREATED": null,
+      "DATE_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null
+    }
+  ],
+  "DETAIL_LAYOUTS": [],
+  "LIST_MOBILE_LAYOUTS": [],
+  "DETAIL_MOBILE_LAYOUTS": [],
+  "CREATE_MOBILE_LAYOUTS": [],
+  "EDIT_MOBILE_LAYOUTS": [],
+   "CREATE_LAYOUTS": [
+    {
+      "LAYOUT_ID": "e22071e8-2f32-4ddf-9ab6-c66f2b7b8684",
+      "NAME": "New Employee",
+      "DESCRIPTION": "Default Create Employee layout",
+      "PANELS": [
+        {
+          "SETTINGS": {
+            "COLLAPSABLE": false,
+            "ACTION": "",
+            "CONDITIONS": []
+          },
+          "ID": "PANEL_1",
+          "PANEL_NAME": "Employee Details",
+          "DISPLAY_TYPE": "Panel",
+          "GRIDS": [
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 50,
+                "FIELD_ID": "13f8973d-aa57-4bb7-bb35-905e639a725b",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 0,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "1b2559e5-bc01-47c6-9bed-45620ea0579f",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "bc170011-cb7d-4f6a-9aa6-d597a64172dd",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "68c618e2-fda7-4636-9e6c-6978d70f3c7f",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "682cbfaf-c878-425f-ad03-8e052d771f37",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "19e80e49-8825-41b7-a980-d559ceba2d7c",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "380524be-04d7-4975-bc4a-0a2431a0cbfc",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+              [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "8e5eba25-dfed-4bc0-8f36-f2c59b2b5d80",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "6ee56682-89ee-4d88-bc44-4749cad84072",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "1fff69f2-5769-4538-86d5-eeade1077360",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "5cff5040-debd-4973-b28c-3682642669f0",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "31cf2bc2-bb44-436e-8472-c1eed83f1ad2",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "cae98135-90a4-46ab-9c0e-89ea78e76353",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "ed411f2a-1d71-49b5-811c-59f92db89ad4",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "21327b67-5e36-4289-a15f-b5739d00f7c1",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "31cf2bc2-bb44-436e-8472-c1eed83f1ad2",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "cae98135-90a4-46ab-9c0e-89ea78e76353",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "ec686eb7-8802-49a7-b7cb-340e8293ae0e",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "36b814b7-9a08-4b61-97f0-4e4a1c474212",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "e78eeaed-a0ca-4a12-86c6-7da96c75d5bc",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "82f5b683-ccdb-46d7-a02f-dbec004216d9",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "36b814b7-9a08-4b61-97f0-4e4a1c474212",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "e78eeaed-a0ca-4a12-86c6-7da96c75d5bc",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "3c20c406-82c3-4d8e-9d63-e05ec98eb7e7",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "a0dde3ab-1910-439c-a924-3d68d91d7c07",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+			[
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "68b5071c-2ecd-48e4-9e64-1e187f563821",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ]
+          ]
+        }
+      ],
+      "TITLE_BAR": [],
+      "PREDEFINED_TEMPLATE": null,
+      "CUSTOM_LAYOUT": null,
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "DATE_CREATED": null,
+      "DATE_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null,
+      "LAYOUT_STYLE": "outline"
+    },
+	  {
+      "LAYOUT_ID": "17689373-37c8-43a1-8b43-95b21705f687",
+      "NAME": "New Employee",
+      "DESCRIPTION": "Default Create Employee layout",
+      "PANELS": [
+        {
+          "SETTINGS": {
+            "COLLAPSABLE": false,
+            "ACTION": "",
+            "CONDITIONS": []
+          },
+          "ID": "PANEL_1",
+          "PANEL_NAME": "Employee Details",
+          "DISPLAY_TYPE": "Panel",
+          "GRIDS": [
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 50,
+                "FIELD_ID": "13f8973d-aa57-4bb7-bb35-905e639a725b",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 0,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "1b2559e5-bc01-47c6-9bed-45620ea0579f",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "bc170011-cb7d-4f6a-9aa6-d597a64172dd",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "68c618e2-fda7-4636-9e6c-6978d70f3c7f",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "682cbfaf-c878-425f-ad03-8e052d771f37",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "19e80e49-8825-41b7-a980-d559ceba2d7c",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "380524be-04d7-4975-bc4a-0a2431a0cbfc",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+              [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "8e5eba25-dfed-4bc0-8f36-f2c59b2b5d80",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "6ee56682-89ee-4d88-bc44-4749cad84072",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "1fff69f2-5769-4538-86d5-eeade1077360",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "5cff5040-debd-4973-b28c-3682642669f0",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "cae98135-90a4-46ab-9c0e-89ea78e76353",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "31cf2bc2-bb44-436e-8472-c1eed83f1ad2",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "ed411f2a-1d71-49b5-811c-59f92db89ad4",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "21327b67-5e36-4289-a15f-b5739d00f7c1",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "31cf2bc2-bb44-436e-8472-c1eed83f1ad2",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "cae98135-90a4-46ab-9c0e-89ea78e76353",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "ec686eb7-8802-49a7-b7cb-340e8293ae0e",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "36b814b7-9a08-4b61-97f0-4e4a1c474212",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "e78eeaed-a0ca-4a12-86c6-7da96c75d5bc",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "82f5b683-ccdb-46d7-a02f-dbec004216d9",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "36b814b7-9a08-4b61-97f0-4e4a1c474212",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "e78eeaed-a0ca-4a12-86c6-7da96c75d5bc",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "3c20c406-82c3-4d8e-9d63-e05ec98eb7e7",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "a0dde3ab-1910-439c-a924-3d68d91d7c07",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+			[
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "68b5071c-2ecd-48e4-9e64-1e187f563821",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ]
+          ]
+        }
+      ],
+      "TITLE_BAR": [],
+      "PREDEFINED_TEMPLATE": null,
+      "CUSTOM_LAYOUT": null,
+      "ROLE": "AGENT_ROLE_REPLACE",
+      "DATE_CREATED": null,
+      "DATE_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null,
+      "LAYOUT_STYLE": "outline"
+    }
+  ],
+  "EDIT_LAYOUTS": [
+    {
+      "LAYOUT_ID": "1110462c-165d-452c-baba-ec0bf1e51863",
+      "NAME": "Employee",
+      "DESCRIPTION": "Default Edit Employee layout",
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "PANELS": [
+        {
+          "SETTINGS": {
+            "COLLAPSABLE": false,
+            "ACTION": "",
+            "CONDITIONS": []
+          },
+          "ID": "PANEL_1",
+          "PANEL_NAME": "Employee Details",
+          "DISPLAY_TYPE": "Panel",
+          "GRIDS": [
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 50,
+                "FIELD_ID": "13f8973d-aa57-4bb7-bb35-905e639a725b",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 0,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "1b2559e5-bc01-47c6-9bed-45620ea0579f",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "bc170011-cb7d-4f6a-9aa6-d597a64172dd",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "68c618e2-fda7-4636-9e6c-6978d70f3c7f",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "682cbfaf-c878-425f-ad03-8e052d771f37",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "19e80e49-8825-41b7-a980-d559ceba2d7c",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "380524be-04d7-4975-bc4a-0a2431a0cbfc",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+             [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "8e5eba25-dfed-4bc0-8f36-f2c59b2b5d80",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "6ee56682-89ee-4d88-bc44-4749cad84072",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "1fff69f2-5769-4538-86d5-eeade1077360",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "5cff5040-debd-4973-b28c-3682642669f0",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "31cf2bc2-bb44-436e-8472-c1eed83f1ad2",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "cae98135-90a4-46ab-9c0e-89ea78e76353",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "ed411f2a-1d71-49b5-811c-59f92db89ad4",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "21327b67-5e36-4289-a15f-b5739d00f7c1",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "ec686eb7-8802-49a7-b7cb-340e8293ae0e",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "36b814b7-9a08-4b61-97f0-4e4a1c474212",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "e78eeaed-a0ca-4a12-86c6-7da96c75d5bc",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "82f5b683-ccdb-46d7-a02f-dbec004216d9",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "3c20c406-82c3-4d8e-9d63-e05ec98eb7e7",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "3c20c406-82c3-4d8e-9d63-e05ec98eb7e7",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "a0dde3ab-1910-439c-a924-3d68d91d7c07",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+			[
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "68b5071c-2ecd-48e4-9e64-1e187f563821",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ]
+          ]
+        }
+      ],
+      "TITLE_BAR": [],
+      "LAYOUT_STYLE": "outline"
+    },
+	{
+      "LAYOUT_ID": "61437360-acd7-4f40-af22-e66817f2747d",
+      "NAME": "Employee",
+      "DESCRIPTION": "Default Edit Employee layout",
+      "ROLE": "AGENT_ROLE_REPLACE",
+      "PANELS": [
+        {
+          "SETTINGS": {
+            "COLLAPSABLE": false,
+            "ACTION": "",
+            "CONDITIONS": []
+          },
+          "ID": "PANEL_1",
+          "PANEL_NAME": "Employee Details",
+          "DISPLAY_TYPE": "Panel",
+          "GRIDS": [
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 50,
+                "FIELD_ID": "13f8973d-aa57-4bb7-bb35-905e639a725b",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 0,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "1b2559e5-bc01-47c6-9bed-45620ea0579f",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "bc170011-cb7d-4f6a-9aa6-d597a64172dd",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "68c618e2-fda7-4636-9e6c-6978d70f3c7f",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "682cbfaf-c878-425f-ad03-8e052d771f37",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "19e80e49-8825-41b7-a980-d559ceba2d7c",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "380524be-04d7-4975-bc4a-0a2431a0cbfc",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+             [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "8e5eba25-dfed-4bc0-8f36-f2c59b2b5d80",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "6ee56682-89ee-4d88-bc44-4749cad84072",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "1fff69f2-5769-4538-86d5-eeade1077360",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "5cff5040-debd-4973-b28c-3682642669f0",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "31cf2bc2-bb44-436e-8472-c1eed83f1ad2",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "cae98135-90a4-46ab-9c0e-89ea78e76353",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "ed411f2a-1d71-49b5-811c-59f92db89ad4",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "21327b67-5e36-4289-a15f-b5739d00f7c1",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "ec686eb7-8802-49a7-b7cb-340e8293ae0e",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "36b814b7-9a08-4b61-97f0-4e4a1c474212",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "e78eeaed-a0ca-4a12-86c6-7da96c75d5bc",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "82f5b683-ccdb-46d7-a02f-dbec004216d9",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "3c20c406-82c3-4d8e-9d63-e05ec98eb7e7",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "3c20c406-82c3-4d8e-9d63-e05ec98eb7e7",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "a0dde3ab-1910-439c-a924-3d68d91d7c07",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+			[
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "68b5071c-2ecd-48e4-9e64-1e187f563821",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ]
+          ]
+        }
+      ],
+      "TITLE_BAR": [],
+      "LAYOUT_STYLE": "outline"
+    }
+  ],
+  "FIELD_RULES": [],
+  "MONITORS": [],
+  "VALIDATIONS": [],
+  "WORKFLOWS": [],
+  "SINGULAR_NAME": "Employee",
+  "PLURAL_NAME": "Employees",
+  "SLAS": [],
+  "SETTINGS": null,
+  "CHAT_BOTS": [],
+  "FORMS": null
+}

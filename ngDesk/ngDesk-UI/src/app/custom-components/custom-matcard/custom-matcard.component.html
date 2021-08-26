@@ -1,0 +1,29 @@
+<div class="mat-elevation-z2" fxLayout="column"  style="border-radius: 5px;">
+	<div fxLayoutAlign="space-around center" style="padding: 10px;">
+		<div fxLayout="column"  fxLayoutGap="5px">
+			<div class="mat-caption" style="color: #68737D;">
+				{{ 'CHANNEL_NAME' | translate }}
+			</div>
+			<div class="mat-body" style="width: 100px;">{{tittle}}</div>
+		</div>
+		<div fxLayout="column" fxLayoutGap="5px">
+			<div class="mat-caption" style="color: #68737D;">
+				{{ 'DATE_CREATED' | translate }}
+			</div>
+			<div class="mat-body">{{date}}</div>
+		</div>	
+		<div fxLayout="column" fxLayoutGap="5px">
+			<div fxFlex="15px"></div>
+			<div *ngIf="authentication" fxLayout="row" fxLayoutAlign="center center"> 
+				<mat-icon  style="color: greenyellow;">fiber_manual_record</mat-icon>	
+				<div class="mat-body">{{ 'ACTIVE' | translate }}</div>		
+			</div>
+		</div>			
+		<div fxLayout="column">
+			<div fxFlex="15px"></div>
+			<button mat-button (click)="unsubscribeButtonEmit()" matTooltip="{{ 'UNSUBSCRIBE' | translate }}">
+				<mat-icon>link_off</mat-icon>	
+			</button>
+		</div>
+	</div>
+</div>

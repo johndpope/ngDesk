@@ -1,0 +1,109 @@
+<StackLayout>
+  <Label text="spf-record-dialog works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<form [formGroup]="spfRecordForm" fxLayout="column" style="max-height: 80vh;">
+	<div fxLayout="column" fxLayoutGap="10px">
+		<div fxLayout="row" mat-dialog-title fxLayoutAlign="space-between flex-start">
+			<h1 class="mat-h2" style="margin: 0px;">{{'NEW_SPF_RECORD' | translate}}</h1>
+			<a href="https://support.ngdesk.com/guide/articles/5cf768eb8856890001465a5c/Configuring%20your%20SPF%20settings%20" target="_blank"
+				style="color: inherit;" matTooltip="{{ 'HELP_CENTER' | translate }}">
+				<mat-icon class="grey-black-color">help_outline</mat-icon>
+			</a>
+		</div>
+		<h1 *ngIf="data.spfId !== 'new'" mat-dialog-title class="mat-h1" fxLayoutAlign="center">{{'EDIT_SPF_RECORD' | translate}}</h1>
+		<mat-error *ngIf="errorMessage !== ''" class="mat-body" fxLayoutAlign="center">{{errorMessage}}</mat-error>
+		<div class="mat-body-strong"> {{ 'CREATE_SPF_RECORD' | translate}} </div>
+
+		<div fxLayout="column" class="mat-body" fxLayoutGap="5px">
+			<div class="mat-body">{{'ADD_NEW_SPF_RECORD'| translate}}</div>
+			<label>{{'SINGLE_SPF_RECORD'| translate}}</label>
+			<div>
+				<div fxFlex="45%">
+					<div fxFlex style="background-color: rgb(216, 214, 214); border-radius: 5px; padding: 10px;white-space: pre-wrap; margin: 0;">
+						<div style="color: rgb(0, 0, 0); word-break: break-word;">
+							<span class="mat-caption">v=spf1 include:ngdesk.com ?all</span>
+						</div>
+					</div>
+				</div>
+				<div>
+
+				</div>
+			</div>
+		</div>
+
+		<div fxLayout="column" fxLayoutGap="10px" class="mat-body">
+			<div fxLayout="column" fxLayoutGap="5px">
+				<div>{{'ALREADY_HAVE_SPF_RECORD'| translate}} </div>
+				<div> {{'EXAMPLE_SPF_RECORD'| translate}}
+				</div>
+			</div>
+
+			<div fxLayout="column" fxLayoutGap="5px">
+				<label>{{'MULTIPLE_SPF_RECORD'| translate}}</label>
+				<div>
+					<div fxFlex="45%">
+						<div style="background-color: rgb(216, 214, 214); border-radius: 5px; padding: 10px;white-space: pre-wrap; margin: 0;">
+							<div style="color: rgb(0, 0, 0); word-break: break-word;">
+								<span class="mat-caption">v=spf1 include:_spf.google.com include:ngdesk.com ~all</span>
+							</div>
+						</div>
+					</div>
+					<div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div fxLayout="column" mat-dialog-content class="mat-body" fxLayoutGap="10px">
+
+			<div>
+				<!-- <mat-form-field fxFlex matDialogContent appearance="outline">
+				<mat-label>{{'MODULE' | translate}}</mat-label>
+				<mat-select formControlName="MODULE" (selectionChange)="moduleSelected($event)" required>
+					<mat-option *ngFor="let module of modules" [value]="module.MODULE_ID">
+						{{module.NAME | translate}}
+					</mat-option>
+				</mat-select>
+				<mat-error [innerHTML]="'FIELD_REQUIRED' | translate: errorParams.module"></mat-error>
+			</mat-form-field> ->
+			</div>
+
+			<div>
+				<mat-form-field fxFlex matDialogContent appearance="outline">
+					<mat-label>{{'DOMAIN' | translate}}</mat-label>
+					<input matInput formControlName="DOMAIN" required>
+					<mat-error [innerHTML]="'FIELD_REQUIRED' | translate: errorParams.domain"></mat-error>
+				</mat-form-field>
+			</div>
+		</div>
+		<div *ngIf="spfErrorMessageForEmptyString" class="mat-body">
+			<label> {{'SPF_ERRORMESSAGE_EMPTY_STRING' | translate}}</label>
+		</div>
+
+		<div *ngIf="spfErrorMessage" class="mat-body">
+			<label>{{'SPF_ERRORMESSAGE' | translate}} </label>
+			<div style="background-color: rgb(7, 7, 7); border-radius: 5px; padding: 10px; white-space: pre-wrap; margin: 0;">
+				<div style="color: rgb(255, 255, 255); word-break: break-word;">
+					<span>{{spferrorMessage}}</span>
+				</div>
+			</div>
+		</div>
+
+		<div mat-dialog-actions fxLayout="row" fxLayoutAlign="end" class="mat-body" fxLayoutGap="10px">
+			<button *ngIf="!showLoader" mat-raised-button color="default" [mat-dialog-close]="'close'">{{'CLOSE' | translate}}</button>
+			<div fxLayoutAlign="center center">
+				<button *ngIf="!showLoader" mat-raised-button color="primary" (click)="saveSpf()">{{'SAVE' | translate}}</button>
+				<mat-spinner *ngIf="showLoader" [diameter]="30"></mat-spinner>
+			</div>
+		</div>
+	</div>
+</form>
+
+-->

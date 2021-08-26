@@ -1,0 +1,24 @@
+{
+  "properties": [
+    {
+      "property": "email",
+      "value": "EMAIL_ADDRESS_REPLACE"
+    },
+    {
+      "property": "firstname",
+      "value": "FIRST_NAME_REPLACE"
+    },
+    {
+      "property": "lastname",
+      "value": "LAST_NAME_REPLACE"
+    },
+    {
+      "property": "phone",
+      "value": "PHONE_NUMBER_REPLACE"
+    },
+    {
+      "property": "subdomain",
+      "value": "SUBDOMAIN_REPLACE"
+    }
+  ]
+}

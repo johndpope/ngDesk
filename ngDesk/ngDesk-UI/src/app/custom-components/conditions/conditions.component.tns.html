@@ -1,0 +1,284 @@
+<StackLayout>
+  <Label text="conditions works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<div *ngIf="CONDITIONS">
+	<div fxLayout="column" fxLayoutGap="20px">
+		<app-title-bar title="{{'CONDITIONS' | translate}}" [customButtonShow]="false"></app-title-bar>
+	</div>
+	<!--All Condition  ->
+	<div fxLayout="row" fxLayoutAlign="flex-start center">
+		<label class="mat-body-2">{{'MEET_ALL_CONDITIONS' | translate}}</label>
+		<button mat-icon-button type="button" (click)="addCondition('All')">
+			<mat-icon>add_circle</mat-icon>
+		</button>
+	</div>
+
+	<div formArrayName="CONDITIONS" *ngFor="let condition of CONDITIONS['controls']; let conditionIndex = index;">
+		<div [formGroupName]="conditionIndex" fxLayout="row" fxLayout.md="row wrap" fxLayout.sm="row wrap" fxLayout.xs="row wrap"
+			fxLayoutAlign="flex-start center" fxLayoutGap="20px" *ngIf="condition.value.REQUIREMENT_TYPE === 'All'">
+			<mat-form-field>
+				<input type=" text" placeholder="{{'CONDITION' | translate}}" matInput [matAutocomplete]="auto" formControlName="CONDITION"
+					(ngModelChange)="filterInputValues($event, condition, 'conditions')">
+				<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayConditionFn" (closed)="resetOptions('conditions')"
+					(optionSelected)="conditionSelected($event.option.value, condition)">
+					<mat-optgroup *ngFor="let group of autocompleteConditionsFiltered" [label]="group.LABEL">
+						<mat-option *ngFor=" let option of group.FIELDS" [value]="option">
+							{{option.DISPLAY_LABEL}}
+						</mat-option>
+					</mat-optgroup>
+				</mat-autocomplete>
+				<mat-error>{{'FIELD_IS' | translate:params.condition}} <strong>{{'REQUIRED' | translate}}</strong></mat-error>
+			</mat-form-field>
+			<mat-form-field *ngIf="condition.value.CONDITION.NAME !=='STILL_ON_SITE' &&  condition.value.CONDITION.NAME!=='STILL_ON_PAGE'">
+				<input type="text" placeholder="{{'OPERATOR' | translate}}" aria-label="Number" matInput [matAutocomplete]="autoGroup"
+					formControlName="OPERATOR" (ngModelChange)="filterInputValues($event, condition, 'operators')">
+				<mat-autocomplete #autoGroup="matAutocomplete" [displayWith]="displayOperator" (closed)="resetOptions('operators')"
+					(optionSelected)="operatorSelected($event.option.value, condition)">
+					<mat-option *ngFor="let option of autocompleteOperatorsFiltered" [value]="option">
+						{{option.DISPLAY}}
+					</mat-option>
+				</mat-autocomplete>
+				<mat-error>{{'FIELD_IS' | translate:params.operator}} <strong>{{'REQUIRED' | translate}}</strong></mat-error>
+			</mat-form-field>
+			<mat-form-field *ngIf="condition.value.CONDITION.DATA_TYPE?.BACKEND ==='Integer'&& condition.value.CONDITION.NAME ==='DAY_OF_WEEK'">
+				<input type="text" placeholder="{{ 'PLEASE_SELECT_A_DAY' | translate}}" matInput [matAutocomplete]="autoAllConditionValue"
+					formControlName="CONDITION_VALUE">
+				<mat-autocomplete #autoAllConditionValue="matAutocomplete">
+					<mat-option *ngFor=" let day of days" [value]="day.viewValue">
+						{{day.viewValue}}
+					</mat-option>
+				</mat-autocomplete>
+			</mat-form-field>
+			<mat-form-field *ngIf=" condition.value.CONDITION.DATA_TYPE?.DISPLAY === 'Custom'  ">
+				<input type="text" placeholder="{{ 'VALUE' | translate}}" matInput [matAutocomplete]="autoAllConditionValue"
+					formControlName="CONDITION_VALUE" (ngModelChange)="filterInputValues($event, condition, 'values')">
+				<mat-autocomplete #autoAllConditionValue="matAutocomplete" (closed)="resetOptions('values')" [displayWith]="displayValueFn">
+					<mat-option *ngFor="let option of autocompleteValuesFiltered[condition.value.CONDITION.NAME]" [value]="option">
+						{{option[condition.value.CONDITION.RELATION_FIELD_NAME]}}
+					</mat-option>
+				</mat-autocomplete>
+			</mat-form-field>
+			<mat-form-field
+				*ngIf=" condition.value.CONDITION.NAME !=='CHANNEL' &&  condition.value.OPERATOR.BACKEND != 'LENGTH_IS_GREATER_THAN' && condition.value.OPERATOR.BACKEND != 'LENGTH_IS_LESS_THAN' && condition.value.CONDITION.DATA_TYPE?.DISPLAY !=='Custom'  && condition.value.OPERATOR != 'Is unique' && condition.value.OPERATOR.BACKEND != 'CHANGED' && condition.value.OPERATOR.BACKEND != 'EXISTS' && condition.value.OPERATOR.BACKEND != 'DOES_NOT_EXIST' && condition.value.CONDITION.DATA_TYPE?.DISPLAY != 'Relationship' && condition.value.CONDITION.DATA_TYPE?.BACKEND != 'Integer' && condition.value.CONDITION.DATA_TYPE?.BACKEND != 'Float' && condition.value.CONDITION.DATA_TYPE?.BACKEND != 'Formula' && condition.value.CONDITION.DATA_TYPE?.DISPLAY != 'Picklist' && condition.value.CONDITION.DATA_TYPE?.DISPLAY != 'Date/Time'&& condition.value.OPERATOR.BACKEND != 'CHANGED' && condition.value.OPERATOR.BACKEND != 'EXISTS' && condition.value.OPERATOR.BACKEND != 'DOES_NOT_EXIST' && condition.value.CONDITION.DATA_TYPE?.DISPLAY != 'Relationship' && condition.value.CONDITION.DATA_TYPE?.BACKEND != 'Integer' && condition.value.CONDITION.DATA_TYPE?.BACKEND != 'Float' && condition.value.CONDITION.DATA_TYPE?.BACKEND != 'Formula' && condition.value.CONDITION.DATA_TYPE?.DISPLAY != 'Picklist' && condition.value.CONDITION.DATA_TYPE?.DISPLAY != 'Date/Time'&& condition.value.OPERATOR.BACKEND != 'CHANGED' && condition.value.OPERATOR.BACKEND != 'EXISTS' && condition.value.OPERATOR.BACKEND != 'DOES_NOT_EXIST' && condition.value.CONDITION.DATA_TYPE?.DISPLAY != 'Relationship' && condition.value.CONDITION.DATA_TYPE?.BACKEND != 'Integer' && condition.value.CONDITION.DATA_TYPE?.BACKEND != 'Float' && condition.value.CONDITION.DATA_TYPE?.BACKEND != 'Formula' && condition.value.CONDITION.DATA_TYPE?.DISPLAY != 'Picklist' && condition.value.CONDITION.DATA_TYPE?.DISPLAY != 'Date/Time' && condition.value.CONDITION.DATA_TYPE?.DISPLAY != 'Time' && condition.value.CONDITION.DATA_TYPE?.DISPLAY != 'Date' && condition.value.CONDITION.NAME !== 'ROLE'">
+				<input type="text" placeholder="{{'ENTER_VALUE' | translate}}" aria-label="Number" matInput formControlName="CONDITION_VALUE">
+			</mat-form-field>
+			<mat-form-field *ngIf="condition.value.CONDITION.NAME ==='CHANNEL' ">
+				<input type="text" placeholder="{{'PLEASE_SELECT_A_CHANNEL' | translate}}" aria-label="Number" matInput
+					formControlName="CONDITION_VALUE" matInput [matAutocomplete]="autoAllConditionValue">
+				<mat-autocomplete #autoAllConditionValue="matAutocomplete">
+					<mat-option *ngFor=" let select of channels" [value]="select.viewValue">
+						{{select.viewValue}}
+					</mat-option>
+				</mat-autocomplete>
+			</mat-form-field>
+			<mat-form-field
+				*ngIf="condition.value.CONDITION.DATA_TYPE?.BACKEND == 'Formula' && condition.value.OPERATOR.BACKEND != 'EXISTS' && condition.value.OPERATOR.BACKEND != 'DOES_NOT_EXIST'">
+				<input type="text" placeholder="{{'VALUE' | translate}}" matInput formControlName="CONDITION_VALUE"
+					(ngModelChange)="filterInputValues($event, condition, 'values')">
+			</mat-form-field>
+			<mat-form-field
+				*ngIf="((condition.value.CONDITION.DATA_TYPE?.DISPLAY == 'Discussion'|| condition.value.CONDITION.DATA_TYPE?.DISPLAY == 'Text') && (condition.value.OPERATOR.BACKEND == 'LENGTH_IS_GREATER_THAN' ||  condition.value.OPERATOR.BACKEND == 'LENGTH_IS_LESS_THAN') ) || ((condition.value.CONDITION.DATA_TYPE?.BACKEND == 'Integer' || condition.value.CONDITION.DATA_TYPE?.BACKEND == 'Float') &&condition.value.CONDITION.NAME !=='DAY_OF_WEEK') && condition.value.OPERATOR.BACKEND != 'EXISTS' && condition.value.OPERATOR.BACKEND != 'DOES_NOT_EXIST' && condition.value.OPERATOR.BACKEND != 'CHANGED' && condition.value.CONDITION.DATA_TYPE?.DISPLAY !== 'Chronometer'">
+				<input type="number" (keypress)="numberOnly($event)" placeholder="{{'VALUE' | translate}}" matInput
+					formControlName="CONDITION_VALUE" (ngModelChange)="filterInputValues($event, condition, 'values')">
+			</mat-form-field>
+			<mat-form-field *ngIf="condition.value.CONDITION.DATA_TYPE?.DISPLAY == 'Chronometer'">
+				<input type="text" placeholder="0mo 0w 0d 0h 0m" matInput formControlName="CONDITION_VALUE"
+					(ngModelChange)="filterInputValues($event, condition, 'values')">
+			</mat-form-field>
+			<mat-form-field
+				*ngIf="condition.value.CONDITION.DATA_TYPE?.DISPLAY == 'Relationship' && condition.value.OPERATOR.BACKEND != 'CHANGED' && condition.value.OPERATOR.BACKEND != 'EXISTS' && condition.value.OPERATOR.BACKEND != 'DOES_NOT_EXIST'">
+				<input type="text" placeholder="{{ 'VALUE' | translate}}" matInput [matAutocomplete]="autoAllConditionValue"
+					formControlName="CONDITION_VALUE" (ngModelChange)="filterInputValues($event, condition, 'values')">
+				<mat-autocomplete #autoAllConditionValue="matAutocomplete" (closed)="resetOptions('values')" [displayWith]="displayValueFn">
+					<mat-option *ngFor="let option of autocompleteValuesFiltered[condition.value.CONDITION.NAME]" [value]="option">
+						{{option[condition.value.CONDITION.RELATION_FIELD_NAME]}}
+					</mat-option>
+				</mat-autocomplete>
+			</mat-form-field>
+			<mat-form-field
+				*ngIf="condition.value.CONDITION.DATA_TYPE?.DISPLAY == 'Picklist' && condition.value.OPERATOR.BACKEND != 'CHANGED' && condition.value.OPERATOR.BACKEND != 'EXISTS' && condition.value.OPERATOR.BACKEND != 'DOES_NOT_EXIST'">
+				<input type="text" placeholder="{{ 'VALUE' | translate}}" matInput [matAutocomplete]="autoAllConditionValue"
+					formControlName="CONDITION_VALUE" (ngModelChange)="filterInputValues($event, condition, 'picklistValues')">
+				<mat-autocomplete #autoAllConditionValue="matAutocomplete" (closed)="resetOptions('picklistValues')">
+					<mat-option *ngFor="let option of autocompleteValuesFiltered[condition.value.CONDITION.NAME]" [value]="option">
+						{{option}}
+					</mat-option>
+				</mat-autocomplete>
+			</mat-form-field>
+			<mat-form-field
+				*ngIf="condition.value.CONDITION.NAME == 'ROLE' && condition.value.OPERATOR.BACKEND != 'CHANGED' && condition.value.OPERATOR.BACKEND != 'EXISTS' && condition.value.OPERATOR.BACKEND != 'DOES_NOT_EXIST'">
+				<input type="text" placeholder="{{ 'VALUE' | translate}}" matInput [matAutocomplete]="autoAllConditionValue"
+					formControlName="CONDITION_VALUE" (ngModelChange)="filterInputValues($event, condition, 'roles')">
+				<mat-autocomplete #autoAllConditionValue="matAutocomplete" (closed)="resetOptions('roles')" [displayWith]="displayRoleValueFn">
+					<mat-option *ngFor="let option of autocompleteValuesFiltered['ROLE']" [value]="option">
+						{{option['NAME']}}
+					</mat-option>
+				</mat-autocomplete>
+			</mat-form-field>
+			<mat-form-field
+				*ngIf="condition.value.CONDITION.DATA_TYPE?.DISPLAY == 'Date/Time' && condition.value.OPERATOR.BACKEND != 'CHANGED' && condition.value.OPERATOR.BACKEND != 'EXISTS' && condition.value.OPERATOR.BACKEND != 'DOES_NOT_EXIST'">
+				<input placeholder="{{ 'PLEASE_SELECT_A_DATE' | translate}}" matInput [owlDateTimeTrigger]="dt" [owlDateTime]="dt"
+					formControlName="CONDITION_VALUE">
+				<owl-date-time #dt></owl-date-time>
+			</mat-form-field>
+			<mat-form-field
+				*ngIf="condition.value.CONDITION.DATA_TYPE?.DISPLAY == 'Date' && condition.value.OPERATOR.BACKEND != 'CHANGED' && condition.value.OPERATOR.BACKEND != 'EXISTS' && condition.value.OPERATOR.BACKEND != 'DOES_NOT_EXIST'">
+				<input placeholder="{{ 'PLEASE_SELECT_A_DATE' | translate}}" matInput [owlDateTimeTrigger]="dt" [owlDateTime]="dt"
+					formControlName="CONDITION_VALUE">
+				<owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
+			</mat-form-field>
+			<mat-form-field
+				*ngIf="condition.value.CONDITION.DATA_TYPE?.DISPLAY == 'Time' && condition.value.OPERATOR.BACKEND != 'CHANGED' && condition.value.OPERATOR.BACKEND != 'EXISTS' && condition.value.OPERATOR.BACKEND != 'DOES_NOT_EXIST'">
+				<input placeholder="{{ 'PLEASE_SELECT_A_TIME' | translate}}" matInput [owlDateTimeTrigger]="dt" [owlDateTime]="dt"
+					formControlName="CONDITION_VALUE">
+				<owl-date-time [pickerType]="'timer'" #dt></owl-date-time>
+			</mat-form-field>
+			<button mat-icon-button type="button" (click)="removeCondition(conditionIndex)">
+				<mat-icon>remove_circle</mat-icon>
+			</button>
+		</div>
+	</div>
+
+	<!--Any Condition  ->
+	<div fxLayout="row" fxLayoutAlign="flex-start center">
+		<label class="mat-body-2">{{'MEET_ANY_CONDITIONS' | translate}}</label>
+		<button mat-icon-button type="button" (click)="addCondition('Any')">
+			<mat-icon>add_circle</mat-icon>
+		</button>
+	</div>
+	<div formArrayName="CONDITIONS" *ngFor="let condition of CONDITIONS['controls']; let conditionIndex = index;">
+		<div [formGroupName]="conditionIndex" fxLayout="row" fxLayout.md="row wrap" fxLayout.sm="row wrap" fxLayout.xs="row wrap"
+			fxLayoutAlign="flex-start center" fxLayoutGap="20px" *ngIf="condition.value.REQUIREMENT_TYPE === 'Any'">
+			<mat-form-field>
+				<input type=" text" placeholder="{{'CONDITION' | translate}}" matInput [matAutocomplete]="auto" formControlName="CONDITION"
+					(ngModelChange)="filterInputValues($event, condition, 'conditions')">
+				<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayConditionFn" (closed)="resetOptions('conditions')"
+					(optionSelected)="conditionSelected($event.option.value, condition)">
+					<mat-optgroup *ngFor="let group of autocompleteConditionsFiltered" [label]="group.LABEL">
+						<mat-option *ngFor=" let option of group.FIELDS" [value]="option">
+							{{option.DISPLAY_LABEL}}
+						</mat-option>
+					</mat-optgroup>
+				</mat-autocomplete>
+				<mat-error>{{'FIELD_IS' | translate:params.condition}} <strong>{{'REQUIRED' | translate}}</strong></mat-error>
+			</mat-form-field>
+			<mat-form-field *ngIf="condition.value.CONDITION.NAME !=='STILL_ON_SITE' &&  condition.value.CONDITION.NAME!=='STILL_ON_PAGE'">
+				<input type="text" placeholder="{{'OPERATOR' | translate}}" aria-label="Number" matInput [matAutocomplete]="autoGroup"
+					formControlName="OPERATOR" (ngModelChange)="filterInputValues($event, condition, 'operators')">
+				<mat-autocomplete #autoGroup="matAutocomplete" [displayWith]="displayOperator" (closed)="resetOptions('operators')"
+					(optionSelected)="operatorSelected($event.option.value, condition)">
+					<mat-option *ngFor="let option of autocompleteOperatorsFiltered" [value]="option">
+						{{option.DISPLAY}}
+					</mat-option>
+				</mat-autocomplete>
+				<mat-error>{{'FIELD_IS' | translate:params.operator}} <strong>{{'REQUIRED' | translate}}</strong></mat-error>
+			</mat-form-field>
+			<mat-form-field
+				*ngIf="condition.value.CONDITION.DATA_TYPE?.DISPLAY === 'Custom' &&  condition.value.CONDITION.DATA_TYPE?.BACKEND !== 'Prompt_field'">
+				<input type="text" placeholder="{{ 'VALUE' | translate}}" matInput [matAutocomplete]="autoAllConditionValue"
+					formControlName="CONDITION_VALUE" (ngModelChange)="filterInputValues($event, condition, 'values')">
+				<mat-autocomplete #autoAllConditionValue="matAutocomplete" (closed)="resetOptions('values')" [displayWith]="displayValueFn">
+					<mat-option *ngFor="let option of autocompleteValuesFiltered[condition.value.CONDITION.NAME]" [value]="option">
+						{{option[condition.value.CONDITION.RELATION_FIELD_NAME]}}
+					</mat-option>
+				</mat-autocomplete>
+			</mat-form-field>
+			<mat-form-field *ngIf="condition.value.CONDITION.DATA_TYPE?.BACKEND ==='Integer' && condition.value.CONDITION.NAME ==='DAY_OF_WEEK'">
+				<input type="text" placeholder="{{ 'PLEASE_SELECT_A_DAY' | translate}}" matInput [matAutocomplete]="autoAllConditionValue"
+					formControlName="CONDITION_VALUE">
+				<mat-autocomplete #autoAllConditionValue="matAutocomplete">
+					<mat-option *ngFor=" let day of days" [value]="day.viewValue">
+						{{day.viewValue}}
+					</mat-option>
+				</mat-autocomplete>
+			</mat-form-field>
+			<mat-form-field *ngIf="condition.value.CONDITION.DATA_TYPE?.DISPLAY == 'Chronometer'">
+				<input type="text" placeholder="0mo 0w 0d 0h 0m" matInput formControlName="CONDITION_VALUE"
+					(ngModelChange)="filterInputValues($event, condition, 'values')">
+			</mat-form-field>
+			<mat-form-field
+				*ngIf="condition.value.CONDITION.NAME !=='CHANNEL' && condition.value.OPERATOR.BACKEND != 'LENGTH_IS_GREATER_THAN' && condition.value.OPERATOR.BACKEND != 'LENGTH_IS_LESS_THAN' && condition.value.CONDITION.DATA_TYPE?.DISPLAY !=='Custom'&&  condition.value.CONDITION.DATA_TYPE?.BACKEND !== 'Prompt_field' && condition.value.OPERATOR != 'Is unique' && condition.value.OPERATOR.BACKEND != 'CHANGED' && condition.value.OPERATOR.BACKEND != 'EXISTS' && condition.value.OPERATOR.BACKEND != 'DOES_NOT_EXIST' && condition.value.CONDITION.DATA_TYPE?.DISPLAY != 'Relationship' && condition.value.CONDITION.DATA_TYPE?.BACKEND != 'Integer' && condition.value.CONDITION.DATA_TYPE?.BACKEND != 'Float' && condition.value.CONDITION.DATA_TYPE?.BACKEND != 'Formula' && condition.value.CONDITION.DATA_TYPE?.DISPLAY != 'Picklist' && condition.value.CONDITION.DATA_TYPE?.DISPLAY != 'Date/Time'  && condition.value.CONDITION.DATA_TYPE?.DISPLAY != 'Time' && condition.value.CONDITION.DATA_TYPE?.DISPLAY != 'Date' && condition.value.CONDITION.NAME !== 'ROLE'">
+				<input type="text" placeholder="{{'ENTER_VALUE' | translate}}" aria-label="Number" matInput formControlName="CONDITION_VALUE">
+			</mat-form-field>
+			<mat-form-field *ngIf="condition.value.CONDITION.NAME ==='CHANNEL' ">
+				<input type="text" placeholder="{{'PLEASE_SELECT_A_CHANNEL' | translate}}" aria-label="Number" matInput
+					formControlName="CONDITION_VALUE" matInput [matAutocomplete]="autoAllConditionValue">
+				<mat-autocomplete #autoAllConditionValue="matAutocomplete">
+					<mat-option *ngFor=" let select of channels" [value]="select.viewValue">
+						{{select.viewValue}}
+					</mat-option>
+				</mat-autocomplete>
+			</mat-form-field>
+			<mat-form-field
+				*ngIf="condition.value.CONDITION.DATA_TYPE?.BACKEND == 'Formula' && condition.value.OPERATOR.BACKEND != 'EXISTS' && condition.value.OPERATOR.BACKEND != 'DOES_NOT_EXIST'">
+				<input type="text" placeholder="{{'VALUE' | translate}}" matInput formControlName="CONDITION_VALUE"
+					(ngModelChange)="filterInputValues($event, condition, 'values')">
+			</mat-form-field>
+			<mat-form-field
+				*ngIf="((condition.value.CONDITION.DATA_TYPE?.DISPLAY == 'Discussion'|| condition.value.CONDITION.DATA_TYPE?.DISPLAY == 'Text') && (condition.value.OPERATOR.BACKEND == 'LENGTH_IS_GREATER_THAN' ||  condition.value.OPERATOR.BACKEND == 'LENGTH_IS_LESS_THAN')) || ((condition.value.CONDITION.DATA_TYPE?.BACKEND == 'Integer' || condition.value.CONDITION.DATA_TYPE?.BACKEND == 'Float') && condition.value.CONDITION.NAME !=='DAY_OF_WEEK') && condition.value.OPERATOR.BACKEND != 'EXISTS' && condition.value.OPERATOR.BACKEND != 'DOES_NOT_EXIST' && condition.value.OPERATOR.BACKEND != 'CHANGED' && condition.value.CONDITION.DATA_TYPE?.DISPLAY !== 'Chronometer'">
+				<input type="number" (keypress)="numberOnly($event)" placeholder="{{'VALUE' | translate}}" matInput
+					formControlName="CONDITION_VALUE" (ngModelChange)="filterInputValues($event, condition, 'values')">
+			</mat-form-field>
+			<mat-form-field
+				*ngIf="condition.value.CONDITION.DATA_TYPE?.DISPLAY == 'Relationship' && condition.value.OPERATOR.BACKEND != 'CHANGED' && condition.value.OPERATOR.BACKEND != 'EXISTS' && condition.value.OPERATOR.BACKEND != 'DOES_NOT_EXIST'">
+				<input type="text" placeholder="{{ 'VALUE' | translate}}" matInput [matAutocomplete]="autoAnyConditionValue"
+					formControlName="CONDITION_VALUE" (ngModelChange)="filterInputValues($event, condition, 'values')">
+				<mat-autocomplete #autoAnyConditionValue="matAutocomplete" (closed)="resetOptions('values')" [displayWith]="displayValueFn">
+					<mat-option *ngFor="let option of autocompleteValuesFiltered[condition.value.CONDITION.NAME]" [value]="option">
+						{{option[condition.value.CONDITION.RELATION_FIELD_NAME]}}
+					</mat-option>
+				</mat-autocomplete>
+			</mat-form-field>
+			<mat-form-field
+				*ngIf="condition.value.CONDITION.DATA_TYPE?.DISPLAY == 'Picklist' && condition.value.OPERATOR.BACKEND != 'CHANGED' && condition.value.OPERATOR.BACKEND != 'EXISTS' && condition.value.OPERATOR.BACKEND != 'DOES_NOT_EXIST'">
+				<input type="text" placeholder="{{ 'VALUE' | translate}}" matInput [matAutocomplete]="autoAnyConditionValue"
+					formControlName="CONDITION_VALUE" (ngModelChange)="filterInputValues($event, condition, 'picklistValues')">
+				<mat-autocomplete #autoAnyConditionValue="matAutocomplete" (closed)="resetOptions('picklistValues')">
+					<mat-option *ngFor="let option of autocompleteValuesFiltered[condition.value.CONDITION.NAME]" [value]="option">
+						{{option}}
+					</mat-option>
+				</mat-autocomplete>
+			</mat-form-field>
+			<mat-form-field
+				*ngIf="condition.value.CONDITION.NAME == 'ROLE' && condition.value.OPERATOR.BACKEND != 'CHANGED' && condition.value.OPERATOR.BACKEND != 'EXISTS' && condition.value.OPERATOR.BACKEND != 'DOES_NOT_EXIST'">
+				<input type="text" placeholder="{{ 'VALUE' | translate}}" matInput [matAutocomplete]="autoAllConditionValue"
+					formControlName="CONDITION_VALUE" (ngModelChange)="filterInputValues($event, condition, 'roles')">
+				<mat-autocomplete #autoAllConditionValue="matAutocomplete" (closed)="resetOptions('roles')" [displayWith]="displayRoleValueFn">
+					<mat-option *ngFor="let option of autocompleteValuesFiltered['ROLE']" [value]="option">
+						{{option['NAME']}}
+					</mat-option>
+				</mat-autocomplete>
+			</mat-form-field>
+			<mat-form-field
+				*ngIf="condition.value.CONDITION.DATA_TYPE?.DISPLAY == 'Date/Time' && condition.value.OPERATOR.BACKEND != 'CHANGED' && condition.value.OPERATOR.BACKEND != 'EXISTS' && condition.value.OPERATOR.BACKEND != 'DOES_NOT_EXIST'">
+				<input placeholder="{{ 'PLEASE_SELECT_A_DATE' | translate}}" matInput [owlDateTimeTrigger]="dt" [owlDateTime]="dt"
+					formControlName="CONDITION_VALUE">
+				<owl-date-time #dt></owl-date-time>
+			</mat-form-field>
+			<mat-form-field
+				*ngIf="condition.value.CONDITION.DATA_TYPE?.DISPLAY == 'Date' && condition.value.OPERATOR.BACKEND != 'CHANGED' && condition.value.OPERATOR.BACKEND != 'EXISTS' && condition.value.OPERATOR.BACKEND != 'DOES_NOT_EXIST'">
+				<input placeholder="{{ 'PLEASE_SELECT_A_DATE' | translate}}" matInput [owlDateTimeTrigger]="dt" [owlDateTime]="dt"
+					formControlName="CONDITION_VALUE">
+				<owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
+			</mat-form-field>
+			<mat-form-field
+				*ngIf="condition.value.CONDITION.DATA_TYPE?.DISPLAY == 'Time' && condition.value.OPERATOR.BACKEND != 'CHANGED' && condition.value.OPERATOR.BACKEND != 'EXISTS' && condition.value.OPERATOR.BACKEND != 'DOES_NOT_EXIST'">
+				<input placeholder="{{ 'PLEASE_SELECT_A_TIME' | translate}}" matInput [owlDateTimeTrigger]="dt" [owlDateTime]="dt"
+					formControlName="CONDITION_VALUE">
+				<owl-date-time [pickerType]="'timer'" #dt></owl-date-time>
+			</mat-form-field>
+			<button mat-icon-button type="button" (click)="removeCondition(conditionIndex)">
+				<mat-icon>remove_circle</mat-icon>
+			</button>
+		</div>
+	</div>
+	<!-- TODO:  Use templete as container ->
+</div>
+
+-->

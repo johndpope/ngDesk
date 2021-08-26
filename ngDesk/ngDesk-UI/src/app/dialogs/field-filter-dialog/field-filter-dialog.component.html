@@ -1,0 +1,16 @@
+<h1 mat-dialog-title class="mat-h1">{{'DATA_FILTER_CONDITIONS' | translate}}</h1>
+<div mat-dialog-content style="width:700px;height:480px">
+	<form [formGroup]="fieldSettings" (ngSubmit)="save()">
+		<div fxLayout="column" fxLayoutAlign="center start" fxLayoutGap="10px">
+			<div>
+				<app-conditions [parentName]="'validationComponent'" [passedInModule]="moduleId" [conditions]="dataFilter.CONDITIONS"
+					[fields]="fields">
+				</app-conditions>
+			</div>
+		</div>
+	</form>
+</div>
+<div mat-dialog-actions fxLayoutAlign="end" [ngStyle]="{'margin-top':'40px'}">
+	<button mat-raised-button (click)="cancel()">{{data.closeDialog}}</button>
+	<button mat-raised-button (click)="save()" color="primary">{{data.buttonText}}</button>
+</div>

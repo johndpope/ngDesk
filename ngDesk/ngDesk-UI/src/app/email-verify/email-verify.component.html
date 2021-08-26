@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+
+<div style="height: 100vh;background: linear-gradient(var(--primaryColor),var(--blendColor))">
+	<div fxFlex="100" style="margin-top:200px">
+		<div fxLayout="column" fxLayoutAlign="center center" *ngIf="isVerified == true">
+			<label class="mat-display-3 custom-theme-icon-color" style="margin-bottom: 30px;">{{'CONGRATULATIONS' | translate}}!</label>
+			<label fxLayout="row" class="mat-subheading-2 custom-theme-icon-color"> {{'YOUR_EMAIL' | translate}} {{email}}
+				{{'HAS_BEEN_VERIFIED' | translate}}&nbsp;<mat-icon>check_circle_outline</mat-icon></label>
+			<label class="mat-subheading-2 custom-theme-icon-color">
+				{{'USE_YOUR_EMAIL' | translate}} </label>
+			<button mat-raised-button color="accent" routerLink="/login">Login</button>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="center center" *ngIf="isVerified == false">
+			<mat-error class="mat-h1"> {{'TRY_AGAIN_OR_CONTACT_US' | translate}} </mat-error>
+		</div>
+	</div>
+</div>

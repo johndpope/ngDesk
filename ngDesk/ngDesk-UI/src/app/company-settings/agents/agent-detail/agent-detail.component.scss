@@ -1,0 +1,40 @@
+::ng-deep .mat-header-cell {
+
+	// TODO: need to find better solution
+	.mat-checkbox-frame {
+		border-color: white;
+	}
+
+	.mat-sort-header-arrow {
+		color: white;
+	}
+
+}
+
+table {
+	width: 100%;
+}
+
+.underline-on-hover:hover {
+	text-decoration: underline;
+}
+
+::ng-deep  .mat-tab-group-with-button .mat-tab-header {
+    border-bottom: none;
+}
+
+.status-dot-online{
+	height: 10px;
+	width: 10px;
+	background-color: green;
+	border-radius: 50%;
+	display: inline-block;
+}
+
+.status-dot-offline{
+	height: 10px;
+	width: 10px;
+	background-color: gray;
+	border-radius: 50%;
+	display: inline-block;
+}

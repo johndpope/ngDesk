@@ -1,0 +1,60 @@
+<StackLayout>
+  <Label text="ArrangeCategoriesComponent works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<app-toolbar [templateRef]="customTemplateRef"></app-toolbar>
+<ng-template #customTemplateRef>
+  <div fxLayoutAlign="flex-end center">
+    <button mat-raised-button color="primary" [routerLink]="['','guide']">{{'NGDESK_GUIDE' | translate}}</button>
+  </div>
+</ng-template>
+<div fxLayout="row" style="min-height: calc(100vh - 55px);">
+  <div fxFlex="1 1 auto"></div>
+  <div fxLayout="column" fxFlex="50" fxFlex.lt-md="80" class="pad10" fxLayoutGap="20px">
+    <div fxLayoutAlign="center">
+      <mat-error class="mat-body">{{errorMessage}}</mat-error>
+    </div>
+    <app-title-bar title="{{'ARRANGE_CONTENT' | translate}}"></app-title-bar>
+    <span class="mat-body">{{'ARRANGE_CONTENT_DESCRIPTION' | translate}}</span>
+    <div *ngIf="categories.length > 0 && !isLoading">
+      <h3 class="mat-h3">{{'CATEGORIES_COUNT_AFTER' | translate: {'count': categories.length} }}</h3>
+      <div cdkDropList fxLayout="column" class="arrange-content-list mat-body" (cdkDropListDropped)="drop($event)">
+        <div class="arrange-content-box" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px"
+          *ngFor="let category of categories;let i = index" cdkDrag>
+          <!-- TODO: drag indicator icon not available, might need to update material icons ->
+          <mat-icon [ngStyle]="{'cursor': 'move'}">reorder</mat-icon>
+          <div *ngIf="category['SECTIONS']" fxLayout="column" fxFlex class="pointer" [routerLink]="['','guide', 'arrange', 'categories', category.CATEGORY_ID]">
+            <label class="pointer"><strong>{{category.NAME}}</strong></label>
+            <label class="pointer" *ngIf="category['SECTIONS'].length === 1"><i>{{'SECTIONS_COUNT_BEFORE_SINGULAR' | translate: { 'count': category['SECTIONS'].length } }}</i></label>
+            <label class="pointer" *ngIf="category['SECTIONS'].length !== 1"><i>{{'SECTIONS_COUNT_BEFORE_PLURAL' | translate: { 'count': category['SECTIONS'].length } }}</i></label>
+          </div>
+          <div fxLayoutAlign="end center">
+            <button mat-icon-button [matMenuTriggerFor]="moreOptionsMenu">
+              <mat-icon>more_vertical</mat-icon>
+            </button>
+            <mat-menu #moreOptionsMenu="matMenu">
+              <button mat-menu-item [routerLink]="['','guide', 'categories', category.CATEGORY_ID]">{{'EDIT_CATEGORY' | translate}}</button>
+              <button mat-menu-item *ngIf="categories.length > 1 && i !== 0" (click)="sendToTop(i, categories)">{{'SEND_TO_TOP' | translate}}</button>
+              <button mat-menu-item [routerLink]="['','guide', 'categories', category.CATEGORY_ID, 'detail']">{{'VIEW_IN_GUIDE' | translate}}</button>
+            </mat-menu>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="categories.length === 0 && !isLoading" fxLayout="column" fxLayoutAlign="center center">
+      <h2 class="mat-h2">{{'EMPTY_GUIDE' | translate}}</h2>
+      <p class="mat-subheading-1">{{'EMPTY_GUIDE_MESSAGE' | translate}}</p>
+      <button mat-raised-button color="primary" [routerLink]="['','guide', 'categories', 'new']">{{'ADD_CATEGORY' | translate}}</button>
+    </div>
+    <div *ngIf="isLoading" fxLayoutAlign="center" fxFlex="50">
+      <mat-spinner></mat-spinner>
+    </div>
+  </div>
+  <div fxFlex="1 1 auto"></div>
+</div>
+-->

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<h1 mat-dialog-title class="mat-h1">{{'UPDATE_ENTRIES' | translate}}</h1>
+<div mat-dialog-content style="width:600px;height:480px">
+	<div fxLayout="column" style="overflow-y: auto;max-height: 250px;" fxFlex="300">
+		<div *ngFor=" let option of data.fields; let conditionIndex = index;">
+			<mat-form-field fxFlex=90 [ngStyle]="{'width':'100%'}" *ngIf="(!option.NOT_EDITABLE && option.DATA_TYPE?.BACKEND == 'String' &&
+      option.DATA_TYPE?.DISPLAY == 'Text') || (!option.NOT_EDITABLE && option.DATA_TYPE?.DISPLAY == 'URL')">
+				<mat-label>{{option.DISPLAY_LABEL}}</mat-label>
+				<input matInput type="text" [(ngModel)]="entry[option.NAME]" autocomplete="off">
+				<mat-icon *ngIf="helpText(option)" matSuffix class="color-primary" matTooltip="{{option.HELP_TEXT | translate}}">help_outline
+				</mat-icon>
+			</mat-form-field>
+			<mat-form-field floatLabel="always" fxFlex="90" *ngIf="!option.NOT_EDITABLE && option.DATA_TYPE?.DISPLAY == 'Picklist'">
+				<mat-label>{{option.DISPLAY_LABEL}}</mat-label>
+				<mat-select [(ngModel)]="entry[option.NAME]">
+					<mat-option *ngFor="let entry of option.PICKLIST_VALUES" [value]="entry">{{entry}}</mat-option>
+				</mat-select>
+				<mat-icon *ngIf="helpText(option)" matSuffix class="color-primary" matTooltip="{{option.HELP_TEXT | translate}}">help_outline
+				</mat-icon>
+			</mat-form-field>
+
+			<mat-form-field fxFlex="90" [floatLabel]="'always'" *ngIf="!option.NOT_EDITABLE && option.DATA_TYPE?.DISPLAY == 'Date/Time'">
+				<input matInput [owlDateTimeTrigger]="FIELD_ID_NAME" [owlDateTime]="FIELD_ID_NAME" placeholder="{{option.DISPLAY_LABEL}}"
+					[(ngModel)]="entry[option.NAME]" autocomplete="off">
+				<owl-date-time #FIELD_ID_NAME></owl-date-time>
+				<mat-icon *ngIf="helpText(option)" matSuffix class="color-primary" matTooltip="{{option.HELP_TEXT | translate}}">help_outline
+				</mat-icon>
+			</mat-form-field>
+
+			<mat-form-field fxFlex="90" [floatLabel]="'always'" *ngIf="!option.NOT_EDITABLE && option.DATA_TYPE?.DISPLAY == 'Date'">
+				<input matInput [owlDateTimeTrigger]="FIELD_ID_NAME" [owlDateTime]="FIELD_ID_NAME" placeholder="{{option.DISPLAY_LABEL}}"
+					[(ngModel)]="entry[option.NAME]" autocomplete="off">
+				<owl-date-time [pickerType]="'calendar'" #FIELD_ID_NAME></owl-date-time>
+				<mat-icon *ngIf="helpText(option)" matSuffix class="color-primary" matTooltip="{{option.HELP_TEXT | translate}}">help_outline
+				</mat-icon>
+			</mat-form-field>
+
+			<mat-form-field fxFlex="90" [floatLabel]="'always'" *ngIf="!option.NOT_EDITABLE && option.DATA_TYPE?.DISPLAY == 'Time'">
+				<input matInput [owlDateTimeTrigger]="FIELD_ID_NAME" [owlDateTime]="FIELD_ID_NAME" placeholder="{{option.DISPLAY_LABEL}}"
+					[(ngModel)]="entry[option.NAME]" autocomplete="off">
+				<owl-date-time [pickerType]="'timer'" #FIELD_ID_NAME></owl-date-time>
+				<mat-icon *ngIf="helpText(option)" matSuffix class="color-primary" matTooltip="{{option.HELP_TEXT | translate}}">help_outline
+				</mat-icon>
+			</mat-form-field>
+
+			<mat-form-field fxFlex="90" [floatLabel]="'always'" *ngIf="!option.NOT_EDITABLE && option.DATA_TYPE?.DISPLAY == 'Text Area'">
+				<mat-label>{{option.DISPLAY_LABEL}}</mat-label>
+				<textarea matInput [(ngModel)]="entry[option.NAME]"></textarea>
+				<mat-icon *ngIf="helpText(option)" matSuffix class="color-primary" matTooltip="{{option.HELP_TEXT | translate}}">help_outline
+				</mat-icon>
+			</mat-form-field>
+
+			<div fxLayout="column">
+				<div fxLayout="row">
+					<mat-label [ngStyle]="{'color': 'rgba(0,0,0,.54)', 'font-size': '12px', 'font-family': 'Roboto, Helvetica Neue, sans-serif'}"
+						*ngIf="!option.NOT_EDITABLE && option.DATA_TYPE?.DISPLAY == 'Phone'">{{option.DISPLAY_LABEL}}</mat-label>
+				</div>
+				<div fxLayout="row">
+					<mat-form-field fxFlex="90" *ngIf="!option.NOT_EDITABLE && option.DATA_TYPE?.DISPLAY == 'Phone'">
+						<section matPrefix [ngStyle]="{'margin-right': '10px'}">
+							<input matInput [ngStyle]="{'display': 'none'}" autocomplete="off">
+							<input [matAutocomplete]=FIELD_ID_NAME_auto name="FIELD_ID_NAME" type="image"
+								src="../../../assets/images/country-flags/{{country['COUNTRY_FLAG']}}" height="25">
+							<mat-autocomplete #FIELD_ID_NAME_auto="matAutocomplete" (optionSelected)="updatePhoneInfo($event.option.value, option.NAME)">
+								<mat-option *ngFor="let country of renderLayoutService.countries" [value]="country">
+									<img [ngStyle]="{'margin-right': '10px'}" aria-hidden [src]="'../../assets/images/country-flags/' + country.COUNTRY_FLAG"
+										height="25">
+									<span>{{country.COUNTRY_NAME}}</span> | <small>{{country.COUNTRY_DIAL_CODE}}</small>
+								</mat-option>
+							</mat-autocomplete>
+						</section>
+						<div fxLayout="row" [ngStyle]="{'margin-bottom': '-8px'}">
+							<span>{{country.DIAL_CODE}}</span>
+							<input type="number" onkeypress="return event.charCode >= 48 && event.charCode <= 57" matInput
+								[(ngModel)]="entry[option.NAME]" autocomplete="off">
+						</div>
+						<mat-icon *ngIf="helpText(option)" matSuffix class="color-primary" matTooltip="{{option.HELP_TEXT | translate}}">help_outline
+						</mat-icon>
+					</mat-form-field>
+				</div>
+			</div>
+
+			<mat-form-field fxFlex="90" *ngIf="!option.NOT_EDITABLE && option.DISPLAY_LABEL == 'Role'">
+				<mat-select [(ngModel)]="entry[option.NAME]">
+					<mat-option *ngFor="let role of roles" [value]="role.ROLE_ID">
+						{{role.NAME}}
+					</mat-option>
+				</mat-select>
+				<mat-icon *ngIf="helpText(option)" matSuffix class="color-primary" matTooltip="{{option.HELP_TEXT | translate}}">help_outline
+				</mat-icon>
+			</mat-form-field>
+
+			<mat-form-field fxFlex=90 *ngIf="!option.NOT_EDITABLE && option.DATA_TYPE.DISPLAY == 'Chronometer'">
+				<mat-label>{{'ADD_TIME_TO'|translate}}{{option.DISPLAY_LABEL}}</mat-label>
+				<input matInput type="text" placeholder="0mo 0w 0d 0h 0m" [(ngModel)]="entry[option.NAME]" autocomplete="off">
+				<mat-icon *ngIf="helpText(option)" matSuffix class="color-primary" matTooltip="{{option.HELP_TEXT | translate}}">help_outline
+				</mat-icon>
+			</mat-form-field>
+
+
+		</div>
+	</div>
+</div>
+<div mat-dialog-actions fxLayoutAlign="end" [ngStyle]="{'margin-top':'40px'}">
+	<button mat-raised-button (click)="onNoClick()">{{data.closeDialog}}</button>
+	<button mat-raised-button (click)="onUpdateEntries()" color="primary">{{data.buttonText}}</button>
+</div>

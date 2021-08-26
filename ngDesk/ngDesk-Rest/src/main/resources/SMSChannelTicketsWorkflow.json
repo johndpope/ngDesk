@@ -1,0 +1,168 @@
+{
+  "WORKFLOW": {
+    "NODES": [
+      {
+        "POSITION_X": "100px",
+        "POSITION_Y": "100px",
+        "VALUES": {},
+        "ID": "node-id-459688f1-a370-4311-9df3-be456d7a44db",
+        "TYPE": "Start",
+        "CONNECTIONS_TO": [
+          {
+            "TITLE": "START",
+            "FROM": "OUT",
+            "TO_NODE": "node-id-46615b4a-175e-4dab-abb1-73b974caa70c"
+          }
+        ],
+        "NAME": "Start",
+        "PLUGS": [
+          {
+            "NAME": "OUT",
+            "ID": "output-plug-71bcc6ba-276c-47e8-9604-7f84570ed2a5",
+            "ORDER": 1
+          }
+        ]
+      },
+      {
+        "POSITION_X": "304px",
+        "POSITION_Y": "244px",
+        "VALUES": {
+          "CODE": "if(inputMessage.DATA_ID&&inputMessage.DATA_ID!=null){PROPOGATE_TO OUT-1}else{PROPOGATE_TO NO-MATCH}"
+        },
+        "ID": "node-id-46615b4a-175e-4dab-abb1-73b974caa70c",
+        "TYPE": "Javascript",
+        "CONNECTIONS_TO": [
+          {
+            "TITLE": "IF NO CONDITION MATCHES",
+            "FROM": "NO-MATCH",
+            "TO_NODE": "node-id-378064d3-c447-4a15-87c2-693987ca4785"
+          },
+          {
+            "TITLE": "UPDATE TICKET",
+            "FROM": "OUT-1",
+            "TO_NODE": "node-id-4f435c7d-b3fe-4452-913f-4dce385c00a8"
+          }
+        ],
+        "NAME": "Javascript 1",
+        "PLUGS": [
+          {
+            "NAME": "INPUT",
+            "ID": "input-plug-0285c844-6f69-4868-9fac-f7484776d93a",
+            "ORDER": 0
+          },
+          {
+            "NAME": "NO-MATCH",
+            "ID": "output-plug-c0c5941b-0231-416a-b311-0fd3812dfdb3",
+            "ORDER": 1
+          },
+          {
+            "NAME": "OUT-1",
+            "ID": "output-plug-7ab9f7bd-2a19-4f4f-a9f1-e510e634298f",
+            "ORDER": 2
+          }
+        ]
+      },
+      {
+        "POSITION_X": "1126px",
+        "POSITION_Y": "276px",
+        "VALUES": {
+          "MODULE": "TICKETS_MODULE_ID",
+          "FIELDS": [
+            {
+              "FIELD": "30e7e42c-ca90-49b5-986e-341f11d37de5",
+              "VALUE": [
+                "{{inputMessage.USER_ID}}"
+              ]
+            },
+            {
+              "FIELD": "02285079-81d3-46db-8061-d5bcee1d8c84",
+              "VALUE": [
+                "New"
+              ]
+            },
+            {
+              "FIELD": "96bf35ea-dcb5-4183-8679-f27f776b92df",
+              "VALUE": [
+                "{{inputMessage.TYPE}}"
+              ]
+            },
+            {
+              "FIELD": "edbef7ac-0f4b-4b68-a3ea-8f0435a0e7b9",
+              "VALUE": [
+                "{{inputMessage.BODY}}"
+              ],
+              "ATTACHMENTS": "{{inputMessage.ATTACHMENTS}}"
+            },
+            {
+              "FIELD": "1556aab3-1f0c-4893-b0fe-d45c52294cd1",
+              "VALUE": [
+                "TEAM_ID_REPLACE"
+              ]
+            },
+            {
+              "FIELD": "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+              "VALUE": [
+                "{{inputMessage.SUBJECT}}"
+              ]
+            },
+            {
+              "FIELD": "a5accd94-cc42-4ba5-aaff-79ae5524bcb8",
+              "VALUE": [
+                "{{inputMessage.WIDGET_ID}}"
+              ]
+            }
+          ]
+        },
+        "ID": "node-id-378064d3-c447-4a15-87c2-693987ca4785",
+        "TYPE": "CreateEntry",
+        "CONNECTIONS_TO": [],
+        "NAME": "Create Entry1",
+        "PLUGS": [
+          {
+            "NAME": "INPUT",
+            "ID": "input-plug-90dd8f9b-6d70-48f2-a2a5-8caba35b4016",
+            "ORDER": 0
+          },
+          {
+            "NAME": "OUT-1",
+            "ID": "output-plug-a33654ff-bce1-4369-81a8-a82653a80ba2",
+            "ORDER": 1
+          }
+        ]
+      },
+      {
+        "POSITION_X": "1126px",
+        "POSITION_Y": "276px",
+        "VALUES": {
+          "MODULE": "TICKETS_MODULE_ID",
+          "ENTRY_ID": "{{inputMessage.DATA_ID}}",
+          "FIELDS": [
+            {
+              "FIELD": "edbef7ac-0f4b-4b68-a3ea-8f0435a0e7b9",
+              "VALUE": [
+                "{{inputMessage.BODY}}"
+              ],
+              "ATTACHMENTS": "{{inputMessage.ATTACHMENTS}}"
+            }
+          ]
+        },
+        "ID": "node-id-4f435c7d-b3fe-4452-913f-4dce385c00a8",
+        "TYPE": "UpdateEntry",
+        "CONNECTIONS_TO": [],
+        "NAME": "Update Entry1",
+        "PLUGS": [
+          {
+            "NAME": "INPUT",
+            "ID": "input-plug-90dd8f9b-6d70-48f2-a2a5-8caba35b4016",
+            "ORDER": 0
+          },
+          {
+            "NAME": "OUT-1",
+            "ID": "output-plug-a33654ff-bce1-4369-81a8-a82653a80ba2",
+            "ORDER": 1
+          }
+        ]
+      }
+    ]
+  }
+}

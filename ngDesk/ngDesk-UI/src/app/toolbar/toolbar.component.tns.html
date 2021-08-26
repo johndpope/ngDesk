@@ -1,0 +1,137 @@
+<StackLayout>
+  <Label text="toolbar works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<!-- <mat-toolbar style="height:48px; padding-right: 66px;"> ->
+<mat-toolbar style="min-height:48px;">
+	<!-- START PUBLIC TOOLBAR ->
+	<div class="app-toolbar" >
+		<div *ngIf="checkGettingStarted > 0" style="position: absolute;left: 10px;top: 10px;">
+			<label class="mat-h1">{{'GETTING_STARTED' | translate}}</label>
+		</div>
+		<div *ngIf="!authToken" fxLayoutAlign="space-between center" style="padding: 6px 10px; position:relative;flex-grow: 1;" class="mat-elevation-z1">
+			<div>
+				<img *ngIf="logo" fxLayoutAlign="" [src]="logo" height="35" width="35" />
+			</div>
+			<div fxLayoutGap="10px">
+				<button mat-raised-button color="primary" (click)="goToLogin()">
+					{{ 'LOGIN' | translate }}
+				</button>
+				<button *ngIf="enableSignup" mat-raised-button color="default" (click)="goToSignup()">
+					{{ 'SIGNUP' | translate }}
+				</button>
+			</div>
+		</div>
+		<!--BEGIN DROPDOWN MENU + HELP + SUBMENU BUTTONS  ->
+		<div *ngIf="authToken !== '' && authToken !== null" fxLayoutAlign="space-between center" style="padding: 6px 10px; position:relative;flex-grow: 1;"
+			class="mat-elevation-z1">
+			<!--BEGIN MENU->
+			<div fxFlex="1 1 auto" >
+				<ng-container *ngTemplateOutlet="templateRef"></ng-container>
+			</div>
+			<span fxFlex="10px"></span>
+
+			<div *ngIf="showGettingStarted" fxLayoutAlign="center center">
+				<button (click)="navigateToGettingStarted()" mat-raised-button *ngIf="!loaded && !gettingStarted"
+					style="margin: 0px;  border-radius: 8px;" class="mat-h4">
+					{{'GETTING_STARTED' | translate}}
+				</button>
+				<button (click)="navigateToGettingStarted()" mat-raised-button *ngIf="!gettingStarted && loaded"
+					style="margin: 0px;  border-radius: 8px;" class="mat-h4">
+					{{'GETTING_STARTED' | translate}}: {{value}}%
+				</button>
+			</div>
+
+			<a href="https://support.ngdesk.com" target="_blank" style="color: inherit;">
+				<button mat-button style="padding: 0px; min-width: 40px;" matTooltip="{{ 'HELP_CENTER' | translate }}">
+					<mat-icon class="grey-black-color">help_outline</mat-icon>
+				</button>
+			</a>
+			<button mat-button [matMenuTriggerFor]="notificationDropdown" style="padding: 0px; min-width: 40px;"
+				matTooltip="{{ 'NOTIFICATIONS' | translate }}">
+				<!--TODO: Set number of notififcation and hide badge if no notifications->
+				<mat-icon fontSet="material-icons-outlined" [matBadge]="notificationsService.unreadNotifications.length" matBadgeColor="warn"
+					matBadgeSize="medium" [matBadgeHidden]="notificationsService.unreadNotifications.length < 1" class="grey-black-color">
+					notifications</mat-icon>
+			</button>
+			<mat-menu #notificationDropdown="matMenu">
+				<button mat-menu-item *ngIf="notificationsService.unreadNotifications.length < 1">
+					{{ 'NO_NOTIFICATIONS' | translate }}
+				</button>
+				<div *ngIf="notificationsService.unreadNotifications.length > 0">
+					<button mat-menu-item *ngFor="let notification of this.notificationsService.unreadNotifications | reverse"
+						(click)="openChat(notification)">
+						<span class="mat-small">{{notification.MESSAGE}}</span>
+					</button>
+				</div>
+			</mat-menu>
+			<button id="profile" mat-button [matMenuTriggerFor]="profileDropdown" style="padding: 0px; min-width: 40px;">
+				<mat-icon class="grey-black-color" fontSet="material-icons-outlined">person</mat-icon>
+				<!-- <mat-icon [ngStyle]="{color:statusColor}">fiber_manual_record</mat-icon> ->
+			</button>
+			<mat-menu id="menu" #profileDropdown="matMenu">
+				<div mat-menu-item (click)="viewProfile()" fxLayout="row" fxLayoutAlign="normal center">
+					<mat-icon>account_circle</mat-icon>
+					<div fxLayout="column">
+						<span class="mat-body">{{ usersService.user?.FIRST_NAME }}
+							{{ usersService.user?.LAST_NAME }}</span>
+						<span class="mat-small">{{ 'VIEW_PROFILE' | translate }}</span>
+					</div>
+				</div>
+				<mat-divider></mat-divider>
+				<button *ngIf="showAcceptChat" mat-menu-item (click)="chatStatus(true);$event.stopPropagation();" fxLayoutAlign="normal center">
+					<mat-icon>
+						<mat-spinner [diameter]="20" *ngIf="!accept && !isAcceptingChats"></mat-spinner>
+						<span *ngIf="isAcceptingChats">done</span>
+					</mat-icon>
+					<span>{{'ACCEPT_CHATS' | translate}}</span>
+				</button>
+				<button *ngIf="showAcceptChat" mat-menu-item (click)="chatStatus(false);$event.stopPropagation();">
+					<mat-icon>
+						<mat-spinner [diameter]="20" *ngIf="!accept && isAcceptingChats"></mat-spinner>
+						<span *ngIf="!isAcceptingChats">block</span>
+					</mat-icon>
+					<span>{{'DONT_ACCEPT_CHATS' | translate}}</span>
+				</button>
+				<!-- <button mat-menu-item [matMenuTriggerFor]="statusMenu">
+        <mat-icon>check_circle</mat-icon> <span >{{'STATUS' | translate}}</span>
+      </button> ->
+				<button mat-menu-item (click)="logout()">
+					<mat-icon>exit_to_app</mat-icon> <span>{{ 'LOGOUT' | translate }}</span>
+				</button>
+			</mat-menu>
+			<!-- <mat-icon [ngStyle]="{color:statusColor}">fiber_manual_record</mat-icon> ->
+			<!-- <mat-menu #statusMenu="matMenu" xPosition="before">
+      <span *ngFor="let status of statuses">
+        <button mat-menu-item (click)="statusChange(status.NAME); statusColor = status.COLOR">
+          <mat-icon [ngStyle]="{'color': status.COLOR}">fiber_manual_record</mat-icon>{{status.NAME | translate}}
+        </button>
+      </span>
+    </mat-menu> ->
+
+			<!--END MENU->
+			<!-- TODO: ADD BACK WHEN HELP SECTION READY ->
+			<!-- <div>
+      <button mat-icon-button>
+        <mat-icon aria-label=" icon-button with a help icon">help</mat-icon>
+      </button>
+    </div> ->
+
+			<!-- TODO: ADD BACK WHEN INTERNAL CHAT READY ->
+			<!-- <div>
+      <button mat-icon-button>
+        <mat-icon aria-label="icon-button with a dehaze icon">dehaze</mat-icon>
+      </button>
+    </div> ->
+		</div>
+	</div>
+	<!--END DROPDOWN MENU + HELP + SUBMENU BUTTONS  ->
+</mat-toolbar>
+<!-- <mat-divider></mat-divider> ->
+
+-->

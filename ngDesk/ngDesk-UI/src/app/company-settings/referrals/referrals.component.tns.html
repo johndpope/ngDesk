@@ -1,0 +1,63 @@
+<StackLayout>
+  <Label text="referrals works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef>
+	<app-title-bar title="{{'REFERRALS' | translate}}" ></app-title-bar>
+</ng-template>
+<div  class="pad10">
+    <div  class="pad10" fxLayoutAlign="center center" class="mat-h1">
+       Refer your friends
+    </div>
+    <div class="pad10" fxLayout="row" style ="height:10%" fxLayoutAlign="center center"  >
+       
+        <mat-card style="margin-bottom:2px;" fxFlex.lg="40" fxFlex.md="40" fxFlex.sm="100" style="background-color:  rgb(255, 255, 255);">
+           
+            <mat-card-content fxLayoutAlign="center center" fxLayout="row" >
+                <mat-icon class="icon-display">person</mat-icon>
+            </mat-card-content>
+            <mat-card-content fxLayoutAlign="center center">
+              {{this.userName}}
+            
+            </mat-card-content>
+            <mat-divider></mat-divider><br> 
+             <mat-card-content fxLayoutAlign="space-around center">
+                  
+                    <div class="mat-h2"  style="padding-top:5%">
+                            <h3 class="mat-h1" fxLayoutAlign="center center">{{this.currentMonth}}</h3>
+                            <h3 class="mat-h4"  fxLayoutAlign="center center">{{'CURRENT_MONTH_REFERRALS' | translate}}</h3>
+                    </div>
+                   
+                    <div class="mat-h2" >
+                            <h3 class="mat-h1" fxLayoutAlign="center center" >{{this.allTime}}</h3>
+                            <h3 class="mat-h4" fxLayoutAlign="center center">{{'ALL_TIME_REFERRALS' | translate}}</h3>
+                    </div> 
+              </mat-card-content> 
+           
+           
+            </mat-card>
+    </div> 
+</div>
+<mat-divider style="margin-left: 25%; margin-right: 25%;"></mat-divider><br> 
+<div fxLayout="column" fxLayoutAlign="center center">
+        <div class="mat-h3" style="text-align: center;" >{{'REFERRAL_INSTRUCTIONS' | translate}}</div>
+        <pre style="margin:0em" style="background-color: rgb(238, 238, 238); border-radius: 5px ; font-family: monospace ; text-align: center;"  fxLayoutAlign="center center" fxFlex (click)="copyToClipboard()">
+             <ol>https://signup.ngdesk.com/landing-pages/signup?c_id={{this.companyUUID}}&u_id={{this.userUUID}}    </ol></pre> 
+</div> 
+<div fxLayoutAlign="center center" style="padding-top: 20px ;" >
+        <button  mat-raised-button color="primary" style="font-size:12px ;"  (click)="enterEmail()" >
+                <mat-icon style="font-size:15px ; height:15px; width:15px ">email</mat-icon>
+                Email
+        </button>
+</div>
+
+
+
+-->

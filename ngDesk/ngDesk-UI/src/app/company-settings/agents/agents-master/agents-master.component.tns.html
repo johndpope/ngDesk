@@ -1,0 +1,30 @@
+<StackLayout>
+  <Label text="controller works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef>
+	<app-title-bar title="{{'CONTROLLERS' | translate}}"></app-title-bar>
+</ng-template>
+<div fxLayout="column" fxLayoutGap="10px" class="pad10">
+	<div fxLayout="row">
+		<div fxFlex>
+			<app-custom-table [templateRef]="columnTemplateRef" noRecordsMessage="{{'NO_CONTROLLERS_FOUND' | translate}}"
+				[actions]="controllerActions.actions" (menuItemTrigger)="menuItemClicked($event.ACTION,$event.ROW_DATA);"
+				(rowClickedEvent)="rowClicked($event)" (sortData)="sortData();customTableService.isLoading = true"
+				(pageChangeEmit)="pageChangeEmit($event);customTableService.isLoading = true">
+				<ng-template #columnTemplateRef let-element="element" let-col="col">
+					<span *ngIf="col.NAME === 'DATE_CREATED'">{{element[col.NAME] | dateFormat: 'medium'}}</span>
+					<span *ngIf="col.NAME !== 'DATE_CREATED'">{{element[col.NAME] | booleanToYesNo}}</span>
+				</ng-template>
+			</app-custom-table>
+		</div>
+	</div>
+</div>
+
+-->

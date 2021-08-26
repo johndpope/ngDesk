@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: manager
+  namespace: NAMESPACE_REPLACE
+spec:
+  selector:
+    matchLabels:
+      app: manager
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: manager
+    spec:
+      containers:
+        - name: manager
+          image: image-registry.openshift-image-registry.svc:5000/NAMESPACE_REPLACE/manager:1
+          imagePullPolicy: Always
+          env:
+          - name: SPRING_PROFILES_ACTIVE
+            value: "devnew"
+          ports:
+            - containerPort: 9081

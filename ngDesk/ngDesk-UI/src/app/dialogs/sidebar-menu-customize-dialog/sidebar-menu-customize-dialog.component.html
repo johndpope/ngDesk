@@ -1,0 +1,39 @@
+<div fxLayout="column">
+	<label mat-dialog-title>Sidebar Menu
+	</label>
+	<div mat-dialog-content fxLayout="column" fxLayoutGap="10px">
+		<div fxLayoutAlign="center center" fxLayoutGap="10px">
+			<mat-icon fxLayoutAlign="center center" fxFlex="50">{{data.MENU.ICON}}</mat-icon>
+			<label fxLayoutAlign="center center" fxFlex="50" *ngIf="false">No icon Selected.</label>
+			<mat-form-field fxFlex="50" hintLabel="{{'MAX_MENU_LENGTH_LABEL' | translate}}">
+				<input matInput placeholder="Menu Name" value="{{data.MENU.NAME}}" [(ngModel)]="data.MENU.NAME" maxLength="16">
+				<mat-hint align="end">{{data.MENU.NAME?.length || 0}}/16</mat-hint>
+			</mat-form-field>
+		</div>
+		<div fxLayoutGap="10px">
+			<mat-form-field fxFlex="50">
+				<mat-select placeholder="Select an icon" [(ngModel)]="data.MENU.ICON">
+					<mat-option *ngFor="let availableIcon of availableIcons" [value]="availableIcon">
+						{{availableIcon}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<mat-form-field fxFlex="50">
+				<span matTooltip="{{'MODULE_NO_SUB_MENU' | translate}}"
+					[matTooltipDisabled]="!data.MENU.SUB_MENU_ITEMS || (data.MENU.SUB_MENU_ITEMS && data.MENU.SUB_MENU_ITEMS.length == 0)">
+					<mat-select placeholder="Select a module" [(ngModel)]="data.MENU.MODULE"
+						[disabled]="data.MENU.SUB_MENU_ITEMS && data.MENU.SUB_MENU_ITEMS.length > 0">
+						<mat-option *ngFor="let module of data.MODULES.MODULES" [value]="module.NAME">
+							{{module.NAME}}
+						</mat-option>
+					</mat-select>
+				</span>
+			</mat-form-field>
+		</div>
+		<div fxLayoutAlign="flex-end center" fxLayoutGap="10px">
+			<button mat-button (click)="onNoClick()">Cancel</button>
+			<button mat-button color="primary" [mat-dialog-close]="data.MENU"
+				[disabled]="data.MENU.NAME == null || data.MENU.NAME == '' || data.MENU.ICON == null">Done</button>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,35 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<div fxLayout="column" fxLayoutGap="8px" class="pad10">
+	<ng-template #headerTemplateRef>
+		<app-title-bar class="light-grey-color" title="{{'MICRO_SOFT_TEAMS' | translate }}"></app-title-bar>
+	</ng-template>
+	<div fxLayoutAlign="center center">
+		<div class="mat-body" style="font-size: 1.5em;padding: 10px;">{{'AUTHENTICATED_CHANNELS' | translate }}</div>
+	</div>
+	<div  *ngIf="navigations.length !== 0; else elseBlock" fxLayout="column wrap" fxLayoutAlign="center center">
+		<ng-container *ngFor="let nav of navigations;let i=index">
+	  	<app-custom-matcard style="padding: 5px;width: 80%;" fxFlex=" 0 1 calc(20% - 40px);" *ngIf="i<remainValues" tittle="{{nav.CHANNEL_NAME | translate}}"
+		  authentication ="{{nav.AUTHENTICATED}}" date="{{nav.TEAMS_CONTEXT_ACTIVITY.timestamp | dateFormat:'medium'}}"
+	  	(unsubscribeButton)="unsubscribe(nav)"></app-custom-matcard>
+		</ng-container>
+	</div>
+	<ng-template #elseBlock>
+		<div fxLayout="row" fxLayoutAlign="center" class="pad10">
+			<div class= "mat-body" style="font-size: 20px;">{{'NO_CHANNEL_AUTHENTICATION' | translate}}</div> 
+			<a href="https://support.ngdesk.com/guide/articles/5d26ce29ba62460001704703/Integrating%20Microsoft%20Teams%20with%20your%20ngDesk%20subdomain" target="_blank" style="color: inherit;">
+				<button mat-button style="padding: 0px; min-width: 40px;line-height: 0;" matTooltip="{{ 'CHECK_DOCUMENTATION' | translate }}">
+				  <mat-icon class="light-grey-color">help_outline</mat-icon>
+				</button>
+			  </a>
+		</div>
+	</ng-template>
+
+	<div *ngIf="length.numberOfElements> 10 && length.numberOfElements!=remainValues" fxLayout="column" fxLayoutAlign="space-evenly end" style="padding-right: 100px;padding-bottom: 20px;">
+		<button mat-raised-button  (click)="getMoreData()">
+			<mat-icon>donut_large</mat-icon> {{'LOAD_MORE' | translate}}
+		</button>
+	</div>
+</div>
+
+
+

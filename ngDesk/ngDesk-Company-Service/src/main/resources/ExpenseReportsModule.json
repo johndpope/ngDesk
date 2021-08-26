@@ -1,0 +1,2991 @@
+{
+  "NAME": "Expense Reports",
+  "DESCRIPTION": "",
+  "SINGULAR_NAME": "Expense Report",
+  "PLURAL_NAME": "Expense Reports",
+  "VALIDATIONS": [],
+  "FIELDS": [
+    {
+      "FIELD_ID": "15044d64-e3f6-4000-b12a-abb8ea418906",
+      "NAME": "DATE_CREATED",
+      "DISPLAY_LABEL": "Date Created",
+      "HELP_TEXT": "",
+      "DATA_TYPE": {
+        "DISPLAY": "Date/Time",
+        "BACKEND": "Date"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "76aaee8a-294a-4bf1-8760-3a14efa745fe",
+      "NAME": "EFFECTIVE_TO",
+      "DISPLAY_LABEL": "Effective to",
+      "HELP_TEXT": "",
+      "DATA_TYPE": {
+        "DISPLAY": "Date/Time",
+        "BACKEND": "Date"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_VALUES": [],
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "2219475d-0c31-4d94-9951-c9f6eaf30654",
+      "NAME": "DATA_ID",
+      "DISPLAY_LABEL": "Data ID",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": "",
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "VISIBILITY": true,
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "MAX_SIZE": 100,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "a9bb32e2-e709-4f34-8596-4ef35510cb75",
+      "NAME": "EFFECTIVE_FROM",
+      "DISPLAY_LABEL": "Effective from",
+      "HELP_TEXT": "",
+      "DATA_TYPE": {
+        "DISPLAY": "Date/Time",
+        "BACKEND": "Date"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_VALUES": [],
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "9b63054f-139f-48ef-b1ae-29e4c5b270f5",
+      "NAME": "DATE_UPDATED",
+      "DISPLAY_LABEL": "Date Updated",
+      "HELP_TEXT": "",
+      "DATA_TYPE": {
+        "DISPLAY": "Date/Time",
+        "BACKEND": "Date"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "11906a71-0b45-4e59-917c-0172df6ec360",
+      "NAME": "LAST_UPDATED_BY",
+      "DISPLAY_LABEL": "Last Updated by",
+      "RELATIONSHIP_TYPE": "Many to One",
+      "PRIMARY_DISPLAY_FIELD": "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+      "RELATIONSHIP_FIELD": "",
+      "MODULE": "USERS_MODULE_REPLACE",
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "String"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "71220976-6403-4016-919e-acff30ce1256",
+      "NAME": "CREATED_BY",
+      "DISPLAY_LABEL": "Created by",
+      "RELATIONSHIP_TYPE": "Many to One",
+      "PRIMARY_DISPLAY_FIELD": "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+      "RELATIONSHIP_FIELD": "",
+      "MODULE": "USERS_MODULE_REPLACE",
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "String"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "41f135aa-e9d1-4888-920b-2a8d8672fb7b",
+      "NAME": "TEAMS",
+      "DISPLAY_LABEL": "Teams",
+      "DEFAULT_VALUE": "GLOBAL_TEAM_REPLACE",
+      "RELATIONSHIP_TYPE": "Many to Many",
+      "PRIMARY_DISPLAY_FIELD": "b1c48961-43e0-4071-b30c-0f7be5daa7a9",
+      "RELATIONSHIP_FIELD": "",
+      "MODULE": "TEAMS_MODULE_REPLACE",
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "Array"
+      },
+      "NOT_EDITABLE":false,
+      "REQUIRED": true,
+      "INTERNAL": true,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "f1041c25-c928-4d30-b2fb-9c843dbe9f95",
+      "NAME": "DELETED",
+      "DISPLAY_LABEL": "Deleted",
+      "DATA_TYPE": {
+        "DISPLAY": "Checkbox",
+        "BACKEND": "Boolean"
+      },
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "96bf35ea-dcb5-4183-8679-f27f776b92df",
+      "NAME": "SOURCE_TYPE",
+      "DISPLAY_LABEL": "Source Type",
+      "DEFAULT_VALUE": "web",
+      "DATA_TYPE": {
+        "DISPLAY": "Picklist",
+        "BACKEND": "String"
+      },
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_VALUES": [
+        "chat",
+        "email",
+        "facebook",
+        "forms",
+        "mobile",
+        "sms",
+        "twitter",
+        "web",
+        "whatsapp"
+      ],
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "a5accd94-cc42-4ba5-aaff-79ae5524bcb8",
+      "NAME": "CHANNEL",
+      "DISPLAY_LABEL": "Channel",
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    
+    {
+      "FIELD_ID": "a571463c-f3b7-4b6b-91ae-8bca81049910",
+      "NAME": "APPROVAL",
+      "DISPLAY_LABEL": "Approval",
+      "HELP_TEXT": "",
+      "DATA_TYPE": {
+        "DISPLAY": "Approval",
+        "BACKEND": "Approval"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": false,
+      "NOT_EDITABLE": false,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_VALUES": [],
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "e04e4bfc-ea9f-4a63-92b3-2ef573a36982",
+      "NAME": "REPORT_TITLE",
+      "DISPLAY_LABEL": "Report Title",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": "",
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": true,
+      "INTERNAL": false,
+      "NOT_EDITABLE": false,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_VALUES": [],
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "f43238de-2d5b-42e3-9d94-4e4bdceb7b08",
+      "NAME": "SUMMARY",
+      "DISPLAY_LABEL": "Summary",
+      "HELP_TEXT": "",
+      "DATA_TYPE": {
+        "DISPLAY": "Text Area",
+        "BACKEND": "String"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": false,
+      "NOT_EDITABLE": false,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_VALUES": [],
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "331cd8f9-98a9-49f8-8547-38824d3c27e2",
+      "NAME": "START_DATE",
+      "DISPLAY_LABEL": "Start Date",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": "",
+      "DATA_TYPE": {
+        "DISPLAY": "Date/Time",
+        "BACKEND": "Date"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": true,
+      "INTERNAL": false,
+      "NOT_EDITABLE": false,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_VALUES": [],
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "8b83946a-0c83-43c3-89b9-52d8e0daef97",
+      "NAME": "END_DATE",
+      "DISPLAY_LABEL": "End Date",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": "",
+      "DATA_TYPE": {
+        "DISPLAY": "Date/Time",
+        "BACKEND": "Date"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": true,
+      "INTERNAL": false,
+      "NOT_EDITABLE": false,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_VALUES": [],
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "619b25b5-5a31-4f88-97ac-ab54d203b904",
+      "NAME": "STATUS",
+      "DISPLAY_LABEL": "Status",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": "Draft",
+      "DATA_TYPE": {
+        "DISPLAY": "Picklist",
+        "BACKEND": "String"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": true,
+      "INTERNAL": false,
+      "NOT_EDITABLE": false,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_VALUES": [
+        "Approved",
+        "Draft",
+        "Pending approval",
+        "Rejected"
+      ],
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "9cb39714-c5e9-46a2-bcdd-cb0fd8f9402c",
+      "NAME": "EXPENSES",
+      "DISPLAY_LABEL": "Expenses",
+      "RELATIONSHIP_TYPE": "One to Many",
+      "PRIMARY_DISPLAY_FIELD": "c94beba0-f09d-41fc-b555-e135a3389268",
+      "RELATIONSHIP_FIELD": "a9a8a4be-8e0d-46ec-8b6d-03bee29ed50c",
+      "MODULE": "EXPENSES_MODULE_REPLACE",
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "Array"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": false,
+      "NOT_EDITABLE": false,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_VALUES": [],
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "422c6e7d-3c7a-4671-a935-6302b608fcae",
+      "NAME": "SUBMITTED_BY",
+      "DISPLAY_LABEL": "Submitted By",
+      "RELATIONSHIP_TYPE": "Many to One",
+      "PRIMARY_DISPLAY_FIELD": "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+      "RELATIONSHIP_FIELD": "38003c5d-00cd-4dc4-878c-afd7f8490e9d",
+      "MODULE": "USERS_MODULE_REPLACE",
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "String"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": false,
+      "NOT_EDITABLE": false,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "c722e138-ff0e-4dc7-89be-f638116b3625",
+      "NAME": "TAX_AMOUNT",
+      "DISPLAY_LABEL": "Tax Amount",
+      "HELP_TEXT": "",
+      "DATA_TYPE": {
+        "DISPLAY": "Aggregate",
+        "BACKEND": "Aggregate"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": false,
+      "NOT_EDITABLE": true,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_VALUES": [],
+      "AGGREGATION_TYPE": "sum",
+      "AGGREGATION_FIELD": "9cb39714-c5e9-46a2-bcdd-cb0fd8f9402c",
+      "AGGREGATION_RELATED_FIELD": "55b3e7fd-060a-46b5-9402-efca211fff09",
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "e77b2050-3ec5-4d71-91d0-604b941c2053",
+      "NAME": "TOTAL",
+      "DISPLAY_LABEL": "Grand Total",
+      "HELP_TEXT": "",
+      "DATA_TYPE": {
+        "DISPLAY": "Aggregate",
+        "BACKEND": "Aggregate"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": false,
+      "NOT_EDITABLE": true,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_VALUES": [],
+      "AGGREGATION_TYPE": "sum",
+      "AGGREGATION_FIELD": "9cb39714-c5e9-46a2-bcdd-cb0fd8f9402c",
+      "AGGREGATION_RELATED_FIELD": "35165eff-fbb5-44be-85aa-8c6eb95fb8c5",
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+     {
+      "FIELD_ID": "5dfbb497-c840-4de1-996e-2b944f52ea7f",
+      "NAME": "DUE_COMPANY",
+      "DISPLAY_LABEL": "Due Company",
+      "HELP_TEXT": "",
+      "DATA_TYPE": {
+        "DISPLAY": "Aggregate",
+        "BACKEND": "Aggregate"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": false,
+      "NOT_EDITABLE": true,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_VALUES": [],
+      "AGGREGATION_TYPE": "sum",
+      "AGGREGATION_FIELD": "9cb39714-c5e9-46a2-bcdd-cb0fd8f9402c",
+      "AGGREGATION_RELATED_FIELD": "35165eff-fbb5-44be-85aa-8c6eb95fb8c5",
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      "IS_LIST_TEXT_UNIQUE": false,
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "CONDITION": "38313213-763f-421a-bd12-824ed0411a61",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION_VALUE": "Employee Paid"
+        }
+      ]
+    },
+    {
+      "FIELD_ID": "5dfbb497-c840-4de1-996e-2b944f52ea7c",
+      "NAME": "REPORT_TOTAL",
+      "DISPLAY_LABEL": "Report Total",
+      "HELP_TEXT": "",
+      "DATA_TYPE": {
+        "DISPLAY": "Aggregate",
+        "BACKEND": "Aggregate"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": false,
+      "NOT_EDITABLE": true,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_VALUES": [],
+      "AGGREGATION_TYPE": "sum",
+      "AGGREGATION_FIELD": "9cb39714-c5e9-46a2-bcdd-cb0fd8f9402c",
+      "AGGREGATION_RELATED_FIELD": "35165eff-fbb5-44be-85aa-8c6eb95fb8c5",
+      "CONDITIONS": [],
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+      {
+      "FIELD_ID": "12f4fe59-7b68-4f89-bd4c-76c4fae30822",
+      "NAME": "DUE_EMPLOYEE",
+      "DISPLAY_LABEL": "Due Employee",
+      "HELP_TEXT": "",
+      "DATA_TYPE": {
+        "DISPLAY": "Aggregate",
+        "BACKEND": "Aggregate"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": false,
+      "NOT_EDITABLE": true,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_VALUES": [],
+      "AGGREGATION_TYPE": "sum",
+      "AGGREGATION_FIELD": "9cb39714-c5e9-46a2-bcdd-cb0fd8f9402c",
+      "AGGREGATION_RELATED_FIELD": "35165eff-fbb5-44be-85aa-8c6eb95fb8c5",
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      "IS_LIST_TEXT_UNIQUE": false,
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "CONDITION": "38313213-763f-421a-bd12-824ed0411a61",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION_VALUE": "Employee to Reimburse Company"
+        }
+      ]
+    },
+     {
+      "FIELD_ID": "da8b7d9a-5399-4000-a41a-566bc9f54fb9",
+      "NAME": "COMPANY_PAID_DIRECT",
+      "DISPLAY_LABEL": "Company Paid Direct",
+      "HELP_TEXT": "",
+      "DATA_TYPE": {
+        "DISPLAY": "Aggregate",
+        "BACKEND": "Aggregate"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": false,
+      "NOT_EDITABLE": true,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_VALUES": [],
+      "AGGREGATION_TYPE": "sum",
+      "AGGREGATION_FIELD": "9cb39714-c5e9-46a2-bcdd-cb0fd8f9402c",
+      "AGGREGATION_RELATED_FIELD": "35165eff-fbb5-44be-85aa-8c6eb95fb8c5",
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      "IS_LIST_TEXT_UNIQUE": false,
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "CONDITION": "38313213-763f-421a-bd12-824ed0411a61",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION_VALUE": "Credit Card"
+        }
+      ]
+    },
+     {
+      "FIELD_ID": "4e03755b-c832-4ac3-bd8e-2b9bfc694dbd",
+      "NAME": "CASH_ADVANCE_REMAINING",
+      "DISPLAY_LABEL": "Cash Advance Remaining",
+      "HELP_TEXT": "",
+      "DATA_TYPE": {
+        "DISPLAY": "Aggregate",
+        "BACKEND": "Aggregate"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": false,
+      "NOT_EDITABLE": true,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_VALUES": [],
+      "AGGREGATION_TYPE": "sum",
+      "AGGREGATION_FIELD": "9cb39714-c5e9-46a2-bcdd-cb0fd8f9402c",
+      "AGGREGATION_RELATED_FIELD": "35165eff-fbb5-44be-85aa-8c6eb95fb8c5",
+      "CONDITIONS": [],
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "fcebb21a-236f-48a7-a065-a787adbce28d",
+      "NAME": "PERSONAL_EXPENSES",
+      "DISPLAY_LABEL": "Personal Expenses",
+      "HELP_TEXT": "",
+      "DATA_TYPE": {
+        "DISPLAY": "Aggregate",
+        "BACKEND": "Aggregate"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": false,
+      "NOT_EDITABLE": true,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_VALUES": [],
+      "AGGREGATION_TYPE": "sum",
+      "AGGREGATION_FIELD": "9cb39714-c5e9-46a2-bcdd-cb0fd8f9402c",
+      "AGGREGATION_RELATED_FIELD": "35165eff-fbb5-44be-85aa-8c6eb95fb8c5",
+      "CONDITIONS": [],
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "d787fa9f-dd88-4638-be9b-27db2eef5c6b",
+      "NAME": "RECEIPT_TOTAL",
+      "DISPLAY_LABEL": "Receipt Total",
+      "HELP_TEXT": "",
+      "DATA_TYPE": {
+        "DISPLAY": "Aggregate",
+        "BACKEND": "Aggregate"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": false,
+      "NOT_EDITABLE": true,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_VALUES": [],
+      "AGGREGATION_TYPE": "sum",
+      "AGGREGATION_FIELD": "9cb39714-c5e9-46a2-bcdd-cb0fd8f9402c",
+      "AGGREGATION_RELATED_FIELD": "8a6be7ea-7b0d-466c-9e05-d9a10317b1a1",
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "6c418751-2d69-4f81-9567-d00447762368",
+      "NAME": "TRACKING_NUMBER",
+      "DISPLAY_LABEL": "Tracking Number",
+      "HELP_TEXT": "",
+      "DATA_TYPE": {
+        "DISPLAY": "Auto Number",
+        "BACKEND": "Integer"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": false,
+      "NOT_EDITABLE": false,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_VALUES": [],
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      "PREFIX": "",
+      "SUFFIX": "",
+      "NUMERIC_FORMAT": ""
+    },
+    {
+      "FIELD_ID": "c994acb0-8037-460e-867c-5162a242670f",
+      "NAME": "SUBMIT_FOR_APPROVAL",
+      "DISPLAY_LABEL": "Submit For Approval",
+      "DATA_TYPE": {
+        "DISPLAY": "Checkbox",
+        "BACKEND": "Boolean"
+      },
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": false,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "ec928c4f-f1f6-424d-b120-7e7747360ff2",
+      "NAME": "TIME_WINDOW",
+      "DISPLAY_LABEL": "Time Window",
+      "HELP_TEXT": "",
+      "DATA_TYPE": {
+        "DISPLAY": "Time Window",
+        "BACKEND": "Timestamp"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_VALUES": [],
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+     {
+      "FIELD_ID": "4024c953-87aa-4d4e-97ae-2a467b83db3a",
+      "NAME": "PDFS",
+      "DISPLAY_LABEL": "PDFS",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": null,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": [],
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": true,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "RELATIONSHIP_FIELD": null,
+      "FORMULA": null,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "DATA_TYPE": {
+        "DISPLAY": "PDF",
+        "BACKEND": "BLOB"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": "DATE_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "MESSAGES": null,
+      "INTERNAL": false,
+      "NOT_EDITABLE": true,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false,
+      "WORKFLOW": null,
+      "DATA_FILTER": null,
+      "AGGREGATION_TYPE": null,
+      "AGGREGATION_FIELD": null,
+      "AGGREGATION_RELATED_FIELD": null,
+      "INHERITANCE_MAPPING": null,
+      "UNIQUE": false,
+      "DATE_UPDATED": "DATE_REPLACE"
+     },
+     {
+      "FIELD_ID": "b82cea98-d4c0-4bf0-a06b-ce7d0974a6c5",
+      "NAME": "REPORT_CURRENCY",
+      "DISPLAY_LABEL": "Report Currency",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": "US Dollar",
+      "DATA_TYPE": {
+        "DISPLAY": "Picklist",
+        "BACKEND": "String"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": true,
+      "INTERNAL": false,
+      "NOT_EDITABLE": false,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_VALUES": [
+        "Afghan Afghani",
+        "Albanian Lek",
+        "Algerian Dinar",
+        "Angolan Kwanza",
+        "Argentine Peso",
+        "Armenian Dram",
+        "Aruban Florin",
+        "Australian Dollar",
+        "Azerbaijani Manat",
+        "Bahamian Dollar",
+        "Bahraini Dinar",
+        "Bangladeshi Taka",
+        "Barbadian Dollar",
+        "Belarusian Ruble",
+        "Belize Dollar",
+        "Bermudan Dollar",
+        "Bhutanese Ngultrum",
+        "Bitcoin",
+        "Bolivian Boliviano",
+        "Bosnia-Herzegovina Convertible Mark",
+        "Botswanan Pula",
+        "Brazilian Real",
+        "British Pound Sterling",
+        "Brunei Dollar",
+        "Bulgarian Lev",
+        "Burundian Franc",
+        "Cambodian Riel",
+        "Canadian Dollar",
+        "Cape Verdean Escudo",
+        "Cayman Islands Dollar",
+        "CFA Franc BCEAO",
+        "CFA Franc BEAC",
+        "CFP Franc",
+        "Chilean Peso",
+        "Chilean Unit of Account (UF)",
+        "Chinese Yuan",
+        "Colombian Peso",
+        "Comorian Franc",
+        "Congolese Franc",
+        "Costa Rican Colón",
+        "Croatian Kuna",
+        "Cuban Convertible Peso",
+        "Cuban Peso",
+        "Czech Republic Koruna",
+        "Danish Krone",
+        "Djiboutian Franc",
+        "Dominican Peso",
+        "East Caribbean Dollar",
+        "Egyptian Pound",
+        "Eritrean Nakfa",
+        "Ethiopian Birr",
+        "Euro",
+        "Falkland Islands Pound",
+        "Fijian Dollar",
+        "Gambian Dalasi",
+        "Georgian Lari",
+        "Ghanaian Cedi",
+        "Gibraltar Pound",
+        "Gold (troy ounce)",
+        "Guatemalan Quetzal",
+        "Guernsey Pound",
+        "Guinean Franc",
+        "Guyanaese Dollar",
+        "Haitian Gourde",
+        "Honduran Lempira",
+        "Hong Kong Dollar",
+        "Hungarian Forint",
+        "Icelandic Króna",
+        "Indian Rupee",
+        "Indonesian Rupiah",
+        "Iranian Rial",
+        "Iraqi Dinar",
+        "Israeli New Sheqel",
+        "Jamaican Dollar",
+        "Japanese Yen",
+        "Jersey Pound",
+        "Jordanian Dinar",
+        "Kazakhstani Tenge",
+        "Kenyan Shilling",
+        "Kuwaiti Dinar",
+        "Kyrgystani Som",
+        "Laotian Kip",
+        "Latvian Lats",
+        "Lebanese Pound",
+        "Lesotho Loti",
+        "Liberian Dollar",
+        "Libyan Dinar",
+        "Lithuanian Litas",
+        "Macanese Pataca",
+        "Macedonian Denar",
+        "Malagasy Ariary",
+        "Malawian Kwacha",
+        "Malaysian Ringgit",
+        "Maldivian Rufiyaa",
+        "Manx pound",
+        "Mauritanian Ouguiya",
+        "Mauritian Rupee",
+        "Mexican Peso",
+        "Moldovan Leu",
+        "Mongolian Tugrik",
+        "Moroccan Dirham",
+        "Mozambican Metical",
+        "Myanma Kyat",
+        "Namibian Dollar",
+        "Nepalese Rupee",
+        "Netherlands Antillean Guilder",
+        "New Taiwan Dollar",
+        "New Zealand Dollar",
+        "Nicaraguan Córdoba",
+        "Nigerian Naira",
+        "North Korean Won",
+        "Norwegian Krone",
+        "Omani Rial",
+        "Pakistani Rupee",
+        "Panamanian Balboa",
+        "Papua New Guinean Kina",
+        "Paraguayan Guarani",
+        "Peruvian Nuevo Sol",
+        "Philippine Peso",
+        "Polish Zloty",
+        "Qatari Rial",
+        "Romanian Leu",
+        "Russian Ruble",
+        "Rwandan Franc",
+        "Saint Helena Pound",
+        "Salvadoran Colón",
+        "Samoan Tala",
+        "Saudi Riyal",
+        "Serbian Dinar",
+        "Seychellois Rupee",
+        "Sierra Leonean Leone",
+        "Silver (troy ounce)",
+        "Singapore Dollar",
+        "Solomon Islands Dollar",
+        "Somali Shilling",
+        "South African Rand",
+        "South Korean Won",
+        "Special Drawing Rights",
+        "Sri Lankan Rupee",
+        "Sudanese Pound",
+        "Surinamese Dollar",
+        "Swazi Lilangeni",
+        "Swedish Krona",
+        "Swiss Franc",
+        "Syrian Pound",
+        "São Tomé and Príncipe Dobra",
+        "Tajikistani Somoni",
+        "Tanzanian Shilling",
+        "Thai Baht",
+        "Tongan Paʻanga",
+        "Trinidad and Tobago Dollar",
+        "Tunisian Dinar",
+        "Turkish Lira",
+        "Turkmenistani Manat",
+        "Ugandan Shilling",
+        "Ukrainian Hryvnia",
+        "United Arab Emirates Dirham",
+        "United States Dollar",
+        "Uruguayan Peso",
+        "Uzbekistan Som",
+        "Vanuatu Vatu",
+        "Venezuelan Bolívar Fuerte",
+        "Vietnamese Dong",
+        "Yemeni Rial",
+        "Zambian Kwacha",
+        "Zambian Kwacha (pre-2013)",
+        "Zimbabwean Dollar"
+      ],
+      "GROUP_ID": "ea79eeeb-18ad-4b9f-8e2a-3ff3494de234",
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "e6cd1502-d4fe-4709-b7ea-79a0726dcc03",
+      "NAME": "INVOICE_NUMBER",
+      "DISPLAY_LABEL": "Invoice Number",
+      "HELP_TEXT": "",
+      "DATA_TYPE": {
+        "DISPLAY": "Auto Number",
+        "BACKEND": "Integer"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": false,
+      "NOT_EDITABLE": false,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_STARTING_NUMBER": 1,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_VALUES": [],
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    }
+  ],
+  "LIST_LAYOUTS": [
+    {
+      "LAYOUT_ID": "87a67668-25b7-451a-b21f-efb29e385601",
+      "NAME": "All Expense Reports",
+      "DESCRIPTION": "Default list layout of Expense Reports module",
+      "ID": "",
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "IS_DEFAULT": true,
+      "ORDER_BY": {
+        "COLUMN": "331cd8f9-98a9-49f8-8547-38824d3c27e2",
+        "ORDER": "Asc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "e04e4bfc-ea9f-4a63-92b3-2ef573a36982",
+          "15044d64-e3f6-4000-b12a-abb8ea418906",
+          "422c6e7d-3c7a-4671-a935-6302b608fcae"
+        ]
+      },
+      "CONDITIONS": [],
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "LAYOUT_ID": "86b9d6ed-b5ad-4cde-a51d-39841129987b",
+      "NAME": "All Expense Reports",
+      "DESCRIPTION": "Default list layout of Expense Reports module",
+      "ID": "",
+      "ROLE": "ACCOUNTING_MANAGER_ROLE_REPLACE",
+      "IS_DEFAULT": true,
+      "ORDER_BY": {
+        "COLUMN": "331cd8f9-98a9-49f8-8547-38824d3c27e2",
+        "ORDER": "Asc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "e04e4bfc-ea9f-4a63-92b3-2ef573a36982",
+          "15044d64-e3f6-4000-b12a-abb8ea418906",
+          "422c6e7d-3c7a-4671-a935-6302b608fcae"
+        ]
+      },
+      "CONDITIONS": [],
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "LAYOUT_ID": "0097edb9-d2ac-406c-8288-e79121335782",
+      "NAME": "All Expense Reports",
+      "DESCRIPTION": "Default list layout of Expense Reports module",
+      "ID": "",
+      "ROLE": "SPENDER_ROLE_REPLACE",
+      "IS_DEFAULT": true,
+      "ORDER_BY": {
+        "COLUMN": "331cd8f9-98a9-49f8-8547-38824d3c27e2",
+        "ORDER": "Asc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "e04e4bfc-ea9f-4a63-92b3-2ef573a36982",
+          "15044d64-e3f6-4000-b12a-abb8ea418906",
+          "422c6e7d-3c7a-4671-a935-6302b608fcae"
+        ]
+      },
+      "CONDITIONS": [],
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+     {
+      "LAYOUT_ID": "de38cdf9-b3b7-44ab-b901-37997bc3d360",
+      "NAME": "All Expense Reports",
+      "DESCRIPTION": "Default list layout of Expense Reports module",
+      "ID": "",
+      "ROLE": "ACCOUNTANT_ROLE_REPLACE",
+      "IS_DEFAULT": true,
+      "ORDER_BY": {
+        "COLUMN": "331cd8f9-98a9-49f8-8547-38824d3c27e2",
+        "ORDER": "Asc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "e04e4bfc-ea9f-4a63-92b3-2ef573a36982",
+          "15044d64-e3f6-4000-b12a-abb8ea418906",
+          "422c6e7d-3c7a-4671-a935-6302b608fcae"
+        ]
+      },
+      "CONDITIONS": [],
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    }
+  ],
+  "CREATE_LAYOUTS": [
+    {
+      "LAYOUT_ID": "99a2d8cf-f729-487e-b0d7-b07a5038bc07",
+      "NAME": "Expense Report Create Layout",
+      "DESCRIPTION": "Default create layout of Expense Report module",
+      "PANELS": [
+        {
+          "SETTINGS": {
+            "COLLAPSABLE": false,
+            "ACTION": "",
+            "CONDITIONS": []
+          },
+          "ID": "PANEL_1",
+          "PANEL_NAME": "Report Details",
+          "GRIDS": [
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "e04e4bfc-ea9f-4a63-92b3-2ef573a36982",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "b82cea98-d4c0-4bf0-a06b-ce7d0974a6c5",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 50,
+                "FIELD_ID": "f43238de-2d5b-42e3-9d94-4e4bdceb7b08",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 0,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "331cd8f9-98a9-49f8-8547-38824d3c27e2",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "8b83946a-0c83-43c3-89b9-52d8e0daef97",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "422c6e7d-3c7a-4671-a935-6302b608fcae",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "619b25b5-5a31-4f88-97ac-ab54d203b904",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ]
+          ],
+          "DISPLAY_TYPE": "Panel"
+        }
+      ],
+      "TITLE_BAR": [],
+      "PREDEFINED_TEMPLATE": null,
+      "CUSTOM_LAYOUT": null,
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAYOUT_STYLE": "outline"
+    },
+    {
+      "LAYOUT_ID": "4aca2d2b-cb87-4477-af10-fe8776655862",
+      "NAME": "Expense Report Create Layout",
+      "DESCRIPTION": "Default create layout of Expense Report module",
+      "PANELS": [
+        {
+          "SETTINGS": {
+            "COLLAPSABLE": false,
+            "ACTION": "",
+            "CONDITIONS": []
+          },
+          "ID": "PANEL_1",
+          "PANEL_NAME": "Report Details",
+          "GRIDS": [
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "e04e4bfc-ea9f-4a63-92b3-2ef573a36982",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "b82cea98-d4c0-4bf0-a06b-ce7d0974a6c5",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 50,
+                "FIELD_ID": "f43238de-2d5b-42e3-9d94-4e4bdceb7b08",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 0,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "331cd8f9-98a9-49f8-8547-38824d3c27e2",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "8b83946a-0c83-43c3-89b9-52d8e0daef97",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "422c6e7d-3c7a-4671-a935-6302b608fcae",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "619b25b5-5a31-4f88-97ac-ab54d203b904",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ]
+          ],
+          "DISPLAY_TYPE": "Panel"
+        }
+      ],
+      "TITLE_BAR": [],
+      "PREDEFINED_TEMPLATE": null,
+      "CUSTOM_LAYOUT": null,
+      "ROLE": "ACCOUNTING_MANAGER_ROLE_REPLACE",
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAYOUT_STYLE": "outline"
+    },
+    {
+      "LAYOUT_ID": "e513ec45-4f91-4ef2-aca2-1edfef2272a0",
+      "NAME": "Expense Report Create Layout",
+      "DESCRIPTION": "Default create layout of Expense Report module",
+      "PANELS": [
+        {
+          "SETTINGS": {
+            "COLLAPSABLE": false,
+            "ACTION": "",
+            "CONDITIONS": []
+          },
+          "ID": "PANEL_1",
+          "PANEL_NAME": "Report Details",
+          "GRIDS": [
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "e04e4bfc-ea9f-4a63-92b3-2ef573a36982",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "b82cea98-d4c0-4bf0-a06b-ce7d0974a6c5",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 50,
+                "FIELD_ID": "f43238de-2d5b-42e3-9d94-4e4bdceb7b08",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 0,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "331cd8f9-98a9-49f8-8547-38824d3c27e2",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "8b83946a-0c83-43c3-89b9-52d8e0daef97",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "422c6e7d-3c7a-4671-a935-6302b608fcae",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "619b25b5-5a31-4f88-97ac-ab54d203b904",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ]
+          ],
+          "DISPLAY_TYPE": "Panel"
+        }
+      ],
+      "TITLE_BAR": [],
+      "PREDEFINED_TEMPLATE": null,
+      "CUSTOM_LAYOUT": null,
+      "ROLE": "SPENDER_ROLE_REPLACE",
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAYOUT_STYLE": "outline"
+    },
+    {
+      "LAYOUT_ID": "59062222-f87a-4500-b175-4bb749d4703e",
+      "NAME": "Expense Report Create Layout",
+      "DESCRIPTION": "Default create layout of Expense Report module",
+      "PANELS": [
+        {
+          "SETTINGS": {
+            "COLLAPSABLE": false,
+            "ACTION": "",
+            "CONDITIONS": []
+          },
+          "ID": "PANEL_1",
+          "PANEL_NAME": "Report Details",
+          "GRIDS": [
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "e04e4bfc-ea9f-4a63-92b3-2ef573a36982",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "b82cea98-d4c0-4bf0-a06b-ce7d0974a6c5",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 50,
+                "FIELD_ID": "f43238de-2d5b-42e3-9d94-4e4bdceb7b08",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 0,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "331cd8f9-98a9-49f8-8547-38824d3c27e2",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "8b83946a-0c83-43c3-89b9-52d8e0daef97",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "422c6e7d-3c7a-4671-a935-6302b608fcae",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "619b25b5-5a31-4f88-97ac-ab54d203b904",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ]
+          ],
+          "DISPLAY_TYPE": "Panel"
+        }
+      ],
+      "TITLE_BAR": [],
+      "PREDEFINED_TEMPLATE": null,
+      "CUSTOM_LAYOUT": null,
+      "ROLE": "ACCOUNTANT_ROLE_REPLACE",
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAYOUT_STYLE": "outline"
+    }
+  ],
+  "EDIT_LAYOUTS": [
+    {
+      "LAYOUT_ID": "2517ac86-52dc-4444-a415-d07261d3c077",
+      "NAME": "Expense Report Edit Layout",
+      "DESCRIPTION": "Default edit layout of Expense Report module",
+      "PANELS": [
+        {
+          "SETTINGS": {
+            "COLLAPSABLE": false,
+            "ACTION": "",
+            "CONDITIONS": []
+          },
+          "ID": "PANEL_1",
+          "PANEL_NAME": "Report Details",
+          "GRIDS": [
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "e04e4bfc-ea9f-4a63-92b3-2ef573a36982",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "b82cea98-d4c0-4bf0-a06b-ce7d0974a6c5",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 50,
+                "FIELD_ID": "f43238de-2d5b-42e3-9d94-4e4bdceb7b08",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 0,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "331cd8f9-98a9-49f8-8547-38824d3c27e2",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "8b83946a-0c83-43c3-89b9-52d8e0daef97",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "422c6e7d-3c7a-4671-a935-6302b608fcae",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "619b25b5-5a31-4f88-97ac-ab54d203b904",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "c994acb0-8037-460e-867c-5162a242670f",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ]
+          ],
+          "DISPLAY_TYPE": "Panel"
+        },
+        {
+          "SETTINGS": {
+            "COLLAPSABLE": false,
+            "ACTION": "",
+            "CONDITIONS": []
+          },
+          "ID": "PANEL_2",
+          "PANEL_NAME": "Expenses",
+          "GRIDS": [
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 100,
+                "FIELD_ID": "9cb39714-c5e9-46a2-bcdd-cb0fd8f9402c",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 0,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 0,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 0,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "5dfbb497-c840-4de1-996e-2b944f52ea7f",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "12f4fe59-7b68-4f89-bd4c-76c4fae30822",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "da8b7d9a-5399-4000-a41a-566bc9f54fb9",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "4e03755b-c832-4ac3-bd8e-2b9bfc694dbd",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "5dfbb497-c840-4de1-996e-2b944f52ea7c",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ]
+          ],
+          "DISPLAY_TYPE": "Panel"
+        }
+      ],
+      "TITLE_BAR": [],
+      "PREDEFINED_TEMPLATE": null,
+      "CUSTOM_LAYOUT": null,
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAYOUT_STYLE": "outline"
+    },
+     {
+      "LAYOUT_ID": "565e85df-8b35-4790-8d45-29f2c1f24baa",
+      "NAME": "Expense Report Edit Layout",
+      "DESCRIPTION": "Default edit layout of Expense Report module",
+      "PANELS": [
+        {
+          "SETTINGS": {
+            "COLLAPSABLE": false,
+            "ACTION": "",
+            "CONDITIONS": []
+          },
+          "ID": "PANEL_1",
+          "PANEL_NAME": "Report Details",
+          "GRIDS": [
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "e04e4bfc-ea9f-4a63-92b3-2ef573a36982",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "b82cea98-d4c0-4bf0-a06b-ce7d0974a6c5",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 50,
+                "FIELD_ID": "f43238de-2d5b-42e3-9d94-4e4bdceb7b08",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 0,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "331cd8f9-98a9-49f8-8547-38824d3c27e2",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "8b83946a-0c83-43c3-89b9-52d8e0daef97",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "422c6e7d-3c7a-4671-a935-6302b608fcae",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "619b25b5-5a31-4f88-97ac-ab54d203b904",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "c994acb0-8037-460e-867c-5162a242670f",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ]
+          ],
+          "DISPLAY_TYPE": "Panel"
+        },
+        {
+          "SETTINGS": {
+            "COLLAPSABLE": false,
+            "ACTION": "",
+            "CONDITIONS": []
+          },
+          "ID": "PANEL_2",
+          "PANEL_NAME": "Expenses",
+          "GRIDS": [
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 100,
+                "FIELD_ID": "9cb39714-c5e9-46a2-bcdd-cb0fd8f9402c",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 0,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 0,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 0,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "5dfbb497-c840-4de1-996e-2b944f52ea7f",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "12f4fe59-7b68-4f89-bd4c-76c4fae30822",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "da8b7d9a-5399-4000-a41a-566bc9f54fb9",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "4e03755b-c832-4ac3-bd8e-2b9bfc694dbd",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "5dfbb497-c840-4de1-996e-2b944f52ea7c",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ]
+          ],
+          "DISPLAY_TYPE": "Panel"
+        }
+      ],
+      "TITLE_BAR": [],
+      "PREDEFINED_TEMPLATE": null,
+      "CUSTOM_LAYOUT": null,
+      "ROLE": "ACCOUNTING_MANAGER_ROLE_REPLACE",
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAYOUT_STYLE": "outline"
+    },
+    {
+      "LAYOUT_ID": "3ff803fe-5147-49a7-b62b-7377b67d36f3",
+      "NAME": "Expense Report Edit Layout",
+      "DESCRIPTION": "Default edit layout of Expense Report module",
+      "PANELS": [
+        {
+          "SETTINGS": {
+            "COLLAPSABLE": false,
+            "ACTION": "",
+            "CONDITIONS": []
+          },
+          "ID": "PANEL_1",
+          "PANEL_NAME": "Report Details",
+          "GRIDS": [
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "e04e4bfc-ea9f-4a63-92b3-2ef573a36982",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "b82cea98-d4c0-4bf0-a06b-ce7d0974a6c5",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 50,
+                "FIELD_ID": "f43238de-2d5b-42e3-9d94-4e4bdceb7b08",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 0,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "331cd8f9-98a9-49f8-8547-38824d3c27e2",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "8b83946a-0c83-43c3-89b9-52d8e0daef97",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "422c6e7d-3c7a-4671-a935-6302b608fcae",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "619b25b5-5a31-4f88-97ac-ab54d203b904",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "c994acb0-8037-460e-867c-5162a242670f",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ]
+          ],
+          "DISPLAY_TYPE": "Panel"
+        },
+        {
+          "SETTINGS": {
+            "COLLAPSABLE": false,
+            "ACTION": "",
+            "CONDITIONS": []
+          },
+          "ID": "PANEL_2",
+          "PANEL_NAME": "Expenses",
+          "GRIDS": [
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 100,
+                "FIELD_ID": "9cb39714-c5e9-46a2-bcdd-cb0fd8f9402c",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 0,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 0,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 0,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "5dfbb497-c840-4de1-996e-2b944f52ea7f",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "12f4fe59-7b68-4f89-bd4c-76c4fae30822",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "da8b7d9a-5399-4000-a41a-566bc9f54fb9",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "4e03755b-c832-4ac3-bd8e-2b9bfc694dbd",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "5dfbb497-c840-4de1-996e-2b944f52ea7c",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ]
+          ],
+          "DISPLAY_TYPE": "Panel"
+        }
+      ],
+      "TITLE_BAR": [],
+      "PREDEFINED_TEMPLATE": null,
+      "CUSTOM_LAYOUT": null,
+      "ROLE": "SPENDER_ROLE_REPLACE",
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAYOUT_STYLE": "outline"
+    },
+      {
+      "LAYOUT_ID": "1d7a83ab-bdb5-484c-b848-ed667f264174",
+      "NAME": "Expense Report Edit Layout",
+      "DESCRIPTION": "Default edit layout of Expense Report module",
+      "PANELS": [
+        {
+          "SETTINGS": {
+            "COLLAPSABLE": false,
+            "ACTION": "",
+            "CONDITIONS": []
+          },
+          "ID": "PANEL_1",
+          "PANEL_NAME": "Report Details",
+          "GRIDS": [
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "e04e4bfc-ea9f-4a63-92b3-2ef573a36982",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "b82cea98-d4c0-4bf0-a06b-ce7d0974a6c5",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 50,
+                "FIELD_ID": "f43238de-2d5b-42e3-9d94-4e4bdceb7b08",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 0,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "331cd8f9-98a9-49f8-8547-38824d3c27e2",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "8b83946a-0c83-43c3-89b9-52d8e0daef97",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "422c6e7d-3c7a-4671-a935-6302b608fcae",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "619b25b5-5a31-4f88-97ac-ab54d203b904",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "c994acb0-8037-460e-867c-5162a242670f",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ]
+          ],
+          "DISPLAY_TYPE": "Panel"
+        },
+        {
+          "SETTINGS": {
+            "COLLAPSABLE": false,
+            "ACTION": "",
+            "CONDITIONS": []
+          },
+          "ID": "PANEL_2",
+          "PANEL_NAME": "Expenses",
+          "GRIDS": [
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 100,
+                "FIELD_ID": "9cb39714-c5e9-46a2-bcdd-cb0fd8f9402c",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 0,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 0,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 0,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "5dfbb497-c840-4de1-996e-2b944f52ea7f",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "12f4fe59-7b68-4f89-bd4c-76c4fae30822",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "da8b7d9a-5399-4000-a41a-566bc9f54fb9",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ],
+            [
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "4e03755b-c832-4ac3-bd8e-2b9bfc694dbd",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": false,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "5dfbb497-c840-4de1-996e-2b944f52ea7c",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              },
+              {
+                "IS_EMPTY": true,
+                "HEIGHT": 10,
+                "WIDTH": 25,
+                "FIELD_ID": "",
+                "SETTINGS": {
+                  "ACTION": "",
+                  "CONDITIONS": []
+                }
+              }
+            ]
+          ],
+          "DISPLAY_TYPE": "Panel"
+        }
+      ],
+      "TITLE_BAR": [],
+      "PREDEFINED_TEMPLATE": null,
+      "CUSTOM_LAYOUT": null,
+      "ROLE": "ACCOUNTANT_ROLE_REPLACE",
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAYOUT_STYLE": "outline"
+    }
+  ],
+  "LIST_MOBILE_LAYOUTS": [
+    {
+      "LAYOUT_ID": "c7519c4b-2549-4a89-b866-b76cc4212b6f",
+      "NAME": "All Expense Reports",
+      "DESCRIPTION": "expense reports",
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "ORDER_BY": {
+        "COLUMN": "38313213-763f-421a-bd12-824ed0411a61",
+        "ORDER": "Asc"
+      },
+      "FIELDS": [
+        "15044d64-e3f6-4000-b12a-abb8ea418906",
+        "e04e4bfc-ea9f-4a63-92b3-2ef573a36982"
+      ],
+      "CONDITIONS": [],
+      "IS_DEFAULT": true
+    },
+    {
+      "LAYOUT_ID": "415c5d46-7632-41a0-a1ae-10c6061f1011",
+      "NAME": "All Expense Reports",
+      "DESCRIPTION": "expense reports",
+      "ROLE": "AGENT_ROLE_REPLACE",
+      "ORDER_BY": {
+        "COLUMN": "38313213-763f-421a-bd12-824ed0411a61",
+        "ORDER": "Asc"
+      },
+      "FIELDS": [
+        "15044d64-e3f6-4000-b12a-abb8ea418906",
+        "e04e4bfc-ea9f-4a63-92b3-2ef573a36982"
+      ],
+      "CONDITIONS": [],
+      "IS_DEFAULT": true
+    },
+     {
+      "LAYOUT_ID": "c4b1f56b-e690-48b2-8a60-0a2261f37a98",
+      "NAME": "All Expense Reports",
+      "DESCRIPTION": "expense reports",
+      "ROLE": "ACCOUNTING_MANAGER_ROLE_REPLACE",
+      "ORDER_BY": {
+        "COLUMN": "38313213-763f-421a-bd12-824ed0411a61",
+        "ORDER": "Asc"
+      },
+      "FIELDS": [
+        "15044d64-e3f6-4000-b12a-abb8ea418906",
+        "e04e4bfc-ea9f-4a63-92b3-2ef573a36982"
+      ],
+      "CONDITIONS": [],
+      "IS_DEFAULT": true
+    }
+  ],
+  "CREATE_MOBILE_LAYOUTS": [
+    {
+      "LAYOUT_ID": "7cb18601-be68-4769-acf5-78009807dfce",
+      "NAME": "Expense Reports",
+      "DESCRIPTION": "expense reports",
+      "FIELDS": [
+        "e04e4bfc-ea9f-4a63-92b3-2ef573a36982",
+        "15044d64-e3f6-4000-b12a-abb8ea418906",
+        "619b25b5-5a31-4f88-97ac-ab54d203b904",
+        "331cd8f9-98a9-49f8-8547-38824d3c27e2",
+        "8b83946a-0c83-43c3-89b9-52d8e0daef97",
+        "422c6e7d-3c7a-4671-a935-6302b608fcae",
+        "41f135aa-e9d1-4888-920b-2a8d8672fb7b"
+      ],
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE"
+    },
+    {
+      "LAYOUT_ID": "a0ecfcc8-db99-4307-9c99-8d310cada33f",
+      "NAME": "Expense Reports",
+      "DESCRIPTION": "expense reports",
+      "FIELDS": [
+        "e04e4bfc-ea9f-4a63-92b3-2ef573a36982",
+        "15044d64-e3f6-4000-b12a-abb8ea418906",
+        "619b25b5-5a31-4f88-97ac-ab54d203b904",
+        "331cd8f9-98a9-49f8-8547-38824d3c27e2",
+        "8b83946a-0c83-43c3-89b9-52d8e0daef97",
+        "422c6e7d-3c7a-4671-a935-6302b608fcae",
+        "41f135aa-e9d1-4888-920b-2a8d8672fb7b"
+      ],
+      "ROLE": "AGENT_ROLE_REPLACE"
+    },
+    {
+      "LAYOUT_ID": "47ff278e-69f3-4769-b8e6-20e6b6418d3e",
+      "NAME": "Expense Reports",
+      "DESCRIPTION": "expense reports",
+      "FIELDS": [
+        "e04e4bfc-ea9f-4a63-92b3-2ef573a36982",
+        "15044d64-e3f6-4000-b12a-abb8ea418906",
+        "619b25b5-5a31-4f88-97ac-ab54d203b904",
+        "331cd8f9-98a9-49f8-8547-38824d3c27e2",
+        "8b83946a-0c83-43c3-89b9-52d8e0daef97",
+        "422c6e7d-3c7a-4671-a935-6302b608fcae",
+        "41f135aa-e9d1-4888-920b-2a8d8672fb7b"
+      ],
+      "ROLE": "CUSTOMERS_ROLE_REPLACE"
+    },
+    {
+      "LAYOUT_ID": "33136595-0bce-4adf-a917-6006131d3013",
+      "NAME": "Expense Reports",
+      "DESCRIPTION": "expense reports",
+      "FIELDS": [
+        "e04e4bfc-ea9f-4a63-92b3-2ef573a36982",
+        "15044d64-e3f6-4000-b12a-abb8ea418906",
+        "619b25b5-5a31-4f88-97ac-ab54d203b904",
+        "331cd8f9-98a9-49f8-8547-38824d3c27e2",
+        "8b83946a-0c83-43c3-89b9-52d8e0daef97",
+        "422c6e7d-3c7a-4671-a935-6302b608fcae",
+        "41f135aa-e9d1-4888-920b-2a8d8672fb7b"
+      ],
+      "ROLE": "ACCOUNTING_MANAGER_ROLE_REPLACE"
+    }
+  ],
+  "EDIT_MOBILE_LAYOUTS": [
+    {
+      "LAYOUT_ID": "afbaae55-b00e-47b5-b717-0276f9942fc9",
+      "NAME": "Expense Reports",
+      "DESCRIPTION": "expense reports",
+      "FIELDS": [
+        "e04e4bfc-ea9f-4a63-92b3-2ef573a36982",
+        "15044d64-e3f6-4000-b12a-abb8ea418906",
+        "619b25b5-5a31-4f88-97ac-ab54d203b904",
+        "331cd8f9-98a9-49f8-8547-38824d3c27e2",
+        "8b83946a-0c83-43c3-89b9-52d8e0daef97",
+        "422c6e7d-3c7a-4671-a935-6302b608fcae",
+        "41f135aa-e9d1-4888-920b-2a8d8672fb7b"
+      ],
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE"
+    },
+    {
+      "LAYOUT_ID": "7988f6fe-e816-4b00-aa5f-bae38ab3d87c",
+      "NAME": "Expense Reports",
+      "DESCRIPTION": "expense reports",
+      "FIELDS": [
+        "e04e4bfc-ea9f-4a63-92b3-2ef573a36982",
+        "15044d64-e3f6-4000-b12a-abb8ea418906",
+        "619b25b5-5a31-4f88-97ac-ab54d203b904",
+        "331cd8f9-98a9-49f8-8547-38824d3c27e2",
+        "8b83946a-0c83-43c3-89b9-52d8e0daef97",
+        "422c6e7d-3c7a-4671-a935-6302b608fcae",
+        "41f135aa-e9d1-4888-920b-2a8d8672fb7b"
+      ],
+      "ROLE": "AGENT_ROLE_REPLACE"
+    },
+    {
+      "LAYOUT_ID": "5e848908-6874-4c35-9599-30d65d10ba81",
+      "NAME": "Expense Reports",
+      "DESCRIPTION": "expense reports",
+      "FIELDS": [
+        "e04e4bfc-ea9f-4a63-92b3-2ef573a36982",
+        "15044d64-e3f6-4000-b12a-abb8ea418906",
+        "619b25b5-5a31-4f88-97ac-ab54d203b904",
+        "331cd8f9-98a9-49f8-8547-38824d3c27e2",
+        "8b83946a-0c83-43c3-89b9-52d8e0daef97",
+        "422c6e7d-3c7a-4671-a935-6302b608fcae",
+        "41f135aa-e9d1-4888-920b-2a8d8672fb7b"
+      ],
+      "ROLE": "CUSTOMERS_ROLE_REPLACE"
+    },
+    {
+      "LAYOUT_ID": "45ab887d-738e-40ee-809a-23e5762ad34f",
+      "NAME": "Expense Reports",
+      "DESCRIPTION": "expense reports",
+      "FIELDS": [
+        "e04e4bfc-ea9f-4a63-92b3-2ef573a36982",
+        "15044d64-e3f6-4000-b12a-abb8ea418906",
+        "619b25b5-5a31-4f88-97ac-ab54d203b904",
+        "331cd8f9-98a9-49f8-8547-38824d3c27e2",
+        "8b83946a-0c83-43c3-89b9-52d8e0daef97",
+        "422c6e7d-3c7a-4671-a935-6302b608fcae",
+        "41f135aa-e9d1-4888-920b-2a8d8672fb7b"
+      ],
+      "ROLE": "ACCOUNTING_MANAGER_ROLE_REPLACE"
+    }
+  ],
+  "WORKFLOWS": [],
+  "DATE_CREATED": "DATE_REPLACE",
+  "DATE_UPDATED": "DATE_REPLACE",
+  "CREATED_BY": "CREATED_BY_REPLACE",
+  "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+}

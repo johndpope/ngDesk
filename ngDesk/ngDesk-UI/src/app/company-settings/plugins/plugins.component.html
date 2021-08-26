@@ -1,0 +1,73 @@
+<app-toolbar></app-toolbar>
+<div class="pad10" fxLayoutAlign="center">
+	<mat-card fxLayout="column" fxFlex.lg="55" fxFlex.md="55" fxFlex.sm="100" fxLayoutGap="20px" *ngIf="widgetId !== undefined">
+		<div>
+
+			<!--WORDPRESS INSTRUCTIONS-->
+			<div *ngIf="path == 'wordpress'">
+				<div class="mat-h2" style="text-align: center">{{'SETUP_WIDGET_ON_WORDPRESS' | translate}}</div>
+
+				<div class="mat-h4">
+					<ul>
+						<li>Login to WordPress admin and navigate to the Plugins menu. It’s on the left side of the WordPress dashboard. Then Select Add
+							New.</li>
+						<li>On the Add Plugins page, search for “ngDesk”</li>
+						<li>Select ngDesk from the results and click the Install Now button.</li>
+						<li>
+							<div>
+								You are now in a list of installed plugins. Find the ngDesk plugin in the list of plugins and click on Settings.
+							</div>
+							<div style="color:grey">
+								NOTE: you could also access this page by selecting settings->ngDesk from your dashboard menu.
+							</div>
+						</li>
+						<li>Enter the below highlighted subdomain and widgetId under settings and click on “Save”</li>
+						<li>The Widget will now appear on all pages of your WordPress site!</li>
+					</ul>
+				</div>
+			</div>
+
+			<!--JOOMLA INSTRUCTIONS-->
+			<div *ngIf="path == 'joomla'">
+				<div class="mat-h2" style="text-align: center">{{'SETUP_WIDGET_ON_JOOMLA' | translate}}</div>
+
+				<div class="mat-h4">
+					<ul>
+						<li>Download “ngdesk.zip” from <a href="https://github.com/ngDesk/ngdesk-joomla-plugin" target="new">GitHub</a> and unzip it
+						</li>
+						<li>In the Joomla administration panel, go to: Extensions –> Manage –> Install</li>
+						<li>Select “Upload & Install Joomla Extension”, click “Choose file” and select the “ngdesk.zip” file</li>
+						<li>Then click Upload & Install to upload the file and complete the installation</li>
+						<li>For the plugin settings, in the Joomla administration panel go to: Extensions –> Plugin and search for “ngDesk”</li>
+						<li>Enter the below highlighted subdomain and widgetId under settings and click on “Save”</li>
+						<li>The Widget will now appear on all pages of your Joomla site!</li>
+					</ul>
+				</div>
+			</div>
+
+			<!--SHOPIFY INSTRUCTIONS-->
+			<div *ngIf="path == 'shopify'">
+				<div class="mat-h2" style="text-align: center">{{'SETUP_WIDGET_ON_SHOPIFY' | translate}}</div>
+
+				<div class="mat-h4">
+					<ul>
+						<li>Login to your Shopify dashboard</li>
+						<li>Under Apps, click on Visit the Shopify App Store and search for “ngDesk”</li>
+						<li>Select ngDesk from the results, Click on Add app and then click the Install app button.</li>
+						<li>Enter the below highlighted subdomain and widgetId under app and click on “Save”</li>
+						<li>The Widget will now appear on all pages of your Shopify site!</li>
+					</ul>
+				</div>
+
+			</div>
+
+			<pre
+				style="background-color: rgb(7, 7, 7); border-radius: 8px; padding-right: 2%; cursor: pointer; white-space: pre-wrap; margin: 0;">
+                <ol style=" margin-top: 0; margin-bottom: 0; cursor: pointer; color: rgb(255, 255, 255); word-break: break-word;" fxLayout="column" fxLayoutGap="5px" >
+                        <li><span><span>&lt;script&gt;</span></span></li><li><span>var script = document.createElement(&#34;script&#34;);</span></li><li><span>script.type = &#34;text/javascript&#34;;</span></li><li><span>script.src = &#34;https://</span><span style="color:darkgoldenrod">{{subdomain}}</span><span>.ngdesk.com/widgets/chat/</span><span style="color:darkgoldenrod">{{widgetId}}</span><span>/chat_widget.js&#34;;</span></li><li><span>document.getElementsByTagName(&#34;head&#34;)[0].appendChild(script);</span></li><li><span class="tag">&lt;/script&gt;</span></li>
+                </ol>
+            </pre>
+		</div>
+
+	</mat-card>
+</div>

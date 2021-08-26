@@ -1,0 +1,28 @@
+  {
+            "CREATED_BY": "CREATED_BY_REPLACE",
+            "DATE_CREATED": "DATE_CREATED_REPLACE",
+            "DATE_UPDATED": "DATE_CREATED_REPLACE",
+            "REQUESTOR": "REQUESTOR_REPLACE",
+            "LAST_UPDATED_BY":"CREATED_BY_REPLACE",
+            "DELETED": false,
+            "STATUS": "New",
+            "SOURCE_TYPE": "web",
+            "TICKET_ID": 1,
+            "MESSAGES": [
+                {
+                    "MESSAGE": "MESSAGE_REPLACE",
+                    "DATE_CREATED": "DATE_CREATED_REPLACE",
+                    "SENDER": {
+                        "ROLE": "SENDER_ROLE_REPLACE",
+                        "USER_UUID": "USER_UUID_REPLACE",
+                        "LAST_NAME": "User",
+                        "FIRST_NAME": "Sytem"
+                    },
+                    "ATTACHMENTS": [],
+                    "MESSAGE_ID": "MESSAGE_ID_REPLACE",
+                    "MESSAGE_TYPE": "MESSAGE"
+                }
+            ],
+            "TEAMS": ["GLOBAL_TEAM_ID_REPLACE"],
+            "SUBJECT": "Sample Ticket: Meet the ticket"
+        }

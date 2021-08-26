@@ -1,0 +1,46 @@
+{
+  "SECTIONS": [
+    {
+      "SOURCE_LANGUAGE": "en",
+      "NAME": "Announcements",
+      "DESCRIPTION": "Any news about ngDesk!",
+      "SORT_BY": "Manually",
+      "CATEGORY": "CATEOGRY_ID_REPLACE",
+      "DATE_CREATED": "DATE_CREATED_REPLACED",
+      "DATE_UPDATED": "DATE_CREATED_REPLACED",
+      "LAST_UPDATED_BY": "USER_ID_REPLACE",
+      "CREATED_BY": "USER_ID_REPLACE",
+      "ORDER": 2,
+      "IS_DRAFT": false,
+      "VISIBLE_TO": [
+        "PUBLIC_TEAM_ID_REPLACE",
+        "GLOBAL_TEAM_ID_REPLACE"
+  	  ],
+  	  "MANAGED_BY": [
+        "ADMIN_TEAM",
+        "AGENT_TEAM"
+      ]
+    },
+    {
+      "SOURCE_LANGUAGE": "en",
+      "NAME": "FAQ",
+      "DESCRIPTION": "Frequently asked questions about ngDesk!",
+      "SORT_BY": "Manually",
+      "CATEGORY": "CATEOGRY_ID_REPLACE",
+      "DATE_CREATED": "DATE_CREATED_REPLACED",
+      "DATE_UPDATED": "DATE_CREATED_REPLACED",
+      "LAST_UPDATED_BY": "USER_ID_REPLACE",
+      "CREATED_BY": "USER_ID_REPLACE",
+      "ORDER": 1,
+      "IS_DRAFT": false,
+      "VISIBLE_TO": [
+        "PUBLIC_TEAM_ID_REPLACE",
+        "GLOBAL_TEAM_ID_REPLACE"
+  	  ],
+      "MANAGED_BY": [
+        "ADMIN_TEAM",
+        "AGENT_TEAM"
+      ]
+    }
+  ]
+}

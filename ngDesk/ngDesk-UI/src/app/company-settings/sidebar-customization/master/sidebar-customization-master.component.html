@@ -1,0 +1,12 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<div fxLayout="column" fxLayoutGap="10px" class="pad10">
+	<ng-template #headerTemplateRef>
+		<app-title-bar class="light-grey-color" title="{{'SIDEBAR_CUSTOMIZATION' | translate}}">
+		</app-title-bar>
+	</ng-template>
+	<app-custom-table fxFlex [templateRef]="columnTemplateRef" (rowClickedEvent)="rowClicked($event)">
+		<ng-template #columnTemplateRef let-element="element" let-col="col">
+			{{element[col.NAME]}}
+		</ng-template>
+	</app-custom-table>
+</div>

@@ -1,0 +1,8 @@
+<GridLayout rows="auto, auto, auto">
+<StackLayout [formGroup]="subdomainForm" hideActionBar>
+  <Label  row="0" style="font-size: 30px;color: #4265d8;" text="ngDesk" ></Label>
+  <TextField   row="1"  formControlName="subdomain" style="width: 90%;font-size:medium;margin: 40px;padding-top: 90px;" autocapitalizationType="none" hint="Please enter your subdomain"></TextField>
+  <Button   row="2" [isEnabled]="!loading" class ="-outline -rounded-sm"  text="Next" style="width: 80%;"  (tap)=checkSubdomain()></Button>
+  <ActivityIndicator rowSpan="3" [busy]="loading"></ActivityIndicator>
+</StackLayout>
+</GridLayout>

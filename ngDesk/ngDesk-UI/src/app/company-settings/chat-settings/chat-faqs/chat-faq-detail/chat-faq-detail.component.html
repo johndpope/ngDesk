@@ -1,0 +1,94 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef>
+	<app-title-bar title="{{'CHAT_FAQS' | translate}}" buttonText="{{'SAVE' | translate}}" (buttonRightOnClick)="save()">
+	</app-title-bar>
+</ng-template>
+<div class="pad10">
+	<div fxLayout="column" fxLayoutAlign="center center" *ngIf='errorMessage != undefined || successMessage != undefined'>
+		<mat-error class="mat-body">{{errorMessage}}</mat-error>
+		<label class="mat-body green-color">{{successMessage}}</label>
+	</div>
+	<form [formGroup]="faqForm" (ngSubmit)="save()">
+		<div fxLayout="column" style="padding-bottom: 10px">
+			<app-new-name-description>
+			</app-new-name-description>
+		</div>
+	</form>
+	<div>
+
+		<h4 class="mat-h4"> {{'FAQ_MODULES_HINT' | translate}}</h4>
+		<div>
+			<mat-form-field>
+				<mat-label>{{'MODULE' | translate}}</mat-label>
+				<mat-select panelClass="schedules-user-select" [(ngModel)]="selected" multiple>
+					<mat-option [value]="modules[0]">{{'TICKETS' | translate}}</mat-option>
+					<mat-option [value]="modules[1]">{{'CHAT' | translate}}</mat-option>
+				</mat-select>
+			</mat-form-field>
+		</div>
+	</div>
+	<div>
+		<h2 class="mat-h2"> {{'QUESTIONS' | translate}}</h2>
+		<h4 class="mat-h4"> {{'FAQ_QUESTIONS_HINT' | translate}}</h4>
+		<form [formGroup]="questionsForm" style="padding-top: 10px; padding-bottom: 20px;">
+			<div fxLayout="column" fxLayoutGap="10px">
+				<div fxLayout="column" fxLayoutGap="20px" formArrayName="itemRows">
+					<mat-card *ngFor="let itemRow of questionsForm['controls']['itemRows']['controls']; let i=index" [formGroupName]="i"
+						fxLayout="column" fxLayoutGap="20px">
+						<div fxLayout="column">
+							<div fxLayout="row" fxLayoutGap="12px" fxLayoutAlign="start center" fxFlex="50px">
+								<span style="padding: 5px" class="custom-stepper-number-icon-outline" color="primary"
+									fxLayoutAlign="center center">{{i + 1}}</span>
+								<mat-form-field fxFlexOffset="8px" fxFlex>
+									<input formControlName="itemName" [(ngModel)]="this.chatFaq.QUESTIONS[i]" placeholder="{{'QUESTION'| translate}}"
+										[disabled]="disableButtons" type="text" matInput>
+								</mat-form-field>
+								<div *ngIf="i > 4" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+									<button [disabled]="disableButtons" mat-icon-button (click)="deleteQuestion(i)">
+										<mat-icon color="primary">remove_circle_outline</mat-icon>
+									</button>
+								</div>
+							</div>
+						</div>
+					</mat-card>
+				</div>
+				<button mat-button *ngIf="!disableButtons" fxLayout="row" fxLayoutGap="5px" style="cursor: pointer" (click)="addNewQuestion()">
+					<mat-icon color="primary">add_circle_outline</mat-icon>
+					<label style="cursor: pointer" class="mat-h3">{{'ADD_FAQ' | translate}}</label>
+				</button>
+			</div>
+		</form>
+	</div>
+	<div>
+		<h2 class="mat-h2"> {{'ANSWERS' | translate}}</h2>
+		<h4 class="mat-h4">{{'FAQ_ANSWERS_HINT' | translate}}</h4>
+		<form [formGroup]="answersForm" style="padding-top: 10px">
+			<div fxLayout="column" fxLayoutGap="10px">
+				<div fxLayout="column" fxLayoutGap="20px" formArrayName="itemRows">
+					<mat-card *ngFor="let itemRow of answersForm['controls']['itemRows']['controls']; let i=index" [formGroupName]="i"
+						fxLayout="column" fxLayoutGap="20px">
+						<div fxLayout="column">
+							<div fxLayout="row" fxLayoutGap="12px" fxLayoutAlign="start center" fxFlex="50px">
+								<span style="padding: 5px" class="custom-stepper-number-icon-outline" color="primary"
+									fxLayoutAlign="center center">{{i + 1}}</span>
+								<mat-form-field fxFlexOffset="8px" fxFlex>
+									<input formControlName="itemName" [(ngModel)]="this.chatFaq.ANSWERS[i]" placeholder="{{'ANSWER'| translate}}"
+										[disabled]="disableButtons" type="text" matInput>
+								</mat-form-field>
+								<div *ngIf="i > 0" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+									<button [disabled]="disableButtons" mat-icon-button (click)="deleteRow(i)">
+										<mat-icon color="primary">remove_circle_outline</mat-icon>
+									</button>
+								</div>
+							</div>
+						</div>
+					</mat-card>
+				</div>
+				<button mat-button *ngIf="!disableButtons" fxLayout="row" fxLayoutGap="5px" style="cursor: pointer" (click)="addNewRow()">
+					<mat-icon color="primary">add_circle_outline</mat-icon>
+					<label style="cursor: pointer" class="mat-h3">{{'ADD_ANSWER' | translate}}</label>
+				</button>
+			</div>
+		</form>
+	</div>
+</div>

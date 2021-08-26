@@ -1,0 +1,35 @@
+<div fxLayout="column" fxLayoutAlign="center start" fxLayoutGap="20px">
+    <app-toolbar style="width: 100%;" [templateRef]="customTemplateRef"></app-toolbar>
+		<ng-template #customTemplateRef>
+			<div fxLayoutAlign="space-between center" fxLayoutGap="10px">
+                <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">
+                    <h2 style="margin: 10px; font-size: large;" class="mat-h3">{{moduleName}}</h2>
+                </div>
+			</div>
+		</ng-template>
+   
+	<div fxFlex=85 style="height:90%;width: 100%;">
+        <app-custom-table  class="pad10" fxFlex [templateRef]="columnTemplateRef" noRecordsMessage="No {{moduleName}} found"
+        (pageChangeEmit)="onPageChange($event);customTableService.isLoading = true" (rowClickedEvent)="rowClicked($event)"
+        (sortData)="onPageChange($event);customTableService.isLoading = true" style="height:100%;width: 100%;">
+    	<ng-template #columnTemplateRef let-element="element" let-col="col">
+            <span *ngIf="col.NAME !== 'CHANNEL' && col.DATA_TYPE === 'Date/Time'">{{element[col.NAME] | dateFormat: 'medium'}}</span>
+            <span *ngIf="col.NAME !== 'CHANNEL' && col.DATA_TYPE === 'Relationship' && element[col.NAME] !== undefined && element[col.NAME] !== null">{{element[col.NAME].PRIMARY_DISPLAY_FIELD}}</span>
+            <span *ngIf="col.NAME !== 'CHANNEL' &&  col.DATA_TYPE ==='Button'"><button mat-raised-button color="primary"
+                    (click)="customButtonClick(col, element)">{{col.DISPLAY}}</button></span>
+            <span *ngIf="col.NAME !== 'CHANNEL' && col.DATA_TYPE === 'Date'">{{element[col.NAME] | dateFormat: 'mediumDate'}}</span>
+            <span *ngIf="col.NAME !== 'CHANNEL' && col.DATA_TYPE === 'Time'">{{element[col.NAME] | dateFormat: 'h:mm a'}}</span>
+            <span *ngIf="col.NAME !== 'CHANNEL' && col.DATA_TYPE === 'Number'">{{element[col.NAME] | localNumber}}</span>
+            <span *ngIf="col.NAME === 'CHANNEL' && element[col.NAME] !== null"> {{ element[col.NAME].name }}</span>
+            <span
+                *ngIf="col.NAME !== 'CHANNEL' && col.DATA_TYPE !== 'Button' && col.DATA_TYPE !== 'Date/Time' && col.DATA_TYPE !== 'Relationship' && col.DATA_TYPE !== 'Date' && 
+                col.DATA_TYPE !== 'Time'&& col.DATA_TYPE !== 'Number' && col.DATA_TYPE !=='Text' && col.DATA_TYPE !=='Text Area'">{{element[col.NAME]}}</span>
+            <span *ngIf="col.NAME !== 'CHANNEL' && col.DATA_TYPE =='Text' || col.DATA_TYPE =='Text Area'">
+                <div style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;width:70%;overflow: hidden;">
+                    {{element[col.NAME]}}
+                </div>
+            </span>
+        </ng-template>
+    </app-custom-table>
+    </div>
+</div>

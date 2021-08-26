@@ -1,0 +1,3030 @@
+{
+  "FIELDS": [
+    {
+      "NAME": "IS_LOGIN_ALLOWED",
+      "INTERNAL": true,
+      "NOT_EDITABLE": false,
+      "DISPLAY_LABEL": "Can login",
+      "DATA_TYPE": {
+        "DISPLAY": "Checkbox",
+        "BACKEND": "Boolean"
+      },
+      "FIELD_ID": "543c1c79-fb2b-49fa-b56b-f7b424c3d156",
+      "REQUIRED": true,
+      "DEFAULT_VALUE": true
+    },
+    {
+      "FIELD_ID": "59ba9b19-bbd6-4062-a8cf-1fadf6e37c0d",
+      "NAME": "EFFECTIVE_TO",
+      "DISPLAY_LABEL": "Effective to",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "LENGTH": 0,
+      "DECIMAL_PLACES": 0,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": null,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": [],
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": true,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "RELATIONSHIP_FIELD": null,
+      "FORMULA": null,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Date/Time",
+        "BACKEND": "Timestamp"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": null,
+      "LAST_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false
+    },
+    {
+      "FIELD_ID": "36adfe5a-c94d-416b-b2ad-2cdf5fa6d18d",
+      "NAME": "EFFECTIVE_FROM",
+      "DISPLAY_LABEL": "Effective from",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "LENGTH": 0,
+      "DECIMAL_PLACES": 0,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": null,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": [],
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": true,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "RELATIONSHIP_FIELD": null,
+      "FORMULA": null,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Date/Time",
+        "BACKEND": "Timestamp"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": null,
+      "LAST_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false
+    },
+    {
+      "NAME": "DELETED",
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "DISPLAY_LABEL": "Deleted",
+      "DATA_TYPE": {
+        "DISPLAY": "Checkbox",
+        "BACKEND": "Boolean"
+      },
+      "FIELD_ID": "f1041c25-c928-4d30-b2fb-9c843dbe9f95",
+      "REQUIRED": false
+    },
+    {
+      "NAME": "SUBSCRIPTION_ON_MARKETING_EMAIL",
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "DISPLAY_LABEL": "Subscription on marketing e-mails",
+      "DATA_TYPE": {
+        "DISPLAY": "Checkbox",
+        "BACKEND": "Boolean"
+      },
+      "FIELD_ID": "bb237250-9648-4677-a782-b2d286e208ea",
+      "REQUIRED": false
+    },
+    {
+      "DISPLAY_LABEL": "Source Type",
+      "FIELD_ID": "96bf35ea-dcb5-4183-8679-f27f776b92df",
+      "INTERNAL": true,
+      "REQUIRED": false,
+      "NOT_EDITABLE": true,
+      "DATA_TYPE": {
+        "DISPLAY": "Picklist",
+        "BACKEND": "String"
+      },
+      "PICKLIST_VALUES": [
+        "web",
+        "email",
+        "facebook",
+        "whatsapp",
+        "mobile",
+        "chat",
+        "twitter",
+        "sms"
+      ],
+      "NAME": "SOURCE_TYPE",
+	  "DEFAULT_VALUE": "web"
+    },
+    {
+      "DISPLAY_LABEL": "Channel",
+      "FIELD_ID": "a5accd94-cc42-4ba5-aaff-79ae5524bcb8",
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "NAME": "CHANNEL"
+    },
+    {
+      "NAME": "PHONE_NUMBER",
+      "INTERNAL": true,
+      "NOT_EDITABLE": false,
+      "DISPLAY_LABEL": "Phone Number",
+      "DATA_TYPE": {
+        "DISPLAY": "Phone",
+        "BACKEND": "String"
+      },
+      "FIELD_ID": "d70e9650-458c-4cd8-8ab1-4e6106fb4ea8",
+      "REQUIRED": false
+    },
+    {
+      "DEFAULT_VALUE": "",
+      "DATE_CREATED": null,
+      "HELP_TEXT": "",
+      "LAST_UPDATED": null,
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": null,
+      "PICKLIST_RESTRICT": false,
+      "LAST_UPDATED_BY": "",
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "cb3a9d64-0b46-43f0-8452-6038429e6bca",
+      "MAX_SIZE": 100,
+      "REQUIRED": true,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": true,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "USER_UUID",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": true,
+      "DISPLAY_LABEL": "User UUID",
+      "EXAMPLE": null
+    },
+    {
+      "DEFAULT_VALUE": null,
+      "DATE_CREATED": null,
+      "HELP_TEXT": "",
+      "LAST_UPDATED": null,
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": [
+        "Email",
+        "Push"
+      ],
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": "",
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Picklist",
+        "BACKEND": "String"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": "Enter Values",
+      "PICKLIST_RESTRICT": true,
+      "LAST_UPDATED_BY": null,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "0049f974-fcbd-4443-a42b-e49df550c128",
+      "MAX_SIZE": 0,
+      "REQUIRED": true,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "DEFAULT_CONTACT_METHOD",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Default contact method",
+      "EXAMPLE": null
+    },
+    {
+      "DEFAULT_VALUE": "",
+      "DATE_CREATED": null,
+      "HELP_TEXT": "",
+      "LAST_UPDATED": null,
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": null,
+      "PICKLIST_RESTRICT": false,
+      "LAST_UPDATED_BY": "",
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "14f09e09-aaea-44c7-baf4-013544178e99",
+      "MAX_SIZE": 100,
+      "REQUIRED": false,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": true,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "DATA_ID",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": true,
+      "DISPLAY_LABEL": "Data ID",
+      "EXAMPLE": null
+    },
+    {
+      "DEFAULT_VALUE": "",
+      "DATE_CREATED": null,
+      "HELP_TEXT": "",
+      "LAST_UPDATED": null,
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": null,
+      "PICKLIST_RESTRICT": false,
+      "LAST_UPDATED_BY": "",
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "cb3a9d64-0b46-43f0-8452-6038429e6bcb",
+      "MAX_SIZE": 100,
+      "REQUIRED": false,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "PASSWORD",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": true,
+      "DISPLAY_LABEL": "Password",
+      "EXAMPLE": null
+    },
+    {
+      "DEFAULT_VALUE": null,
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "HELP_TEXT": "",
+      "LAST_UPDATED": "LAST_UPDATED_REPLACE",
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": "",
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Number",
+        "BACKEND": "Integer"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": "Enter Values",
+      "PICKLIST_RESTRICT": true,
+      "LAST_UPDATED_BY": null,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "8d2ac715-62d3-4d5c-a6d7-58b1a8f9bbb2",
+      "MAX_SIZE": 0,
+      "REQUIRED": false,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "LOGIN_ATTEMPTS",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Login Attempts",
+      "EXAMPLE": null
+    },
+    {
+      "DEFAULT_VALUE": "",
+      "DATE_CREATED": null,
+      "HELP_TEXT": "",
+      "LAST_UPDATED": null,
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Email",
+        "BACKEND": "String"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": null,
+      "PICKLIST_RESTRICT": false,
+      "LAST_UPDATED_BY": "",
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+      "MAX_SIZE": 100,
+      "REQUIRED": true,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "EMAIL_ADDRESS",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Email",
+      "EXAMPLE": null
+    },
+    {
+      "DEFAULT_VALUE": "",
+      "DATE_CREATED": null,
+      "HELP_TEXT": "",
+      "LAST_UPDATED": null,
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": null,
+      "PICKLIST_RESTRICT": false,
+      "LAST_UPDATED_BY": "",
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "cb3a9d64-0b46-43f0-8452-6038429e6bcd",
+      "MAX_SIZE": 100,
+      "REQUIRED": true,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "FIRST_NAME",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "First Name",
+      "EXAMPLE": null
+    },
+    {
+      "DEFAULT_VALUE": "",
+      "DATE_CREATED": null,
+      "HELP_TEXT": "",
+      "LAST_UPDATED": null,
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": null,
+      "PICKLIST_RESTRICT": false,
+      "LAST_UPDATED_BY": "",
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "cb3a9d64-0b46-43f0-8452-6038429e6bce",
+      "MAX_SIZE": 100,
+      "REQUIRED": false,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "LAST_NAME",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Last Name",
+      "EXAMPLE": null
+    },
+    {
+      "DEFAULT_VALUE": "",
+      "DATE_CREATED": null,
+      "HELP_TEXT": "",
+      "LAST_UPDATED": null,
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Date/Time",
+        "BACKEND": "Timestamp"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": null,
+      "PICKLIST_RESTRICT": false,
+      "LAST_UPDATED_BY": "",
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "cb3a9d64-0b46-43f0-8452-6038429e6bcf",
+      "MAX_SIZE": 10,
+      "REQUIRED": false,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": true,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "DATE_CREATED",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": true,
+      "DISPLAY_LABEL": "Date Created",
+      "EXAMPLE": null
+    },
+    {
+      "DEFAULT_VALUE": "",
+      "DATE_CREATED": null,
+      "HELP_TEXT": "",
+      "LAST_UPDATED": null,
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Date/Time",
+        "BACKEND": "Timestamp"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": null,
+      "PICKLIST_RESTRICT": false,
+      "LAST_UPDATED_BY": null,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "cb3a9d64-0b46-43f0-8452-6038429e6baa",
+      "MAX_SIZE": 10,
+      "REQUIRED": false,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": true,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "DATE_UPDATED",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": true,
+      "DISPLAY_LABEL": "Date Updated",
+      "EXAMPLE": null
+    },
+    {
+      "CREATED_BY": null,
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "FIELD_ID": "cb3a9d64-0b46-43f0-8452-6038429e6bab",
+      "LAST_UPDATED": "LAST_UPDATED_REPLACE",
+      "REQUIRED": false,
+      "RELATIONSHIP_FIELD": "",
+      "NOT_EDITABLE": true,
+      "NAME": "LAST_UPDATED_BY",
+      "MODULE": "USERS_MODULE_REPLACE",
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Last Updated By",
+      "RELATIONSHIP_TYPE": "Many to One",
+      "INTERNAL": true,
+      "PRIMARY_DISPLAY_FIELD": "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "String"
+      }
+    },
+    {
+      "CREATED_BY": null,
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "FIELD_ID": "6871c4ed-451d-4a28-a7b5-cba7886f33f6",
+      "LAST_UPDATED": "LAST_UPDATED_REPLACE",
+      "REQUIRED": false,
+      "RELATIONSHIP_FIELD": "",
+      "NOT_EDITABLE": true,
+      "NAME": "CREATED_BY",
+      "MODULE": "USERS_MODULE_REPLACE",
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Created By",
+      "RELATIONSHIP_TYPE": "Many to One",
+      "INTERNAL": true,
+      "PRIMARY_DISPLAY_FIELD": "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "String"
+      }
+    },
+    {
+      "DEFAULT_VALUE": "",
+      "DATE_CREATED": null,
+      "HELP_TEXT": "",
+      "LAST_UPDATED": null,
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": null,
+      "PICKLIST_RESTRICT": false,
+      "LAST_UPDATED_BY": "",
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "cb3a9d64-0b46-43f0-8452-6038429e6bad",
+      "MAX_SIZE": 50,
+      "REQUIRED": false,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "STATUS",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Status",
+      "EXAMPLE": null
+    },
+    {
+      "DEFAULT_VALUE": "false",
+      "DATE_CREATED": null,
+      "HELP_TEXT": "",
+      "LAST_UPDATED": null,
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Checkbox",
+        "BACKEND": "Boolean"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": null,
+      "PICKLIST_RESTRICT": false,
+      "LAST_UPDATED_BY": "",
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "cb3a9d64-0b46-43f0-8452-6038429e6bae",
+      "MAX_SIZE": 5,
+      "REQUIRED": false,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "DISABLED",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Disabled",
+      "EXAMPLE": null
+    },
+    {
+      "DEFAULT_VALUE": "en",
+      "DATE_CREATED": null,
+      "HELP_TEXT": "",
+      "LAST_UPDATED": null,
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": ["ar", "de", "en", "el", "es" , "fr", "hi", "it", "ms", "no", "pt", "ru", "zh"],
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Picklist",
+        "BACKEND": "String"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": "Enter Values",
+      "PICKLIST_RESTRICT": true,
+      "LAST_UPDATED_BY": "",
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "cb3a9d64-0b46-43f0-8452-6038429e6baf",
+      "MAX_SIZE": 25,
+      "REQUIRED": true,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "LANGUAGE",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Language",
+      "EXAMPLE": null
+    },
+    {
+      "DEFAULT_VALUE": "",
+      "DATE_CREATED": null,
+      "HELP_TEXT": "",
+      "LAST_UPDATED": null,
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Date/Time",
+        "BACKEND": "Timestamp"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": null,
+      "PICKLIST_RESTRICT": false,
+      "LAST_UPDATED_BY": "",
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "1f0d78b9-dd90-4697-9633-d10682994bf0",
+      "MAX_SIZE": 16,
+      "REQUIRED": false,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "LAST_SEEN",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Last Seen",
+      "EXAMPLE": null
+    },
+    {
+      "DEFAULT_VALUE": "",
+      "DATE_CREATED": null,
+      "HELP_TEXT": "",
+      "LAST_UPDATED": null,
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": [
+        "United States",
+        "Canada",
+        "Afghanistan",
+        "Albania",
+        "Algeria",
+        "American Samoa",
+        "Andorra",
+        "Angola",
+        "Anguilla",
+        "Antarctica",
+        "Antigua and/or Barbuda",
+        "Argentina",
+        "Armenia",
+        "Aruba",
+        "Australia",
+        "Austria",
+        "Azerbaijan",
+        "Bahamas",
+        "Bahrain",
+        "Bangladesh",
+        "Barbados",
+        "Belarus",
+        "Belgium",
+        "Belize",
+        "Benin",
+        "Bermuda",
+        "Bhutan",
+        "Bolivia",
+        "Bosnia and Herzegovina",
+        "Botswana",
+        "Bouvet Island",
+        "Brazil",
+        "British lndian Ocean Territory",
+        "Brunei Darussalam",
+        "Bulgaria",
+        "Burkina Faso",
+        "Burundi",
+        "Cambodia",
+        "Cameroon",
+        "Cape Verde",
+        "Cayman Islands",
+        "Central African Republic",
+        "Chad",
+        "Chile",
+        "China",
+        "Christmas Island",
+        "Cocos (Keeling) Islands",
+        "Colombia",
+        "Comoros",
+        "Congo",
+        "Cook Islands",
+        "Costa Rica",
+        "Croatia (Hrvatska)",
+        "Cuba",
+        "Cyprus",
+        "Czech Republic",
+        "Denmark",
+        "Djibouti",
+        "Dominica",
+        "Dominican Republic",
+        "East Timor",
+        "Ecudaor",
+        "Egypt",
+        "El Salvador",
+        "Equatorial Guinea",
+        "Eritrea",
+        "Estonia",
+        "Ethiopia",
+        "Falkland Islands (Malvinas)",
+        "Faroe Islands",
+        "Fiji",
+        "Finland",
+        "France",
+        "France, Metropolitan",
+        "French Guiana",
+        "French Polynesia",
+        "French Southern Territories",
+        "Gabon",
+        "Gambia",
+        "Georgia",
+        "Germany",
+        "Ghana",
+        "Gibraltar",
+        "Greece",
+        "Greenland",
+        "Grenada",
+        "Guadeloupe",
+        "Guam",
+        "Guatemala",
+        "Guinea",
+        "Guinea-Bissau",
+        "Guyana",
+        "Haiti",
+        "Heard and Mc Donald Islands",
+        "Honduras",
+        "Hong Kong",
+        "Hungary",
+        "Iceland",
+        "India",
+        "Indonesia",
+        "Iran (Islamic Republic of)",
+        "Iraq",
+        "Ireland",
+        "Israel",
+        "Italy",
+        "Ivory Coast",
+        "Jamaica",
+        "Japan",
+        "Jordan",
+        "Kazakhstan",
+        "Kenya",
+        "Kiribati",
+        "Korea, Democratic People's Republic of",
+        "Korea, Republic of",
+        "Kuwait",
+        "Kyrgyzstan",
+        "Lao People's Democratic Republic",
+        "Latvia",
+        "Lebanon",
+        "Lesotho",
+        "Liberia",
+        "Libyan Arab Jamahiriya",
+        "Liechtenstein",
+        "Lithuania",
+        "Luxembourg",
+        "Macau",
+        "Macedonia",
+        "Madagascar",
+        "Malawi",
+        "Malaysia",
+        "Maldives",
+        "Mali",
+        "Malta",
+        "Marshall Islands",
+        "Martinique",
+        "Mauritania",
+        "Mauritius",
+        "Mayotte",
+        "Mexico",
+        "Micronesia, Federated States of",
+        "Moldova, Republic of",
+        "Monaco",
+        "Mongolia",
+        "Montserrat",
+        "Morocco",
+        "Mozambique",
+        "Myanmar",
+        "Namibia",
+        "Nauru",
+        "Nepal",
+        "Netherlands",
+        "Netherlands Antilles",
+        "New Caledonia",
+        "New Zealand",
+        "Nicaragua",
+        "Niger",
+        "Nigeria",
+        "Niue",
+        "Norfork Island",
+        "Northern Mariana Islands",
+        "Norway",
+        "Oman",
+        "Pakistan",
+        "Palau",
+        "Panama",
+        "Papua New Guinea",
+        "Paraguay",
+        "Peru",
+        "Philippines",
+        "Pitcairn",
+        "Poland",
+        "Portugal",
+        "Puerto Rico",
+        "Qatar",
+        "Reunion",
+        "Romania",
+        "Russian Federation",
+        "Rwanda",
+        "Saint Kitts and Nevis",
+        "Saint Lucia",
+        "Saint Vincent and the Grenadines",
+        "Samoa",
+        "San Marino",
+        "Sao Tome and Principe",
+        "Saudi Arabia",
+        "Senegal",
+        "Seychelles",
+        "Sierra Leone",
+        "Singapore",
+        "Slovakia",
+        "Slovenia",
+        "Solomon Islands",
+        "Somalia",
+        "South Africa",
+        "South Georgia South Sandwich Islands",
+        "Spain",
+        "Sri Lanka",
+        "St. Helena",
+        "St. Pierre and Miquelon",
+        "Sudan",
+        "Suriname",
+        "Svalbarn and Jan Mayen Islands",
+        "Swaziland",
+        "Sweden",
+        "Switzerland",
+        "Syrian Arab Republic",
+        "Taiwan",
+        "Tajikistan",
+        "Tanzania, United Republic of",
+        "Thailand",
+        "Togo",
+        "Tokelau",
+        "Tonga",
+        "Trinidad and Tobago",
+        "Tunisia",
+        "Turkey",
+        "Turkmenistan",
+        "Turks and Caicos Islands",
+        "Tuvalu",
+        "Uganda",
+        "Ukraine",
+        "United Arab Emirates",
+        "United Kingdom",
+        "United States minor outlying islands",
+        "Uruguay",
+        "Uzbekistan",
+        "Vanuatu",
+        "Vatican City State",
+        "Venezuela",
+        "Vietnam",
+        "Virigan Islands (British)",
+        "Virgin Islands (U.S.)",
+        "Wallis and Futuna Islands",
+        "Western Sahara",
+        "Yemen",
+        "Yugoslavia",
+        "Zaire",
+        "Zambia",
+        "Zimbabwe"
+      ],
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Picklist",
+        "BACKEND": "String"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": "Enter Values",
+      "PICKLIST_RESTRICT": true,
+      "LAST_UPDATED_BY": "",
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "1f0d78b9-dd90-4697-9633-d10682994bf1",
+      "MAX_SIZE": 25,
+      "REQUIRED": false,
+      "MASK_TYPE": null,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "COUNTRY",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Country",
+      "EXAMPLE": null
+    },
+    {
+      "DEFAULT_VALUE": "",
+      "DATE_CREATED": null,
+      "HELP_TEXT": "",
+      "LAST_UPDATED": null,
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": [
+        "Africa/Abidjan",
+        "Africa/Accra",
+        "Africa/Addis_Ababa",
+        "Africa/Algiers",
+        "Africa/Asmara",
+        "Africa/Asmera",
+        "Africa/Bamako",
+        "Africa/Bangui",
+        "Africa/Banjul",
+        "Africa/Bissau",
+        "Africa/Blantyre",
+        "Africa/Brazzaville",
+        "Africa/Bujumbura",
+        "Africa/Cairo",
+        "Africa/Casablanca",
+        "Africa/Ceuta",
+        "Africa/Conakry",
+        "Africa/Dakar",
+        "Africa/Dar_es_Salaam",
+        "Africa/Djibouti",
+        "Africa/Douala",
+        "Africa/El_Aaiun",
+        "Africa/Freetown",
+        "Africa/Gaborone",
+        "Africa/Harare",
+        "Africa/Johannesburg",
+        "Africa/Juba",
+        "Africa/Kampala",
+        "Africa/Khartoum",
+        "Africa/Kigali",
+        "Africa/Kinshasa",
+        "Africa/Lagos",
+        "Africa/Libreville",
+        "Africa/Lome",
+        "Africa/Luanda",
+        "Africa/Lubumbashi",
+        "Africa/Lusaka",
+        "Africa/Malabo",
+        "Africa/Maputo",
+        "Africa/Maseru",
+        "Africa/Mbabane",
+        "Africa/Mogadishu",
+        "Africa/Monrovia",
+        "Africa/Nairobi",
+        "Africa/Ndjamena",
+        "Africa/Niamey",
+        "Africa/Nouakchott",
+        "Africa/Ouagadougou",
+        "Africa/Porto-Novo",
+        "Africa/Sao_Tome",
+        "Africa/Timbuktu",
+        "Africa/Tripoli",
+        "Africa/Tunis",
+        "Africa/Windhoek",
+        "America/Adak",
+        "America/Anchorage",
+        "America/Anguilla",
+        "America/Antigua",
+        "America/Araguaina",
+        "America/Argentina/Buenos_Aires",
+        "America/Argentina/Catamarca",
+        "America/Argentina/ComodRivadavia",
+        "America/Argentina/Cordoba",
+        "America/Argentina/Jujuy",
+        "America/Argentina/La_Rioja",
+        "America/Argentina/Mendoza",
+        "America/Argentina/Rio_Gallegos",
+        "America/Argentina/Salta",
+        "America/Argentina/San_Juan",
+        "America/Argentina/San_Luis",
+        "America/Argentina/Tucuman",
+        "America/Argentina/Ushuaia",
+        "America/Aruba",
+        "America/Asuncion",
+        "America/Atikokan",
+        "America/Atka",
+        "America/Bahia",
+        "America/Bahia_Banderas",
+        "America/Barbados",
+        "America/Belem",
+        "America/Belize",
+        "America/Blanc-Sablon",
+        "America/Boa_Vista",
+        "America/Bogota",
+        "America/Boise",
+        "America/Buenos_Aires",
+        "America/Cambridge_Bay",
+        "America/Campo_Grande",
+        "America/Cancun",
+        "America/Caracas",
+        "America/Catamarca",
+        "America/Cayenne",
+        "America/Cayman",
+        "America/Chicago",
+        "America/Chihuahua",
+        "America/Coral_Harbour",
+        "America/Cordoba",
+        "America/Costa_Rica",
+        "America/Creston",
+        "America/Cuiaba",
+        "America/Curacao",
+        "America/Danmarkshavn",
+        "America/Dawson",
+        "America/Dawson_Creek",
+        "America/Denver",
+        "America/Detroit",
+        "America/Dominica",
+        "America/Edmonton",
+        "America/Eirunepe",
+        "America/El_Salvador",
+        "America/Ensenada",
+        "America/Fort_Nelson",
+        "America/Fort_Wayne",
+        "America/Fortaleza",
+        "America/Glace_Bay",
+        "America/Godthab",
+        "America/Goose_Bay",
+        "America/Grand_Turk",
+        "America/Grenada",
+        "America/Guadeloupe",
+        "America/Guatemala",
+        "America/Guayaquil",
+        "America/Guyana",
+        "America/Halifax",
+        "America/Havana",
+        "America/Hermosillo",
+        "America/Indiana/Indianapolis",
+        "America/Indiana/Knox",
+        "America/Indiana/Marengo",
+        "America/Indiana/Petersburg",
+        "America/Indiana/Tell_City",
+        "America/Indiana/Vevay",
+        "America/Indiana/Vincennes",
+        "America/Indiana/Winamac",
+        "America/Indianapolis",
+        "America/Inuvik",
+        "America/Iqaluit",
+        "America/Jamaica",
+        "America/Jujuy",
+        "America/Juneau",
+        "America/Kentucky/Louisville",
+        "America/Kentucky/Monticello",
+        "America/Knox_IN",
+        "America/Kralendijk",
+        "America/La_Paz",
+        "America/Lima",
+        "America/Los_Angeles",
+        "America/Louisville",
+        "America/Lower_Princes",
+        "America/Maceio",
+        "America/Managua",
+        "America/Manaus",
+        "America/Marigot",
+        "America/Martinique",
+        "America/Matamoros",
+        "America/Mazatlan",
+        "America/Mendoza",
+        "America/Menominee",
+        "America/Merida",
+        "America/Metlakatla",
+        "America/Mexico_City",
+        "America/Miquelon",
+        "America/Moncton",
+        "America/Monterrey",
+        "America/Montevideo",
+        "America/Montreal",
+        "America/Montserrat",
+        "America/Nassau",
+        "America/New_York",
+        "America/Nipigon",
+        "America/Nome",
+        "America/Noronha",
+        "America/North_Dakota/Beulah",
+        "America/North_Dakota/Center",
+        "America/North_Dakota/New_Salem",
+        "America/Ojinaga",
+        "America/Panama",
+        "America/Pangnirtung",
+        "America/Paramaribo",
+        "America/Phoenix",
+        "America/Port-au-Prince",
+        "America/Port_of_Spain",
+        "America/Porto_Acre",
+        "America/Porto_Velho",
+        "America/Puerto_Rico",
+        "America/Punta_Arenas",
+        "America/Rainy_River",
+        "America/Rankin_Inlet",
+        "America/Recife",
+        "America/Regina",
+        "America/Resolute",
+        "America/Rio_Branco",
+        "America/Rosario",
+        "America/Santa_Isabel",
+        "America/Santarem",
+        "America/Santiago",
+        "America/Santo_Domingo",
+        "America/Sao_Paulo",
+        "America/Scoresbysund",
+        "America/Shiprock",
+        "America/Sitka",
+        "America/St_Barthelemy",
+        "America/St_Johns",
+        "America/St_Kitts",
+        "America/St_Lucia",
+        "America/St_Thomas",
+        "America/St_Vincent",
+        "America/Swift_Current",
+        "America/Tegucigalpa",
+        "America/Thule",
+        "America/Thunder_Bay",
+        "America/Tijuana",
+        "America/Toronto",
+        "America/Tortola",
+        "America/Vancouver",
+        "America/Virgin",
+        "America/Whitehorse",
+        "America/Winnipeg",
+        "America/Yakutat",
+        "America/Yellowknife",
+        "Antarctica/Casey",
+        "Antarctica/Davis",
+        "Antarctica/DumontDUrville",
+        "Antarctica/Macquarie",
+        "Antarctica/Mawson",
+        "Antarctica/McMurdo",
+        "Antarctica/Palmer",
+        "Antarctica/Rothera",
+        "Antarctica/South_Pole",
+        "Antarctica/Syowa",
+        "Antarctica/Troll",
+        "Antarctica/Vostok",
+        "Arctic/Longyearbyen",
+        "Asia/Aden",
+        "Asia/Almaty",
+        "Asia/Amman",
+        "Asia/Anadyr",
+        "Asia/Aqtau",
+        "Asia/Aqtobe",
+        "Asia/Ashgabat",
+        "Asia/Ashkhabad",
+        "Asia/Atyrau",
+        "Asia/Baghdad",
+        "Asia/Bahrain",
+        "Asia/Baku",
+        "Asia/Bangkok",
+        "Asia/Barnaul",
+        "Asia/Beirut",
+        "Asia/Bishkek",
+        "Asia/Brunei",
+        "Asia/Calcutta",
+        "Asia/Chita",
+        "Asia/Choibalsan",
+        "Asia/Chongqing",
+        "Asia/Chungking",
+        "Asia/Colombo",
+        "Asia/Dacca",
+        "Asia/Damascus",
+        "Asia/Dhaka",
+        "Asia/Dili",
+        "Asia/Dubai",
+        "Asia/Dushanbe",
+        "Asia/Famagusta",
+        "Asia/Gaza",
+        "Asia/Harbin",
+        "Asia/Hebron",
+        "Asia/Ho_Chi_Minh",
+        "Asia/Hong_Kong",
+        "Asia/Hovd",
+        "Asia/Irkutsk",
+        "Asia/Istanbul",
+        "Asia/Jakarta",
+        "Asia/Jayapura",
+        "Asia/Jerusalem",
+        "Asia/Kabul",
+        "Asia/Kamchatka",
+        "Asia/Karachi",
+        "Asia/Kashgar",
+        "Asia/Kathmandu",
+        "Asia/Katmandu",
+        "Asia/Khandyga",
+        "Asia/Kolkata",
+        "Asia/Krasnoyarsk",
+        "Asia/Kuala_Lumpur",
+        "Asia/Kuching",
+        "Asia/Kuwait",
+        "Asia/Macao",
+        "Asia/Macau",
+        "Asia/Magadan",
+        "Asia/Makassar",
+        "Asia/Manila",
+        "Asia/Muscat",
+        "Asia/Nicosia",
+        "Asia/Novokuznetsk",
+        "Asia/Novosibirsk",
+        "Asia/Omsk",
+        "Asia/Oral",
+        "Asia/Phnom_Penh",
+        "Asia/Pontianak",
+        "Asia/Pyongyang",
+        "Asia/Qatar",
+        "Asia/Qyzylorda",
+        "Asia/Rangoon",
+        "Asia/Riyadh",
+        "Asia/Saigon",
+        "Asia/Sakhalin",
+        "Asia/Samarkand",
+        "Asia/Seoul",
+        "Asia/Shanghai",
+        "Asia/Singapore",
+        "Asia/Srednekolymsk",
+        "Asia/Taipei",
+        "Asia/Tashkent",
+        "Asia/Tbilisi",
+        "Asia/Tehran",
+        "Asia/Tel_Aviv",
+        "Asia/Thimbu",
+        "Asia/Thimphu",
+        "Asia/Tokyo",
+        "Asia/Tomsk",
+        "Asia/Ujung_Pandang",
+        "Asia/Ulaanbaatar",
+        "Asia/Ulan_Bator",
+        "Asia/Urumqi",
+        "Asia/Ust-Nera",
+        "Asia/Vientiane",
+        "Asia/Vladivostok",
+        "Asia/Yakutsk",
+        "Asia/Yangon",
+        "Asia/Yekaterinburg",
+        "Asia/Yerevan",
+        "Atlantic/Azores",
+        "Atlantic/Bermuda",
+        "Atlantic/Canary",
+        "Atlantic/Cape_Verde",
+        "Atlantic/Faeroe",
+        "Atlantic/Faroe",
+        "Atlantic/Jan_Mayen",
+        "Atlantic/Madeira",
+        "Atlantic/Reykjavik",
+        "Atlantic/South_Georgia",
+        "Atlantic/St_Helena",
+        "Atlantic/Stanley",
+        "Australia/ACT",
+        "Australia/Adelaide",
+        "Australia/Brisbane",
+        "Australia/Broken_Hill",
+        "Australia/Canberra",
+        "Australia/Currie",
+        "Australia/Darwin",
+        "Australia/Eucla",
+        "Australia/Hobart",
+        "Australia/LHI",
+        "Australia/Lindeman",
+        "Australia/Lord_Howe",
+        "Australia/Melbourne",
+        "Australia/NSW",
+        "Australia/North",
+        "Australia/Perth",
+        "Australia/Queensland",
+        "Australia/South",
+        "Australia/Sydney",
+        "Australia/Tasmania",
+        "Australia/Victoria",
+        "Australia/West",
+        "Australia/Yancowinna",
+        "Brazil/Acre",
+        "Brazil/DeNoronha",
+        "Brazil/East",
+        "Brazil/West",
+        "Canada/Atlantic",
+        "Canada/Central",
+        "Canada/East-Saskatchewan",
+        "Canada/Eastern",
+        "Canada/Mountain",
+        "Canada/Newfoundland",
+        "Canada/Pacific",
+        "Canada/Saskatchewan",
+        "Canada/Yukon",
+        "Chile/Continental",
+        "Chile/EasterIsland",
+        "Cuba",
+        "Egypt",
+        "Eire",
+        "Europe/Amsterdam",
+        "Europe/Andorra",
+        "Europe/Astrakhan",
+        "Europe/Athens",
+        "Europe/Belfast",
+        "Europe/Belgrade",
+        "Europe/Berlin",
+        "Europe/Bratislava",
+        "Europe/Brussels",
+        "Europe/Bucharest",
+        "Europe/Budapest",
+        "Europe/Busingen",
+        "Europe/Chisinau",
+        "Europe/Copenhagen",
+        "Europe/Dublin",
+        "Europe/Gibraltar",
+        "Europe/Guernsey",
+        "Europe/Helsinki",
+        "Europe/Isle_of_Man",
+        "Europe/Istanbul",
+        "Europe/Jersey",
+        "Europe/Kaliningrad",
+        "Europe/Kiev",
+        "Europe/Kirov",
+        "Europe/Lisbon",
+        "Europe/Ljubljana",
+        "Europe/London",
+        "Europe/Luxembourg",
+        "Europe/Madrid",
+        "Europe/Malta",
+        "Europe/Mariehamn",
+        "Europe/Minsk",
+        "Europe/Monaco",
+        "Europe/Moscow",
+        "Europe/Nicosia",
+        "Europe/Oslo",
+        "Europe/Paris",
+        "Europe/Podgorica",
+        "Europe/Prague",
+        "Europe/Riga",
+        "Europe/Rome",
+        "Europe/Samara",
+        "Europe/San_Marino",
+        "Europe/Sarajevo",
+        "Europe/Saratov",
+        "Europe/Simferopol",
+        "Europe/Skopje",
+        "Europe/Sofia",
+        "Europe/Stockholm",
+        "Europe/Tallinn",
+        "Europe/Tirane",
+        "Europe/Tiraspol",
+        "Europe/Ulyanovsk",
+        "Europe/Uzhgorod",
+        "Europe/Vaduz",
+        "Europe/Vatican",
+        "Europe/Vienna",
+        "Europe/Vilnius",
+        "Europe/Volgograd",
+        "Europe/Warsaw",
+        "Europe/Zagreb",
+        "Europe/Zaporozhye",
+        "Europe/Zurich",
+        "Greenwich",
+        "Hongkong",
+        "Iceland",
+        "Indian/Antananarivo",
+        "Indian/Chagos",
+        "Indian/Christmas",
+        "Indian/Cocos",
+        "Indian/Comoro",
+        "Indian/Kerguelen",
+        "Indian/Mahe",
+        "Indian/Maldives",
+        "Indian/Mauritius",
+        "Indian/Mayotte",
+        "Indian/Reunion",
+        "Iran",
+        "Israel",
+        "Jamaica",
+        "Japan",
+        "Kwajalein",
+        "Libya",
+        "Mexico/BajaNorte",
+        "Mexico/BajaSur",
+        "Mexico/General",
+        "Pacific/Apia",
+        "Pacific/Auckland",
+        "Pacific/Bougainville",
+        "Pacific/Chatham",
+        "Pacific/Chuuk",
+        "Pacific/Easter",
+        "Pacific/Efate",
+        "Pacific/Enderbury",
+        "Pacific/Fakaofo",
+        "Pacific/Fiji",
+        "Pacific/Funafuti",
+        "Pacific/Galapagos",
+        "Pacific/Gambier",
+        "Pacific/Guadalcanal",
+        "Pacific/Guam",
+        "Pacific/Honolulu",
+        "Pacific/Johnston",
+        "Pacific/Kiritimati",
+        "Pacific/Kosrae",
+        "Pacific/Kwajalein",
+        "Pacific/Majuro",
+        "Pacific/Marquesas",
+        "Pacific/Midway",
+        "Pacific/Nauru",
+        "Pacific/Niue",
+        "Pacific/Norfolk",
+        "Pacific/Noumea",
+        "Pacific/Pago_Pago",
+        "Pacific/Palau",
+        "Pacific/Pitcairn",
+        "Pacific/Pohnpei",
+        "Pacific/Ponape",
+        "Pacific/Port_Moresby",
+        "Pacific/Rarotonga",
+        "Pacific/Saipan",
+        "Pacific/Samoa",
+        "Pacific/Tahiti",
+        "Pacific/Tarawa",
+        "Pacific/Tongatapu",
+        "Pacific/Truk",
+        "Pacific/Wake",
+        "Pacific/Wallis",
+        "Pacific/Yap",
+        "Poland",
+        "Portugal",
+        "Singapore",
+        "Turkey",
+        "US/Alaska",
+        "US/Aleutian",
+        "US/Arizona",
+        "US/Central",
+        "US/East-Indiana",
+        "US/Eastern",
+        "US/Hawaii",
+        "US/Indiana-Starke",
+        "US/Michigan",
+        "US/Mountain",
+        "US/Pacific",
+        "US/Pacific-New",
+        "US/Samoa"
+      ],
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Picklist",
+        "BACKEND": "String"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": "Enter Values",
+      "PICKLIST_RESTRICT": true,
+      "LAST_UPDATED_BY": "",
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "1f0d78b9-dd90-4697-9633-d10682994bf2",
+      "MAX_SIZE": 10,
+      "REQUIRED": false,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "TIMEZONE",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Time Zone",
+      "EXAMPLE": null
+    },
+    {
+      "DEFAULT_VALUE": "",
+      "DATE_CREATED": null,
+      "HELP_TEXT": "",
+      "LAST_UPDATED": null,
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": null,
+      "PICKLIST_RESTRICT": false,
+      "LAST_UPDATED_BY": "",
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "1f0d78b9-dd90-4697-9633-d10682994bf3",
+      "MAX_SIZE": 40,
+      "REQUIRED": false,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "LAST_IP",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Last IP",
+      "EXAMPLE": null
+    },
+    {
+      "DEFAULT_VALUE": "",
+      "DATE_CREATED": null,
+      "HELP_TEXT": "",
+      "LAST_UPDATED": null,
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": null,
+      "PICKLIST_RESTRICT": false,
+      "LAST_UPDATED_BY": "",
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "1f0d78b9-dd90-4697-9633-d10682994bf4",
+      "MAX_SIZE": 25,
+      "REQUIRED": false,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "LAST_BROWSER",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Last Browser",
+      "EXAMPLE": null
+    },
+    {
+      "DEFAULT_VALUE": "",
+      "DATE_CREATED": null,
+      "HELP_TEXT": "",
+      "LAST_UPDATED": null,
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": null,
+      "PICKLIST_RESTRICT": false,
+      "LAST_UPDATED_BY": "",
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "1f0d78b9-dd90-4697-9633-d10682994bf5",
+      "MAX_SIZE": 16,
+      "REQUIRED": false,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "LAST_SCREEN_DIMENSIONS",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Last Screen Dimensions",
+      "EXAMPLE": null
+    },
+    {
+      "MODULE": "ACCOUNTS_MODULE_REPLACE",
+      "FIELD_ID": "1f0d78b9-dd90-4697-9633-d10682994bf6",
+      "DISPLAY_LABEL": "Account",
+      "INTERNAL": true,
+      "RELATIONSHIP_TYPE": "Many to One",
+      "REQUIRED": true,
+      "RELATIONSHIP_FIELD": "6b30c9f0-a2d4-43d0-8a59-ba6e5c464114",
+      "PRIMARY_DISPLAY_FIELD": "ffd63179-dae8-48a9-a9c1-ee37713adda3",
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "String"
+      },
+      "NAME": "ACCOUNT"
+    },
+    {
+      "MODULE": "TEAMS_MODULE_REPLACE",
+      "FIELD_ID": "6b6cab61-b28c-415f-b808-75e9073f8a8c",
+      "DISPLAY_LABEL": "Teams",
+      "INTERNAL": true,
+      "RELATIONSHIP_TYPE": "Many to Many",
+      "REQUIRED": true,
+      "RELATIONSHIP_FIELD": "bc8bddf5-dfd2-4f7f-81ce-03ac52f0321c",
+      "PRIMARY_DISPLAY_FIELD": "b1c48961-43e0-4071-b30c-0f7be5daa7a9",
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "Array"
+      },
+      "NAME": "TEAMS"
+    },
+    {
+      "MODULE": "CONTRACTS_MODULE_REPLACE",
+      "FIELD_ID": "60a6c69a-d04c-4c49-b47d-730c64e2ea56",
+      "DISPLAY_LABEL": "Contract Approver",
+      "INTERNAL": true,
+      "RELATIONSHIP_TYPE": "Many to Many",
+      "REQUIRED": false,
+      "RELATIONSHIP_FIELD": "90831e39-cd02-401e-9773-89900e07d094",
+      "PRIMARY_DISPLAY_FIELD": "703b478e-81f6-4769-b6c1-3440a2b206f0",
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "Array"
+      },
+      "NAME": "CONTRACT_APPROVER",
+      "DATA_FILTER": {
+        "CONDITIONS": [
+          {
+            "CONDITION": "a4dd84e5-543c-4778-874e-a8a2e67708ab",
+            "CONDITION_VALUE": "SystemAdmin",
+            "OPERATOR": "EQUALS_TO",
+            "REQUIREMENT_TYPE": "Any"
+          },
+          {
+            "CONDITION": "a4dd84e5-543c-4778-874e-a8a2e67708ab",
+            "CONDITION_VALUE": "Agent",
+            "OPERATOR": "EQUALS_TO",
+            "REQUIREMENT_TYPE": "Any"
+          }
+        ]
+      }
+    },
+    {
+      "MODULE": "TICKETS_MODULE_REPLACE",
+      "FIELD_ID": "3105993e-8b89-4e3b-8389-2deae8f70716",
+      "DISPLAY_LABEL": "Tickets Assigned",
+      "INTERNAL": true,
+      "RELATIONSHIP_TYPE": "One to Many",
+      "REQUIRED": false,
+      "RELATIONSHIP_FIELD": "62c5c3a3-0008-4c4e-b1a8-3d5784e9dd6d",
+      "PRIMARY_DISPLAY_FIELD": "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "Array"
+      },
+      "NAME": "TICKETS_ASSIGNED",
+      "DATA_FILTER": {
+        "CONDITIONS": [
+          {
+            "CONDITION": "a4dd84e5-543c-4778-874e-a8a2e67708ab",
+            "CONDITION_VALUE": "SystemAdmin",
+            "OPERATOR": "EQUALS_TO",
+            "REQUIREMENT_TYPE": "Any"
+          },
+          {
+            "CONDITION": "a4dd84e5-543c-4778-874e-a8a2e67708ab",
+            "CONDITION_VALUE": "Agent",
+            "OPERATOR": "EQUALS_TO",
+            "REQUIREMENT_TYPE": "Any"
+          }
+        ]
+      }
+    },
+    {
+      "MODULE": "TICKETS_MODULE_REPLACE",
+      "FIELD_ID": "9e68b9c7-c0f2-4422-8cbe-b0104f8c11d5",
+      "DISPLAY_LABEL": "Tickets Requested",
+      "INTERNAL": true,
+      "RELATIONSHIP_TYPE": "One to Many",
+      "REQUIRED": false,
+      "RELATIONSHIP_FIELD": "30e7e42c-ca90-49b5-986e-341f11d37de5",
+      "PRIMARY_DISPLAY_FIELD": "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "Array"
+      },
+      "NAME": "TICKETS_REQUESTED"
+    },
+    {
+      "MODULE": "CHAT_MODULE_REPLACE",
+      "FIELD_ID": "23207a42-5123-434b-a116-49096ec1ad4f",
+      "DISPLAY_LABEL": "Chats Requested",
+      "INTERNAL": true,
+      "RELATIONSHIP_TYPE": "One to Many",
+      "REQUIRED": false,
+      "RELATIONSHIP_FIELD": "4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
+      "PRIMARY_DISPLAY_FIELD": "1eb6118f-4afc-4d32-bcec-738f69955f04",
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "Array"
+      },
+      "NAME": "CHATS_REQUESTED"
+    },
+    {
+      "DEFAULT_VALUE": "",
+      "DATE_CREATED": null,
+      "HELP_TEXT": "",
+      "LAST_UPDATED": null,
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Checkbox",
+        "BACKEND": "Boolean"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": null,
+      "PICKLIST_RESTRICT": false,
+      "LAST_UPDATED_BY": "",
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "1f0d78b9-dd90-4697-9633-d10682994bf8",
+      "MAX_SIZE": 64,
+      "REQUIRED": false,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "INVITE_ACCEPTED",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Invite Accepted",
+      "EXAMPLE": null
+    },
+    {
+      "DEFAULT_VALUE": null,
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "HELP_TEXT": "",
+      "LAST_UPDATED": "LAST_UPDATED_REPLACE",
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": "",
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Checkbox",
+        "BACKEND": "Boolean"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": "Enter Values",
+      "PICKLIST_RESTRICT": true,
+      "LAST_UPDATED_BY": null,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "2f836719-20d6-43ba-9ae7-2d9b137c4aeb",
+      "MAX_SIZE": 0,
+      "REQUIRED": false,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "EMAIL_VERIFIED",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Email Verified",
+      "EXAMPLE": null
+    },
+    {
+      "DEFAULT_VALUE": null,
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "HELP_TEXT": "",
+      "LAST_UPDATED": "LAST_UPDATED_REPLACE",
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": "",
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": "Enter Values",
+      "PICKLIST_RESTRICT": true,
+      "LAST_UPDATED_BY": null,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "3bd33c2b-ae0a-4e31-8fe1-5d2eaa78c4a4",
+      "MAX_SIZE": 0,
+      "REQUIRED": false,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "NOTIFICATION_SOUND",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Notification Sound",
+      "EXAMPLE": null
+    },
+    {
+      "DEFAULT_VALUE": null,
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "HELP_TEXT": "",
+      "LAST_UPDATED": "LAST_UPDATED_REPLACE",
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": "",
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": "Enter Values",
+      "PICKLIST_RESTRICT": true,
+      "LAST_UPDATED_BY": null,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "a4dd84e5-543c-4778-874e-a8a2e67708ab",
+      "MAX_SIZE": 0,
+      "REQUIRED": true,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "ROLE",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Role",
+      "EXAMPLE": null
+    },
+    {
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "FIELD_ID": "8018dfe5-834a-45b9-88ff-76e5c4cc514d",
+      "LAST_UPDATED": "LAST_UPDATED_REPLACE",
+      "REQUIRED": false,
+      "RELATIONSHIP_FIELD": "c964b713-5ed0-44cf-83d9-eb24bffba8ea",
+      "NOT_EDITABLE": false,
+      "NAME": "REPORTS_TO",
+      "MODULE": "USERS_MODULE_REPLACE",
+      "DISPLAY_LABEL": "Reports To",
+      "RELATIONSHIP_TYPE": "Many to One",
+      "INTERNAL": true,
+      "PRIMARY_DISPLAY_FIELD": "cb3a9d64-0b46-43f0-8452-6038429e6bcd",
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "String"
+      },
+      "TYPE": 0
+    },
+    {
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "FIELD_ID": "c964b713-5ed0-44cf-83d9-eb24bffba8ea",
+      "LAST_UPDATED": "LAST_UPDATED_REPLACE",
+      "REQUIRED": false,
+      "RELATIONSHIP_FIELD": "8018dfe5-834a-45b9-88ff-76e5c4cc514d",
+      "NOT_EDITABLE": false,
+      "NAME": "MANAGES",
+      "MODULE": "USERS_MODULE_REPLACE",
+      "DISPLAY_LABEL": "Manages",
+      "RELATIONSHIP_TYPE": "One to Many",
+      "INTERNAL": true,
+      "PRIMARY_DISPLAY_FIELD": "cb3a9d64-0b46-43f0-8452-6038429e6bcd",
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "Array"
+      },
+      "TYPE": 0
+    },
+    {
+      "FIELD_ID": "f0a12914-3eff-43de-b3c1-a9238f806019",
+      "NAME": "SALES_INVOICES",
+      "DISPLAY_LABEL": "Sales Invoices",
+      "HELP_TEXT": null,
+      "DEFAULT_VALUE": null,
+      "LENGTH": 0,
+      "DECIMAL_PLACES": 0,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": "One to Many",
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": null,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": false,
+      "PRIMARY_DISPLAY_FIELD": "5ccf043f-7d2e-40a1-bf0b-470fb3eeecb5",
+      "RELATIONSHIP_FIELD": "3f1f9b0e-be1b-46fe-890d-a40ef2225929",
+      "FORMULA": null,
+      "MODULE": "INVOICES_MODULE_REPLACE",
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "Array"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": null,
+      "LAST_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null,
+      "MESSAGES": null,
+      "INTERNAL": false,
+      "NOT_EDITABLE": false,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false,
+      "WORKFLOW": null,
+      "DATA_FILTER": null
+    },
+    {
+      "FIELD_ID": "fa100d3c-6fcd-46b5-95d6-37997c792bf8",
+      "NAME": "CUSTOMER_INVOICES",
+      "DISPLAY_LABEL": "Customer Invoices",
+      "HELP_TEXT": null,
+      "DEFAULT_VALUE": null,
+      "LENGTH": 0,
+      "DECIMAL_PLACES": 0,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": "One to Many",
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": null,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": false,
+      "PRIMARY_DISPLAY_FIELD": "5ccf043f-7d2e-40a1-bf0b-470fb3eeecb5",
+      "RELATIONSHIP_FIELD": "309a6539-1a4f-483f-bb33-d42780dc2430",
+      "FORMULA": null,
+      "MODULE": "INVOICES_MODULE_REPLACE",
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "Array"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": null,
+      "LAST_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null,
+      "MESSAGES": null,
+      "INTERNAL": false,
+      "NOT_EDITABLE": false,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false,
+      "WORKFLOW": null,
+      "DATA_FILTER": null
+    },
+    {
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "FIELD_ID": "89d70d1a-54bb-48b7-929f-d95ae0641609",
+      "LAST_UPDATED": "LAST_UPDATED_REPLACE",
+      "REQUIRED": false,
+      "RELATIONSHIP_FIELD": "35dca797-ab69-42b1-914a-511589b3086c",
+      "NOT_EDITABLE": false,
+      "NAME": "LEAD_SOURCE_OPPORTUNITY",
+      "MODULE": "OPPORTUNITIES_MODULE_REPLACE",
+      "DISPLAY_LABEL": "Lead Source Opportunity",
+      "RELATIONSHIP_TYPE": "One to One",
+      "INTERNAL": true,
+      "PRIMARY_DISPLAY_FIELD": "84010f2c-5a2f-4e6c-a79b-91a42f046d90",
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "String"
+      },
+      "TYPE": 0
+    },
+    {
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "FIELD_ID": "76518b17-2d56-4dec-a7d1-868aeeb19b55",
+      "LAST_UPDATED": "LAST_UPDATED_REPLACE",
+      "REQUIRED": false,
+      "RELATIONSHIP_FIELD": "4ee4a54d-7194-4d0f-bbc5-041d8ed4f8b2",
+      "NOT_EDITABLE": false,
+      "NAME": "CONTACT_OPPORTUNITIES",
+      "MODULE": "OPPORTUNITIES_MODULE_REPLACE",
+      "DISPLAY_LABEL": "Contact Opportunities",
+      "RELATIONSHIP_TYPE": "One to Many",
+      "INTERNAL": true,
+      "PRIMARY_DISPLAY_FIELD": "84010f2c-5a2f-4e6c-a79b-91a42f046d90",
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "Array"
+      },
+      "TYPE": 0
+    },
+    {
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "FIELD_ID": "ec3fa65c-0947-4c58-853a-c89ef34a3281",
+      "LAST_UPDATED": "LAST_UPDATED_REPLACE",
+      "REQUIRED": false,
+      "RELATIONSHIP_FIELD": "d1928fc3-20cb-437d-89db-f6eb2e47be9a",
+      "NOT_EDITABLE": false,
+      "NAME": "ASSIGNED_OPPORTUNITIES",
+      "MODULE": "OPPORTUNITIES_MODULE_REPLACE",
+      "DISPLAY_LABEL": "Assigned Opportunities",
+      "RELATIONSHIP_TYPE": "One to Many",
+      "INTERNAL": true,
+      "PRIMARY_DISPLAY_FIELD": "84010f2c-5a2f-4e6c-a79b-91a42f046d90",
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "Array"
+      },
+      "TYPE": 0
+    },
+    {
+      "FIELD_ID": "d3d293b9-59d5-4fbb-a302-a16d033531f6",
+      "NAME": "APPROVAL",
+      "DISPLAY_LABEL": "Approval",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "LENGTH": 0,
+      "DECIMAL_PLACES": 0,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": null,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": [],
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": true,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "RELATIONSHIP_FIELD": null,
+      "FORMULA": null,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Approval",
+        "BACKEND": "Approval"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": null,
+      "LAST_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "NOT_EDITABLE": false,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false
+    }
+  ],
+  "WORKFLOWS": [],
+  "FIELD_RULES": [],
+  "NAME": "Users",
+  "DETAIL_LAYOUTS": [
+    {
+      "LAYOUT_STYLE": "standard",
+      "LAYOUT_ID": "28f3e296-12b8-11e9-ab14-d663bd873d93",
+      "NAME": "Users",
+      "DESCRIPTION": "",
+      "PREDEFINED_TEMPLATE": [
+        {
+          "ID": "LEFT_SIDEBAR",
+          "FIELDS": [
+            {
+              "FIELD_ID": "cb3a9d64-0b46-43f0-8452-6038429e6bcd"
+            },
+            {
+              "FIELD_ID": "cb3a9d64-0b46-43f0-8452-6038429e6bce"
+            },
+            {
+              "FIELD_ID": "cb3a9d64-0b46-43f0-8452-6038429e6bcc"
+            },
+            {
+              "FIELD_ID": "d70e9650-458c-4cd8-8ab1-4e6106fb4ea8"
+            },
+            {
+              "FIELD_ID": "0049f974-fcbd-4443-a42b-e49df550c128"
+            },
+            {
+              "FIELD_ID": "a4dd84e5-543c-4778-874e-a8a2e67708ab"
+            },
+            {
+              "FIELD_ID": "cb3a9d64-0b46-43f0-8452-6038429e6baf"
+            },
+            {
+              "FIELD_ID": "1f0d78b9-dd90-4697-9633-d10682994bf1"
+            },
+            {
+              "FIELD_ID": "1f0d78b9-dd90-4697-9633-d10682994bf2"
+            },
+            {
+              "FIELD_ID": "cb3a9d64-0b46-43f0-8452-6038429e6bae"
+            }
+          ],
+          "FIELD_STYLE": "EDITABLE"
+        },
+        {
+          "ID": "RIGHT_SIDEBAR",
+          "FIELDS": [
+            {
+              "FIELD_ID": "23207a42-5123-434b-a116-49096ec1ad4f"
+            },
+            {
+              "FIELD_ID": "3105993e-8b89-4e3b-8389-2deae8f70716"
+            }
+          ],
+          "FIELD_STYLE": "ONE_TO_MANY_SECTIONS"
+        },
+        {
+          "ID": "TAB_AREA",
+          "FIELDS": [
+            {
+              "FIELD_ID": "9e68b9c7-c0f2-4422-8cbe-b0104f8c11d5"
+            }
+          ],
+          "FIELD_STYLE": "ONE_TO_MANY_SECTIONS"
+        }
+      ],
+      "ROLE": "SystemAdmin"
+    },
+    {
+      "LAYOUT_STYLE": "standard",
+      "LAYOUT_ID": "9eaa875c-9363-461f-9104-7289785c010a",
+      "NAME": "Users",
+      "DESCRIPTION": "",
+      "PREDEFINED_TEMPLATE": [
+        {
+          "ID": "LEFT_SIDEBAR",
+          "FIELDS": [
+            {
+              "FIELD_ID": "cb3a9d64-0b46-43f0-8452-6038429e6bcd"
+            },
+            {
+              "FIELD_ID": "cb3a9d64-0b46-43f0-8452-6038429e6bce"
+            },
+            {
+              "FIELD_ID": "cb3a9d64-0b46-43f0-8452-6038429e6bcc"
+            },
+            {
+              "FIELD_ID": "d70e9650-458c-4cd8-8ab1-4e6106fb4ea8"
+            },
+            {
+              "FIELD_ID": "0049f974-fcbd-4443-a42b-e49df550c128"
+            },
+            {
+              "FIELD_ID": "cb3a9d64-0b46-43f0-8452-6038429e6baf"
+            },
+            {
+              "FIELD_ID": "1f0d78b9-dd90-4697-9633-d10682994bf1"
+            },
+            {
+              "FIELD_ID": "1f0d78b9-dd90-4697-9633-d10682994bf2"
+            }
+          ],
+          "FIELD_STYLE": "EDITABLE"
+        },
+        {
+          "ID": "RIGHT_SIDEBAR",
+          "FIELDS": [
+            {
+              "FIELD_ID": "23207a42-5123-434b-a116-49096ec1ad4f"
+            },
+            {
+              "FIELD_ID": "3105993e-8b89-4e3b-8389-2deae8f70716"
+            }
+          ],
+          "FIELD_STYLE": "ONE_TO_MANY_SECTIONS"
+        },
+        {
+          "ID": "TAB_AREA",
+          "FIELDS": [
+            {
+              "FIELD_ID": "9e68b9c7-c0f2-4422-8cbe-b0104f8c11d5"
+            }
+          ],
+          "FIELD_STYLE": "ONE_TO_MANY_SECTIONS"
+        }
+      ],
+      "ROLE": "Agent"
+    },
+    {
+      "LAYOUT_STYLE": "standard",
+      "LAYOUT_ID": "95b6d64b-b96a-4f3c-a52c-e209da3a1803",
+      "NAME": "Users",
+      "DESCRIPTION": "",
+      "PREDEFINED_TEMPLATE": [
+        {
+          "ID": "LEFT_SIDEBAR",
+          "FIELDS": [
+            {
+              "FIELD_ID": "cb3a9d64-0b46-43f0-8452-6038429e6bcd"
+            },
+            {
+              "FIELD_ID": "cb3a9d64-0b46-43f0-8452-6038429e6bce"
+            },
+            {
+              "FIELD_ID": "cb3a9d64-0b46-43f0-8452-6038429e6bcc"
+            },
+            {
+              "FIELD_ID": "d70e9650-458c-4cd8-8ab1-4e6106fb4ea8"
+            },
+            {
+              "FIELD_ID": "0049f974-fcbd-4443-a42b-e49df550c128"
+            },
+            {
+              "FIELD_ID": "cb3a9d64-0b46-43f0-8452-6038429e6baf"
+            },
+            {
+              "FIELD_ID": "1f0d78b9-dd90-4697-9633-d10682994bf1"
+            },
+            {
+              "FIELD_ID": "1f0d78b9-dd90-4697-9633-d10682994bf2"
+            }
+          ],
+          "FIELD_STYLE": "EDITABLE"
+        },
+        {
+          "ID": "RIGHT_SIDEBAR",
+          "FIELDS": [
+            {
+              "FIELD_ID": "23207a42-5123-434b-a116-49096ec1ad4f"
+            }
+          ],
+          "FIELD_STYLE": "ONE_TO_MANY_SECTIONS"
+        },
+        {
+          "ID": "TAB_AREA",
+          "FIELDS": [
+            {
+              "FIELD_ID": "9e68b9c7-c0f2-4422-8cbe-b0104f8c11d5"
+            }
+          ],
+          "FIELD_STYLE": "ONE_TO_MANY_SECTIONS"
+        }
+      ],
+      "ROLE": "Customer"
+    }
+  ],
+  "SINGULAR_NAME": "User",
+  "PLURAL_NAME": "Users",
+  "VALIDATIONS": [],
+  "EDIT_LAYOUTS": [
+    {
+      "LAYOUT_STYLE": "standard",
+      "LAYOUT_ID": "027a7412-67c8-40c1-9612-89ffa3a11b13",
+      "NAME": "Users",
+      "DESCRIPTION": "",
+      "PREDEFINED_TEMPLATE": [
+        {
+          "ID": "LEFT_SIDEBAR",
+          "FIELDS": [
+            {
+              "FIELD_ID": "cb3a9d64-0b46-43f0-8452-6038429e6bcd"
+            },
+            {
+              "FIELD_ID": "cb3a9d64-0b46-43f0-8452-6038429e6bce"
+            },
+            {
+              "FIELD_ID": "cb3a9d64-0b46-43f0-8452-6038429e6bcc"
+            },
+            {
+              "FIELD_ID": "d70e9650-458c-4cd8-8ab1-4e6106fb4ea8"
+            },
+            {
+              "FIELD_ID": "0049f974-fcbd-4443-a42b-e49df550c128"
+            },
+            {
+              "FIELD_ID": "a4dd84e5-543c-4778-874e-a8a2e67708ab"
+            },
+            {
+              "FIELD_ID": "cb3a9d64-0b46-43f0-8452-6038429e6baf"
+            },
+            {
+              "FIELD_ID": "1f0d78b9-dd90-4697-9633-d10682994bf1"
+            },
+            {
+              "FIELD_ID": "1f0d78b9-dd90-4697-9633-d10682994bf2"
+            },
+            {
+              "FIELD_ID": "cb3a9d64-0b46-43f0-8452-6038429e6bae"
+            }
+          ],
+          "FIELD_STYLE": "EDITABLE"
+        },
+        {
+          "ID": "RIGHT_SIDEBAR",
+          "FIELDS": [
+            {
+              "FIELD_ID": "23207a42-5123-434b-a116-49096ec1ad4f"
+            },
+            {
+              "FIELD_ID": "3105993e-8b89-4e3b-8389-2deae8f70716"
+            }
+          ],
+          "FIELD_STYLE": "ONE_TO_MANY_SECTIONS"
+        },
+        {
+          "ID": "TAB_AREA",
+          "FIELDS": [
+            {
+              "FIELD_ID": "9e68b9c7-c0f2-4422-8cbe-b0104f8c11d5"
+            }
+          ],
+          "FIELD_STYLE": "ONE_TO_MANY_SECTIONS"
+        }
+      ],
+      "ROLE": "SystemAdmin"
+    },
+    {
+      "LAYOUT_STYLE": "standard",
+      "LAYOUT_ID": "62124654-e105-4d20-9432-75930f91296f",
+      "NAME": "Users",
+      "DESCRIPTION": "",
+      "PREDEFINED_TEMPLATE": [
+        {
+          "ID": "LEFT_SIDEBAR",
+          "FIELDS": [
+            {
+              "FIELD_ID": "cb3a9d64-0b46-43f0-8452-6038429e6bcd"
+            },
+            {
+              "FIELD_ID": "cb3a9d64-0b46-43f0-8452-6038429e6bce"
+            },
+            {
+              "FIELD_ID": "cb3a9d64-0b46-43f0-8452-6038429e6bcc"
+            },
+            {
+              "FIELD_ID": "d70e9650-458c-4cd8-8ab1-4e6106fb4ea8"
+            },
+            {
+              "FIELD_ID": "0049f974-fcbd-4443-a42b-e49df550c128"
+            },
+            {
+              "FIELD_ID": "cb3a9d64-0b46-43f0-8452-6038429e6baf"
+            },
+            {
+              "FIELD_ID": "1f0d78b9-dd90-4697-9633-d10682994bf1"
+            },
+            {
+              "FIELD_ID": "1f0d78b9-dd90-4697-9633-d10682994bf2"
+            }
+          ],
+          "FIELD_STYLE": "EDITABLE"
+        },
+        {
+          "ID": "RIGHT_SIDEBAR",
+          "FIELDS": [
+            {
+              "FIELD_ID": "23207a42-5123-434b-a116-49096ec1ad4f"
+            },
+            {
+              "FIELD_ID": "3105993e-8b89-4e3b-8389-2deae8f70716"
+            }
+          ],
+          "FIELD_STYLE": "ONE_TO_MANY_SECTIONS"
+        },
+        {
+          "ID": "TAB_AREA",
+          "FIELDS": [
+            {
+              "FIELD_ID": "9e68b9c7-c0f2-4422-8cbe-b0104f8c11d5"
+            }
+          ],
+          "FIELD_STYLE": "ONE_TO_MANY_SECTIONS"
+        }
+      ],
+      "ROLE": "Agent"
+    },
+    {
+      "LAYOUT_STYLE": "standard",
+      "LAYOUT_ID": "510386e8-a8f4-4b77-93c0-8ea99320e789",
+      "NAME": "Users",
+      "DESCRIPTION": "",
+      "PREDEFINED_TEMPLATE": [
+        {
+          "ID": "LEFT_SIDEBAR",
+          "FIELDS": [
+            {
+              "FIELD_ID": "cb3a9d64-0b46-43f0-8452-6038429e6bcd"
+            },
+            {
+              "FIELD_ID": "cb3a9d64-0b46-43f0-8452-6038429e6bce"
+            },
+            {
+              "FIELD_ID": "cb3a9d64-0b46-43f0-8452-6038429e6bcc"
+            },
+            {
+              "FIELD_ID": "d70e9650-458c-4cd8-8ab1-4e6106fb4ea8"
+            },
+            {
+              "FIELD_ID": "0049f974-fcbd-4443-a42b-e49df550c128"
+            },
+            {
+              "FIELD_ID": "cb3a9d64-0b46-43f0-8452-6038429e6baf"
+            },
+            {
+              "FIELD_ID": "1f0d78b9-dd90-4697-9633-d10682994bf1"
+            },
+            {
+              "FIELD_ID": "1f0d78b9-dd90-4697-9633-d10682994bf2"
+            }
+          ],
+          "FIELD_STYLE": "EDITABLE"
+        },
+        {
+          "ID": "RIGHT_SIDEBAR",
+          "FIELDS": [
+            {
+              "FIELD_ID": "23207a42-5123-434b-a116-49096ec1ad4f"
+            }
+          ],
+          "FIELD_STYLE": "ONE_TO_MANY_SECTIONS"
+        },
+        {
+          "ID": "TAB_AREA",
+          "FIELDS": [
+            {
+              "FIELD_ID": "9e68b9c7-c0f2-4422-8cbe-b0104f8c11d5"
+            }
+          ],
+          "FIELD_STYLE": "ONE_TO_MANY_SECTIONS"
+        }
+      ],
+      "ROLE": "Customer"
+    }
+  ],
+  "DESCRIPTION": "Users Module",
+  "MONITORS": [],
+  "EDIT_MOBILE_LAYOUTS": [
+    {
+      "ROLE": "SystemAdmin",
+      "DESCRIPTION": "User Description",
+      "FIELDS": [
+        "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+        "cb3a9d64-0b46-43f0-8452-6038429e6bcd",
+        "cb3a9d64-0b46-43f0-8452-6038429e6bce",
+        "6b6cab61-b28c-415f-b808-75e9073f8a8c",
+        "0049f974-fcbd-4443-a42b-e49df550c128",
+        "0049f974-fcbd-4443-a42b-e49df550c128"
+      ],
+      "LAYOUT_ID": "3f6974c2-847b-47f3-bad3-d18b54ca9dc8",
+      "NAME": "Users"
+    },
+    {
+      "ROLE": "Agent",
+      "DESCRIPTION": "User Description",
+      "FIELDS": [
+        "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+        "cb3a9d64-0b46-43f0-8452-6038429e6bcd",
+        "cb3a9d64-0b46-43f0-8452-6038429e6bce",
+        "6b6cab61-b28c-415f-b808-75e9073f8a8c",
+        "0049f974-fcbd-4443-a42b-e49df550c128",
+        "0049f974-fcbd-4443-a42b-e49df550c128"
+      ],
+      "LAYOUT_ID": "5d4abe00-7373-4b60-92b4-e14a8c7078ad",
+      "NAME": "Users"
+    },
+    {
+      "ROLE": "Customer",
+      "DESCRIPTION": "User Description",
+      "FIELDS": [
+        "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+        "cb3a9d64-0b46-43f0-8452-6038429e6bcd",
+        "cb3a9d64-0b46-43f0-8452-6038429e6bce",
+        "6b6cab61-b28c-415f-b808-75e9073f8a8c",
+        "0049f974-fcbd-4443-a42b-e49df550c128",
+        "0049f974-fcbd-4443-a42b-e49df550c128"
+      ],
+      "LAYOUT_ID": "9ce2b76f-288b-4cb2-93ef-b8c2244fb3ba",
+      "NAME": "Users"
+    }
+  ],
+  "CREATE_MOBILE_LAYOUTS": [
+    {
+      "ROLE": "SystemAdmin",
+      "DESCRIPTION": "User Description",
+      "FIELDS": [
+        "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+        "cb3a9d64-0b46-43f0-8452-6038429e6bcd",
+        "cb3a9d64-0b46-43f0-8452-6038429e6bce",
+        "6b6cab61-b28c-415f-b808-75e9073f8a8c"
+      ],
+      "LAYOUT_ID": "a42879ae-5e2b-4ea1-a773-67d9d51f3b2e",
+      "NAME": "Users"
+    },
+    {
+      "ROLE": "Agent",
+      "DESCRIPTION": "User Description",
+      "FIELDS": [
+        "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+        "cb3a9d64-0b46-43f0-8452-6038429e6bcd",
+        "cb3a9d64-0b46-43f0-8452-6038429e6bce",
+        "6b6cab61-b28c-415f-b808-75e9073f8a8c"
+      ],
+      "LAYOUT_ID": "068927f3-b606-452e-90b5-d9d77a53574b",
+      "NAME": "Users"
+    },
+    {
+      "ROLE": "Customer",
+      "DESCRIPTION": "User Description",
+      "FIELDS": [
+        "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+        "cb3a9d64-0b46-43f0-8452-6038429e6bcd",
+        "cb3a9d64-0b46-43f0-8452-6038429e6bce",
+        "6b6cab61-b28c-415f-b808-75e9073f8a8c"
+      ],
+      "LAYOUT_ID": "e54b2f27-a7c7-4816-9573-7f174649bf7f",
+      "NAME": "Users"
+    }
+  ],
+  "DETAIL_MOBILE_LAYOUTS": [
+    {
+      "ROLE": "SystemAdmin",
+      "DESCRIPTION": "User Description",
+      "FIELDS": [
+        "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+        "cb3a9d64-0b46-43f0-8452-6038429e6bcd",
+        "cb3a9d64-0b46-43f0-8452-6038429e6bce"
+      ],
+      "LAYOUT_ID": "7d84161a-ea14-43cb-8a7e-1c8e5a9e20ed",
+      "NAME": "Users"
+    },
+    {
+      "ROLE": "Agent",
+      "DESCRIPTION": "User Description",
+      "FIELDS": [
+        "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+        "cb3a9d64-0b46-43f0-8452-6038429e6bcd",
+        "cb3a9d64-0b46-43f0-8452-6038429e6bce"
+      ],
+      "LAYOUT_ID": "a4950650-7a3a-4cfe-9b7c-6af4217c9b07",
+      "NAME": "Users"
+    },
+    {
+      "ROLE": "Customer",
+      "DESCRIPTION": "User Description",
+      "FIELDS": [
+        "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+        "cb3a9d64-0b46-43f0-8452-6038429e6bcd",
+        "cb3a9d64-0b46-43f0-8452-6038429e6bce"
+      ],
+      "LAYOUT_ID": "a6f803e4-4646-4a7b-96ae-5a753b0e943a",
+      "NAME": "Users"
+    }
+  ],
+  "LIST_LAYOUTS": [
+    {
+      "ROLE": "SystemAdmin",
+      "ORDER_BY": {
+        "ORDER": "Asc",
+        "COLUMN": "cb3a9d64-0b46-43f0-8452-6038429e6bcc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+          "cb3a9d64-0b46-43f0-8452-6038429e6bcd",
+          "cb3a9d64-0b46-43f0-8452-6038429e6bce"
+        ]
+      },
+      "DESCRIPTION": "Invite, promote and edit users.",
+      "CONDITIONS": [],
+      "ID": null,
+      "LAYOUT_ID": "13f1fd43-0ba9-4d74-89ea-ecfcc254f665",
+      "IS_DEFAULT": true,
+      "NAME": "Users"
+    },
+    {
+      "ROLE": "Agent",
+      "ORDER_BY": {
+        "ORDER": "Asc",
+        "COLUMN": "cb3a9d64-0b46-43f0-8452-6038429e6bcc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+          "cb3a9d64-0b46-43f0-8452-6038429e6bcd",
+          "cb3a9d64-0b46-43f0-8452-6038429e6bce"
+        ]
+      },
+      "DESCRIPTION": "Invite, promote and edit users.",
+      "CONDITIONS": [],
+      "ID": null,
+      "LAYOUT_ID": "620fb830-47d5-411a-8476-cc88881bb888",
+      "IS_DEFAULT": true,
+      "NAME": "Users"
+    },
+    {
+      "ROLE": "Customer",
+      "ORDER_BY": {
+        "ORDER": "Asc",
+        "COLUMN": "cb3a9d64-0b46-43f0-8452-6038429e6bcc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+          "cb3a9d64-0b46-43f0-8452-6038429e6bcd",
+          "cb3a9d64-0b46-43f0-8452-6038429e6bce"
+        ]
+      },
+      "DESCRIPTION": "Invite, promote and edit users.",
+      "CONDITIONS": [],
+      "ID": null,
+      "LAYOUT_ID": "2c6eff00-b1ad-4240-8b03-02302a4a9298",
+      "IS_DEFAULT": true,
+      "NAME": "Users"
+    },
+    {
+      "LAYOUT_ID": "a4ed0aa6-8336-4949-a611-3226492d4619",
+      "NAME": "AGENTS_REPLACE",
+      "DESCRIPTION": "Layout for all AGENTS_REPLACE",
+      "ID": "",
+      "ROLE": "SystemAdmin",
+      "ORDER_BY": {
+        "COLUMN": "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+        "ORDER": "Asc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+          "cb3a9d64-0b46-43f0-8452-6038429e6bcd",
+          "cb3a9d64-0b46-43f0-8452-6038429e6bce"
+        ]
+      },
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "a4dd84e5-543c-4778-874e-a8a2e67708ab",
+          "CONDITION_VALUE": "Agent"
+        }
+      ],
+      "IS_DEFAULT": false,
+      "DATE_CREATED": null,
+      "DATE_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null
+    },
+    {
+      "LAYOUT_ID": "a4ed0aa6-8336-4949-a611-3226492d4234",
+      "NAME": "AGENTS_REPLACE",
+      "DESCRIPTION": "Layout for all AGENTS_REPLACE",
+      "ID": "",
+      "ROLE": "Agent",
+      "ORDER_BY": {
+        "COLUMN": "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+        "ORDER": "Asc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+          "cb3a9d64-0b46-43f0-8452-6038429e6bcd",
+          "cb3a9d64-0b46-43f0-8452-6038429e6bce"
+        ]
+      },
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "a4dd84e5-543c-4778-874e-a8a2e67708ab",
+          "CONDITION_VALUE": "Agent"
+        }
+      ],
+      "IS_DEFAULT": false,
+      "DATE_CREATED": null,
+      "DATE_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null
+    },
+    {
+      "LAYOUT_ID": "18ba31f7-aec2-498c-b8e5-4340c07228fb",
+      "NAME": "SYSTEM_ADMINS_REPLACE",
+      "DESCRIPTION": "Layout that shows only SYSTEM_ADMINS_REPLACE",
+      "ID": "",
+      "ROLE": "SystemAdmin",
+      "ORDER_BY": {
+        "COLUMN": "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+        "ORDER": "Asc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+          "cb3a9d64-0b46-43f0-8452-6038429e6bcd",
+          "cb3a9d64-0b46-43f0-8452-6038429e6bce"
+        ]
+      },
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "a4dd84e5-543c-4778-874e-a8a2e67708ab",
+          "CONDITION_VALUE": "SystemAdmin"
+        }
+      ],
+      "IS_DEFAULT": false,
+      "DATE_CREATED": null,
+      "DATE_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null
+    },
+    {
+      "LAYOUT_ID": "18ba31f7-aec2-498c-b8e5-4340c07229rd",
+      "NAME": "SYSTEM_ADMINS_REPLACE",
+      "DESCRIPTION": "Layout that shows only SYSTEM_ADMINS_REPLACE",
+      "ID": "",
+      "ROLE": "Agent",
+      "ORDER_BY": {
+        "COLUMN": "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+        "ORDER": "Asc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+          "cb3a9d64-0b46-43f0-8452-6038429e6bcd",
+          "cb3a9d64-0b46-43f0-8452-6038429e6bce"
+        ]
+      },
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "a4dd84e5-543c-4778-874e-a8a2e67708ab",
+          "CONDITION_VALUE": "SystemAdmin"
+        }
+      ],
+      "IS_DEFAULT": false,
+      "DATE_CREATED": null,
+      "DATE_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null
+    },
+    {
+      "LAYOUT_ID": "00513902-f4c2-4e9e-8de0-607452aa1f07",
+      "NAME": "CUSTOMERS_REPLACE",
+      "DESCRIPTION": "Layout for all CUSTOMERS_REPLACE",
+      "ID": "",
+      "ROLE": "SystemAdmin",
+      "ORDER_BY": {
+        "COLUMN": "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+        "ORDER": "Asc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+          "cb3a9d64-0b46-43f0-8452-6038429e6bcd",
+          "cb3a9d64-0b46-43f0-8452-6038429e6bce"
+        ]
+      },
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "a4dd84e5-543c-4778-874e-a8a2e67708ab",
+          "CONDITION_VALUE": "Customer"
+        }
+      ],
+      "IS_DEFAULT": false,
+      "DATE_CREATED": null,
+      "DATE_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null
+    },
+    {
+      "LAYOUT_ID": "00513902-f4c2-4e9e-8de0-607452aa1e98",
+      "NAME": "CUSTOMERS_REPLACE",
+      "DESCRIPTION": "Layout for all CUSTOMERS_REPLACE",
+      "ID": "",
+      "ROLE": "Agent",
+      "ORDER_BY": {
+        "COLUMN": "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+        "ORDER": "Asc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+          "cb3a9d64-0b46-43f0-8452-6038429e6bcd",
+          "cb3a9d64-0b46-43f0-8452-6038429e6bce"
+        ]
+      },
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "a4dd84e5-543c-4778-874e-a8a2e67708ab",
+          "CONDITION_VALUE": "Customer"
+        }
+      ],
+      "IS_DEFAULT": false,
+      "DATE_CREATED": null,
+      "DATE_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null
+    }
+  ],
+  "LIST_MOBILE_LAYOUTS": [
+    {
+      "ROLE": "SystemAdmin",
+      "DESCRIPTION": "User Description",
+      "LAYOUT_ID": "37fa9c8d-3340-4850-a046-88474ec034e6",
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "cb3a9d64-0b46-43f0-8452-6038429e6bcd"
+      },
+      "NAME": "Users",
+      "CONDITIONS": [],
+      "FIELDS": [
+        "cb3a9d64-0b46-43f0-8452-6038429e6bcd",
+        "cb3a9d64-0b46-43f0-8452-6038429e6bcc"
+      ]
+    },
+    {
+      "ROLE": "Agent",
+      "DESCRIPTION": "User Description",
+      "LAYOUT_ID": "f39f2d87-3645-44f8-b02b-d1068f6f1d7b",
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "cb3a9d64-0b46-43f0-8452-6038429e6bcd"
+      },
+      "NAME": "Users",
+      "CONDITIONS": [],
+      "FIELDS": [
+        "cb3a9d64-0b46-43f0-8452-6038429e6bcd",
+        "cb3a9d64-0b46-43f0-8452-6038429e6bcc"
+      ]
+    },
+    {
+      "ROLE": "Customer",
+      "DESCRIPTION": "User Description",
+      "LAYOUT_ID": "54e5e3e6-de9b-48c0-90b8-0a9f341413c0",
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "cb3a9d64-0b46-43f0-8452-6038429e6bcd"
+      },
+      "CONDITIONS": [],
+      "NAME": "Users",
+      "FIELDS": [
+        "cb3a9d64-0b46-43f0-8452-6038429e6bcd",
+        "cb3a9d64-0b46-43f0-8452-6038429e6bcc"
+      ]
+    }
+  ],
+  "CREATE_LAYOUTS": [
+    {
+      "LAYOUT_STYLE": "standard",
+      "LAYOUT_ID": "28f3e296-12b8-11e9-ab14-d663bd873d93",
+      "NAME": "Users",
+      "DESCRIPTION": "",
+      "ROLE": "SystemAdmin"
+    },
+    {
+      "LAYOUT_STYLE": "standard",
+      "LAYOUT_ID": "28f3e296-12b8-11e9-ab14-d663bd873d93",
+      "NAME": "Users",
+      "DESCRIPTION": "",
+      "ROLE": "Agent"
+    },
+    {
+      "LAYOUT_STYLE": "standard",
+      "LAYOUT_ID": "28f3e296-12b8-11e9-ab14-d663bd873d93",
+      "NAME": "Users",
+      "DESCRIPTION": "",
+      "ROLE": "Customer"
+    }
+  ],
+  "CHAT_BOTS": []
+}

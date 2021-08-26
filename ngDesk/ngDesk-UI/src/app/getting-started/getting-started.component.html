@@ -1,0 +1,828 @@
+<app-toolbar></app-toolbar>
+<div *ngIf="loaded">
+	<div fxLayout="column" fxLayoutGap="20px" class="scrollbar" id="style-4"
+		style="border-radius: 10px;  overflow-y: scroll; overflow-x: hidden; height: 100vh;padding-top: 20px;min-width: 300px;">
+		<div fxLayoutAlign="center center" fxLayout="row" fxFlex="10" fxLayoutGap="30px">
+			<!--Progress spinner start-->
+			<div fxLayout="column" fxFlex="20" fxLayoutAlign="start start">
+				<div class="spinner spinner-color" style="position: relative;left: 50%;top: -12px;">
+					<mat-progress-spinner diameter="60" strokeWidth="8" style="stroke-opacity: 0.2;" [mode]="mode" [value]="100">
+					</mat-progress-spinner>
+					<mat-progress-spinner diameter="60" strokeWidth="8" [mode]="mode" [value]="value">
+					</mat-progress-spinner>
+				</div>
+				<span *ngIf="value === 100"
+					style="font: 400 15px/32px Roboto, 'Helvetica Neue', sans-serif;position: relative;left: 71%;top: 2px;">{{value}}%</span>
+				<span *ngIf="value === 0"
+					style="font: 400 15px/32px Roboto, 'Helvetica Neue', sans-serif;position: relative;left: 86%;top: 3px;">{{value}}%</span>
+				<span *ngIf="value !== 0 && value !== 100"
+					style="font: 400 15px/32px Roboto, 'Helvetica Neue', sans-serif;position: relative;left: 80%;top: 3px;">{{value}}%</span>
+			</div>
+			<!--Progress spinner end-->
+			<div fxFlex fxLayoutAlign="center center" fxLayoutGap="5px" style="padding-top: 10px;">
+				<div fxLayout="column">
+					<span
+						style="font: 400 22px/32px Roboto, 'Helvetica Neue', sans-serif;position: relative;left: -10px;">{{ 'GETTING_STARTED' | translate}}</span>
+					<span
+						style="font: lighter 14px/32px Roboto, 'Helvetica Neue', sans-serif;position: relative;left: -10px;">&nbsp;{{'STEPS_COMPLETED' | translate: { 'completedSteps' : this.completedSteps, 'totalSteps' : this.totalSteps} }}</span>
+				</div>
+
+			</div>
+		</div>
+		<div fxFlex="90">
+			<!--Side menu items start-->
+			<mat-list (click)="stepClicked(i,item)" *ngFor="let item of gettingStarted; let i = index" style="padding: 10px; cursor: pointer;">
+				<mat-list-item style="border-radius: 5px;"
+					[ngStyle]="{'background-color': complete[i] === false ? '#FAFAFA' : '#81C784', 'color': complete[i] === false ? '#000000' : '#FAFAFA' }"
+					matRipple [matRippleCentered]="false" [matRippleDisabled]="false" [matRippleUnbounded]="false" matRippleColor="primary" fxFlex
+					id="{{i}}">
+					<div fxLayout="row" fxFill fxLayoutAlign="space-between center">
+						<mat-label>{{item.STEP_NAME}} </mat-label>
+						<mat-icon *ngIf="item.COMPLETED">{{stepIcon[i]}}</mat-icon>
+					</div>
+				</mat-list-item>
+			</mat-list>
+			<!--Side menu items end-->
+			<!-- Resources start -->
+			<mat-list style="padding: 10px; cursor: pointer;" fxLayout="column">
+				<mat-list-item style="border-radius: 5px;" [ngStyle]="{'background-color': '#FAFAFA', 'color': '#000000'}" matRipple
+					[matRippleCentered]="false" [matRippleDisabled]="false" [matRippleUnbounded]="false" matRippleColor="primary" fxFlex
+					id="resources" (click)="clickedResources()">
+					<div fxLayout="row" fxFill fxLayoutAlign="space-between center">
+						<mat-label>{{ 'RESOURCES' | translate }}</mat-label>
+						<mat-icon *ngIf="showResources">keyboard_arrow_down</mat-icon>
+						<mat-icon *ngIf="!showResources">keyboard_arrow_right</mat-icon>
+					</div>
+				</mat-list-item>
+				<!-- Knowledge base start -->
+				<mat-list-item *ngIf="showResources"
+					[ngStyle]="{'background-color': resourceSelected !== 'knowledgebase' ? '#FAFAFA' : 'var(--primaryColor)', 'color': resourceSelected !== 'knowledgebase' ? '#000000' : '#FAFAFA'}"
+					matRipple [matRippleCentered]="false" [matRippleDisabled]="false" [matRippleUnbounded]="false" matRippleColor="primary" fxFlex
+					fxLayoutAlign="start start" id="resources" (click)="resourcesMenu('knowledgebase')">
+					<mat-icon>help_outline</mat-icon>
+					<mat-label style="padding-left: 10px;">{{'KNOWLEDGE_BASE' | translate}}</mat-label>
+				</mat-list-item>
+				<!-- Knowledge base end -->
+				<!-- Blog start -->
+				<mat-list-item *ngIf="showResources"
+					[ngStyle]="{'background-color': resourceSelected !== 'blog' ? '#FAFAFA' : 'var(--primaryColor)', 'color': resourceSelected !== 'blog' ? '#000000' : '#FAFAFA'}"
+					matRipple [matRippleCentered]="false" [matRippleDisabled]="false" [matRippleUnbounded]="false" matRippleColor="primary" fxFlex
+					fxLayoutAlign="start start" id="resources" (click)="learnMore('https://ngdesk.com/blog/')">
+					<mat-icon>info_outline</mat-icon>
+					<mat-label style="padding-left: 10px;">{{'BLOG' | translate}}</mat-label>
+				</mat-list-item>
+				<!-- Blog end -->
+				<!-- Ticket guide start -->
+				<mat-list-item *ngIf="showResources"
+					[ngStyle]="{'background-color': resourceSelected !== 'tickets' ? '#FAFAFA' : 'var(--primaryColor)', 'color': resourceSelected !== 'tickets' ? '#000000' : '#FAFAFA'}"
+					matRipple [matRippleCentered]="false" [matRippleDisabled]="false" [matRippleUnbounded]="false" matRippleColor="primary" fxFlex
+					id="resources" (click)="resourcesMenu('tickets')">
+					<mat-icon>list_alt</mat-icon>
+					<div fxLayout="row" fxFlex fxLayoutAlign="space-between center">
+						<mat-label style="padding-left: 10px;">{{'TICKETS_GUIDE' | translate}}</mat-label>
+						<mat-icon *ngIf="showTicketsGuide">keyboard_arrow_down</mat-icon>
+						<mat-icon *ngIf="!showTicketsGuide">keyboard_arrow_right</mat-icon>
+					</div>
+				</mat-list-item>
+				<!-- Ticket guide end -->
+				<!-- Create ticket start -->
+				<mat-list-item *ngIf="showResources && showTicketsGuide"
+					[ngStyle]="{'background-color': resourceSelected !== 'createTickets' ? '#FAFAFA' : 'var(--primaryColor)', 'color': resourceSelected !== 'createTickets' ? '#000000' : '#FAFAFA'}"
+					matRipple [matRippleCentered]="false" [matRippleDisabled]="false" [matRippleUnbounded]="false" matRippleColor="primary" fxFlex
+					fxLayoutAlign="start start" id="resources" (click)="resourcesMenu('createTickets')">
+					<mat-icon style="padding-left: 30px;">create</mat-icon>
+					<span style="padding-left: 10px;">{{'CREATE_TICKET' | translate}}</span>
+				</mat-list-item>
+				<!-- Create ticket end -->
+				<!-- Premade responses start -->
+				<mat-list-item *ngIf="showResources && showTicketsGuide"
+					[ngStyle]="{'background-color': resourceSelected !== 'premade' ? '#FAFAFA' : 'var(--primaryColor)', 'color': resourceSelected !== 'premade' ? '#000000' : '#FAFAFA'}"
+					matRipple [matRippleCentered]="false" [matRippleDisabled]="false" [matRippleUnbounded]="false" matRippleColor="primary" fxFlex
+					fxLayoutAlign="start start" id="resources" (click)="resourcesMenu('premade')">
+					<mat-icon style="padding-left: 30px;">chat_bubble_outline</mat-icon>
+					<span style="padding-left: 10px;">{{'PREMADE_RESPONSES' | translate}}</span>
+				</mat-list-item>
+				<!-- Premade responses end -->
+				<!-- Search ticket start -->
+				<mat-list-item *ngIf="showResources && showTicketsGuide"
+					[ngStyle]="{'background-color': resourceSelected !== 'search' ? '#FAFAFA' : 'var(--primaryColor)', 'color': resourceSelected !== 'search' ? '#000000' : '#FAFAFA'}"
+					matRipple [matRippleCentered]="false" [matRippleDisabled]="false" [matRippleUnbounded]="false" matRippleColor="primary" fxFlex
+					fxLayoutAlign="start start" id="resources" (click)="resourcesMenu('search')">
+					<mat-icon style="padding-left: 30px;">search</mat-icon>
+					<span style="padding-left: 10px;">{{'SEARCH_TICKETS' | translate}}</span>
+				</mat-list-item>
+				<!-- Search ticket end -->
+			</mat-list>
+			<!-- Resources end -->
+			<div fxLayoutAlign="center center" fxLayoutGap="10px" style="padding-top: 20%;">
+				<button color="primary" *ngIf="(finish || value === 100)" (click)="nextStep()" mat-raised-button>Finish</button>
+			</div>
+		</div>
+	</div>
+	<div class="getting-started" fxFlex="80" fxLayoutAlign="start start" fxFlexFill style="padding-top:10px; height: 100vh">
+		<app-customization *ngIf="currentStep === 0 && resourceSelected === 'none'" fxFlex></app-customization>
+		<div *ngIf="currentStep === 1 && resourceSelected === 'none'" fxFlex="100" fxLayout="column">
+			<div style="padding-left: 10px;margin-top: 10px;">
+				<h1 class="mat-h1" style="font-weight: 550; margin: 0px;">{{'ACTIVATE_EMAIL' | translate}}</h1>
+			</div>
+			<div fxLayoutAlign="center center" fxLayout="column">
+				<div fxLayoutAlign="center center">
+					<img src="../../assets/images/activation.jpg" style="width:70%;height:30%;" alt=""> </div>
+				<div *ngIf="!complete[1]" style="padding-left: 10px;" fxFlex="100">
+					<h3 class="mat-h3" style="font-weight: normal;">{{'CHECK_EMAIL_TEXT' | translate}}</h3>
+					<div fxLayoutAlign="center center" fxLayoutGap="10px">
+						<mat-form-field fxFlex>
+							<input matInput [disabled]=true [value]="email" required />
+						</mat-form-field>
+						<button mat-raised-button color="primary" (click)="activateEmail()">
+							{{ 'RESEND' | translate }}
+						</button>
+					</div>
+				</div>
+				<div *ngIf="complete[1]" style="padding-left: 10px;">
+					<h3 class="mat-h3" style="font-weight: normal;">{{'EMAIL_ACTIVATED' | translate}}</h3>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="currentStep === 2 && resourceSelected === 'none'" fxFlex="100">
+			<div style="padding-left: 10px;margin-top: 10px;">
+				<div fxLayoutAlign="space-between flex-start">
+					<h1 class="mat-h1" style="font-weight: 550; margin: 0px;">{{'SUPPORT_EMAIL' | translate}}</h1>
+				</div>
+				<h3 class="mat-h3" style="color: #9e9e9e;">{{'SUPPORT_EMAIL_SUBTITLE' | translate}}</h3>
+			</div>
+			<div fxLayout="row">
+				<div style=" padding-left: 20px;" fxLayoutAlign="start start" fxFlex="50">
+					<app-sliding-view-panel [activePane]="active">
+						<div fxLayout="column" fxLayoutAlign="start" paneOne>
+							<div fxLayoutAlign="center" *ngIf="errorMessage != ''">
+								<mat-error class="mat-h3" fxLayoutAlign="center">{{
+					  errorMessage
+					}}</mat-error>
+							</div>
+							<form [formGroup]="emailChannelForm" style="padding-top: 20px;"
+								*ngIf="channelType === 'Internal' || channelType === 'External'">
+								<div mat-dialog-content fxLayout="column">
+									<div fxLayoutAlign="start center" style="padding-left: 57%;" fxLayoutGap="10px">
+										<div><button color="primary" *ngIf="channelType === 'External'" (click)="typeSelected('Internal')"
+												mat-raised-button>Switch
+												to Internal</button>
+											<button color="primary" *ngIf="channelType === 'Internal'" (click)="typeSelected('External')" mat-raised-button>Switch
+												to External</button> </div>
+									</div>
+									<div fxLayout="column" fxLayoutAlign="start start">
+										<mat-form-field style="width: 85%;">
+											<input matInput placeholder="{{ 'NAME' | translate }}" formControlName="name" required />
+											<mat-error [innerHTML]="'FIELD_REQUIRED' | translate: errorParams.name"></mat-error>
+										</mat-form-field>
+										<mat-form-field style="width: 85%;">
+											<input matInput placeholder="{{ 'DESCRIPTION' | translate }}" formControlName="description" />
+										</mat-form-field>
+										<mat-form-field style="width: 85%;">
+											<input matInput placeholder="{{ 'EMAIL_ADDRESS' | translate }}" formControlName="emailAddress" required />
+											<label *ngIf="channelType === 'Internal'" matSuffix>@{{ subdomain }}.ngdesk.com</label>
+											<mat-error *ngIf="emailChannelForm.get('emailAddress').hasError('required')"
+												[innerHTML]="'FIELD_REQUIRED' | translate: errorParams.emailAddress"></mat-error>
+											<mat-error *ngIf="emailChannelForm.get('emailAddress').hasError('email')">
+												{{ 'EMAIL_MUST_BE_VALID' | translate }}</mat-error>
+										</mat-form-field>
+									</div>
+								</div>
+								<div mat-dialog-actions fxLayoutAlign="end start" style="padding-right: 15%;">
+
+									<button mat-raised-button color="primary" (click)="save()">
+										{{ 'SAVE' | translate }}
+									</button>
+								</div>
+							</form>
+							<div style="padding-top: 5%;" *ngIf="channelType === ''" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10%">
+								<div fxLayoutGap="10%">
+									<h4 class="mat-h4">{{'INTERNAL_TITLE' | translate}}</h4>
+									<div fxLayoutAlign="center center">
+										<button color="primary" (click)="typeSelected('Internal')" mat-raised-button>Internal</button>
+									</div>
+								</div>
+								<div fxLayoutGap="10%">
+									<h4 class="mat-h4">{{'EXTERNAL_TITLE' | translate}}</h4>
+									<div fxLayoutAlign="center center">
+										<button color="primary" (click)="typeSelected('External')" mat-raised-button>External</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div fxLayout="column" fxLayoutAlign="start start" fxFlex="100" paneTwo style="padding-left: 15px;">
+							<h1 mat-dialog-title class="mat-headline" fxLayoutAlign="start">
+								{{ 'EMAIL_FORWARDING' | translate }}
+							</h1>
+							<h3 class="mat-h3">{{ 'SETUP_FORWARD_TO_ADDRESS' | translate }}:</h3>
+							<label class="mat-h4">support@{{ subdomain }}.ngdesk.com </label><br />
+							<div fxLayoutAlign="start" fxFlex>
+								<div fxLayout="row" fxFlex="70" fxLayoutGap="10px">
+									<mat-checkbox color="primary" [(ngModel)]="forwardingConfirmed"></mat-checkbox>
+									<div class="mat-body" i18n>
+										{{ 'SETUP_FORWARDING_CONFIRM' | translate: params.emailAddress }}
+										<br />
+										<p [innerHTML]="'FOR_MORE_INFORMATION' | translate"></p>
+									</div>
+								</div>
+							</div>
+							<div fxLayoutGap="10px">
+								<button mat-raised-button (click)="active = 'paneOne'">
+									{{ 'BACK' | translate }}
+								</button>
+								<button mat-raised-button color="primary" (click)="verifyEmail()" [disabled]="!forwardingConfirmed">
+									{{ 'TEST_FORWARDING' | translate }}
+								</button>
+							</div>
+						</div>
+						<div fxLayout="column" fxLayoutAlign="center center" fxFlex="100" paneThree>
+							<label class="mat-h1" *ngIf="isVerifying">{{
+					'EMAIL_FORWARDING_VERIFICATION' | translate
+				  }}</label>
+							<label class="mat-h1" *ngIf="!isVerifying && !isVerified">{{
+					'COULDNT_COMPLETE_SETUP' | translate
+				  }}</label>
+							<label *ngIf="isVerifying && !isVerified" class="mat-body" fxFlex>{{
+					'THIS_MIGHT_TAKE_UP_TO_MINUTE' | translate
+				  }}</label>
+							<div fxLayoutAlign="center center">
+								<mat-spinner *ngIf="isVerifying && !isVerified"></mat-spinner>
+								<label fxFlex="90" class="mat-h3" *ngIf="!isVerifying && !isVerified"
+									[ngStyle]="{ color: '#7f0000' }">{{ 'VERIFICATION_FAILED' | translate }}</label>
+
+								<div *ngIf="!isVerifying && isVerified" fxLayout="column" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+									<label class="mat-h2">{{ 'VERIFICATION_SUCCEEDED' | translate }}</label>
+									<mat-icon class="green-color">done</mat-icon>
+									<span class="mat-body">{{ 'EMAIL_FORWARDING_SUCCESS_MESSAGE' | translate }}
+										<b>support@{{ subdomain }}.ngdesk.com </b></span>
+									<button mat-raised-button color="primary" [mat-dialog-close]="emailChannelForm">
+										{{ 'DONE' | translate }}
+									</button>
+								</div>
+							</div>
+							<div fxLayout="column" fxLayoutAlign="space-between center" fxFlex *ngIf="!isVerifying && !isVerified">
+								<div fxLayout="column" fxLayoutAlign="center center">
+									<label fxFlex="100" class="mat-h3" [innerHTML]="'VERIFICATION_HELP' | translate"></label>
+									<label fxFlex="100" class="mat-body-strong">{{
+						'NEED_HELP' | translate
+					  }}</label>
+									<label fxFlex="100" class="mat-body">{{
+						'REACH_OUT' | translate
+					  }}</label>
+								</div>
+								<div>
+									<div fxLayoutGap="20px">
+
+										<button mat-raised-button color="primary" (click)="active = 'paneTwo'">
+											{{ 'START_OVER' | translate }}
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</app-sliding-view-panel>
+				</div>
+				<div fxFlex="50">
+					<img src="../../assets/images/email-channel-cropped.jpg" style="width:100%;height:100%;" alt=""> </div>
+			</div>
+		</div>
+		<div *ngIf="currentStep === 3 && resourceSelected === 'none'" fxFlex="100">
+
+			<div style="padding: 10px;" fxLayout="column" fxFlex>
+				<div fxLayoutAlign="space-between flex-start">
+					<h1 class="mat-h1" style="font-weight: 550; margin: 0px;">{{'INVITE_TEAM' | translate}}</h1>
+				</div>
+				<h3 class="mat-h3" style="color: #9e9e9e;">{{'INVITE_TEAM_SUBTITLE' | translate}}</h3>
+				<div fxLayoutAlign="center center" fxFlex="60">
+					<img src="../../assets/images/invite-users-cropped.jpg" style="width:65%;height:80%;" alt="">
+				</div>
+				<div>
+					<div fxLayout="row" fxLayoutAlign="space-between flex-start">
+						<div fxLayout="row" fxLayoutAlign="center center">
+							<h1 style="margin: 0px;" mat-dialog-title class="mat-h1">{{'INVITE_USERS' | translate}}</h1>
+							<button mat-icon-button (click)="addInvite()" type="button" style="cursor: pointer;">
+								<mat-icon>add_circle</mat-icon>
+							</button>
+						</div>
+					</div>
+					<div fxLayoutAlign="center" *ngIf="errorMessage != ''">
+						<mat-error class="mat-h3" fxLayoutAlign="center">{{errorMessage}}</mat-error>
+					</div>
+
+					<form [formGroup]="inviteUsersForm" fxLayout="column" fxLayoutGap="30px" (ngSubmit)="sendInvite()">
+						<div style="overflow-y: auto;max-height: 450px;">
+							<div formArrayName="users" fxLayoutAlign="center center" *ngFor=" let user of formData.controls; let i = index">
+								<div [formGroupName]="i" fxLayoutAlign="space-between" fxFlex="100" fxLayout="row">
+									<mat-form-field [ngStyle]="{'width':'20%'}">
+										<input matInput required placeholder="{{'FIRST_NAME' | translate}}" formControlName="FIRST_NAME">
+										<mat-error *ngIf="user.controls.FIRST_NAME.hasError('required')"
+											[innerHTML]="'FIELD_REQUIRED' | translate:inviteUsersParams.firstName">
+										</mat-error>
+									</mat-form-field>
+									<mat-form-field [ngStyle]="{'width':'20%'}">
+										<input matInput placeholder="{{'LAST_NAME' | translate}}" formControlName="LAST_NAME">
+									</mat-form-field>
+									<mat-form-field [ngStyle]="{'width':'20%'}">
+										<input matInput required placeholder="{{'EMAIL_ADDRESS' | translate}}" formControlName="EMAIL_ADDRESS">
+										<mat-error *ngIf="user.controls.EMAIL_ADDRESS.hasError('email') && !user.controls.EMAIL_ADDRESS.hasError('required')">
+											{{'PLEASE_ENTER_VALID_EMAIL_ADDRESS' | translate}}
+										</mat-error>
+										<mat-error *ngIf="user.controls.EMAIL_ADDRESS.hasError('required')"
+											[innerHTML]="'FIELD_REQUIRED' | translate:inviteUsersParams.emailAddress">
+										</mat-error>
+									</mat-form-field>
+									<mat-form-field [ngStyle]="{'width':'20%'}">
+										<mat-select required placeholder="{{'ROLE' | translate}}" formControlName="ROLE">
+											<mat-option *ngFor="let role of roles" [value]="role.ROLE_ID">
+												{{role.NAME}}
+											</mat-option>
+										</mat-select>
+										<mat-error *ngIf="user.controls.ROLE.hasError('required')"
+											[innerHTML]="'FIELD_REQUIRED' | translate:inviteUsersParams.role">
+										</mat-error>
+									</mat-form-field>
+									<div fxLayoutAlign="center center">
+										<button mat-icon-button (click)="removeInvite(i)" type="button">
+											<mat-icon id="remove" *ngIf="formData.controls.length > 1" style=" cursor:pointer;">remove_circle</mat-icon>
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+						<div fxLayoutAlign="end" fxLayout="row" fxLayoutGap="10px" style="padding-right: 80px;">
+							<!-- <button mat-raised-button color="primary" (click)="goToInvites()">{{'MANAGE_INVITES' | translate}}</button> -->
+							<mat-spinner diameter="35" *ngIf="inviting"></mat-spinner>
+							<button *ngIf="!inviting" mat-raised-button color="primary" [disabled]="!inviteUsersForm.valid"
+								type="submit">{{'INVITE' | translate}}</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="currentStep > 3 && 7 > currentStep && resourceSelected === 'none'" fxFlex="100">
+			<div style="padding: 10px;">
+				<div>
+					<div fxLayoutGap="20px">
+						<app-toolbar *ngIf="!checkGettingStarted > 0" [templateRef]="headerTemplateRef"></app-toolbar>
+						<div *ngIf="chatChannelChanges$ | async as chatChannel; else loading" class="pad10">
+							<ng-template #headerTemplateRef>
+								<app-title-bar title="{{chatChannel.NAME}}"></app-title-bar>
+							</ng-template>
+							<div fxLayout="column" fxLayoutAlign="center center">
+								<mat-error class="mat-body">{{errorMessage}}</mat-error>
+							</div>
+							<div fxLayout="column">
+								<mat-tab-group (selectedTabChange)="tabClicked($event)" #chatSettingsTabs [selectedIndex]="selectedIndex">
+									<!-- SETUP TAB -->
+									<mat-tab label="Setup">
+										<div class="mat-h2" style="text-align: center">{{'INSTALL_WIDGET' | translate}}</div>
+										<div id="chat-script"
+											[ngClass]="{'z9999': fpos.hostElement === 'chat-script', 'white-background': fpos.hostElement === 'chat-script'}"
+											#chatScript>
+											<h3 class="mat-h3" style="text-align: center" [innerHTML]="'COPY_CHAT_DISCLAIMER' | translate"></h3>
+											<div style="padding-left: 25%; padding-right: 25%; cursor: pointer;">
+												<pre
+													style="background-color: rgb(7, 7, 7); border-radius: 8px; padding-right: 2%; cursor: pointer; white-space: pre-wrap; margin: 0;"
+													(click)="copyToClipboard()">
+										  <ol style=" margin-top: 0; margin-bottom: 0; cursor: pointer; color: rgb(255, 255, 255); word-break: break-word;" fxLayout="column" fxLayoutGap="5px" >
+											<div fxLayoutAlign="end start">	<mat-icon aria-hidden="false"  matTooltip="{{'COPY_TO_CLIPBOARD' | translate}}">content_copy</mat-icon></div>
+											<li><span><span>&lt;script&gt;</span></span></li><li><span>var script = document.createElement(&#34;script&#34;);</span></li><li><span>script.type = &#34;text/javascript&#34;;</span></li><li><span>script.src = &#34;https://{{subdomain}}.ngdesk.com/widgets/chat/{{chatChannel.CHANNEL_ID}}/chat_widget.js&#34;;</span></li><li><span>document.getElementsByTagName(&#34;head&#34;)[0].appendChild(script);</span></li><li><span class="tag">&lt;/script&gt;</span></li>
+										  </ol>
+										</pre>
+											</div>
+											<br>
+											<h3 class="mat-h3" style="text-align: center" [innerHTML]="'USE_PLUGIN' | translate"></h3>
+											<div id="chat-plugin" style="padding-left: 40%"
+												[ngClass]="{'z9999': fpos.hostElement === 'chat-plugin', 'white-background': fpos.hostElement === 'chat-plugin'}"
+												#chatPlugin fxLayout="row" fxLayoutGap="10px">
+												<div fxLayout="row" fxLayoutGap="10px">
+													<mat-form-field>
+														<mat-label>{{'SELECT_PLUGIN' | translate}}</mat-label>
+														<mat-select [(ngModel)]="selectedPlugin">
+															<mat-option *ngFor="let plugin of this.plugins" [value]="plugin">
+																{{plugin.NAME}}
+															</mat-option>
+														</mat-select>
+													</mat-form-field>
+													<div fxLayoutAlign="center center">
+														<button mat-raised-button color="primary" style="margin-left: 2%;" (click)="downloadPlugin()">
+															<mat-icon aria-hidden="false">archive</mat-icon>
+														</button> </div>
+												</div>
+											</div>
+											<mat-divider style="margin-left: 25%; margin-right: 25%;"></mat-divider><br>
+											<h3 class="mat-h3" style="text-align: center" [innerHTML]="'EMAIL_INSTRUCTIONS' | translate"></h3>
+											<div style="padding-left: 30%" id="chat-email-developers"
+												[ngClass]="{'z9999': fpos.hostElement === 'chat-email-developers', 'white-background': fpos.hostElement === 'chat-email-developers'}"
+												#chatEmailDevelopers>
+												<mat-form-field style="width: 50%;">
+													<mat-chip-list #developerEmail>
+														<mat-chip *ngFor="let email of developerEmails" [selectable]="true" [removable]="true"
+															(removed)="remove(email)">
+															{{email}}
+															<mat-icon matChipRemove>cancel</mat-icon>
+														</mat-chip>
+														<input placeholder="{{'ENTER_EMAIL_HERE' | translate}}" [matChipInputFor]="developerEmail"
+															[matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
+															(matChipInputTokenEnd)="add($event)">
+													</mat-chip-list>
+												</mat-form-field>
+												<button mat-raised-button color="primary" style="margin-left: 2%;" (click)="sendEmailToDevelopers()">
+													<mat-icon aria-hidden="false">send</mat-icon>
+												</button>
+											</div>
+											<h3 id=scroll class="mat-small" style="text-align: center" [innerHTML]="'MULTIPLE_EMAIL' | translate"></h3>
+										</div>
+									</mat-tab>
+
+									<!-- CUSTOMIZATION TAB -->
+									<mat-tab label="Customization">
+										<!-- SAVE CHAT WIDGET CUSTOMIZATION CHANGES -->
+										<br>
+										<div fxLayoutAlign="end center">
+											<button
+												[disabled]="!headerColor.validity.valid || !textColor.validity.valid || !senderBubbleColor.validity.valid || !senderTextColor.validity.valid || !receiverTextColor.validity.valid || !receiverBubbleColor.validity.valid"
+												mat-raised-button mat-primary color="primary" (click)="saveCustomization()">
+												{{'SAVE' | translate}}
+											</button>
+										</div><br>
+										<!-- PANELS-->
+										<mat-accordion style="margin-top: 50px">
+											<mat-expansion-panel id="chat-customize-details"
+												[ngClass]="{'z9999': fpos.hostElement === 'chat-customize-details', 'white-background': fpos.hostElement === 'chat-customize-details'}"
+												#chatCustomizeDetails>
+												<mat-expansion-panel-header>
+													<mat-panel-title fxFlex="30">
+														{{ 'CUSTOMIZE_WIDGET' | translate}}
+													</mat-panel-title>
+													<mat-panel-description>
+														{{ 'CUSTOMIZE_WIDGET_DESCRIPTION' | translate}}
+													</mat-panel-description>
+												</mat-expansion-panel-header>
+												<label class="mat-body" style="color: #9e9e9e;">{{'CUSTOMIZE_WIDGET_SUBTITLE' | translate}}</label>
+												<div fxLayout="row" style="margin: 20px;height: relative;width:relative;">
+													<!-- USER INPUT FIELDS FOR CHAT WIDGET CUSTOMIZATION -->
+													<div fxLayout="column" style="width: 60%;">
+														<div fxLayout="column" id="chat-customize-details"
+															[ngClass]="{'z9999': fpos.hostElement === 'chat-customize-details', 'white-background': fpos.hostElement === 'chat-customize-details'}"
+															#chatCustomizeDetails>
+															<div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign=" center" style="padding-top: 15px;">
+																<label class="mat-body" style="width:150px;">{{'HEADER_NAME' | translate}}</label>
+																<mat-form-field style="width: 230px;">
+																	<input placeholder="Max 25 Characters" matInput #headerColor fxLayout="column"
+																		[(ngModel)]="this.chatChannel.TITLE" style="color:black;" maxlength="25">
+																</mat-form-field>
+															</div>
+															<div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign=" center">
+																<label class="mat-body" style="width:150px;">{{'HEADER_COLOR' | translate}}</label>
+																<input type="color" [(ngModel)]="this.chatChannel.HEADER_COLOR" />
+																<mat-form-field>
+																	<input matInput #headerColor fxLayout="column" [(ngModel)]="this.chatChannel.HEADER_COLOR"
+																		style="color:black;" value="{{this.chatChannel.HEADER_COLOR}}" pattern="^#+([a-fA-F0-9]{6})$"
+																		required />
+																	<mat-error>{{ "HEX_ERROR" | translate }}</mat-error>
+																</mat-form-field>
+															</div>
+															<div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign=" center" style="margin-bottom: 0px;">
+																<label class="mat-body" style="width:150px;">{{'HEADER_TEXT_COLOR' | translate}}</label>
+																<input type="color" [(ngModel)]="this.chatChannel.HEADER_TEXT_COLOR" />
+																<mat-form-field>
+																	<input matInput #textColor fxLayout="column" [(ngModel)]="this.chatChannel.HEADER_TEXT_COLOR"
+																		style="color:black;" value="{{this.chatChannel.HEADER_TEXT_COLOR}}" pattern="^#+([a-fA-F0-9]{6})$"
+																		required />
+																	<mat-error>{{ "HEX_ERROR" | translate }}</mat-error>
+																</mat-form-field>
+															</div>
+															<div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign=" center" style="padding-top: 15px;">
+																<label class="mat-body" style="width:150px;">{{'HEADER_ICON' | translate}}</label>
+																<button mat-raised-button color="basic" (click)="fileInput.click()">
+																	<span>Choose File</span>
+																	<input #fileInput type="file" (change)="onFileChanged($event)" style="display:none;" />
+																</button>
+																<span style="width:350px;word-wrap: break-word;">{{fileName}}</span>
+															</div>
+															<div style="margin-top: 4%;">
+																<button *ngIf="!showMore" mat-raised-button color="basic" (click)="showMoreToggle(true)">
+																	<mat-icon>keyboard_arrow_down</mat-icon> {{'SHOW_MORE' | translate}}
+																</button>
+																<button *ngIf="showMore" mat-raised-button color="basic" (click)="showMoreToggle(false)">
+																	<mat-icon>keyboard_arrow_up</mat-icon> {{'SHOW_LESS' | translate}}
+																</button>
+															</div>
+															<div id="moreSettings" style="display: none;">
+																<div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign=" center" style="padding-top: 15px;margin-bottom: 0px;">
+																	<label class="mat-body" style="width:150px;">{{'SENDER_BUBBLE_COLOR' | translate}}</label>
+																	<input type="color" [(ngModel)]="this.chatChannel.SENDER_BUBBLE_COLOR" />
+																	<mat-form-field>
+																		<input matInput #senderBubbleColor fxLayout="column" [(ngModel)]="this.chatChannel.SENDER_BUBBLE_COLOR"
+																			style="color:black;" value="{{this.chatChannel.SENDER_BUBBLE_COLOR}}" pattern="^#+([a-fA-F0-9]{6})$"
+																			required />
+																		<mat-error>{{ "HEX_ERROR" | translate }}</mat-error>
+																	</mat-form-field>
+																</div>
+																<div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign=" center" style="margin-bottom: 0px;">
+																	<label class="mat-body" style="width:150px;">{{'SENDER_TEXT_COLOR' | translate}}</label>
+																	<input type="color" [(ngModel)]="this.chatChannel.SENDER_TEXT_COLOR" />
+																	<mat-form-field>
+																		<input matInput #senderTextColor fxLayout="column" [(ngModel)]="this.chatChannel.SENDER_TEXT_COLOR"
+																			style="color:black;" value="{{this.chatChannel.SENDER_TEXT_COLOR}}" pattern="^#+([a-fA-F0-9]{6})$"
+																			required />
+																		<mat-error>{{ "HEX_ERROR" | translate }}</mat-error>
+																	</mat-form-field>
+																</div>
+																<div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign=" center" style="margin-bottom: 0px;">
+																	<label class="mat-body" style="width:150px;">{{'RECEIVER_BUBBLE_COLOR' | translate}}</label>
+																	<input type="color" [(ngModel)]="this.chatChannel.RECEIVER_BUBBLE_COLOR" />
+																	<mat-form-field>
+																		<input matInput #receiverBubbleColor fxLayout="column"
+																			[(ngModel)]="this.chatChannel.RECEIVER_BUBBLE_COLOR" style="color:black;"
+																			value="{{this.chatChannel.RECEIVER_BUBBLE_COLOR}}" pattern="^#+([a-fA-F0-9]{6})$" required />
+																		<mat-error>{{ "HEX_ERROR" | translate }}</mat-error>
+																	</mat-form-field>
+																</div>
+																<div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign=" center" style="margin-bottom: 0px;">
+																	<label class="mat-body" style="width:150px;">{{'RECEIVER_TEXT_COLOR' | translate}}</label>
+																	<input type="color" [(ngModel)]="this.chatChannel.RECEIVER_TEXT_COLOR" />
+																	<mat-form-field>
+																		<input matInput #receiverTextColor fxLayout="column" [(ngModel)]="this.chatChannel.RECEIVER_TEXT_COLOR"
+																			style="color:black;" value="{{this.chatChannel.RECEIVER_TEXT_COLOR}}" pattern="^#+([a-fA-F0-9]{6})$"
+																			required />
+																		<mat-error>{{ "HEX_ERROR" | translate }}</mat-error>
+																	</mat-form-field>
+																</div>
+															</div>
+														</div>
+													</div>
+													<!-- PREVIEW OF CHAT WIDGET AFTER CUSTOMIZATION -->
+													<div fxLayout="column" style="width: 100%;">
+														<div fxLayout="column"
+															style="height: 550px; width: 320px; background-color: white; border: 1px solid #b0b0b0; border-radius: 5px;"
+															id="chat-preview-area"
+															[ngClass]="{'z9999': fpos.hostElement === 'chat-preview-area', 'white-background': fpos.hostElement === 'chat-preview-area'}"
+															#chatPreviewArea>
+															<div fxLayoutAlign="space-between center"
+																[ngStyle]="{'background-color': this.chatChannel.HEADER_COLOR, 'color': this.chatChannel.HEADER_TEXT_COLOR}">
+																<div fxFlex="15" fxLayoutAlign="center">
+																	<img src="{{this.chatChannel.FILE}}" style="height: 25px; width: 25px;" />
+																</div>
+																<div fxLayout="column" fxLayoutAlign="center center" style="margin: 10px 0px" fxFlex>
+																	<h3 class="mat-h3" style="margin: 0px;">{{this.chatChannel.TITLE}}</h3>
+																</div>
+																<div fxLayoutAlign="center" fxFlex="15">
+																	<span fxLayoutAlign="center" class="pointer">
+																		<mat-icon matTooltip="Minimize">remove</mat-icon>
+																	</span>
+																	<span fxLayoutAlign="center" class="pointer" style="margin-right: 10px">
+																		<mat-icon matTooltip="Close">close</mat-icon>
+																	</span>
+																</div>
+															</div>
+															<mat-divider></mat-divider>
+															<div fxFlex style="padding: 15px;" fxLayout="column">
+																<div fxFlex fxLayout="column">
+																	<form fxLayout="column" fxFlex="100">
+																		<div fxLayoutAlign="center center" style="text-align: center;margin-bottom: 10px">
+																			<label class="mat-body">{{'CHAT_WITH_US' | translate}}</label>
+																		</div>
+																		<mat-form-field [floatLabel]="'always'" class="mat-form-field--remove-padding" appearance="outline"
+																			style="padding-bottom: 0px">
+																			<mat-label>{{'FIRST_NAME' | translate}}</mat-label>
+																			<input type="text" matInput required />
+																		</mat-form-field>
+																		<mat-form-field [floatLabel]="'always'" class="mat-form-field--remove-padding" appearance="outline"
+																			style="padding-bottom: 0px">
+																			<mat-label>{{'LAST_NAME' | translate}}</mat-label>
+																			<input type="text" matInput />
+																		</mat-form-field>
+																		<mat-form-field [floatLabel]="'always'" class="mat-form-field--remove-padding" appearance="outline"
+																			style="padding-bottom: 0px">
+																			<mat-label>{{'EMAIL_ADDRESS' | translate}}</mat-label>
+																			<input type="text" matInput required />
+																		</mat-form-field>
+																		<div fxFlex></div>
+																		<button
+																			[ngStyle]="{'background-color': this.chatChannel.HEADER_COLOR, 'color': this.chatChannel.HEADER_TEXT_COLOR}"
+																			mat-raised-button color="primary" style="min-height:11%">
+																			{{'START_CHAT' | translate}}
+																		</button>
+																	</form>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</mat-expansion-panel>
+
+											<mat-expansion-panel id="chat-prechat-survey"
+												[ngClass]="{'z9999': fpos.hostElement === 'chat-prechat-survey', 'white-background': fpos.hostElement === 'chat-prechat-survey'}"
+												#chatPrechatSurvey>
+												<mat-expansion-panel-header>
+													<mat-panel-title fxFlex="30">
+														{{ 'PRE_CHAT_SURVEY' | translate}}
+													</mat-panel-title>
+													<mat-panel-description>
+														{{ 'PRE_CHAT_SURVEY_DESCRIPTION' | translate}}
+													</mat-panel-description>
+												</mat-expansion-panel-header>
+
+												<!-- ENABLE PRE-CHAT SURVEY -->
+												<div fxFlex fxLayout="column" fxLayoutGap="3%">
+													<label class="mat-body" style="color: #9e9e9e;">{{'PRE_CHAT_SURVEY_SUBTITLE' | translate}}</label>
+													<div fxLayout="row" fxFlex=100%>
+														<div fxLayoutAlign="end start" fxFlex="30" fxLayoutGap="2%">
+															<div fxLayoutAlign="start center">
+																<label class="mat-body">{{'ENABLE_PRE_CHAT_SURVEY' | translate}}</label> </div>
+															<mat-slide-toggle class="mat-body" [color]="'primary'"
+																[(ngModel)]="this.chatChannel.SETTINGS.PRE_SURVEY_REQUIRED">
+															</mat-slide-toggle>
+														</div>
+														<div fxFlex="70" fxLayoutAlign="start start">
+															<img src="../../assets/images/pre-chat.jpg" style="width:85%;height:75%;" alt="">
+														</div>
+													</div>
+												</div>
+											</mat-expansion-panel>
+											<mat-expansion-panel id="chat-business-rules"
+												[ngClass]="{'z9999': fpos.hostElement === 'chat-business-rules', 'white-background': fpos.hostElement === 'chat-business-rules'}"
+												#chatBusinessRules>
+												<mat-expansion-panel-header>
+													<mat-panel-title fxFlex="30">
+														{{ 'BUSINESS_RULES' | translate}}
+													</mat-panel-title>
+													<mat-panel-description>
+														{{ 'BUSINESS_RULES_DESCRIPTION' | translate}}
+													</mat-panel-description>
+												</mat-expansion-panel-header>
+												<div fxFlex fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="5%">
+													<!-- Operating Hours-->
+													<div fxLayoutAlign="start start">
+														<label class="mat-body" style="color: #9e9e9e;">{{'BUSINESS_HOURS_SUBTITLE' | translate}}</label>
+													</div>
+													<div fxFlex=100% fxLayout="row" fxLayoutAlign="end start">
+														<!-- Operating hours settings display -->
+														<div fxFlex="50" fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="2%" style="width: 100%;">
+															<div fxFlex="40" fxLayout="row" id="chat-operating-hours-switch"
+																[ngClass]="{'z9999': fpos.hostElement === 'chat-operating-hours-switch'}" #chatOperatingHoursSwitch
+																fxLayoutAlign="center center" fxLayoutGap="2%" style="width: 100%;">
+																<div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="2%">
+																	<mat-slide-toggle [(ngModel)]="buttonValue" (ngModelChange)="chatBusinessToggled()">Operating Hours
+																	</mat-slide-toggle>
+																	<div (click)="activateBusinessRule(true,true)"
+																		*ngIf="(chatBusinessRule.hasRestriction || chatBusinessRule.chatRestrictions.length > 0)"
+																		style="padding: 5px;cursor: pointer;color: #757575;">
+																		<mat-icon>edit</mat-icon>
+																	</div>
+																</div>
+															</div>
+															<!-- Timezone -->
+															<div fxFlex="35" fxLayout="row" *ngIf="buttonValue == null" fxLayoutGap="5%" fxLayoutAlign="center center"
+																style="width: 100%;">
+																<label class="mat-body">Select Timezone </label>
+																<mat-form-field>
+																	<mat-select [disabled]="disableButtons" placeholder="Timezone" [(ngModel)]="timezone">
+																		<mat-option *ngFor="let timezone of timeZones" [value]="timezone">
+																			{{timezone}}
+																		</mat-option>
+																	</mat-select>
+																</mat-form-field>
+															</div>
+															<div fxFlex fxLayout="column" fxLayoutAlign="start center" fxFlex="25" style="margin-right: 5%;"
+																*ngIf="chatBusinessRule.chatRestrictions.length > 0 && chatBusinessRule.chatRestrictions[0]['START_TIME'] !== ''"
+																fxLayoutGap="5px">
+																<div fxLayout="row" style="color: #ffffff; background-color: #1A69AC; border-radius: 5px; padding: 5px;"
+																	fxLayoutAlign="center center" *ngFor="let restriction of chatBusinessRule.chatRestrictions;">
+																	<label>From &nbsp;</label>
+																	<label *ngIf="chatBusinessRule.restrictionType == 'Week'">{{ restriction.START_DAY}}&nbsp;</label>
+																	<label>{{ restriction.START_TIME}}&nbsp;</label>
+																	<label>to&nbsp;</label>
+																	<label *ngIf="chatBusinessRule.restrictionType == 'Week'">{{ restriction.END_DAY}}&nbsp;</label>
+																	<label>{{ restriction.END_TIME}}&nbsp;</label>
+																	<div *ngIf="chatBusinessRule.restrictionType !== 'Week'">everyday&nbsp;</div>
+																</div>
+															</div>
+														</div>
+														<div fxLayoutAlign="start start" fxFlex="50">
+															<img src="../../assets/images/work-hours.jpg" style="width:70%;height:50%;" alt="">
+														</div>
+													</div>
+												</div>
+											</mat-expansion-panel>
+											<mat-expansion-panel id="chat-bot">
+												<mat-expansion-panel-header>
+													<mat-panel-title fxFlex="30">
+														{{ 'CHAT_BOTS' | translate}}
+													</mat-panel-title>
+													<mat-panel-description>
+														{{ 'CHAT_BOTS_DESCRIPTION' | translate}}
+													</mat-panel-description>
+												</mat-expansion-panel-header>
+												<!-- CHAT BOT SETTINGS -->
+												<div fxFlex fxLayout="column" fxLayoutAlign="start start">
+													<div fxLayoutGap="10px" fxLayout="column">
+														<label class="mat-body" style="color: #9e9e9e;">{{'CHAT_BOT_SUBTITLE' | translate}}</label>
+														<div style="padding-top: 2%;" fxLayoutAlign="start start" fxLayout="row">
+															<div *ngIf="chatBotsExist" fxLayoutAlign="center center" fxFlex="50" fxLayout="column">
+																<div fxLayoutGap="10px" fxLayout="row" fxFlex="50" *ngIf="chatBotsExist" fxFlex="30"
+																	fxLayoutAlign="start start">
+																	<label class="mat-body"> {{ 'ENABLE_BOT' | translate}} </label>
+																	<mat-slide-toggle [color]="'primary'" [(ngModel)]="this.chatChannel.SETTINGS.BOT_SETTINGS.BOT_ENABLED"
+																		(ngModelChange)="chatBotToggled()">
+																	</mat-slide-toggle>
+																</div>
+																<div fxFlex="50" *ngIf="this.chatChannel.SETTINGS.BOT_SETTINGS.BOT_ENABLED" fxLayoutAlign="start start">
+																	<mat-form-field>
+																		<mat-label>{{'CHAT_BOT' | translate}}</mat-label>
+																		<mat-select [(ngModel)]="this.chatChannel.SETTINGS.BOT_SETTINGS.CHAT_BOT">
+																			<mat-option *ngFor="let bot of chatBots" [value]="bot.CHAT_BOT_ID">{{ bot.NAME }}</mat-option>
+																		</mat-select>
+																	</mat-form-field>
+																</div>
+															</div>
+															<div *ngIf="!chatBotsExist"><label class="mat-body"> {{ 'CHATBOT_NOT_PRESENT' | translate}}
+																</label>
+																<label (click)="createBot()"
+																	style="text-decoration: underline blue; color: blue; font-size: 12px; cursor: pointer; ">{{ 'CREATE_CHATBOT_LINK' | translate}}</label>
+															</div>
+															<div fxLayoutAlign="start start" fxFlex="50">
+																<img src="../../assets/images/chat-bot.jpg" style="width:70%;height:40%;" alt="">
+															</div>
+														</div>
+													</div>
+												</div>
+											</mat-expansion-panel>
+										</mat-accordion>
+									</mat-tab>
+								</mat-tab-group>
+							</div>
+						</div>
+						<ng-template #loading>
+							<div fxLayout="column" fxLayoutAlign="center center" style="margin-top: 20px;">
+								<mat-spinner></mat-spinner>
+							</div>
+						</ng-template>
+
+					</div>
+				</div>
+			</div>
+			<div id="chat-widget" style="position: absolute;"
+				[ngClass]="{'z9999': fpos.hostElement === 'chat-widget', 'white-background': fpos.hostElement === 'chat-widget'}" #chatWidget>
+			</div>
+		</div>
+		<div *ngIf="currentStep === 7 && resourceSelected === 'none'" fxFlex="100" style="padding-left: 10px;margin-top: 10px;"
+			fxLayoutGap="3%">
+			<h1 class="mat-h1" style="font-weight: 550; margin: 0px;">{{'CHAT_STATUS' | translate}}</h1>
+			<div fxLayout="column">
+				<h3 class="mat-h3" style="color: #9e9e9e;">{{'CHAT_STATUS_AVAILABLE' | translate}}{{'CHAT_STATUS_UNAVAILABLE' | translate}}</h3>
+				<div fxLayoutAlign="center start">
+					<img src="../../assets/images/chat-status.jpg" style="width:50%;height:40%;" alt="">
+				</div>
+			</div>
+		</div>
+		<div *ngIf="resourceSelected === 'knowledgebase'" fxFlex fxLayout="column" fxLayoutAlign="start start">
+			<div style="padding-top: 2%; padding-left: 2%;" fxFlex fxLayout="column" fxLayoutAlign="start start">
+				<h3 class="mat-h3" style="color: #9e9e9e;  display: inline;">{{'KNOWLEDGE_BASE_VIDEO' | translate}} <h4 class="mat-h4"
+						style="font-weight: 550;  display: inline; color:blue; text-decoration: underline; cursor: pointer;"
+						(click)="learnMore('https://support.ngdesk.com/')">
+						{{'KNOWLEDGE_BASE_LINK' | translate}}</h4>
+				</h3>
+				<div>
+					<iframe [class.thumbnail]="thumbnail" [src]="knowwledgebaseSrc" width="640px" height="385px" frameborder="0" webkitallowfullscreen
+						mozallowfullscreen allowfullscreen></iframe>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="resourceSelected === 'createTickets'" fxFlex fxLayout="column" style="margin-top: 2%; margin-left: 2%;">
+			<h3 class="mat-h3" style="color: #9e9e9e;">{{'CREATE_TICKET_VIDEO' | translate}}</h3>
+			<div style="margin-top: 10px;" fxLayoutAlign="start start" fxLayout="column">
+				<div>
+					<iframe [class.thumbnail]="thumbnail" [src]="ticketsSrc" width="640px" height="385px" frameborder="0" webkitallowfullscreen
+						mozallowfullscreen allowfullscreen></iframe>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="resourceSelected === 'premade'" fxFlex fxLayout="column" style="margin-top: 2%; margin-left: 2%;">
+			<h3 class="mat-h3" style="color: #9e9e9e;">{{'PREDEFINED_RESPONSE' | translate}}</h3>
+			<div style="margin-top: 10px;" fxLayout="column" fxLayoutAlign="start start">
+				<div>
+					<iframe [class.thumbnail]="thumbnail" [src]="predefinedSrc" width="640px" height="385px" frameborder="0" webkitallowfullscreen
+						mozallowfullscreen allowfullscreen></iframe>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="resourceSelected === 'search'" fxFlex fxLayout="column" style="margin-top: 2%; margin-left: 2%;">
+			<h3 class="mat-h3" style="color: #9e9e9e;  display: inline;">{{'SEARCHING_TICKETS' | translate}} <h4 class="mat-h4"
+					style="font-weight: 550;  display: inline; color:blue; text-decoration: underline; cursor: pointer;"
+					(click)="learnMore('https://support.ngdesk.com/guide/sections/5cf7551aff43060001998cdf/detail')">
+					{{'LEARN_MORE_TICKETS' | translate}}</h4>
+			</h3>
+			<div style="margin-top: 10px;" fxLayoutAlign="start start" fxLayout="column">
+				<div>
+					<iframe [class.thumbnail]="thumbnail" [src]="searchTicketsSrc" width="640px" height="385px" frameborder="0" webkitallowfullscreen
+						mozallowfullscreen allowfullscreen></iframe>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

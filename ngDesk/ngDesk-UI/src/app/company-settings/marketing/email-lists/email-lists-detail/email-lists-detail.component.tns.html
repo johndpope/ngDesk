@@ -1,0 +1,37 @@
+<StackLayout>
+  <Label text="email-lists-detail works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<app-toolbar></app-toolbar>
+<form [formGroup]="emailListForm" fxLayout="column" (ngSubmit)="save()" style="overflow: auto;">
+	<div class="pad10">
+		<app-new-name-description buttonText="{{'SAVE' | translate}}" (modelChange)="save()"></app-new-name-description>
+	</div>
+	<div fxLayout="row" fxLayout.xs="column" style="min-height: calc(100vh - 45px); border-top: 1px solid rgba(0,0,0,.12)">
+		<div class="pad10" fxLayout="column" fxLayout.xs="row" fxFlex="calc(35-5px)" fxFlex.xs="30"
+			style="background: rgb(248, 249, 249); border-right: 1px solid rgba(0,0,0,.12)">
+			<div fxLayout.md="row wrap" fxLayout.sm="row wrap" fxLayout.xs="row wrap">
+				<app-conditions *ngIf="emailListLoaded" [parentName]="'emailListDetailComponent'" [conditions]="emailList.conditions"
+					[passedInModule]="moduleId" [fields]="fields"></app-conditions>
+			</div>
+		</div>
+		<div class="pad10" fxFlex="60" fxLayout="column" fxLayout.xs="row" fxFlex.xs="60">
+			<div fxFlex>
+				<app-custom-table [templateRef]="columnTemplateRef" noRecordsMessage="{{'NO_USERS_FOUND' | translate}}"
+					(sortData)="sortData();customTableService.isLoading = true"
+					(pageChangeEmit)="pageChangeEmit($event);customTableService.isLoading = true">
+					<ng-template #columnTemplateRef let-element="element" let-col="col">
+						{{element[col.NAME]}}
+					</ng-template>
+				</app-custom-table>
+			</div>
+		</div>
+	</div>
+</form>
+
+-->

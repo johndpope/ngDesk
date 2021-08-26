@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sam
+  namespace: NAMESPACE_REPLACE
+spec:
+  selector:
+    matchLabels:
+      app: sam
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: sam
+    spec:
+      containers:
+        - name: sam
+          image: gitlab.bluemsp.com:5050/ngdesk/ngdesk/sam:latest
+          env:
+          - name: SPRING_PROFILES_ACTIVE
+            value: prod
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8083

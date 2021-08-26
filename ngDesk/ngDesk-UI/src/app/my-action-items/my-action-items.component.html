@@ -1,0 +1,69 @@
+<app-toolbar [templateRef]="customTemplateRef"></app-toolbar>
+<ng-template #customTemplateRef>
+	<div fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="space-between">
+		<div style="min-width: 24px; padding: 0 10px; margin-right: 10px;">
+			<button mat-button *ngIf="roleLayoutsExist" (click)="setListLayoutTableState(showListLayouts)">
+				<mat-icon class="pointer grey-balck-color" matTooltip="{{'LAYOUTS'|translate}}">menu</mat-icon>
+			</button>
+			<span class="mat-h3 grey-balck-color">{{pageTitle}}</span>
+		</div>
+		<div fxLayout="row" fxLayoutGap="10px" *ngIf="allowNewEntry">
+			<button mat-raised-button color="primary" (click)="newEntry()" #customButton>
+				{{'NEW' | translate}}
+			</button>
+		</div>
+	</div>
+</ng-template>
+<!-- layout sidebar -->
+<div fxLayout="row" *ngIf="roleLayoutsExist">
+	<div id="layouts-sidebar" class="pad10" [@openClose]="showListLayouts ? 'open' : 'closed'">
+		<table  mat-table [dataSource]="roleLayouts" class="mat-elevation-z8" style="width: 130px;">
+			<ng-container matColumnDef="name">
+				<th class="custom-theme-icon-color" mat-header-cell *matHeaderCellDef> {{'ACTION_ITEMS' | translate}}
+				</th>
+				<td matRipple class="no-wrap" mat-cell *matCellDef="let element" class="pointer"
+					[ngStyle]="{ 'background-color': (selectedRoleLayout && element.name == selectedRoleLayout.name) ? '#ececec' : 'white'}">
+					{{element.name}} </td>
+			</ng-container>
+			<tr class="custom-theme-primary-color" mat-header-row *matHeaderRowDef="['name']"></tr>
+			<tr mat-row *matRowDef="let row; columns: ['name'];" (click)="setListLayout(row)"></tr>
+		</table>
+	</div>
+	<span fxFlex="10px"></span>
+	<!-- displays all the tabs -->
+	<mat-tab-group [(selectedIndex)]="selectModuleTabIndex" (selectedTabChange)="onSelectModuleTabs($event)" *ngIf="selectedRoleLayout"
+		fxFlex="97" animationDuration="0ms">
+		<mat-tab *ngFor="let tab of selectedRoleLayout.tabs; let index = index" label="{{tab.module.name}}">
+			<!-- displays tables according to modules -->
+			<div fxFlex="99" style="overflow: hidden; padding-left: 10px; padding-right: 10px;">
+				<app-custom-table class="pad10" [templateRef]="columnTemplateRef" (rowClickedEvent)="rowClicked($event, tab.module.moduleId)"
+					noRecordsMessage="No Records found" (pageChangeEmit)="onPageChange($event, tab.orderBy, tab, 'pageChange')"
+					(sortData)="onPageChange($event, tab.orderBy, tab, 'sort')">
+					<ng-template #columnTemplateRef let-element="element" let-col="col">
+						<span *ngIf="specialDataTypes.indexOf(col.DATA_TYPE) === -1">{{ element[col.NAME] }}</span>
+						<span *ngIf="col.DATA_TYPE === 'Date/Time'">{{element[col.NAME] | dateFormat: 'MMM d, y, h:mm a'}}</span>
+						<span *ngIf="col.DATA_TYPE === 'Date'">{{element[col.NAME] | dateFormat: 'mediumDate'}}</span>
+						<span *ngIf="col.DATA_TYPE === 'Time'">{{element[col.NAME] | dateFormat: 'h:mm a'}}</span>
+					</ng-template>
+				</app-custom-table>
+			</div>
+		</mat-tab>
+	</mat-tab-group>
+</div>
+<div *ngIf="!roleLayoutsExist" class="mat-h1" fxLayout="row" fxLayoutAlign="center center" style="height: 100%">
+	<div fxFlex="50" fxLayoutAlign="end center">
+		<div fxLayout="column" fxFlex="40" fxLayoutGap="5px">
+			<div fxLayout="column" style="text-align: left;">
+				<label class="mat-h3">{{'NO_ACTION_ITEMS' | translate}}</label>
+				<label *ngIf="role && role.NAME !== 'SystemAdmin'" class="mat-h3">{{'CONTACT_ADMIN' | translate}}</label></div>
+			<div fxLayoutAlign="start start" *ngIf="role && role.NAME === 'SystemAdmin'">
+				<button (click)="newLayout()" mat-raised-button color="primary">{{'CREATE_ACTION_ITEM' | translate}}</button>
+			</div>
+		</div>
+	</div>
+	<div fxFlex="50" fxLayout="column">
+		<div fxFlex=50>
+		</div>
+		<img src="../../assets/images/notFoundImage.png" style="width:35%;" alt="">
+	</div>
+</div>

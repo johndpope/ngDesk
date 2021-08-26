@@ -1,0 +1,78 @@
+:host {
+
+	gridster {
+		display: flex;
+		background-color: white;
+		flex-direction: column;
+	}
+
+	gridster-item {
+		height: auto !important;
+		box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.2);
+	}
+
+	gridster-item:hover {
+		box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.5);
+	}
+
+	.mat-drawer-content {
+		overflow: hidden;
+		display: contents;
+	}
+
+	/* Hide scrollbar for Chrome, Safari and Opera */
+	gridster::-webkit-scrollbar {
+		width: 7px;
+		height: 7px;
+	}
+
+	gridster::-webkit-scrollbar-track {
+		background: #f1f1f1;
+	}
+
+	/* Handle */
+	gridster::-webkit-scrollbar-thumb {
+		background: #888;
+	}
+
+	/* Handle on hover */
+	gridster::-webkit-scrollbar-thumb:hover {
+		background: #555;
+	}
+}
+
+.mat-drawer-container {
+	display: contents;
+}
+
+mat-form-field {
+	width: 100%;
+
+	::ng-deep {
+		.mat-form-field-outline {
+			background-color: #ffffff;
+		}
+	}
+}
+
+mat-card {
+	cursor: pointer;
+}
+
+.widget-header {
+	padding: 15px;
+	background-color: #ffffff;
+	box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.15);
+}
+
+.highlight {
+	background-color: #e8eaf6;
+}
+
+.border {
+	border: 1px solid #5c6bc0;
+}
+
+.material-icons {
+	overflow: hidden;
+}

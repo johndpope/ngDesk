@@ -1,0 +1,3123 @@
+{
+	"FIELDS": [{
+			"NAME": "PAN",
+			"INTERNAL": true,
+			"HELP_TEXT": "",
+			"NOT_EDITABLE": false,
+			"DISPLAY_LABEL": "PAN",
+			"DATA_TYPE": {
+				"DISPLAY": "Checkbox",
+				"BACKEND": "Boolean"
+			},
+			"FIELD_ID": "ce8d8aa1-7798-49ed-83c3-1d0329fc29df",
+			"REQUIRED": false
+		},
+			 {
+      "FIELD_ID": "2cc641ce-8467-4ac6-9d56-57a9caac4445",
+      "NAME": "EMPLOYEE",
+      "DISPLAY_LABEL": "Employee",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "LENGTH": 0,
+      "DECIMAL_PLACES": 0,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": "One to One",
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": null,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": false,
+      "PRIMARY_DISPLAY_FIELD": "13f8973d-aa57-4bb7-bb35-905e639a725b",
+      "RELATIONSHIP_FIELD": "",
+      "FORMULA": null,
+      "MODULE": "EMPLOYEES_MODULE_REPLACE",
+      "VISIBILITY": false,
+      "REQUIRED": true,
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "String"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": null,
+      "LAST_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "NOT_EDITABLE": false,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false
+    },
+		{
+			"NAME": "I9_FORM",
+			"INTERNAL": true,
+			"HELP_TEXT": "",
+			"NOT_EDITABLE": false,
+			"DISPLAY_LABEL": "I9 Form",
+			"DATA_TYPE": {
+				"DISPLAY": "Checkbox",
+				"BACKEND": "Boolean"
+			},
+			"FIELD_ID": "10af9e2c-5bc9-4ada-8239-b88379977a1f",
+			"REQUIRED": false
+		},
+		{
+			"NAME": "W4_FORM",
+			"INTERNAL": true,
+			"HELP_TEXT": "",
+			"NOT_EDITABLE": false,
+			"DISPLAY_LABEL": "W4 Form",
+			"DATA_TYPE": {
+				"DISPLAY": "Checkbox",
+				"BACKEND": "Boolean"
+			},
+			"FIELD_ID": "af7152ce-5e74-42e4-be49-11d5d90c90c2",
+			"REQUIRED": false
+		},
+		{
+			"NAME": "TD1_FORM",
+			"INTERNAL": true,
+			"HELP_TEXT": "",
+			"NOT_EDITABLE": false,
+			"DISPLAY_LABEL": "TD1 Form",
+			"DATA_TYPE": {
+				"DISPLAY": "Checkbox",
+				"BACKEND": "Boolean"
+			},
+			"FIELD_ID": "06f6cafa-e4d6-48a8-a7a1-33800314e8c6",
+			"REQUIRED": false
+		},
+		{
+			"NAME": "DIRECT_DEPOSIT_DETAILS",
+			"INTERNAL": true,
+			"HELP_TEXT": "",
+			"NOT_EDITABLE": false,
+			"DISPLAY_LABEL": "Direct Deposit Details",
+			"DATA_TYPE": {
+				"DISPLAY": "Checkbox",
+				"BACKEND": "Boolean"
+			},
+			"FIELD_ID": "41179adf-3e94-4e93-9717-22fb33061ae3",
+			"REQUIRED": false
+		},
+		{
+			"NAME": "SOCIAL_SECURITY_CARD",
+			"INTERNAL": true,
+			"HELP_TEXT": "",
+			"NOT_EDITABLE": false,
+			"DISPLAY_LABEL": "Social Security Card",
+			"DATA_TYPE": {
+				"DISPLAY": "Checkbox",
+				"BACKEND": "Boolean"
+			},
+			"FIELD_ID": "1a306da1-fe9a-4f1e-9fe7-0ef47e796765",
+			"REQUIRED": false
+		},
+		{
+			"NAME": "GOVERNMENT_ISSUED_ID",
+			"INTERNAL": true,
+			"HELP_TEXT": "",
+			"NOT_EDITABLE": false,
+			"DISPLAY_LABEL": "Government Issued ID",
+			"DATA_TYPE": {
+				"DISPLAY": "Checkbox",
+				"BACKEND": "Boolean"
+			},
+			"FIELD_ID": "14606773-ae13-4cfc-8b01-0bfdd5d0e7fd",
+			"REQUIRED": false
+		},
+		{
+			"NAME": "NATIONAL_ID",
+			"INTERNAL": true,
+			"HELP_TEXT": "",
+			"NOT_EDITABLE": false,
+			"DISPLAY_LABEL": "National ID",
+			"DATA_TYPE": {
+				"DISPLAY": "Checkbox",
+				"BACKEND": "Boolean"
+			},
+			"FIELD_ID": "0733dd37-6d9d-44d8-84ce-07e9ec426e88",
+			"REQUIRED": false
+		},
+		{
+			"NAME": "DRIVER_LICENSE",
+			"INTERNAL": true,
+			"HELP_TEXT": "",
+			"NOT_EDITABLE": false,
+			"DISPLAY_LABEL": "Driver License",
+			"DATA_TYPE": {
+				"DISPLAY": "Checkbox",
+				"BACKEND": "Boolean"
+			},
+			"FIELD_ID": "392b305f-cc55-4bf9-bc16-3ed09eb1285d",
+			"REQUIRED": false
+		},
+				{
+			"NAME": "PASSPORT",
+			"INTERNAL": true,
+			"HELP_TEXT": "",
+			"NOT_EDITABLE": false,
+			"DISPLAY_LABEL": "Passport",
+			"DATA_TYPE": {
+				"DISPLAY": "Checkbox",
+				"BACKEND": "Boolean"
+			},
+			"FIELD_ID": "1ed86d6f-e2f5-43e4-bc75-2d5fa4e38f83",
+			"REQUIRED": false
+		},
+				{
+			"NAME": "ELECTION_CARD",
+			"INTERNAL": true,
+			"HELP_TEXT": "",
+			"NOT_EDITABLE": false,
+			"DISPLAY_LABEL": "Election Card",
+			"DATA_TYPE": {
+				"DISPLAY": "Checkbox",
+				"BACKEND": "Boolean"
+			},
+			"FIELD_ID": "bc795f52-6379-43e1-b7e6-1d7336e8b5b1",
+			"REQUIRED": false
+		},
+						{
+			"NAME": "COLLEGE_ID_CARD",
+			"INTERNAL": true,
+			"HELP_TEXT": "",
+			"NOT_EDITABLE": false,
+			"DISPLAY_LABEL": "College ID Card",
+			"DATA_TYPE": {
+				"DISPLAY": "Checkbox",
+				"BACKEND": "Boolean"
+			},
+			"FIELD_ID": "a3966110-7efa-4829-a533-9ad05251e7d5",
+			"REQUIRED": false
+		},
+								{
+			"NAME": "LAST_PAYSLIP_FROM_PAST_EMPLOYER",
+			"INTERNAL": true,
+			"HELP_TEXT": "",
+			"NOT_EDITABLE": false,
+			"DISPLAY_LABEL": "Last Payslip from Past Employer",
+			"DATA_TYPE": {
+				"DISPLAY": "Checkbox",
+				"BACKEND": "Boolean"
+			},
+			"FIELD_ID": "0783cacd-821b-45fc-8353-1cc3c4b0fd58",
+			"REQUIRED": false
+		},
+							{
+			"NAME": "PROFESSIONAL_REFERENCE_1",
+			"INTERNAL": true,
+			"HELP_TEXT": "",
+			"NOT_EDITABLE": false,
+			"DISPLAY_LABEL": "Professional Reference 1",
+			"DATA_TYPE": {
+				"DISPLAY": "Checkbox",
+				"BACKEND": "Boolean"
+			},
+			"FIELD_ID": "fdcb5863-abce-4c5d-bf31-38f65edd169c",
+			"REQUIRED": false
+		},
+								{
+			"NAME": "PROFESSIONAL_REFERENCE_2",
+			"INTERNAL": true,
+			"HELP_TEXT": "",
+			"NOT_EDITABLE": false,
+			"DISPLAY_LABEL": "Professional Reference 2",
+			"DATA_TYPE": {
+				"DISPLAY": "Checkbox",
+				"BACKEND": "Boolean"
+			},
+			"FIELD_ID": "ff6a92c54-daa6-4779-88fc-727ecbd4ffbb",
+			"REQUIRED": false
+		},
+							{
+			"NAME": "EDUCATIONAL_CERTIFICATE_1",
+			"INTERNAL": true,
+			"HELP_TEXT": "",
+			"NOT_EDITABLE": false,
+			"DISPLAY_LABEL": "Educational Certificate 1",
+			"DATA_TYPE": {
+				"DISPLAY": "Checkbox",
+				"BACKEND": "Boolean"
+			},
+			"FIELD_ID": "9611831c-dde0-496a-aae6-87150f1bb4f3",
+			"REQUIRED": false
+		},
+							{
+			"NAME": "EDUCATIONAL_CERTIFICATE_2",
+			"INTERNAL": true,
+			"HELP_TEXT": "",
+			"NOT_EDITABLE": false,
+			"DISPLAY_LABEL": "Educational Certificate 2",
+			"DATA_TYPE": {
+				"DISPLAY": "Checkbox",
+				"BACKEND": "Boolean"
+			},
+			"FIELD_ID": "33c3fdac-22f6-48d2-843a-2e4e118531a0",
+			"REQUIRED": false
+		},
+						{
+			"NAME": "BIRTH_CERTIFICATE",
+			"INTERNAL": true,
+			"HELP_TEXT": "",
+			"NOT_EDITABLE": false,
+			"DISPLAY_LABEL": "Birth Certificate",
+			"DATA_TYPE": {
+				"DISPLAY": "Checkbox",
+				"BACKEND": "Boolean"
+			},
+			"FIELD_ID": "14546c67-e3e1-4c34-8b4b-06317b0d0b11",
+			"REQUIRED": false
+		},
+	 {
+      "DEFAULT_VALUE": null,
+      "DATE_CREATED": null,
+      "HELP_TEXT": "",
+      "LAST_UPDATED": null,
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": "",
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "File Upload",
+        "BACKEND": "String"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": "Enter Values",
+      "PICKLIST_RESTRICT": true,
+      "LAST_UPDATED_BY": null,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "f3883cba-bf36-4f11-843e-030c419051a7",
+      "MAX_SIZE": 0,
+      "REQUIRED": false,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "DOCUMENT_UPLOAD",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Document Upload",
+      "EXAMPLE": null
+    },
+	{
+			"DISPLAY_LABEL": "Deleted",
+			"FIELD_ID": "86b3604d-bd67-418c-8091-848dd1826850",
+			"INTERNAL": true,
+			"REQUIRED": false,
+			"NOT_EDITABLE": true,
+			"DATA_TYPE": {
+				"DISPLAY": "Checkbox",
+				"BACKEND": "Boolean"
+			},
+			"NAME": "DELETED"
+		},{
+			"FIELD_ID": "a038d717-335c-436f-9a2f-358d70e55db8",
+			"NAME": "DATE_CREATED",
+			"DISPLAY_LABEL": "Date Created",
+			"HELP_TEXT": "",
+			"DEFAULT_VALUE": null,
+			"LENGTH": 0,
+			"DECIMAL_PLACES": 0,
+			"MAX_SIZE": 0,
+			"MASK_TYPE": null,
+			"MASK_CHARACTER": null,
+			"EXAMPLE": null,
+			"RELATIONSHIP_TYPE": null,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"GEOLOCATION_LATITUDE_LONGTITUDE": "",
+			"PICKLIST": "Enter Values",
+			"PICKLIST_GLOBAL_LIST": null,
+			"PICKLIST_VALUES": null,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_RESTRICT": true,
+			"PRIMARY_DISPLAY_FIELD": null,
+			"RELATIONSHIP_FIELD": null,
+			"FORMULA": null,
+			"MODULE": null,
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"DATA_TYPE": {
+				"DISPLAY": "Date/Time",
+				"BACKEND": "Date"
+			},
+			"ORDER": 0,
+			"TYPE": 0,
+			"DATE_CREATED": "2020-07-27T15:05:10.850Z",
+			"LAST_UPDATED": "2020-07-27T15:05:10.850Z",
+			"LAST_UPDATED_BY": null,
+			"CREATED_BY": null,
+			"MESSAGES": null,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"GROUP_ID": null,
+			"IS_LIST_TEXT_UNIQUE": false,
+			"WORKFLOW": null,
+			"DATA_FILTER": null,
+			"AGGREGATION_TYPE": null,
+			"AGGREGATION_FIELD": null,
+			"AGGREGATION_RELATED_FIELD": null,
+			"INHERITANCE_MAPPING": null,
+			"UNIQUE": false
+		},
+		{
+			"FIELD_ID": "1f692128-c053-4eb8-801c-6158d141418e",
+			"NAME": "EFFECTIVE_TO",
+			"DISPLAY_LABEL": "Effective to",
+			"HELP_TEXT": "",
+			"DEFAULT_VALUE": null,
+			"LENGTH": 0,
+			"DECIMAL_PLACES": 0,
+			"MAX_SIZE": 0,
+			"MASK_TYPE": null,
+			"MASK_CHARACTER": null,
+			"EXAMPLE": null,
+			"RELATIONSHIP_TYPE": null,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"GEOLOCATION_LATITUDE_LONGTITUDE": null,
+			"PICKLIST": null,
+			"PICKLIST_GLOBAL_LIST": null,
+			"PICKLIST_VALUES": [],
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_RESTRICT": true,
+			"PRIMARY_DISPLAY_FIELD": null,
+			"RELATIONSHIP_FIELD": null,
+			"FORMULA": null,
+			"MODULE": null,
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"DATA_TYPE": {
+				"DISPLAY": "Date/Time",
+				"BACKEND": "Date"
+			},
+			"ORDER": 0,
+			"TYPE": 0,
+			"DATE_CREATED": null,
+			"LAST_UPDATED": null,
+			"LAST_UPDATED_BY": null,
+			"CREATED_BY": null,
+			"MESSAGES": null,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"GROUP_ID": null,
+			"IS_LIST_TEXT_UNIQUE": false,
+			"WORKFLOW": null,
+			"DATA_FILTER": null,
+			"AGGREGATION_TYPE": null,
+			"AGGREGATION_FIELD": null,
+			"AGGREGATION_RELATED_FIELD": null,
+			"INHERITANCE_MAPPING": null,
+			"UNIQUE": false
+		},
+		{
+			"FIELD_ID": "4fc64092-7c4c-4f75-a80e-2664af9c06bb",
+			"NAME": "EFFECTIVE_FROM",
+			"DISPLAY_LABEL": "Effective from",
+			"HELP_TEXT": "",
+			"DEFAULT_VALUE": null,
+			"LENGTH": 0,
+			"DECIMAL_PLACES": 0,
+			"MAX_SIZE": 0,
+			"MASK_TYPE": null,
+			"MASK_CHARACTER": null,
+			"EXAMPLE": null,
+			"RELATIONSHIP_TYPE": null,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"GEOLOCATION_LATITUDE_LONGTITUDE": null,
+			"PICKLIST": null,
+			"PICKLIST_GLOBAL_LIST": null,
+			"PICKLIST_VALUES": [],
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_RESTRICT": true,
+			"PRIMARY_DISPLAY_FIELD": null,
+			"RELATIONSHIP_FIELD": null,
+			"FORMULA": null,
+			"MODULE": null,
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"DATA_TYPE": {
+				"DISPLAY": "Date/Time",
+				"BACKEND": "Date"
+			},
+			"ORDER": 0,
+			"TYPE": 0,
+			"DATE_CREATED": null,
+			"LAST_UPDATED": null,
+			"LAST_UPDATED_BY": null,
+			"CREATED_BY": null,
+			"MESSAGES": null,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"GROUP_ID": null,
+			"IS_LIST_TEXT_UNIQUE": false,
+			"WORKFLOW": null,
+			"DATA_FILTER": null,
+			"AGGREGATION_TYPE": null,
+			"AGGREGATION_FIELD": null,
+			"AGGREGATION_RELATED_FIELD": null,
+			"INHERITANCE_MAPPING": null,
+			"UNIQUE": false
+		},
+		{
+			"FIELD_ID": "f384c579-b370-4eac-b229-c359b062bb52",
+			"NAME": "DATE_UPDATED",
+			"DISPLAY_LABEL": "Date Updated",
+			"HELP_TEXT": "",
+			"DEFAULT_VALUE": null,
+			"LENGTH": 0,
+			"DECIMAL_PLACES": 0,
+			"MAX_SIZE": 0,
+			"MASK_TYPE": null,
+			"MASK_CHARACTER": null,
+			"EXAMPLE": null,
+			"RELATIONSHIP_TYPE": null,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"GEOLOCATION_LATITUDE_LONGTITUDE": "",
+			"PICKLIST": "Enter Values",
+			"PICKLIST_GLOBAL_LIST": null,
+			"PICKLIST_VALUES": null,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_RESTRICT": true,
+			"PRIMARY_DISPLAY_FIELD": null,
+			"RELATIONSHIP_FIELD": null,
+			"FORMULA": null,
+			"MODULE": null,
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"DATA_TYPE": {
+				"DISPLAY": "Date/Time",
+				"BACKEND": "Date"
+			},
+			"ORDER": 0,
+			"TYPE": 0,
+			"DATE_CREATED": null,
+			"LAST_UPDATED": null,
+			"LAST_UPDATED_BY": null,
+			"CREATED_BY": null,
+			"MESSAGES": null,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"GROUP_ID": null,
+			"IS_LIST_TEXT_UNIQUE": false,
+			"WORKFLOW": null,
+			"DATA_FILTER": null,
+			"AGGREGATION_TYPE": null,
+			"AGGREGATION_FIELD": null,
+			"AGGREGATION_RELATED_FIELD": null,
+			"INHERITANCE_MAPPING": null,
+			"UNIQUE": false
+		},
+		{
+			"FIELD_ID": "84a5afe3-aee4-46ba-8ae8-76ddbfbda4b7",
+			"NAME": "LAST_UPDATED_BY",
+			"DISPLAY_LABEL": "Last Updated by",
+			"HELP_TEXT": null,
+			"DEFAULT_VALUE": null,
+			"LENGTH": 0,
+			"DECIMAL_PLACES": 0,
+			"MAX_SIZE": 0,
+			"MASK_TYPE": null,
+			"MASK_CHARACTER": null,
+			"EXAMPLE": null,
+			"RELATIONSHIP_TYPE": "Many to One",
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"GEOLOCATION_LATITUDE_LONGTITUDE": null,
+			"PICKLIST": null,
+			"PICKLIST_GLOBAL_LIST": null,
+			"PICKLIST_VALUES": null,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_RESTRICT": false,
+			"PRIMARY_DISPLAY_FIELD": "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+			"RELATIONSHIP_FIELD": "",
+			"FORMULA": null,
+			"MODULE": "USERS_MODULE_REPLACE",
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"DATA_TYPE": {
+				"DISPLAY": "Relationship",
+				"BACKEND": "String"
+			},
+			"ORDER": 0,
+			"TYPE": 0,
+			"DATE_CREATED": null,
+			"LAST_UPDATED": null,
+			"LAST_UPDATED_BY": null,
+			"CREATED_BY": null,
+			"MESSAGES": null,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"GROUP_ID": null,
+			"IS_LIST_TEXT_UNIQUE": false,
+			"WORKFLOW": null,
+			"DATA_FILTER": null,
+			"AGGREGATION_TYPE": null,
+			"AGGREGATION_FIELD": null,
+			"AGGREGATION_RELATED_FIELD": null,
+			"INHERITANCE_MAPPING": null,
+			"UNIQUE": false
+		},
+		{
+			"FIELD_ID": "3925bb26-78bd-493a-9c80-a04723885611",
+			"NAME": "CREATED_BY",
+			"DISPLAY_LABEL": "Created by",
+			"HELP_TEXT": null,
+			"DEFAULT_VALUE": null,
+			"LENGTH": 0,
+			"DECIMAL_PLACES": 0,
+			"MAX_SIZE": 0,
+			"MASK_TYPE": null,
+			"MASK_CHARACTER": null,
+			"EXAMPLE": null,
+			"RELATIONSHIP_TYPE": "Many to One",
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"GEOLOCATION_LATITUDE_LONGTITUDE": null,
+			"PICKLIST": null,
+			"PICKLIST_GLOBAL_LIST": null,
+			"PICKLIST_VALUES": null,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_RESTRICT": false,
+			"PRIMARY_DISPLAY_FIELD": "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+			"RELATIONSHIP_FIELD": "",
+			"FORMULA": null,
+			"MODULE": "USERS_MODULE_REPLACE",
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"DATA_TYPE": {
+				"DISPLAY": "Relationship",
+				"BACKEND": "String"
+			},
+			"ORDER": 0,
+			"TYPE": 0,
+			"DATE_CREATED": null,
+			"LAST_UPDATED": null,
+			"LAST_UPDATED_BY": null,
+			"CREATED_BY": null,
+			"MESSAGES": null,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"GROUP_ID": null,
+			"IS_LIST_TEXT_UNIQUE": false,
+			"WORKFLOW": null,
+			"DATA_FILTER": null,
+			"AGGREGATION_TYPE": null,
+			"AGGREGATION_FIELD": null,
+			"AGGREGATION_RELATED_FIELD": null,
+			"INHERITANCE_MAPPING": null,
+			"UNIQUE": false
+		},
+		{
+			"FIELD_ID": "ecf343be-851c-49a4-aa9b-5711ee9a44b5",
+			"NAME": "TEAMS",
+			"DISPLAY_LABEL": "Teams",
+			"HELP_TEXT": null,
+			"DEFAULT_VALUE": "GLOBAL_TEAM_REPLACE",
+			"LENGTH": 0,
+			"DECIMAL_PLACES": 0,
+			"MAX_SIZE": 0,
+			"MASK_TYPE": null,
+			"MASK_CHARACTER": null,
+			"EXAMPLE": null,
+			"RELATIONSHIP_TYPE": "Many to Many",
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"GEOLOCATION_LATITUDE_LONGTITUDE": null,
+			"PICKLIST": null,
+			"PICKLIST_GLOBAL_LIST": null,
+			"PICKLIST_VALUES": null,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_RESTRICT": false,
+			"PRIMARY_DISPLAY_FIELD": "b1c48961-43e0-4071-b30c-0f7be5daa7a9",
+			"RELATIONSHIP_FIELD": "",
+			"FORMULA": null,
+			"MODULE": "TEAMS_MODULE_REPLACE",
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"DATA_TYPE": {
+				"DISPLAY": "Relationship",
+				"BACKEND": "Array"
+			},
+			"ORDER": 0,
+			"TYPE": 0,
+			"DATE_CREATED": null,
+			"LAST_UPDATED": null,
+			"LAST_UPDATED_BY": null,
+			"CREATED_BY": null,
+			"MESSAGES": null,
+			"INTERNAL": true,
+			"NOT_EDITABLE": false,
+			"GROUP_ID": null,
+			"IS_LIST_TEXT_UNIQUE": false,
+			"WORKFLOW": null,
+			"DATA_FILTER": null,
+			"AGGREGATION_TYPE": null,
+			"AGGREGATION_FIELD": null,
+			"AGGREGATION_RELATED_FIELD": null,
+			"INHERITANCE_MAPPING": null,
+			"UNIQUE": false
+		},
+			{
+			"DEFAULT_VALUE": "",
+			"DATE_CREATED": null,
+			"HELP_TEXT": "",
+			"LAST_UPDATED": null,
+			"LENGTH": 0,
+			"PICKLIST_GLOBAL_LIST": null,
+			"ORDER": 0,
+			"PICKLIST_VALUES": null,
+			"MESSAGES": null,
+			"INTERNAL": true,
+			"GEOLOCATION_LATITUDE_LONGTITUDE": null,
+			"DECIMAL_PLACES": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"DATA_TYPE": {
+				"DISPLAY": "Text",
+				"BACKEND": "String"
+			},
+			"TYPE": 0,
+			"MASK_CHARACTER": null,
+			"PICKLIST": null,
+			"PICKLIST_RESTRICT": false,
+			"LAST_UPDATED_BY": "",
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"FIELD_ID": "a07e06ef-0cb6-4cbe-a7e9-1e6979681b1a",
+			"MAX_SIZE": 100,
+			"REQUIRED": false,
+			"MASK_TYPE": null,
+			"NOT_EDITABLE": true,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"FORMULA": null,
+			"NAME": "DATA_ID",
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"MODULE": null,
+			"VISIBILITY": true,
+			"DISPLAY_LABEL": "Data ID",
+			"EXAMPLE": null
+		},
+		{
+			"FIELD_ID": "69c92dd0-e86a-4728-8730-4017dd6efe3a",
+			"NAME": "SOURCE_TYPE",
+			"DISPLAY_LABEL": "Source Type",
+			"HELP_TEXT": null,
+			"DEFAULT_VALUE": "web",
+			"LENGTH": 0,
+			"DECIMAL_PLACES": 0,
+			"MAX_SIZE": 0,
+			"MASK_TYPE": null,
+			"MASK_CHARACTER": null,
+			"EXAMPLE": null,
+			"RELATIONSHIP_TYPE": null,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"GEOLOCATION_LATITUDE_LONGTITUDE": null,
+			"PICKLIST": null,
+			"PICKLIST_GLOBAL_LIST": null,
+			"PICKLIST_VALUES": [
+				"chat",	
+				"email",	
+				"facebook",	
+				"forms",
+				"mobile",	
+				"sms",	
+				"twitter",	
+				"web",	
+				"whatsapp"
+			],
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_RESTRICT": false,
+			"PRIMARY_DISPLAY_FIELD": null,
+			"RELATIONSHIP_FIELD": null,
+			"FORMULA": null,
+			"MODULE": null,
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"DATA_TYPE": {
+				"DISPLAY": "Picklist",
+				"BACKEND": "String"
+			},
+			"ORDER": 0,
+			"TYPE": 0,
+			"DATE_CREATED": null,
+			"LAST_UPDATED": null,
+			"LAST_UPDATED_BY": null,
+			"CREATED_BY": null,
+			"MESSAGES": null,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"GROUP_ID": null,
+			"IS_LIST_TEXT_UNIQUE": false,
+			"WORKFLOW": null,
+			"DATA_FILTER": null,
+			"AGGREGATION_TYPE": null,
+			"AGGREGATION_FIELD": null,
+			"AGGREGATION_RELATED_FIELD": null,
+			"INHERITANCE_MAPPING": null,
+			"UNIQUE": false
+		},
+		{
+			"FIELD_ID": "253e1d4e-ef6f-4df8-89ab-44aa32a5fa05",
+			"NAME": "CHANNEL",
+			"DISPLAY_LABEL": "Channel",
+			"HELP_TEXT": null,
+			"DEFAULT_VALUE": null,
+			"LENGTH": 0,
+			"DECIMAL_PLACES": 0,
+			"MAX_SIZE": 0,
+			"MASK_TYPE": null,
+			"MASK_CHARACTER": null,
+			"EXAMPLE": null,
+			"RELATIONSHIP_TYPE": null,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"GEOLOCATION_LATITUDE_LONGTITUDE": null,
+			"PICKLIST": null,
+			"PICKLIST_GLOBAL_LIST": null,
+			"PICKLIST_VALUES": null,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_RESTRICT": false,
+			"PRIMARY_DISPLAY_FIELD": null,
+			"RELATIONSHIP_FIELD": null,
+			"FORMULA": null,
+			"MODULE": null,
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"DATA_TYPE": {
+				"DISPLAY": "Text",
+				"BACKEND": "String"
+			},
+			"ORDER": 0,
+			"TYPE": 0,
+			"DATE_CREATED": null,
+			"LAST_UPDATED": null,
+			"LAST_UPDATED_BY": null,
+			"CREATED_BY": null,
+			"MESSAGES": null,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"GROUP_ID": null,
+			"IS_LIST_TEXT_UNIQUE": false,
+			"WORKFLOW": null,
+			"DATA_FILTER": null,
+			"AGGREGATION_TYPE": null,
+			"AGGREGATION_FIELD": null,
+			"AGGREGATION_RELATED_FIELD": null,
+			"INHERITANCE_MAPPING": null,
+			"UNIQUE": false
+		},
+		{
+      "FIELD_ID": "ec928c4f-f1f6-424d-b120-7e7747360ff2",
+      "NAME": "TIME_WINDOW",
+      "DISPLAY_LABEL": "Time Window",
+      "HELP_TEXT": "",
+      "DATA_TYPE": {
+        "DISPLAY": "Time Window",
+        "BACKEND": "Timestamp"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_VALUES": [],
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+     {
+      "FIELD_ID": "4024c953-87aa-4d4e-97ae-2a467b83db3a",
+      "NAME": "PDFS",
+      "DISPLAY_LABEL": "PDFS",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": null,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": [],
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": true,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "RELATIONSHIP_FIELD": null,
+      "FORMULA": null,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "DATA_TYPE": {
+        "DISPLAY": "PDF",
+        "BACKEND": "BLOB"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": "DATE_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "MESSAGES": null,
+      "INTERNAL": false,
+      "NOT_EDITABLE": true,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false,
+      "WORKFLOW": null,
+      "DATA_FILTER": null,
+      "AGGREGATION_TYPE": null,
+      "AGGREGATION_FIELD": null,
+      "AGGREGATION_RELATED_FIELD": null,
+      "INHERITANCE_MAPPING": null,
+      "UNIQUE": false,
+      "DATE_UPDATED": "DATE_REPLACE"
+     }
+	],
+	"WORKFLOWS": [],
+	"FIELD_RULES": [],
+	"DETAIL_LAYOUTS": [],
+	"NAME": "Document Checklist",
+	"SINGULAR_NAME": "Document Checklist",
+	"PLURAL_NAME": "Document Checklists",
+	"VALIDATIONS": [],
+	"EDIT_MOBILE_LAYOUTS": [],
+	"EDIT_LAYOUTS": [
+		{
+			"LAYOUT_ID": "d0e90e21-1ec2-42a6-9c78-c36cd2fc6fe2",
+			"NAME": "Document Checklist",
+			"DESCRIPTION": "",
+			"PANELS": [
+			{
+					"SETTINGS": {
+						"COLLAPSABLE": false,
+						"ACTION": "",
+						"CONDITIONS": []
+					},
+					"ID": "PANEL_1",
+					"PANEL_NAME": "Employee Details",
+					"GRIDS": [
+						[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "2cc641ce-8467-4ac6-9d56-57a9caac4445"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					]
+					],
+					"DISPLAY_TYPE": "Panel"
+				},
+				{
+					"SETTINGS": {
+						"COLLAPSABLE": false,
+						"ACTION": "",
+						"CONDITIONS": []
+					},
+					"ID": "PANEL_2",
+					"PANEL_NAME": "Document Checklist",
+					"GRIDS": [
+						[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "ce8d8aa1-7798-49ed-83c3-1d0329fc29df"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "392b305f-cc55-4bf9-bc16-3ed09eb1285d"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "1ed86d6f-e2f5-43e4-bc75-2d5fa4e38f83"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "bc795f52-6379-43e1-b7e6-1d7336e8b5b1"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "a3966110-7efa-4829-a533-9ad05251e7d5"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "0783cacd-821b-45fc-8353-1cc3c4b0fd58"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "fdcb5863-abce-4c5d-bf31-38f65edd169c"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "ff6a92c54-daa6-4779-88fc-727ecbd4ffbb"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "9611831c-dde0-496a-aae6-87150f1bb4f3"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "33c3fdac-22f6-48d2-843a-2e4e118531a0"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "14546c67-e3e1-4c34-8b4b-06317b0d0b11"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "1a306da1-fe9a-4f1e-9fe7-0ef47e796765"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "14606773-ae13-4cfc-8b01-0bfdd5d0e7fd"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "0733dd37-6d9d-44d8-84ce-07e9ec426e88"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "10af9e2c-5bc9-4ada-8239-b88379977a1f"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "af7152ce-5e74-42e4-be49-11d5d90c90c2"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "06f6cafa-e4d6-48a8-a7a1-33800314e8c6"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "41179adf-3e94-4e93-9717-22fb33061ae3"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "f3883cba-bf36-4f11-843e-030c419051a7"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					]
+					],
+					"DISPLAY_TYPE": "Panel"
+				}
+			],
+			"TITLE_BAR": [],
+			"PREDEFINED_TEMPLATE": null,
+			"CUSTOM_LAYOUT": null,
+			"ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+			"DATE_CREATED": null,
+			"DATE_UPDATED": null,
+			"LAST_UPDATED_BY": null,
+			"CREATED_BY": null,
+			"LAYOUT_STYLE": "outline"
+		},
+		{
+			"LAYOUT_ID": "deb1cc23-56e6-4a22-8dc1-7f62bce541bb",
+			"NAME": "Document Checklist",
+			"DESCRIPTION": "",
+			"PANELS": [
+			{
+					"SETTINGS": {
+						"COLLAPSABLE": false,
+						"ACTION": "",
+						"CONDITIONS": []
+					},
+					"ID": "PANEL_1",
+					"PANEL_NAME": "Employee Details",
+					"GRIDS": [
+						[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "2cc641ce-8467-4ac6-9d56-57a9caac4445"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					]
+					],
+					"DISPLAY_TYPE": "Panel"
+				},
+				{
+					"SETTINGS": {
+						"COLLAPSABLE": false,
+						"ACTION": "",
+						"CONDITIONS": []
+					},
+					"ID": "PANEL_2",
+					"PANEL_NAME": "Document Checklist",
+					"GRIDS": [
+						[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "ce8d8aa1-7798-49ed-83c3-1d0329fc29df"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "392b305f-cc55-4bf9-bc16-3ed09eb1285d"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "1ed86d6f-e2f5-43e4-bc75-2d5fa4e38f83"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "bc795f52-6379-43e1-b7e6-1d7336e8b5b1"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "a3966110-7efa-4829-a533-9ad05251e7d5"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "0783cacd-821b-45fc-8353-1cc3c4b0fd58"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "fdcb5863-abce-4c5d-bf31-38f65edd169c"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "ff6a92c54-daa6-4779-88fc-727ecbd4ffbb"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "9611831c-dde0-496a-aae6-87150f1bb4f3"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "33c3fdac-22f6-48d2-843a-2e4e118531a0"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "14546c67-e3e1-4c34-8b4b-06317b0d0b11"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "1a306da1-fe9a-4f1e-9fe7-0ef47e796765"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "14606773-ae13-4cfc-8b01-0bfdd5d0e7fd"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "0733dd37-6d9d-44d8-84ce-07e9ec426e88"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "10af9e2c-5bc9-4ada-8239-b88379977a1f"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "af7152ce-5e74-42e4-be49-11d5d90c90c2"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "06f6cafa-e4d6-48a8-a7a1-33800314e8c6"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "41179adf-3e94-4e93-9717-22fb33061ae3"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "f3883cba-bf36-4f11-843e-030c419051a7"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					]
+					],
+					"DISPLAY_TYPE": "Panel"
+				}
+			],
+			"TITLE_BAR": [],
+			"PREDEFINED_TEMPLATE": null,
+			"CUSTOM_LAYOUT": null,
+			"ROLE": "AGENT_ROLE_REPLACE",
+			"DATE_CREATED": null,
+			"DATE_UPDATED": null,
+			"LAST_UPDATED_BY": null,
+			"CREATED_BY": null,
+			"LAYOUT_STYLE": "outline"
+		}
+	],
+	"DESCRIPTION": "Document Checklist Module ",
+	"MONITORS": [],
+	"CREATE_MOBILE_LAYOUTS": [],
+	"DETAIL_MOBILE_LAYOUTS": [],
+	"LIST_LAYOUTS": [{
+			"ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+			"ORDER_BY": {
+				"ORDER": "Desc",
+				"COLUMN": "a038d717-335c-436f-9a2f-358d70e55db8"
+			},
+			"COLUMN_SHOW": {
+				"FIELDS": [
+					"2cc641ce-8467-4ac6-9d56-57a9caac4445",
+					"a038d717-335c-436f-9a2f-358d70e55db8"
+				]
+			},
+			"DESCRIPTION": "Document Checklist",
+			"CONDITIONS": [],
+			"LAYOUT_ID": "b5e72cf2-42be-4501-88a4-ae0b9cb3604e",
+			"IS_DEFAULT": true,
+			"NAME": "Document Checklist"
+		},
+		{
+			"ROLE": "AGENT_ROLE_REPLACE",
+			"ORDER_BY": {
+				"ORDER": "Desc",
+				"COLUMN": "a038d717-335c-436f-9a2f-358d70e55db8"
+			},
+			"COLUMN_SHOW": {
+				"FIELDS": [
+					"2cc641ce-8467-4ac6-9d56-57a9caac4445",
+					"a038d717-335c-436f-9a2f-358d70e55db8"
+				]
+			},
+			"DESCRIPTION": "Document Checklist",
+			"CONDITIONS": [],
+			"LAYOUT_ID": "19d60368-8684-4607-8afc-7cbe17b43b5f",
+			"IS_DEFAULT": true,
+			"NAME": "Document Checklist"
+		}
+	],
+	"LIST_MOBILE_LAYOUTS": [],
+	"CREATE_LAYOUTS": [{
+			"LAYOUT_ID": "91ca5159-0104-4a24-89a8-244ab100d803",
+			"NAME": "Document Checklist",
+			"DESCRIPTION": "",
+			"PANELS": [
+				{
+					"SETTINGS": {
+						"COLLAPSABLE": false,
+						"ACTION": "",
+						"CONDITIONS": []
+					},
+					"ID": "PANEL_1",
+					"PANEL_NAME": "Employee Details",
+					"GRIDS": [
+						[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "2cc641ce-8467-4ac6-9d56-57a9caac4445"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					]
+					],
+					"DISPLAY_TYPE": "Panel"
+				},
+				{
+					"SETTINGS": {
+						"COLLAPSABLE": false,
+						"ACTION": "",
+						"CONDITIONS": []
+					},
+					"ID": "PANEL_2",
+					"PANEL_NAME": "Document Checklist",
+					"GRIDS": [
+						[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "ce8d8aa1-7798-49ed-83c3-1d0329fc29df"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "392b305f-cc55-4bf9-bc16-3ed09eb1285d"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "1ed86d6f-e2f5-43e4-bc75-2d5fa4e38f83"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "bc795f52-6379-43e1-b7e6-1d7336e8b5b1"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "a3966110-7efa-4829-a533-9ad05251e7d5"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "0783cacd-821b-45fc-8353-1cc3c4b0fd58"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "fdcb5863-abce-4c5d-bf31-38f65edd169c"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "ff6a92c54-daa6-4779-88fc-727ecbd4ffbb"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "9611831c-dde0-496a-aae6-87150f1bb4f3"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "33c3fdac-22f6-48d2-843a-2e4e118531a0"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "14546c67-e3e1-4c34-8b4b-06317b0d0b11"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "1a306da1-fe9a-4f1e-9fe7-0ef47e796765"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "14606773-ae13-4cfc-8b01-0bfdd5d0e7fd"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "0733dd37-6d9d-44d8-84ce-07e9ec426e88"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "10af9e2c-5bc9-4ada-8239-b88379977a1f"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "af7152ce-5e74-42e4-be49-11d5d90c90c2"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "06f6cafa-e4d6-48a8-a7a1-33800314e8c6"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "41179adf-3e94-4e93-9717-22fb33061ae3"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "f3883cba-bf36-4f11-843e-030c419051a7"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					]
+					],
+					"DISPLAY_TYPE": "Panel"
+				}
+			],
+			"TITLE_BAR": [],
+			"PREDEFINED_TEMPLATE": null,
+			"CUSTOM_LAYOUT": null,
+			"ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+			"DATE_CREATED": null,
+			"DATE_UPDATED": null,
+			"LAST_UPDATED_BY": null,
+			"CREATED_BY": null,
+			"LAYOUT_STYLE": "outline"
+		},
+		{
+			"LAYOUT_ID": "678f3520-30f7-4e51-827c-8c0226e9ab18",
+			"NAME": "Document Checklist",
+			"DESCRIPTION": "",
+			"PANELS": [
+				{
+					"SETTINGS": {
+						"COLLAPSABLE": false,
+						"ACTION": "",
+						"CONDITIONS": []
+					},
+					"ID": "PANEL_1",
+					"PANEL_NAME": "Employee Details",
+					"GRIDS": [
+						[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "2cc641ce-8467-4ac6-9d56-57a9caac4445"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					]
+					],
+					"DISPLAY_TYPE": "Panel"
+				},
+				{
+					"SETTINGS": {
+						"COLLAPSABLE": false,
+						"ACTION": "",
+						"CONDITIONS": []
+					},
+					"ID": "PANEL_2",
+					"PANEL_NAME": "Document Checklist",
+					"GRIDS": [
+						[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "ce8d8aa1-7798-49ed-83c3-1d0329fc29df"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "392b305f-cc55-4bf9-bc16-3ed09eb1285d"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "1ed86d6f-e2f5-43e4-bc75-2d5fa4e38f83"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "bc795f52-6379-43e1-b7e6-1d7336e8b5b1"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "a3966110-7efa-4829-a533-9ad05251e7d5"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "0783cacd-821b-45fc-8353-1cc3c4b0fd58"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "fdcb5863-abce-4c5d-bf31-38f65edd169c"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "ff6a92c54-daa6-4779-88fc-727ecbd4ffbb"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "9611831c-dde0-496a-aae6-87150f1bb4f3"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "33c3fdac-22f6-48d2-843a-2e4e118531a0"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "14546c67-e3e1-4c34-8b4b-06317b0d0b11"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "1a306da1-fe9a-4f1e-9fe7-0ef47e796765"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "14606773-ae13-4cfc-8b01-0bfdd5d0e7fd"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "0733dd37-6d9d-44d8-84ce-07e9ec426e88"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "10af9e2c-5bc9-4ada-8239-b88379977a1f"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "af7152ce-5e74-42e4-be49-11d5d90c90c2"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "06f6cafa-e4d6-48a8-a7a1-33800314e8c6"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "41179adf-3e94-4e93-9717-22fb33061ae3"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					],
+					[{
+							"IS_EMPTY": false,
+							"HEIGHT": 10,
+							"WIDTH": 50,
+							"FIELD_ID": "f3883cba-bf36-4f11-843e-030c419051a7"
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 0,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						},
+						{
+							"IS_EMPTY": true,
+							"HEIGHT": 10,
+							"WIDTH": 25,
+							"FIELD_ID": ""
+						}
+					]
+					],
+					"DISPLAY_TYPE": "Panel"
+				}
+			],
+			"TITLE_BAR": [],
+			"PREDEFINED_TEMPLATE": null,
+			"CUSTOM_LAYOUT": null,
+			"ROLE": "AGENT_ROLE_REPLACE",
+			"DATE_CREATED": null,
+			"DATE_UPDATED": null,
+			"LAST_UPDATED_BY": null,
+			"CREATED_BY": null,
+			"LAYOUT_STYLE": "outline"
+		}
+	],
+	"CHAT_BOTS": []
+}

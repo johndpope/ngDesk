@@ -1,0 +1,23 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<div fxLayout="column" fxLayoutGap="10px" class="pad10">
+	<ng-template #headerTemplateRef>
+		<app-title-bar class="light-grey-color" title="{{'ACTION_ITEMS' | translate}}" buttonText="{{'NEW' | translate}}"
+			(buttonRightOnClick)="newRoleLayout()">
+		</app-title-bar>
+	</ng-template>
+	<div fxFlex>
+		<app-custom-table [templateRef]="columnTemplateRef" (rowClickedEvent)="rowClicked($event)" [actions]="roleLayoutsActions.actions"
+			(menuItemTrigger)="roleLayoutsActions[$event.ACTION.NAME]($event.ROW_DATA);"
+			noRecordsMessage="{{'NO_ACTION_ITEMS_FOUND' | translate}}"
+			(pageChangeEmit)="pageChangeEmit($event);customTableService.isLoading = true"
+			(sortData)="sortData();customTableService.isLoading = true">
+			<ng-template #columnTemplateRef let-element="element" let-col="col">
+				<span *ngIf="specialDataTypes.indexOf(col.DATA_TYPE) === -1">{{ element[col.NAME] }}</span>
+				<span *ngIf="col.DATA_TYPE === 'Date/Time'">{{element[col.NAME] | dateFormat: 'MMM d, y, h:mm a'}}</span>
+				<span *ngIf="col.DATA_TYPE === 'Date'">{{element[col.NAME] | dateFormat: 'mediumDate'}}</span>
+				<span *ngIf="col.DATA_TYPE === 'Time'">{{element[col.NAME] | dateFormat: 'h:mm a'}}</span>
+				<span *ngIf="col.DATA_TYPE === 'Relationship'">{{element[col.NAME].PRIMARY_DISPLAY_FIELD}}</span>
+			</ng-template>
+		</app-custom-table>
+	</div>
+</div>

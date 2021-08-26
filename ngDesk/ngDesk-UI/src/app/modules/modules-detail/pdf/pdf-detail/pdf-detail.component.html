@@ -1,0 +1,57 @@
+<app-toolbar [templateRef]="customTemplateRef"></app-toolbar>
+<ng-template #customTemplateRef>
+	<app-title-bar title="{{'PDF_NEW' | translate}}">
+	</app-title-bar>
+</ng-template>
+<!-- Form start -->
+<form [formGroup]="pdfForm" (ngSubmit)="save()">
+	<div fxLayout="row" style="min-height: calc(100vh - 55px);">
+		<div fxLayout="column" fxFlex="80">
+			<div fxLayout="column" fxFlexFill>
+				<!-- Title start -->
+				<div fxLayoutAlign="center" style="min-width: 600px;" fxFlexOffset="10px">
+					<mat-form-field class="field-padding" fxFlex="80" appearance="outline" floatLabel="always">
+						<mat-label>{{'TITLE' | translate}}</mat-label>
+						<input matInput formControlName="TITLE" required>
+						<mat-error style="margin-top: 5px;" [innerHTML]="'FIELD_REQUIRED' | translate:errorParams.title"></mat-error>
+					</mat-form-field>
+				</div>
+				<!-- Title end -->
+				<!-- Body start -->
+				<div fxLayout="row" fxLayoutAlign="center" style="min-width: 600px;">
+					<div fxLayoutAlign="center" class="text-no-bottom-padding no-hover-effect" fxLayout="column" fxFlex="80">
+						<tinymce placeholder="" #editor formControlName="HTML_TEMPLATE" [config]="config"></tinymce>
+					</div>
+				</div>
+				<div fxLayoutAlign="center"
+					*ngIf="(pdfForm.controls.HTML_TEMPLATE.dirty && pdfForm.controls.HTML_TEMPLATE.errors?.required) || clickedSave">
+					<mat-error fxFlex="77" *ngIf="pdfForm.controls.HTML_TEMPLATE.errors?.required" class="mat-small"
+						[innerHTML]="'FIELD_REQUIRED' | translate:errorParams.body"></mat-error>
+				</div>
+				<!-- Body end -->
+			</div>
+		</div>
+		<mat-divider [vertical]="true"></mat-divider>
+		<!-- Side bar start -->
+		<div fxLayout="column" fxFlex="20" fxFlex.sm="300px" fxFlex.md="300px" class="pad10" [ngStyle]="{'background': '#F8F9F9'}">
+			<button *ngIf="!isSubmitting" mat-raised-button type="submit" color="primary">{{'SAVE' | translate}}</button>
+			<div style="min-height: 36px;" fxLayoutAlign="center center" *ngIf="isSubmitting">
+				<mat-spinner [diameter]="30"></mat-spinner>
+			</div>
+			<span class="mat-h3 light-grey-color" style="margin-bottom: 0px;padding-top: 10px;">{{'FIELDS' | translate}}</span>
+			<mat-divider></mat-divider>
+			<span class="mat-h5 light-grey-color">{{'CLICK_FIELD' | translate}}</span>
+			<div style="min-height: 36px;" fxLayoutAlign="center center" *ngIf="isLoading">
+				<mat-spinner [diameter]="30"></mat-spinner>
+			</div>
+			<div *ngIf="!isLoading" fxLayout="row wrap" fxLayoutGap="5px grid">
+				<mat-chip-list>
+					<mat-chip class="mat-h4" *ngFor="let field of fields" (click)="insertBodyVariable(field)" color="primary" selected>
+						{{field.DISPLAY_LABEL}}</mat-chip>
+				</mat-chip-list>
+			</div>
+		</div>
+		<!-- Side bar end -->
+	</div>
+</form>
+<!-- Form end -->

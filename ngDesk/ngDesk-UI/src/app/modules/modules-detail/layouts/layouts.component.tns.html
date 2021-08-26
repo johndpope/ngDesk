@@ -1,0 +1,122 @@
+<StackLayout>
+  <Label text="LayoutsComponent works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+
+<div class="pad10">
+	<ng-template #headerTemplateRef>
+		<app-title-bar title="{{'LAYOUTS' | translate}}"></app-title-bar>
+	</ng-template>
+	<ng-container *ngIf="isLoading; else elseTemplate">
+		<mat-spinner style="position:relative;top:20%;left:50%"></mat-spinner>
+	</ng-container>
+	<ng-template #elseTemplate>
+		<div fxLayout="column" fxLayoutGap="10px">
+
+			<div fxLayout="row" fxLayoutWrap fxLayoutGap="10px" fxLayoutAlign="flex-start">
+				<div fxFlex="20" fxLayoutAlign="flex-start">
+
+					<table fxFlex="68.9" fxFlex.lt-lg="100" *ngIf="showSideNav" mat-table [dataSource]="navigations" class="mat-elevation-z8">
+						<ng-container matColumnDef="NAME">
+							<th class="custom-theme-icon-color" mat-header-cell *matHeaderCellDef>
+								<div fxLayout="row" fxLayoutGap="5%">
+									<div fxLayout="column" fxFlex="85" fxFlexAlign="center" class="trim-info" matTooltip="{{module.PLURAL_NAME}}">
+										{{ module.PLURAL_NAME | truncate : 10}}
+										{{'MODULE' | translate}}</div>
+									<div fxLayout="column" *ngIf="showSideNav" fxFlex="15">
+										<button mat-icon-button [ngStyle]="{'border': (showSideNav) ? '2px solid white' : '2px solid #3f51b5'}"
+											(click)="showSideNav = !showSideNav" style="border-radius: 3px;margin-top: -2px;">
+											<mat-icon class="custom-theme-icon-color" style="margin-top: -5px;">
+												keyboard_arrow_left</mat-icon>
+										</button>
+									</div>
+								</div>
+							</th>
+							<td matRipple class="no-wrap" mat-cell *matCellDef="let element" class="pointer"
+								[ngClass]="{ 'module-page-active': element.NAME == 'LAYOUTS'}">
+								{{element.NAME | translate}} </td>
+						</ng-container>
+
+						<tr class="custom-theme-primary-color" mat-header-row *matHeaderRowDef="['NAME']"></tr>
+						<tr mat-row *matRowDef="let row; columns: ['NAME'];" [routerLink]="row.PATH" [appHighlight]="{BACKGROUND: '#ececec'}"></tr>
+					</table>
+
+					<div>
+						<button mat-icon-button *ngIf="!showSideNav"
+							[ngStyle]="{'border': (showSideNav) ? '2px solid white' : '2px solid #3f51b5', 'margin-left' : (showSideNav) ? '-48px' : '0px'}"
+							(click)="showSideNav = !showSideNav" style="border-radius: 3px; margin-top: -2px;">
+							<mat-icon color="primary" style="margin-top: -5px;">
+								keyboard_arrow_right</mat-icon>
+						</button>
+					</div>
+					<span fxFlex="1 1 auto"></span>
+				</div>
+				<div fxLayoutGap="20px" fxLayout="column" fxFlex="1 1 auto" fxFlexFill>
+					<div fxLayoutGap="10px" fxFlex="100" fxFlexFill>
+						<mat-card [appHighlight]="{BACKGROUND: 'ghostwhite'}" style="height: 30%" fxFlex="20" fxLayout="column"
+							fxLayoutAlign="center center" class="pointer" (click)="navigateTo('list_layouts')">
+							<mat-icon>view_list</mat-icon>
+							<mat-label class="mat-body-2">{{'WEB_LIST_LAYOUT' | translate}}</mat-label>
+						</mat-card>
+
+						<mat-card *ngIf="module.NAME !=='Chat'" [appHighlight]="{BACKGROUND: 'ghostwhite'}" style="height: 30%" fxFlex="20"
+							fxLayout="column" fxLayoutAlign="center center" class="pointer" (click)="navigateTo('create_layouts')">
+							<mat-icon>tab_unselected</mat-icon>
+							<mat-label class="mat-body-2">{{'WEB_CREATE_LAYOUT' | translate}}</mat-label>
+						</mat-card>
+
+						<mat-card *ngIf="module.NAME !=='Chat'" [appHighlight]="{BACKGROUND: 'ghostwhite'}" style="height: 30%" fxFlex="20"
+							fxLayout="column" fxLayoutAlign="center center" class="pointer" (click)="navigateTo('edit_layouts')">
+							<mat-icon>tab</mat-icon>
+							<mat-label class="mat-body-2">{{'WEB_EDIT_LAYOUT' | translate}}</mat-label>
+						</mat-card>
+
+						<mat-card *ngIf="module.NAME !=='Chat' && module.NAME !=='Tickets'" [appHighlight]="{BACKGROUND: 'ghostwhite'}"
+							style="height: 30%" fxFlex="20" fxLayout="column" fxLayoutAlign="center center" class="pointer"
+							(click)="navigateTo('detail_layouts')">
+							<mat-icon>view_quilt</mat-icon>
+							<mat-label class="mat-body-2">{{'WEB_DETAIL_LAYOUT' | translate}}</mat-label>
+						</mat-card>
+					</div>
+
+
+					<div fxFlex="20"></div>
+
+					<div fxLayoutGap="10px" fxFlex="100" fxFlexFill>
+						<mat-card [appHighlight]="{BACKGROUND: 'ghostwhite'}" style="height: 30%" fxFlex="20" fxLayout="column"
+							fxLayoutAlign="center center" class="pointer" (click)="navigateTo('list_mobile_layouts')">
+							<mat-icon>menu</mat-icon>
+							<mat-label class="mat-body-2">{{'MOBILE_LIST_LAYOUT' | translate}}</mat-label>
+						</mat-card>
+
+						<mat-card *ngIf="module.NAME !=='Chat'" [appHighlight]="{BACKGROUND: 'ghostwhite'}" style="height: 30%" fxFlex="20"
+							fxLayout="column" fxLayoutAlign="center center" class="pointer" (click)="navigateTo('create_mobile_layouts')">
+							<mat-icon>crop_portrait</mat-icon>
+							<mat-label class="mat-body-2">{{'MOBILE_CREATE_LAYOUT' | translate}}</mat-label>
+						</mat-card>
+
+						<mat-card *ngIf="module.NAME !=='Chat'" [appHighlight]="{BACKGROUND: 'ghostwhite'}" style="height: 30%" fxFlex="20"
+							fxLayout="column" fxLayoutAlign="center center" class="pointer" (click)="navigateTo('edit_mobile_layouts')">
+							<mat-icon>table_chart</mat-icon>
+							<mat-label class="mat-body-2">{{'MOBILE_EDIT_LAYOUT' | translate}}</mat-label>
+						</mat-card>
+						<mat-card *ngIf="module.NAME !=='Chat'" [appHighlight]="{BACKGROUND: 'ghostwhite'}" style="height: 30%" fxFlex="20"
+							fxLayout="column" fxLayoutAlign="center center" class="pointer" (click)="navigateTo('detail_mobile_layouts')">
+							<mat-icon>view_compact</mat-icon>
+							<mat-label class="mat-body-2">{{'MOBILE_DETAIL_LAYOUT' | translate}}</mat-label>
+						</mat-card>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</ng-template>
+</div>
+
+-->

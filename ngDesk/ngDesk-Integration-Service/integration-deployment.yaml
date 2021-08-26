@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: integration
+  namespace: NAMESPACE_REPLACE
+spec:
+  selector:
+    matchLabels:
+      app: integration
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: integration
+    spec:
+      containers:
+        - name: integration
+          image: gitlab.bluemsp.com:5050/ngdesk/ngdesk/integration:latest
+          env:
+          - name: SPRING_PROFILES_ACTIVE
+            value: prod
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8095

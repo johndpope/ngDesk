@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<div fxLayout="column" fxLayoutGap="2px">
+	<div fxLayout="row" fxFlexAlign="center" fxLayoutGap="5px">
+		<mat-icon style="color: red;line-height: 1.2;">warning</mat-icon>
+		<div mat-dialog-title style="font-size:24px;font-weight: 700px;">Warning!</div>
+	</div>
+	<div fxFlexAlign="start center">
+		<div mat-dialog-title>{{data.message}}</div>
+	</div>
+	<div mat-dialog-actions fxFlexAlign="end" [ngStyle]="{'margin-top':'30px'}">
+		<button mat-raised-button (click)="onNoClick()" tabindex="-1">{{data.closeDialog}}</button>
+		<button mat-raised-button [mat-dialog-close]="data.action" color="{{data.executebuttonColor}}">{{data.buttonText}}</button>
+	</div>
+</div>

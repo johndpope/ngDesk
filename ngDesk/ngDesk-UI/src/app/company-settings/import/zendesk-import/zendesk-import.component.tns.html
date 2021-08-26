@@ -1,0 +1,151 @@
+<StackLayout>
+  <Label text="zendesk-import works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<div fxLayout="column" fxLayoutGap="15px" class="pad10">
+  <app-title-bar [title]="'MIGRATE_FROM_ZENDESK' | translate"></app-title-bar>
+  <div fxLayout="row" fxLayoutAlign="center">
+    <div fxLayout="column" fxFlex="50" fxFlex.sm="100">
+      <mat-tab-group animationDuration="0ms">
+        <mat-tab label="{{'CONNECT' | translate}}">
+          <form [formGroup]="migrationForm" (ngSubmit)="connectToZendesk()" class="pad10">
+            <div fxLayout="row" fxLayout.sm="column" fxLayoutAlign="start center" fxLayoutGap="20px">
+              <div fxFlex fxLayoutAlign="flex-start center">
+                <label class="mat-h3" [ngStyle]="{'margin-bottom':'0px'}">{{'ZENDESK_DOMAIN' | translate}}</label>
+              </div>
+              <div fxFlex fxLayoutAlign="flex-start center">
+                <mat-form-field fxFlex>
+                  <span matPrefix>https://</span>
+                  <input matInput formControlName="SUBDOMAIN" required>
+                  <span matSuffix>.zendesk.com</span>
+                  <mat-error [innerHTML]="'FIELD_REQUIRED' | translate:errorParams.zendeskDomain"></mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div fxLayout="row" fxLayout.sm="column" fxLayoutAlign="start center" fxLayoutGap="20px">
+              <div fxFlex fxLayoutAlign="flex-start center">
+                <label class="mat-h3" [ngStyle]="{'margin-bottom':'0px'}">{{'API_KEY' | translate}}</label>
+              </div>
+              <div fxFlex fxLayoutAlign="flex-start center">
+                <mat-form-field fxFlex>
+                  <input matInput formControlName="API_TOKEN" required>
+                  <mat-hint [innerHTML]="'ZENDESK_API_KEY_HINT' | translate"></mat-hint>
+                  <mat-error [innerHTML]="'FIELD_REQUIRED' | translate:errorParams.apiKey"></mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div fxLayout="row" fxLayout.sm="column" fxLayoutAlign="start center" fxLayoutGap="20px">
+              <div fxFlex fxLayoutAlign="flex-start center">
+                <label class="mat-h3" [ngStyle]="{'margin-bottom':'0px'}">{{'EMAIL_ADDRESS' | translate}}</label>
+              </div>
+              <div fxFlex fxLayoutAlign="flex-start center">
+                <mat-form-field fxFlex>
+                  <input matInput formControlName="EMAIL_ADDRESS" required>
+                  <mat-hint>{{'ZENDESK_EMAIL_ID_HINT' | translate}}</mat-hint>
+                  <mat-error [innerHTML]="'FIELD_REQUIRED' | translate:errorParams.emailAddress"></mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div [ngStyle]="{'padding': '20px 0'}">
+              <mat-divider></mat-divider>
+            </div>
+            <!-- <div fxLayout="row" fxLayout.sm="column" fxLayoutAlign="start center" fxLayoutGap="20px">
+              <div fxFlex fxLayoutAlign="flex-start center">
+                <label class="mat-h3" [ngStyle]="{'margin-bottom':'0px'}">{{'NGDESK_DOMAIN' | translate}}</label>
+              </div>
+              <div fxFlex fxLayoutAlign="flex-start center">
+                <mat-form-field fxFlex>
+                  <span matPrefix>https://</span>
+                  <input matInput formControlName="NGDESK_DOMAIN" required>
+                  <span matSuffix>.ngdesk.com</span>
+                  <mat-error [innerHTML]="'FIELD_REQUIRED' | translate:errorParams.ngdeskDomain"></mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div fxLayout="row" fxLayout.sm="column" fxLayoutAlign="start center" fxLayoutGap="20px">
+              <div fxFlex fxLayoutAlign="flex-start center">
+                <label class="mat-h3" [ngStyle]="{'margin-bottom':'0px'}">{{'API_KEY' | translate}}</label>
+              </div>
+              <div fxFlex fxLayoutAlign="flex-start center">
+                <mat-form-field fxFlex>
+                  <input matInput formControlName="NGDESK_API_KEY" required>
+                  <mat-error [innerHTML]="'FIELD_REQUIRED' | translate:errorParams.apiKey"></mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div [ngStyle]="{'padding': '20px 0'}">
+              <mat-divider></mat-divider>
+            </div> ->
+            <div fxLayout="row" fxLayout.sm="column" fxLayoutAlign="flex-end">
+              <button mat-raised-button type="submit" color="primary">{{'IMPORT' | translate}}</button>
+            </div>
+          </form>
+        </mat-tab>
+        <mat-tab label="{{'SETTINGS' | translate}}">
+          <form [formGroup]="settingsForm" class="pad10" fxLayout="column" fxLayoutGap="20px">
+            <!-- <ng-container
+              *ngTemplateOutlet="settingToggle; context:{control:'IMPORT_USERS_GROUPS_COMPANIES', label: 'IMPORT_USERS_GROUPS_COMPANIES_QUESTION'}">
+            </ng-container> ->
+            <ng-container *ngTemplateOutlet="settingToggle; context:{control:'IMPORT_TICKETS', label: 'IMPORT_TICKETS_QUESTION'}">
+            </ng-container>
+            <div fxLayout="row" fxLayout.sm="column" fxLayoutAlign="start center" fxLayoutGap="20px"
+              *ngIf="settingsForm.get('IMPORT_TICKETS').value === true">
+              <div fxFlex="60"></div>
+              <div fxFlex fxLayoutAlign="flex-start center">
+                <mat-radio-group fxLayout="column" fxLayoutGap="10px" class="mat-body" formControlName="IMPORT_TICKET_OPTION">
+                  <mat-radio-button value="IMPORT_ALL_TICKETS">{{'IMPORT_ALL_TICKETS' | translate}}</mat-radio-button>
+                  <div>
+                    <mat-radio-button value="IMPORT_TICKETS_FROM_DATE">{{'IMPORT_TICKETS_FROM_DATE' | translate}}
+                    </mat-radio-button>
+                    <mat-form-field [floatLabel]="'always'"
+                      *ngIf="settingsForm.get('IMPORT_TICKET_OPTION').value === 'IMPORT_TICKETS_FROM_DATE'"
+                      [ngStyle]="{'padding-left': '30px'}">
+                      <input matInput [owlDateTimeTrigger]="dt" [owlDateTime]="dt" formControlName="IMPORT_TICKETS_FROM_DATE"
+                        [max]="currentDate">
+                      <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
+                    </mat-form-field>
+                  </div>
+                </mat-radio-group>
+              </div>
+            </div>
+            <div *ngIf="this.settingsForm.value.IMPORT_TICKETS">
+              <ng-container
+                *ngTemplateOutlet="settingToggle; context:{control:'IMPORT_TICKET_ATTACHMENTS', label: 'IMPORT_TICKET_ATTACHMENTS_QUESTION'}">
+              </ng-container>
+            </div>
+            <!-- <ng-container
+              *ngTemplateOutlet="settingToggle; context:{control:'MIGRATE_KNOWLEDGE_BASE', label: 'MIGRATE_KNOWLEDGE_BASE_QUESTION'}">
+            </ng-container> ->
+            <mat-divider></mat-divider>
+            <div fxLayout="row" fxLayout.sm="column" fxLayoutAlign="flex-end" fxLayoutGap="10px">
+              <button mat-raised-button type="submit" color="primary"
+                (click)="saveSettings('import')">{{'SAVE_AND_IMPORT' | translate}}</button>
+            </div>
+          </form>
+        </mat-tab>
+        <mat-tab label="{{'LOGS' | translate}}">
+
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>
+
+<!-- settings tab - toggle options ->
+<ng-template #settingToggle let-control="control" let-label="label">
+  <div [formGroup]="settingsForm" fxLayout="row" fxLayout.sm="column" fxLayoutAlign="start center" fxLayoutGap="20px">
+    <div fxFlex="60" fxLayoutAlign="flex-start center">
+      <label class="mat-h3" [ngStyle]="{'margin-bottom':'0px'}">{{label | translate}}</label>
+    </div>
+    <div fxFlex fxLayoutAlign="flex-start center">
+      <mat-slide-toggle formControlName="{{control}}"></mat-slide-toggle>
+    </div>
+  </div>
+</ng-template>
+
+-->

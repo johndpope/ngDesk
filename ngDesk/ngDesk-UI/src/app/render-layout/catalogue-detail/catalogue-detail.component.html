@@ -1,0 +1,30 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef>
+	<app-title-bar title="{{catalogue.name}}"></app-title-bar>
+</ng-template>
+<div class="pad10">
+	<label class="mat-caption" style="color: #888;font-style: italic;">{{catalogue.description}}</label>
+</div>
+
+<div fxLayout="column" fxLayoutAlign="center center" style="padding-top: 10px;" fxLayout.lt-md="row" fxLayoutGap="20px">
+	<div fxLayoutAlign="center" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px"
+		*ngFor="let catalogueSplit of numberOfIterations(); let i=index">
+		<div style="width: 200px; height: 245px;cursor: pointer; max-width: 100%;" *ngFor="let form of getForms(i);let j=index;">
+			<div *ngIf="form" class="mat-elevation-z2" [appHighlight]="{BACKGROUND: 'ghostWhite'}"
+				(click)="navigate(form.formId.formId, form.moduleId)" fxLayout="column" style="border-radius: 5px;">
+				<div fxLayoutAlign="center center" class="custom-theme-offset-background-Color" style="height: 140px;">
+					<mat-icon *ngIf="!form.formId.displayImage">assignment</mat-icon>
+					<img *ngIf="form.formId.displayImage" width=200px height=140px [src]="form.formId.displayImage">
+				</div>
+				<div fxFlex="50" fxLayoutAlign="start start" fxLayout="column" style="padding: 10px;" fxLayoutGap="5px">
+					<div class="mat-body-strong" style="font-size: 15px; word-break: break-word;">
+						{{form.formId.name}}
+					</div>
+					<div class="mat-caption" style="word-break: break-word; text-overflow: ellipsis;">
+						{{form.formId.description}}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

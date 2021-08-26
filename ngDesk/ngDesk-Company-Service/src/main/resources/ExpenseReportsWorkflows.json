@@ -1,0 +1,126 @@
+[{
+  "WORKFLOW_ID": "60a4d0caa551a6409288f700",
+  "MODULE_ID": "5f8e89b50b817042f3195a21",
+  "COMPANY_ID": "60a4d0c9a551a6409288f6e5",
+  "TYPE": "CREATE_OR_UPDATE",
+  "NAME": "Status Update And Approval",
+  "DESCRIPTION": "Status Update And Approval",
+  "CONDITIONS": [
+    {
+      "CONDITION": "c994acb0-8037-460e-867c-5162a242670f",
+      "CONDITION_VALUE": "true",
+      "OPERATOR": "EQUALS_TO",
+      "REQUIREMENT_TYPE": "All"
+    }
+  ],
+  "STAGES": [
+    {
+      "STAGE_ID": "7378fa12-95f0-7128-e751-3733f5411ca1",
+      "NAME": "Default Stage",
+      "CONDITIONS": [],
+      "NODES": [
+        {
+          "TYPE": "Start",
+          "CONDITIONS": [],
+          "ID": "a255ccdb-3fc8-4639-be3b-18a04148807c",
+          "CONNECTIONS_TO": [
+            {
+              "TITLE": "t10.6669446301771336",
+              "FROM": "t20.2858974426127703",
+              "TO_NODE": "75feba3e-a127-4a05-8f24-2098a11d6f64"
+            }
+          ],
+          "NAME": "Start"
+        },
+        {
+          "TYPE": "End",
+          "CONDITIONS": [],
+          "ID": "1ca7669e-e2fb-48ba-aa4f-8fce388710a9",
+          "CONNECTIONS_TO": [],
+          "NAME": "End"
+        },
+        {
+          "TYPE": "Approval",
+          "CONDITIONS": [],
+          "ID": "75feba3e-a127-4a05-8f24-2098a11d6f64",
+          "CONNECTIONS_TO": [
+            {
+              "TITLE": "approve",
+              "FROM": "t20.18439862724471423",
+              "TO_NODE": "d6173415-f153-403c-b67a-de12ffa7b029"
+            },
+            {
+              "TITLE": "reject",
+              "FROM": "t20.2614029817911072",
+              "TO_NODE": "a21612df-5219-436a-b128-37e9d426fc69"
+            }
+          ],
+          "NAME": "Approval",
+          "APPROVERS": [],
+          "TEAMS": [
+            "ADMIN_TEAM_REPLACE"
+          ],
+          "APPROVAL_CONDITION": "Any Approver",
+          "NUMBER_OF_APPROVALS_REQUIRED": null,
+          "DISABLE_ENTRY": true,
+          "NOTIFY_USERS_FOR_APPROVAL": false,
+          "NOTIFY_USERS_AFTER_APPROVAL": false
+        },
+        {
+          "TYPE": "UpdateEntry",
+          "CONDITIONS": [],
+          "ID": "d6173415-f153-403c-b67a-de12ffa7b029",
+          "CONNECTIONS_TO": [
+            {
+              "TITLE": "t10.6452491027026548",
+              "FROM": "t20.6022157063397977",
+              "TO_NODE": "1ca7669e-e2fb-48ba-aa4f-8fce388710a9"
+            }
+          ],
+          "NAME": "Update Entry",
+          "MODULE": "5f8e89b50b817042f3195a21",
+          "ENTRY_ID": "{{InputMessage.DATA_ID}}",
+          "FIELDS": [
+            {
+              "FIELD": "619b25b5-5a31-4f88-97ac-ab54d203b904",
+              "VALUE": [
+                "Approved"
+              ]
+            }
+          ]
+        },
+        {
+          "TYPE": "UpdateEntry",
+          "CONDITIONS": [],
+          "ID": "a21612df-5219-436a-b128-37e9d426fc69",
+          "CONNECTIONS_TO": [
+            {
+              "TITLE": "t10.34254102814360077",
+              "FROM": "t20.8116978417692944",
+              "TO_NODE": "1ca7669e-e2fb-48ba-aa4f-8fce388710a9"
+            }
+          ],
+          "NAME": "Reject Update Entry",
+          "MODULE": "5f8e89b50b817042f3195a21",
+          "ENTRY_ID": "{{InputMessage.DATA_ID}}",
+          "FIELDS": [
+            {
+              "FIELD": "619b25b5-5a31-4f88-97ac-ab54d203b904",
+              "VALUE": [
+                "Rejected"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "ORDER": 0,
+  "DATE_CREATED": null,
+  "DATE_UPDATED": "2021-05-19T09:10:13.999Z",
+  "LAST_UPDATED_BY": "60a4d0caa551a6409288f707",
+  "CREATED_BY": null,
+  "RAPID_UI_PAYLOAD": "{\"cells\":[{\"type\":\"app.FlowchartStart\",\"size\":{\"width\":48,\"height\":48},\"ports\":{\"items\":[{\"group\":\"out\",\"id\":\"e4b63033-c7b2-4db8-b680-d18c37f24fe7\"}]},\"position\":{\"x\":-584,\"y\":-464},\"id\":\"a255ccdb-3fc8-4639-be3b-18a04148807c\",\"z\":1,\"attrs\":{\"label\":{\"text\":\"Start\"}}},{\"type\":\"app.FlowchartEnd\",\"size\":{\"width\":48,\"height\":48},\"ports\":{\"items\":[{\"group\":\"in\",\"id\":\"a8c6382b-0a22-4ad8-badb-7d72aafea97a\"}]},\"position\":{\"x\":-600,\"y\":160},\"id\":\"1ca7669e-e2fb-48ba-aa4f-8fce388710a9\",\"z\":2,\"attrs\":{\"label\":{\"text\":\"End\"}}},{\"type\":\"app.Approval\",\"size\":{\"width\":368,\"height\":80},\"ports\":{\"items\":[{\"group\":\"in\",\"id\":\"f27ecb6a-47e1-46bb-b695-bd34b80d4d99\"},{\"group\":\"out\",\"attrs\":{\"portLabel\":{\"text\":\"Approve\"}},\"id\":\"2cae9eb8-1894-475c-916b-db929780d8e1\"},{\"group\":\"out\",\"attrs\":{\"portLabel\":{\"text\":\"Reject\"}},\"id\":\"19d06a9a-d188-43d3-b737-59b29bfe1be4\"}]},\"position\":{\"x\":-696,\"y\":-304},\"id\":\"75feba3e-a127-4a05-8f24-2098a11d6f64\",\"z\":3,\"attrs\":{\"body\":{\"stroke\":\"#E8E8E8\"},\"label\":{\"text\":\"Approval\"},\"icon\":{\"xlinkHref\":\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDI0IDI0IiBoZWlnaHQ9IjI0IiB2aWV3Qm94PSIwIDAgMjQgMjQiIHdpZHRoPSIyNCI+PGc+PHJlY3QgZmlsbD0ibm9uZSIgaGVpZ2h0PSIyNCIgd2lkdGg9IjI0Ii8+PC9nPjxnPjxnPjxnPjxwYXRoIGQ9Ik0xNCwxMEgydjJoMTJWMTB6IE0xNCw2SDJ2MmgxMlY2eiBNMiwxNmg4di0ySDJWMTZ6IE0yMS41LDExLjVMMjMsMTNsLTYuOTksN2wtNC41MS00LjVMMTMsMTRsMy4wMSwzTDIxLjUsMTEuNXoiLz48L2c+PC9nPjwvZz48L3N2Zz4=\"}}},{\"type\":\"app.UpdateEntry\",\"size\":{\"width\":368,\"height\":80},\"ports\":{\"items\":[{\"group\":\"in\",\"id\":\"8f8a5f12-7ecb-4d16-b377-9b43c9156d7f\"},{\"group\":\"out\",\"attrs\":{\"portLabel\":{\"text\":\"out\"}},\"id\":\"0c520c10-3265-4816-a9fe-d5eb08674a8a\"}]},\"position\":{\"x\":-728,\"y\":-88},\"id\":\"d6173415-f153-403c-b67a-de12ffa7b029\",\"z\":4,\"attrs\":{\"body\":{\"stroke\":\"#E8E8E8\"},\"label\":{\"text\":\"Update Entry\"},\"icon\":{\"xlinkHref\":\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjI0Ij48cGF0aCBkPSJNMCAwaDI0djI0SDB6IiBmaWxsPSJub25lIi8+PHBhdGggZD0iTTMgMTcuMjVWMjFoMy43NUwxNy44MSA5Ljk0bC0zLjc1LTMuNzVMMyAxNy4yNXpNMjAuNzEgNy4wNGMuMzktLjM5LjM5LTEuMDIgMC0xLjQxbC0yLjM0LTIuMzRjLS4zOS0uMzktMS4wMi0uMzktMS40MSAwbC0xLjgzIDEuODMgMy43NSAzLjc1IDEuODMtMS44M3oiLz48L3N2Zz4=\"}}},{\"type\":\"app.Link\",\"labels\":[{\"attrs\":{\"labelText\":{\"text\":\"Connection\"}},\"position\":{\"distance\":0.25}}],\"source\":{\"id\":\"a255ccdb-3fc8-4639-be3b-18a04148807c\",\"magnet\":\"portBody\",\"port\":\"e4b63033-c7b2-4db8-b680-d18c37f24fe7\"},\"target\":{\"id\":\"75feba3e-a127-4a05-8f24-2098a11d6f64\",\"magnet\":\"portBody\",\"port\":\"f27ecb6a-47e1-46bb-b695-bd34b80d4d99\"},\"id\":\"bac62c3b-d28f-4c41-bcd6-47efe4db490a\",\"z\":5,\"attrs\":{}},{\"type\":\"app.Link\",\"labels\":[{\"attrs\":{\"labelText\":{\"text\":\"Connection\"}},\"position\":{\"distance\":0.25}}],\"source\":{\"id\":\"75feba3e-a127-4a05-8f24-2098a11d6f64\",\"magnet\":\"portBody\",\"port\":\"2cae9eb8-1894-475c-916b-db929780d8e1\"},\"target\":{\"id\":\"d6173415-f153-403c-b67a-de12ffa7b029\",\"magnet\":\"portBody\",\"port\":\"8f8a5f12-7ecb-4d16-b377-9b43c9156d7f\"},\"id\":\"341b66f1-2de1-4369-bf78-fea4986a95af\",\"z\":6,\"attrs\":{}},{\"type\":\"app.Link\",\"labels\":[{\"attrs\":{\"labelText\":{\"text\":\"Connection\"}},\"position\":{\"distance\":0.25}}],\"source\":{\"id\":\"d6173415-f153-403c-b67a-de12ffa7b029\",\"magnet\":\"portBody\",\"port\":\"0c520c10-3265-4816-a9fe-d5eb08674a8a\"},\"target\":{\"id\":\"1ca7669e-e2fb-48ba-aa4f-8fce388710a9\",\"magnet\":\"portBody\",\"port\":\"a8c6382b-0a22-4ad8-badb-7d72aafea97a\"},\"id\":\"c8b72e7b-92f3-4a5a-9286-79f9c6590b60\",\"z\":7,\"attrs\":{}},{\"type\":\"app.UpdateEntry\",\"size\":{\"width\":368,\"height\":80},\"ports\":{\"items\":[{\"group\":\"in\",\"id\":\"0deb7b96-765d-4807-8366-a5019636cecf\"},{\"group\":\"out\",\"attrs\":{\"portLabel\":{\"text\":\"out\"}},\"id\":\"10f132d7-07eb-40b8-96c6-4fceacd43ada\"}]},\"position\":{\"x\":-288,\"y\":-88},\"id\":\"a21612df-5219-436a-b128-37e9d426fc69\",\"z\":9,\"attrs\":{\"body\":{\"stroke\":\"#E8E8E8\"},\"label\":{\"text\":\"Reject Update Entry\"},\"icon\":{\"xlinkHref\":\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjI0Ij48cGF0aCBkPSJNMCAwaDI0djI0SDB6IiBmaWxsPSJub25lIi8+PHBhdGggZD0iTTMgMTcuMjVWMjFoMy43NUwxNy44MSA5Ljk0bC0zLjc1LTMuNzVMMyAxNy4yNXpNMjAuNzEgNy4wNGMuMzktLjM5LjM5LTEuMDIgMC0xLjQxbC0yLjM0LTIuMzRjLS4zOS0uMzktMS4wMi0uMzktMS40MSAwbC0xLjgzIDEuODMgMy43NSAzLjc1IDEuODMtMS44M3oiLz48L3N2Zz4=\"}}},{\"type\":\"app.Link\",\"labels\":[{\"attrs\":{\"labelText\":{\"text\":\"Connection\"}},\"position\":{\"distance\":0.25}}],\"source\":{\"id\":\"75feba3e-a127-4a05-8f24-2098a11d6f64\",\"magnet\":\"portBody\",\"port\":\"19d06a9a-d188-43d3-b737-59b29bfe1be4\"},\"target\":{\"id\":\"a21612df-5219-436a-b128-37e9d426fc69\",\"magnet\":\"portBody\",\"port\":\"0deb7b96-765d-4807-8366-a5019636cecf\"},\"id\":\"a5a9c05f-48c7-40bf-926a-b5bcd58d96c6\",\"z\":10,\"attrs\":{}},{\"type\":\"app.Link\",\"labels\":[{\"attrs\":{\"labelText\":{\"text\":\"Connection\"}},\"position\":{\"distance\":0.25}}],\"source\":{\"id\":\"a21612df-5219-436a-b128-37e9d426fc69\",\"magnet\":\"portBody\",\"port\":\"10f132d7-07eb-40b8-96c6-4fceacd43ada\"},\"target\":{\"id\":\"1ca7669e-e2fb-48ba-aa4f-8fce388710a9\",\"magnet\":\"portBody\",\"port\":\"a8c6382b-0a22-4ad8-badb-7d72aafea97a\"},\"id\":\"00bed9c8-e887-474d-8be3-01993a43319d\",\"z\":11,\"attrs\":{}}]}",
+  "DISPLAY_ON_ENTRY": false
+}
+]

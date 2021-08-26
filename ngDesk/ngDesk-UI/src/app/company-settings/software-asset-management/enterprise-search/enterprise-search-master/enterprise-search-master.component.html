@@ -1,0 +1,23 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<div fxLayout="column" fxLayoutGap="10px" class="pad10">
+	<ng-template #headerTemplateRef>
+		<app-title-bar title="{{'ENTERPRISE_SEARCH' | translate}}" buttonText="{{'NEW' | translate}}"
+			(buttonRightOnClick)="newEnterpriseSearch()"></app-title-bar>
+	</ng-template>
+	<!-- <app-search-bar fxHide.lt-md fxShow.gt-sm fxFlex="1 1 auto" [isPiiDiscoveryMap]="true"
+	(searchFieldsEvent)="searchValuesChange($event)"> -->
+	<!-- </app-search-bar> -->
+	<div fxLayout="row">
+		<div fxFlex>
+			<app-custom-table [templateRef]="columnTemplateRef" (rowClickedEvent)="rowClicked($event)"
+				noRecordsMessage="{{'NO_ENTERPRISE_SEARCH_FOUND' | translate}}" [actions]="enterpriseSearchActions.actions"
+				(menuItemTrigger)="enterpriseSearchActions[$event.ACTION.NAME]($event.ROW_DATA);"
+				(sortData)="sortData();customTableService.isLoading = true"
+				(pageChangeEmit)="pageChangeEmit($event);customTableService.isLoading = true">
+				<ng-template #columnTemplateRef let-element="element" let-col="col">
+					{{element[col.NAME]}}
+				</ng-template>
+			</app-custom-table>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,55 @@
+<StackLayout>
+  <Label text="controller-detail works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef>
+	<app-title-bar title="{{'APPLICATIONS_INSTALLED' | translate }}"></app-title-bar>
+</ng-template>
+<div class="controller_table" fxLayout="row" fxLayoutAlign="center">
+	<!-- <mat-card > ->
+	<div fxFlex fxFlex="100" fxLayout="column" *ngIf="showSubApps">
+		<div class="mat-table">
+			<div class="mat-header-row">
+				<div class="mat-header-cell" *ngFor="let header of columnsHeaders">
+					<h3><b>{{header}}</b></h3>
+				</div>
+			</div>
+			<div class="mat-row" *ngFor="let subApp of subApps">
+				<ng-container>
+
+					<div class="mat-cell" fxLayoutAlign="start start">
+						{{subApp.NAME}}
+					</div>
+					<div class="mat-cell" fxLayoutAlign="start start">
+						<mat-icon class="green-icon" *ngIf="subApp.STATUS==='Online'">check_circle</mat-icon>
+						<mat-icon class="red-icon" *ngIf="subApp.STATUS==='Offline'">highlight_off</mat-icon>
+						{{subApp.STATUS}}
+					</div>
+					<div class="mat-cell" fxLayoutAlign="start start">{{subApp.LAST_SEEN | dateFormat:'medium'}}</div>
+					<div class="mat-cell" fxLayoutAlign="start start">
+						<ng-container *ngTemplateOutlet="menuTemplate; context:{col:col,row:element}"></ng-container>
+						<ng-template #menuTemplate let-row="row" let-col="col">
+							<button mat-button [matMenuTriggerFor]="menu">
+								<mat-icon>more_horiz</mat-icon>
+							</button>
+							<mat-menu #menu="matMenu">
+								<button mat-menu-item *ngFor="let action of actions" (click)="menuItemClicked(action,subApp)">
+									<mat-icon>{{action.ICON}}</mat-icon><span>{{action.NAME | translate}}</span>
+								</button>
+							</mat-menu>
+						</ng-template>
+					</div>
+				</ng-container>
+			</div>
+		</div>
+	</div>
+	<!-- </mat-card> ->
+</div>
+
+-->

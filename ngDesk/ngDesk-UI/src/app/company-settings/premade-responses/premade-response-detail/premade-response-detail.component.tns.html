@@ -1,0 +1,84 @@
+<StackLayout>
+  <Label text="premade-response-detail works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef>
+	<app-title-bar title="{{'PREMADE_RESPONSES' | translate}}" buttonText="{{'SAVE' | translate}}"
+		(buttonRightOnClick)="savePremadeResponse()"></app-title-bar>
+</ng-template>
+<form [formGroup]="responseForm" class="pad10">
+	<div fxLayout="row" fxLayoutGap="20px">
+		<mat-form-field>
+			<input matInput placeholder="{{'NAME' | translate}}" formControlName="NAME" required>
+			<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:errorParams.name"></mat-error>
+		</mat-form-field>
+		<mat-form-field>
+			<mat-select placeholder="{{'MODULE' | translate}}" (selectionChange)="moduleSelected($event.value)" formControlName="MODULE" required>
+				<mat-option *ngFor="let module of modules" [value]="module.MODULE_ID">
+					{{module.NAME}}
+				</mat-option>
+			</mat-select>
+			<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:errorParams.module"></mat-error>
+		</mat-form-field>
+		<mat-form-field>
+			<mat-label>{{'TEAMS' | translate}}</mat-label>
+			<mat-select formControlName="TEAMS" multiple required>
+				<mat-option *ngFor="let team of teams" [value]="team.DATA_ID">{{team.NAME}}</mat-option>
+			</mat-select>
+			<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:errorParams.teams"></mat-error>
+		</mat-form-field>
+	</div>
+	<div fxLayout="column" fxLayoutGap="20px">
+		<div style="min-height: 40vh">
+			<div fxFlex>
+				<tinymce #editor formControlName="MESSAGE" [config]="config"></tinymce>
+			</div>
+		</div>
+		<div fxLayout="row wrap">
+			<div *ngFor="let field of fields; index as i">
+				<button *ngIf="field.DATA_TYPE.DISPLAY  !== 'Relationship' && field.RELATIONSHIP_TYPE !== 'One to Many'  || isDefaultField(field)"
+					type="button" style="margin-top:5px; margin-right:5px" mat-raised-button color="default"
+					(click)="insertBodyVariable(field.NAME)">{{field.DISPLAY_LABEL}}</button>
+				<button
+					*ngIf="field.DATA_TYPE.DISPLAY  === 'Relationship' && field.RELATIONSHIP_TYPE !== 'One to Many' && field.RELATIONSHIP_TYPE !== 'Many to Many' && !isDefaultField(field)"
+					type="button" style="margin-top:5px; margin-right:5px" mat-raised-button color="default"
+					[matMenuTriggerFor]="relationshipVars">{{field.DISPLAY_LABEL}}</button>
+				<mat-menu #relationshipVars="matMenu">
+					<ng-container *ngFor="let relField of relatedFields[field.MODULE]; index as j">
+						<button *ngIf="field.DATA_TYPE.DISPLAY !== 'Relationship'  || isDefaultField(relField)" mat-menu-item
+							(click)="concatenateVariables(field, relField)">{{relField.DISPLAY_LABEL}}</button>
+						<button
+							*ngIf="relField.DATA_TYPE.DISPLAY === 'Relationship' && relField.RELATIONSHIP_TYPE !== 'Many to Many' && relField.RELATIONSHIP_TYPE !== 'One to Many' && !isDefaultField(relField)"
+							mat-menu-item [matMenuTriggerFor]="subRelationshipVars"
+							[disabled]="relField.MODULE === responseForm.get('MODULE').value">{{relField.DISPLAY_LABEL}}</button>
+						<mat-menu #subRelationshipVars="matMenu">
+							<ng-container *ngFor="let levelTwoRelField of relatedFields[relField.MODULE]; index as k">
+								<button *ngIf="levelTwoRelField.DATA_TYPE.DISPLAY !== 'Relationship' || isDefaultField(levelTwoRelField)" mat-menu-item
+									(click)="concatenateVariables(field, relField, levelTwoRelField)">{{levelTwoRelField.DISPLAY_LABEL}}</button>
+								<button
+									*ngIf="levelTwoRelField.DATA_TYPE.DISPLAY === 'Relationship' && levelTwoRelField.RELATIONSHIP_TYPE !== 'Many to Many' && !isDefaultField(levelTwoRelField)"
+									mat-menu-item [matMenuTriggerFor]="subSubRelationshipVars"
+									[disabled]="levelTwoRelField.MODULE === responseForm.get('MODULE').value">{{levelTwoRelField.DISPLAY_LABEL}}</button>
+								<mat-menu #subSubRelationshipVars="matMenu">
+									<ng-container *ngFor="let levelThreeRelField of relatedFields[levelTwoRelField.MODULE]; index as l">
+										<button *ngIf="levelThreeRelField.DATA_TYPE.DISPLAY  !== 'Relationship' || isDefaultField(levelThreeRelField)"
+											mat-menu-item
+											(click)="concatenateVariables(field, relField, levelTwoRelField, levelThreeRelField)">{{levelThreeRelField.DISPLAY_LABEL}}</button>
+									</ng-container>
+								</mat-menu>
+							</ng-container>
+						</mat-menu>
+					</ng-container>
+				</mat-menu>
+			</div>
+		</div>
+	</div>
+</form>
+
+-->

@@ -1,0 +1,140 @@
+<StackLayout>
+  <Label text="escalations-detail works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<app-toolbar></app-toolbar>
+<div class="pad10">
+
+    <div fxLayout="column" fxLayoutAlign="center center" *ngIf='errorMessage != undefined || successMessage != undefined'>
+        <mat-error class="mat-body">{{errorMessage}}</mat-error>
+        <label class="mat-body green-color">{{successMessage}}</label>
+    </div>
+
+    <form [formGroup]="escalationForm" (ngSubmit)="save()">
+        <app-new-name-description [disabledButton]="disableButtons" buttonText="{{'SAVE' | translate}}" (modelChange)="save()">
+        </app-new-name-description>
+    </form>
+
+    <div fxLayout="column" fxLayoutGap="10px">
+        <div fxLayout="row">
+            <mat-card fxLayoutAlign="start center" fxLayoutGap="10px" fxFlex="100">
+              <mat-icon color="primary">error_outline</mat-icon>
+              <label class="mat-h3">{{'AS_SOON_ICIDENT_IS_TRIGGERED'| translate}}!</label>
+            </mat-card>
+        </div>
+        <div fxLayout="column" fxLayoutGap="20px">
+            <mat-card *ngFor="let rule of escalation.RULES; let ind = index;" fxLayout="column" fxLayoutGap="20px">
+                <div fxLayout="column">
+                    <div fxLayout="row" fxLayoutGap="12px" fxLayoutAlign="start center" fxFlex="50px">
+                        <!-- TODO: Need to fix alignment and sizing to be same as mat icon->
+                        <span class="custom-stepper-number-icon-outline" color="primary" fxLayoutAlign="center center">{{ind + 1}}</span>
+                        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+                          <label class="mat-h3">{{'ESCALATES_AFTER'| translate}}</label>
+                          <div fxLayout="column" fxLayoutAlign=" center" fxFlex="20">
+                            <mat-form-field fxFlexOffset="8px" fxFlexFill>
+                              <input [disabled]="disableButtons" type="number" min="0" oninput="validity.valid||(value='');"
+                                [(ngModel)]="rule.MINS_AFTER" matInput>
+                            </mat-form-field>
+                          </div>
+                          <label class="mat-h3">{{'MINUTES' | translate}}</label>
+                          <button [disabled]="disableButtons" mat-icon-button (click)="removeRule(ind)">
+                            <mat-icon color="primary">remove_circle_outline</mat-icon>
+                          </button>
+                        </div>
+                    </div>
+                    
+                    <div fxLayout="row" fxLayoutGap="32px" fxLayoutAlign="start center">
+                        <div></div>
+                        <mat-form-field fxFlex>
+                          <mat-chip-list [disabled]="disableButtons" #teamChipList>
+                            <mat-chip *ngFor="let id of rule.ESCALATE_TO.TEAM_IDS" [selectable]="true" [removable]="true"
+                              (removed)="removeItem(id, ind, 'TEAM_IDS')">
+                              {{getDisplayNameFromId(id, 'teamsInitial', 'DATA_ID')}}
+                              <mat-icon matChipRemove>cancel</mat-icon>
+                            </mat-chip>
+                            <input placeholder="{{'ESCALATE_TO_TEAM' | translate}}" #teamInput [matAutocomplete]="autoTeam"
+                              [matChipInputFor]="teamChipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
+                              (matChipInputTokenEnd)="resetInput($event)" [formControl]="teamCtrl"
+                              (ngModelChange)="filterInputValues($event, 'teams', teamsInitial)">
+                          </mat-chip-list>
+                          <mat-autocomplete #autoTeam="matAutocomplete" (optionSelected)="selected($event, ind, 'teamInput', 'TEAM_IDS')"
+                            (closed)="teams = teamsInitial">
+                            <mat-option *ngFor="let team of teams" [value]="team" [disabled]="rule.ESCALATE_TO.TEAM_IDS.indexOf(team) != -1">
+                              {{team.NAME}}
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutGap="32px" fxLayoutAlign="start center">
+                        <div></div>
+                        <mat-form-field fxFlex>
+                          <mat-chip-list [disabled]="disableButtons" #chipList>
+                            <mat-chip *ngFor="let id of rule.ESCALATE_TO.USER_IDS" [selectable]="true" [removable]="true"
+                              (removed)="removeItem(id, ind, 'USER_IDS')">
+                              {{getDisplayNameFromId(id, 'usersInitial', 'DATA_ID')}}
+                              <mat-icon matChipRemove>cancel</mat-icon>
+                            </mat-chip>
+                            <input placeholder="{{'ESCALATE_TO_USERS' | translate}}" #userInput [matAutocomplete]="auto" [matChipInputFor]="chipList"
+                              [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
+                              (matChipInputTokenEnd)="resetInput($event)" [formControl]="userCtrl"
+                              (ngModelChange)="filterInputValues($event, 'users', usersInitial)">
+                          </mat-chip-list>
+                          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event, ind, 'userInput', 'USER_IDS')"
+                            (closed)="users = usersInitial">
+                            <mat-option *ngFor="let user of users" [value]="user" [disabled]="rule.ESCALATE_TO.USER_IDS.indexOf(user) != -1">
+                             {{user.CONTACT.PRIMARY_DISPLAY_FIELD}}
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>
+                      </div>
+
+                      <div fxLayout="row" fxLayoutGap="32px" fxLayoutAlign="start center">
+                        <div></div>
+                        <mat-form-field fxFlex *ngIf="schedulesInitial.length > 0">
+                          <mat-chip-list [disabled]="disableButtons" #scheduleChipList>
+                            <mat-chip *ngFor="let id of rule.ESCALATE_TO.SCHEDULE_IDS" [selectable]="true" [removable]="true"
+                              (removed)="removeItem(id, ind, 'SCHEDULE_IDS')">
+                              {{getDisplayNameFromId(id, 'schedulesInitial', 'SCHEDULE_ID')}}
+                              <mat-icon matChipRemove>cancel</mat-icon>
+                            </mat-chip>
+                            <input placeholder="{{'ESCALATE_TO_SCHEDULES' | translate}}" #scheduleInput [matAutocomplete]="autoSchedule"
+                              [matChipInputFor]="scheduleChipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
+                              (matChipInputTokenEnd)="resetInput($event)" [formControl]="scheduleCtrl"
+                              (ngModelChange)="filterInputValues($event, 'schedules', schedulesInitial)">
+                          </mat-chip-list>
+                          <mat-autocomplete #autoSchedule="matAutocomplete" (optionSelected)="selected($event, ind, 'scheduleInput', 'SCHEDULE_IDS')"
+                            (closed)="schedules = schedulesInitial">
+                            <mat-option *ngFor="let schedule of schedules" [value]="schedule"
+                              [disabled]="rule.ESCALATE_TO.SCHEDULE_IDS.indexOf(schedule) != -1">
+                              {{schedule.NAME}}
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>
+                        <div fxLayoutAlign=" center" *ngIf="schedulesInitial.length === 0">
+                          <label>
+                            {{'NO_SCHEDULES_FOUND' | translate}}. {{'CLICK' | translate}} <a
+                              [routerLink]="['','schedules', 'new']">{{'HERE' | translate}}</a>
+                            {{'TO_CREATE_A_NEW_SCHEDULE' | translate}}.
+                          </label>
+                        </div>
+                      </div>
+                </div>
+            </mat-card>
+        </div>
+        <div *ngIf="!disableButtons" fxLayout="row">
+            <button mat-button fxFlex="100" style="padding-left:0px; padding-right:0px;" (click)="addRule()">
+              <mat-card fxLayoutAlign="start center" fxLayoutGap="12px" fxFlex="100">
+                <mat-icon color="primary">add_circle_outline</mat-icon>
+                <label class="mat-h3">{{'ADD_RULE' | translate}}</label>
+              </mat-card>
+            </button>
+          </div>
+    </div>
+</div>
+-->

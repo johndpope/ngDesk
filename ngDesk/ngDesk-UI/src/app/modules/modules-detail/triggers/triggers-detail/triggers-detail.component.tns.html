@@ -1,0 +1,301 @@
+<StackLayout>
+  <Label text="TriggersDetailComponent works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<app-toolbar></app-toolbar>
+<div class="pad10">
+	<div fxLayout="column">
+		<div fxLayoutAlign="center">
+			<mat-error class="mat-h3">{{errorMessage}}</mat-error>
+		</div>
+	</div>
+
+	<form [formGroup]="triggerForm" (ngSubmit)="save()">
+		<app-new-name-description buttonText="Save" (save)="save()"></app-new-name-description>
+		<div fxLayout="row" fxLayoutGap="100px">
+			<mat-form-field>
+				<mat-select placeholder="Trigger type" formControlName="TYPE">
+					<mat-option *ngFor="let triggerType of triggerTypes" [value]="triggerType">
+						{{triggerType.DISPLAY}}
+					</mat-option>
+				</mat-select>
+				<mat-error>{{'FIELD_IS' | translate:params.triggerType}} <strong>{{'REQUIRED' | translate}}</strong></mat-error>
+			</mat-form-field>
+			<mat-form-field>
+				<input type="number" matInput placeholder="Order" formControlName="ORDER">
+				<mat-error><strong>{{ 'MINIMUM_ORDER' | translate }}</strong></mat-error>
+			</mat-form-field>
+		</div>
+		<app-conditions *ngIf="triggerLoaded" [parentName]="'triggersComponent'" [conditions]="trigger.conditions" [fields]="fields">
+		</app-conditions>
+		<div><label class="mat-h1"> Actions </label></div>
+		<div>
+			<label class="mat-h4" i18>Perform these actions</label>
+			<button mat-icon-button type="button" (click)="addActions()">
+				<mat-icon>add_circle</mat-icon>
+			</button>
+		</div>
+		<div formGroupName="WORKFLOW">
+			<div formArrayName="NODES"
+				*ngFor="let action of triggerForm.get('WORKFLOW').get('NODES')['controls'] | slice:1; let actionIndex = index;">
+				<div [formGroupName]="actionIndex+1">
+					<div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign=" center">
+						<mat-form-field>
+							<mat-select placeholder="Select an action" formControlName="TYPE" name="action" (selectionChange)="changeAction(action)"
+								required>
+								<mat-option *ngFor="let name of actionNames" [value]="name.TYPE">
+									<label> {{ name.ACTION }} </label>
+								</mat-option>
+							</mat-select>
+							<mat-error>{{'FIELD_IS' | translate:params.action}} <strong>{{'REQUIRED' | translate}}</strong>
+							</mat-error>
+						</mat-form-field>
+						<div *ngIf="action.get('TYPE').value === 'StartEscalation'" formGroupName="VALUES">
+							<mat-form-field *ngIf="escalations.length > 0">
+								<mat-select placeholder="Select an escalation" formControlName="ESCALATION" name="escalation" required>
+									<mat-option *ngFor="let escalation of escalations" [value]="escalation.ESCALATION_ID">
+										<label> {{ escalation.NAME }} </label>
+									</mat-option>
+								</mat-select>
+								<mat-error>{{'FIELD_IS' | translate:params.escalation}} <strong>{{'REQUIRED' | translate}}</strong>
+								</mat-error>
+							</mat-form-field>
+							<label *ngIf="escalations.length === 0" class="mat-body">
+								{{'NO_ESCALATIONS' | translate}} {{'CLICK' | translate}} <a
+									[routerLink]="['','escalations', 'new']">{{'HERE' | translate}}</a>
+								{{'CREATE_NEW_ESCALATION' | translate}}
+							</label>
+						</div>
+						<button mat-icon-button (click)="removeActions(actionIndex + 1)">
+							<mat-icon>remove_circle</mat-icon>
+						</button>
+					</div>
+					<div fxLayout="column" *ngIf="action.get('TYPE').value == 'SendEmail' ||
+      (action.get('TYPE').value == 'StartEscalation' && action.get('VALUES').get('ESCALATION').value)" formGroupName="VALUES">
+						<div *ngIf="action.get('TYPE').value == 'SendEmail'">
+							<div>
+								<mat-form-field fxFlex="25">
+									<mat-select matInput placeholder="From" name="FROM" formControlName="FROM">
+										<mat-option *ngFor="let channel of emailChannels" [value]="channel.EMAIL_ADDRESS" [title]="channel.EMAIL_ADDRESS">
+											{{channel.EMAIL_ADDRESS}}
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+							<div>
+								<mat-form-field fxFlex="25">
+									<input type="text" placeholder="To" matInput [matAutocomplete]="auto" formControlName="TO" required />
+									<mat-autocomplete #auto="matAutocomplete" (closed)="resetOptions()">
+										<mat-option *ngFor="let variable of variables" [value]="variable.NAME">
+											{{variable.DISPLAY_LABEL}}
+										</mat-option>
+									</mat-autocomplete>
+									<mat-error *ngIf="action.get('VALUES').get('TO').hasError('required')">
+										{{'FIELD_IS' | translate:params.to}}
+										<strong>{{'REQUIRED' | translate}}</strong></mat-error>
+									<mat-error *ngIf="action.get('VALUES').get('TO').hasError('invalidEmail') &&
+                    !action.get('VALUES').get('TO').hasError('required')">
+										{{'PLEASE_ENTER_VALID_EMAIL_ADDRESS' | translate}}</mat-error>
+								</mat-form-field>
+							</div>
+						</div>
+						<div>
+							<mat-form-field fxFlex="
+                      25">
+								<input type="text" placeholder="Subject" matInput [matAutocomplete]="auto" formControlName="SUBJECT" required />
+								<mat-autocomplete #auto="matAutocomplete" (closed)="resetOptions()">
+									<mat-option *ngFor=" let variable of variables" [value]="variable.NAME">
+										{{variable.DISPLAY_LABEL}}
+									</mat-option>
+								</mat-autocomplete>
+								<mat-error>{{'FIELD_IS' | translate:params.subject}} <strong>{{'REQUIRED' | translate}}</strong>
+								</mat-error>
+							</mat-form-field>
+						</div>
+						<div>
+							<mat-form-field fxFlex="50">
+								<textarea matInput placeholder="Body" rows="4" formControlName="BODY" name="EMAIL-BODY" required></textarea>
+								<mat-error>{{'FIELD_IS' | translate:params.body}} <strong>{{'REQUIRED' | translate}}</strong>
+								</mat-error>
+							</mat-form-field>
+						</div>
+						<div fxLayout="row wrap" fxLayoutGap="10px grid">
+							<div fxFlex="50">
+								<ng-container *ngFor="let field of this.bodyFields; index as i">
+									<ng-container *ngTemplateOutlet="dynamicMenu; context: {field: field, index: i, item: action}"></ng-container>
+								</ng-container>
+							</div>
+						</div>
+					</div>
+					<div fxLayout="column" *ngIf="action.get('TYPE').value == 'MakePhoneCall' || action.get('TYPE').value == 'SendSms'"
+						formGroupName="VALUES">
+						<div>
+							<mat-form-field fxFlex="25">
+								<input type="text" placeholder="To" matInput [matAutocomplete]="auto" formControlName="TO" required />
+								<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFullName" (closed)="resetOptions()">
+									<ng-container *ngIf="action.get('TYPE').value === 'SendSms'">
+										<mat-option *ngFor="let user of smsUsers | filter: action.get('VALUES').get('TO').value" [value]="user">
+											{{user.NAME}}
+										</mat-option>
+									</ng-container>
+									<ng-container *ngIf="action.get('TYPE').value === 'MakePhoneCall'">
+										<mat-option *ngFor="let user of users | filter: action.get('VALUES').get('TO').value" [value]="user">
+											{{user.NAME}}
+										</mat-option>
+									</ng-container>
+								</mat-autocomplete>
+								<mat-error>{{'FIELD_IS' | translate:params.to}} <strong>{{'REQUIRED' | translate}}</strong></mat-error>
+							</mat-form-field>
+						</div>
+						<div>
+							<mat-form-field fxFlex="50">
+								<textarea matInput placeholder="Body" rows="4" formControlName="BODY" name="BODY" required></textarea>
+								<mat-error>{{'FIELD_IS' | translate:params.body}} <strong>{{'REQUIRED' | translate}}</strong>
+								</mat-error>
+							</mat-form-field>
+						</div>
+						<div fxLayout="row wrap" fxLayoutGap="10px grid">
+							<div fxFlex="50">
+								<ng-container *ngFor="let field of this.bodyFields; index as i">
+									<ng-container *ngTemplateOutlet="dynamicMenu; context: {field: field, index: i, item: action}"></ng-container>
+								</ng-container>
+							</div>
+						</div>
+					</div>
+					<div fxLayout="column" *ngIf="action.get('TYPE').value == 'UpdateEntry'" formGroupName="VALUES">
+						<div>
+							<label class="mat-h4" i18>Update these fields </label>
+							<button mat-icon-button type="button" (click)="addField(action.get('VALUES').controls.FIELDS)">
+								<mat-icon>add_circle</mat-icon>
+							</button>
+						</div>
+						<div formArrayName="FIELDS">
+							<div *ngFor="let item of action.get('VALUES').get('FIELDS').controls; let fieldIndex = index">
+								<div [formGroupName]="fieldIndex" fxLayoutGap="20px">
+									<mat-form-field fxFlex=25>
+										<input type="text" placeholder="Field" matInput [matAutocomplete]="auto" formControlName="FIELD" required />
+										<mat-autocomplete #auto="matAutocomplete" (closed)="resetOptions()" [displayWith]="displayFieldName">
+											<mat-option *ngFor=" let variable of variables" [value]="variable"
+												[disabled]="variable.DATA_TYPE.DISPLAY==='Discussion'">
+												{{variable.DISPLAY_LABEL}}
+											</mat-option>
+										</mat-autocomplete>
+										<mat-error>{{'FIELD_IS' | translate:params.field}} <strong>{{'REQUIRED' | translate}}</strong>
+										</mat-error>
+									</mat-form-field>
+									<mat-form-field *ngIf="item.value.FIELD.DATA_TYPE?.DISPLAY != 'Relationship'
+                      && item.value.FIELD.DATA_TYPE?.DISPLAY != 'Picklist' && 
+                      item.value.FIELD.DATA_TYPE?.DISPLAY != 'Discussion'" fxFlex="25">
+										<input type="text" placeholder="{{'ENTER_VALUE' | translate}}" aria-label="Number" matInput formControlName="VALUE">
+										<mat-error>{{'FIELD_IS' | translate:params.value}} <strong>{{'REQUIRED' | translate}}</strong>
+										</mat-error>
+									</mat-form-field>
+									<mat-form-field *ngIf="item.value.FIELD.DATA_TYPE?.DISPLAY == 'Picklist'" fxFlex="25">
+										<input type="text" placeholder="{{ 'VALUE' | translate}}" matInput [matAutocomplete]="autoAllConditionValue"
+											formControlName="VALUE" (ngModelChange)="filterVariables($event, 'picklistValues', item.value.FIELD.PICKLIST_VALUES)">
+										<mat-autocomplete #autoAllConditionValue="matAutocomplete" (closed)="resetOptions('picklistValues')">
+											<mat-option *ngFor="let option of item.value.FIELD.PICKLIST_VALUES" [value]="option">
+												{{option}}
+											</mat-option>
+										</mat-autocomplete>
+										<mat-error>{{'FIELD_IS' | translate:params.value}} <strong>{{'REQUIRED' | translate}}</strong>
+										</mat-error>
+									</mat-form-field>
+									<div *ngIf="item.value.FIELD.DATA_TYPE?.DISPLAY == 'Relationship'" fxFlex="25">
+										<div *ngFor="let obj of relationshipObj">
+											<mat-form-field
+												*ngIf="obj.module === item.value.FIELD.MODULE && item.value.FIELD.RELATIONSHIP_TYPE === 'Many to Many'" fxFlex>
+												<mat-select formControlName="VALUE" multiple>
+													<mat-option *ngFor="let data of obj.data" [value]="data">{{data[item.value.FIELD.PRIMARY_DISPLAY_FIELD_NAME]}}
+													</mat-option>
+												</mat-select>
+												<mat-error>{{'FIELD_IS' | translate:params.value}} <strong>{{'REQUIRED' | translate}}</strong>
+												</mat-error>
+											</mat-form-field>
+											<mat-form-field
+												*ngIf="obj.module === item.value.FIELD.MODULE && item.value.FIELD.RELATIONSHIP_TYPE !== 'Many to Many'" fxFlex>
+												<input type="text" placeholder="{{ 'VALUE' | translate}}" matInput [matAutocomplete]="autoComplete"
+													formControlName="VALUE">
+												<mat-autocomplete #autoComplete="matAutocomplete" [displayWith]="displayName">
+													<mat-option *ngFor="let data of obj.data | filter: item.get('VALUE').value"
+														[value]="{DATA: data, ITEM: item.value.FIELD}">
+														{{data[item.value.FIELD.PRIMARY_DISPLAY_FIELD_NAME]}}
+													</mat-option>
+												</mat-autocomplete>
+												<mat-error>{{'FIELD_IS' | translate:params.value}} <strong>{{'REQUIRED' | translate}}</strong>
+												</mat-error>
+											</mat-form-field>
+										</div>
+									</div>
+
+									<button mat-icon-button type="button" (click)="removeField(action.get('VALUES').controls.FIELDS, fieldIndex)">
+										<mat-icon>remove_circle</mat-icon>
+									</button>
+									<br>
+									<div fxLayout="column">
+										<div fxFlex>
+											<mat-form-field fxFlex=50 *ngIf="item.value.FIELD.DATA_TYPE?.DISPLAY === 'Discussion'">
+												<textarea matInput placeholder=" Body" rows="4" formControlName="VALUE" name="EMAIL-BODY" required></textarea>
+												<mat-error>{{'FIELD_IS' | translate:params.body}} <strong>{{'REQUIRED' | translate}}</strong>
+												</mat-error>
+											</mat-form-field>
+										</div>
+										<div fxLayout="row wrap" fxLayoutGap="10px grid" *ngIf="item.value.FIELD.DATA_TYPE?.DISPLAY === 'Discussion'">
+											<div fxFlex="50">
+												<ng-container *ngFor="let field of this.bodyFields; index as i">
+													<ng-container *ngTemplateOutlet="dynamicMenu; context: {field: field, index: i, item: item}"></ng-container>
+												</ng-container>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div><!-- Update Entry  ->
+				</div>
+			</div>
+			<ng-template #dynamicMenu let-field="field" let-index="j" let-item="item">
+				<button *ngIf="field.RELATIONSHIP_TYPE ===null" type="button" style="margin-top:5px; margin-right:5px; border-radius: 20px"
+					mat-raised-button color="primary" (click)="insertBodyVariable(item, field)">{{field.DISPLAY_LABEL}}</button>
+				<button *ngIf="field.RELATIONSHIP_TYPE !== null && field.RELATIONSHIP_TYPE !== 'Many to Many'" type="button"
+					style="margin-top:5px; margin-right:5px; border-radius: 20px" mat-raised-button color="primary"
+					[matMenuTriggerFor]="relationshipVars">{{field.DISPLAY_LABEL}}</button>
+				<mat-menu #relationshipVars="matMenu">
+					<ng-container *ngFor="let relField of relatedFields[field.MODULE]; index as j">
+						<button *ngIf="relatedFields.RELATIONSHIP_TYPE === null || !relatedFields.RELATIONSHIP_TYPE" mat-menu-item
+							(click)="concatenateVariables(item, field, relField)">{{relField.DISPLAY_LABEL}}</button>
+						<button
+							*ngIf="(relatedFields.RELATIONSHIP_TYPE && relatedFields.RELATIONSHIP_TYPE !== null) && relField.RELATIONSHIP_TYPE !== 'Many to Many'"
+							mat-menu-item [matMenuTriggerFor]="subRelationshipVars"
+							[disabled]="relField.MODULE === moduleId">{{relField.DISPLAY_LABEL}}</button>
+						<mat-menu #subRelationshipVars="matMenu">
+							<ng-container *ngFor="let levelTwoRelField of relatedFields[relField.MODULE]; index as k">
+								<button *ngIf="levelTwoRelField.RELATIONSHIP_TYPE === null || !levelTwoRelField.RELATIONSHIP_TYPE" mat-menu-item
+									(click)="concatenateVariables(item, field, relField, levelTwoRelField)">{{levelTwoRelField.DISPLAY_LABEL}}</button>
+								<button
+									*ngIf="levelTwoRelField.RELATIONSHIP_TYPE !== null && levelTwoRelField.RELATIONSHIP_TYPE && levelTwoRelField.RELATIONSHIP_TYPE && levelTwoRelField.RELATIONSHIP_TYPE !== 'Many to Many'"
+									mat-menu-item [matMenuTriggerFor]="subSubRelationshipVars"
+									[disabled]="levelTwoRelField.MODULE === moduleId">{{levelTwoRelField.DISPLAY_LABEL}}</button>
+								<mat-menu #subSubRelationshipVars="matMenu">
+									<ng-container *ngFor="let levelThreeRelField of relatedFields[levelTwoRelField.MODULE]; index as l">
+										<button *ngIf="levelThreeRelField.RELATIONSHIP_TYPE === null || !levelThreeRelField.RELATIONSHIP_TYPE" mat-menu-item
+											(click)="concatenateVariables(item, field, relField, levelTwoRelField, levelThreeRelField)">{{levelThreeRelField.DISPLAY_LABEL}}</button>
+									</ng-container>
+								</mat-menu>
+							</ng-container>
+						</mat-menu>
+					</ng-container>
+				</mat-menu>
+			</ng-template>
+		</div>
+	</form>
+</div>
+
+<div>
+
+-->

@@ -1,0 +1,21 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<div fxLayout="column" fxLayoutGap="10px" class="pad10">
+	<ng-template #headerTemplateRef>
+		<app-title-bar class="light-grey-color" (buttonRightOnClick)="openDialog()" title="{{'ALLOW_NGDESK_TO_SEND_EMAILS' | translate}}"
+			buttonText="{{'NEW' | translate}}">
+		</app-title-bar>
+	</ng-template>
+	<div fxLayout="row">
+		<div fxFlex>
+			<app-custom-table [templateRef]="columnTemplateRef" (rowClickedEvent)="openDialog($event)" [actions]="spfRecordsActions.actions"
+				(menuItemTrigger)="spfRecordsActions[$event.ACTION.NAME]($event.ROW_DATA);"
+				noRecordsMessage="{{'NO_SPF_RECORDS_FOUND' | translate}}"
+				(pageChangeEmit)="pageChangeEmit($event);customTableService.isLoading = true"
+				(sortData)="sortData();customTableService.isLoading = true">
+				<ng-template #columnTemplateRef let-element="element" let-col="col">
+					{{element[col.NAME]}}
+				</ng-template>
+			</app-custom-table>
+		</div>
+	</div>
+</div>

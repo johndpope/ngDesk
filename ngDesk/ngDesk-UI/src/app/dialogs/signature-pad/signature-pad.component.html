@@ -1,0 +1,12 @@
+<div fxLayout="column" fxLayoutAlign="start  start">
+    <div fxLayout="row" fxLayoutAlign="start  center">
+        <canvas id="htmlElemId" (mousedown)="onMouseDown($event)" (mousemove)="onMouseMove($event)" (touchmove)="touchMoving($event)"
+            (touchstart)="touchStart($event)"></canvas>
+    </div>
+    <small fxLayout="row" fxLayoutAlign="start  center"> <i style="color: gray;margin-top: 5px;">* Draw and Save your signature </i></small>
+    <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="end  end" style="margin-top: 10px;">
+        <button mat-raised-button color="primary" (click)="save()" [disabled]="!isSigned">Save</button>
+        <button mat-raised-button color="primary" (click)="clear()">clear</button>
+        <button mat-button mat-dialog-close>Close</button>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+.schedule-bar {
+  height: 30px;
+  border-width: 1px;
+  border-top-style: solid;
+  border-bottom-style: solid;
+  color: white;
+  display: flex;
+  background-repeat: repeat-x;
+  border-left: 1px solid white;
+  border-right: 1px solid white;
+  overflow: hidden;
+}
+
+::ng-deep .schedules-user-select {
+  position: relative;
+  left: 30px;
+}

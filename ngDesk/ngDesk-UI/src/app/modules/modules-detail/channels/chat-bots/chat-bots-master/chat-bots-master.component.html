@@ -1,0 +1,125 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<div class="pad10">
+	<ng-template #headerTemplateRef>
+		<app-title-bar title="{{'CHATBOT_TEMPLATES' | translate}}"></app-title-bar>
+	</ng-template>
+	<ng-container *ngIf="isLoading; else elseTemplate">
+		<mat-spinner style="position:relative;top:20%;left:50%"></mat-spinner>
+	</ng-container>
+	<ng-template #elseTemplate>
+		<div style="padding-left:10px" fxLayout="column" style="margin-top: 10px;" fxLayoutGap="10px">
+			<div fxLayout="row" fxLayoutWrap fxLayoutGap="10px" fxLayoutAlign="start flex-start">
+				<div fxFlex="20" fxLayoutAlign="flex-start">
+					<table fxFlex="68.9" fxFlex.lt-lg="100" *ngIf="showSideNav" mat-table [dataSource]="navigations" class="mat-elevation-z8">
+						<ng-container matColumnDef="NAME">
+							<th class="custom-theme-icon-color" mat-header-cell *matHeaderCellDef>
+								<div class="trim-info" matTooltip="{{module.PLURAL_NAME}}">
+									{{ module.PLURAL_NAME | truncate : 10}} {{'MODULE' | translate}}</div>
+							</th>
+							<td matRipple class="no-wrap" mat-cell *matCellDef="let element" class="pointer"
+								[ngClass]="{ 'module-page-active': element.NAME == 'CHAT_BOTS'}">
+								{{element.NAME | translate}} </td>
+						</ng-container>
+						<tr class="custom-theme-primary-color" mat-header-row *matHeaderRowDef="['NAME']"></tr>
+						<tr mat-row *matRowDef="let row; columns: ['NAME'];" [routerLink]="row.PATH" [appHighlight]="{BACKGROUND: '#ececec'}"></tr>
+					</table>
+					<div class="pad10" style="margin-left: -10px;">
+						<button mat-icon-button
+							[ngStyle]="{'border': (showSideNav) ? '2px solid white' : '2px solid #3f51b5', 'margin-left' : (showSideNav) ? '-48px' : '0px'}"
+							(click)="showSideNav = !showSideNav" style="border-radius: 3px; margin-top: -2px;">
+							<mat-icon color="primary" style="margin-top: -5px;" *ngIf="!showSideNav">
+								keyboard_arrow_right</mat-icon>
+							<mat-icon class="custom-theme-icon-color" style="margin-top: -5px;" *ngIf="showSideNav">
+								keyboard_arrow_left</mat-icon>
+						</button>
+					</div>
+					<span fxFlex="1 1 auto"></span>
+				</div>
+
+				<div style="padding-left:5px">
+
+					<div fxLayout="column" style="padding-top:100px" style="padding-left: 20px;">
+
+
+						<div fxLayout="row" fxLayoutGap="20px">
+							<mat-card *ngFor="let chatbot of botTemplateList1; let i = index" style="text-align: center;" class="bot-card">
+
+								<div style="margin: -16px;height: 150px" [style.backgroundColor]="backGroundColor">
+									<mat-icon fontSet="material-icons-outlined" style="transform: scale(2.3);padding-top: 40px;border: 0%;"
+										*ngIf="chatbot.NAME==='Live Chat'">textsms</mat-icon>
+									<mat-icon fontSet="material-icons-outlined" style="transform: scale(2.3);padding-top: 40px;"
+										*ngIf="chatbot.NAME==='Customer Support'">live_help</mat-icon>
+									<mat-icon fontSet="material-icons-outlined" style="transform: scale(2.3);padding-top: 40px;"
+										*ngIf="chatbot.NAME==='Net Promoter Score'">rate_review</mat-icon>
+									<mat-icon fontSet="material-icons-outlined" style="transform: scale(2.3);padding-top: 40px;"
+										*ngIf="chatbot.NAME==='Quote Request'">monetization_on</mat-icon>
+								</div>
+								<div style="text-align: start;padding-top: 40px;" font="40">{{chatbot.NAME}}</div>
+								<mat-card-content style="padding-top:30px;text-align:start;" *ngIf="chatbot.NAME==='Live Chat'">
+									<p>
+										Allow users to initiate a live chat session with someone from your team to offer help.
+									</p>
+								</mat-card-content>
+
+
+								<mat-card-content style="padding-top:30px;text-align:start;" *ngIf="chatbot.NAME==='Customer Support'">
+									<p>
+										Provide answers to FAQs and an available channel for providing support.
+									</p>
+								</mat-card-content>
+								<mat-card-content style="padding-top:30px;text-align:start;" *ngIf="chatbot.NAME==='Net Promoter Score'">
+									<p>
+										Collect feedback of your customer's overall perception of your brand and service.
+									</p>
+								</mat-card-content>
+								<mat-card-content style="padding-top:30px;text-align:start;" *ngIf="chatbot.NAME==='Quote Request'">
+									<p>
+										Collect requests from your visitors such as a price quote for your services.
+									</p>
+								</mat-card-content>
+
+								<mat-card-actions style="padding-bottom: 10px;text-align:start;">
+									<button style="width : 100%;" mat-raised-button color="primary" (click)="rowClicked(chatbot)">Use this template</button>
+								</mat-card-actions>
+							</mat-card>
+						</div>
+
+
+						<div style="padding-top: 20px;" fxLayout="row" fxLayoutGap="20px">
+
+							<mat-card *ngFor="let chatbot of botTemplateList2; let i = index" style="text-align: center;" class="bot-card">
+
+
+								<div style="margin: -16px; height: 150px;" [style.backgroundColor]="backGroundColor">
+									<mat-icon fontSet="material-icons-outlined" style="transform: scale(2.3);padding-top: 40px;"
+										*ngIf="chatbot.NAME==='Brand Awareness Feedback'">beenhere</mat-icon>
+									<mat-icon fontSet="material-icons-outlined" style="transform: scale(2.3);padding-top: 40px;"
+										*ngIf="chatbot.NAME==='Target Market Demographics'">pie_chart</mat-icon>
+								</div>
+								<div style="text-align: start; padding-top: 40px;" font="40">{{chatbot.NAME}}</div>
+
+								<mat-card-content style="padding-top:30px;text-align:start;" *ngIf="chatbot.NAME==='Brand Awareness Feedback'">
+									<p>
+										Gather feedback from your target market on their sentiment about your brand.
+									</p>
+								</mat-card-content>
+
+								<mat-card-content style="padding-top:30px;text-align:start;" *ngIf="chatbot.NAME==='Target Market Demographics'">
+									<p>
+										Collect information about your target market who are most likely to buy your brand.
+									</p>
+								</mat-card-content>
+
+								<mat-card-actions style="padding-bottom: 10px;text-align:start;">
+									<button style="width : 100%;" mat-raised-button color="primary" (click)="rowClicked(chatbot)">Use this template</button>
+								</mat-card-actions>
+							</mat-card>
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</ng-template>
+</div>

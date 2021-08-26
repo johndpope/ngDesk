@@ -1,0 +1,415 @@
+{
+  "SIDEBAR_MENU": [
+    {
+      "ROLE": "SystemAdminRole",
+      "MENU_ITEMS": [
+        {
+          "ROUTE": "dashboard",
+          "ORDER": 0,
+          "MODULE": "",
+          "IS_MODULE": false,
+          "PATH_PARAMETER": "",
+          "ICON": "dashboard",
+          "EDITABLE": false,
+          "NAME": "DASHBOARD",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "my-action-items",
+          "ORDER": 1,
+          "MODULE": "",
+          "IS_MODULE": false,
+          "PATH_PARAMETER": "",
+          "ICON": "account_box",
+          "EDITABLE": false,
+          "NAME": "MY_ACTION_ITEMS",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "TICKETS_ID_REPLACE",
+          "ORDER": 2,
+          "MODULE": "TICKETS_ID_REPLACE",
+          "IS_MODULE": true,
+          "PATH_PARAMETER": "",
+          "ICON": "assignment",
+          "EDITABLE": true,
+          "NAME": "Tickets",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "CHAT_ID_REPLACE",
+          "ORDER": 3,
+          "MODULE": "CHAT_ID_REPLACE",
+          "IS_MODULE": true,
+          "PATH_PARAMETER": "",
+          "ICON": "chat",
+          "EDITABLE": true,
+          "NAME": "Chats",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "TEAMS_ID_REPLACE",
+          "ORDER": 4,
+          "MODULE": "TEAMS_ID_REPLACE",
+          "IS_MODULE": true,
+          "PATH_PARAMETER": "",
+          "ICON": "people",
+          "EDITABLE": true,
+          "NAME": "Teams",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "USERS_ID_REPLACE",
+          "ORDER": 5,
+          "MODULE": "USERS_ID_REPLACE",
+          "IS_MODULE": true,
+          "PATH_PARAMETER": "",
+          "ICON": "person",
+          "EDITABLE": true,
+          "NAME": "Manage Users",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "ACCOUNTS_ID_REPLACE",
+          "ORDER": 6,
+          "MODULE": "ACCOUNTS_ID_REPLACE",
+          "IS_MODULE": true,
+          "PATH_PARAMETER": "",
+          "ICON": "business",
+          "EDITABLE": true,
+          "NAME": "Accounts",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "guide",
+          "ORDER": 7,
+          "MODULE": "",
+          "IS_MODULE": false,
+          "PATH_PARAMETER": "",
+          "ICON": "library_books",
+          "EDITABLE": false,
+          "NAME": "KNOWLEDGE_BASE",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "modules",
+          "ORDER": 8,
+          "MODULE": "",
+          "IS_MODULE": false,
+          "PATH_PARAMETER": "",
+          "ICON": "view_module",
+          "EDITABLE": false,
+          "NAME": "MODULES",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+					"ROUTE": "",
+					"ORDER": 9,
+					"MODULE": "",
+					"IS_MODULE": false,
+					"PATH_PARAMETER": "",
+					"ICON": "account_box",
+					"EDITABLE": false,
+					"NAME": "HR",
+					"SUB_MENU_ITEMS": [
+						{
+							"ROUTE": "EMPLOYEES_ID_REPLACE",
+							"ORDER": 0,
+							"MODULE": "EMPLOYEES_ID_REPLACE",
+							"IS_MODULE": true,
+							"PATH_PARAMETER": "",
+							"ICON": "account_circle",
+							"EDITABLE": false,
+							"NAME": "Employees"
+						},
+						{
+							"ROUTE": "ONBOARDINGS_ID_REPLACE",
+							"ORDER": 1,
+							"MODULE": "ONBOARDINGS_ID_REPLACE",
+							"IS_MODULE": true,
+							"PATH_PARAMETER": "",
+							"ICON": "art_track",
+							"EDITABLE": false,
+							"NAME": "Onboardings"
+						},
+						{
+							"ROUTE": "DOCUMENT CHECKLIST_ID_REPLACE",
+							"ORDER": 2,
+							"MODULE": "DOCUMENT CHECKLIST_ID_REPLACE",
+							"IS_MODULE": true,
+							"PATH_PARAMETER": "",
+							"ICON": "add_task",
+							"EDITABLE": false,
+							"NAME": "Document Checklist"
+						},
+						{
+							"ROUTE": "HEALTHCARE INSURANCES_ID_REPLACE",
+							"ORDER": 3,
+							"MODULE": "HEALTHCARE INSURANCES_ID_REPLACE",
+							"IS_MODULE": true,
+							"PATH_PARAMETER": "",
+							"ICON": "local_hospital",
+							"EDITABLE": false,
+							"NAME": "Healthcare Insurance"
+						},
+						{
+							"ROUTE": "PROMOTIONS_ID_REPLACE",
+							"ORDER": 4,
+							"MODULE": "PROMOTIONS_ID_REPLACE",
+							"IS_MODULE": true,
+							"PATH_PARAMETER": "",
+							"ICON": "work",
+							"EDITABLE": false,
+							"NAME": "Promotions"
+						},
+						{
+							"ROUTE": "BONUS ISSUANCES_ID_REPLACE",
+							"ORDER": 5,
+							"MODULE": "BONUS ISSUANCES_ID_REPLACE",
+							"IS_MODULE": true,
+							"PATH_PARAMETER": "",
+							"ICON": "monetization_on",
+							"EDITABLE": false,
+							"NAME": "Bonus Issuances"
+						},
+						{
+							"ROUTE": "EXIT DETAILS_ID_REPLACE",
+							"ORDER": 6,
+							"MODULE": "EXIT DETAILS_ID_REPLACE",
+							"IS_MODULE": true,
+							"PATH_PARAMETER": "",
+							"ICON": "meeting_room",
+							"EDITABLE": false,
+							"NAME": "Exit Details"
+						},
+						{
+							"ROUTE": "TRAVEL AUTHORIZATIONS_ID_REPLACE",
+							"ORDER": 7,
+							"MODULE": "TRAVEL AUTHORIZATIONS_ID_REPLACE",
+							"IS_MODULE": true,
+							"PATH_PARAMETER": "",
+							"ICON": "flight_takeoff",
+							"EDITABLE": false,
+							"NAME": "Travel Authorizations"
+						},
+						{
+							"ROUTE": "TIME OFF REQUESTS_ID_REPLACE",
+							"ORDER": 8,
+							"MODULE": "TIME OFF REQUESTS_ID_REPLACE",
+							"IS_MODULE": true,
+							"PATH_PARAMETER": "",
+							"ICON": "date_range",
+							"EDITABLE": false,
+							"NAME": "Time Off Requests"
+						},
+						{
+							"ROUTE": "TRAVEL EXPENSES_ID_REPLACE",
+							"ORDER": 9,
+							"MODULE": "TRAVEL EXPENSES_ID_REPLACE",
+							"IS_MODULE": true,
+							"PATH_PARAMETER": "",
+							"ICON": "card_travel",
+							"EDITABLE": false,
+							"NAME": "Travel Expenses"
+						}
+					]
+				},
+        {
+          "ROUTE": "",
+          "ORDER": 10,
+          "MODULE": "",
+          "IS_MODULE": false,
+          "PATH_PARAMETER": "",
+          "ICON": "notifications",
+          "EDITABLE": false,
+          "NAME": "PAGER",
+          "SUB_MENU_ITEMS": [
+            {
+              "ROUTE": "escalations",
+              "ORDER": 0,
+              "MODULE": "",
+              "IS_MODULE": false,
+              "PATH_PARAMETER": "",
+              "ICON": "arrow_upward",
+              "EDITABLE": false,
+              "NAME": "ESCALATIONS"
+            },
+            {
+              "ROUTE": "schedules",
+              "ORDER": 1,
+              "MODULE": "",
+              "IS_MODULE": false,
+              "PATH_PARAMETER": "",
+              "ICON": "event",
+              "EDITABLE": false,
+              "NAME": "SCHEDULES"
+            }
+          ]
+        },
+        {
+          "ROUTE": "reports",
+          "ORDER": 11,
+          "MODULE": "",
+          "IS_MODULE": false,
+          "PATH_PARAMETER": "",
+          "ICON": "pie_chart",
+          "EDITABLE": false,
+          "NAME": "REPORTS",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "company-settings",
+          "ORDER": 12,
+          "MODULE": "",
+          "IS_MODULE": false,
+          "PATH_PARAMETER": "",
+          "ICON": "settings",
+          "EDITABLE": false,
+          "NAME": "COMPANY_SETTINGS",
+          "SUB_MENU_ITEMS": []
+        }
+      ]
+    },
+    {
+      "ROLE": "AgentRole",
+      "MENU_ITEMS": [
+        {
+          "ROUTE": "dashboard",
+          "ORDER": 0,
+          "MODULE": "",
+          "IS_MODULE": false,
+          "PATH_PARAMETER": "",
+          "ICON": "dashboard",
+          "EDITABLE": false,
+          "NAME": "DASHBOARD",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "my-action-items",
+          "ORDER": 1,
+          "MODULE": "",
+          "IS_MODULE": false,
+          "PATH_PARAMETER": "",
+          "ICON": "account_box",
+          "EDITABLE": false,
+          "NAME": "MY_ACTION_ITEMS",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "TICKETS_ID_REPLACE",
+          "ORDER": 2,
+          "MODULE": "TICKETS_ID_REPLACE",
+          "IS_MODULE": true,
+          "PATH_PARAMETER": "",
+          "ICON": "assignment",
+          "EDITABLE": true,
+          "NAME": "Tickets",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "CHAT_ID_REPLACE",
+          "ORDER": 3,
+          "MODULE": "CHAT_ID_REPLACE",
+          "IS_MODULE": true,
+          "PATH_PARAMETER": "",
+          "ICON": "chat",
+          "EDITABLE": true,
+          "NAME": "Chats",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "USERS_ID_REPLACE",
+          "ORDER": 4,
+          "MODULE": "USERS_ID_REPLACE",
+          "IS_MODULE": true,
+          "PATH_PARAMETER": "",
+          "ICON": "person",
+          "EDITABLE": true,
+          "NAME": "Manage Users",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "ACCOUNTS_ID_REPLACE",
+          "ORDER": 5,
+          "MODULE": "ACCOUNTS_ID_REPLACE",
+          "IS_MODULE": true,
+          "PATH_PARAMETER": "",
+          "ICON": "business",
+          "EDITABLE": true,
+          "NAME": "Accounts",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "guide",
+          "ORDER": 6,
+          "MODULE": "",
+          "IS_MODULE": false,
+          "PATH_PARAMETER": "",
+          "ICON": "library_books",
+          "EDITABLE": false,
+          "NAME": "KNOWLEDGE_BASE",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "",
+          "ORDER": 7,
+          "MODULE": "",
+          "IS_MODULE": false,
+          "PATH_PARAMETER": "",
+          "ICON": "notifications",
+          "EDITABLE": false,
+          "NAME": "PAGER",
+          "SUB_MENU_ITEMS": [
+            {
+              "ROUTE": "escalations",
+              "ORDER": 0,
+              "MODULE": "",
+              "IS_MODULE": false,
+              "PATH_PARAMETER": "",
+              "ICON": "arrow_upward",
+              "EDITABLE": false,
+              "NAME": "ESCALATIONS"
+            },
+            {
+              "ROUTE": "schedules",
+              "ORDER": 1,
+              "MODULE": "",
+              "IS_MODULE": false,
+              "PATH_PARAMETER": "",
+              "ICON": "event",
+              "EDITABLE": false,
+              "NAME": "SCHEDULES"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "ROLE": "CustomersRole",
+      "MENU_ITEMS": [
+        {
+          "ROUTE": "TICKETS_ID_REPLACE",
+          "ORDER": 1,
+          "MODULE": "TICKETS_ID_REPLACE",
+          "IS_MODULE": true,
+          "PATH_PARAMETER": "",
+          "ICON": "assignment",
+          "EDITABLE": true,
+          "NAME": "Tickets",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "guide",
+          "ORDER": 2,
+          "MODULE": "",
+          "IS_MODULE": false,
+          "PATH_PARAMETER": "",
+          "ICON": "library_books",
+          "EDITABLE": false,
+          "NAME": "KNOWLEDGE_BASE",
+          "SUB_MENU_ITEMS": []
+        }
+      ]
+    }
+  ]
+}

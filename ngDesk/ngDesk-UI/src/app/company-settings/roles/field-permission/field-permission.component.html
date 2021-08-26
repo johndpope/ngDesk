@@ -1,0 +1,47 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<div fxLayout="column" fxLayoutGap="10px" class="pad10">
+	<ng-template #headerTemplateRef>
+		<app-title-bar class="light-grey-color" title="{{'FIELD_PERMISSIONS' | translate}}" fxLayoutGap="10px"
+		(buttonRightOnClick)="saveField()" [buttonText]="'SAVE' | translate" [buttonColor]="'primary'">
+		</app-title-bar>
+	</ng-template>
+	<div fxLayout="row">
+		<div fxFlex>
+			<app-custom-table [templateRef]="columnTemplateRef" (sortData)="sortData($event)" fxFlex fxLayoutGap="20px"
+			noRecordsMessage="{{'NO_FIELD_PERMISSIONS_FOUND' | translate}}"> 
+				<ng-template #columnTemplateRef let-element="element" let-col="col">
+					<span *ngIf="col.NAME === 'FIELD_NAME'">
+						{{element[col.NAME]}}
+					</span> 
+					<span *ngIf="col.NAME != 'FIELD_NAME'">
+						<mat-menu #menu="matMenu" yPosition="below">
+							<div *ngIf="col.NAME === 'PERMISSION'">
+								<div *ngFor="let option of accessOptions">
+									<button style="padding: 0px 10px;line-height: 35px;height: 35px;" (click)="element[col.NAME] = option" mat-menu-item>
+										<span style="font-size: 12px;font-weight: normal;">
+											{{option}}
+										</span>
+										<mat-icon fxLayoutAlign="end center" *ngIf="element[col.NAME] === option"
+											style="font-size: 18px;float: right;margin-right: 0px;line-height: 35px;font-weight: bold;height: 35px;">done</mat-icon>
+									</button>
+								</div>
+							</div>
+						</mat-menu>
+						<button [disableRipple]="true" mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()" style="width:fit-content;">
+							<span style="font-size: 12px;font-weight: normal;">
+								<div fxLayoutGap="10px">
+									<div fxFlex="90px" fxLayoutAlign="start">
+										{{element[col.NAME]}}
+									</div>
+									<div fxLayoutAlign="end" style="padding-left:8px">
+										<mat-icon style="font-size: 20px;padding-top:10px">keyboard_arrow_down</mat-icon>
+									</div>
+								</div>
+							</span>
+						</button>
+					</span>
+				</ng-template> 
+			</app-custom-table>
+		</div>
+	</div>
+</div>

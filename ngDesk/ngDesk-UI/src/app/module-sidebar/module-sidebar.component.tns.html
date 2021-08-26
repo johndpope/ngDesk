@@ -1,0 +1,84 @@
+<!-- <RadSideDrawer style="border-color: firebrick;border-width: 10;">
+    <GridLayout tkDrawerContent>
+        <Label text="Side Menu"></Label>
+    </GridLayout>
+</RadSideDrawer> -->
+
+<ActionBar title="ngDesk">
+<!-- <NavigationButton icon="res://menu_black"></NavigationButton> -->
+
+	<!-- <ActionItem 
+	  (tap)="userDetails()" style="font-size:9;" class="fas" icon="font://&#xf2bd;" > -->
+	   <!-- <label style="font-size: 20;" class="fas" text="&#xf2bd;" ></label> -->
+	  <!-- </ActionItem> -->
+
+ 
+	<ActionItem 
+	ios.position="right" android.position="right" (tap)="userDetails()" style="font-size:12;" class="fas" icon="font://&#xf2bd;" >
+	   <!-- <label style="font-size: 20;" class="fas" text="&#xf2bd;" ></label> -->
+	  </ActionItem>
+
+</ActionBar>
+<ScrollView>
+	<ActivityIndicator [busy]="isloadingData"></ActivityIndicator>
+	<StackLayout *ngIf="!isloadingData">
+		<!-- <StackLayout  class="{{itemIndex === selectedOptionIndex ? 'selected' : 'unSelected' }}"  *ngFor="let menuItem of companiesService.userSidebar.MENU_ITEMS;let itemIndex=index"  (touch)="onSidebarClick(menuItem,itemIndex)" >
+				<StackLayout  style="height: 60;" *ngIf="(menuItem.NAME !== 'DASHBOARD' && menuItem.NAME !== 'KNOWLEDGE_BASE' && menuItem.NAME !== 'MODULES' && menuItem.NAME !== 'PAGER' && menuItem.NAME !== 'REPORTS' && menuItem.NAME !== 'COMPANY_SETTINGS')" orientation="horizontal">
+					<label style="font-size: 24;height:40;margin-left: 40px;" *ngIf="menuItem.NAME === 'DASHBOARD'" class="fa"  text="&#xf015;" ></label>
+					<label style="font-size: 22;height:40;margin-left: 40px;" *ngIf="menuItem.NAME === 'Tickets' || menuItem.NAME === 'TICKETS'" class="fas" text="&#xf46d;" ></label>
+					<label style="font-size: 22;height:40;margin-left: 40px;" *ngIf="menuItem.NAME === 'Chats' || menuItem.NAME === 'CHATS'" class="fas"  text="&#xf27a;" ></label>
+					<label style="font-size: 22;height:40;margin-left: 40px;" *ngIf="menuItem.NAME === 'Teams' || menuItem.NAME === 'TEAMS'" class="fas"  text="&#xf500;" ></label>
+					<label style="font-size: 22;height:40;margin-left: 40px;" *ngIf="menuItem.NAME === 'Manage Users' || menuItem.NAME === 'MANAGE_USERS'" class="fas"  text="&#xf007;" ></label>
+					<label style="font-size: 22;height:40;margin-left: 40px;" *ngIf="menuItem.NAME === 'Accounts' || menuItem.NAME === 'ACCOUNTS' " class="fas"  text="&#xf1ec;" ></label>
+					<label style="font-size: 22;height:40;margin-left: 40px;" *ngIf="menuItem.NAME === 'KNOWLEDGE_BASE'" class="fas"  text="&#xf24d;" ></label>
+					<label style="font-size: 22;height:40;margin-left: 40px;" *ngIf="menuItem.NAME === 'MODULES'" class="fas" text="&#xf00a;" ></label>
+					<label style="font-size: 22;height:40;margin-left: 40px;" *ngIf="menuItem.NAME === 'PAGER'" class="fas"  text="&#xf0f3;" ></label>
+					<label style="font-size: 22;height:40;margin-left: 40px;" *ngIf="menuItem.NAME === 'REPORTS'" class="fas" text="&#xf200;" ></label>
+					<label style="font-size: 22;height:40;margin-left: 40px;" *ngIf="menuItem.NAME === 'COMPANY_SETTINGS'" class="fas"  text="&#xf013;" ></label>
+					<label style="font-size: 22;height:40;margin-left: 40px;" *ngIf="(menuItem.NAME !== 'DASHBOARD'  && menuItem.NAME !== 'Tickets' && menuItem.NAME !== 'TICKETS' && menuItem.NAME !== 'Chats' && menuItem.NAME !== 'CHATS' && menuItem.NAME !== 'Teams' && menuItem.NAME !== 'TEAMS' && menuItem.NAME !== 'Manage Users' && menuItem.NAME !== 'MANAGE_USERS' && menuItem.NAME !== 'Accounts' && menuItem.NAME !== 'ACCOUNTS' && menuItem.NAME !== 'KNOWLEDGE_BASE' && menuItem.NAME !== 'MODULES' && menuItem.NAME !== 'REPORTS' && menuItem.NAME !== 'COMPANY_SETTINGS' && menuItem.NAME !== 'PAGER') " class="fas" text="&#xf2f9;" ></label>
+					
+					
+					
+					<Label style="font-size: 15;height:40;margin-left: 40px;" *ngIf="(menuItem.NAME === 'TICKETS' || menuItem.NAME === 'CHATS' || menuItem.NAME === 'TEAMS' || menuItem.NAME === 'MANAGE_USERS' || menuItem.NAME === 'ACCOUNTS')"  text="{{menuItem.NAME |translate }}" ></Label>
+					<Label style="font-size: 15;height:40;margin-left: 40px;" *ngIf="(menuItem.NAME !== 'DASHBOARD' && menuItem.NAME !== 'TICKETS' && menuItem.NAME !== 'CHATS' && menuItem.NAME !== 'TEAMS' && menuItem.NAME !== 'MANAGE_USERS' && menuItem.NAME !== 'ACCOUNTS' && menuItem.NAME !== 'KNOWLEDGE_BASE' && menuItem.NAME !== 'MODULES' && menuItem.NAME !== 'SCHEDULES' && menuItem.NAME !== 'ESCALATIONS' && menuItem.NAME !== 'REPORTS' && menuItem.NAME !== 'COMPANY_SETTINGS' && menuItem.NAME !=='PAGER')" text="{{menuItem.NAME  }}" ></Label>
+					<StackLayout style="height: 1;background-color: #0e0707;" orientation="vertical" ></StackLayout>
+				</StackLayout>
+			<StackLayout *ngIf="(menuItem.NAME !== 'DASHBOARD' && menuItem.NAME !== 'KNOWLEDGE_BASE' && menuItem.NAME !== 'MODULES' && menuItem.NAME !== 'PAGER' && menuItem.NAME !== 'REPORTS' && menuItem.NAME !== 'COMPANY_SETTINGS')"  style="height: 1;background-color: #e0dede;"></StackLayout>
+		</StackLayout> -->
+		<StackLayout (touch)="temporaryMobileNavigation()">
+			<StackLayout  style="height: 60;" orientation="horizontal">
+				<label style="font-size: 22;height:40;margin-left: 40px;"  class="fas" text="&#xf46d;" ></label>
+				<Label style="font-size: 15;height:40;margin-left: 40px;"  text="{{'TICKETS' |translate }}" ></Label>
+			</StackLayout>
+		</StackLayout>
+	</StackLayout>
+</ScrollView>	
+
+
+
+
+<!-- <ListView [items]="companiesService.userSidebar.MENU_ITEMS"  isUserInteractionEnabled="true"   >
+
+		<ng-template let-menuItem="item">
+			
+			<GridLayout  rows="40" columns="50,3*,*"  (tap)="onSidebarClick(menuItem)"  > -->
+				<!-- dashbaord, knowldege base, moduesl pager, reports and company settings -->
+				<!-- <label style="font-size: 24;" *ngIf="menuItem.NAME === 'DASHBOARD'" class="fa" row="0" col="0" text="&#xf015;"></label>
+				<label style="font-size: 22;" *ngIf="menuItem.NAME === 'Tickets'" class="fas" row="0" col="0" text="&#xf46d;"></label>
+				<label style="font-size: 22;" *ngIf="menuItem.NAME === 'Chats'" class="fas" row="0" col="0" text="&#xf27a;"></label>
+				<label style="font-size: 22;" *ngIf="menuItem.NAME === 'Teams'" class="fas" row="0" col="0" text="&#xf500;"></label>
+				<label style="font-size: 22;" *ngIf="menuItem.NAME === 'Manage Users'" class="fas" row="0" col="0" text="&#xf007;"></label>
+				<label style="font-size: 22;" *ngIf="menuItem.NAME === 'Accounts'" class="fas" row="0" col="0" text="&#xf1ec;"></label>
+				<label style="font-size: 22;" *ngIf="menuItem.NAME === 'KNOWLEDGE_BASE'" class="fas" row="0" col="0" text="&#xf24d;"></label>
+				<label style="font-size: 22;" *ngIf="menuItem.NAME === 'MODULES'" class="fas" row="0" col="0" text="&#xf00a;"></label>
+				<label style="font-size: 22;" *ngIf="menuItem.NAME === 'PAGER'" class="fas" row="0" col="0" text="&#xf0f3;"></label>
+				<label style="font-size: 22;" *ngIf="menuItem.NAME === 'REPORTS'" class="fas" row="0" col="0" text="&#xf200;"></label>
+				<label style="font-size: 22;" *ngIf="menuItem.NAME === 'COMPANY_SETTINGS'" class="fas" row="0" col="0" text="&#xf013;"></label>
+				<label style="font-size: 22;" *ngIf="(menuItem.NAME !== 'DASHBOARD'  && menuItem.NAME !== 'Tickets' && menuItem.NAME !== 'Chats' && menuItem.NAME !== 'Teams' && menuItem.NAME !== 'Manage Users' && menuItem.NAME !== 'Accounts' && menuItem.NAME !== 'KNOWLEDGE_BASE' && menuItem.NAME !== 'MODULES' && menuItem.NAME !== 'REPORTS' && menuItem.NAME !== 'COMPANY_SETTINGS' && menuItem.NAME !== 'PAGER') " class="fas" row="0" col="0" text="&#xf2f9;"></label>
+
+				<Label style="font-size: 15;" *ngIf="(menuItem.NAME === 'DASHBOARD' || menuItem.NAME === 'TICKETS' || menuItem.NAME === 'CHATS' || menuItem.NAME === 'TEAMS' || menuItem.NAME === 'MANAGE_USERS' || menuItem.NAME === 'ACCOUNTS' || menuItem.NAME === 'KNOWLEDGE_BASE' || menuItem.NAME === 'MODULES' || menuItem.NAME === 'SCHEDULES' || menuItem.NAME === 'ESCALATIONS' || menuItem.NAME === 'REPORTS' || menuItem.NAME === 'COMPANY_SETTINGS' || menuItem.NAME ==='PAGER')" row="0" col="1" text="{{menuItem.NAME |translate }}"></Label>
+				<Label style="font-size: 15;" *ngIf="(menuItem.NAME !== 'DASHBOARD' && menuItem.NAME !== 'TICKETS' && menuItem.NAME !== 'CHATS' && menuItem.NAME !== 'TEAMS' && menuItem.NAME !== 'MANAGE_USERS' && menuItem.NAME !== 'ACCOUNTS' && menuItem.NAME !== 'KNOWLEDGE_BASE' && menuItem.NAME !== 'MODULES' && menuItem.NAME !== 'SCHEDULES' && menuItem.NAME !== 'ESCALATIONS' && menuItem.NAME !== 'REPORTS' && menuItem.NAME !== 'COMPANY_SETTINGS' && menuItem.NAME !=='PAGER')" row="0" col="1" text="{{menuItem.NAME  }}"></Label>
+			</GridLayout>
+		</ng-template>
+
+</ListView> -->

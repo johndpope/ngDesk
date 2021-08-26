@@ -1,0 +1,17 @@
+{
+	"extends": "../tsconfig.json",
+	"compilerOptions": {
+		"outDir": "../out-tsc/app",
+		"types": ["node", "@types/stripe-v3"],
+		"paths": {
+			"@angular/*": ["../node_modules/@angular/*"],
+			"moment": ["../node_modules/moment/min/moment.min.js"],
+			"@src/*": ["src/*.web", "src/*"]
+		}
+	},
+	"exclude": ["test.ts", "**/*.spec.ts"],
+	"include": [],
+	"files": ["main.ts", "polyfills.ts", "../node_modules/@clientio/rappid/index.ts",
+		"../rappid/index.ts"
+]
+}

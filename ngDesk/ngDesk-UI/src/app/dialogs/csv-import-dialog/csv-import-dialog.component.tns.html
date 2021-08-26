@@ -1,0 +1,44 @@
+<StackLayout>
+  <Label text="csv-import-dialog works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<h1 mat-dialog-title class="mat-h1">{{data.dialogTitle}}</h1>
+<mat-divider></mat-divider>
+
+<div mat-dialog-content style="width:600px;height:auto">
+	<div fxLayoutAlign="center" fxLayout="column" style="margin-top:4%;">
+		<mat-label *ngIf="fields.length === 0">
+			{{'FIELD_NOT_EXIST' | translate}}
+		</mat-label>
+		<div fxLayout="row" fxFlex="100" *ngFor="let fields of fields; let i = index">
+			<div fxLayout="column" fxFlex="40">
+				<mat-label for="singleFile" style="margin-top:9%;font-family:Roboto, Helvetica Neue, sans-serif">
+					{{fields.DISPLAY_LABEL}}:</mat-label>
+			</div>
+			<div fxLayout="column" fxFlex="60">
+				<mat-form-field>
+					<mat-select name="test" placeholder="Select a field" [(ngModel)]="headerMap[fields.FIELD_ID]">
+						<mat-option>
+							None
+						</mat-option>
+						<mat-option *ngFor="let field of headers" [value]="field">
+							{{field}}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div mat-dialog-actions fxLayoutAlign="end" [ngStyle]="{'margin-top':'40px'}">
+	<button mat-raised-button type="button" [mat-dialog-close]="data.closeDialog">{{data.closeDialog}}</button>
+	<button *ngIf="fields.length > 0" mat-raised-button color="primary" (click)="onImportCsv()" type="button">{{data.buttonText}}</button>
+</div>
+
+-->

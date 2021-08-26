@@ -1,0 +1,128 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef>
+	<app-title-bar class="light-grey-color" title="{{'CATALOGUES' | translate}}" buttonText="{{'SAVE' | translate}}"
+		(buttonRightOnClick)="save()"></app-title-bar>
+</ng-template>
+<form [formGroup]="catalogueForm" class="pad10">
+	<div fxLayoutGap=10px>
+		<app-new-name-description (messageName)='getName($event)' (messageDesc)='getDesc($event)'>
+		</app-new-name-description>
+	</div>
+	<div fxLayout="row">
+		<mat-form-field fxFlex=20>
+			<mat-label>{{'VISIBLE_TO' | translate}} *</mat-label>
+			<mat-chip-list #teamsChipList>
+				<mat-chip *ngFor="let team of visibleTo" [selectable]='true' [removable]=true (removed)="removeTeam(team)">
+					{{team.name}}
+					<mat-icon matChipRemove>cancel</mat-icon>
+				</mat-chip>
+				<input matInput [matAutocomplete]="autoTeams" formControlName="visibleTo" [matChipInputFor]="teamsChipList"
+					[matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="resetInput($event)" (keyup)="onSearch()">
+			</mat-chip-list>
+			<mat-autocomplete #autoTeams="matAutocomplete" (appAutocompleteScroll)="onScrollTeams();" (closed)="autocompleteClosed()"
+				(optionSelected)="addTeam($event);">
+				<mat-option *ngFor="let team of teamNames" [value]="team" [disabled]="disableSelectedValues(team)">
+					{{team.name}}
+				</mat-option>
+			</mat-autocomplete>
+		</mat-form-field>
+	</div>
+	<div fxLayout="column" fxLayoutAlign="start" fxLayoutGap="10px">
+		<mat-card fxFlex="50" fxLayout="column" style="padding: 20px;width: 50%;">
+			<div fxLayout="column" fxLayoutGap="10px">
+				<div class="mat-h1" fxLayoutAlign="start center">
+					<label>{{'FORMS' | translate}}</label>
+					<button mat-icon-button (click)="addCatalogueForms()">
+						<mat-icon>add_circle</mat-icon>
+					</button>
+				</div>
+				<div formArrayName="catalogueForms" fxLayout="column">
+					<div fxLayout="row" *ngFor=" let catalogueForms of catalogueFormData.controls; let i = index" [formGroupName]="i"
+						fxLayoutGap="10px">
+						<mat-form-field>
+							<mat-label>Module
+							</mat-label>
+							<mat-select [value]="catalogueForms.value.moduleId" (selectionChange)="filterModuleForms(i,$event,catalogueForms)"
+								formControlName="moduleId">
+								<mat-option *ngFor="let module of modules" [value]="module.MODULE_ID">
+									{{module.NAME}}
+								</mat-option>
+							</mat-select>
+						</mat-form-field>
+						<mat-form-field *ngIf="forms[i]?.length > 0 || catalogueForms.get('moduleId').value == ''">
+							<mat-label>Form</mat-label>
+							<mat-select formControlName="formId">
+								<mat-option *ngFor="let form of forms[i]" [value]="form.formId">
+									{{form.name}}
+								</mat-option>
+							</mat-select>
+							<mat-icon *ngIf="catalogueForms.get('formId').value && forms[i]?.length > 0" matSuffix
+								style="cursor: pointer;vertical-align: bottom;" matTooltip="{{'NAVIGATE_TO_FORMS' | translate}}"
+								(click)="redirectToForms(catalogueForms.get('moduleId').value,catalogueForms.get('formId').value)" color="primary">link
+							</mat-icon>
+						</mat-form-field>
+						<div *ngIf="forms[i]?.length == 0" fxLayoutAlign="center center">
+							<a (click)="createForms(catalogueForms.value.moduleId)" style="cursor: pointer; color: rgb(12, 12, 143);">Click
+								here to
+								create forms</a>
+						</div>
+						<div *ngIf="forms[i]?.length > 0" fxLayoutAlign="center center">
+							<button mat-icon-button (click)="removeCatalogueForms(i)" type="button">
+								<mat-icon>remove_circle</mat-icon>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</mat-card>
+	</div>
+	<mat-accordion>
+		<mat-expansion-panel>
+			<mat-expansion-panel-header>
+				<mat-panel-title>
+					Preview of catalogue icon
+				</mat-panel-title>
+			</mat-expansion-panel-header>
+			<div class="pad10" fxLayout="row" fxFlex="100">
+				<div fxLayout="column" fxLayoutGap=10px>
+					<button mat-raised-button fxLayoutAlign="center center" style="height:48px;border-radius: 5px;" (click)="fileInput.click()">
+						<div fxLayout="row" style="height:48px;">
+							<div fxLayoutAlign="center center">
+								<label class="mat-h4" style="margin: 0px;cursor: pointer; font-weight:500;">Select Image</label>
+							</div>
+							<div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px" [ngStyle]="{'font-size': '20px', 'font-weight':'500'}">
+								<mat-icon inline class="pointer">
+									attach_file</mat-icon>
+								<input accept="image/x-png, image/png, image/jpeg" hidden type="file" #fileInput (change)="onChange($event)">
+							</div>
+
+						</div>
+					</button>
+				</div>
+				<div style="padding-top: 12px;padding-left: 10px;">
+					<mat-icon color="primary" matTooltip="{{'SELECT_IMAGE_HINT' | translate}}">help_outline</mat-icon>
+				</div>
+
+				<div fxFlex style="width: 50px;" fxLayoutAlign="center center">
+					<div style="width: 200px; cursor: pointer;">
+						<div class="mat-elevation-z2" [appHighlight]="{BACKGROUND: 'ghostWhite'}" fxLayout="column" style="border-radius: 5px;">
+							<div fxLayoutAlign="center center" class="custom-theme-offset-background-Color" style="height: 140px;">
+								<mat-icon *ngIf="!myImage">assignment</mat-icon>
+								<img *ngIf="myImage" width=140px height=140px [src]="myImage">
+							</div>
+							<div fxFlex="50" fxLayoutAlign="start start" fxLayout="column" style="padding: 10px;" fxLayoutGap="5px">
+								<div class="mat-body-strong" style="font-size: 15px; word-break: break-word;">
+									{{name}}
+								</div>
+								<div class="mat-caption" style="word-break: break-word; text-overflow: ellipsis;">
+									{{description}}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</mat-expansion-panel>
+	</mat-accordion>
+
+</form>

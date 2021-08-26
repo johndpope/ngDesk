@@ -1,0 +1,10 @@
+{
+	"BUSINESS_RULES": {
+		"RESTRICTIONS": [],
+		"ACTIVE": false,
+		"RESTRICTION_TYPE": "",
+		"TIMEZONE": "DEFAULT_TIMEZONE"
+	},
+	"ENABLE_FAQS": true,
+	"PRE_SURVEY_REQUIRED" :true
+}

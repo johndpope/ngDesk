@@ -1,0 +1,19 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<div fxLayout="column" fxLayoutGap="10px" class="pad10">
+	<ng-template #headerTemplateRef>
+		<app-title-bar title="{{'DASHBOARDS' | translate}}" buttonText="{{'NEW' | translate}}"
+			(buttonRightOnClick)="newDashboard()"></app-title-bar>
+	</ng-template>
+	<div fxLayout="row">
+		<div fxFlex>
+			<app-custom-table [templateRef]="columnTemplateRef" (rowClickedEvent)="rowClicked($event)" [actions]="dashboardsActions.actions"
+				(menuItemTrigger)="dashboardsActions[$event.ACTION.NAME]($event.ROW_DATA);" noRecordsMessage="{{'NO_DASHBOARDS_FOUND' | translate}}"
+				(pageChangeEmit)="pageChangeEmit($event);customTableService.isLoading = true"
+				(sortData)="sortData();customTableService.isLoading = true">
+				<ng-template #columnTemplateRef let-element="element" let-col="col">
+					{{element[col.NAME]}}
+				</ng-template>
+			</app-custom-table>
+		</div>
+	</div>
+</div>

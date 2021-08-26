@@ -1,0 +1,18 @@
+<div class="pad10">
+	<app-title-bar class="light-grey-color" (buttonRightOnClick)="saveTheme()" title="{{'THEMES' | translate}}"
+		buttonText="{{'SAVE' | translate}}"></app-title-bar>
+	<div fxLayout="column" fxLayoutGap="30px">
+		<mat-radio-group fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="20px" [(ngModel)]="themeSelected.name">
+			<div fxLayout="row" fxFlex="40px" fxLayoutAlign="stretch " *ngFor="let theme of themes">
+				<mat-radio-button fxLayoutAlign="center" value="{{theme.name}}"></mat-radio-button>
+				<div class="pointer" fxFlex="50px" *ngFor="let key of theme | objectToArray" [style.background-color]="key.value"
+					(click)="selectTheme(theme)"></div>
+			</div>
+		</mat-radio-group>
+		<div fxLayout="row">
+			<div fxFlexFill fxLayoutAlign="center center">
+				<label class="mat-small">{{'YOU_CHOSE' | translate}}: <b>{{themeSelected.name}}</b></label>
+			</div>
+		</div>
+	</div>
+	<div>

@@ -1,0 +1,18 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<div fxLayout="column" fxLayoutGap="10px" class="pad10">
+	<ng-template #headerTemplateRef>
+		<app-title-bar class="light-grey-color" title="{{'API_KEYS' | translate }}" buttonText="{{'NEW'|translate}}"
+			(buttonRightOnClick)="NewApiKey()"></app-title-bar>
+	</ng-template>
+	<div fxLayout="row">
+		<div fxFlex>
+			<app-custom-table [templateRef]="columnTemplateRef" noRecordsMessage="{{'NO_API_KEYS_FOUND' | translate}}"
+				[actions]="apiKeysActions.actions" (menuItemTrigger)="apiKeysActions[$event.ACTION.NAME]($event.ROW_DATA);"
+				(pageChangeEmit)="pageChangeEmit($event);customTableService.isLoading = true" (sortData)="sortData($event)">
+				<ng-template #columnTemplateRef let-element="element" let-col="col">
+					{{element[col.NAME]}}
+				</ng-template>
+			</app-custom-table>
+		</div>
+	</div>
+</div>

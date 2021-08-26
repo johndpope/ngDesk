@@ -1,0 +1,97 @@
+<app-toolbar></app-toolbar>
+<div fxLayout="column" [ngStyle]="{'min-height': '94vh'}">
+	<div fxLayoutAlign="center center" *ngIf="isPublicArticle">
+		<div fxLayout="column" fxFlex.lt-lg="100" fxFlex="90">
+			<div fxLayout="row" [ngStyle]="{'padding-left': '20px'}" fxFlexOffset="20px">
+				<label class="mat-body custom-theme-primary-font-color" *ngFor="let nav of navArray; let i = index;">
+					<a class="link mat-body pointer" (click)="navigate(nav.PATH)">{{nav.NAME | translate}}</a>
+					<span *ngIf="i < navArray.length -1 "> &gt; &nbsp;</span>
+				</label> </div>
+			<div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
+				<div fxLayout="column" fxFlex="20" fxLayoutGap="10px" [ngStyle]="{'padding': '20px'}">
+					<mat-label class="mat-h3" style="font-size: 15px; font-weight: 500;">{{'ARTICLES_IN_SECTION' | translate}}
+					</mat-label>
+					<div class="mat-body" style="border: 1px transparent; border-radius: 4px; overflow: hidden" matRipple matRippleColor="primary"
+						*ngFor="let articleObj of sectionArticles; let i=index;"
+						(click)="navigate(['guide','articles',articleObj.SECTION,articleObj.TITLE])"
+						[ngStyle]="{ 'background-color': (articleObj.ARTICLE_ID == article.ARTICLE_ID) ? 'var(--primaryColor)' : 'white', 'color': (articleObj.ARTICLE_ID == article.ARTICLE_ID) ? 'white' : 'black'}">
+						<label [appHighlight]="{BACKGROUND: 'var(--primaryColor)', TEXT: '#ffff'}" fxFlex
+							class="pad10 pointer">&nbsp;{{articleObj.TITLE}}</label>
+					</div>
+				</div>
+				<div fxLayout="column" fxFlex="80" [ngStyle]="{'padding': '20px'}" fxLayoutGap="20px" *ngIf="!loading">
+					<div>
+						<div>
+							<mat-label class="mat-h1">{{article.TITLE}}</mat-label>
+						</div>
+						<span fxFlex="1 1 auto"></span>
+						<button mat-raised-button color="primary" *ngIf="hasEditAccess"
+							(click)="goToEditArticle()">{{ 'EDIT_ARTICLE' | translate}}</button>
+					</div>
+					<div fxLayout="row" fxLayoutGap="20px"> <button mat-fab disabled>
+							<mat-icon>person</mat-icon>
+						</button>
+						<div fxLayout="column" fxLayoutGap="5px">
+							<div>
+								<mat-label class="mat-h4">{{article.AUTHOR}}</mat-label>
+							</div>
+							<div>
+								<mat-label class="mat-caption">{{article.DATE_CREATED | dateFormat: 'medium'}}</mat-label>
+							</div>
+						</div>
+					</div>
+					<div style="overflow: auto;" [innerHTML]="article.BODY | allowStyles"></div>
+					<div fxLayout="row wrap" fxLayoutGap="10px" class="pointer">
+						<div *ngFor="let attachment of article['ATTACHMENTS']" fxLayoutAlign="start center"
+							[ngStyle]="{'color': '#1f73b7', 'border-radius': '5px'}">
+							<a [ngStyle]="{'color': '#1f73b7', 'text-decoration': 'none'}" class="mat-body" fxLayout="row" fxLayoutGap="10px"
+								fxLayoutAlign="center center" target="blank" download="attachment.FILE_NAME"
+								[attr.href]="downloadAttachment(attachment.ATTACHMENT_UUID)">
+								<mat-icon>attach_file</mat-icon>{{attachment.FILE_NAME}}
+							</a> </div>
+					</div>
+					<mat-divider></mat-divider><label class="mat-h2">{{'COMMENTS' | translate}}</label>
+					<mat-divider></mat-divider>
+					<div fxLayout="column" *ngFor="let comment of article.COMMENTS" fxLayoutGap="20px">
+						<div fxLayout="row" fxLayoutGap="20px"><button mat-fab disabled>
+								<mat-icon>person</mat-icon>
+							</button>
+							<div fxLayout="column" fxLayoutGap="5px">
+								<div>
+									<mat-label class="mat-h4">{{comment.SENDER}}</mat-label>
+								</div>
+								<div>
+									<mat-label class="mat-caption">{{comment.DATE_CREATED | dateFormat: 'medium'}}</mat-label>
+								</div>
+							</div>
+						</div>
+						<div class="mat-body"><span [innerHtml]="comment.MESSAGE"></span></div>
+						<mat-divider></mat-divider>
+					</div><span *ngIf="!article.OPEN_FOR_COMMENTS" class="mat-body">{{'ARTICLE_CLOSED_FOR_COMMENTS' | translate}}</span>
+					<div fxLayout="column" *ngIf="article.OPEN_FOR_COMMENTS && hasCommentAccess">
+						<div fxLayoutGap="20px"><button mat-fab disabled>
+								<mat-icon>person</mat-icon>
+							</button>
+							<mat-form-field appearance="outline" fxFlex> <textarea matInput matTextareaAutosize="true" matAutosizeMaxRows="5"
+									matAutosizeMinRows="5" [(ngModel)]="comment.MESSAGE" placeholder="{{'COMMENTS' | translate}}"></textarea></mat-form-field>
+						</div>
+						<div><span fxFlex="1 1 auto"></span><button mat-raised-button color="primary"
+								(click)="addComment()">{{'SUBMIT' | translate}}</button></div>
+					</div>
+				</div>
+				<div fxFlex="80" fxLayoutAlign="center center" *ngIf="loading">
+					<mat-spinner></mat-spinner>
+				</div>
+			</div>
+
+			<div fxFlex></div>
+		</div>
+	</div>
+	<div fxLayoutAlign="center center" *ngIf="!isPublicArticle">
+		<label class="mat-h2 pad10">{{'THIS_ARTICLE_IS_NOT_PUBLIC' | translate}}</label>
+	</div>
+	<div fxFlex></div>
+	<div *ngIf="!authToken" fxLayoutAlign="flex-end end" style="padding: 20px">
+		<label class="mat-body" [innerHTML]="'BACKLINK_TEXT' | translate"></label>
+	</div>
+</div>

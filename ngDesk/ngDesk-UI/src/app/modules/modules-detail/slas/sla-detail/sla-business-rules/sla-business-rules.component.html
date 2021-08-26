@@ -1,0 +1,96 @@
+<div fxLayout="column" fxLayoutGap="10px" class="pad10">
+	<div fxLayout="column">
+		<label class="mat-h2" style="margin-bottom:0px;">Business Rules</label>
+	</div>
+	<mat-divider></mat-divider>
+	<div fxLayout="row">
+		<div class="mat-small" style="background-color:#A9A9A9;color:white;border-radius:5px;padding:2px">
+			For each 1-week shift
+		</div>
+	</div>
+	<div fxLayout="row" fxLayoutAlign="center">
+		<mat-error class="mat-body-strong">{{errorMessage}}</mat-error>
+	</div>
+	<mat-radio-group class="radio-group" [(ngModel)]="data.businessRuleValue.restrictionType" fxLayout="column" fxLayoutGap="10px">
+		<mat-radio-button color="primary" value="Day">
+			Business Rules to specific times-of-the-day
+		</mat-radio-button>
+		<div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center"
+			*ngFor="let restriction of restrictionsDaily;let restrictionIndex = index;">
+			<label class="mat-body">From</label>
+			<mat-form-field>
+				<mat-select placeholder="Start Time" [(ngModel)]="restriction.startTime"
+					[disabled]="data.businessRuleValue.restrictionType == 'Week'">
+					<mat-option *ngFor="let time of times" [value]="time">
+						{{time}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<label class="mat-body">to </label>
+			<mat-form-field>
+				<mat-select [disabled]="data.businessRuleValue.restrictionType == 'Week'" placeholder="End Time" [(ngModel)]="restriction.endTime">
+					<mat-option *ngFor="let time of times" [value]="time">
+						{{time}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<button [disabled]="data.businessRuleValue.restrictionType == 'Week'" mat-mini-fab color="primary" (click)="addRestriction('Day')">
+				<mat-icon>add</mat-icon>
+			</button>
+			<button [disabled]="data.businessRuleValue.restrictionType == 'Week'" mat-mini-fab
+				(click)="removeRestriction('Day', restrictionIndex)" *ngIf="restrictionsDaily.length > 1">
+				<mat-icon>close</mat-icon>
+			</button>
+		</div>
+		<mat-radio-button color="primary" value="Week">
+			Business Rules to specific times-of-the-week
+		</mat-radio-button>
+		<div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center"
+			*ngFor="let restriction of restrictionsSpecific;let restrictionIndex = index;">
+			<label class="mat-body">From</label>
+			<mat-form-field fxFlex="15">
+				<mat-select [disabled]="data.businessRuleValue.restrictionType == 'Day'" placeholder="Start Day" [(ngModel)]="restriction.startDay">
+					<mat-option *ngFor="let day of weekDays" [value]="day">
+						{{day}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<mat-form-field fxFlex="15">
+				<mat-select [disabled]="data.businessRuleValue.restrictionType == 'Day'" placeholder="Start Time"
+					[(ngModel)]="restriction.startTime">
+					<mat-option *ngFor="let time of times" [value]="time">
+						{{time}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<label class="mat-body">to</label>
+			<mat-form-field fxFlex="15">
+				<mat-select [disabled]="data.businessRuleValue.restrictionType == 'Day'" placeholder="End Day" [(ngModel)]="restriction.endDay">
+					<mat-option *ngFor="let day of weekDays" [value]="day">
+						{{day}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<mat-form-field fxFlex="15">
+				<mat-select [disabled]="data.businessRuleValue.restrictionType == 'Day'" placeholder="End Time" [(ngModel)]="restriction.endTime">
+					<mat-option *ngFor="let time of times" [value]="time">
+						{{time}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<button [disabled]="data.businessRuleValue.restrictionType == 'Day'" mat-mini-fab color="primary" color="primary"
+				(click)="addRestriction('Week')">
+				<mat-icon>add</mat-icon>
+			</button>
+			<button [disabled]="data.businessRuleValue.restrictionType == 'Day'" mat-mini-fab
+				(click)="removeRestriction('Week', restrictionIndex)" *ngIf="restrictionsSpecific.length > 1">
+				<mat-icon>close</mat-icon>
+			</button>
+		</div>
+	</mat-radio-group>
+	<mat-divider></mat-divider>
+	<div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="10px" mat-dialog-actions>
+		<button mat-button (click)="onNoClick()">Cancel</button>
+		<button mat-button (click)="saveRestrictions()">Save</button>
+	</div>
+</div>

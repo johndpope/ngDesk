@@ -1,0 +1,14 @@
+.mat-tooltip {
+	/* your own custom styles here */
+	/* e.g. */
+	width: 125px;
+	position: absolute;
+
+}
+
+::ng-deep .mat-tooltip {
+	/* your own custom styles here */
+	/* e.g. */
+	width: 125px;
+	position: absolute;
+}

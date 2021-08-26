@@ -1,0 +1,6 @@
+{
+	"REPLY_ABOVE": "Пожалуйста, напечатайте свой ответ над этой строкой",
+	"UNAUTHORIZED_ERROR": "Invalid Credentials",
+	"INTERNAL_ERROR": "Server Error",
+	"FILE_NOT_FOUND": "File does not exist"
+}

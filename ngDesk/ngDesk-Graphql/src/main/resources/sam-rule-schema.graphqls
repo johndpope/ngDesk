@@ -1,0 +1,23 @@
+schema {
+    query: Query
+}
+
+type Query {
+    rules(pageNumber : Int, pageSize: Int): [SamRule]
+    rule(id: String!): SamRule
+    countRules: Int
+}
+
+type SamRule {
+	id: String
+	fileName: String
+	filePath: String
+	hash: String
+	ruleCondition: String
+	application: Applications
+}
+
+type Applications {
+	_id: String
+	APPLICATION_NAME: String
+}

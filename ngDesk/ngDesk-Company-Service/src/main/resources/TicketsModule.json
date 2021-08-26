@@ -1,0 +1,2213 @@
+{
+  "FIELDS": [
+    {
+      "NAME": "PRIORITY",
+      "INTERNAL": false,
+      "HELP_TEXT": "",
+      "NOT_EDITABLE": false,
+      "DISPLAY_LABEL": "Priority",
+      "DATA_TYPE": {
+        "DISPLAY": "Picklist",
+        "BACKEND": "String"
+      },
+      "PICKLIST_VALUES": [
+		"Low",
+		"Medium",
+		"High",
+        "Critical"
+      ],
+      "FIELD_ID": "34e5212e-6be4-4e69-915b-2b27ed1c746f",
+      "REQUIRED": false
+    },
+    {
+      "DISPLAY_LABEL": "Channel",
+      "FIELD_ID": "a5accd94-cc42-4ba5-aaff-79ae5524bcb8",
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "NAME": "CHANNEL"
+    },
+    {
+      "DISPLAY_LABEL": "Deleted",
+      "FIELD_ID": "f1041c25-c928-4d30-b2fb-9c843dbe9f95",
+      "INTERNAL": true,
+      "REQUIRED": false,
+      "NOT_EDITABLE": true,
+      "DATA_TYPE": {
+        "DISPLAY": "Checkbox",
+        "BACKEND": "Boolean"
+      },
+      "NAME": "DELETED"
+    },
+    {
+      "FIELD_ID": "f79dba1a-f470-4540-bec6-6ba448ec4f53",
+      "NAME": "EFFECTIVE_TO",
+      "DISPLAY_LABEL": "Effective to",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "LENGTH": 0,
+      "DECIMAL_PLACES": 0,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": null,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": [],
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": true,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "RELATIONSHIP_FIELD": null,
+      "FORMULA": null,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Date/Time",
+        "BACKEND": "Date"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": null,
+      "LAST_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false
+    },
+    {
+      "FIELD_ID": "9784dbfc-f002-4807-ab73-868cf1a89223",
+      "NAME": "EFFECTIVE_FROM",
+      "DISPLAY_LABEL": "Effective from",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "LENGTH": 0,
+      "DECIMAL_PLACES": 0,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": null,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": [],
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": true,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "RELATIONSHIP_FIELD": null,
+      "FORMULA": null,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Date/Time",
+        "BACKEND": "Date"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": null,
+      "LAST_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false
+    },
+    {
+      "DISPLAY_LABEL": "Post Id",
+      "FIELD_ID": "5b616354-3de1-4006-91c4-a6d175e89f9c",
+      "INTERNAL": true,
+      "REQUIRED": false,
+      "NOT_EDITABLE": true,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "NAME": "POST_ID"
+    },
+    {
+      "DISPLAY_LABEL": "Source Type",
+      "FIELD_ID": "96bf35ea-dcb5-4183-8679-f27f776b92df",
+      "INTERNAL": true,
+      "REQUIRED": false,
+      "NOT_EDITABLE": true,
+      "DATA_TYPE": {
+        "DISPLAY": "Picklist",
+        "BACKEND": "String"
+      },
+      "PICKLIST_VALUES": [
+        "chat",
+		"email",
+		"facebook",
+		"mobile",
+		"sms",
+		"twitter",
+		"web",
+		"whatsapp"
+      ],
+      "NAME": "SOURCE_TYPE",
+      "DEFAULT_VALUE": "web"
+    },
+    {
+      "DEFAULT_VALUE": null,
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "HELP_TEXT": "",
+      "LAST_UPDATED": "LAST_UPDATED_REPLACE",
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": "",
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": "Enter Values",
+      "PICKLIST_RESTRICT": true,
+      "LAST_UPDATED_BY": null,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+      "MAX_SIZE": 0,
+      "REQUIRED": true,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "SUBJECT",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Subject",
+      "EXAMPLE": null
+    },
+    {
+      "DEFAULT_VALUE": null,
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "HELP_TEXT": "",
+      "LAST_UPDATED": "LAST_UPDATED_REPLACE",
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": "",
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Discussion",
+        "BACKEND": "String"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": "Enter Values",
+      "PICKLIST_RESTRICT": true,
+      "LAST_UPDATED_BY": null,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "edbef7ac-0f4b-4b68-a3ea-8f0435a0e7b9",
+      "MAX_SIZE": 0,
+      "REQUIRED": true,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "MESSAGES",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Messages",
+      "EXAMPLE": null
+    },
+    {
+      "DEFAULT_VALUE": "",
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "HELP_TEXT": "",
+      "LAST_UPDATED": "LAST_UPDATED_REPLACE",
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "List Text",
+        "BACKEND": "Array"
+      },
+      "IS_LIST_TEXT_UNIQUE": true,
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": null,
+      "PICKLIST_RESTRICT": false,
+      "LAST_UPDATED_BY": "",
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "cc3282db-a464-4c64-b15f-1824e128387f",
+      "MAX_SIZE": 0,
+      "REQUIRED": false,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "CC_EMAILS",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Cc Emails",
+      "EXAMPLE": null
+    },
+    {
+      "DEFAULT_VALUE": null,
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "HELP_TEXT": "",
+      "LAST_UPDATED": "LAST_UPDATED_REPLACE",
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": "",
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Date/Time",
+        "BACKEND": "Date"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": "Enter Values",
+      "PICKLIST_RESTRICT": true,
+      "LAST_UPDATED_BY": null,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "9d3c5936-21d8-44cd-b523-6732c9386650",
+      "MAX_SIZE": 0,
+      "REQUIRED": false,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": true,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "DATE_CREATED",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Date Created",
+      "EXAMPLE": null
+    },
+    {
+      "DEFAULT_VALUE": "",
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "HELP_TEXT": "",
+      "LAST_UPDATED": "LAST_UPDATED_REPLACE",
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": false,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Date/Time",
+        "BACKEND": "Date"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": null,
+      "PICKLIST_RESTRICT": false,
+      "LAST_UPDATED_BY": "",
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "7087da64-031f-41b3-8a1c-f649fbfe98ea",
+      "MAX_SIZE": 10,
+      "REQUIRED": false,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "DUE_DATE",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Due Date",
+      "EXAMPLE": null
+    },
+    {
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "FIELD_ID": "ec79ed72-b3e0-47d8-ba75-ac2ca380ddd7",
+      "LAST_UPDATED": "LAST_UPDATED_REPLACE",
+      "REQUIRED": false,
+      "RELATIONSHIP_FIELD": "",
+      "NOT_EDITABLE": true,
+      "NAME": "LAST_UPDATED_BY",
+      "MODULE": "USERS_MODULE_REPLACE",
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Last Updated by",
+      "RELATIONSHIP_TYPE": "Many to One",
+      "INTERNAL": true,
+      "PRIMARY_DISPLAY_FIELD": "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "String"
+      }
+    },
+    {
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "FIELD_ID": "0d7c6fa8-1bff-489d-bce3-097c8ab16512",
+      "LAST_UPDATED": "LAST_UPDATED_REPLACE",
+      "REQUIRED": false,
+      "RELATIONSHIP_FIELD": "",
+      "NOT_EDITABLE": true,
+      "NAME": "CREATED_BY",
+      "MODULE": "USERS_MODULE_REPLACE",
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Created By",
+      "RELATIONSHIP_TYPE": "Many to One",
+      "INTERNAL": true,
+      "PRIMARY_DISPLAY_FIELD": "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "String"
+      }
+    },
+    {
+      "DEFAULT_VALUE": null,
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "HELP_TEXT": "",
+      "LAST_UPDATED": "LAST_UPDATED_REPLACE",
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": "",
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Date/Time",
+        "BACKEND": "Date"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": "Enter Values",
+      "PICKLIST_RESTRICT": true,
+      "LAST_UPDATED_BY": null,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "99f33168-9456-456a-97ff-166548a799ca",
+      "MAX_SIZE": 0,
+      "REQUIRED": false,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": true,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "DATE_UPDATED",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Date Updated",
+      "EXAMPLE": null
+    },
+    {
+      "DEFAULT_VALUE": null,
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "HELP_TEXT": "",
+      "LAST_UPDATED": "LAST_UPDATED_REPLACE",
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": "",
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "File Upload",
+        "BACKEND": "BLOB"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": "Enter Values",
+      "PICKLIST_RESTRICT": true,
+      "LAST_UPDATED_BY": null,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "95556e66-513b-488e-b8c9-9c7bb7477d1b",
+      "MAX_SIZE": 0,
+      "REQUIRED": false,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "FILE_UPLOAD",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Attach Files",
+      "EXAMPLE": null
+    },
+    {
+      "DEFAULT_VALUE": "New",
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "HELP_TEXT": "",
+      "LAST_UPDATED": "LAST_UPDATED_REPLACE",
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": [
+		"New",
+        "Open",
+        "Pending",
+        "Resolved",
+        "Closed"
+      ],
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": "",
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Picklist",
+        "BACKEND": "String"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": "Enter Values",
+      "PICKLIST_RESTRICT": true,
+      "LAST_UPDATED_BY": null,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "02285079-81d3-46db-8061-d5bcee1d8c84",
+      "MAX_SIZE": 0,
+      "REQUIRED": true,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "STATUS",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Status",
+      "EXAMPLE": null
+    },
+    {
+      "DEFAULT_VALUE": "",
+      "DATE_CREATED": null,
+      "HELP_TEXT": "",
+      "LAST_UPDATED": null,
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": null,
+      "PICKLIST_RESTRICT": false,
+      "LAST_UPDATED_BY": "",
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "b190baa2-180b-4eb4-b935-af08a07377db",
+      "MAX_SIZE": 100,
+      "REQUIRED": false,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": true,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "DATA_ID",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": true,
+      "DISPLAY_LABEL": "Data ID",
+      "EXAMPLE": null
+    },
+    {
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "FIELD_ID": "30e7e42c-ca90-49b5-986e-341f11d37de5",
+      "LAST_UPDATED": "LAST_UPDATED_REPLACE",
+      "REQUIRED": true,
+      "RELATIONSHIP_FIELD": "9e68b9c7-c0f2-4422-8cbe-b0104f8c11d5",
+      "NAME": "REQUESTOR",
+      "MODULE": "CONTACTS_MODULE_REPLACE",
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Requestor",
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "RELATIONSHIP_TYPE": "Many to One",
+      "PRIMARY_DISPLAY_FIELD": "1abb3787-2ead-49ee-88cc-da911717c38d",
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "String"
+      },
+      "DEFAULT_VALUE": "{{CURRENT_CONTACT}}"
+    },
+    {
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "FIELD_ID": "62c5c3a3-0008-4c4e-b1a8-3d5784e9dd6d",
+      "LAST_UPDATED": "LAST_UPDATED_REPLACE",
+      "REQUIRED": false,
+      "RELATIONSHIP_FIELD": "3105993e-8b89-4e3b-8389-2deae8f70716",
+      "NAME": "ASSIGNEE",
+      "MODULE": "USERS_MODULE_REPLACE",
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Assignee",
+      "NOT_EDITABLE": false,
+      "INTERNAL": true,
+      "RELATIONSHIP_TYPE": "Many to One",
+      "PRIMARY_DISPLAY_FIELD": "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "String"
+      }
+    },
+    {
+      "DEFAULT_VALUE": null,
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "HELP_TEXT": "",
+      "LAST_UPDATED": "LAST_UPDATED_REPLACE",
+      "LENGTH": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": "",
+      "DECIMAL_PLACES": null,
+      "AUTO_NUMBER_GENERATION": true,
+      "DATA_TYPE": {
+        "DISPLAY": "Auto Number",
+        "BACKEND": "Integer"
+      },
+      "MASK_CHARACTER": null,
+      "PICKLIST": "Enter Values",
+      "PICKLIST_RESTRICT": true,
+      "LAST_UPDATED_BY": null,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+      "REQUIRED": true,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": true,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "TICKET_ID",
+      "AUTO_NUMBER_STARTING_NUMBER": 1,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "ID",
+      "EXAMPLE": null,
+	  "PREFIX": "",
+	  "SUFFIX": "",
+	  "NUMERIC_FORMAT": ""
+    },
+    {
+      "MODULE": "TEAMS_MODULE_REPLACE",
+      "FIELD_ID": "1556aab3-1f0c-4893-b0fe-d45c52294cd1",
+      "DISPLAY_LABEL": "Teams",
+      "INTERNAL": true,
+      "HELP_TEXT": "",
+      "RELATIONSHIP_TYPE": "Many to Many",
+      "REQUIRED": true,
+      "NOT_EDITABLE":false,
+      "RELATIONSHIP_FIELD": "",
+      "PRIMARY_DISPLAY_FIELD": "b1c48961-43e0-4071-b30c-0f7be5daa7a9",
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "Array"
+      },
+      "NAME": "TEAMS",
+      "DEFAULT_VALUE": "GLOBAL_TEAM_REPLACE"
+    },
+    {
+      "DISPLAY_LABEL": "Time Spent",
+      "FIELD_ID": "048232fa-eb4d-4997-a3df-4886ef5e8e3b",
+      "INTERNAL": true,
+      "REQUIRED": false,
+      "HELP_TEXT": "",
+      "NOT_EDITABLE": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Chronometer",
+        "BACKEND": "Integer"
+      },
+      "NAME": "TIME_SPENT",
+	  "PREFIX": "",
+	  "SUFFIX": "",
+	  "NUMERIC_FORMAT": ""
+    },
+    {
+      "FIELD_ID": "c962e5b9-9da9-4fd3-8e99-3bb2e4c3fa92",
+      "NAME": "APPROVAL",
+      "DISPLAY_LABEL": "Approval",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "LENGTH": 0,
+      "DECIMAL_PLACES": 0,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": null,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": [],
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": true,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "RELATIONSHIP_FIELD": null,
+      "FORMULA": null,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Approval",
+        "BACKEND": "Approval"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": null,
+      "LAST_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "NOT_EDITABLE": false,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false
+    },
+     {
+      "FIELD_ID": "ec928c4f-f1f6-424d-b120-7e7747360ff2",
+      "NAME": "TIME_WINDOW",
+      "DISPLAY_LABEL": "Time Window",
+      "HELP_TEXT": "",
+      "DATA_TYPE": {
+        "DISPLAY": "Time Window",
+        "BACKEND": "Timestamp"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_VALUES": [],
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+     {
+      "FIELD_ID": "4024c953-87aa-4d4e-97ae-2a467b83db3a",
+      "NAME": "PDFS",
+      "DISPLAY_LABEL": "PDFS",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": null,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": [],
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": true,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "RELATIONSHIP_FIELD": null,
+      "FORMULA": null,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "DATA_TYPE": {
+        "DISPLAY": "PDF",
+        "BACKEND": "BLOB"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": "DATE_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "MESSAGES": null,
+      "INTERNAL": false,
+      "NOT_EDITABLE": true,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false,
+      "WORKFLOW": null,
+      "DATA_FILTER": null,
+      "AGGREGATION_TYPE": null,
+      "AGGREGATION_FIELD": null,
+      "AGGREGATION_RELATED_FIELD": null,
+      "INHERITANCE_MAPPING": null,
+      "UNIQUE": false,
+      "DATE_UPDATED": "DATE_REPLACE"
+     }
+  ],
+  "WORKFLOWS": [
+    {
+      "COMPANY_ID": "COMPANY_ID_REPLACE",
+      "MODULE_ID": "TICKETS_MODULE_REPLACE",
+      "TYPE": "CREATE_OR_UPDATE",
+      "NAME": "Send Confirmation",
+      "DESCRIPTION": "this workflow send a confirmation to everybody involved",
+      "CONDITIONS": [],
+      "STAGES": [
+        {
+          "STAGE_ID": "deaa53bb-8d59-4c88-b3eb-56d45b89f981",
+          "NAME": "Send Confirmation",
+          "CONDITIONS": [],
+          "NODES": [
+            {
+              "ID": "node-id-7fc84ff2-ca9a-499d-08ae-5585a4efaba8",
+              "TYPE": "Start",
+              "CONNECTIONS_TO": [
+                {
+                  "TITLE": "START",
+                  "FROM": "OUT",
+                  "TO_NODE": "node-id-e1df26bd-1796-4b0e-7f07-845ab6f79264"
+                }
+              ],
+              "NAME": "Update"
+            },
+            {
+              "ID": "node-id-e1df26bd-1796-4b0e-7f07-845ab6f79264",
+              "TYPE": "SendEmail",
+              "CONNECTIONS_TO": [
+                {
+                  "TITLE": "IF EMAIL SENT",
+                  "FROM": "OUT-1",
+                  "TO_NODE": "node-id-ab2e4c88-4fd7-da33-7722-b16b45fa64fa"
+                }
+              ],
+              "NAME": "Send Email 1",
+              "TO": "{{inputMessage.REQUESTOR.USER.EMAIL_ADDRESS}}",
+              "FROM": "support@COMPANY_SUBDOMAIN_REPLACE.ngdesk.com",
+              "SUBJECT": "[#{{inputMessage.TICKET_ID}}] {{inputMessage.SUBJECT}}",
+              "BODY": "{{inputMessage.MESSAGES}}"
+            },
+            {
+              "ID": "node-id-ab2e4c88-4fd7-da33-7722-b16b45fa64fa",
+              "TYPE": "SendEmail",
+              "CONNECTIONS_TO": [
+                {
+                  "TITLE": "START",
+                  "FROM": "OUT",
+                  "TO_NODE": "node-id-47ff373b-bd2c-4cdd-b037-05cc6b723609"
+                }
+              ],
+              "NAME": "Send Email 2",
+              "TO": "{{inputMessage.CC_EMAILS}}",
+              "FROM": "support@COMPANY_SUBDOMAIN_REPLACE.ngdesk.com",
+              "SUBJECT": "[#{{inputMessage.TICKET_ID}}] {{inputMessage.SUBJECT}}",
+              "BODY": "{{inputMessage.MESSAGES}}"
+            },
+            {
+              "ID": "node-id-47ff373b-bd2c-4cdd-b037-05cc6b723609",
+              "TYPE": "SendEmail",
+              "CONNECTIONS_TO": [
+                {
+                  "TITLE": "END",
+                  "FROM": "OUT",
+                  "TO_NODE": "node-id-7fc84ff2-ca9a-499d-08ae-5585a4efacd4"
+                }
+              ],
+              "NAME": "SendEmail 3",
+              "TO": "{{InputMessage.ASSIGNEE.EMAIL_ADDRESS}}",
+              "FROM": "support@COMPANY_SUBDOMAIN_REPLACE.ngdesk.com",
+              "SUBJECT": "[#{{inputMessage.TICKET_ID}}] {{inputMessage.SUBJECT}}",
+              "BODY": " {{InputMessage.MESSAGES}} "
+            },
+            {
+              "ID": "node-id-7fc84ff2-ca9a-499d-08ae-5585a4efacd4",
+              "TYPE": "End",
+              "CONNECTIONS_TO": [],
+              "NAME": "End workflow",
+              "CONDITIONS": []
+            }
+          ]
+        }
+      ],
+      "ORDER": 0,
+      "RAPID_UI_PAYLOAD": "{\"cells\": [{\"type\": \"app.FlowchartStart\", \"size\": {\"width\": 48, \"height\": 48}, \"ports\": {\"items\": [{\"group\": \"out\", \"id\": \"a8edfa57-93fa-4186-9544-5dd11438ddd7\"}]}, \"position\": {\"x\": 216, \"y\": -200}, \"id\": \"25075ebf-615e-4ab1-a80f-69bb153635fb\", \"z\": 1, \"attrs\": {\"label\": {\"text\": \"Start\"}}}, {\"type\": \"app.SendEmail\", \"size\": {\"width\": 368, \"height\": 80}, \"ports\": {\"items\": [{\"group\": \"in\", \"id\": \"03004514-4090-4cb2-b742-163202c34451\"}, {\"group\": \"out\", \"attrs\": {\"portLabel\": {\"text\": \"out\"}}, \"id\": \"341ca1b7-b557-45b6-8bfa-1fd784bc7a0c\"}]}, \"position\": {\"x\": 216, \"y\": 0}, \"id\": \"node-id-e1df26bd-1796-4b0e-7f07-845ab6f79264\", \"z\": 2, \"attrs\": {\"body\": {\"stroke\": \"#E8E8E8\"}, \"label\": {\"text\": \"Send Email 1\"}, \"icon\": {\"xlinkHref\": \"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDI0IDI0IiBoZWlnaHQ9IjI0IiB2aWV3Qm94PSIwIDAgMjQgMjQiIHdpZHRoPSIyNCI+PGc+PHJlY3QgZmlsbD0ibm9uZSIgaGVpZ2h0PSIyNCIgd2lkdGg9IjI0IiB4PSIwIi8+PHBhdGggZD0iTTEyLDE5YzAtMy44NywzLjEzLTcsNy03YzEuMDgsMCwyLjA5LDAuMjUsMywwLjY4VjZjMC0xLjEtMC45LTItMi0ySDRDMi45LDQsMiw0LjksMiw2djEyYzAsMS4xLDAuOSwyLDIsMmg4LjA4IEMxMi4wMywxOS42NywxMiwxOS4zNCwxMiwxOXogTTQsNmw4LDVsOC01djJsLTgsNUw0LDhWNnogTTE3LjM0LDIybC0zLjU0LTMuNTRsMS40MS0xLjQxbDIuMTIsMi4xMmw0LjI0LTQuMjRMMjMsMTYuMzRMMTcuMzQsMjJ6Ii8+PC9nPjwvc3ZnPg==\"}}}, {\"type\": \"app.Link\", \"labels\": [{\"attrs\": {\"labelText\": {\"text\": \"Label\"}}, \"position\": {\"distance\": 0.25}}], \"source\": {\"id\": \"25075ebf-615e-4ab1-a80f-69bb153635fb\", \"magnet\": \"portBody\", \"port\": \"a8edfa57-93fa-4186-9544-5dd11438ddd7\"}, \"target\": {\"id\": \"node-id-e1df26bd-1796-4b0e-7f07-845ab6f79264\", \"magnet\": \"portBody\", \"port\": \"03004514-4090-4cb2-b742-163202c34451\"}, \"id\": \"c7314331-2a8d-4685-a70e-5223b070590e\", \"z\": 3, \"attrs\": {}}, {\"type\": \"app.SendEmail\", \"size\": {\"width\": 368, \"height\": 80}, \"ports\": {\"items\": [{\"group\": \"in\", \"id\": \"0f57e7a4-80e0-49ed-aa5f-1ba9d365cb1c\"}, {\"group\": \"out\", \"attrs\": {\"portLabel\": {\"text\": \"out\"}}, \"id\": \"687b46db-d9c8-4b89-b950-c55f627b03a5\"}]}, \"position\": {\"x\": 216, \"y\": 200}, \"id\": \"node-id-ab2e4c88-4fd7-da33-7722-b16b45fa64fa\", \"z\": 4, \"attrs\": {\"body\": {\"stroke\": \"#E8E8E8\"}, \"label\": {\"text\": \"Send Email 2\"}, \"icon\": {\"xlinkHref\": \"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDI0IDI0IiBoZWlnaHQ9IjI0IiB2aWV3Qm94PSIwIDAgMjQgMjQiIHdpZHRoPSIyNCI+PGc+PHJlY3QgZmlsbD0ibm9uZSIgaGVpZ2h0PSIyNCIgd2lkdGg9IjI0IiB4PSIwIi8+PHBhdGggZD0iTTEyLDE5YzAtMy44NywzLjEzLTcsNy03YzEuMDgsMCwyLjA5LDAuMjUsMywwLjY4VjZjMC0xLjEtMC45LTItMi0ySDRDMi45LDQsMiw0LjksMiw2djEyYzAsMS4xLDAuOSwyLDIsMmg4LjA4IEMxMi4wMywxOS42NywxMiwxOS4zNCwxMiwxOXogTTQsNmw4LDVsOC01djJsLTgsNUw0LDhWNnogTTE3LjM0LDIybC0zLjU0LTMuNTRsMS40MS0xLjQxbDIuMTIsMi4xMmw0LjI0LTQuMjRMMjMsMTYuMzRMMTcuMzQsMjJ6Ii8+PC9nPjwvc3ZnPg==\"}}}, {\"type\": \"app.Link\", \"labels\": [{\"attrs\": {\"labelText\": {\"text\": \"Label\"}}, \"position\": {\"distance\": 0.25}}], \"source\": {\"id\": \"node-id-e1df26bd-1796-4b0e-7f07-845ab6f79264\", \"magnet\": \"portBody\", \"port\": \"341ca1b7-b557-45b6-8bfa-1fd784bc7a0c\"}, \"target\": {\"id\": \"node-id-ab2e4c88-4fd7-da33-7722-b16b45fa64fa\", \"magnet\": \"portBody\", \"port\": \"0f57e7a4-80e0-49ed-aa5f-1ba9d365cb1c\"}, \"id\": \"6d34557a-8ca7-4e8e-9a29-7dd04badc4ce\", \"z\": 5, \"attrs\": {}}, {\"type\": \"app.SendEmail\", \"size\": {\"width\": 368, \"height\": 80}, \"ports\": {\"items\": [{\"group\": \"in\", \"id\": \"c08039ec-1ebc-4ca2-ae96-2486c396956f\"}, {\"group\": \"out\", \"attrs\": {\"portLabel\": {\"text\": \"out\"}}, \"id\": \"275e0752-00f1-40c1-9fb2-934464739337\"}]}, \"position\": {\"x\": 216, \"y\": 400}, \"id\": \"node-id-47ff373b-bd2c-4cdd-b037-05cc6b723609\", \"z\": 6, \"attrs\": {\"body\": {\"stroke\": \"#E8E8E8\"}, \"label\": {\"text\": \"SendEmail 3\"}, \"icon\": {\"xlinkHref\": \"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDI0IDI0IiBoZWlnaHQ9IjI0IiB2aWV3Qm94PSIwIDAgMjQgMjQiIHdpZHRoPSIyNCI+PGc+PHJlY3QgZmlsbD0ibm9uZSIgaGVpZ2h0PSIyNCIgd2lkdGg9IjI0IiB4PSIwIi8+PHBhdGggZD0iTTEyLDE5YzAtMy44NywzLjEzLTcsNy03YzEuMDgsMCwyLjA5LDAuMjUsMywwLjY4VjZjMC0xLjEtMC45LTItMi0ySDRDMi45LDQsMiw0LjksMiw2djEyYzAsMS4xLDAuOSwyLDIsMmg4LjA4IEMxMi4wMywxOS42NywxMiwxOS4zNCwxMiwxOXogTTQsNmw4LDVsOC01djJsLTgsNUw0LDhWNnogTTE3LjM0LDIybC0zLjU0LTMuNTRsMS40MS0xLjQxbDIuMTIsMi4xMmw0LjI0LTQuMjRMMjMsMTYuMzRMMTcuMzQsMjJ6Ii8+PC9nPjwvc3ZnPg==\"}}}, {\"type\": \"app.Link\", \"labels\": [{\"attrs\": {\"labelText\": {\"text\": \"Label\"}}, \"position\": {\"distance\": 0.25}}], \"source\": {\"id\": \"node-id-ab2e4c88-4fd7-da33-7722-b16b45fa64fa\", \"magnet\": \"portBody\", \"port\": \"687b46db-d9c8-4b89-b950-c55f627b03a5\"}, \"target\": {\"id\": \"node-id-47ff373b-bd2c-4cdd-b037-05cc6b723609\", \"magnet\": \"portBody\", \"port\": \"c08039ec-1ebc-4ca2-ae96-2486c396956f\"}, \"id\": \"bf8c82b7-f1b5-4831-aa16-04fc84d1937d\", \"z\": 7, \"attrs\": {}}, {\"type\": \"app.FlowchartEnd\", \"size\": {\"width\": 48, \"height\": 48}, \"ports\": {\"items\": [{\"group\": \"in\", \"id\": \"04cd738e-e646-49d3-8d1d-41641a7d4e34\"}]}, \"position\": {\"x\": 216, \"y\": 600}, \"id\": \"node-id-7fc84ff2-ca9a-499d-08ae-5585a4efacd4\", \"attrs\": {\"label\": {\"text\": \"End\"}}, \"z\": 8}, {\"type\": \"app.Link\", \"labels\": [{\"attrs\": {\"labelText\": {\"text\": \"Label\"}}, \"position\": {\"distance\": 0.25}}], \"source\": {\"id\": \"node-id-47ff373b-bd2c-4cdd-b037-05cc6b723609\", \"magnet\": \"portBody\", \"port\": \"275e0752-00f1-40c1-9fb2-934464739337\"}, \"target\": {\"id\": \"node-id-7fc84ff2-ca9a-499d-08ae-5585a4efacd4\", \"magnet\": \"portBody\", \"port\": \"04cd738e-e646-49d3-8d1d-41641a7d4e34\"}, \"id\": \"77ee885a-c7c9-4049-afe7-30d24769dda4\", \"z\": 9, \"attrs\": {}}]}"    },
+    {
+      "COMPANY_ID": "COMPANY_ID_REPLACE",
+      "MODULE_ID": "TICKETS_MODULE_REPLACE",
+      "TYPE": "CREATE",
+      "NAME": "Block out of office tickets",
+      "DESCRIPTION": "This workflow will not let the ticket to be created due the out of office auto replies ",
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "CONDITION_VALUE": "Out of Office"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "CONTAINS",
+          "CONDITION": "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "CONDITION_VALUE": "Out of Office"
+        }
+      ],
+      "STAGES": [
+        {
+          "STAGE_ID": "d74edb61-07e3-485e-9f0d-de06d780e8c1",
+          "NAME": "Block out of office tickets",
+          "CONDITIONS": [],
+          "NODES": [
+            {
+              "ID": "node-id-42f22740-e43d-4f96-95c5-f972be52904e",
+              "TYPE": "Start",
+              "CONNECTIONS_TO": [
+                {
+                  "TITLE": "START",
+                  "FROM": "OUT",
+                  "TO_NODE": "node-id-a7c08978-ba13-4d39-b774-d11baa5dda3e"
+                }
+              ],
+              "NAME": "Start"
+            },
+            {
+              "ID": "node-id-a7c08978-ba13-4d39-b774-d11baa5dda3e",
+              "TYPE": "DeleteEntry",
+              "CONNECTIONS_TO": [
+                {
+                  "TITLE": "END",
+                  "FROM": "OUT",
+                  "TO_NODE": "node-id-7fc84ff2-ca9a-499d-08ae-5585a4efacd4"
+                }
+              ],
+              "NAME": "DeleteEntry 1"
+            },
+            {
+              "ID": "node-id-7fc84ff2-ca9a-499d-08ae-5585a4efacd4",
+              "TYPE": "End",
+              "CONNECTIONS_TO": [],
+              "NAME": "End workflow",
+              "CONDITIONS": []
+            }
+          ]
+        }
+      ],
+      "ORDER": 1,
+      "RAPID_UI_PAYLOAD": "{\"cells\": [{\"type\": \"app.FlowchartStart\", \"size\": {\"width\": 48, \"height\": 48}, \"ports\": {\"items\": [{\"group\": \"out\", \"id\": \"86ac3ad8-e691-4abf-be8a-e2ab0418bbe5\"}]}, \"position\": {\"x\": 216, \"y\": -200}, \"id\": \"458b9b68-9eae-4678-b4f7-ef65a9e3c927\", \"z\": 1, \"attrs\": {\"label\": {\"text\": \"Start\"}}}, {\"type\": \"app.DeleteEntry\", \"size\": {\"width\": 368, \"height\": 80}, \"ports\": {\"items\": [{\"group\": \"in\", \"id\": \"aa24c57c-468f-4d50-8db3-0cde9f3cffed\"}, {\"group\": \"out\", \"attrs\": {\"portLabel\": {\"text\": \"out\"}}, \"id\": \"dcc4a728-71aa-4b94-9ffc-c6f5ff4c9e4e\"}]}, \"position\": {\"x\": 216, \"y\": 0}, \"id\": \"node-id-a7c08978-ba13-4d39-b774-d11baa5dda3e\", \"z\": 2, \"attrs\": {\"body\": {\"stroke\": \"#E8E8E8\"}, \"label\": {\"text\": \"DeleteEntry 1\"}, \"icon\": {\"xlinkHref\": \"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDI0IDI0IiBoZWlnaHQ9IjI0IiB2aWV3Qm94PSIwIDAgMjQgMjQiIHdpZHRoPSIyNCI+PGc+PHJlY3QgZmlsbD0ibm9uZSIgaGVpZ2h0PSIyNCIgd2lkdGg9IjI0IiB4PSIwIi8+PHBhdGggZD0iTTEyLDE5YzAtMy44NywzLjEzLTcsNy03YzEuMDgsMCwyLjA5LDAuMjUsMywwLjY4VjZjMC0xLjEtMC45LTItMi0ySDRDMi45LDQsMiw0LjksMiw2djEyYzAsMS4xLDAuOSwyLDIsMmg4LjA4IEMxMi4wMywxOS42NywxMiwxOS4zNCwxMiwxOXogTTQsNmw4LDVsOC01djJsLTgsNUw0LDhWNnogTTE3LjM0LDIybC0zLjU0LTMuNTRsMS40MS0xLjQxbDIuMTIsMi4xMmw0LjI0LTQuMjRMMjMsMTYuMzRMMTcuMzQsMjJ6Ii8+PC9nPjwvc3ZnPg==\"}}}, {\"type\": \"app.Link\", \"labels\": [{\"attrs\": {\"labelText\": {\"text\": \"Label\"}}, \"position\": {\"distance\": 0.25}}], \"source\": {\"id\": \"458b9b68-9eae-4678-b4f7-ef65a9e3c927\", \"magnet\": \"portBody\", \"port\": \"86ac3ad8-e691-4abf-be8a-e2ab0418bbe5\"}, \"target\": {\"id\": \"node-id-a7c08978-ba13-4d39-b774-d11baa5dda3e\", \"magnet\": \"portBody\", \"port\": \"aa24c57c-468f-4d50-8db3-0cde9f3cffed\"}, \"id\": \"a5750f75-32b7-49ea-87e0-faca3be663f9\", \"z\": 3, \"attrs\": {}}, {\"type\": \"app.FlowchartEnd\", \"size\": {\"width\": 48, \"height\": 48}, \"ports\": {\"items\": [{\"group\": \"in\", \"id\": \"afecfa06-0994-40c2-8aeb-0fd80a76a9d0\"}]}, \"position\": {\"x\": 216, \"y\": 200}, \"id\": \"node-id-7fc84ff2-ca9a-499d-08ae-5585a4efacd4\", \"attrs\": {\"label\": {\"text\": \"End\"}}, \"z\": 4}, {\"type\": \"app.Link\", \"labels\": [{\"attrs\": {\"labelText\": {\"text\": \"Label\"}}, \"position\": {\"distance\": 0.25}}], \"source\": {\"id\": \"node-id-a7c08978-ba13-4d39-b774-d11baa5dda3e\", \"magnet\": \"portBody\", \"port\": \"dcc4a728-71aa-4b94-9ffc-c6f5ff4c9e4e\"}, \"target\": {\"id\": \"node-id-7fc84ff2-ca9a-499d-08ae-5585a4efacd4\", \"magnet\": \"portBody\", \"port\": \"afecfa06-0994-40c2-8aeb-0fd80a76a9d0\"}, \"id\": \"38775a2e-bc7d-4b18-926a-535550058b74\", \"z\": 5, \"attrs\": {}}]}"    }
+  ],
+  "PLURAL_NAME": "Tickets",
+  "FIELD_RULES": [],
+  "CREATE_LAYOUTS": [
+    {
+      "LAYOUT_STYLE": "outline",
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "DESCRIPTION": "",
+      "LAYOUT_ID": "2d3b6b14-5066-4891-8388-733131a396ef",
+      "NAME": "Tickets",
+      "PREDEFINED_TEMPLATE": [
+        {
+          "ID": "SIDE_BAR",
+          "FIELDS": [
+            {
+              "FIELD_ID": "30e7e42c-ca90-49b5-986e-341f11d37de5"
+            },
+            {
+              "FIELD_ID": "62c5c3a3-0008-4c4e-b1a8-3d5784e9dd6d"
+            },
+            {
+              "FIELD_ID": "02285079-81d3-46db-8061-d5bcee1d8c84"
+            },
+            {
+              "FIELD_ID": "34e5212e-6be4-4e69-915b-2b27ed1c746f"
+            },
+            {
+              "FIELD_ID": "1556aab3-1f0c-4893-b0fe-d45c52294cd1"
+            },
+            {
+              "FIELD_ID": "cc3282db-a464-4c64-b15f-1824e128387f"
+            },
+            {
+              "FIELD_ID": "7087da64-031f-41b3-8a1c-f649fbfe98ea"
+            }
+          ],
+          "FIELD_STYLE": "EDITABLE"
+        }
+      ]
+    },
+    {
+      "LAYOUT_STYLE": "outline",
+      "ROLE": "AGENT_ROLE_REPLACE",
+      "DESCRIPTION": "",
+      "LAYOUT_ID": "d42df608-c690-4b6c-815e-0526b6fd665d",
+      "NAME": "Tickets",
+      "PREDEFINED_TEMPLATE": [
+        {
+          "ID": "SIDE_BAR",
+          "FIELDS": [
+            {
+              "FIELD_ID": "30e7e42c-ca90-49b5-986e-341f11d37de5"
+            },
+            {
+              "FIELD_ID": "62c5c3a3-0008-4c4e-b1a8-3d5784e9dd6d"
+            },
+            {
+              "FIELD_ID": "02285079-81d3-46db-8061-d5bcee1d8c84"
+            },
+            {
+              "FIELD_ID": "34e5212e-6be4-4e69-915b-2b27ed1c746f"
+            },
+            {
+              "FIELD_ID": "1556aab3-1f0c-4893-b0fe-d45c52294cd1"
+            },
+            {
+              "FIELD_ID": "cc3282db-a464-4c64-b15f-1824e128387f"
+            },
+            {
+              "FIELD_ID": "7087da64-031f-41b3-8a1c-f649fbfe98ea"
+            }
+          ],
+          "FIELD_STYLE": "EDITABLE"
+        }
+      ]
+    },
+    {
+      "LAYOUT_STYLE": "outline",
+      "ROLE": "CUSTOMERS_ROLE_REPLACE",
+      "DESCRIPTION": "",
+      "LAYOUT_ID": "61128077-78f2-4909-8036-ea4c86146831",
+      "NAME": "Tickets",
+      "PREDEFINED_TEMPLATE": [
+        {
+          "ID": "SIDE_BAR",
+          "FIELDS": [
+            {
+              "FIELD_ID": "cc3282db-a464-4c64-b15f-1824e128387f"
+            }
+          ],
+          "FIELD_STYLE": "EDITABLE"
+        }
+      ]
+    }
+  ],
+  "EDIT_MOBILE_LAYOUTS": [
+    {
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "DESCRIPTION": "Ticket Description",
+      "FIELDS": [
+        "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+        "02285079-81d3-46db-8061-d5bcee1d8c84",
+        "edbef7ac-0f4b-4b68-a3ea-8f0435a0e7b9",
+        "1556aab3-1f0c-4893-b0fe-d45c52294cd1"
+      ],
+      "LAYOUT_ID": "391348e4-4369-4cd0-9e07-5a32ecac0392",
+      "NAME": "Tickets"
+    },
+    {
+      "ROLE": "AGENT_ROLE_REPLACE",
+      "DESCRIPTION": "Ticket Description",
+      "FIELDS": [
+        "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+        "02285079-81d3-46db-8061-d5bcee1d8c84",
+        "edbef7ac-0f4b-4b68-a3ea-8f0435a0e7b9",
+        "1556aab3-1f0c-4893-b0fe-d45c52294cd1"
+      ],
+      "LAYOUT_ID": "a457d89b-d9fa-4140-a516-9c62236bc5b7",
+      "NAME": "Tickets"
+    },
+    {
+      "ROLE": "CUSTOMERS_ROLE_REPLACE",
+      "DESCRIPTION": "Ticket Description",
+      "FIELDS": [
+        "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+        "02285079-81d3-46db-8061-d5bcee1d8c84",
+        "edbef7ac-0f4b-4b68-a3ea-8f0435a0e7b9",
+        "1556aab3-1f0c-4893-b0fe-d45c52294cd1"
+      ],
+      "LAYOUT_ID": "327712e8-170a-4238-81d2-9a33340b5064",
+      "NAME": "Tickets"
+    }
+  ],
+  "DETAIL_LAYOUTS": [
+    {
+      "LAYOUT_STYLE": "outline",
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "DESCRIPTION": "",
+      "LAYOUT_ID": "7e92c631-783e-4526-82bd-480ae893dca7",
+      "NAME": "Tickets",
+      "CUSTOM_LAYOUT": null,
+      "PREDEFINED_TEMPLATE": [
+        {
+          "ID": "SIDE_BAR",
+          "FIELDS": [
+            {
+              "FIELD_ID": "34e5212e-6be4-4e69-915b-2b27ed1c746f"
+            },
+            {
+              "FIELD_ID": "02285079-81d3-46db-8061-d5bcee1d8c84"
+            },
+            {
+              "FIELD_ID": "cc3282db-a464-4c64-b15f-1824e128387f"
+            },
+            {
+              "FIELD_ID": "62c5c3a3-0008-4c4e-b1a8-3d5784e9dd6d"
+            },
+            {
+              "FIELD_ID": "1556aab3-1f0c-4893-b0fe-d45c52294cd1"
+            },
+            {
+              "FIELD_ID": "7087da64-031f-41b3-8a1c-f649fbfe98ea"
+            },
+            {
+              "FIELD_ID": "048232fa-eb4d-4997-a3df-4886ef5e8e3b"
+            }
+          ],
+          "FIELD_STYLE": "EDITABLE"
+        },
+        {
+          "ID": "HEADER",
+          "FIELDS": [
+            {
+              "FIELD_ID": "51bf883f-f16b-4a0a-b2b8-6e965392af82"
+            },
+            {
+              "FIELD_ID": "30e7e42c-ca90-49b5-986e-341f11d37de5"
+            }
+          ],
+          "FIELD_STYLE": "NON_EDITABLE_PILLS"
+        }
+      ]
+    },
+    {
+      "LAYOUT_STYLE": "outline",
+      "ROLE": "AGENT_ROLE_REPLACE",
+      "DESCRIPTION": "",
+      "LAYOUT_ID": "178d7a17-8b14-4285-aa96-f4719a4e3731",
+      "NAME": "Tickets",
+      "CUSTOM_LAYOUT": null,
+      "PREDEFINED_TEMPLATE": [
+        {
+          "ID": "SIDE_BAR",
+          "FIELDS": [
+            {
+              "FIELD_ID": "34e5212e-6be4-4e69-915b-2b27ed1c746f"
+            },
+            {
+              "FIELD_ID": "02285079-81d3-46db-8061-d5bcee1d8c84"
+            },
+            {
+              "FIELD_ID": "cc3282db-a464-4c64-b15f-1824e128387f"
+            },
+            {
+              "FIELD_ID": "62c5c3a3-0008-4c4e-b1a8-3d5784e9dd6d"
+            },
+            {
+              "FIELD_ID": "1556aab3-1f0c-4893-b0fe-d45c52294cd1"
+            },
+            {
+              "FIELD_ID": "7087da64-031f-41b3-8a1c-f649fbfe98ea"
+            },
+            {
+              "FIELD_ID": "048232fa-eb4d-4997-a3df-4886ef5e8e3b"
+            }
+          ],
+          "FIELD_STYLE": "EDITABLE"
+        },
+        {
+          "ID": "HEADER",
+          "FIELDS": [
+            {
+              "FIELD_ID": "51bf883f-f16b-4a0a-b2b8-6e965392af82"
+            },
+            {
+              "FIELD_ID": "30e7e42c-ca90-49b5-986e-341f11d37de5"
+            }
+          ],
+          "FIELD_STYLE": "NON_EDITABLE_PILLS"
+        }
+      ]
+    },
+    {
+      "LAYOUT_STYLE": "outline",
+      "ROLE": "CUSTOMERS_ROLE_REPLACE",
+      "DESCRIPTION": "",
+      "LAYOUT_ID": "4dc1f5a9-4f82-44bf-a50b-2d55fe458f0e",
+      "NAME": "Tickets",
+      "CUSTOM_LAYOUT": null,
+      "PREDEFINED_TEMPLATE": [
+        {
+          "ID": "HEADER",
+          "FIELDS": [
+            {
+              "FIELD_ID": "51bf883f-f16b-4a0a-b2b8-6e965392af82"
+            },
+            {
+              "FIELD_ID": "30e7e42c-ca90-49b5-986e-341f11d37de5"
+            }
+          ],
+          "FIELD_STYLE": "NON_EDITABLE_PILLS"
+        }
+      ]
+    }
+  ],
+  "NAME": "Tickets",
+  "VALIDATIONS": [],
+  "SINGULAR_NAME": "Ticket",
+  "EDIT_LAYOUTS": [
+    {
+      "LAYOUT_STYLE": "outline",
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "DESCRIPTION": "",
+      "LAYOUT_ID": "3a5dad41-e9be-4594-a334-bf35d759faf7",
+      "NAME": "Tickets",
+      "PREDEFINED_TEMPLATE": [
+        {
+          "ID": "SIDE_BAR",
+          "FIELDS": [
+            {
+              "FIELD_ID": "34e5212e-6be4-4e69-915b-2b27ed1c746f"
+            },
+            {
+              "FIELD_ID": "02285079-81d3-46db-8061-d5bcee1d8c84"
+            },
+            {
+              "FIELD_ID": "cc3282db-a464-4c64-b15f-1824e128387f"
+            },
+            {
+              "FIELD_ID": "62c5c3a3-0008-4c4e-b1a8-3d5784e9dd6d"
+            },
+            {
+              "FIELD_ID": "1556aab3-1f0c-4893-b0fe-d45c52294cd1"
+            },
+            {
+              "FIELD_ID": "7087da64-031f-41b3-8a1c-f649fbfe98ea"
+            },
+            {
+              "FIELD_ID": "048232fa-eb4d-4997-a3df-4886ef5e8e3b"
+            }
+          ],
+          "FIELD_STYLE": "EDITABLE"
+        },
+        {
+          "ID": "HEADER",
+          "FIELDS": [
+            {
+              "FIELD_ID": "51bf883f-f16b-4a0a-b2b8-6e965392af82"
+            },
+            {
+              "FIELD_ID": "30e7e42c-ca90-49b5-986e-341f11d37de5"
+            }
+          ],
+          "FIELD_STYLE": "NON_EDITABLE_PILLS"
+        }
+      ]
+    },
+    {
+      "LAYOUT_STYLE": "outline",
+      "ROLE": "AGENT_ROLE_REPLACE",
+      "DESCRIPTION": "",
+      "LAYOUT_ID": "571f247d-03e9-4aab-8d90-e4c8e92bc899",
+      "NAME": "Tickets",
+      "PREDEFINED_TEMPLATE": [
+        {
+          "ID": "SIDE_BAR",
+          "FIELDS": [
+            {
+              "FIELD_ID": "34e5212e-6be4-4e69-915b-2b27ed1c746f"
+            },
+            {
+              "FIELD_ID": "02285079-81d3-46db-8061-d5bcee1d8c84"
+            },
+            {
+              "FIELD_ID": "cc3282db-a464-4c64-b15f-1824e128387f"
+            },
+            {
+              "FIELD_ID": "62c5c3a3-0008-4c4e-b1a8-3d5784e9dd6d"
+            },
+            {
+              "FIELD_ID": "1556aab3-1f0c-4893-b0fe-d45c52294cd1"
+            },
+            {
+              "FIELD_ID": "7087da64-031f-41b3-8a1c-f649fbfe98ea"
+            },
+            {
+              "FIELD_ID": "048232fa-eb4d-4997-a3df-4886ef5e8e3b"
+            }
+          ],
+          "FIELD_STYLE": "EDITABLE"
+        },
+        {
+          "ID": "HEADER",
+          "FIELDS": [
+            {
+              "FIELD_ID": "51bf883f-f16b-4a0a-b2b8-6e965392af82"
+            },
+            {
+              "FIELD_ID": "30e7e42c-ca90-49b5-986e-341f11d37de5"
+            }
+          ],
+          "FIELD_STYLE": "NON_EDITABLE_PILLS"
+        }
+      ]
+    },
+    {
+      "LAYOUT_STYLE": "outline",
+      "ROLE": "CUSTOMERS_ROLE_REPLACE",
+      "DESCRIPTION": "",
+      "LAYOUT_ID": "5a040862-6ea6-4281-b08b-c20c33f7781f",
+      "NAME": "Tickets",
+      "PREDEFINED_TEMPLATE": [
+        {
+          "ID": "HEADER",
+          "FIELDS": [
+            {
+              "FIELD_ID": "51bf883f-f16b-4a0a-b2b8-6e965392af82"
+            },
+            {
+              "FIELD_ID": "30e7e42c-ca90-49b5-986e-341f11d37de5"
+            }
+          ],
+          "FIELD_STYLE": "NON_EDITABLE_PILLS"
+        }
+      ]
+    }
+  ],
+  "DESCRIPTION": "Tickets",
+  "MONITORS": [],
+  "CREATE_MOBILE_LAYOUTS": [
+    {
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "DESCRIPTION": "Ticket Description",
+      "FIELDS": [
+        "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+        "02285079-81d3-46db-8061-d5bcee1d8c84",
+        "edbef7ac-0f4b-4b68-a3ea-8f0435a0e7b9",
+        "1556aab3-1f0c-4893-b0fe-d45c52294cd1",
+        "30e7e42c-ca90-49b5-986e-341f11d37de5"
+      ],
+      "LAYOUT_ID": "2f5661e2-84d1-493a-bc63-3879038f304b",
+      "NAME": "Ticket"
+    },
+    {
+      "ROLE": "AGENT_ROLE_REPLACE",
+      "DESCRIPTION": "Ticket Description",
+      "FIELDS": [
+        "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+        "02285079-81d3-46db-8061-d5bcee1d8c84",
+        "edbef7ac-0f4b-4b68-a3ea-8f0435a0e7b9",
+        "1556aab3-1f0c-4893-b0fe-d45c52294cd1",
+        "30e7e42c-ca90-49b5-986e-341f11d37de5"
+      ],
+      "LAYOUT_ID": "9dddd02-d63d-4f2f-9b20-6190b7174fe7",
+      "NAME": "Tickets"
+    },
+    {
+      "ROLE": "CUSTOMERS_ROLE_REPLACE",
+      "DESCRIPTION": "Ticket Description",
+      "FIELDS": [
+        "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+        "02285079-81d3-46db-8061-d5bcee1d8c84",
+        "edbef7ac-0f4b-4b68-a3ea-8f0435a0e7b9",
+        "1556aab3-1f0c-4893-b0fe-d45c52294cd1",
+        "30e7e42c-ca90-49b5-986e-341f11d37de5"
+      ],
+      "LAYOUT_ID": "417a5c80-c996-42b0-a176-18317aa66ebc",
+      "NAME": "Tickets"
+    }
+  ],
+  "DETAIL_MOBILE_LAYOUTS": [
+    {
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "DESCRIPTION": "Ticket Description",
+      "FIELDS": [
+        "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+        "02285079-81d3-46db-8061-d5bcee1d8c84",
+        "9d3c5936-21d8-44cd-b523-6732c9386650",
+        "edbef7ac-0f4b-4b68-a3ea-8f0435a0e7b9",
+        "99f33168-9456-456a-97ff-166548a799ca"
+      ],
+      "LAYOUT_ID": "e2e8cdf0-2065-4acf-924a-1aee976e6737c",
+      "NAME": "Tickets"
+    },
+    {
+      "ROLE": "AGENT_ROLE_REPLACE",
+      "DESCRIPTION": "Ticket Description",
+      "FIELDS": [
+        "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+        "02285079-81d3-46db-8061-d5bcee1d8c84",
+        "9d3c5936-21d8-44cd-b523-6732c9386650",
+        "edbef7ac-0f4b-4b68-a3ea-8f0435a0e7b9",
+        "99f33168-9456-456a-97ff-166548a799ca"
+      ],
+      "LAYOUT_ID": "e1042129-b650-4d95-8ec6-01e64b458236",
+      "NAME": "Tickets"
+    },
+    {
+      "ROLE": "CUSTOMERS_ROLE_REPLACE",
+      "DESCRIPTION": "Ticket Description",
+      "FIELDS": [
+        "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+        "02285079-81d3-46db-8061-d5bcee1d8c84",
+        "9d3c5936-21d8-44cd-b523-6732c9386650",
+        "edbef7ac-0f4b-4b68-a3ea-8f0435a0e7b9",
+        "99f33168-9456-456a-97ff-166548a799ca"
+      ],
+      "LAYOUT_ID": "ecbaef9e-de5d-4d7b-bb59-96d19e18998c",
+      "NAME": "Tickets"
+    }
+  ],
+  "LIST_LAYOUTS": [
+    {
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "99f33168-9456-456a-97ff-166548a799ca"
+      },
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+          "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "9d3c5936-21d8-44cd-b523-6732c9386650",
+          "99f33168-9456-456a-97ff-166548a799ca",
+          "02285079-81d3-46db-8061-d5bcee1d8c84"
+        ]
+      },
+      "DESCRIPTION": "Create, view and resolve current tickets ",
+      "CONDITIONS": [],
+      "LAYOUT_ID": "635e7787-6beb-49e3-9b01-60d152a15842",
+      "IS_DEFAULT": false,
+      "NAME": "All Tickets"
+    },
+    {
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "99f33168-9456-456a-97ff-166548a799ca"
+      },
+      "ROLE": "AGENT_ROLE_REPLACE",
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+          "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "9d3c5936-21d8-44cd-b523-6732c9386650",
+          "99f33168-9456-456a-97ff-166548a799ca",
+          "02285079-81d3-46db-8061-d5bcee1d8c84"
+        ]
+      },
+      "DESCRIPTION": "Create, view and resolve current tickets ",
+      "CONDITIONS": [],
+      "LAYOUT_ID": "e1d125f5-3be7-46be-b941-e1197589984b",
+      "IS_DEFAULT": false,
+      "NAME": "All Tickets"
+    },
+    {
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "99f33168-9456-456a-97ff-166548a799ca"
+      },
+      "ROLE": "CUSTOMERS_ROLE_REPLACE",
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+          "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "9d3c5936-21d8-44cd-b523-6732c9386650",
+          "99f33168-9456-456a-97ff-166548a799ca",
+          "02285079-81d3-46db-8061-d5bcee1d8c84"
+        ]
+      },
+      "DESCRIPTION": "Create, view and resolve current tickets ",
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "CONDITION": "30e7e42c-ca90-49b5-986e-341f11d37de5",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION_VALUE": "{{CURRENT_USER}}"
+        }
+      ],
+      "LAYOUT_ID": "0d3f322a-14e3-4df6-b750-a39b6459283a",
+      "IS_DEFAULT": false,
+      "NAME": "All Tickets"
+    },
+    {
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "99f33168-9456-456a-97ff-166548a799ca"
+      },
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+          "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "9d3c5936-21d8-44cd-b523-6732c9386650",
+          "99f33168-9456-456a-97ff-166548a799ca",
+          "02285079-81d3-46db-8061-d5bcee1d8c84"
+        ]
+      },
+      "DESCRIPTION": "Create, view and resolve current tickets ",
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "62c5c3a3-0008-4c4e-b1a8-3d5784e9dd6d",
+          "CONDITION_VALUE": "{{CURRENT_USER}}"
+        }
+      ],
+      "LAYOUT_ID": "e645e173-f5b3-4155-9ed5-682e8addd962",
+      "IS_DEFAULT": false,
+      "NAME": "Your Tickets"
+    },
+    {
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "99f33168-9456-456a-97ff-166548a799ca"
+      },
+      "ROLE": "AGENT_ROLE_REPLACE",
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+          "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "9d3c5936-21d8-44cd-b523-6732c9386650",
+          "99f33168-9456-456a-97ff-166548a799ca",
+          "02285079-81d3-46db-8061-d5bcee1d8c84"
+        ]
+      },
+      "DESCRIPTION": "Create, view and resolve current tickets ",
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "62c5c3a3-0008-4c4e-b1a8-3d5784e9dd6d",
+          "CONDITION_VALUE": "{{CURRENT_USER}}"
+        }
+      ],
+      "LAYOUT_ID": "965591db-1e40-4ac7-9fc2-becc8d0d46ff",
+      "IS_DEFAULT": false,
+      "NAME": "Your Tickets"
+    },
+    {
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "99f33168-9456-456a-97ff-166548a799ca"
+      },
+      "ROLE": "CUSTOMERS_ROLE_REPLACE",
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+          "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "9d3c5936-21d8-44cd-b523-6732c9386650",
+          "99f33168-9456-456a-97ff-166548a799ca",
+          "02285079-81d3-46db-8061-d5bcee1d8c84"
+        ]
+      },
+      "DESCRIPTION": "Create, view and resolve current tickets ",
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "CONDITION": "30e7e42c-ca90-49b5-986e-341f11d37de5",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION_VALUE": "{{CURRENT_USER}}"
+        }
+      ],
+      "LAYOUT_ID": "df0120c4-2550-479f-88b1-ec867005a28c",
+      "IS_DEFAULT": false,
+      "NAME": "Your Tickets"
+    },
+    {
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "99f33168-9456-456a-97ff-166548a799ca"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+          "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "9d3c5936-21d8-44cd-b523-6732c9386650",
+          "99f33168-9456-456a-97ff-166548a799ca",
+          "02285079-81d3-46db-8061-d5bcee1d8c84"
+        ]
+      },
+      "DESCRIPTION": "Create, view and resolve current tickets ",
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "New"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Open"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Pending"
+        }
+      ],
+      "LAYOUT_ID": "8d09fa40-787c-49fe-8444-0ea51aa0ad37",
+      "IS_DEFAULT": true,
+      "NAME": "Active Tickets"
+    },
+    {
+      "ROLE": "AGENT_ROLE_REPLACE",
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "99f33168-9456-456a-97ff-166548a799ca"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+          "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "9d3c5936-21d8-44cd-b523-6732c9386650",
+          "99f33168-9456-456a-97ff-166548a799ca",
+          "02285079-81d3-46db-8061-d5bcee1d8c84"
+        ]
+      },
+      "DESCRIPTION": "Create, view and resolve current tickets ",
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "New"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Open"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Pending"
+        }
+      ],
+      "LAYOUT_ID": "000faa23-df37-4a8c-8571-52f4ea501642",
+      "IS_DEFAULT": true,
+      "NAME": "Active Tickets"
+    },
+    {
+      "ROLE": "CUSTOMERS_ROLE_REPLACE",
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "99f33168-9456-456a-97ff-166548a799ca"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+          "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "9d3c5936-21d8-44cd-b523-6732c9386650",
+          "99f33168-9456-456a-97ff-166548a799ca",
+          "02285079-81d3-46db-8061-d5bcee1d8c84"
+        ]
+      },
+      "DESCRIPTION": "Create, view and resolve current tickets ",
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "CONDITION": "30e7e42c-ca90-49b5-986e-341f11d37de5",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION_VALUE": "{{CURRENT_USER}}"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "New"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Open"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Pending"
+        }
+      ],
+      "LAYOUT_ID": "a348a348-305b-493c-8b90-5a2a2f9ddbfe",
+      "IS_DEFAULT": true,
+      "NAME": "Active Tickets"
+    },
+    {
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "99f33168-9456-456a-97ff-166548a799ca"
+      },
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+          "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "9d3c5936-21d8-44cd-b523-6732c9386650",
+          "99f33168-9456-456a-97ff-166548a799ca",
+          "02285079-81d3-46db-8061-d5bcee1d8c84"
+        ]
+      },
+      "DESCRIPTION": "Create, view and resolve current tickets ",
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Closed"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Resolved"
+        }
+      ],
+      "LAYOUT_ID": "e121783f-40b6-45f4-ab7d-5cac596c2741",
+      "IS_DEFAULT": false,
+      "NAME": "Inactive Tickets"
+    },
+    {
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "99f33168-9456-456a-97ff-166548a799ca"
+      },
+      "ROLE": "AGENT_ROLE_REPLACE",
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+          "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "9d3c5936-21d8-44cd-b523-6732c9386650",
+          "99f33168-9456-456a-97ff-166548a799ca",
+          "02285079-81d3-46db-8061-d5bcee1d8c84"
+        ]
+      },
+      "DESCRIPTION": "Create, view and resolve current tickets ",
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Closed"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Resolved"
+        }
+      ],
+      "LAYOUT_ID": "d79a2eb8-e2bd-403f-8453-604ab183e17e",
+      "IS_DEFAULT": false,
+      "NAME": "Inactive Tickets"
+    },
+    {
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "99f33168-9456-456a-97ff-166548a799ca"
+      },
+      "ROLE": "CUSTOMERS_ROLE_REPLACE",
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+          "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "9d3c5936-21d8-44cd-b523-6732c9386650",
+          "99f33168-9456-456a-97ff-166548a799ca",
+          "02285079-81d3-46db-8061-d5bcee1d8c84"
+        ]
+      },
+      "DESCRIPTION": "Create, view and resolve current tickets ",
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "CONDITION": "30e7e42c-ca90-49b5-986e-341f11d37de5",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION_VALUE": "{{CURRENT_USER}}"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Closed"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Resolved"
+        }
+      ],
+      "LAYOUT_ID": "db37f0b1-d170-4803-8120-2d20f60b9744",
+      "IS_DEFAULT": false,
+      "NAME": "Inactive Tickets"
+    },
+    {
+      "LAYOUT_ID": "4386fbcd-c3f3-4e10-aa01-54ab92afb8a3",
+      "NAME": "New Tickets",
+      "DESCRIPTION": "All the new tickets can be viewed",
+      "ID": null,
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "ORDER_BY": {
+        "COLUMN": "99f33168-9456-456a-97ff-166548a799ca",
+        "ORDER": "Desc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+          "34e5212e-6be4-4e69-915b-2b27ed1c746f",
+          "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "9d3c5936-21d8-44cd-b523-6732c9386650",
+          "99f33168-9456-456a-97ff-166548a799ca"
+        ]
+      },
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "New"
+        }
+      ],
+      "IS_DEFAULT": false
+    },
+    {
+      "LAYOUT_ID": "0256f433-287a-449d-a865-b5a1ddbb086c",
+      "NAME": "New Tickets",
+      "DESCRIPTION": "All the new tickets can be viewed",
+      "ID": null,
+      "ROLE": "AGENT_ROLE_REPLACE",
+      "ORDER_BY": {
+        "COLUMN": "99f33168-9456-456a-97ff-166548a799ca",
+        "ORDER": "Desc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+          "34e5212e-6be4-4e69-915b-2b27ed1c746f",
+          "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "9d3c5936-21d8-44cd-b523-6732c9386650",
+          "99f33168-9456-456a-97ff-166548a799ca"
+        ]
+      },
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "New"
+        }
+      ],
+      "IS_DEFAULT": false
+    },
+    {
+      "LAYOUT_ID": "89e7317e-f06b-411b-861b-6b7fc224286b",
+      "NAME": "Open Tickets",
+      "DESCRIPTION": "All the open tickets can be viewed",
+      "ID": null,
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "ORDER_BY": {
+        "COLUMN": "99f33168-9456-456a-97ff-166548a799ca",
+        "ORDER": "Desc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+          "34e5212e-6be4-4e69-915b-2b27ed1c746f",
+          "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "9d3c5936-21d8-44cd-b523-6732c9386650",
+          "99f33168-9456-456a-97ff-166548a799ca"
+        ]
+      },
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Open"
+        }
+      ],
+      "IS_DEFAULT": false
+    },
+    {
+      "LAYOUT_ID": "9c51ea94-90ae-4fd7-acd4-841952a7d563",
+      "NAME": "Open Tickets",
+      "DESCRIPTION": "All the open tickets can be viewed",
+      "ID": null,
+      "ROLE": "AGENT_ROLE_REPLACE",
+      "ORDER_BY": {
+        "COLUMN": "99f33168-9456-456a-97ff-166548a799ca",
+        "ORDER": "Desc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+          "34e5212e-6be4-4e69-915b-2b27ed1c746f",
+          "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "9d3c5936-21d8-44cd-b523-6732c9386650",
+          "99f33168-9456-456a-97ff-166548a799ca"
+        ]
+      },
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Open"
+        }
+      ],
+      "IS_DEFAULT": false
+    },
+    {
+      "LAYOUT_ID": "270aecf3-8699-4312-baec-b4d7be933437",
+      "NAME": "Pending tickets",
+      "DESCRIPTION": "All the pending tickets can be viewed ",
+      "ID": null,
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "ORDER_BY": {
+        "COLUMN": "99f33168-9456-456a-97ff-166548a799ca",
+        "ORDER": "Desc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+          "34e5212e-6be4-4e69-915b-2b27ed1c746f",
+          "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "9d3c5936-21d8-44cd-b523-6732c9386650",
+          "99f33168-9456-456a-97ff-166548a799ca"
+        ]
+      },
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Pending"
+        }
+      ],
+      "IS_DEFAULT": false
+    },
+    {
+      "LAYOUT_ID": "f56bda8a-b504-40fe-9dc8-347b6935a15a",
+      "NAME": "Pending tickets",
+      "DESCRIPTION": "All the pending tickets can be viewed ",
+      "ID": null,
+      "ROLE": "AGENT_ROLE_REPLACE",
+      "ORDER_BY": {
+        "COLUMN": "99f33168-9456-456a-97ff-166548a799ca",
+        "ORDER": "Desc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+          "34e5212e-6be4-4e69-915b-2b27ed1c746f",
+          "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "9d3c5936-21d8-44cd-b523-6732c9386650",
+          "99f33168-9456-456a-97ff-166548a799ca"
+        ]
+      },
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Pending"
+        }
+      ],
+      "IS_DEFAULT": false
+    },
+    {
+      "LAYOUT_ID": "f15f6c32-14ea-45c0-834f-992c5cf5ff63",
+      "NAME": "Resolved Tickets",
+      "DESCRIPTION": "Can view the resolved Tickets",
+      "ID": null,
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "ORDER_BY": {
+        "COLUMN": "99f33168-9456-456a-97ff-166548a799ca",
+        "ORDER": "Desc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+          "34e5212e-6be4-4e69-915b-2b27ed1c746f",
+          "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "9d3c5936-21d8-44cd-b523-6732c9386650",
+          "99f33168-9456-456a-97ff-166548a799ca"
+        ]
+      },
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Resolved"
+        }
+      ],
+      "IS_DEFAULT": false
+    },
+    {
+      "LAYOUT_ID": "83d43213-0de6-4c86-9890-2b80c702690a",
+      "NAME": "Closed Tickets",
+      "DESCRIPTION": "Can view the closed Tickets",
+      "ID": null,
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "ORDER_BY": {
+        "COLUMN": "99f33168-9456-456a-97ff-166548a799ca",
+        "ORDER": "Desc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+          "34e5212e-6be4-4e69-915b-2b27ed1c746f",
+          "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "9d3c5936-21d8-44cd-b523-6732c9386650",
+          "99f33168-9456-456a-97ff-166548a799ca"
+        ]
+      },
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Closed"
+        }
+      ],
+      "IS_DEFAULT": false
+    }
+  ],
+  "LIST_MOBILE_LAYOUTS": [
+    {
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "9d3c5936-21d8-44cd-b523-6732c9386650"
+      },
+      "DESCRIPTION": "New, Open and Pending Tickets",
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "New"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Open"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Pending"
+        }
+      ],
+      "LAYOUT_ID": "ddf7eed9-b93f-428f-b5c4-2f51fccf980b",
+      "NAME": "Tickets",
+      "IS_DEFAULT": true,
+      "FIELDS": [
+        "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+        "02285079-81d3-46db-8061-d5bcee1d8c84"
+      ]
+    },
+    {
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "9d3c5936-21d8-44cd-b523-6732c9386650"
+      },
+      "DESCRIPTION": "Closed and Resolved Tickets",
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Closed"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Resolved"
+        }
+      ],
+      "LAYOUT_ID": "59b7f649-5fed-4f58-9ff1-8414d8dee0e9",
+      "NAME": "Closed and Resolved",
+      "FIELDS": [
+        "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+        "02285079-81d3-46db-8061-d5bcee1d8c84"
+      ]
+    },
+    {
+      "ROLE": "CUSTOMERS_ROLE_REPLACE",
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "9d3c5936-21d8-44cd-b523-6732c9386650"
+      },
+      "DESCRIPTION": "Ticket",
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "New"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Open"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Pending"
+        }
+      ],
+      "LAYOUT_ID": "8d114be8-512d-450e-a771-80eac5b992c4",
+      "NAME": "Tickets",
+      "IS_DEFAULT": true,
+      "FIELDS": [
+        "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+        "02285079-81d3-46db-8061-d5bcee1d8c84"
+      ]
+    },
+    {
+      "ROLE": "CUSTOMERS_ROLE_REPLACE",
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "9d3c5936-21d8-44cd-b523-6732c9386650"
+      },
+      "DESCRIPTION": "Closed and Resolved Tickets",
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Closed"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Resolved"
+        }
+      ],
+      "LAYOUT_ID": "670a37ff-a2d7-49ee-b6a7-b0d5f6eed239",
+      "NAME": "Closed and Resolved",
+      "FIELDS": [
+        "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+        "02285079-81d3-46db-8061-d5bcee1d8c84"
+      ]
+    },
+    {
+      "ROLE": "AGENT_ROLE_REPLACE",
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "9d3c5936-21d8-44cd-b523-6732c9386650"
+      },
+      "DESCRIPTION": "Ticket",
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "New"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Open"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Pending"
+        }
+      ],
+      "LAYOUT_ID": "95a7b232-b76c-4cd8-a781-4ba307edf609",
+      "NAME": "Tickets",
+      "IS_DEFAULT": true,
+      "FIELDS": [
+        "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+        "02285079-81d3-46db-8061-d5bcee1d8c84"
+      ]
+    },
+    {
+      "ROLE": "AGENT_ROLE_REPLACE",
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "9d3c5936-21d8-44cd-b523-6732c9386650"
+      },
+      "DESCRIPTION": "Closed and Resolved Tickets",
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Closed"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Resolved"
+        }
+      ],
+      "LAYOUT_ID": "23341ca8-98f5-4f30-8772-f2c26b50d9e3",
+      "NAME": "Closed and Resolved",
+      "FIELDS": [
+        "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+        "02285079-81d3-46db-8061-d5bcee1d8c84"
+      ]
+    }
+  ],
+  "CHAT_BOTS": []
+}

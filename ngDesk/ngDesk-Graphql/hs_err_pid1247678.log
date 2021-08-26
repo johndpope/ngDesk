@@ -1,0 +1,30 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007ff414a5c0ad, pid=1247678, tid=1247698
+#
+# JRE version: OpenJDK Runtime Environment (11.0.8+10) (build 11.0.8+10-post-Ubuntu-0ubuntu120.04)
+# Java VM: OpenJDK 64-Bit Server VM (11.0.8+10-post-Ubuntu-0ubuntu120.04, mixed mode, sharing, tiered, compressed oops, g1 gc, linux-amd64)
+# Problematic frame:
+# C  [libjimage.so+0x30ad]
+#
+# Core dump will be written. Default location: Core dumps may be processed with "/usr/share/apport/apport %p %s %c %d %P %E" (or dumping to /home/sshankaranand/workspace/ngdesk/backend/ngDesk-Graphql/core.1247678)
+#
+# If you would like to submit a bug report, please visit:
+#   https://bugs.launchpad.net/ubuntu/+source/openjdk-lts
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -agentlib:jdwp=transport=dt_socket,suspend=y,address=localhost:39183 -javaagent:/home/sshankaranand/.eclipse/org.eclipse.platform_4.16.0_640022211_linux_gtk_x86_64/configuration/org.eclipse.osgi/215/0/.cp/lib/javaagent-shaded.jar -Dfile.encoding=UTF-8 com.ngdesk.graphql.GraphqlApplication
+
+Host: Intel(R) Core(TM) i7-10875H CPU @ 2.30GHz, 16 cores, 31G, Ubuntu 20.04.1 LTS
+Time: Tue Oct 13 17:53:21 2020 CDT elapsed time: 216 seconds (0d 0h 3m 36s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00007ff4102ba000):  JavaThread "Signal Dispatcher" daemon [_thread_in_vm, id=1247698, stack(0x00007ff3d859c000,0x00007ff3d869d000)]
+
+Stack: [0x00007ff3d859c000,0x00007ff3d869d000],  sp=0x00007ff3d869a1f0,  free space=1016k
+Native frames: (J=compiled Java code, A=aot compiled Java code, j=interpreted, Vv=VM code, C=native code)
+C  [libjimage.so+0x30ad]

@@ -1,0 +1,144 @@
+<app-toolbar [templateRef]="headerTemplateRef">
+</app-toolbar>
+<ng-template #headerTemplateRef>
+	<app-title-bar class="light-grey-color" (buttonRightOnClick)="save()" [title]="'SIDEBAR_CUSTOMIZATION' | translate"
+		[buttonText]="'SAVE' | translate" [buttonColor]="'primary'"></app-title-bar>
+</ng-template>
+<ng-template #menuNameTranslate let-menu="menuObj" let-menuLabelStyle="styleObj">
+	<mat-label *ngIf="internalMenus.indexOf(menu.NAME) !== -1" [ngStyle]="menuLabelStyle ? menuLabelStyle : ''"> {{menu.NAME | translate}}
+	</mat-label>
+	<mat-label *ngIf="internalMenus.indexOf(menu.NAME) === -1" [ngStyle]="menuLabelStyle ? menuLabelStyle : ''"> {{menu.NAME}} </mat-label>
+</ng-template>
+<div fxLayout="row" fxLayoutAlign="center center" class="pad10">
+	<div *ngIf="sidebarLoaded" fxLayout="column" fxFlex="60" fxLayoutGap="10px">
+		<mat-accordion cdkDropList (cdkDropListDropped)="dropMenu($event)">
+			<mat-expansion-panel *ngFor="let menu of sidebar.MENU_ITEMS; let menuIndex = index" cdkDrag>
+				<mat-expansion-panel-header>
+					<mat-panel-title>
+						<div fxLayout="row" fxLayoutAlign=" center" fxLayoutGap="10px" style="cursor: move;">
+							<mat-icon>reorder</mat-icon>
+							<ng-container *ngTemplateOutlet="menuNameTranslate; context: {menuObj: menu}"></ng-container>
+						</div>
+					</mat-panel-title>
+				</mat-expansion-panel-header>
+				<div fxLayout="column" fxLayoutGap="20px">
+					<!-- SIDEBAR MENU DETAILS -->
+					<div>
+						<div fxLayout="row" fxLayoutAlign="space-around center">
+							<div fxLayoutAlign="center center" fxFlex>
+								<mat-label style="text-decoration: underline"> <b>{{'ICON' | translate}}</b> </mat-label>
+							</div>
+							<div fxLayoutAlign="center center" fxFlex>
+								<mat-label style="text-decoration: underline"> <b>{{'NAME' | translate}}</b> </mat-label>
+							</div>
+							<div fxLayoutAlign="center center" fxFlex>
+								<mat-label style="text-decoration: underline"> <b>{{'MODULE' | translate}}</b> </mat-label>
+							</div>
+							<div fxLayoutAlign="center center" fxFlex>
+								<mat-label style="text-decoration: underline"> <b>{{'EDIT' | translate}}</b> </mat-label>
+							</div>
+							<div fxLayoutAlign="center center" fxFlex>
+								<mat-label style="text-decoration: underline"> <b>{{'DELETE' | translate}}</b> </mat-label>
+							</div>
+						</div>
+						<div fxLayout="row" fxLayoutAlign="space-around center">
+							<div fxLayoutAlign="center center" fxFlex>
+								<mat-icon> {{menu.ICON}} </mat-icon>
+							</div>
+							<div fxLayoutAlign="center center" fxFlex>
+								<ng-container *ngTemplateOutlet="menuNameTranslate; context: {menuObj: menu, styleObj: {'text-align': 'center'}}">
+								</ng-container>
+							</div>
+							<div fxLayoutAlign="center center" fxFlex>
+								<mat-label *ngIf="menu.IS_MODULE"> {{ menu.MODULE }} </mat-label>
+								<mat-label *ngIf="!menu.IS_MODULE"> {{'NONE' | translate}} </mat-label>
+							</div>
+							<div fxLayoutAlign="center center" matTooltip="{{'NOT_EDITABLE' | translate}}" [matTooltipDisabled]="menu.EDITABLE" fxFlex>
+								<button mat-icon-button (click)="editMenu(menu, menuIndex)" [disabled]="!menu.EDITABLE">
+									<mat-icon>edit</mat-icon>
+								</button>
+							</div>
+							<div fxLayoutAlign="center center" matTooltip="{{'NOT_EDITABLE' | translate}}" [matTooltipDisabled]="menu.EDITABLE" fxFlex>
+								<button mat-icon-button (click)="deleteMenu(menuIndex)" [disabled]="!menu.EDITABLE">
+									<mat-icon>close</mat-icon>
+								</button>
+							</div>
+						</div>
+					</div>
+
+					<!-- SIDEBAR SUBMENUS -->
+					<div fxLayout="column" fxLayoutGap="10px">
+						<mat-label *ngIf="menu.SUB_MENU_ITEMS.length > 0" style="text-decoration: underline" fxLayoutAlign="center center">
+							<b>{{'SUB_MENUS' | translate}}</b>
+						</mat-label>
+						<mat-accordion cdkDropList (cdkDropListDropped)="dropSubMenu($event, menuIndex)">
+							<mat-expansion-panel *ngFor="let subMenu of menu.SUB_MENU_ITEMS; let subMenuIndex = index;" cdkDrag>
+								<mat-expansion-panel-header>
+									<mat-panel-title>
+										<div fxLayout="row" fxLayoutAlign=" center" fxLayoutGap="10px" style="cursor: move;">
+											<mat-icon>reorder</mat-icon>
+											<ng-container *ngTemplateOutlet="menuNameTranslate; context: {menuObj: subMenu}"></ng-container>
+										</div>
+									</mat-panel-title>
+								</mat-expansion-panel-header>
+								<div fxLayout="column">
+									<div fxLayout="row" fxLayoutAlign="space-around center">
+										<div fxLayoutAlign="center center" fxFlex>
+											<mat-label style="text-decoration: underline"> <b>{{'ICON' | translate}}</b> </mat-label>
+										</div>
+										<div fxLayoutAlign="center center" fxFlex>
+											<mat-label style="text-decoration: underline"> <b>{{'NAME' | translate}}</b> </mat-label>
+										</div>
+										<div fxLayoutAlign="center center" fxFlex>
+											<mat-label style="text-decoration: underline"> <b>{{'MODULE' | translate}}</b> </mat-label>
+										</div>
+										<div fxLayoutAlign="center center" fxFlex>
+											<mat-label style="text-decoration: underline"> <b>{{'EDIT' | translate}}</b> </mat-label>
+										</div>
+										<div fxLayoutAlign="center center" fxFlex>
+											<mat-label style="text-decoration: underline"> <b>{{'DELETE' | translate}}</b> </mat-label>
+										</div>
+									</div>
+									<div fxLayout="row" fxLayoutAlign="space-around center">
+										<div fxLayoutAlign="center center" fxFlex>
+											<mat-icon> {{subMenu.ICON}} </mat-icon>
+										</div>
+										<div fxLayoutAlign="center center" fxFlex>
+											<ng-container *ngTemplateOutlet="menuNameTranslate; context: {menuObj: subMenu, styleObj: {'text-align': 'center'}}">
+											</ng-container>
+										</div>
+										<div fxLayoutAlign="center center" fxFlex>
+											<mat-label *ngIf="subMenu.IS_MODULE"> {{ subMenu.MODULE }} </mat-label>
+											<mat-label *ngIf="!subMenu.IS_MODULE"> {{'NONE' | translate}} </mat-label>
+										</div>
+										<div fxLayoutAlign="center center" matTooltip="{{'NOT_EDITABLE' | translate}}" [matTooltipDisabled]="subMenu.EDITABLE"
+											fxFlex>
+											<button mat-icon-button (click)="editSubMenu(subMenu, menuIndex, subMenuIndex)" [disabled]="!subMenu.EDITABLE">
+												<mat-icon>edit</mat-icon>
+											</button>
+										</div>
+										<div fxLayoutAlign="center center" matTooltip="{{'NOT_EDITABLE' | translate}}" [matTooltipDisabled]="subMenu.EDITABLE"
+											fxFlex>
+											<button mat-icon-button (click)="deleteSubMenu(menuIndex, subMenuIndex)" [disabled]="!subMenu.EDITABLE">
+												<mat-icon>close</mat-icon>
+											</button>
+										</div>
+									</div>
+								</div>
+							</mat-expansion-panel>
+						</mat-accordion>
+						<div matTooltip="{{'MODULE_NO_SUB_MENU' | translate}}" [matTooltipDisabled]="!menu.IS_MODULE" matTooltipPosition="below">
+							<button mat-button [disabled]="menu.IS_MODULE" (click)="addSubMenu(menuIndex)" fxFlex>
+								<mat-icon>add</mat-icon> {{'ADD_SUB_MENU' | translate}}
+							</button>
+						</div>
+					</div>
+				</div>
+			</mat-expansion-panel>
+		</mat-accordion>
+		<button mat-button (click)="addMenu()">
+			<mat-icon>add</mat-icon>{{'ADD_MENU' | translate}}
+		</button>
+	</div>
+
+</div>

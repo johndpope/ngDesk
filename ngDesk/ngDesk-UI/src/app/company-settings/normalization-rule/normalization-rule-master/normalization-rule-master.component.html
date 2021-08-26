@@ -1,0 +1,25 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef>
+  <div fxLayoutAlign="space-between center" fxLayoutGap="10px">
+    <app-title-bar class="light-grey-color" title="{{'NORMALIZATION_RULES' | translate}}"></app-title-bar>
+    <button mat-raised-button (click)="createNewNormalizationRule()" color="primary" #customButton>
+      {{'NEW' | translate}}
+    </button>
+  </div>
+</ng-template>
+
+<div fxLayout="column" fxLayoutGap="10px" class="pad10">
+  <div fxLayout="row">
+    <div fxFlex>
+      <app-custom-table [templateRef]="columnTemplateRef" noRecordsMessage="{{'NO_NORMALIZATION_RULES_FOUND' | translate}}" [actions]="normalizationRuleActions.actions"
+			(menuItemTrigger)="normalizationRuleActions[$event.ACTION.NAME]($event.ROW_DATA);"
+        (rowClickedEvent)="rowClicked($event)" (sortData)="sortData();customTableService.isLoading = true"
+        (pageChangeEmit)="pageChangeEmit($event);customTableService.isLoading = true">
+        <ng-template #columnTemplateRef let-element="element" let-col="col">
+          <span *ngIf="col.NAME !== 'DATE_CREATED'">{{element[col.NAME]}}</span>
+          <span *ngIf="col.NAME === 'DATE_CREATED'">{{element[col.NAME] | dateFormat: 'MMM d, y, h:mm a'}}</span>
+        </ng-template>
+      </app-custom-table>
+    </div>
+  </div>
+</div>

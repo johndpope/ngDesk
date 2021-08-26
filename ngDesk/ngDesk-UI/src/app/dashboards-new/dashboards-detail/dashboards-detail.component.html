@@ -1,0 +1,321 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef>
+	<div fxLayoutAlign="space-between center" fxLayoutGap="10px">
+		<app-title-bar class="light-grey-color" title="{{ 'DASHBOARD' | translate }}" buttonText="{{ 'SAVE' | translate }}"
+			(buttonRightOnClick)="save()" style="min-width: 100%"></app-title-bar>
+	</div>
+</ng-template>
+<div class="pad10">
+	<form [formGroup]="dashboardForm" (ngSubmit)="save()">
+		<app-new-name-description *ngIf="roles" [additionalFields]="additionalFields">
+		</app-new-name-description>
+	</form>
+	<mat-divider></mat-divider>
+</div>
+<div fxLayout="row" fxLayoutGap="2px" class="pad10">
+	<div fxLayout="row" fxLayoutGap="2px" fxFlex="100" style="height: 85vh">
+		<div fxLayout="column" fxFlex="22" flex>
+			<div *ngIf="!widgetAdded" class="mat-h3 widget-header" fxLayout="row" fxLayoutAlign="center center"
+				fxLayoutGap="5px">
+				<mat-icon>widgets</mat-icon> {{ 'WIDGET_LIBRARY' | translate }}
+			</div>
+			<div *ngIf="widgetAdded" class="mat-h3 widget-header" fxLayout="row">
+				<div fxLayoutAlign="start" fxFlex="25" (click)="widgetAdded = !widgetAdded">
+					<mat-icon style="cursor: pointer">arrow_back </mat-icon>
+				</div>
+				<div fxLayoutAlign="center" (click)="widgetAdded = !widgetAdded">
+					{{ 'BACK_TO_WIDGET_LIBRARY' | translate }}
+				</div>
+			</div>
+			<mat-divider></mat-divider>
+			<div class="pad10" fxLayout="column" fxLayoutGap="10px">
+				<div *ngIf="!widgetAdded">
+					<div class="mat-body-strong">Live Widgets</div>
+					<div class="mat-h4" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="6px">
+						<div style="width: 100%; display: flex; flex-flow: row wrap" fxLayoutAlign="start start">
+							<div fxLayout="row" style="margin-bottom: 10px" *ngFor="let widget of allWidgets; let i = index">
+								<mat-card style="height: 110px; width: 140px; margin-right: 5px;" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="5px"
+									(click)="addItem(widget)">
+									<mat-icon style="cursor: pointer">{{ widget.ICON }}</mat-icon>
+                                    <div style="width: 100%; display: flex; flex-flow: row wrap" fxLayoutAlign="start start"></div>
+									<span style="cursor: pointer">{{ widget.TITLE }}</span>
+								</mat-card>
+							</div>
+						</div>
+					</div>
+					<!--Todo:multi-score-card and advanced-pie-chart has to be implemented-->
+					<!-- <div class="mat-h4" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="6px">
+                        <mat-card style="height: 110px;" fxFlex="33.3" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="5px"
+                            (click)="addItem(widget);" *ngFor="let widget of advanceCharts;let i=index">
+                            <mat-icon style="cursor: pointer;">{{widget.ICON}}</mat-icon>
+                            <span style="cursor: pointer;">{{widget.TITLE}}</span>
+                        </mat-card>
+                    </div> -->
+				</div>
+				<div *ngIf="widgetAdded" style="padding: 6px" flex>
+					<div fxLayout="column">
+						<div fxLayout="row">
+							<div fxLayout="column" fxFlex="100">
+								<mat-form-field floatLabel="always" fxFlex="100" appearance="outline">
+									<mat-label>{{ 'TYPE' | translate }}</mat-label>
+									<input matInput type="text" [(ngModel)]="widgets[selectedIndex].type" disabled />
+								</mat-form-field>
+							</div>
+						</div>
+						<div fxLayout="row">
+							<div fxLayout="column" fxFlex="100">
+								<mat-form-field floatLabel="always" fxFlex="100" appearance="outline">
+									<mat-label>{{ 'TITLE' | translate }}</mat-label>
+									<input matInput type="text" [(ngModel)]="widgets[selectedIndex].title" (selectionChange)="
+											onChnageTitle(widgets[selectedIndex].widgetId, $event)
+										" required />
+								</mat-form-field>
+							</div>
+						</div>
+                        <div fxLayout="row" *ngIf="widgets[selectedIndex].type === 'multi-score'">
+							<mat-form-field floatLabel="always" fxFlex="100" appearance="outline">
+								<mat-label>{{ 'WIDGETS' | translate }}</mat-label>
+								<mat-select multiple [(ngModel)]="widgets[selectedIndex]['multiScorecards']"  (ngModelChange)="multiScoreOnChange($event, widgets[selectedIndex])" required>
+									<mat-option *ngFor="let column of availableScoreCards.get(widgets[selectedIndex].widgetId)" [value]="column">
+										{{ column.title }}
+									</mat-option>
+								</mat-select>
+							</mat-form-field>
+						</div>
+						<div fxLayout="row"  *ngIf="widgets[selectedIndex].type !== 'multi-score'">
+							<div fxLayout="column" fxFlex="100">
+								<mat-form-field floatLabel="always" fxFlex="100" appearance="outline">
+									<mat-label>{{ 'SELECT_MODULE' | translate }}</mat-label>
+									<mat-select required [(ngModel)]="widgets[selectedIndex].moduleId"
+										(selectionChange)="onSelectModule($event)">
+										<mat-option *ngFor="let module of modules" [value]="module.MODULE_ID">
+											{{ module.NAME }}
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+						<div fxLayout="row"  *ngIf="widgets[selectedIndex].type !== 'multi-score'">
+							<mat-form-field floatLabel="always" fxFlex="100" appearance="outline">
+								<mat-label>{{ 'ORDER_BY' | translate }}</mat-label>
+								<mat-select [(ngModel)]="widgets[selectedIndex].orderBy.column" required>
+									<mat-option *ngFor="let column of orderByfields" [value]="column.FIELD_ID">
+										{{ column.DISPLAY_LABEL }}
+									</mat-option>
+								</mat-select>
+							</mat-form-field>
+						</div>
+						<div fxLayout="row"  *ngIf="widgets[selectedIndex].type !== 'multi-score'">
+							<mat-form-field fxFlex="100" floatLabel="always" class="mat-form-field--no-underline">
+								<input matInput placeholder="{{ 'ORDER' | translate }}"
+									[(ngModel)]="widgets[selectedIndex].orderBy.order" style="display: none" required />
+								<mat-radio-group [(ngModel)]="widgets[selectedIndex].orderBy.order" fxLayoutGap="10px">
+									<mat-radio-button value="Asc">{{ 'ASC' | translate }}</mat-radio-button>
+									<mat-radio-button value="Desc">{{ 'DESC' | translate }}</mat-radio-button>
+								</mat-radio-group>
+							</mat-form-field>
+						</div>
+						<div fxLayout="row" *ngIf="widgets[selectedIndex].type !== 'score' && widgets[selectedIndex].type !== 'multi-score'">
+							<mat-form-field floatLabel="always" fxFlex="100" appearance="outline">
+								<mat-label>{{ 'FIELD' | translate }}</mat-label>
+								<mat-select [(ngModel)]="widgets[selectedIndex]['field']" required>
+									<mat-option *ngFor="let column of fields" [value]="column.FIELD_ID">
+										{{ column.DISPLAY_LABEL }}
+									</mat-option>
+								</mat-select>
+							</mat-form-field>
+						</div>
+						<div fxLayout="row" *ngIf="widgets[selectedIndex].type !== 'multi-score'">
+							<mat-checkbox color="primary" class="mat-h3" [(ngModel)]="this.widgets[selectedIndex].limitEntries">
+								{{ 'LIMIT_OF_ENTRIES' | translate }}</mat-checkbox>
+						</div>
+						<div fxLayout="row" *ngIf="this.widgets[selectedIndex].limitEntries">
+							<div fxLayout="column" fxFlex="100">
+								<mat-form-field floatLabel="always" fxFlex="100" appearance="outline">
+									<mat-label>{{ 'LIMIT' | translate }}</mat-label>
+									<input type="number" [(ngModel)]="this.widgets[selectedIndex].limit" matInput required />
+								</mat-form-field>
+							</div>
+						</div>
+						<div fxLayout="row" *ngIf="widgets[selectedIndex].type !== 'multi-score'">
+							<mat-form-field floatLabel="always" fxFlex="100" appearance="outline">
+								<mat-label>{{ 'AGGREGATION_TYPE' | translate }}</mat-label>
+								<mat-select [(ngModel)]="widgets[selectedIndex]['aggregateType']" required>
+									<mat-option *ngFor="let aggregateType of aggregateTypes" [value]="aggregateType">
+										{{ aggregateType }}
+									</mat-option>
+								</mat-select>
+							</mat-form-field>
+						</div>
+						<div fxLayout="row" *ngIf="widgets[selectedIndex].type !== 'multi-score' && widgets[selectedIndex]['aggregateType'] !== 'count'">
+							<mat-form-field floatLabel="always" fxFlex="100" appearance="outline">
+								<mat-label>{{ 'AGGREGATION_FIELD' | translate }}</mat-label>
+								<mat-select [(ngModel)]="widgets[selectedIndex]['aggregateField']" required>
+									<mat-option *ngFor="let aggregateField of aggregationFields" [value]="aggregateField.FIELD_ID">
+										{{ aggregateField.DISPLAY_LABEL }}
+									</mat-option>
+								</mat-select>
+							</mat-form-field>
+						</div>
+						<div  *ngIf="widgets[selectedIndex].type !== 'multi-score'" fxLayout="row" style="margin-bottom: 24px">
+							<button mat-raised-button color="primary" (click)="openConditionsDialog()">
+								{{ 'CONDITIONS' | translate }}
+							</button>
+						</div>
+					</div>
+					<!--Todo:multi-score-card and advanced-pie-chart has to be implemented-->
+					<!-- <div fxLayout="column" *ngIf="widgets[selectedIndex]['multiScoreCards']">
+                        <div fxLayout="row">
+                            <div fxLayout="column" fxFlex="100">
+                                <mat-form-field floatLabel="always" fxFlex="100" appearance="outline">
+                                    <mat-label>Type</mat-label>
+                                    <input matInput type="text"
+                                        [(ngModel)]="widgets[selectedIndex]['multiScoreCards'][multiScorecardWidgetIndex].type" disabled>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div fxLayout="row">
+                            <div fxLayout="column" fxFlex="100">
+                                <mat-form-field floatLabel="always" fxFlex="100" appearance="outline">
+                                    <mat-label>Title</mat-label>
+                                    <input matInput type="text"
+                                        [(ngModel)]="widgets[selectedIndex]['multiScoreCards'][multiScorecardWidgetIndex].title"
+                                        (ngModelChange)="onChnageTitle(widgets[selectedIndex]['multiScoreCards'][multiScorecardWidgetIndex].widgetId,$event)"
+                                        required>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div fxLayout="row">
+                            <div fxLayout="column" fxFlex="100">
+                                <mat-form-field floatLabel="always" fxFlex="100" appearance="outline">
+                                    <mat-label>Select Module</mat-label>
+                                    <mat-select required
+                                        [(ngModel)]="widgets[selectedIndex]['multiScoreCards'][multiScorecardWidgetIndex].moduleId"
+                                        (selectionChange)="onSelectModule($event)">
+                                        <mat-option *ngFor="let module of modules" [value]="module.MODULE_ID">
+                                            {{module.NAME}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div fxLayout="row">
+                            <mat-form-field fxFlex="100" appearance="outline">
+                                <mat-select placeholder="{{'ORDER_BY' | translate}}"
+                                    [(ngModel)]="widgets[selectedIndex]['multiScoreCards'][multiScorecardWidgetIndex].orderBy.column"
+                                    required>
+                                    <mat-option *ngFor="let column of orderByfields" [value]="column.FIELD_ID">
+                                        {{column.DISPLAY_LABEL}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div fxLayout="row">
+                            <mat-form-field fxFlex="100" floatLabel="always" class="mat-form-field--no-underline">
+                                <input matInput placeholder="{{'ORDER' | translate}}"
+                                    [(ngModel)]="widgets[selectedIndex]['multiScoreCards'][multiScorecardWidgetIndex].orderBy.order"
+                                    style="display: none" required>
+                                <mat-radio-group
+                                    [(ngModel)]="widgets[selectedIndex]['multiScoreCards'][multiScorecardWidgetIndex].orderBy.order"
+                                    fxLayoutGap="10px">
+                                    <mat-radio-button value="Asc">Asc</mat-radio-button>
+                                    <mat-radio-button value="Desc">Desc</mat-radio-button>
+                                </mat-radio-group>
+                            </mat-form-field>
+                        </div>
+                        <div fxLayout="row" *ngIf="widgets[selectedIndex].type !== 'score'">
+                            <mat-form-field fxFlex="100" appearance="outline">
+                                <mat-select placeholder="{{'FIELD' | translate}}"
+                                    [(ngModel)]="widgets[selectedIndex]['multiScoreCards'][multiScorecardWidgetIndex]['field']" required>
+                                    <mat-option *ngFor="let column of fields" [value]="column.FIELD_ID">
+                                        {{column.DISPLAY_LABEL}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div fxLayout="row">
+                            <div fxLayout="column" fxFlex="100">
+                                <mat-form-field floatLabel="always" fxFlex="100" appearance="outline">
+                                    <mat-label>{{'LIMIT' | translate}}</mat-label>
+                                    <input type="number"
+                                        [(ngModel)]="widgets[selectedIndex]['multiScoreCards'][multiScorecardWidgetIndex].limit" matInput
+                                        required>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div fxLayout="row" style="margin-bottom:24px;">
+                            <button mat-raised-button color="primary" (click)="openConditionsDialog()"> {{'CONDITIONS' |
+                                translate}} </button>
+                        </div>
+                    </div> -->
+				</div>
+			</div>
+		</div>
+		<mat-divider [vertical]="true"></mat-divider>
+		<div fxFlex class="dashboard-grid">
+			<gridster [options]="options" style="background-color: white">
+				<gridster-item [item]="item" *ngFor="let item of dashboards; let widgetIndex = index" style="border: 1px solid">
+					<div class="drag-handler widget-header" *ngIf="item && item.type !== 'multi-score'">
+                    <div  fxLayout="row" >
+						<div fxFlex="50" fxLayoutAlign="start">
+							<div class="float-left header-margin-left"></div>
+							<span class="mat-body" *ngIf="item.label">{{ item.label }}</span>
+						</div>
+						<div fxFlex="50" fxLayoutAlign="end">
+							<a class="widget-header-btn" style="cursor: pointer" (click)="editWidget(item)">
+								<mat-icon>settings</mat-icon>
+							</a>
+							<a class="widget-header-btn" style="cursor: pointer" (mousedown)="removeItem($event, item)">
+								<mat-icon>delete</mat-icon>
+							</a>
+						</div>
+					</div>
+					<div style="height: 70%" fxLayout="column" fxLayoutGap="5px" fxLayoutAlign="center center"
+						class="pad10 mat-body">
+						<div class="mat-body-strong">
+							{{ widgetMap.get(item.id) }}
+						</div>
+					</div>
+                </div>
+				<div class="drag-handler widget-header" *ngIf="item && item.type === 'multi-score'">
+                    <div  fxLayout="row" >
+						<div fxFlex="50" fxLayoutAlign="start">
+							<div class="float-left header-margin-left"></div>
+							<span class="mat-body" *ngIf="item.label">{{ widgets[widgetIndex].title }}</span>
+						</div>
+						<div fxFlex="50" fxLayoutAlign="end">
+							<a class="widget-header-btn" style="cursor: pointer" (click)="editWidget(item)">
+							
+								<mat-icon>settings</mat-icon>
+							</a>
+							<a class="widget-header-btn" style="cursor: pointer" (mousedown)="removeItem($event, item)">
+								
+								<mat-icon>delete</mat-icon>
+							</a>
+						</div>
+					</div>
+					<!-- <div style="height: 70%" fxLayout="column" fxLayoutGap="5px" fxLayoutAlign="center center"
+						class="pad10 mat-body">
+						<div class="mat-body-strong">
+							{{ widgetMap.get(item.id) }}
+						</div>
+					</div>
+				 -->
+				 <div style="width: 100%;  display: flex; flex-flow: row wrap;" fxLayoutAlign="start start">
+					<div fxLayout="row" fxFlex="30" style="margin-bottom: 10px; margin-right: 10px; height: 48%;" *ngFor="let scorecard of widgets[widgetIndex].multiScorecards">
+						<mat-card fxLayout="row" style="width: 100%; height: 100%; padding: 10px;" fxLayoutGap="5px" fxLayoutAlign="space-between center">
+							<label class="mat-h5" style="font-size: 14px;">{{ scorecard.title }}</label>
+							<div fxLayout="column">
+								<mat-icon (click)="unlinkScoreFromMultiScore(widgets[widgetIndex], scorecard);" matTooltip="Ungroup Widget" style="transform: scale(0.8);">link_off</mat-icon>
+								<mat-icon  (click)="deleteScoreFromMultiScore(widgets[widgetIndex], scorecard);" matTooltip="Delete Widget" style="transform: scale(0.8);">delete_outline</mat-icon>
+							</div>
+						</mat-card>
+					</div>
+				</div>
+                </div>
+				</gridster-item>
+			</gridster>
+		</div>
+		<mat-divider [vertical]="true" style="color: black"></mat-divider>
+	</div>
+</div>

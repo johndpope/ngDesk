@@ -1,0 +1,30 @@
+{
+  "ROLE": "ROLE_ID_REPLACE",
+  "KPIS": [
+    {
+      "NAME": "My Open Tickets",
+      "MODULE": "TICKET_MODULE_REPLACE",
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "OPERATOR": "equals to",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Open"
+        }
+      ]
+    },
+    {
+      "NAME": "My Resolved Tickets",
+      "MODULE": "TICKET_MODULE_REPLACE",
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "OPERATOR": "equals to",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Resolved"
+        }
+      ]
+    }
+  ],
+  "LEFT_TAB_MODULE": "TICKET_MODULE_REPLACE"
+}

@@ -1,0 +1,138 @@
+{
+	"PERMISSIONS": [
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Normal",
+				"EDIT": "None",
+				"VIEW": "All",
+				"ACCESS": "Enabled"
+			},
+			"MODULE": "ACCOUNTS_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Normal",
+				"EDIT": "None",
+				"VIEW": "All",
+				"ACCESS": "Enabled"
+			},
+			"MODULE": "CONTACTS_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Normal",
+				"EDIT": "None",
+				"VIEW": "All",
+				"ACCESS": "Enabled"
+			},
+			"MODULE": "USERS_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Normal",
+				"EDIT": "None",
+				"VIEW": "All",
+				"ACCESS": "Enabled"
+			},
+			"MODULE": "TEAMS_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Normal",
+				"EDIT": "None",
+				"VIEW": "All",
+				"ACCESS": "Enabled"
+			},
+			"MODULE": "TICKETS_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "All",
+				"ACCESS_TYPE": "Normal",
+				"EDIT": "All",
+				"VIEW": "All",
+				"ACCESS": "Enabled"
+			},
+			"MODULE": "EXPENSE_REPORTS_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "All",
+				"ACCESS_TYPE": "Normal",
+				"EDIT": "All",
+				"VIEW": "All",
+				"ACCESS": "Enabled"
+			},
+			"MODULE": "CATEGORIES_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "All",
+				"ACCESS_TYPE": "Normal",
+				"EDIT": "All",
+				"VIEW": "All",
+				"ACCESS": "Enabled"
+			},
+			"MODULE": "EXPENSES_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "All",
+				"ACCESS_TYPE": "Normal",
+				"EDIT": "All",
+				"VIEW": "All",
+				"ACCESS": "Enabled"
+			},
+			"MODULE": "TAXES_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "All",
+				"ACCESS_TYPE": "Normal",
+				"EDIT": "All",
+				"VIEW": "All",
+				"ACCESS": "Enabled"
+			},
+			"MODULE": "GL_CODES_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "All",
+				"ACCESS_TYPE": "Normal",
+				"EDIT": "All",
+				"VIEW": "All",
+				"ACCESS": "Enabled"
+			},
+			"MODULE": "Schedules",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "All",
+				"ACCESS_TYPE": "Normal",
+				"EDIT": "All",
+				"VIEW": "All",
+				"ACCESS": "Enabled"
+			},
+			"MODULE": "Escalations",
+			"FIELD_PERMISSIONS": []
+		}
+	],
+	"DESCRIPTION": "This is for the default Accountant",
+	"NAME": "Accountant"
+}

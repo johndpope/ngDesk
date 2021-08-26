@@ -1,0 +1,110 @@
+[
+  {
+    "WORKFLOW_ID": "609b783553a6b04dce78ab7a",
+    "TYPE": "CREATE_OR_UPDATE",
+    "NAME": "Approval",
+    "DESCRIPTION": null,
+    "CONDITIONS": [
+      {
+        "REQUIREMENT_TYPE": "All",
+        "CONDITION": "c4a4b1c8-d8a1-4415-acf3-9f2c3544df0b",
+        "OPERATOR": "NOT_EQUALS_TO",
+        "CONDITION_VALUE": "None"
+      },
+      {
+        "REQUIREMENT_TYPE": "All",
+        "CONDITION": "01a2d02c-3acd-4a76-b861-ca2d3e42edf2",
+        "OPERATOR": "EQUALS_TO",
+        "CONDITION_VALUE": "New"
+      }
+    ],
+    "STAGES": [
+      {
+        "STAGE_ID": "a95c0b0f-92dd-1111-20f1-ceff2221ae77",
+        "NAME": "Approval",
+        "CONDITIONS": [],
+        "NODES": [
+          {
+            "TYPE": "Start",
+            "ID": "a255ccdb-3fc8-4639-be3b-18a04148807c",
+            "CONNECTIONS_TO": [
+              {
+                "TITLE": "t10.6649542162260662",
+                "FROM": "t20.7405445141354172",
+                "TO_NODE": "82d6c1a6-7ee3-4cb6-9384-ee93471b6732",
+                "ON_ERROR": false
+              }
+            ],
+            "NAME": "Start",
+            "CONDITIONS": []
+          },
+          {
+            "TYPE": "End",
+            "ID": "1ca7669e-e2fb-48ba-aa4f-8fce388710a9",
+            "CONNECTIONS_TO": [],
+            "NAME": "End",
+            "CONDITIONS": []
+          },
+          {
+            "TYPE": "Approval",
+            "ID": "82d6c1a6-7ee3-4cb6-9384-ee93471b6732",
+            "CONNECTIONS_TO": [
+              {
+                "TITLE": "approve",
+                "FROM": "t20.5785215514330646",
+                "TO_NODE": "7f6a40f6-a96a-42f1-aa4f-b547e99ce15e",
+                "ON_ERROR": false
+              },
+              {
+                "TITLE": "reject",
+                "FROM": "t20.6535448500709273",
+                "TO_NODE": "1ca7669e-e2fb-48ba-aa4f-8fce388710a9",
+                "ON_ERROR": false
+              }
+            ],
+            "NAME": "Approval",
+            "CONDITIONS": [],
+            "APPROVERS": [],
+            "TEAMS": [
+              "ADMIN_TEAM_REPLACE"
+            ],
+            "NUMBER_OF_APPROVALS_REQUIRED": null,
+            "APPROVAL_CONDITION": "Any Approver",
+            "NOTIFY_USERS_FOR_APPROVAL": true,
+            "NOTIFY_USERS_AFTER_APPROVAL": true,
+            "DISABLE_ENTRY": false
+          },
+          {
+            "TYPE": "UpdateEntry",
+            "ID": "7f6a40f6-a96a-42f1-aa4f-b547e99ce15e",
+            "CONNECTIONS_TO": [
+              {
+                "TITLE": "t10.8658673684079208",
+                "FROM": "t20.3935676953536509",
+                "TO_NODE": "1ca7669e-e2fb-48ba-aa4f-8fce388710a9",
+                "ON_ERROR": false
+              }
+            ],
+            "NAME": "Update Entry",
+            "CONDITIONS": [],
+            "MODULE": "60584b21b849a94aabb0bd08",
+            "FIELDS": [
+              {
+                "FIELD": "01a2d02c-3acd-4a76-b861-ca2d3e42edf2",
+                "VALUE": [
+                  "Implement"
+                ]
+              }
+            ],
+            "ENTRY_ID": "{{InputMessage.DATA_ID}}"
+          }
+        ]
+      }
+    ],
+    "ORDER": 0,
+    "DATE_CREATED": "DATE_REPLACE",
+    "DATE_UPDATED": "DATE_REPLACE",
+    "RAPID_UI_PAYLOAD": "{\"cells\":[{\"type\":\"app.FlowchartStart\",\"size\":{\"width\":48,\"height\":48},\"ports\":{\"items\":[{\"group\":\"out\",\"id\":\"e4b63033-c7b2-4db8-b680-d18c37f24fe7\"}]},\"position\":{\"x\":24,\"y\":32},\"id\":\"a255ccdb-3fc8-4639-be3b-18a04148807c\",\"z\":1,\"attrs\":{\"label\":{\"text\":\"Start\"}}},{\"type\":\"app.FlowchartEnd\",\"size\":{\"width\":48,\"height\":48},\"ports\":{\"items\":[{\"group\":\"in\",\"id\":\"a8c6382b-0a22-4ad8-badb-7d72aafea97a\"}]},\"position\":{\"x\":224,\"y\":368},\"id\":\"1ca7669e-e2fb-48ba-aa4f-8fce388710a9\",\"z\":2,\"attrs\":{\"label\":{\"text\":\"End\"}}},{\"type\":\"app.Approval\",\"size\":{\"width\":368,\"height\":80},\"ports\":{\"items\":[{\"group\":\"in\",\"id\":\"35e0c72a-5c2d-44c3-af6c-39a5e1276890\"},{\"group\":\"out\",\"attrs\":{\"portLabel\":{\"text\":\"Approve\"}},\"id\":\"a4f8013a-20a6-486b-aded-876f020932b7\"},{\"group\":\"out\",\"attrs\":{\"portLabel\":{\"text\":\"Reject\"}},\"id\":\"11341a78-1fbd-4c12-bbcb-64cb2b272243\"}]},\"position\":{\"x\":-128,\"y\":104},\"id\":\"82d6c1a6-7ee3-4cb6-9384-ee93471b6732\",\"z\":3,\"attrs\":{\"body\":{\"stroke\":\"#E8E8E8\"},\"label\":{\"text\":\"Approval\"},\"icon\":{\"xlinkHref\":\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDI0IDI0IiBoZWlnaHQ9IjI0IiB2aWV3Qm94PSIwIDAgMjQgMjQiIHdpZHRoPSIyNCI+PGc+PHJlY3QgZmlsbD0ibm9uZSIgaGVpZ2h0PSIyNCIgd2lkdGg9IjI0Ii8+PC9nPjxnPjxnPjxnPjxwYXRoIGQ9Ik0xNCwxMEgydjJoMTJWMTB6IE0xNCw2SDJ2MmgxMlY2eiBNMiwxNmg4di0ySDJWMTZ6IE0yMS41LDExLjVMMjMsMTNsLTYuOTksN2wtNC41MS00LjVMMTMsMTRsMy4wMSwzTDIxLjUsMTEuNXoiLz48L2c+PC9nPjwvZz48L3N2Zz4=\"}}},{\"type\":\"app.UpdateEntry\",\"size\":{\"width\":368,\"height\":80},\"ports\":{\"items\":[{\"group\":\"in\",\"id\":\"25367d4c-fb1d-486c-8700-d87458c9f05c\"},{\"group\":\"out\",\"attrs\":{\"portLabel\":{\"text\":\"out\"}},\"id\":\"859419d5-f48e-4787-82d4-5f2b9a96f9ff\"}]},\"position\":{\"x\":-160,\"y\":240},\"id\":\"7f6a40f6-a96a-42f1-aa4f-b547e99ce15e\",\"z\":4,\"attrs\":{\"body\":{\"stroke\":\"#E8E8E8\"},\"label\":{\"text\":\"Update Entry\"},\"icon\":{\"xlinkHref\":\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjI0Ij48cGF0aCBkPSJNMCAwaDI0djI0SDB6IiBmaWxsPSJub25lIi8+PHBhdGggZD0iTTMgMTcuMjVWMjFoMy43NUwxNy44MSA5Ljk0bC0zLjc1LTMuNzVMMyAxNy4yNXpNMjAuNzEgNy4wNGMuMzktLjM5LjM5LTEuMDIgMC0xLjQxbC0yLjM0LTIuMzRjLS4zOS0uMzktMS4wMi0uMzktMS40MSAwbC0xLjgzIDEuODMgMy43NSAzLjc1IDEuODMtMS44M3oiLz48L3N2Zz4=\"}}},{\"type\":\"app.Link\",\"labels\":[{\"attrs\":{\"labelText\":{\"text\":\"Connection\"}},\"position\":{\"distance\":0.25}}],\"source\":{\"id\":\"a255ccdb-3fc8-4639-be3b-18a04148807c\",\"magnet\":\"portBody\",\"port\":\"e4b63033-c7b2-4db8-b680-d18c37f24fe7\"},\"target\":{\"id\":\"82d6c1a6-7ee3-4cb6-9384-ee93471b6732\",\"magnet\":\"portBody\",\"port\":\"35e0c72a-5c2d-44c3-af6c-39a5e1276890\"},\"id\":\"d56d9e94-e1b2-4d93-b4b9-ab0542e0be45\",\"z\":5,\"attrs\":{}},{\"type\":\"app.Link\",\"labels\":[{\"attrs\":{\"labelText\":{\"text\":\"Connection\"}},\"position\":{\"distance\":0.25}}],\"source\":{\"id\":\"82d6c1a6-7ee3-4cb6-9384-ee93471b6732\",\"magnet\":\"portBody\",\"port\":\"a4f8013a-20a6-486b-aded-876f020932b7\"},\"target\":{\"id\":\"7f6a40f6-a96a-42f1-aa4f-b547e99ce15e\",\"magnet\":\"portBody\",\"port\":\"25367d4c-fb1d-486c-8700-d87458c9f05c\"},\"id\":\"9481cd1e-9a5d-4ca8-90a9-3a15d224f7fd\",\"z\":6,\"attrs\":{}},{\"type\":\"app.Link\",\"labels\":[{\"attrs\":{\"labelText\":{\"text\":\"Connection\"}},\"position\":{\"distance\":0.25}}],\"source\":{\"id\":\"82d6c1a6-7ee3-4cb6-9384-ee93471b6732\",\"magnet\":\"portBody\",\"port\":\"11341a78-1fbd-4c12-bbcb-64cb2b272243\"},\"target\":{\"id\":\"1ca7669e-e2fb-48ba-aa4f-8fce388710a9\",\"magnet\":\"portBody\",\"port\":\"a8c6382b-0a22-4ad8-badb-7d72aafea97a\"},\"id\":\"f037c30a-7e7e-4d6d-b26a-4b54ea7c3321\",\"z\":7,\"attrs\":{}},{\"type\":\"app.Link\",\"labels\":[{\"attrs\":{\"labelText\":{\"text\":\"Connection\"}},\"position\":{\"distance\":0.25}}],\"source\":{\"id\":\"7f6a40f6-a96a-42f1-aa4f-b547e99ce15e\",\"magnet\":\"portBody\",\"port\":\"859419d5-f48e-4787-82d4-5f2b9a96f9ff\"},\"target\":{\"id\":\"1ca7669e-e2fb-48ba-aa4f-8fce388710a9\",\"magnet\":\"portBody\",\"port\":\"a8c6382b-0a22-4ad8-badb-7d72aafea97a\"},\"id\":\"0aa477bc-7fa0-4e83-aba2-3b30c4b0a98e\",\"z\":8,\"attrs\":{}}]}",
+    "DISPLAY_ON_ENTRY": true
+  }
+]

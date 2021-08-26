@@ -1,0 +1,237 @@
+{
+	"PERMISSIONS": [
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Not Set",
+				"EDIT": "All",
+				"VIEW": "All",
+				"ACCESS": "Enabled"
+			},
+			"MODULE": "ACCOUNTS_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Not Set",
+				"EDIT": "None",
+				"VIEW": "All",
+				"ACCESS": "Enabled"
+			},
+			"MODULE": "USERS_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Not Set",
+				"EDIT": "None",
+				"VIEW": "All",
+				"ACCESS": "Enabled"
+			},
+			"MODULE": "TEAMS_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Not Set",
+				"EDIT": "None",
+				"VIEW": "None",
+				"ACCESS": "Disabled"
+			},
+			"MODULE": "TICKETS_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Not Set",
+				"EDIT": "None",
+				"VIEW": "None",
+				"ACCESS": "Disabled"
+			},
+			"MODULE": "CHAT_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Not Set",
+				"EDIT": "None",
+				"VIEW": "None",
+				"ACCESS": "Disabled"
+			},
+			"MODULE": "Schedules",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Not Set",
+				"EDIT": "None",
+				"VIEW": "None",
+				"ACCESS": "Disabled"
+			},
+			"MODULE": "Escalations",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Not Set",
+				"EDIT": "None",
+				"VIEW": "None",
+				"ACCESS": "Disabled"
+			},
+			"MODULE": "CONTRACTS_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Not Set",
+				"EDIT": "None",
+				"VIEW": "None",
+				"ACCESS": "Disabled"
+			},
+			"MODULE": "LICENSETRANSACTION_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Not Set",
+				"EDIT": "None",
+				"VIEW": "None",
+				"ACCESS": "Disabled"
+			},
+			"MODULE": "PURCHASEASSIGNMENTS_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Not Set",
+				"EDIT": "All",
+				"VIEW": "All",
+				"ACCESS": "Enabled"
+			},
+			"MODULE": "APPLICATIONS_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Not Set",
+				"EDIT": "All",
+				"VIEW": "All",
+				"ACCESS": "Enabled"
+			},
+			"MODULE": "ASSETS_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Not Set",
+				"EDIT": "All",
+				"VIEW": "All",
+				"ACCESS": "Enabled"
+			},
+			"MODULE": "DISCOVEREDSOFTWARE_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Not Set",
+				"EDIT": "None",
+				"VIEW": "None",
+				"ACCESS": "Disabled"
+			},
+			"MODULE": "LICENSES_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Not Set",
+				"EDIT": "None",
+				"VIEW": "None",
+				"ACCESS": "Disabled"
+			},
+			"MODULE": "OPPORTUNITIES_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Not Set",
+				"EDIT": "None",
+				"VIEW": "None",
+				"ACCESS": "Disabled"
+			},
+			"MODULE": "QUOTES_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Not Set",
+				"EDIT": "None",
+				"VIEW": "None",
+				"ACCESS": "Disabled"
+			},
+			"MODULE": "REVENUELINEITEMS_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Not Set",
+				"EDIT": "None",
+				"VIEW": "None",
+				"ACCESS": "Disabled"
+			},
+			"MODULE": "EMAILS_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Not Set",
+				"EDIT": "None",
+				"VIEW": "None",
+				"ACCESS": "Disabled"
+			},
+			"MODULE": "INVOICES_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Not Set",
+				"EDIT": "None",
+				"VIEW": "None",
+				"ACCESS": "Disabled"
+			},
+			"MODULE": "PRODUCTS_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Not Set",
+				"EDIT": "None",
+				"VIEW": "None",
+				"ACCESS": "Disabled"
+			},
+			"MODULE": "PATCHES_REPLACE",
+			"FIELD_PERMISSIONS": []
+		}
+	],
+	"DESCRIPTION": "This is a internal role for probe",
+	"NAME": "ExternalProbe"
+}

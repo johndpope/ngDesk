@@ -1,0 +1,40 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef>
+	<app-title-bar class="light-grey-color" [title]="'DOWNLOAD_INSTALLERS' | translate"></app-title-bar>
+</ng-template>
+<div class="pad10" fxLayout="column" fxLayoutGap="10px">
+	<div fxLayout="row" fxLayoutAlign="start">
+		<mat-card fxFlex="100">
+			<div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="20px" fxFlex="100">
+				<!-- <div fxLayout="column" class="pad10" style="margin-left:10px">
+					<img style="cursor: pointer; max-width: 180px;" src="../../../../assets/images/image.jpg">
+				</div> -->
+				<div fxLayout="column" class="pad10" fxFlex="50">
+					<span class="download-installer-header">{{'INSTALLER' | translate}}</span>
+					<span class="mat-h4" style="padding:0px;">
+						The agent once installed will scan the file system, find all the hardware
+						information and post an Asset on to your ngDesk account. Next it will find all the softwares installed on your
+						machine and post them on to your ngDesk account. The agent will run once a day to periodically check and update the
+						status of your hardware and softwares.
+					</span>
+					<div fxLayout="row" fxLayoutGap="5px">
+						<span class="mat-h4" style="padding:0px;">{{'DOWNLOAD_INSTALLER' | translate}}:</span>
+						<span fxLayoutGap="20px" style="margin-left: 6px;">
+							<a (click)="downloadApplication('osx')" class="mat-body-strong" style="cursor: pointer;">macOS</a>
+							<a (click)="downloadApplication('ngDesk-Agent-x64')" class="mat-body-strong" style="cursor: pointer;">Linux
+								64-bit</a>
+							<a (click)="downloadApplication('ngDesk-Agent')" class="mat-body-strong" style="cursor: pointer;">Linux
+								32-bit</a>
+							<a (click)="downloadApplication('ngDesk-Agent-x64.exe')" class="mat-body-strong"
+								style="cursor: pointer;">Windows
+								64-bit</a>
+							<a (click)="downloadApplication('ngDesk-Agent-x64.exe')" class="mat-body-strong"
+								style="cursor: pointer;">Windows
+								32-bit</a>
+						</span>
+					</div>
+				</div>
+			</div>
+		</mat-card>
+	</div>
+</div>

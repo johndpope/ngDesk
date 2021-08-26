@@ -1,0 +1,44 @@
+{
+  "ARTICLES": [
+    {
+      "CREATED_BY": "USER_ID_REPLACE",
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "LAST_UPDATED_BY": "USER_ID_REPLACE",
+      "DATE_UPDATED": "DATE_CREATED_REPLACE",
+      "COMMENTS": [],
+      "AUTHOR": "USER_ID_REPLACE",
+      "PUBLISH": true,
+      "VISIBLE_TO": [
+        "PUBLIC_TEAM_ID_REPLACE",
+        "GLOBAL_TEAM_ID_REPLACE"
+      ],
+      "ORDER": 1,
+      "OPEN_FOR_COMMENTS": true,
+      "TITLE": "Welcome to ngDesk!",
+      "SOURCE_LANGUAGE": "en",
+      "LABELS": [],
+      "BODY": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<p><span style=\"font-family: helvetica, arial, sans-serif;\">Welcome to ngDesk!</span></p>\n<p><span style=\"font-family: helvetica, arial, sans-serif;\">You can now create categories, sections, and articles for your company. Check out other articles or create your own with access control options that can be customizable!&nbsp;</span></p>\n<p><span style=\"font-family: helvetica, arial, sans-serif;\">If you have any questions, don't hesitate to reach out to us!</span></p>\n<p>&nbsp;</p>\n<p><span style=\"font-family: helvetica, arial, sans-serif;\">Thanks!</span></p>\n<p><span style=\"font-family: helvetica, arial, sans-serif;\">the ngDesk team</span></p>\n</body>\n</html>",
+      "SECTION": "Announcements_REPLACE"
+    },
+    {
+      "CREATED_BY": "USER_ID_REPLACE",
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "LAST_UPDATED_BY": "USER_ID_REPLACE",
+      "DATE_UPDATED": "DATE_CREATED_REPLACE",
+      "COMMENTS": [],
+      "AUTHOR": "USER_ID_REPLACE",
+      "PUBLISH": true,
+      "VISIBLE_TO": [
+        "PUBLIC_TEAM_ID_REPLACE",
+        "GLOBAL_TEAM_ID_REPLACE"
+      ],
+      "ORDER": 1,
+      "OPEN_FOR_COMMENTS": true,
+      "TITLE": "What are categories, sections, and articles?",
+      "SOURCE_LANGUAGE": "en",
+      "LABELS": [],
+      "BODY": "<!DOCTYPE html>\n<html>\n<head>\n</head>\n<body>\n<p><span style=\"font-family: helvetica, arial, sans-serif;\">This FAQ is a section in the General category of your ngDesk Guide knowledge base. We created this category and a few common sections to help you get started with your guide.</span></p>\n<p><span style=\"font-family: helvetica, arial, sans-serif;\">The knowledge base in the guide consists of three main document types: category, section, and article.</span></p>\n<p><span style=\"font-family: helvetica, arial, sans-serif;\">You can add your own content and modify or completely delete our content. See our ngDesk documentation or reach out to a ngDesk support team member to learn how.</span></p>\n</body>\n</html>",
+      "SECTION": "FAQ_REPLACE"
+    }
+  ]
+}

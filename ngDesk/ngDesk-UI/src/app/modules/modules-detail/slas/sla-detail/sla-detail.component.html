@@ -1,0 +1,158 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef>
+	<app-title-bar class="light-grey-color" title="{{'SERVICE_LEVEL_AGREEMENTS' | translate}}" buttonText="{{'SAVE' | translate}}"
+		(buttonRightOnClick)="save()">
+	</app-title-bar>
+</ng-template>
+<form [formGroup]="slaForm" fxLayoutGap='10px' (ngSubmit)="save()" class="pad10">
+	<app-new-name-description>
+	</app-new-name-description>
+	<app-conditions *ngIf="slaLoaded" [conditions]="sla.conditions" [fields]="fields" [parentName]="'slaComponent'"></app-conditions>
+	<div fxLayout="row" fxLayoutAlign="normal center" fxLayoutGap='10px'>
+		<div><label class="mat-h1 light-grey-color">{{'VIOLATIONS' | translate}} *</label></div>
+	</div>
+	<div style="padding-bottom: 20px;">
+		<div fxLayout="row" fxLayoutAlign="start" fxLayoutGap='10px'>
+			<div fxLayout="row" formGroupName="VIOLATIONS" fxLayoutAlign='start center' fxLayoutGap='10px'>
+				<mat-form-field>
+					<input type="text" placeholder="{{'CONDITION' | translate}}" matInput [matAutocomplete]="auto" formControlName="CONDITION"
+						(ngModelChange)="filterInputValues($event, slaForm.get('VIOLATIONS'), 'conditions')" required>
+					<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayConditionFn" (closed)="resetOptions('conditions')"
+						(optionSelected)="conditionSelected($event.option.value, slaForm.get('VIOLATIONS'))">
+						<mat-option *ngFor=" let option of autocompleteConditionsFiltered" [value]="option">
+							{{option.DISPLAY_LABEL}}
+						</mat-option>
+					</mat-autocomplete>
+					<mat-error>{{'FIELD_IS' | translate:params.condition}} <strong>{{'REQUIRED' | translate}}</strong></mat-error>
+				</mat-form-field>
+				<mat-form-field>
+					<input type="text" placeholder="{{'OPERATOR' | translate}}" aria-label="Number" matInput [matAutocomplete]="autoGroup"
+						formControlName="OPERATOR" (ngModelChange)="filterInputValues($event, slaForm.get('VIOLATIONS'), 'operators')"
+						(click)="conditionSelected(slaForm.get('VIOLATIONS').get('CONDITION').clearValidators, slaForm.get('VIOLATIONS'),true)"
+						required>
+					<mat-autocomplete #autoGroup="matAutocomplete" [displayWith]="displayOperator" (closed)="resetOptions('operators')"
+						(optionSelected)="operatorSelected($event.option.value, slaForm.get('VIOLATIONS'))">
+						<mat-option *ngFor="let option of autocompleteOperatorsFiltered" [value]="option">
+							{{option.DISPLAY}}
+						</mat-option>
+					</mat-autocomplete>
+					<mat-error>{{'FIELD_IS' | translate:params.operator}} <strong>{{'REQUIRED' | translate}}</strong></mat-error>
+				</mat-form-field>
+				<mat-form-field
+					*ngIf="slaForm.get('VIOLATIONS').get('CONDITION').value.DATA_TYPE?.DISPLAY != 'Discussion' && slaForm.get('VIOLATIONS').get('CONDITION').value.DATA_TYPE?.DISPLAY != 'Picklist' &&
+					slaForm.get('VIOLATIONS').get('OPERATOR').value.BACKEND != 'HAS_NOT_CHANGED' && slaForm.get('VIOLATIONS').get('OPERATOR').value.BACKEND != 'IS_PAST_BY' && slaForm.get('VIOLATIONS').get('OPERATOR').value.BACKEND != 'IS_WITHIN'">
+					<input type="text" placeholder="{{'ENTER_VALUE' | translate}}" aria-label="Number" matInput formControlName="CONDITION_VALUE">
+				</mat-form-field>
+				<mat-form-field *ngIf="slaForm.get('VIOLATIONS').get('CONDITION').value.DATA_TYPE?.DISPLAY == 'Discussion'">
+					<mat-chip-list #teamChipList>
+						<mat-chip *ngFor="let team of selectedTeams" [selectable]="true" [removable]="true" (removed)="removeTeams(team)">
+							{{team.NAME}}
+							<mat-icon matChipRemove>cancel</mat-icon>
+						</mat-chip>
+						<input #teamInput placeholder="{{ 'TEAM' | translate}}" [matAutocomplete]="autoTeam" [matChipInputFor]="teamChipList"
+							formControlName="CONDITION_VALUE" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
+							(matChipInputTokenEnd)="resetInput($event)" (ngModelChange)="searchTeam()">
+					</mat-chip-list>
+					<mat-autocomplete #autoTeam="matAutocomplete" (appAutocompleteScroll)="onTeamsScroll()" (optionSelected)="onTeamSelect($event)"
+						(closed)="teamAutocompleteClosed()">
+						<mat-option *ngFor="let team of triggersDetailService.teamsStore" [value]="team" [disabled]="disabledTeamCheck(team, teams)">
+							{{team.NAME}}
+						</mat-option>
+					</mat-autocomplete>
+				</mat-form-field>
+				<mat-form-field
+					*ngIf="slaForm.get('VIOLATIONS').get('CONDITION').value.DATA_TYPE?.DISPLAY == 'Picklist' && slaForm.get('VIOLATIONS').get('OPERATOR').value.BACKEND != 'HAS_NOT_CHANGED' && slaForm.get('VIOLATIONS').get('OPERATOR').value.BACKEND != 'IS_PAST_BY' && slaForm.get('VIOLATIONS').get('OPERATOR').value.BACKEND != 'IS_WITHIN'">
+					<input type="text" placeholder="{{ 'VALUE' | translate}}" matInput [matAutocomplete]="autoViolationsValue"
+						formControlName="CONDITION_VALUE" (ngModelChange)="filterInputValues($event, slaForm.get('VIOLATIONS'), 'picklistValues')">
+					<mat-autocomplete #autoViolationsValue="matAutocomplete" (closed)="resetOptions('picklistValues')">
+						<mat-option *ngFor="let option of autocompleteValuesFiltered[slaForm.get('VIOLATIONS').value.CONDITION.NAME]" [value]="option">
+							{{option}}
+						</mat-option>
+					</mat-autocomplete>
+				</mat-form-field>
+				<mat-label
+					*ngIf="slaForm.get('VIOLATIONS').get('OPERATOR').value.BACKEND !== 'IS_PAST_BY' && slaForm.get('VIOLATIONS').get('OPERATOR').value.BACKEND !== 'IS_WITHIN'"
+					class="mat-body-strong">{{'FOR' | translate}}</mat-label>
+				<mat-label *ngIf=" slaForm.get('VIOLATIONS').get('OPERATOR').value.BACKEND === 'IS_PAST_BY'" class="mat-body-strong">
+					{{'BY' | translate}}</mat-label>
+			</div>
+			<div fxLayoutAlign='start center' fxLayoutGap='10px'>
+				<mat-form-field>
+					<input type="number" placeholder="{{'ENTER_SLA_EXPIRY' | translate}}" aria-label="Number" matInput formControlName="SLA_EXPIRY"
+						(keypress)="numberOnly($event)" required>
+					<label matSuffix>mins</label>
+					<mat-error>{{'FIELD_IS' | translate:params.slaExpiry}} <strong>{{'REQUIRED' | translate}}</strong></mat-error>
+				</mat-form-field>
+			</div>
+		</div>
+	</div>
+
+	<div fxLayout="column" fxLayoutAlign='start start' fxLayoutGap='20px' style="padding-bottom: 20px;">
+		<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+			<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+				<label class="mat-body" style="font-size: 16px;"> {{ 'RECURRANCE' | translate }} </label>
+				<mat-icon class="light-grey-color" style="transform: scale(0.9);" matTooltip="{{'SLA_RECURRING' | translate}}">
+					help_outline</mat-icon>
+			</div>
+			<mat-slide-toggle formControlName="IS_RECURRING" (change)="onRecurring($event)"></mat-slide-toggle>
+		</div>
+
+		<div fxLayoutGap="10px" fxLayout="column" *ngIf="slaForm.get('IS_RECURRING').value">
+			<mat-card formGroupName="RECURRENCE" fxFlex="50" fxLayoutGap="30px">
+				<div fxLayoutAlign="start center" fxLayoutGap="10px">
+					<label>{{'RECURRENCE_INTERVAL_TIME'|translate}}</label>
+					<mat-form-field fxFlex="40">
+						<input type="number" onkeypress="return event.charCode >= 48 && event.charCode <= 57" matInput formControlName="INTERVAL_TIME">
+						<label matSuffix>mins</label>
+						<mat-error *ngIf="slaForm.get('RECURRENCE').get('INTERVAL_TIME').invalid">{{getErrorMessage()}}</mat-error>
+					</mat-form-field>
+					<mat-form-field fxFlex="40">
+						<input type="number" min="1" max="99" placeholder="{{'MAX_NO_OF_RECCURENCE' | translate}}" aria-label="Number" matInput
+							formControlName="MAX_RECCURENCE" (keypress)="numberOnly($event)">
+						<mat-error *ngIf="slaForm.get('RECURRENCE').get('MAX_RECCURENCE').invalid">{{ErrorMessage()}}</mat-error>
+					</mat-form-field>
+				</div>
+			</mat-card>
+		</div>
+
+		<div fxLayout="column" style="margin-bottom: 2%;">
+			<div fxLayout="row" fxLayoutGap="5px">
+				<mat-checkbox [checked]="checked" color="primary" formControlName="isRestricted" (change)="toggleRestrictions($event,true)">
+					{{ 'BUSINESS_HOURS' | translate}} </mat-checkbox>
+				<label class="mat-body-strong pointer" (click)="toggleRestrictions($event,true)" *ngIf="checked && sla.isRestricted">Edit</label>
+				<mat-icon class="light-grey-color" style="transform: scale(0.9);" matTooltip="{{'RESTRICT_TO_BUSINESS_HOURS' | translate}}">
+					help_outline</mat-icon>
+			</div>
+
+			<!-- MARGIN LEFT SET TO 24px TO MATCH THE CHECKBOX AT THE TOP -->
+			<div fxLayout="row" *ngFor="let restriction of sla.businessRules.restrictions" style="margin-left:24px" fxLayoutGap="5px"
+				class="mat-body">
+				<label>From</label>
+				<label *ngIf="sla.businessRules.restrictionType == 'Week'">{{restriction.startDay}}</label>
+				<label>{{restriction.startTime}}</label>
+				<label>to</label>
+				<label *ngIf="sla.businessRules.restrictionType == 'Week'">{{restriction.endDay}}</label>
+				<label>{{restriction.endTime}}</label>
+			</div>
+		</div>
+	</div>
+
+	<!-- Workflow drop down -->
+	<div fxLayout="column" fxLayoutAlign="start" fxLayoutGap='5px'>
+		<div fxLayoutGap='5px'><label class="mat-h1 light-grey-color">{{'WORKFLOW'|translate}}</label>
+		</div>
+		<mat-form-field *ngIf="workflows.length > 0" style="width: 20%;">
+			<mat-select placeholder="{{'WORKFLOWS' | translate}}" formControlName="WORKFLOW">
+				<mat-option *ngFor="let workflow of workflows " [value]="workflow.WORKFLOW_ID">
+					{{workflow.NAME}}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+		<div *ngIf="workflows.length === 0" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+			<a (click)="createNewWorkflow()" class="mat-caption"
+				style="cursor: pointer; text-decoration: underline;color: blue;">{{'WORKFLOW_BUTTON'|translate}}</a>
+			<mat-icon class="light-grey-color" style="transform: scale(0.8);" matTooltip="{{'WORKFLOW_TO_CREATE' | translate}}">
+				help_outline</mat-icon>
+		</div>
+	</div>
+</form>

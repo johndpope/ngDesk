@@ -1,0 +1,107 @@
+schema {
+    query: Query
+}
+
+type Query {
+
+    getPublishedUserPlugins(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [UserPlugin]
+    getCategoryById(categoryId: String): Category
+	getAllCategories(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [Category]
+    getCategoriesCount: Int
+    getKbArticle(articleId:String): Article
+    getAllKbArticles(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String, search: String):[Article]
+    getAllKbArticlesCount(search: String): Int
+    getKbSection(sectionId:String):Section
+	getKbSections(category: String,pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String):[Section]
+    getKbSectionsCount(category: String):Int
+    getKbCategory(categoryId: String): Category
+	getKbCategories(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [Category]
+    getKbCountCategories: Int
+
+}
+
+
+scalar DateTime
+
+
+type UserPlugin{
+	id: String
+	name: String
+	modules: [String]
+	status: String
+	dateCreated: DateTime
+	dateUpdated: DateTime
+	createdBy: String
+	lastUpdatedBy: String
+}
+
+
+type Section{
+
+   sectionId: String
+   name:String
+   description:String
+   sortBy:String
+   category:Category
+   dateCreated:DateTime
+   dateUpdated:DateTime
+   lastUpdatedBy:String
+   createdBy:String
+   order:Int
+   isDraft:Boolean
+   visibleTo:[String]
+   managedBy:[String]
+}
+
+type Category{
+	categoryId: String,
+	name: String,
+	description: String,
+	sourceLanguage: String,
+	dateCreated: DateTime,
+	dateUpdated: DateTime,
+	createdBy: String,
+	lastUpdatedBy: String,
+	isDraft: Boolean,
+	order: Int,
+	visibleTo: [String]
+}
+type Message{
+	message: String
+}
+
+type CommentMessage{
+	messageId:String
+	message:String
+	sender:String
+	dateCreated:DateTime
+}
+
+type Attachment{
+	file:String
+	hash:String
+	attachmentUuid: String
+	fileName:String
+}
+
+type Article{
+	articleId:String
+	title:String
+	body:String
+	author:String
+	visibleTo:[String]
+	openForComments:Boolean
+	sourceLanguage:String
+	labels:[String]
+	order:Int
+	section:String
+	dateCreated:DateTime
+	dateUpdated:DateTime
+	lastUpdatedBy:String
+	createdBy:String
+	publish:Boolean
+	comments:[CommentMessage]
+	attachments:[Attachment]
+}
+	
+

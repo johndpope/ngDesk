@@ -1,0 +1,55 @@
+<app-sliding-view-panel [activePane]="active">
+  <div fxLayout="column" fxLayoutAlign="space around center" paneOne>
+    <h1 mat-dialog-title class="mat-headline" fxLayoutAlign="center">
+      {{ 'TWILIO_REQUEST' | translate }}
+    </h1>
+    <p class="mat-caption">({{ 'TWILIO_INFO_DOCUMENTATION_REQUIRED' | translate }})</p>
+    <div fxLayoutAlign="center" *ngIf="errorMessage != ''">
+      <mat-error class="mat-h3" fxLayoutAlign="center">{{
+          errorMessage
+        }}</mat-error>
+    </div>
+    <form [formGroup]="twilioRequestForm">
+      <div mat-dialog-content fxLayout="column">
+        <mat-form-field>
+          <input matInput placeholder="{{ 'FIRST_NAME' | translate }}" formControlName="firstName" required />
+          <mat-error [innerHTML]="'FIELD_REQUIRED' | translate: errorParams.firstName"></mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="{{ 'LAST_NAME' | translate }}" formControlName="lastName" required />
+          <mat-error [innerHTML]="'FIELD_REQUIRED' | translate: errorParams.lastName"></mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="{{ 'EMAIL_ADDRESS' | translate }}" formControlName="emailAddress" required />
+          <mat-error [innerHTML]="'FIELD_REQUIRED' | translate: errorParams.emailAddress"></mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="{{ 'PHONE_NUMBER' | translate }}" formControlName="phoneNumber" required />
+          <mat-error [innerHTML]="'FIELD_REQUIRED' | translate: errorParams.phoneNumber"></mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <!-- <mat-label>Country</mat-label> -->
+          <!-- <mat-select formControlName="country">
+            <mat-option *ngFor="let country of this.channelsService.twilioSupportedCountries" [value]="country">
+              {{country.COUNTRY_NAME}}
+            </mat-option>
+          </mat-select> -->
+          <input matInput placeholder="{{ 'COUNTRY' | translate }}" formControlName="country" required [disabled]='true' />
+          <mat-error [innerHTML]="'FIELD_REQUIRED' | translate: errorParams.country"></mat-error>
+        </mat-form-field>
+      </div>
+      <div mat-dialog-actions fxLayoutAlign="center center" fxLayoutGap="10px">
+        <button mat-raised-button [mat-dialog-close]="twilioRequestForm" cdkFocusInitial>
+          {{ 'CLOSE' | translate }}
+        </button>
+        <div>
+          <button mat-raised-button color="primary" (click)="request()" *ngIf="!isSubmitting">
+            {{ 'REQUEST' | translate }}
+          </button>
+          <div fxFlex fxFlex.lt-sm="40px" fxLayoutAlign="center center" *ngIf="isSubmitting">
+            <mat-spinner [diameter]="30"></mat-spinner>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>

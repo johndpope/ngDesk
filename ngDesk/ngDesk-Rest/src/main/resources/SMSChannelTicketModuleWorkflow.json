@@ -1,0 +1,87 @@
+{
+  "NAME": "Send Confirmation for SMS",
+  "DESCRIPTION": "",
+  "CONDITIONS": [
+    {
+      "CONDITION": "edbef7ac-0f4b-4b68-a3ea-8f0435a0e7b9",
+      "CONDITION_VALUE": "",
+      "OPERATOR": "CHANGED",
+      "REQUIREMENT_TYPE": "All"
+    },
+    {
+      "CONDITION": "{{InputMessage.MESSAGES.LATEST.SENDER}}",
+      "CONDITION_VALUE": "{{REQUESTOR}}",
+      "OPERATOR": "NOT_EQUALS_TO",
+      "REQUIREMENT_TYPE": "All"
+    },
+    {
+      "CONDITION": "96bf35ea-dcb5-4183-8679-f27f776b92df",
+      "CONDITION_VALUE": "sms",
+      "OPERATOR": "EQUALS_TO",
+      "REQUIREMENT_TYPE": "Any"
+    },
+    {
+      "CONDITION": "96bf35ea-dcb5-4183-8679-f27f776b92df",
+      "CONDITION_VALUE": "whatsapp",
+      "OPERATOR": "EQUALS_TO",
+      "REQUIREMENT_TYPE": "Any"
+    }
+  ],
+  "TYPE": "CREATE_OR_UPDATE",
+  "WORKFLOW": {
+    "NODES": [
+      {
+        "POSITION_X": "100px",
+        "POSITION_Y": "100px",
+        "VALUES": {},
+        "ID": "node-id-7fc84ff2-ca9a-499d-08ae-5585a4efaba8",
+        "TYPE": "Start",
+        "CONNECTIONS_TO": [
+          {
+            "TITLE": "START",
+            "FROM": "OUT",
+            "TO_NODE": "node-id-e1df26bd-1796-4b0e-7f07-845ab6f79264"
+          }
+        ],
+        "PLUGS": [
+          {
+            "ORDER": 1,
+            "ID": "output-plug-3b42989b-69f5-71fe-caf9-df84eced06ed",
+            "NAME": "OUT"
+          }
+        ],
+        "NAME": "Update"
+      },
+      {
+        "POSITION_X": "194px",
+        "POSITION_Y": "356px",
+        "VALUES": {
+          "TO": "{{InputMessage.REQUESTOR.PHONE_NUMBER}}",
+          "BODY": "{{InputMessage.MESSAGES.LATEST}}"
+        },
+        "ID": "node-id-e1df26bd-1796-4b0e-7f07-845ab6f79264",
+        "TYPE": "SendSms",
+        "CONNECTIONS_TO": [],
+        "PLUGS": [
+          {
+            "ORDER": 0,
+            "ID": "input-plug-8f8521b3-5c86-2c54-2438-a55d653a4ebe",
+            "NAME": "INPUT"
+          },
+          {
+            "ORDER": 1,
+            "ID": "output-plug-067970cb-cb54-09c9-9021-30125725eb03",
+            "NAME": "OUT-1"
+          }
+        ],
+        "NAME": "SendSms 1"
+      }
+    ],
+    "LAST_UPDATED_BY": "USER_ID_REPLACE",
+    "DATE_UPDATED": "DATE_CREATED_REPLACE"
+  },
+  "WORKFLOW_ID": "abda6277-2ef6-466c-a328-7938a1ccb1bf",
+  "DATE_CREATED": "DATE_CREATED_REPLACE",
+  "LAST_UPDATED_BY": "USER_ID_REPLACE",
+  "DATE_UPDATED": "DATE_CREATED_REPLACE"
+}

@@ -1,0 +1,8 @@
+{
+	"RULES_REQUIRED": "At least one rule is required",
+	"ORDER_MINIMUM": "Order must have a minimum value of 1",
+	"ESCALATION_RULE_ORDER_INVALID": "The order of rules are expected to be in ascending",
+	"ESCALATE_TO_REQUIRED": "Each rule must escalated to at least a user, or a team or a schedule",
+	"ESCALATION_RULE_MINS_AFTER_INVALID": "Minutes after is expected to be in ascending order",
+	"RULES_LIMIT_REACHED": "The maximum no of rules that can be added are 99, please try again"
+}

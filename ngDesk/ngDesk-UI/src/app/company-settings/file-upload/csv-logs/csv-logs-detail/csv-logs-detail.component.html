@@ -1,0 +1,15 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef>
+	<app-title-bar class="light-grey-color" title="{{'CSV_LOGS' | translate}}">
+	</app-title-bar>
+</ng-template>
+<div fxLayout="row" fxLayoutAlign="center">
+	<mat-card fxFlex="70" style="margin-top: 20px;">
+		<div fxLayout="row" fxLayoutAlign="center">
+			<mat-label class="mat-h2">{{fileName}}</mat-label>
+		</div>
+		<div class="mat-h3" *ngFor="let log of logs" fxLayoutAlign="center">{{'ON_LINE_NUMBER' | translate}} {{log.LINE_NUMBER}} :
+			{{log.ERROR_MESSAGE}}</div>
+		<div class="mat-h3" *ngIf="logs.length === 0" fxLayoutAlign="center">{{'NO_ERROR_LOGS_FOUND' | translate}}</div>
+	</mat-card>
+</div>

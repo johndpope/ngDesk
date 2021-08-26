@@ -1,0 +1,403 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<div fxLayout="column" fxLayoutGap="10px" class="pad10">
+	<ng-template #headerTemplateRef>
+		<app-title-bar title="{{'EMAIL_CHANNEL' | translate}}">
+		</app-title-bar>
+	</ng-template>
+	<div fxFlex="80">
+		<!-- Update Mapping -->
+		<!-- <mat-expansion-panel style="margin-bottom: 2%;" [expanded]="step === 3" hideToggle>
+			<mat-expansion-panel-header>
+				<mat-panel-title>
+					Email field Mapping for Update Entry
+				</mat-panel-title>
+			</mat-expansion-panel-header>
+			<div fxLayout="column" fxLayoutAlign="center center">
+				<mat-card style="width: 60%" *ngIf="!this.loading" fxLayout="column">
+					<mat-label fxLayoutAlign="start center" style="color: #9e9e9e;" class="mat-h3">{{'EMAIL_CHANNEL_FIELDS_SUBTITLE' | translate}}
+					</mat-label>
+					<div fxLayout="column" fxLayoutAlign="start start" fxFlex style="width: 100%;">
+						<div fxLayout="row" fxLayoutAlign="center center" style="width: 100%; padding-bottom: 5%;">
+							<div fxFlex="50">
+								<mat-label fxLayoutAlign="start center" class="mat-h3">{{'EMAIL_CHANNEL_FIELDS' | translate}}</mat-label>
+							</div>
+							<div>
+								<mat-label fxLayoutAlign="start center" class="mat-h3">{{this.module.NAME}} {{'FIELDS' | translate}}</mat-label>
+							</div>
+						</div>
+						<div fxLayout="row" fxLayoutAlign="center center" style="width: 100%;">
+							<div fxFlex="50" fxLayoutAlign="start center" style="padding-left: 20%;"><label style="margin: 0px; padding-top: 8px;"
+									class="mat-h3">{{'SUBJECT' | translate}}</label></div>
+							<div fxLayoutAlign="end end" fxFlex="50">
+								<mat-form-field style="width: 100%;" *ngIf="subjectFields.length > 0">
+									<mat-select placeholder="{{'SELECT_A_FIELD' | translate}}" [(ngModel)]="subjectFieldUpdate" required>
+										<mat-option>
+											None
+										</mat-option>
+										<mat-option *ngFor="let subjectField of subjectFields" [value]="subjectField.FIELD_ID">
+											{{subjectField.DISPLAY_LABEL}}
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+								<mat-label (click)="fieldCreator()" *ngIf="subjectFields.length === 0"
+									style="color: blue; text-decoration: underline blue; font-size: 12px; cursor: pointer;">
+									{{'FIELD_DOES_NOT_EXIST_TEXT' | translate}}</mat-label>
+							</div>
+						</div>
+						<div fxLayout="row" fxLayoutAlign="center center" style="width: 100%;">
+							<div fxFlex="50" fxLayoutAlign="start center" style="padding-left: 20%;"><label style="margin: 0px;  padding-top: 8px;"
+									class="mat-h3">{{'BODY' | translate}}</label></div>
+							<div fxFlex="50">
+								<mat-form-field style="width: 100%;" *ngIf="bodyFieldsUpdate.length > 0">
+									<mat-select placeholder="{{'SELECT_A_FIELD' | translate}}" [(ngModel)]="bodyFieldUpdate" required>
+										<mat-option>
+											None
+										</mat-option>
+										<mat-option *ngFor="let bodyField of bodyFieldsUpdate" [value]="bodyField.FIELD_ID">
+											{{bodyField.DISPLAY_LABEL}}
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+								<mat-label (click)="fieldCreator()" *ngIf="bodyFieldsUpdate.length === 0"
+									style="color: blue; text-decoration: underline blue; font-size: 12px; cursor: pointer;">
+									{{'FIELD_DOES_NOT_EXIST_DISCUSSION' | translate}}
+								</mat-label>
+							</div>
+						</div>
+						<div fxLayout="row" fxLayoutAlign="center center" style="width: 100%;">
+							<div fxFlex="50" fxLayoutAlign="start center" style="padding-left: 20%;"><label style="margin: 0px;  padding-top: 8px;"
+									class="mat-h3">{{'CC_EMAILS' | translate}}</label>
+							</div>
+							<div fxFlex="50">
+								<mat-form-field style="width: 100%;" *ngIf="ccemailFieldsUpdate.length > 0">
+									<mat-select placeholder="{{'SELECT_A_FIELD' | translate}}" [(ngModel)]="ccemailFieldUpdate">
+										<mat-option>
+											None
+										</mat-option>
+										<mat-option *ngFor="let ccemailField of ccemailFieldsUpdate" [value]="ccemailField.FIELD_ID">
+											{{ccemailField.DISPLAY_LABEL}}
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+								<label *ngIf="ccemailFieldsUpdate.length === 0" (click)="fieldCreator()"
+									style="text-decoration: underline blue; color: blue; font-size: 12px; cursor: pointer; ">{{ 'FIELD_DOES_NOT_EXIST_LIST_TEXT' | translate}}</label>
+							</div>
+						</div>
+					</div>
+				</mat-card>
+			</div>
+		</mat-expansion-panel> -->
+		<mat-tab-group [selectedIndex]="selectedTab" (selectedTabChange)="onSelectTabs($event)">
+			<mat-tab label="{{'CHANNEL' | translate}}" [disabled]="isForwardEmail">
+				<app-sliding-view-panel [activePane]="active">
+					<div fxLayout="column" fxLayoutAlign="start" paneOne>
+						<div fxLayoutAlign="center" *ngIf="errorMessage != ''">
+						</div>
+						<form [formGroup]="emailChannelForm" style="padding-top: 20px;width: 100%;"
+							*ngIf="channelType === 'Internal' || channelType === 'External'" fxLayoutAlign="center center" fxLayout="column">
+							<div mat-dialog-content fxLayout="column" style="width: 100%;" fxLayoutAlign="center center">
+								<mat-card fxLayout="column" fxLayoutAlign="center center"
+									style="width: 50%; padding-top: 1%; padding-left: 2%; padding-right: 2%; padding-bottom: 2%;">
+									<div fxLayoutAlign="start start" style="padding-bottom: 2%; width: 100%;"
+										*ngIf='channelType === "Internal" || channelType === "External"'>
+										<mat-icon style="cursor: pointer;" matTooltip="{{'BACK' | translate}}" (click)="back()">keyboard_backspace</mat-icon>
+									</div>
+									<mat-form-field style="width: 100%;">
+										<input matInput placeholder="{{ 'NAME' | translate }}" formControlName="name" required />
+										<mat-error [innerHTML]="'FIELD_REQUIRED' | translate: errorParams.name"></mat-error>
+										<!-- <div *ngIf="emailChannelForm.value.name.errors.pattern">
+								  <mat-error [innerHTML]="'CHANNEL_NAME_INVALID' | translate:errorParams.name"></mat-error>
+								</div> -->
+									</mat-form-field>
+									<mat-form-field style="width: 100%;">
+										<input matInput placeholder="{{ 'DESCRIPTION' | translate }}" formControlName="description" />
+									</mat-form-field>
+									<mat-form-field style="width: 100%;">
+										<input matInput placeholder="{{ 'EMAIL_ADDRESS' | translate }}" formControlName="emailAddress" required />
+										<label style="color: #999;" *ngIf="channelType === 'Internal'" matSuffix>@{{ subdomain }}.ngdesk.com</label>
+									</mat-form-field>
+									<div style="width: 100%;" fxLayoutAlign="end end"
+										*ngIf='(channelType === "Internal" || channelType === "External") && selectedTab === 0'>
+										<button color="primary" (click)="save()" mat-raised-button>{{'NEXT' | translate}}</button>
+									</div>
+								</mat-card>
+							</div>
+							<div mat-dialog-actions fxLayoutAlign="end start" style="padding-right: 25%;">
+							</div>
+						</form>
+						<div *ngIf="channelType === ''" fxLayoutAlign="center center" fxLayoutGap="5%" style="margin-top: 10%;">
+							<mat-card *ngIf="channelType === ''" fxFlex="30%" [appHighlight]="{BACKGROUND: 'ghostwhite'}" fxFlex="30" fxLayout="column"
+								fxLayoutAlign="start start" class="pointer" fxLayoutGap="5%" (click)="typeSelected('Internal')">
+								<!-- <mat-icon fontSet="material-icons-outlined">view_list</mat-icon> -->
+								<!-- <img  mat-card-image raisedElevation="40"  class="pointer" class="logo" src='../../../../../../assets/images/fromTemplate.png'
+								height="200"> -->
+								<mat-label class="mat-body-2">{{'Internal' | translate}}</mat-label>
+								<mat-card-content fxLayoutAlign="center center">
+									<p>{{'INTERNAL_TITLE' | translate}}</p>
+								</mat-card-content>
+							</mat-card>
+							<mat-card *ngIf="channelType === ''" fxFlex="30%" [appHighlight]="{BACKGROUND: 'ghostwhite'}" fxFlex="30" fxLayout="column"
+								fxLayoutAlign="start start" class="pointer" (click)="typeSelected('External')" fxLayoutGap="5%">
+								<!-- <mat-icon fontSet="material-icons-outlined">view_list</mat-icon> -->
+								<!-- <img  mat-card-image raisedElevation="40"  class="pointer" class="logo" src='../../../../../../assets/images/fromTemplate.png'
+									height="200"> -->
+								<mat-label class="mat-body-2">{{'External' | translate}}</mat-label>
+								<mat-card-content fxLayoutAlign="center center">
+									<p>{{'EXTERNAL_TITLE' | translate}}</p>
+								</mat-card-content>
+							</mat-card>
+						</div>
+						<!-- <div style="padding-top: 5%;" *ngIf="channelType === ''" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="5%">
+							<div fxLayoutGap="5%" style="width: 90%;" fxLayoutAlign="center center" fxLayout="column">
+								<h4 class="mat-h4" style="color: #9e9e9e;">{{'INTERNAL_TITLE' | translate}}</h4>
+								<div fxLayoutAlign="center center">
+									<button color="primary" (click)="typeSelected('Internal')" mat-raised-button>Internal</button>
+								</div>
+							</div>
+							<div fxLayoutGap="5%" style="width: 90%;" fxLayoutAlign="center center" fxLayout="column">
+								<h4 class="mat-h4" style="color: #9e9e9e;">{{'EXTERNAL_TITLE' | translate}}</h4>
+								<div fxLayoutAlign="center center">
+									<button color="primary" (click)="typeSelected('External')" mat-raised-button>External</button>
+								</div>
+							</div>
+						</div> -->
+					</div>
+				</app-sliding-view-panel>
+			</mat-tab>
+			<mat-tab [disabled]="!channelSet || (isForwardEmail && emailId === 'new')" label="{{'CREATE_MAPPING' | translate}}">
+				<div fxLayout="column" fxLayoutAlign="center center">
+					<mat-card style="width: 60%; margin: 10px;" *ngIf="!this.loading" fxLayout="column">
+						<div fxLayoutAlign="start start" style="padding-bottom: 2%; width: 100%;"
+							*ngIf='channelType === "Internal" || channelType === "External"'>
+							<mat-icon style="cursor: pointer;" matTooltip="{{'BACK' | translate}}" (click)="back()">keyboard_backspace</mat-icon>
+						</div>
+						<mat-label fxLayoutAlign="start center" style="color: #9e9e9e; font-size: small; padding-bottom: 20px;" class="mat-h3">
+							{{'EMAIL_CHANNEL_FIELDS_SUBTITLE' | translate}}
+						</mat-label>
+						<div fxLayout="column" fxLayoutAlign="start start" fxFlex style="width: 100%;">
+							<div fxLayout="row" fxLayoutAlign="center center" style="width: 100%;">
+								<div fxFlex="40" fxLayoutAlign="start center" style="padding-left: 15%;"><label style="margin: 0px; "
+										class="mat-h3">{{'SUBJECT' | translate}}<span> *</span></label></div>
+								<div fxLayoutAlign="start center" fxFlex="60" fxLayout="row">
+									<mat-form-field style="width: 80%;" *ngIf="subjectFields.length > 0">
+										<mat-select placeholder="{{'SELECT_A_FIELD' | translate}}" [(ngModel)]="subjectField" required>
+											<mat-option *ngFor="let subjectField of subjectFields" [value]="subjectField.FIELD_ID">
+												{{subjectField.DISPLAY_LABEL}}
+											</mat-option>
+										</mat-select>
+									</mat-form-field>
+									<mat-label (click)="fieldCreator('SUBJECT')" *ngIf="subjectFields.length === 0"
+										matTooltip="{{'SUBJECT_FIELD_HINT' | translate}}"
+										style="color: blue; text-decoration: underline blue; font-size: 12px; cursor: pointer;">
+										{{'FIELD_DOES_NOT_EXIST_TEXT' | translate}}</mat-label>
+									<div fxLayoutAlign="center center" *ngIf="subjectFields.length > 0">
+										<mat-icon style="font-size: large;" matTooltip="{{'SUBJECT_FIELD_HINT' | translate}}">
+											help_outline</mat-icon>
+									</div>
+								</div>
+							</div>
+							<div fxLayout="row" fxLayoutAlign="center center" style="width: 100%;">
+								<div fxFlex="40" fxLayoutAlign="start center" style="padding-left: 15%;"><label style="margin: 0px;  "
+										class="mat-h3">{{'BODY' | translate}}<span> *</span></label></div>
+								<div fxFlex="60" fxLayout="row">
+									<mat-form-field style="width: 80%;" *ngIf="bodyFields.length > 0">
+										<mat-select placeholder="{{'SELECT_A_FIELD' | translate}}" [(ngModel)]="bodyField" required>
+											<mat-option *ngFor="let bodyField of bodyFields" [value]="bodyField.FIELD_ID">
+												{{bodyField.DISPLAY_LABEL}}
+											</mat-option>
+										</mat-select>
+									</mat-form-field>
+									<mat-label (click)="fieldCreator('BODY')" *ngIf="bodyFields.length === 0" matTooltip="{{'BODY_FIELD_HINT' | translate}}"
+										style="color: blue; text-decoration: underline blue; font-size: 12px; cursor: pointer;">
+										{{'FIELD_DOES_NOT_EXIST_DISCUSSION' | translate}}
+									</mat-label>
+									<div fxLayoutAlign="center center" *ngIf="bodyFields.length > 0">
+										<mat-icon style="font-size: large;" matTooltip="{{'BODY_FIELD_HINT' | translate}}" *ngIf="bodyFields.length > 0">
+											help_outline</mat-icon>
+									</div>
+								</div>
+							</div>
+							<div fxLayout="row" fxLayoutAlign="center center" style="width: 100%;">
+								<div fxFlex="40" fxLayoutAlign="start center" style="padding-left: 15%;"><label style="margin: 0px;  "
+										class="mat-h3">{{'CC_EMAILS' | translate}}</label>
+								</div>
+								<div fxFlex="60" fxLayout="row">
+									<mat-form-field style="width: 80%;" *ngIf="ccemailFields.length > 0">
+										<mat-select placeholder="{{'SELECT_A_FIELD' | translate}}" [(ngModel)]="ccemailField">
+											<mat-option>
+												None
+											</mat-option>
+											<mat-option *ngFor="let ccemailField of ccemailFields" [value]="ccemailField.FIELD_ID">
+												{{ccemailField.DISPLAY_LABEL}}
+											</mat-option>
+										</mat-select>
+									</mat-form-field>
+									<label *ngIf="ccemailFields.length === 0" (click)="fieldCreator('CC_EMAILS')"
+										matTooltip="{{'CCEMAILS_FIELD_HINT' | translate}}"
+										style="text-decoration: underline blue; color: blue; font-size: 12px; cursor: pointer; ">{{ 'FIELD_DOES_NOT_EXIST_LIST_TEXT' | translate}}</label>
+									<div fxLayoutAlign="center center" *ngIf="ccemailFields.length > 0">
+										<mat-icon style="font-size: large;" matTooltip="{{'CCEMAILS_FIELD_HINT' | translate}}" *ngIf="ccemailFields.length > 0">
+											help_outline</mat-icon>
+									</div>
+								</div>
+							</div>
+							<!-- <div fxLayout="row" fxLayoutAlign="center center" style="width: 100%;">
+								<div fxFlex="50" fxLayoutAlign="start center" style="padding-left: 20%;"><label style="margin: 0px;  padding-top: 8px;"
+										class="mat-h3">{{'TEAMS' | translate}}<span> *</span></label></div>
+								<div fxFlex="50">
+									<mat-form-field style="width: 100%;" *ngIf="teamsFields.length > 0">
+										<mat-select placeholder="{{'SELECT_A_FIELD' | translate}}" required [(ngModel)]="teamsField">
+											<mat-option>
+												None
+											</mat-option>
+											<mat-option *ngFor="let teamsField of teamsFields" [value]="teamsField.FIELD_ID">
+												{{teamsField.DISPLAY_LABEL}}
+											</mat-option>
+										</mat-select>
+									</mat-form-field>
+									<mat-label (click)="fieldCreator()" *ngIf="teamsFields.length === 0"
+										style="color: blue; text-decoration: underline blue; font-size: 12px; cursor: pointer;">
+										{{ 'FIELD_DOES_NOT_EXIST_LIST_TEXT' | translate}}
+									</mat-label>
+								</div>
+								<mat-icon style="font-size: large;" matTooltip="{{'TEAMS_FIELD_HINT' | translate}}" *ngIf="subjectFields.length > 0">
+									help_outline</mat-icon>
+							</div> -->
+							<div fxLayout="row" fxLayoutAlign="center center" style="width: 100%;">
+								<div fxFlex="40" fxLayoutAlign="start center" style="padding-left: 15%;"><label class="mat-h3"
+										style="margin: 0px;  ">{{'FROM' | translate}}</label></div>
+								<div fxFlex="60" fxLayout="row">
+									<mat-form-field style="width: 80%;" *ngIf="requestorFields.length > 0">
+										<mat-select placeholder="{{'SELECT_A_FIELD' | translate}}" [(ngModel)]="requestorField">
+											<mat-option>
+												None
+											</mat-option>
+											<mat-option *ngFor="let requestorField of requestorFields" [value]="requestorField.FIELD_ID">
+												{{requestorField.DISPLAY_LABEL}}
+											</mat-option>
+										</mat-select>
+									</mat-form-field>
+									<mat-label (click)="fieldCreator('REQUESTOR')" *ngIf="requestorFields.length === 0"
+										matTooltip="{{'FROM_FIELD_HINT' | translate}}"
+										style="color: blue; text-decoration: underline blue; font-size: 12px; cursor: pointer;">
+										{{ 'FIELD_DOES_NOT_EXIST_REQUESTOR' | translate}}
+									</mat-label>
+									<div fxLayoutAlign="center center" *ngIf="requestorFields.length > 0">
+										<mat-icon style="font-size: large;" matTooltip="{{'FROM_FIELD_HINT' | translate}}">
+											help_outline</mat-icon>
+									</div>
+								</div>
+							</div>
+							<div fxFlex="50" fxLayout="row" fxLayoutAlign="center center" style="width: 100%;">
+								<div fxFlex="40" fxLayoutAlign="start center" style="padding-left: 15%;"><label class="mat-h3" fxLayout="column"
+										style="margin: 0px;  ">{{'FROM_EMAIL' | translate}}</label></div>
+								<div fxFlex="60" fxLayout="row">
+									<mat-form-field style="width: 80%;" *ngIf="fromemailFields.length > 0">
+										<mat-select placeholder="{{'SELECT_A_FIELD' | translate}}" [(ngModel)]="fromemailField">
+											<mat-option>
+												None
+											</mat-option>
+											<mat-option *ngFor="let fromemailField of fromemailFields" [value]="fromemailField.FIELD_ID">
+												{{fromemailField.DISPLAY_LABEL}}
+											</mat-option>
+										</mat-select>
+									</mat-form-field>
+									<mat-label (click)="fieldCreator('FROM_EMAIL')" *ngIf="fromemailFields.length == 0"
+										style="color: blue; text-decoration: underline blue; font-size: 12px; cursor: pointer;"
+										matTooltip="{{'FROM_EMAIL_FIELD_HINT' | translate}}">
+										{{ 'FIELD_DOES_NOT_EXIST_TEXT' | translate}}
+									</mat-label>
+									<div fxLayout="row" fxLayoutAlign="center center" *ngIf="fromemailFields.length > 0">
+										<mat-icon style="font-size: large;" matTooltip="{{'FROM_EMAIL_FIELD_HINT' | translate}}">
+											help_outline</mat-icon>
+									</div>
+								</div>
+
+							</div>
+						</div>
+						<div fxLayoutAlign="end end" style="padding-bottom: 1%;" *ngIf="channelSet && channelType !== ''">
+							<button color="primary" (click)="save()" mat-raised-button [disabled]="!enableSaveButton">{{'SAVE' | translate}}</button>
+						</div>
+					</mat-card>
+				</div>
+			</mat-tab>
+			<mat-tab label="{{'EMAIL_FORWARDING' | translate}}" *ngIf="isForwardEmail">
+				<app-sliding-view-panel [activePane]="active">
+					<div fxLayout="column" fxLayoutAlign="center center" fxFlex="100" paneTwo style="padding-left: 15px;">
+						<h1 mat-dialog-title class="mat-headline" fxLayoutAlign="start">
+							{{ 'EMAIL_FORWARDING' | translate }}
+						</h1>
+						<h3 class="mat-h3">{{ 'SETUP_FORWARD_TO_ADDRESS' | translate }}:</h3>
+						<label class="mat-h4">support@{{ subdomain }}.ngdesk.com </label><br />
+						<div fxLayoutAlign="center" fxFlex>
+							<div fxLayout="row" fxFlex="70" fxLayoutGap="10px" style="padding-left: 12%;">
+								<mat-checkbox color="primary" [(ngModel)]="forwardingConfirmed"></mat-checkbox>
+								<div class="mat-body" i18n>
+									{{ 'SETUP_FORWARDING_CONFIRM' | translate: params.emailAddress }}
+									<br />
+									<p [innerHTML]="'FOR_MORE_INFORMATION' | translate"></p>
+								</div>
+							</div>
+						</div>
+						<div fxLayoutGap="10px">
+							<button mat-raised-button (click)="done()">
+								{{ 'CLOSE' | translate }}
+							</button>
+							<button mat-raised-button color="primary" (click)="verifyEmail()" [disabled]="!forwardingConfirmed">
+								{{ 'TEST_FORWARDING' | translate }}
+							</button>
+						</div>
+					</div>
+					<div fxLayout="column" fxLayoutAlign="center center" fxFlex="100" paneThree>
+						<label class="mat-h1" *ngIf="isVerifying">{{
+							'EMAIL_FORWARDING_VERIFICATION' | translate
+						  }}</label>
+						<label class="mat-h1" *ngIf="!isVerifying && !isVerified">{{
+							'COULDNT_COMPLETE_SETUP' | translate
+						  }}</label>
+						<label *ngIf="isVerifying && !isVerified" class="mat-body" fxFlex>{{
+							'THIS_MIGHT_TAKE_UP_TO_MINUTE' | translate
+						  }}</label>
+						<div fxLayoutAlign="center center">
+							<mat-spinner *ngIf="isVerifying && !isVerified"></mat-spinner>
+							<div fxLayout="column">
+								<label fxFlex="90" class="mat-h3" *ngIf="!isVerifying && !isVerified"
+									[ngStyle]="{ color: '#7f0000' }">{{ 'VERIFICATION_FAILED' | translate }}</label>
+							</div>
+							<div *ngIf="!isVerifying && isVerified" fxLayout="column" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+								<label class="mat-h2">{{ 'VERIFICATION_SUCCEEDED' | translate }}</label>
+								<mat-icon class="green-color">done</mat-icon>
+								<span class="mat-body">{{ 'EMAIL_FORWARDING_SUCCESS_MESSAGE' | translate }}
+									<b>support@{{ subdomain }}.ngdesk.com </b></span>
+								<button mat-raised-button color="primary" (click)="done()">
+									{{ 'DONE' | translate }}
+								</button>
+							</div>
+						</div>
+						<div fxLayout="column" fxLayoutAlign="space-between center" fxFlex *ngIf="!isVerifying && !isVerified">
+							<div fxLayout="column" fxLayoutAlign="center center">
+								<label fxFlex="100" class="mat-h3" [innerHTML]="'VERIFICATION_HELP' | translate"></label>
+								<label fxFlex="100" class="mat-body-strong">{{
+								'NEED_HELP' | translate
+							  }}</label>
+								<label fxFlex="100" class="mat-body">{{
+								'REACH_OUT' | translate
+							  }}</label>
+							</div>
+							<div fxLayout="column">
+								<div fxLayoutGap="20px">
+									<button mat-raised-button (click)="done()">
+										{{ 'CLOSE' | translate }}
+									</button>
+									<button mat-raised-button color="primary" (click)="active = 'paneTwo'">
+										{{ 'START_OVER' | translate }}
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</app-sliding-view-panel>
+			</mat-tab>
+		</mat-tab-group>
+	</div>
+</div>

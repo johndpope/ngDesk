@@ -1,0 +1,342 @@
+{
+  "SIDEBAR_MENU": [
+    {
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "MENU_ITEMS": [
+        {
+          "ROUTE": "dashboards",
+          "ORDER": 0,
+          "MODULE": "",
+          "IS_MODULE": false,
+          "PATH_PARAMETER": "",
+          "ICON": "dashboard",
+          "EDITABLE": false,
+          "NAME": "DASHBOARDS",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "TICKETS_ID_REPLACE",
+          "ORDER": 1,
+          "MODULE": "TICKETS_ID_REPLACE",
+          "IS_MODULE": true,
+          "PATH_PARAMETER": "",
+          "ICON": "assignment",
+          "EDITABLE": true,
+          "NAME": "Tickets",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "CHAT_ID_REPLACE",
+          "ORDER": 2,
+          "MODULE": "CHAT_ID_REPLACE",
+          "IS_MODULE": true,
+          "PATH_PARAMETER": "",
+          "ICON": "chat",
+          "EDITABLE": true,
+          "NAME": "Chats",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "TEAMS_ID_REPLACE",
+          "ORDER": 3,
+          "MODULE": "TEAMS_ID_REPLACE",
+          "IS_MODULE": true,
+          "PATH_PARAMETER": "",
+          "ICON": "people",
+          "EDITABLE": true,
+          "NAME": "Teams",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "USERS_ID_REPLACE",
+          "ORDER": 4,
+          "MODULE": "USERS_ID_REPLACE",
+          "IS_MODULE": true,
+          "PATH_PARAMETER": "",
+          "ICON": "person",
+          "EDITABLE": true,
+          "NAME": "Manage Users",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "ACCOUNTS_ID_REPLACE",
+          "ORDER": 5,
+          "MODULE": "ACCOUNTS_ID_REPLACE",
+          "IS_MODULE": true,
+          "PATH_PARAMETER": "",
+          "ICON": "business",
+          "EDITABLE": true,
+          "NAME": "Accounts",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "guide",
+          "ORDER": 6,
+          "MODULE": "",
+          "IS_MODULE": false,
+          "PATH_PARAMETER": "",
+          "ICON": "library_books",
+          "EDITABLE": false,
+          "NAME": "KNOWLEDGE_BASE",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "modules",
+          "ORDER": 7,
+          "MODULE": "",
+          "IS_MODULE": false,
+          "PATH_PARAMETER": "",
+          "ICON": "view_module",
+          "EDITABLE": false,
+          "NAME": "MODULES",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "",
+          "ORDER": 8,
+          "MODULE": "",
+          "IS_MODULE": false,
+          "ICON": "web_asset",
+          "EDITABLE": false,
+          "NAME": "SAM",
+          "SUB_MENU_ITEMS": [
+            {
+              "ROUTE": "APPLICATIONS_ID_REPLACE",
+              "ORDER": 0,
+              "MODULE": "APPLICATIONS_ID_REPLACE",
+              "IS_MODULE": true,
+              "PATH_PARAMETER": "",
+              "ICON": "arrow_upward",
+              "EDITABLE": false,
+              "NAME": "Applications"
+            },
+            {
+              "ROUTE": "ASSETS_ID_REPLACE",
+              "ORDER": 1,
+              "MODULE": "ASSETS_ID_REPLACE",
+              "IS_MODULE": true,
+              "PATH_PARAMETER": "",
+              "ICON": "build",
+              "EDITABLE": false,
+              "NAME": "Assets"
+            },
+            {
+              "ROUTE": "CONTRACTS_ID_REPLACE",
+              "ORDER": 2,
+              "MODULE": "CONTRACTS_ID_REPLACE",
+              "IS_MODULE": true,
+              "PATH_PARAMETER": "",
+              "ICON": "description",
+              "EDITABLE": false,
+              "NAME": "Contracts"
+            },
+            {
+              "ROUTE": "DISCOVERED SOFTWARE_ID_REPLACE",
+              "ORDER": 3,
+              "MODULE": "DISCOVERED SOFTWARE_ID_REPLACE",
+              "IS_MODULE": true,
+              "PATH_PARAMETER": "",
+              "ICON": "cloud",
+              "EDITABLE": false,
+              "NAME": "Software"
+            },
+            {
+              "ROUTE": "LICENSES_ID_REPLACE",
+              "ORDER": 4,
+              "MODULE": "LICENSES_ID_REPLACE",
+              "IS_MODULE": true,
+              "PATH_PARAMETER": "",
+              "ICON": "gavel",
+              "EDITABLE": false,
+              "NAME": "Licenses"
+            }
+          ]
+        },
+        {
+          "ROUTE": "",
+          "ORDER": 9,
+          "MODULE": "",
+          "IS_MODULE": false,
+          "PATH_PARAMETER": "",
+          "ICON": "notifications",
+          "EDITABLE": false,
+          "NAME": "PAGER",
+          "SUB_MENU_ITEMS": [
+            {
+              "ROUTE": "escalations",
+              "ORDER": 0,
+              "MODULE": "",
+              "IS_MODULE": false,
+              "PATH_PARAMETER": "",
+              "ICON": "arrow_upward",
+              "EDITABLE": false,
+              "NAME": "ESCALATIONS"
+            },
+            {
+              "ROUTE": "schedules",
+              "ORDER": 1,
+              "MODULE": "",
+              "IS_MODULE": false,
+              "PATH_PARAMETER": "",
+              "ICON": "event",
+              "EDITABLE": false,
+              "NAME": "SCHEDULES"
+            }
+          ]
+        },
+        {
+          "ROUTE": "reports",
+          "ORDER": 10,
+          "MODULE": "",
+          "IS_MODULE": false,
+          "PATH_PARAMETER": "",
+          "ICON": "pie_chart",
+          "EDITABLE": false,
+          "NAME": "REPORTS",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "company-settings",
+          "ORDER": 11,
+          "MODULE": "",
+          "IS_MODULE": false,
+          "PATH_PARAMETER": "",
+          "ICON": "settings",
+          "EDITABLE": false,
+          "NAME": "COMPANY_SETTINGS",
+          "SUB_MENU_ITEMS": []
+        }
+      ]
+    },
+    {
+      "ROLE": "AGENT_ROLE_REPLACE",
+      "MENU_ITEMS": [
+        {
+          "ROUTE": "dashboards",
+          "ORDER": 0,
+          "MODULE": "",
+          "IS_MODULE": false,
+          "PATH_PARAMETER": "",
+          "ICON": "dashboard",
+          "EDITABLE": false,
+          "NAME": "DASHBOARDS",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "TICKETS_ID_REPLACE",
+          "ORDER": 1,
+          "MODULE": "TICKETS_ID_REPLACE",
+          "IS_MODULE": true,
+          "PATH_PARAMETER": "",
+          "ICON": "assignment",
+          "EDITABLE": true,
+          "NAME": "Tickets",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "CHAT_ID_REPLACE",
+          "ORDER": 2,
+          "MODULE": "CHAT_ID_REPLACE",
+          "IS_MODULE": true,
+          "PATH_PARAMETER": "",
+          "ICON": "chat",
+          "EDITABLE": true,
+          "NAME": "Chats",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "USERS_ID_REPLACE",
+          "ORDER": 3,
+          "MODULE": "USERS_ID_REPLACE",
+          "IS_MODULE": true,
+          "PATH_PARAMETER": "",
+          "ICON": "person",
+          "EDITABLE": true,
+          "NAME": "Manage Users",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "ACCOUNTS_ID_REPLACE",
+          "ORDER": 4,
+          "MODULE": "ACCOUNTS_ID_REPLACE",
+          "IS_MODULE": true,
+          "PATH_PARAMETER": "",
+          "ICON": "business",
+          "EDITABLE": true,
+          "NAME": "Accounts",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "guide",
+          "ORDER": 5,
+          "MODULE": "",
+          "IS_MODULE": false,
+          "PATH_PARAMETER": "",
+          "ICON": "library_books",
+          "EDITABLE": false,
+          "NAME": "KNOWLEDGE_BASE",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "",
+          "ORDER": 6,
+          "MODULE": "",
+          "IS_MODULE": false,
+          "PATH_PARAMETER": "",
+          "ICON": "notifications",
+          "EDITABLE": false,
+          "NAME": "PAGER",
+          "SUB_MENU_ITEMS": [
+            {
+              "ROUTE": "escalations",
+              "ORDER": 0,
+              "MODULE": "",
+              "IS_MODULE": false,
+              "PATH_PARAMETER": "",
+              "ICON": "arrow_upward",
+              "EDITABLE": false,
+              "NAME": "ESCALATIONS"
+            },
+            {
+              "ROUTE": "schedules",
+              "ORDER": 1,
+              "MODULE": "",
+              "IS_MODULE": false,
+              "PATH_PARAMETER": "",
+              "ICON": "event",
+              "EDITABLE": false,
+              "NAME": "SCHEDULES"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "ROLE": "CUSTOMERS_ROLE_REPLACE",
+      "MENU_ITEMS": [
+        {
+          "ROUTE": "TICKETS_ID_REPLACE",
+          "ORDER": 1,
+          "MODULE": "TICKETS_ID_REPLACE",
+          "IS_MODULE": true,
+          "PATH_PARAMETER": "",
+          "ICON": "assignment",
+          "EDITABLE": true,
+          "NAME": "Tickets",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "guide",
+          "ORDER": 2,
+          "MODULE": "",
+          "IS_MODULE": false,
+          "PATH_PARAMETER": "",
+          "ICON": "library_books",
+          "EDITABLE": false,
+          "NAME": "KNOWLEDGE_BASE",
+          "SUB_MENU_ITEMS": []
+        }
+      ]
+    }
+  ]
+}

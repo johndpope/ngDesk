@@ -1,0 +1,54 @@
+{
+  "NAME": "Update Meta Data",
+  "MODULE": "MODULE_ID",
+  "WORKFLOW": {
+    "NODES": [{
+        "POSITION_X": "100px",
+        "POSITION_Y": "100px",
+        "VALUES": {},
+        "ID": "node-id-0fdcdcd2-4619-4c75-b3ad-dfd19076030b",
+        "TYPE": "Start",
+        "CONNECTIONS_TO": [{
+          "TITLE": "START",
+          "FROM": "OUT",
+          "TO_NODE": "node-id-a3730000-503a-48cc-a38c-54bad35dd600"
+        }],
+        "NAME": "Start",
+        "PLUGS": [{
+          "NAME": "OUT",
+          "ID": "output-plug-fb2f4518-348f-406f-b496-4753101c03e4",
+          "ORDER": 1
+        }]
+      },
+      {
+        "POSITION_X": "708px",
+        "POSITION_Y": "448px",
+        "VALUES": {
+          "MODULE": "MODULE_ID_REPLACE",
+          "ENTRY_ID": "{{inputMessage.DATA_ID}}",
+          "FIELDS": [{
+            "FIELD": "FIELD_ID_REPLACE",
+            "VALUE": [
+              "VALUE_REPLACE"
+            ]
+          }]
+        },
+        "ID": "node-id-a3730000-503a-48cc-a38c-54bad35dd600",
+        "TYPE": "UpdateEntry",
+        "CONNECTIONS_TO": [],
+        "NAME": "Update Entry",
+        "PLUGS": [{
+            "NAME": "INPUT",
+            "ID": "input-plug-1a00c6a7-de33-4acf-92b4-9dca29550a85",
+            "ORDER": 0
+          },
+          {
+            "NAME": "OUT-1",
+            "ID": "output-plug-7a60d395-8009-47d9-8045-c350e3e7d47c",
+            "ORDER": 1
+          }
+        ]
+      }
+    ]
+  }
+}

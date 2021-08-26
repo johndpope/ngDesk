@@ -1,0 +1,23 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<div fxLayout="column" fxLayoutGap="10px" class="pad10">
+	<ng-template #headerTemplateRef>
+		<app-title-bar *ngIf="editAccess;else elseBlock" title="{{'ESCALATIONS' | translate}}" buttonText="{{'NEW' | translate}}"
+			(buttonRightOnClick)="newEscalation()"></app-title-bar>
+		<ng-template #elseBlock>
+			<app-title-bar title="{{'ESCALATIONS' | translate}}"></app-title-bar>
+		</ng-template>
+	</ng-template>
+	<div fxLayout="row">
+		<div fxFlex>
+			<app-custom-table [templateRef]="columnTemplateRef" (rowClickedEvent)="rowClicked($event)"
+				noRecordsMessage="{{'NO_ESCALATIONS_FOUND' | translate}}" [actions]="escalationsActions.actions"
+				(menuItemTrigger)="escalationsActions[$event.ACTION.NAME]($event.ROW_DATA);"
+				(sortData)="sortData();customTableService.isLoading = true"
+				(pageChangeEmit)="pageChangeEmit($event);customTableService.isLoading = true">
+				<ng-template #columnTemplateRef let-element="element" let-col="col">
+					{{element[col.NAME]}}
+				</ng-template>
+			</app-custom-table>
+		</div>
+	</div>
+</div>

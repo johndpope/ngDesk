@@ -1,0 +1,53 @@
+<app-toolbar [templateRef]="customTemplateRef"></app-toolbar>
+<ng-template #customTemplateRef>
+  <div fxLayoutAlign="flex-end center">
+    <button mat-raised-button color="primary" [routerLink]="['','guide']">{{'NGDESK_GUIDE' | translate}}</button>
+  </div>
+</ng-template>
+<div fxLayout="row" style="min-height: calc(100vh - 55px);">
+  <div fxFlex="1 1 auto"></div>
+  <div fxLayout="column" fxFlex="50" fxFlex.lt-md="80" class="pad10" fxLayoutGap="20px">
+    <div fxLayoutAlign="center">
+      <mat-error class="mat-body">{{errorMessage}}</mat-error>
+    </div>
+    <app-title-bar title="{{'ARRANGE_CONTENT' | translate}}"></app-title-bar>
+    <span class="mat-body">{{'ARRANGE_CONTENT_DESCRIPTION' | translate}}</span>
+    <label class="mat-body" *ngIf="!isLoading">
+      <a class="section-heading link pointer" [routerLink]="['','guide', 'arrange']">{{'ALL_CATEGORIES' | translate}}</a>
+      >
+      <a class="section-heading link pointer" [routerLink]="['','guide', 'arrange', 'categories', category.categoryId]">{{category.name}}</a>
+      >
+      <span>{{section.name}}</span>
+    </label>
+    <div *ngIf="articles.length > 0 && !isLoading">
+      <h3 class="mat-h3">{{'ARTICLES_COUNT_AFTER' | translate: {'count': articles.length} }}</h3>
+      <div cdkDropList fxLayout="column" class="arrange-content-list mat-body" (cdkDropListDropped)="drop($event)">
+        <div class="arrange-content-box" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px"
+          *ngFor="let article of articles;let i = index" [ngStyle]="{'cursor': 'move'}" cdkDrag>
+          <!-- TODO: drag indicator icon not available, might need to update material icons -->
+          <mat-icon [ngStyle]="{'cursor': 'move'}">reorder</mat-icon>
+          <label fxFlex [ngStyle]="{'cursor': 'move'}">{{article.TITLE}}</label>
+          <div fxLayoutAlign="end center">
+            <button mat-icon-button [matMenuTriggerFor]="moreOptionsMenu">
+              <mat-icon>more_vertical</mat-icon>
+            </button>
+            <mat-menu #moreOptionsMenu="matMenu">
+              <button mat-menu-item [routerLink]="['','guide', 'articles', 'detail', article.ARTICLE_ID]">{{'EDIT_ARTICLE' | translate}}</button>
+              <button mat-menu-item *ngIf="articles.length > 1 && i !== 0" (click)="sendToTop(i, articles)">{{'SEND_TO_TOP' | translate}}</button>
+              <button mat-menu-item *ngIf="article.PUBLISH === true" [routerLink]="['','guide', 'articles', section.sectionId, article.TITLE]">{{'VIEW_IN_GUIDE' | translate}}</button>
+            </mat-menu>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="articles.length === 0 && !isLoading" fxLayout="column" fxLayoutAlign="center center">
+      <h2 class="mat-h2">{{'EMPTY_SECTION' | translate}}</h2>
+      <p class="mat-subheading-1">{{'EMPTY_SECTION_MESSAGE' | translate}}</p>
+      <button mat-raised-button color="primary" [routerLink]="['','guide', 'articles', 'new']">{{'ADD_ARTICLE' | translate}}</button>
+    </div>
+    <div *ngIf="isLoading" fxLayoutAlign="center" fxFlex="50">
+      <mat-spinner></mat-spinner>
+    </div>
+  </div>
+  <div fxFlex="1 1 auto"></div>
+</div>

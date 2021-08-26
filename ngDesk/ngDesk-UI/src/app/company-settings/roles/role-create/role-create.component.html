@@ -1,0 +1,83 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef>
+	<app-title-bar class="light-grey-color" title="{{'CUSTOM_ROLE' | translate}}" buttonText="{{'SAVE' | translate}}"
+		(buttonRightOnClick)="saveRole()">
+	</app-title-bar>
+</ng-template>
+<div class="pad10">
+	<form [formGroup]="roleForm" (ngSubmit)="saveRole()">
+		<app-new-name-description></app-new-name-description>
+	</form>
+</div>
+<mat-divider></mat-divider>
+<div fxLayout="column" fxLayoutGap="20px" class="pad10">
+	<app-custom-table *ngIf="!isSystemAdmin" [templateRef]="columnTemplateRef" fxFlex fxLayoutGap="20px"
+		noRecordsMessage="{{'NO_ROLE_PERMISSIONS_FOUND' | translate}}">
+		<ng-template #columnTemplateRef let-element="element" let-col="col">
+			<span *ngIf="col.NAME === 'MODULE_NAME'">
+				{{element[col.NAME]}}
+			</span>
+			<span fxLayout="row" fxLayoutAlign="start center" *ngIf="col.NAME != 'MODULE_NAME'">
+				<span fxFlex="40">
+					<mat-menu #menu="matMenu" yPosition="below">
+						<div *ngIf="col.NAME === 'ACCESS'">
+							<div *ngFor="let option of accessOptions">
+								<button style="padding: 0px 10px;line-height: 35px;height: 35px;" (click)="element[col.NAME] = option" mat-menu-item>
+									<span style="font-size: 12px;font-weight: normal;">
+										{{option}}
+									</span>
+									<mat-icon fxLayoutAlign="end center" *ngIf="element[col.NAME] === option"
+										style="font-size: 18px;float: right;margin-right: 0px;line-height: 35px;font-weight: bold;height: 35px;">done</mat-icon>
+								</button>
+							</div>
+						</div>
+						<div *ngIf="col.NAME === 'ACCESS_TYPE'">
+							<div *ngFor="let option of accessTypeOptions">
+								<button style="padding: 0px 10px;line-height: 35px;height: 35px;" (click)="element[col.NAME] = option" mat-menu-item>
+									<span style="font-size: 12px;font-weight: normal;">
+										{{option}}
+									</span>
+	
+									<mat-icon fxLayoutAlign="end center" *ngIf="element[col.NAME] === option"
+										style="font-size: 18px;float: right;margin-right: 0px;line-height: 35px;font-weight: bold;height: 35px;">done</mat-icon>
+								</button>
+							</div>
+						</div>
+						<div *ngIf="col.NAME != 'ACCESS' && col.NAME != 'ACCESS_TYPE' ">
+							<div *ngFor="let option of modifyOptions">
+								<button style="padding: 0px 10px;line-height: 35px;height: 35px;" (click)="element[col.NAME] = option" mat-menu-item>
+									<span style="font-size: 12px;font-weight: normal;">
+										{{option}}
+									</span>
+									<mat-icon fxLayoutAlign="end center" *ngIf="element[col.NAME] === option"
+										style="font-size: 18px;float: right;margin-right: 0px;line-height: 35px;font-weight: bold;height: 35px;">done</mat-icon>
+								</button>
+							</div>
+						</div>
+					</mat-menu>
+					<button [disableRipple]="true" mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
+						<span style="font-size: 12px;font-weight: normal;">
+							<div fxFlex="40px" fxLayoutGap="10px">
+								<div fxFlex="30px" fxLayoutAlign="start">
+									{{element[col.NAME]}}
+								</div>
+								<div fxLayoutAlign="end" style="padding-left:8px">
+									<mat-icon style="font-size: 20px;padding-top:10px">keyboard_arrow_down</mat-icon>
+								</div>
+							</div>
+						</span>
+					</button>
+				</span>
+				<span *ngIf="displayfieldPermissionButton">
+					<span *ngIf="col.NAME != 'ACCESS' && col.NAME != 'DELETE'&& col.NAME != 'EDIT' ">
+						<span *ngIf="element.MODULE_NAME !== 'Schedules' && element.MODULE_NAME !== 'Escalations'">
+							<button color="primary" style="font-size: 12px;font-weight: normal;" mat-button (click)="fieldPermission(element)">
+									{{"FIELD_PERMISSIONS" | translate}}
+							</button>
+						</span>
+					</span>
+				</span>
+			</span>
+		</ng-template>
+	</app-custom-table>
+</div>

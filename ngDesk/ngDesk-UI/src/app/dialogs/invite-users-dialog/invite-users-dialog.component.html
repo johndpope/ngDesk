@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<div fxLayoutAlign="space around center" fxLayout="column" fxLayoutGap="20px">
+	<div fxLayout="row" fxLayoutAlign="space-between flex-start">
+		<div fxLayout="row" fxLayoutAlign="center center">
+			<h1 style="margin: 0px;" mat-dialog-title class="mat-h1">{{'INVITE_USERS' | translate}}</h1>
+			<button mat-icon-button (click)="addInvite()" type="button">
+				<mat-icon>add_circle</mat-icon>
+			</button>
+		</div>
+		<button mat-raised-button color="primary" (click)="goToInvites()">Manage Invites</button>
+	</div>
+	<div fxLayoutAlign="center" *ngIf="errorMessage != ''">
+		<mat-error class="mat-h3" fxLayoutAlign="center">{{errorMessage}}</mat-error>
+	</div>
+
+	<form [formGroup]="inviteUsersForm" fxLayout="column" fxLayoutGap="30px" (ngSubmit)="sendInvite()">
+		<div style="overflow-y: auto;max-height: 450px;">
+			<div formArrayName="users" fxLayoutAlign="center center" *ngFor=" let user of formData.controls; let i = index">
+				<div [formGroupName]="i" style="height: 80px" fxLayoutAlign="space-between" fxFlex="100" fxLayout="row">
+					<span class="mat-h3" style="font-size: 18px;height: 60px;" fxLayoutAlign="center center">{{i+1}}.</span>
+					<mat-form-field [ngStyle]="{'width':'20%'}">
+						<input matInput placeholder="{{'FIRST_NAME' | translate}}" formControlName="FIRST_NAME">
+						<mat-error *ngIf="user.controls.FIRST_NAME.hasError('required')" [innerHTML]="'FIELD_REQUIRED' | translate:params.firstName">
+						</mat-error>
+					</mat-form-field>
+					<mat-form-field [ngStyle]="{'width':'20%'}">
+						<input matInput placeholder="{{'LAST_NAME' | translate}}" formControlName="LAST_NAME">
+						<mat-error *ngIf="user.controls.LAST_NAME.hasError('required')" [innerHTML]="'FIELD_REQUIRED' | translate:params.lastName">
+						</mat-error>
+					</mat-form-field>
+					<mat-form-field [ngStyle]="{'width':'20%'}">
+						<input matInput placeholder="{{'EMAIL_ADDRESS' | translate}}" formControlName="EMAIL_ADDRESS">
+						<mat-error *ngIf="user.controls.EMAIL_ADDRESS.hasError('email') && !user.controls.EMAIL_ADDRESS.hasError('required')">
+							{{'PLEASE_ENTER_VALID_EMAIL_ADDRESS' | translate}}
+						</mat-error>
+						<mat-error *ngIf="user.controls.EMAIL_ADDRESS.hasError('required')"
+							[innerHTML]="'FIELD_REQUIRED' | translate:params.emailAddress">
+						</mat-error>
+					</mat-form-field>
+					<mat-form-field [ngStyle]="{'width':'20%'}">
+						<mat-select placeholder="{{'ROLE' | translate}}" formControlName="ROLE">
+							<mat-option *ngFor="let role of roles" [value]="role.ROLE_ID">
+								{{role.NAME}}
+							</mat-option>
+						</mat-select>
+						<mat-error *ngIf="user.controls.ROLE.hasError('required')" [innerHTML]="'FIELD_REQUIRED' | translate:params.role">
+						</mat-error>
+					</mat-form-field>
+					<div fxLayoutAlign="center center">
+						<button mat-icon-button (click)="removeInvite(i)" type="button">
+							<mat-icon>remove_circle</mat-icon>
+
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div fxLayoutAlign="end" fxLayout="row" fxLayoutGap="10px">
+			<button mat-raised-button [mat-dialog-close]="inviteUsersForm">{{'CLOSE' | translate}}</button>
+			<button mat-raised-button color="primary" [disabled]="!inviteUsersForm.valid" type="submit">{{'INVITE' | translate}}</button>
+		</div>
+	</form>
+
+</div>

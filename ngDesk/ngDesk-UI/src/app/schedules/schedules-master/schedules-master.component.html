@@ -1,0 +1,22 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<div fxLayout="column" fxLayoutGap="10px" class="pad10">
+	<ng-template #headerTemplateRef>
+		<app-title-bar *ngIf="editAccess;else elseBlock" title="{{'SCHEDULES' | translate}}" buttonText="{{'NEW' | translate}}"
+			(buttonRightOnClick)="newSchedule()"></app-title-bar>
+		<ng-template #elseBlock>
+			<app-title-bar title="{{'SCHEDULES' | translate}}"></app-title-bar>
+		</ng-template>
+	</ng-template>
+	<div fxLayout="row">
+		<div fxFlex>
+			<app-custom-table [templateRef]="columnTemplateRef" (rowClickedEvent)="rowClicked($event)" [actions]="schedulesActions.actions"
+				(menuItemTrigger)="schedulesActions[$event.ACTION.NAME]($event.ROW_DATA);" noRecordsMessage="No schedules found"
+				(pageChangeEmit)="pageChangeEmit($event);customTableService.isLoading = true"
+				(sortData)="sortData();customTableService.isLoading = true">
+				<ng-template #columnTemplateRef let-element="element" let-col="col">
+					{{element[col.NAME]}}
+				</ng-template>
+			</app-custom-table>
+		</div>
+	</div>
+</div>

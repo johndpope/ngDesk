@@ -1,0 +1,35 @@
+<StackLayout>
+  <Label text="chat-faqs works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<div fxLayout="column" fxLayoutGap="10px" class="pad10">
+  <ng-template #headerTemplateRef>
+    <app-title-bar *ngIf="!buttonDisabled; else elseBlock" title="{{'CHAT_FAQS' | translate}}" buttonText="{{'NEW' | translate}}"
+      (buttonRightOnClick)="newFaq()"></app-title-bar>
+    <ng-template #elseBlock>
+      <app-title-bar title="{{'CHAT_FAQS' | translate}}"></app-title-bar>
+    </ng-template>
+  </ng-template>
+  <div fxLayout="row">
+    <div fxFlex>
+      <app-custom-table [templateRef]="columnTemplateRef" (rowClickedEvent)="rowClicked($event)"
+        noRecordsMessage="{{'NO_FAQS_FOUND'| translate}}" [actions]="triggersActions.actions"
+        (menuItemTrigger)="triggersActions[$event.ACTION.NAME]($event.ROW_DATA);"
+        (pageChangeEmit)="pageChangeEmit($event);customTableService.isLoading = true"
+        (sortData)="sortData();customTableService.isLoading = true">
+        <ng-template #columnTemplateRef let-element="element" let-col="col">
+          {{element[col.NAME]}}
+        </ng-template>
+      </app-custom-table>
+
+    </div>
+  </div>
+</div>
+
+-->

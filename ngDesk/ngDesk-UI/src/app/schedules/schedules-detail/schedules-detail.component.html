@@ -1,0 +1,216 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef>
+	<app-title-bar title="{{'SCHEDULES' | translate}}" buttonText="{{'SAVE' | translate}}" (buttonRightOnClick)="saveSchedule()">
+	</app-title-bar>
+</ng-template>
+<div fxLayout="column" fxLayoutGap="10px" class="pad10">
+	<form [formGroup]="scheduleForm" (ngSubmit)="saveSchedule()">
+		<app-new-name-description>
+		</app-new-name-description>
+	</form>
+
+	<!-- TIME ZONE -->
+	<div fxLayout="row">
+		<mat-form-field fxFlex="20">
+			<mat-select [disabled]="disableButtons" placeholder="Timezone" [(ngModel)]="schedule.timezone" (ngModelChange)="initTable()">
+				<mat-option *ngFor="let timezone of timeZones" [value]="timezone">
+					{{timezone}}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+	</div>
+	<!-- END TIME ZONE -->
+
+	<!-- LAYERS -->
+	<div fxLayout="column" fxLayoutGap="10px">
+		<div fxLayout="column" *ngFor="let layer of schedule.layers; let i = index" class="mat-elevation-z8">
+			<div class="pad10" fxLayout="row" fxLayoutAlign="space-between center">
+				<label class="mat-h3">{{'LAYER'|translate}} {{i+1}}</label>
+				<button mat-icon-button [disabled]="disableButtons" (click)="removeLayer(i)">
+					<mat-icon class="pointer" *ngIf="schedule.layers.length > 1">remove_circle</mat-icon>
+				</button>
+			</div>
+			<div class="pad10" fxLayout="row" fxLayoutGap="10px">
+				<!-- STEP1 -->
+				<div fxLayout="column" fxFlex="33" fxLayoutGap="10px">
+					<label class="mat-body">{{'STEP_1_ADD_USERS'|translate}}</label>
+					<div fxLayout="column" fxLayoutGap="10px" *ngIf="layer.users.length > 0">
+						<div *ngFor="let user of layer.users; let userIndex = index" fxLayout="row" fxLayoutAlign="space-between center"
+							fxFlexOffset="1" class="white-color"
+							[ngStyle]="{'padding': '2px', 'background-color': usersMap[user].COLORS.backgroundColor,
+                'border-color': usersMap[user].COLORS.borderColor, 'background-image': usersMap[user].COLORS.backgroundImage, 'border-radius': '5px'}">
+							<label class="mat-body" [ngStyle]="{'color': usersMap[user].COLORS.backgroundImage === 'linear-gradient(to bottom,#eaf7fe,#dff4ff)'?'black':'white'
+								,'margin-left':'5px'}">{{usersMap[user].CONTACT.PRIMARY_DISPLAY_FIELD}}</label>
+							<div fxLayout="row">
+								<mat-icon class="pointer" [ngStyle]="{'color': usersMap[user].COLORS.backgroundImage === 'linear-gradient(to bottom,#eaf7fe,#dff4ff)'?'black':'white'
+								,'margin-left':'5px'}" *ngIf="userIndex != 0 && !disableButtons" (click)="swap(i,userIndex,'up')">
+									arrow_upwards
+								</mat-icon>
+								<mat-icon class="pointer" [ngStyle]="{'color': usersMap[user].COLORS.backgroundImage === 'linear-gradient(to bottom,#eaf7fe,#dff4ff)'?'black':'white'
+								,'margin-left':'5px'}" *ngIf="userIndex != layer.users.length - 1 && !disableButtons" (click)="swap(i,userIndex,'down')">
+									arrow_downwards
+								</mat-icon>
+							</div>
+						</div>
+					</div>
+					<mat-form-field>
+						<mat-chip-list [disabled]="disableButtons" #schedule_user_ChipList>
+							<mat-chip *ngFor="let userEntry of layer.users; let userEntryIndex = index" [selectable]='true' [removable]=true
+								(removed)="removeUserFromLayer(i,userEntryIndex)">
+								<span>{{usersMap[userEntry].EMAIL_ADDRESS+' '+'<'+usersMap[userEntry].CONTACT.PRIMARY_DISPLAY_FIELD +'>'}}</span>
+								<mat-icon matChipRemove>cancel</mat-icon>
+							</mat-chip>
+							<input matInput title="{{'SCHEDULES_USER_SEARCH' | translate}}" [matAutocomplete]="users_auto" placeholder="Users"
+								[matChipInputFor]="schedule_user_ChipList" [(ngModel)]="tempUserInput" [matChipInputAddOnBlur]="true"
+								(matChipInputTokenEnd)="resetInput($event)" (ngModelChange)="searchUser()">
+						</mat-chip-list>
+						<mat-autocomplete (appAutocompleteScroll)="onUsersScroll()" #users_auto="matAutocomplete"
+							(optionSelected)="addUserToLayer($event,i);">
+							<mat-option *ngFor="let user of filteredUsers" [value]="user.DATA_ID" [disabled]="disableSelectedUsers(user,i)">
+								<span>{{user.EMAIL_ADDRESS +' '+'<'+user.CONTACT.PRIMARY_DISPLAY_FIELD +'>'}}</span>
+							</mat-option>
+						</mat-autocomplete>
+					</mat-form-field>
+				</div>
+				<!-- END STEP1 -->
+
+				<!-- STEP2 -->
+				<div fxLayout="column" fxFlex="33" fxLayoutGap="10px">
+					<label class="mat-body">{{'STEP_2_SET_UP_ON_CALL'|translate}}</label>
+					<mat-form-field>
+						<mat-select [disabled]="disableButtons" placeholder="Rotation Type" [(ngModel)]="layer.rotationType"
+							(ngModelChange)="initTable()">
+							<mat-option *ngFor="let type of rotationTypes" [value]="type">
+								{{type}}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+					<mat-form-field>
+						<mat-select [disabled]="disableButtons" placeholder="Handoff Time" [(ngModel)]="layer.startTime" (ngModelChange)="initTable()">
+							<mat-option *ngFor="let time of startTimes" [value]="time">
+								{{time}}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+					<div fxLayout="column">
+						<div fxLayout="row" fxLayoutGap="5px">
+							<mat-checkbox [disabled]="disableButtons" color="primary" [(ngModel)]="layer.hasRestrictions"
+								(ngModelChange)="toggleRestrictions(i)">{{'RESTRICT_ON_CALL_SHIFT'|translate}}</mat-checkbox>
+							<label class="mat-body-strong pointer" (click)="toggleRestrictions(i)"
+								*ngIf="layer.hasRestrictions && !disableButtons">Edit</label>
+						</div>
+						<!-- MARGIN LEFT SET TO 24px TO MATCH THE CHECKBOX AT THE TOP -->
+						<div fxLayout="row" *ngFor="let restriction of layer.restrictions;" style="margin-left:24px" fxLayoutGap="5px" class="mat-body">
+							<label>{{'FROM'|translate}}</label>
+							<label *ngIf="layer.restrictionType == 'Week'">{{restriction.startDay}}</label>
+							<label>{{restriction.startTime}}</label>
+							<label>{{'TO'|translate}}</label>
+							<label *ngIf="layer.restrictionType == 'Week'">{{restriction.endDay}}</label>
+							<label>{{restriction.endTime}}</label>
+						</div>
+					</div>
+				</div>
+				<!-- END STEP2 -->
+
+				<!-- STEP3 -->
+				<div fxLayout="column" fxFlex="33" fxLayoutGap="10px">
+					<label class="mat-body">{{ 'STEP_3_SELECT_TIME_FOR_CHANGES'|translate}}</label>
+					<mat-form-field>
+						<input [disabled]="disableButtons" matInput [matDatepicker]="picker" placeholder="Start Date" [(ngModel)]="layer.startDate"
+							(ngModelChange)="initTable()">
+						<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+						<mat-datepicker #picker></mat-datepicker>
+					</mat-form-field>
+					<mat-form-field>
+						<input matInput placeholder="Start Time" readonly [value]="layer.startTime" [disabled]='true'>
+					</mat-form-field>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div fxLayout="row" fxLayoutAlign="end">
+		<button [disabled]="disableButtons" mat-raised-button color="primary" (click)="addLayer()">
+			{{'ADD_LAYER'|translate}}
+		</button>
+	</div>
+	<!-- END LAYERS -->
+
+	<!-- SCHEDULE VISUALIZATION -->
+	<div fxLayout="column" class="mat-elevation-z8">
+		<div fxLayout="row" fxLayoutAlign="space-between center" class="pad10">
+			<div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="5px">
+				<button class="small-button" mat-raised-button (click)="setDates('today')">Today</button>
+				<button class="small-button" mat-raised-button (click)="setDates('previous')">
+					<mat-icon>arrow_back</mat-icon>
+				</button>
+				<button class="small-button" (click)="setDates('next')" mat-raised-button>
+					<mat-icon>arrow_forward</mat-icon>
+				</button>
+				<b class="mat-body-2">{{dayInView | date : "MMM dd"}}</b>
+				<b class="mat-body-2" *ngIf="currentView != 'Day'"> - {{dayInViewEnd | date : "MMM dd"}}</b>
+			</div>
+			<div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="5px">
+				<b class="mat-body-2">View:</b>
+				<button class="small-button" mat-raised-button (click)="changeCurrentView('Day')">
+					{{'1_DAY'|translate}}</button>
+				<button class="small-button" mat-raised-button (click)="changeCurrentView('Week')">
+					{{'1_WEEK'|translate}}</button>
+				<button class="small-button" mat-raised-button (click)="changeCurrentView('Month')">
+					{{'1_MONTH'|translate}}</button>
+			</div>
+		</div>
+		<mat-divider></mat-divider>
+		<div fxLayout="row" class="pad10">
+			<b class="mat-body-2"> {{ 'CONFIGURATION_LAYERS'|translate}}</b>
+		</div>
+		<mat-divider></mat-divider>
+		<div fxLayout="row">
+			<div fxLayout="column" fxFlex="15" fxLayoutAlign="center end" style="border-right:1px solid #ddd">
+				<div style="height:20px"></div>
+				<div fxLayout="row" fxLayoutAlign="end center" class="pad10" *ngFor="let layer of schedule.layers; let i = index;"
+					style="height:60px">
+					<b class="mat-body-2"> {{'LAYER'|translate}} {{i + 1}}</b>
+				</div>
+			</div>
+			<div fxFlex="85" fxLayout="column">
+				<div fxLayout="row" fxLayoutAlign=" stretch">
+					<label class="mat-small" *ngFor="let div of layerDivs" fxFlex>{{div.LABEL}}</label>
+				</div>
+				<div fxLayout="row" fxLayoutAlign=" center" *ngFor="let layer of schedule.layers; let i = index;" style="height:60px">
+					<div class="schedule-bar mat-body" *ngFor="let user of layerUsers[i].users" fxFlex="{{user.SIZE}}" fxFlexOffset="{{user.OFFSET}}"
+						fxLayoutAlign="center center" [ngStyle]="{'background-color': user.COLORS.backgroundColor,
+            'border-color': user.COLORS.borderColor, 'background-image': user.COLORS.backgroundImage}">
+						{{user.CONTACT.PRIMARY_DISPLAY_FIELD}}
+					</div>
+				</div>
+			</div>
+		</div>
+		<mat-divider></mat-divider>
+		<div fxLayout="row" class="pad10">
+			<b class="mat-body-2"> {{'FINAL_SCHEDULE'|translate}}</b>
+		</div>
+		<mat-divider></mat-divider>
+		<div fxLayout="row">
+			<div fxLayout="column" fxFlex="15" fxLayoutAlign="center end" style="border-right:1px solid #ddd">
+				<div style="height:20px"></div>
+				<div fxLayout="row" fxLayoutAlign="end center" class="pad10" style="height:60px">
+					<b class="mat-body-2"> {{'FINAL_SCHEDULE'|translate}}</b>
+				</div>
+			</div>
+			<div fxFlex="85" fxLayout="column">
+				<div fxLayout="row" fxLayoutAlign=" stretch">
+					<label class="mat-small" *ngFor="let div of layerDivs" fxFlex>{{div.LABEL}}</label>
+				</div>
+				<div fxLayout="row" fxLayoutAlign=" center" style="height:60px">
+					<div class="schedule-bar mat-body-strong" *ngFor="let user of finalLayer.users" fxFlex="{{user.SIZE}}"
+						fxFlexOffset="{{user.OFFSET}}" fxLayoutAlign="center center" [ngStyle]="{'background-color': user.COLORS.backgroundColor,
+            'border-color': user.COLORS.borderColor, 'background-image': user.COLORS.backgroundImage}">
+						{{user.CONTACT.PRIMARY_DISPLAY_FIELD}}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- SCHEDULE VISUALIZATION END -->
+</div>

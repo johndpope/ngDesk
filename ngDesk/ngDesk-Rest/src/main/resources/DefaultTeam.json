@@ -1,0 +1,9 @@
+{
+  "NAME":"Global",
+  "DESCRIPTION":"Default Team",
+  "USERS":[
+    "USER_ID_REPLACE"
+   ],
+   "DELETED": false,
+   "IS_PERSONAL": false
+}

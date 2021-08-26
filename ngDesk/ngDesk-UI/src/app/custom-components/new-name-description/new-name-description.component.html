@@ -1,0 +1,67 @@
+<div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+	<div fxLayout="row" fxLayoutGap="10px" fxFlex>
+		<!-- Name field start -->
+		<mat-form-field>
+			<input matInput [errorStateMatcher]="matcher" placeholder="{{'NAME' | translate}}" formControlName="NAME"   (focusout)="focusoutName($event)" value="{{fgd.value.NAME}}"
+				required>
+			<mat-error>{{'FIELD_IS' | translate:params.name}} <strong>{{'REQUIRED' | translate}}</strong></mat-error>
+		</mat-form-field>
+		<!-- Name field end -->
+		<!-- Additional fields start -->
+		<div fxLayout="row" fxLayoutGap="10px" *ngIf="additionalFields.length > 0">
+			<div *ngFor="let field of additionalFields">
+				<mat-form-field *ngIf="field.type === 'multipleList'">
+					<mat-select placeholder="{{field.placeHolder | translate}}" multiple formControlName="{{field.control}}" required>
+						<mat-option *ngFor="let data of field.list" [value]="data[field.value]">
+							{{ data[field.display] }}
+						</mat-option>
+					</mat-select>
+					<mat-error>{{'FIELD_IS' | translate:params[field.error]}} <strong>{{'REQUIRED' | translate}}</strong></mat-error>
+				</mat-form-field>
+				<mat-form-field *ngIf="field.type === 'list'">
+					<mat-select placeholder="{{field.placeHolder  | translate}}" formControlName="{{field.control}}" required
+						value="{{fgd.value[field.bindValue]}}" (selectionChange)="customSelectionChangeEmit()">
+						<mat-option *ngFor="let data of field.list" [value]="data[field.value]">
+							{{data[field.display]}}
+						</mat-option>
+					</mat-select>
+					<mat-error>{{'FIELD_IS' | translate:params[field.error]}} <strong>{{'REQUIRED' | translate}}</strong></mat-error>
+				</mat-form-field>
+				<mat-form-field *ngIf="field.type === 'number'">
+					<input type="number" matInput placeholder="{{field.placeHolder | translate}}" formControlName="{{field.control}}" required
+						value="{{fgd.value[field.bindValue]}}">
+					<mat-error><strong>{{ field.error | translate }}</strong></mat-error>
+				</mat-form-field>
+			</div>
+		</div>
+		<!-- Additional fields end -->
+		<!-- Description field start -->
+		<mat-form-field fxFlex>
+			<input matInput placeholder="{{'DESCRIPTION' | translate}}" formControlName="DESCRIPTION" (focusout)="focusoutDesc($event)" value="{{fgd.value.DESCRIPTION}}">
+		</mat-form-field>
+		<!-- Description field end -->
+		<!--Additional checkbox field start -->
+		<div fxLayout="row" *ngIf="additionalCheckboxFields.length > 0">
+			<div *ngFor="let field of additionalCheckboxFields">
+				<div style="padding-top: 17px;">
+					<mat-checkbox color="primary" value="{{fgd.value[field.bindValue]}}" matTooltip="{{field.placeHolder | translate}}"
+						matTooltipPosition="below" formControlName="{{field.control}}">
+						{{field.display | translate}}
+					</mat-checkbox>
+				</div>
+			</div>
+		</div>
+		<!--Additional checkbox field end -->
+	</div>
+	<!-- Custom button start -->
+	<div fxLayout="row" fxLayoutGap="10px">
+		<button [disabled]="disabledButton" *ngIf="altButton" type="button" (click)="altButtonEmit()" mat-raised-button color="primary">
+			{{altButtonTitle}}
+		</button>
+		<button [disabled]="disabledButton" *ngIf="schedulesButton" type="button" (click)="schedulesButtonEmit()" mat-raised-button
+			color="primary">
+			{{schedulesButtonTitle}}
+		</button>
+	</div>
+	<!-- Custom button end -->
+</div>

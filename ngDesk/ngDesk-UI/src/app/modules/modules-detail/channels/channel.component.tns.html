@@ -1,0 +1,86 @@
+<StackLayout>
+  <Label text="ChannelComponent works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<div class="pad10">
+	<ng-template #headerTemplateRef>
+		<app-title-bar title="{{'CHANNELS' | translate}}"></app-title-bar>
+	</ng-template>
+	<ng-container *ngIf="isLoading; else elseTemplate">
+		<mat-spinner style="position:relative;top:20%;left:50%"></mat-spinner>
+	</ng-container>
+	<ng-template #elseTemplate>
+		<div fxLayout="column" style="margin-top: 10px;" fxLayoutGap="10px">
+			<div fxLayout="row" fxLayoutWrap fxLayoutGap="10px" fxLayoutAlign="start flex-start">
+				<div fxFlex="20" fxLayoutAlign="flex-start">
+					<table fxFlex="68.9" fxFlex.lt-lg="100" *ngIf="showSideNav" mat-table [dataSource]="navigations" class="mat-elevation-z8">
+						<ng-container matColumnDef="NAME">
+							<th class="custom-theme-icon-color" mat-header-cell *matHeaderCellDef>
+								<div class="trim-info" matTooltip="{{module.PLURAL_NAME}}">
+									{{ module.PLURAL_NAME | truncate : 10}} {{'MODULE' | translate}}
+								</div>
+							</th>
+							<td matRipple class="no-wrap" mat-cell *matCellDef="let element" class="pointer"
+								[ngClass]="{ 'module-page-active': element.NAME == 'CHANNELS'}">
+								{{element.NAME | translate}} </td>
+						</ng-container>
+						<tr class="custom-theme-primary-color" mat-header-row *matHeaderRowDef="['NAME']"></tr>
+						<tr mat-row *matRowDef="let row; columns: ['NAME'];" [routerLink]="row.PATH" [appHighlight]="{BACKGROUND: '#ececec'}"></tr>
+					</table>
+					<div class="pad10" style="margin-left: -10px;">
+						<button mat-icon-button
+							[ngStyle]="{'border': (showSideNav) ? '2px solid white' : '2px solid #3f51b5', 'margin-left' : (showSideNav) ? '-48px' : '0px'}"
+							(click)="showSideNav = !showSideNav" style="border-radius: 3px; margin-top: -2px;">
+							<mat-icon color="primary" style="margin-top: -5px;" *ngIf="!showSideNav">
+								keyboard_arrow_right</mat-icon>
+							<mat-icon class="custom-theme-icon-color" style="margin-top: -5px;" *ngIf="showSideNav">
+								keyboard_arrow_left</mat-icon>
+						</button>
+					</div>
+					<span fxFlex="1 1 auto"></span>
+				</div>
+
+				<div fxFlex fxLayoutGap="20px" *ngIf="module.NAME !== 'Chat' && module.NAME === 'Tickets'">
+					<mat-card [appHighlight]="{BACKGROUND: 'ghostwhite'}" fxFlex="40" fxLayout="column" fxLayoutAlign="center center" class="pointer"
+						(click)="navigateTo('email')">
+						<mat-icon fontSet="material-icons-outlined">email</mat-icon>
+						<mat-label class="mat-body-2">{{'EMAIL' | translate}}</mat-label>
+					</mat-card>
+					<mat-card [appHighlight]="{BACKGROUND: 'ghostwhite'}" fxFlex="40" fxLayout="column" fxLayoutAlign="center center" class="pointer"
+						(click)="navigateTo('facebook')">
+						<img class="mat-icon notranslate material-icons mat-icon-no-color" src="../../../../../assets/images/facebook_logo.png" />
+						<mat-label class="mat-body-2">{{ 'FACEBOOK' | translate}}</mat-label>
+					</mat-card>
+					<mat-card [appHighlight]="{BACKGROUND: 'ghostwhite'}" fxFlex="40" fxLayout="column" fxLayoutAlign="center center" class="pointer"
+						(click)="navigateTo('sms')">
+						<mat-icon>chat_bubble_outline</mat-icon>
+						<mat-label class="mat-body-2">SMS</mat-label>
+					</mat-card>
+
+				</div>
+				<div fxFlex fxLayoutGap="20px" *ngIf="module.NAME === 'Chat'">
+					<mat-card [appHighlight]="{BACKGROUND: 'ghostwhite'}" fxFlex="40" fxLayout="column" fxLayoutAlign="center center" class="pointer"
+						(click)="navigateTo('chatChannel')">
+						<mat-icon fontSet="material-icons-outlined">chat_bubble_outline</mat-icon>
+						<mat-label class="mat-body-2">{{'CHAT' | translate}}</mat-label>
+					</mat-card>
+				</div>
+				<div fxFlex fxLayoutGap="20px" *ngIf="module.NAME !== 'Chat' && module.NAME !== 'Tickets' ">
+					<mat-card [appHighlight]="{BACKGROUND: 'ghostwhite'}" fxFlex="40" fxLayout="column" fxLayoutAlign="center center" class="pointer"
+						(click)="navigateTo('email')">
+						<mat-icon fontSet="material-icons-outlined">email</mat-icon>
+						<mat-label class="mat-body-2">{{'EMAIL' | translate}}</mat-label>
+					</mat-card>
+				</div>
+			</div>
+		</div>
+	</ng-template>
+</div>
+
+-->

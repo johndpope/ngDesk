@@ -1,0 +1,284 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<div class="pad10" fxLayout="column">
+	<ng-template #headerTemplateRef>
+		<app-title-bar class="light-grey-color" title="{{'API_BUILDER' | translate}}">
+		</app-title-bar>
+	</ng-template>
+	<div fxLayout="row" fxLayoutAlign="center">
+		<mat-error class="mat-body">{{errorMessage}}</mat-error>
+	</div>
+	<div fxLayout="column" fxLayoutGap="7px">
+		<div fxLayout="row">
+			<mat-form-field>
+				<mat-select placeholder="Select a module" [(ngModel)]="selectedModule" name="module"
+					(selectionChange)="loadModuleFields($event.value)" required>
+					<mat-option *ngFor="let module of modules" [value]="module">
+						<label i18n> {{ module.NAME }} </label>
+					</mat-option>
+				</mat-select>
+				<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params.MODULE"></mat-error>
+			</mat-form-field>
+		</div>
+		<div fxLayout="row">
+			<mat-form-field>
+				<mat-select placeholder="{{'SELECT_REQUEST_TYPE' | translate}}" [(ngModel)]="requestType"
+					(selectionChange)="requestTypeChanged(requestType)" required name="requestType">
+					<mat-option *ngFor="let request of requestTypes" [value]="request.DISPLAY">
+						{{request.DISPLAY | translate}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+		</div>
+		<div fxLayout="row">
+			<mat-form-field>
+				<input matInput type="text" placeholder="{{'ENTER_API_KEY' | translate}}" [(ngModel)]="apiKey" required>
+				<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params.API_KEY"></mat-error>
+			</mat-form-field>
+		</div>
+		<div fxLayout="row" *ngIf="requestType ==='GET'">
+			<mat-checkbox [(ngModel)]="isGetByFilter" class="mat-body-strong" color="primary" name="getByFilter" (change)="OnChange();">
+				{{'GET_BY_FILTER' | translate}}
+			</mat-checkbox>
+		</div>
+
+		<mat-card fxLayout="column" fxLayoutAlign="center" fxLayoutGap="20px" fxFlex="1 1 calc(70vh + 15px)">
+			<div *ngIf="!selectedModule.NAME" fxLayoutAlign="center center">
+				<h1 class="mat-h1">{{'SELECT_MODULE_TO_START' | translate}}</h1>
+			</div>
+			<div fxLayout="row" fxFlex="100" *ngIf="selectedModule.NAME">
+				<div *ngIf="requestType === 'POST'" fxLayout="column" fxFlex="50" fxLayoutGap="20px" style="margin-right:20px">
+					<div fxLayout="row" fxFlex>
+						<cdk-virtual-scroll-viewport fxFlex [itemSize]="selectedModule.FIELDS.length">
+							<div *ngFor="let field of displayedFields; let i = index">
+								<!-- TEXT -->
+								<mat-form-field fxFlex *ngIf="(field.NAME !== 'ROLE' && field.DATA_TYPE.DISPLAY === 'Text') || field.DATA_TYPE.DISPLAY === 'URL' ||
+            field.DATA_TYPE.DISPLAY === 'Street 1' || field.DATA_TYPE.DISPLAY === 'Street 2' ||
+            field.DATA_TYPE.DISPLAY === 'City' || field.DATA_TYPE.DISPLAY === 'State' || field.DATA_TYPE.DISPLAY === 'Zipcode' ||
+            field.DATA_TYPE.DISPLAY === 'Country' || field.DATA_TYPE.DISPLAY == 'List Text' || field.DATA_TYPE.DISPLAY == 'Email'">
+									<input matInput placeholder="{{field.DISPLAY_LABEL | translate}}" [(ngModel)]="entry[field.NAME]"
+										[required]="field.REQUIRED">
+									<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params[field.NAME]"></mat-error>
+								</mat-form-field>
+
+								<!-- NUMBER -->
+								<mat-form-field fxFlex *ngIf="field.DATA_TYPE.DISPLAY === 'Auto Number' || field.DATA_TYPE.DISPLAY === 'Number'">
+									<input matInput type="number" placeholder="{{field.NAME | translate}}" [(ngModel)]="entry[field.NAME]"
+										[required]="field.REQUIRED">
+									<mat-hint> {{field.HELP_TEXT}} </mat-hint>
+									<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params[field.NAME]"></mat-error>
+								</mat-form-field>
+
+								<!-- TEXTAREA -->
+								<mat-form-field fxFlex *ngIf="field.DATA_TYPE.DISPLAY === 'Text Area' ||
+                field.DATA_TYPE.DISPLAY === 'Text Area Rich' || field.DATA_TYPE.DISPLAY === 'Text Area Long'">
+									<textarea matInput placeholder="{{field.DISPLAY_LABEL | translate}}" [(ngModel)]="entry[field.NAME]"
+										[ngModelOptions]="{standalone: true}" [required]="field.REQUIRED"></textarea>
+									<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params[field.NAME]"></mat-error>
+								</mat-form-field>
+
+								<!-- PICKLIST -->
+								<mat-form-field fxFlex *ngIf="field.DATA_TYPE.DISPLAY === 'Picklist'">
+									<mat-select placeholder="{{field.DISPLAY_LABEL | translate}}" [(ngModel)]="entry[field.NAME]" [required]="field.REQUIRED">
+										<mat-option *ngFor="let pickedValue of field.PICKLIST_VALUES" [value]="pickedValue">
+											{{pickedValue}}
+										</mat-option>
+									</mat-select>
+									<mat-hint> {{field.HELP_TEXT}} </mat-hint>
+									<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params[field.NAME]"></mat-error>
+								</mat-form-field>
+
+								<!-- DATE/TIME -->
+								<mat-form-field fxFlex *ngIf="field.DATA_TYPE.DISPLAY === 'Date/Time'">
+									<input placeholder="{{ field.DISPLAY_LABEL | translate}}" matInput [owlDateTimeTrigger]="dt" [owlDateTime]="dt"
+										[ngModel]="entry[field.NAME]" (ngModelChange)="entry[field.NAME] = $event" [required]="field.REQUIRED">
+									<owl-date-time #dt></owl-date-time>
+									<mat-hint> {{field.HELP_TEXT}} </mat-hint>
+									<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params[field.NAME]"></mat-error>
+								</mat-form-field>
+
+								<!-- CHECKBOX -->
+								<mat-form-field fxFlex *ngIf="field.DATA_TYPE.DISPLAY === 'Checkbox'">
+									<mat-select placeholder="{{field.DISPLAY_LABEL | translate}}" [(ngModel)]="entry[field.NAME]" [required]="field.REQUIRED">
+										<mat-option *ngFor="let pickedValue of checkBoxValues" [value]="pickedValue">
+											{{pickedValue}}
+										</mat-option>
+									</mat-select>
+									<mat-hint> {{field.HELP_TEXT}} </mat-hint>
+									<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params[field.NAME]"></mat-error>
+								</mat-form-field>
+
+								<!-- RELATIONSHIP ONE TO ONE AND MANY TO ONE -->
+								<mat-form-field fxFlex
+									*ngIf="field.DATA_TYPE.DISPLAY == 'Relationship' && field.RELATIONSHIP_TYPE == 'Many to One' || field.RELATIONSHIP_TYPE == 'One to One'">
+									<mat-select placeholder="{{field.DISPLAY_LABEL | translate}}" [(ngModel)]="entry[field.NAME]" [required]="field.REQUIRED">
+										<mat-option *ngFor="let entry of relationFieldEntries[field.PRIMARY_DISPLAY_FIELD]" [value]="entry.DATA_ID">
+											{{entry[field.PRIMARY_DISPLAY_FIELD_NAME]}}
+										</mat-option>
+									</mat-select>
+									<mat-hint> {{field.HELP_TEXT}} </mat-hint>
+									<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params[field.NAME]"></mat-error>
+								</mat-form-field>
+
+								<!-- RELATIONSHIP MANY TO MANY -->
+								<mat-form-field fxFlex *ngIf="field.DATA_TYPE.DISPLAY == 'Relationship' && field.RELATIONSHIP_TYPE == 'Many to Many'">
+									<mat-select placeholder="{{field.NAME | translate}}" [(ngModel)]="entry[field.NAME]" [required]="field.REQUIRED" multiple>
+										<mat-option *ngFor="let entry of relationFieldEntries[field.PRIMARY_DISPLAY_FIELD]" [value]="entry.DATA_ID">
+											{{entry[field.PRIMARY_DISPLAY_FIELD_NAME]}}
+										</mat-option>
+									</mat-select>
+									<mat-hint> {{field.HELP_TEXT}} </mat-hint>
+									<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params[field.NAME]"></mat-error>
+								</mat-form-field>
+
+								<!-- DISCUSSION -->
+								<mat-form-field fxFlex *ngIf="field.DATA_TYPE.DISPLAY == 'Discussion'">
+									<textarea matInput matTextareaAutosize="true" matAutosizeMaxRows="7" matAutosizeMinRows="7"
+										placeholder="{{field.DISPLAY_LABEL | translate}}" [(ngModel)]="entry[field.NAME][0]['MESSAGE']"
+										[required]="field.REQUIRED"></textarea>
+									<mat-hint> {{field.HELP_TEXT}} </mat-hint>
+									<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params[field.NAME]"></mat-error>
+								</mat-form-field>
+
+								<!-- FILE UPLOAD -->
+								<div fxFlex *ngIf="field.DATA_TYPE.DISPLAY == 'File Upload'" fxLayoutAlign="start center" fxLayoutGap="20px">
+									<button class="small-button" mat-raised-button color="primary" (click)="fileInput.click()"
+										[disabled]="disabled">{{'UPLOAD' | translate}}</button>
+									<input hidden type="file" #fileInput (change)="onFileChange($event)">
+									<ng-container *ngFor="let attachment of attachments"><label class="mat-body-strong">{{attachment.FILE_NAME}}</label>
+									</ng-container>
+								</div>
+
+								<!-- PHONE -->
+								<mat-form-field fxFlex *ngIf="field.DATA_TYPE.DISPLAY == 'Phone'" [ngStyle]="{'margin-top': '8px'}">
+									<section matPrefix [ngStyle]="{'margin-right': '10px'}">
+										<input matInput [ngStyle]="{'display': 'none'}">
+										<input [matAutocomplete]=phone_auto name="phone" type="image"
+											src="../../../assets/images/country-flags/{{country['COUNTRY_FLAG']}}" height="25">
+										<mat-autocomplete #phone_auto="matAutocomplete" (optionSelected)="updatePhoneInfo($event.option.value, field.NAME)">
+											<mat-option *ngFor="let country of renderLayoutService.countries" [value]="country">
+												<img [ngStyle]="{'margin-right': '10px'}" aria-hidden
+													[src]="'../../assets/images/country-flags/' + country.COUNTRY_FLAG" height="25">
+												<span>{{country.COUNTRY_NAME}}</span> | <small>{{country.COUNTRY_DIAL_CODE}}</small>
+											</mat-option>
+										</mat-autocomplete>
+									</section>
+									<div fxLayout="row" [ngStyle]="{'margin-bottom': '-8px'}">
+										<span>{{country.DIAL_CODE}}</span>
+										<input type="tel" matInput [(ngModel)]="entry[field.NAME]['PHONE_NUMBER']">
+									</div>
+								</mat-form-field>
+								<!-- DATE -->
+								<mat-form-field fxFlex *ngIf="field.DATA_TYPE.DISPLAY == 'Date'">
+									<input matInput [owlDateTimeTrigger]="date" [owlDateTime]="date" [(ngModel)]="entry[field.NAME]"
+										(ngModelChange)="entry[field.NAME] = $event" placeholder="{{field.DISPLAY_LABEL | translate}}">
+									<owl-date-time [pickerType]="'calendar'" #date></owl-date-time>
+								</mat-form-field>
+								<!-- TIME -->
+
+								<mat-form-field fxFlex *ngIf="field.DATA_TYPE.DISPLAY == 'Time'">
+									<input matInput [owlDateTimeTrigger]="time" [owlDateTime]="time" [(ngModel)]="entry[field.NAME]"
+										(ngModelChange)="entry[field.NAME] = $event" placeholder="{{field.DISPLAY_LABEL | translate}}">
+									<owl-date-time [pickerType]="'timer'" #time></owl-date-time>
+								</mat-form-field>
+								<!-- ROLE -->
+								<mat-form-field fxFlex *ngIf="field.NAME == 'ROLE'">
+									<mat-select [(ngModel)]="entry[field.NAME]" placeholder="{{field.DISPLAY_LABEL | translate}}">
+										<mat-option *ngFor="let role of roles" [value]="role.ROLE_ID">
+											{{role.NAME.toUpperCase() | translate}}
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+
+								<!-- CHRONOMETER -->
+								<mat-form-field fxFlex *ngIf="field.DATA_TYPE.DISPLAY == 'Chronometer'">
+									<mat-label>{{'ADD_TIME_TO'|translate}}{{field.DISPLAY_LABEL}}</mat-label>
+									<input matInput type="text" placeholder="0mo 0w 0d 0h 0m" [(ngModel)]="entry[field.NAME]">
+								</mat-form-field>
+
+
+								<button mat-icon-button *ngIf="!field.REQUIRED" (click)="removeField(field, i)">
+									<mat-icon>remove_circle</mat-icon>
+								</button>
+							</div>
+						</cdk-virtual-scroll-viewport>
+					</div>
+					<div *ngIf="additionalFields.length > 0">
+						<label>{{'ADDITIONAL_FIELDS' | translate}}:</label>
+						<mat-chip-list>
+							<mat-chip class="mat-h4" *ngFor="let field of additionalFields" color="primary" (click)="addField(field)" selected>
+								{{field.DISPLAY_LABEL}}</mat-chip>
+						</mat-chip-list>
+					</div>
+				</div>
+				<div *ngIf="requestType ==='GET'" fxLayout="column" fxFlex="50" fxLayoutGap="20px" style="margin-right:20px">
+					<div fxLayout="column" fxFlex>
+						<mat-form-field *ngIf="!isGetByFilter">
+							<input matInput type="text" placeholder="{{'SEARCH' | translate}}" [(ngModel)]="search">
+						</mat-form-field>
+
+						<mat-form-field *ngIf="isGetByFilter">
+							<mat-select placeholder="{{'SELECT_LAYOUT' | translate}}" [(ngModel)]="selectedListLayout" (selectionChange)="updateAPI();"
+								required>
+								<mat-option *ngFor="let listLayout of allListLayouts" [value]="listLayout.LAYOUT_ID">
+									{{listLayout.NAME}}
+								</mat-option>
+							</mat-select>
+						</mat-form-field>
+
+						<mat-form-field>
+							<input matInput type="number" placeholder="{{'PAGE_SIZE' | translate}}" [(ngModel)]="pagesize" required>
+						</mat-form-field>
+						<mat-form-field>
+							<input matInput type="number" placeholder="{{'PAGE' | translate}}" [(ngModel)]="page" required>
+						</mat-form-field>
+						<mat-form-field>
+							<mat-select placeholder="{{'SORT' | translate}}" [(ngModel)]="sort" required>
+								<mat-option *ngFor="let sort of sortValues" [value]="sort.value">
+									{{sort.viewValue}}
+								</mat-option>
+							</mat-select>
+						</mat-form-field>
+						<div fxLayoutGap="20px">
+							<mat-label>{{'ORDER'|translate}}</mat-label>
+							<mat-radio-group fxLayoutGap="10px" [(ngModel)]="order">
+								<mat-radio-button value="asc">Asc</mat-radio-button>
+								<mat-radio-button value="desc">Desc</mat-radio-button>
+							</mat-radio-group>
+						</div>
+					</div>
+				</div>
+
+				<mat-divider [vertical]="true"></mat-divider>
+				<div fxLayout="column" style="margin-left:20px" fxFlex="50">
+					<label class="mat-h2">{{'API_REQUEST' | translate}}</label>
+					<div fxLayout="row" fxLayoutAlign="start center" style="background-color: #f6f8fa;">
+						<div *ngIf="requestType !=='GET'" #curlDiv style="white-space: nowrap;border-radius: 3px;font-size: 85%;line-height: 1.45;
+            overflow: auto;padding: 16px;margin: 0px 14px 0px 14px;">
+							&nbsp;{{curlCommand}} {{httpEndpoint}}{{apiKey}}' -H 'Content-Type: application/json' -d '{{entry | json}}'
+						</div>
+						<div *ngIf="requestType ==='GET' && isGetByFilter" #curlDiv style="white-space: nowrap;border-radius: 3px;font-size: 85%;line-height: 1.45;
+            overflow: auto;padding: 16px;margin: 0px 14px 0px 14px;">
+							&nbsp;{{curlCommand}}
+							'{{httpEndpointGet}}' -H 'authentication_token:{{apiKey}}' sort={{sort}}&order={{order}}&page={{page}}&page_size={{pagesize}}
+							
+						</div>
+						<div *ngIf="requestType ==='GET' && !isGetByFilter" #curlDiv style="white-space: nowrap;border-radius: 3px;font-size: 85%;line-height: 1.45;
+            overflow: auto;padding: 16px;margin: 0px 14px 0px 14px;">
+							&nbsp;{{curlCommand}}
+							'{{httpEndpointGet}}' -H 'authentication_token:{{apiKey}}' sort={{sort}}&order={{order}}&page={{page}}&page_size={{pagesize}}&search={{search}}
+							
+						</div>
+						<button mat-icon-button #tooltip="matTooltip" (mouseenter)="copyTooltip=translateService.instant('COPY_TO_CLIPBOARD')"
+							matTooltip="{{copyTooltip}}" matTooltipPosition="below" (click)="copyText();tooltip.show()">
+							<mat-icon>content_copy</mat-icon>
+						</button>
+					</div>
+					<div *ngIf="requestType !=='GET'">
+						<label class="mat-h2">{{'REQUEST_BODY' | translate}}</label>
+						<pre style="word-break: break-all; white-space: pre-wrap;">{{entry | json}}</pre>
+					</div>
+				</div>
+			</div>
+		</mat-card>
+	</div>
+</div>

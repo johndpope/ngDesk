@@ -1,0 +1,205 @@
+{
+	"WORKFLOW": {
+		"NODES": [
+			{
+				"POSITION_X": "100px",
+				"POSITION_Y": "100px",
+				"VALUES": {
+					
+				},
+				"ID": "node-id-870cf2d7-e411-4fd6-8a1b-6fdc3f54cdf6",
+				"TYPE": "Start",
+				"CONNECTIONS_TO": [
+					{
+						"TITLE": "START",
+						"FROM": "OUT",
+						"TO_NODE": "node-id-ecc63675-b6d1-41d0-98cf-226ec660af99"
+					}
+				],
+				"NAME": "Start",
+				"PLUGS": [
+					{
+						"NAME": "OUT",
+						"ID": "output-plug-0caac579-3e4c-43b7-9ec5-c74c09f1eacf",
+						"ORDER": 1
+					}
+				]
+			},
+			{
+				"POSITION_X": "304px",
+				"POSITION_Y": "244px",
+				"VALUES": {
+					"CODE": "if(inputMessage.DATA_ID&&inputMessage.DATA_ID!=null&&!inputMessage.DELETED){PROPOGATE_TO OUT-1}else if(inputMessage.DATA_ID&&inputMessage.DATA_ID!=null&&inputMessage.DELETED){PROPOGATE_TO OUT-2}else{PROPOGATE_TO NO-MATCH}"
+				},
+				"ID": "node-id-ecc63675-b6d1-41d0-98cf-226ec660af99",
+				"TYPE": "Javascript",
+				"CONNECTIONS_TO": [
+					{
+						"TITLE": "IF NO CONDITION MATCHES",
+						"FROM": "NO-MATCH",
+						"TO_NODE": "node-id-3f81cf03-b96b-41c1-93ad-f9dca53f338c"
+					},
+					{
+						"TITLE": "UPDATE TICKET",
+						"FROM": "OUT-1",
+						"TO_NODE": "node-id-00515d84-84f1-45f4-a2b3-34eb89cc7065"
+					},
+					{
+						"TITLE": "DELETE TICKET",
+						"FROM": "OUT-2",
+						"TO_NODE": "node-id-0a57c048-1c3a-41bd-9d92-351aecc18cf0"
+					}
+				],
+				"NAME": "Javascript 1",
+				"PLUGS": [
+					{
+						"NAME": "INPUT",
+						"ID": "input-plug-0187fc83-843e-4506-9d64-badf8832db79",
+						"ORDER": 0
+					},
+					{
+						"NAME": "NO-MATCH",
+						"ID": "output-plug-f1da9b93-0bb1-427a-a5d0-9818cf55be49",
+						"ORDER": 1
+					},
+					{
+						"NAME": "OUT-1",
+						"ID": "output-plug-339232b0-b069-412b-89f2-c7b6d399e1d3",
+						"ORDER": 2
+					},
+					{
+						"NAME": "OUT-2",
+						"ID": "output-plug-42da5528-90e9-4394-b47b-e9dbd1f45f19",
+						"ORDER": 3
+					}
+				]
+			},
+			{
+				"POSITION_X": "1126px",
+				"POSITION_Y": "276px",
+				"VALUES": {
+					"MODULE": "MODULE_ID",
+					"FIELDS": [
+						{
+							"FIELD": "30e7e42c-ca90-49b5-986e-341f11d37de5",
+							"VALUE": [
+								"{{inputMessage.USER_ID}}"
+							]
+						},
+						{
+							"FIELD": "02285079-81d3-46db-8061-d5bcee1d8c84",
+							"VALUE": [
+								"New"
+							]
+						},
+						{
+							"FIELD": "96bf35ea-dcb5-4183-8679-f27f776b92df",
+							"VALUE": [
+								"facebook"
+							]
+						},
+						{
+							"FIELD": "edbef7ac-0f4b-4b68-a3ea-8f0435a0e7b9",
+							"VALUE": [
+								"{{inputMessage.BODY}}"
+							],
+							"ATTACHMENTS": "{{inputMessage.ATTACHMENTS}}"
+						},
+						{
+							"FIELD": "1556aab3-1f0c-4893-b0fe-d45c52294cd1",
+							"VALUE": [
+								"TEAM_ID_REPLACE"
+							]
+						},
+						{
+							"FIELD": "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+							"VALUE": [
+								"{{inputMessage.SUBJECT}}"
+							]
+						},
+						{
+							"FIELD": "5b616354-3de1-4006-91c4-a6d175e89f9c",
+							"VALUE": [
+								"{{inputMessage.POST_ID}}"
+							]
+						}
+					]
+				},
+				"ID": "node-id-3f81cf03-b96b-41c1-93ad-f9dca53f338c",
+				"TYPE": "CreateEntry",
+				"CONNECTIONS_TO": [],
+				"NAME": "Create Entry1",
+				"PLUGS": [
+					{
+						"NAME": "INPUT",
+						"ID": "input-plug-c3a31828-ae41-4475-a029-15fbee36e362",
+						"ORDER": 0
+					},
+					{
+						"NAME": "OUT-1",
+						"ID": "output-plug-be88996e-c954-4091-b2af-b800a476ef3b",
+						"ORDER": 1
+					}
+				]
+			},
+			{
+				"POSITION_X": "1126px",
+				"POSITION_Y": "276px",
+				"VALUES": {
+					"MODULE": "MODULE_ID",
+					"ENTRY_ID": "{{inputMessage.DATA_ID}}",
+					"FIELDS": [
+						{
+							"FIELD": "edbef7ac-0f4b-4b68-a3ea-8f0435a0e7b9",
+							"VALUE": [
+								"{{inputMessage.BODY}}"
+							],
+							"ATTACHMENTS": "{{inputMessage.ATTACHMENTS}}"
+						}
+					]
+				},
+				"ID": "node-id-00515d84-84f1-45f4-a2b3-34eb89cc7065",
+				"TYPE": "UpdateEntry",
+				"CONNECTIONS_TO": [],
+				"NAME": "Update Entry1",
+				"PLUGS": [
+					{
+						"NAME": "INPUT",
+						"ID": "input-plug-ecc16b1b-a2ec-404d-bb53-fd62965ddffe",
+						"ORDER": 0
+					},
+					{
+						"NAME": "OUT-1",
+						"ID": "output-plug-ecc16b1b-a2ec-404d-bb53-fd62965ddffe",
+						"ORDER": 1
+					}
+				]
+			},
+			{
+				"POSITION_X": "1126px",
+				"POSITION_Y": "276px",
+				"VALUES": {
+					"MODULE": "MODULE_ID",
+					"ENTRY_ID": "{{inputMessage.DATA_ID}}",
+					"FIELDS": []
+				},
+				"ID": "node-id-0a57c048-1c3a-41bd-9d92-351aecc18cf0",
+				"TYPE": "DeleteEntry",
+				"CONNECTIONS_TO": [],
+				"NAME": "Delete Entry1",
+				"PLUGS": [
+					{
+						"NAME": "INPUT",
+						"ID": "input-plug-4f60eb1f-8bfd-4c94-a96c-ad16cdfd0773",
+						"ORDER": 0
+					},
+					{
+						"NAME": "OUT-1",
+						"ID": "output-plug-2a71942d-b1e4-4de9-87df-eb328e032345",
+						"ORDER": 1
+					}
+				]
+			}
+		]
+	}
+}

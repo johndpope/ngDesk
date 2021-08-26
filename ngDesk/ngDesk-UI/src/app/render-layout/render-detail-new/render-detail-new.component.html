@@ -1,0 +1,119 @@
+<app-toolbar *ngIf="modalData === null" [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef>
+	<div *ngIf="modalData === null && module" fxLayout="row" style="width: 100%;">
+		<app-title-bar *ngIf=" !showSaveOnTitleBar" style="min-width: 100%" [templateRef]="approvalFieldTemplate"
+			[buttonsTemplateRef]="titleBarTemplateRef" title="{{ module.SINGULAR_NAME }}"></app-title-bar>
+		<app-title-bar *ngIf=" editAccess && showSaveOnTitleBar && createLayout" style="min-width: 100%"
+			[buttonsTemplateRef]="titleBarTemplateRef" [templateRef]="approvalFieldTemplate" title="{{ module.SINGULAR_NAME }}"
+			buttonText="{{'SAVE' | translate}}" (buttonRightOnClick)="save('return')">
+		</app-title-bar>
+		<app-title-bar *ngIf=" editAccess && showSaveOnTitleBar && !createLayout" style="min-width: 100%"
+			[buttonsTemplateRef]="titleBarTemplateRef" [templateRef]="approvalFieldTemplate" title="{{ module.SINGULAR_NAME }}"
+			buttonText="{{'SAVE_AND_RETURN' | translate}}" (buttonRightOnClick)="save('return')" buttonText3="{{'EVENTS' | translate}}"
+			buttonText2="{{'SAVE_AND_CONTINUE' | translate}}" (buttonRightOnClick2)="save('continue')" enableButton2=true
+			(buttonRightOnClick3)="events()" enableButton3=true>
+		</app-title-bar>
+	</div>
+</ng-template>
+<ng-template #titleBarTemplateRef>
+	<app-dynamic [context]="this" [material-module]="dataMaterialModule" [template]="titleBarTemplate">
+	</app-dynamic>
+</ng-template>
+<div [class.disabled]="disableTheEntry">
+	<ng-template #approvalFieldTemplate>
+		<div fxLayout="row" fxLayoutGap="10px" *ngIf="!createLayout && customModulesService.displayApprovalButton">
+			<button mat-raised-button color="primary" (click)="setApproval(true)">{{'APPROVE' | translate}}</button>
+			<button mat-raised-button color="primary" (click)="setApproval(false)">{{'REJECT' | translate}}</button>
+		</div>
+		<div *ngIf="isRenderedFromOneToMany">
+			<button mat-raised-button color="primary" (click)="navigateBack()">{{'CANCEL' | translate}}</button>
+		</div>
+		<div fxLayout="row" fxLayoutGap="10px"
+			*ngIf="!createLayout && customModulesService.approvalStatusObject.status === 'ONGOING' && customModulesService.approvalStatusObject.deniedBy && customModulesService.approvalStatusObject.deniedBy.length > 0">
+			<button matTooltip="{{'REJECTED_INFORMATION_TIP' | translate}}" mat-stroked-button color="primary"
+				(click)="showRejectedInformation()">
+				<mat-icon style="margin-left: 5px;" aria-hidden="false" aria-label="workflow menu">help_outline</mat-icon>
+			</button>
+		</div>
+		<div fxLayout="row" fxLayoutGap="10px"
+			*ngIf="!createLayout && !customModulesService.displayApprovalButton && customModulesService.approvalStatusObject.status === 'REJECTED'">
+			<button matTooltip="{{'REJECTED_INFORMATION_TIP' | translate}}" mat-stroked-button color="primary"
+				(click)="showRejectedInformation()">{{'APPROVAL_REJECTED_STATUS' | translate}}<mat-icon style="margin-left: 5px;"
+					aria-hidden="false" aria-label="workflow menu">help_outline</mat-icon></button>
+		</div>
+	</ng-template>
+	<div *ngIf="modalData !== null" fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%;">
+		<h2 style="margin: 0px;" class="mat-h2">{{ module?.SINGULAR_NAME }}</h2>
+		<div fxLayout="row" fxLayoutAlign="end end" style="width: 50%;" fxLayoutGap="15px">
+			<button mat-raised-button (click)="closeCreateOneToManyDialog(true)" color="primary">Cancel</button>
+			<button mat-raised-button (click)="save('saveFromDialog')" color="primary">Save</button>
+		</div>
+	</div>
+
+	<mat-card *ngIf="!isWorkflowsLoading" style="margin-bottom: 10px; margin-left: 5px; margin-right: 5px;">
+		<div fxFlex="3">
+			<button mat-button [matMenuTriggerFor]="menu">
+				<mat-icon matTooltip="Switch Workflow" aria-hidden="false" aria-label="workflow menu">menu</mat-icon>
+			</button>
+			<mat-menu #menu matMenu>
+				<div *ngFor="let workflowId of workflowIds">
+					<button mat-menu-item
+						(click)="workflowStagesService.workflowSwitch(entry, customModulesService, workflowId, module['MODULE_ID'],workflows,workflowInstances)">{{workflows[workflowId].NAME}}</button>
+				</div>
+			</mat-menu>
+		</div>
+		<app-dynamic fxFlex="97" [context]="this" [material-module]="dataMaterialModule" [template]="workflowTemplate">
+		</app-dynamic>
+	</mat-card>
+	<div *ngIf="!layoutMissingForRole" fxLayout="column" fxLayoutGap="10px" style="height: calc(100vh - 49px);">
+		<app-dynamic class="text-padding" *ngIf="!gridLayout && template" [context]="this" [material-module]="dataMaterialModule"
+			[template]="template">
+		</app-dynamic>
+		<div *ngIf="gridLayout" fxLayout="column" style="padding: 10px;">
+			<div *ngIf="showTabs" id="tabsOnRenderDetail">
+				<mat-tab-group>
+					<div *ngFor="let panel of panels">
+						<mat-tab *ngIf="panel['DISPLAY_TYPE'] === 'Tab'" label="{{panel['DISPLAY_NAME']}}">
+							<mat-card style="margin-bottom: 10px; margin-left: 1px; margin-right: 1px;">
+								<app-dynamic [context]="this" [material-module]="dataMaterialModule" [template]="panel['TEMPLATE']">
+								</app-dynamic>
+							</mat-card>
+						</mat-tab>
+					</div>
+				</mat-tab-group>
+			</div>
+			<div style="padding-bottom: 10px;" *ngFor="let panel of panels">
+				<ng-container *ngIf="panel['DISPLAY']">
+					<mat-accordion *ngIf="panel['DISPLAY_TYPE'] === 'Panel'">
+						<mat-expansion-panel style="overflow-x: auto;" [expanded]="!panel['COLLAPSE']">
+							<mat-expansion-panel-header>
+								<mat-panel-title> {{panel['DISPLAY_NAME']}}</mat-panel-title>
+							</mat-expansion-panel-header>
+							<app-dynamic [context]="this" [material-module]="dataMaterialModule" [template]="panel['TEMPLATE']">
+							</app-dynamic>
+						</mat-expansion-panel>
+					</mat-accordion>
+				</ng-container>
+			</div>
+		</div>
+	</div>
+	<div *ngIf="layoutMissingForRole">
+		<!-- HANDLE ERROR MESSAGE -->
+		<div fxLayoutAlign="center center" [ngStyle]="isModalTable?{'height':'400px'}:{'height':'86vh'}">
+			<div class="mat-h1" fxLayout="row" fxLayoutAlign="center center">
+				<div fxFlex="50" fxLayoutAlign="end center">
+					<div fxLayout="column" fxFlex="40" fxLayoutGap="5px">
+						<div style="text-align: left;">
+							<label class="mat-h3">{{'NO_LAYOUTS_FOR_ROLE' | translate}}</label>
+						</div>
+					</div>
+				</div>
+				<div fxFlex="50" fxLayout="column">
+					<div fxFlex=50>
+					</div>
+					<img src="../../assets/images/notFoundImage.png" style="width:35%;" alt="">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

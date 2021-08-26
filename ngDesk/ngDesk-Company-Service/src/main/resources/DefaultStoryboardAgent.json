@@ -1,0 +1,172 @@
+{
+	"name": "Default (Agent)",
+	"description": "This is the default dashboard",
+	"role": "AGENT_REPLACE",
+	"companyId": "COMPANY_ID",
+	"widgets": [
+		{
+			"widgetId": "e7b59400-b116-78ac-6673-7023436ffae8",
+			"title": "All tickets",
+			"type": "score",
+			"moduleId": "MODULE_ID_REPLACE",
+			"positionX": 15,
+			"positionY": 15,
+			"width": 200,
+			"height": 100,
+			"dashboardconditions": [],
+			"orderBy": {
+				"column": "9d3c5936-21d8-44cd-b523-6732c9386650",
+				"order": "Asc"
+			},
+			"limit": null,
+			"limitEntries": false,
+			"aggregateType": "count",
+			"_class": "com.ngdesk.commons.models.ScoreCardWidget"
+		},
+		{
+			"widgetId": "7d1b63c2-a795-2f25-068e-a2c70d67f256",
+			"positionX": 15,
+			"positionY": 140,
+			"width": 600,
+			"height": 400,
+			"title": "All tickets by status (count)",
+			"type": "bar-horizontal",
+			"moduleId": "MODULE_ID_REPLACE",
+			"field": "02285079-81d3-46db-8061-d5bcee1d8c84",
+			"dashboardconditions": [],
+			"orderBy": {
+				"column": "9d3c5936-21d8-44cd-b523-6732c9386650",
+				"order": "Asc"
+			},
+			"limit": null,
+			"limitEntries": false,
+			"aggregateType": "count",
+			"_class": "com.ngdesk.commons.models.BarChartWidget"
+		},
+		{
+			"widgetId": "a9121e40-2693-487f-b8a6-793e7a0e6f5b",
+			"positionX": 225,
+			"positionY": 15,
+			"width": 200,
+			"height": 100,
+			"title": "My tickets",
+			"type": "score",
+			"moduleId": "MODULE_ID_REPLACE",
+			"dashboardconditions": [
+				{
+					"requirementType": "All",
+					"operator": "EQUALS_TO",
+					"condition": "62c5c3a3-0008-4c4e-b1a8-3d5784e9dd6d",
+					"value": "{{CURRENT_USER}}"
+				}
+			],
+			"orderBy": {
+				"column": "9d3c5936-21d8-44cd-b523-6732c9386650",
+				"order": "Asc"
+			},
+			"limit": null,
+			"limitEntries": false,
+			"aggregateType": "count",
+			"_class": "com.ngdesk.commons.models.ScoreCardWidget"
+		},
+		{
+			"widgetId": "5437f62b-2659-4cc7-9945-e48ff734295c",
+			"positionX": 435,
+			"positionY": 15,
+			"width": 200,
+			"height": 100,
+			"title": "New tickets",
+			"type": "score",
+			"moduleId": "MODULE_ID_REPLACE",
+			"dashboardconditions": [
+				{
+					"requirementType": "All",
+					"operator": "EQUALS_TO",
+					"condition": "02285079-81d3-46db-8061-d5bcee1d8c84",
+					"value": "New"
+				}
+			],
+			"orderBy": {
+				"column": "9d3c5936-21d8-44cd-b523-6732c9386650",
+				"order": "Asc"
+			},
+			"limit": null,
+			"limitEntries": false,
+			"aggregateType": "count",
+			"_class": "com.ngdesk.commons.models.ScoreCardWidget"
+		},
+		{
+			"widgetId": "e7554fff-79e5-425e-8412-70b9d9342dca",
+			"positionX": 645,
+			"positionY": 15,
+			"width": 200,
+			"height": 100,
+			"title": "Open tickets",
+			"type": "score",
+			"moduleId": "MODULE_ID_REPLACE",
+			"dashboardconditions": [
+				{
+					"requirementType": "All",
+					"operator": "EQUALS_TO",
+					"condition": "02285079-81d3-46db-8061-d5bcee1d8c84",
+					"value": "Open"
+				}
+			],
+			"orderBy": {
+				"column": "9d3c5936-21d8-44cd-b523-6732c9386650",
+				"order": "Asc"
+			},
+			"limit": null,
+			"limitEntries": false,
+			"aggregateType": "count",
+			"_class": "com.ngdesk.commons.models.ScoreCardWidget"
+		},
+		{
+			"widgetId": "14dd9916-83bd-4f69-a754-ee2c76b02b31",
+			"positionX": 855,
+			"positionY": 15,
+			"width": 200,
+			"height": 100,
+			"title": "Pending tickets",
+			"type": "score",
+			"moduleId": "MODULE_ID_REPLACE",
+			"dashboardconditions": [
+				{
+					"requirementType": "All",
+					"operator": "EQUALS_TO",
+					"condition": "02285079-81d3-46db-8061-d5bcee1d8c84",
+					"value": "Pending"
+				}
+			],
+			"orderBy": {
+				"column": "9d3c5936-21d8-44cd-b523-6732c9386650",
+				"order": "Asc"
+			},
+			"limit": null,
+			"limitEntries": false,
+			"aggregateType": "count",
+			"_class": "com.ngdesk.commons.models.ScoreCardWidget"
+		},
+		{
+			"widgetId": "da382c47-41e2-4bb1-81be-7d03abc163de",
+			"positionX": 625,
+			"positionY": 140,
+			"width": 600,
+			"height": 400,
+			"title": "All tickets by priority (count)",
+			"type": "pie",
+			"moduleId": "MODULE_ID_REPLACE",
+			"field": "34e5212e-6be4-4e69-915b-2b27ed1c746f",
+			"dashboardconditions": [],
+			"orderBy": {
+				"column": "9d3c5936-21d8-44cd-b523-6732c9386650",
+				"order": "Asc"
+			},
+			"limit": null,
+			"limitEntries": false,
+			"aggregateType": "count",
+			"_class": "com.ngdesk.commons.models.PieChartWidget"
+		}
+	],
+	"_class": "com.ngdesk.commons.models.Dashboard"
+}

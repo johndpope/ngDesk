@@ -1,0 +1,31 @@
+<!--The content below is only a placeholder and can be replaced.--> 
+<div [ngClass]="themeColorObserver | async"> 
+	<div *ngIf="isAuthenticated" flex layout="row" layout-fill style="height: 100vh;overflow: hidden;">
+		<!-- <div  fxLayout="column"  style="height: 100%;"> -->
+		<div *ngIf="showSidebar && !isConfirmationPage" fxLayout="column">
+			<div class="sidebar" fxLayout="row" layout-fill style="overflow-y: auto;overflow-x:hidden;z-index: 9999;">
+				<app-module-sidebar></app-module-sidebar>
+			</div>
+		</div>
+		<div fxLayout="column" fxLayoutGap="1px" fxFlex="calc(100 - 50px)" style="overflow-x: auto;overflow-y: hidden;">
+			<!-- <div fxLayout="column" fxLayoutGap="1px" fxFlex="calc(100 - 50px)" style="height: 100%;"> -->
+			<!-- <div  class="toolbar" fxLayout="row"  layout-fill style="height: 50px;" > 
+					<app-toolbar fxFlex="calc(100 - 50px)"></app-toolbar>
+				</div>
+				<div  class="content"  layout-fill style="height: calc(100% - 50px);overflow: auto;"> -->
+			<div class="content" style="overflow-y: auto; min-height: 100vh;">
+				<ng-container *ngTemplateOutlet="template"></ng-container>
+			</div>
+		</div>
+	</div>
+
+	<div *ngIf="!isAuthenticated">
+		<ng-container *ngTemplateOutlet="template"></ng-container>
+	</div>
+</div>
+<ng-template #template>
+	<app-banner-message
+		*ngIf="(bannerMessageService.successNotifications.length > 0 || bannerMessageService.errorNotifications.length > 0) && showSidebar">
+	</app-banner-message>
+	<router-outlet></router-outlet>
+</ng-template>

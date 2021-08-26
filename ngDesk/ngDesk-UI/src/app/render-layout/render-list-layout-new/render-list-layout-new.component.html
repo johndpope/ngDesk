@@ -1,0 +1,179 @@
+<mat-sidenav-container style="height: 100vh">
+	<mat-sidenav #mergeEntriesSidenav mode="over" position="end">
+		<app-merge-entries-sidenav *ngIf="module && customTableService.selection.selected.length > 0" [module]="module"
+			[listLayout]="currentListLayout" [data]="customTableService.selection.selected" (cancel)="mergeEntriesSidenav.toggle()"
+			(save)="onEntriesMerged()">
+		</app-merge-entries-sidenav>
+	</mat-sidenav>
+	<mat-sidenav-content>
+		<div fxLayout="column">
+			<app-toolbar [templateRef]="customTemplateRef"></app-toolbar>
+			<ng-template #customTemplateRef>
+				<div *ngIf="isModuleAllowed && listLayoutExists" fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="space-between">
+					<div style="min-width: 24px; padding: 0 10px; margin-right: 10px;">
+						<button *ngIf="layoutMenuButtonShow" mat-button (click)="setListLayoutTableState(showListLayouts)">
+							<mat-icon class="pointer grey-balck-color" matTooltip="{{'LAYOUTS'|translate}}">menu
+							</mat-icon>
+						</button>
+						<span class="mat-h3 grey-balck-color">{{pageTitle}}</span>
+					</div>
+					<app-search-bar fxHide.lt-md fxShow.gt-sm fxFlex="1 1 auto" [moduleId]="moduleId"
+						(searchFieldsEvent)="searchValuesChange($event)"></app-search-bar>
+					<div fxHide.gt-sm fxShow.lt-md fxFlex="1 1 auto" fxLayoutAlign="end" style="margin:10px;">
+						<button mat-icon-button (click)="isOpen = !isOpen">
+							<mat-icon>search</mat-icon>
+						</button>
+					</div>
+					<div fxLayoutAlign="center center">
+						<mat-slide-toggle color="primary" (ngModelChange)="includeConditionsChanged($event)" [(ngModel)]="includeConditions"
+							[ngModelOptions]="{standalone: true}" *ngIf="roleName !== 'Customer'">
+							{{'INCLUDE_CONDITIONS' | translate}}
+						</mat-slide-toggle>
+					</div>
+					<div fxLayout="row" fxLayoutGap="10px">
+						<button mat-raised-button color="primary" (click)="inviteUsers()"
+							*ngIf="roleName === 'SystemAdmin' && module && recordName === 'users'">
+							{{'INVITE_USERS' | translate}}
+						</button>
+						<!-- ENTRY SELECTION BUTTONS START -->
+						<span *ngIf="module && customTableService.selection.selected.length > 0" fxLayoutGap="10px">
+							<button *ngIf="deleteAccess" mat-raised-button color="warn" matTooltip="{{'DELETE'|translate}}"
+								(click)="deleteEntries(customTableService.selection.selected)">
+								<mat-icon>delete_forever</mat-icon>
+							</button>
+							<!-- TODO: ENABLE WHEN BULK UPDATE/MERGE IS SET UP ON DATA SERVICE -->
+							<button *ngIf="editAccess" mat-raised-button color="primary" matTooltip="{{'UPDATE'|translate}}"
+								(click)="updateEntries(customTableService.selection.selected)">
+								<mat-icon>update</mat-icon>
+							</button>
+							<button *ngIf="editAccess" mat-raised-button color="primary" matTooltip="{{'MERGE'|translate}}"
+								(click)="mergeEntriesSidenav.toggle()">
+								<mat-icon>merge_type</mat-icon>
+							</button>
+						</span>
+						<button *ngIf="editAccess && customTableService.selection.selected.length === 1 && module && recordName !== 'tickets' && recordName !== 'users' && recordName !== 'contacts' 
+								&& recordName !== 'accounts' && recordName !== 'teams' " matTooltip="{{'CLONE'|translate}}" mat-raised-button color="primary"
+							(click)="cloneEntry(customTableService.selection.selected,module)">
+							<mat-icon>content_copy</mat-icon>
+						</button>
+						<!-- ENTRY SELECTION BUTTONS END -->
+						<button *ngIf="editAccess && module && recordName !== 'users' && recordName !== 'chats'" mat-raised-button color="primary"
+							(click)="newEntry()" #customButton>
+							{{'NEW' | translate}}
+						</button>
+					</div>
+				</div>
+			</ng-template>
+			<div fxHide.gt-sm fxShow.lt-md fxLayout="row" [@showHideSearchBar]="isOpen ? 'open' : 'closed'">
+				<app-search-bar fxFlex="1 1 auto" [moduleId]="moduleId" (searchFieldsEvent)="searchValuesChange($event)">
+				</app-search-bar>
+			</div>
+			<div fxLayout="row" *ngIf="isModuleAllowed && listLayoutExists">
+				<div id="layouts-sidebar" fxLayoutGap="10px" class="pad10"
+					[@openClose]="layoutMenuButtonShow && showListLayouts ? 'open' : 'closed'">
+					<table fxFlex="0 0 100%" mat-table [dataSource]="filteredLayouts" class="mat-elevation-z8">
+						<ng-container matColumnDef="NAME">
+							<th class="custom-theme-icon-color" mat-header-cell *matHeaderCellDef>
+								{{'LAYOUTS' | translate}}
+							</th>
+							<td matRipple class="no-wrap" mat-cell *matCellDef="let element" class="pointer"
+								[ngStyle]="{ 'background-color': element.NAME == listlayoutName ? '#ececec' : 'white'}">
+								{{element.NAME}} </td>
+						</ng-container>
+						<tr class="custom-theme-primary-color" mat-header-row *matHeaderRowDef="['NAME']"></tr>
+						<tr mat-row *matRowDef="let row; columns: ['NAME'];" (click)="setListLayout(row)"></tr>
+					</table>
+				</div>
+				<span fxFlex="10px"></span>
+				<div fxFlex style="margin-right: 20px;">
+					<app-custom-table class="pad10" [templateRef]="columnTemplateRef" (pageChangeEmit)="onPageChange($event)"
+						(sortData)="onPageChange($event)" (rowClickedEvent)="rowClicked($event)" noRecordsMessage="No {{recordName}} found">
+						<ng-template #columnTemplateRef let-element="element" let-col="col">
+							<span *ngIf="specialDataTypes.indexOf(col.DATA_TYPE) === -1 && col.NAME === 'CHANNEL' && element[col.NAME] === null">--</span>
+							<span *ngIf="specialDataTypes.indexOf(col.DATA_TYPE) === -1 && col.NAME === 'CHANNEL' && element[col.NAME] !== null">
+								{{ element[col.NAME].name }}</span>
+							<span *ngIf="specialDataTypes.indexOf(col.DATA_TYPE) === -1 && col.NAME !== 'CHANNEL'"> {{ element[col.NAME] |
+								truncate : 32
+								}}</span>
+							<span
+								*ngIf=" col.NAME!=='DATE_CREATED' && col.NAME!=='DATE_UPDATED' && col.DATA_TYPE === 'Date/Time'">{{element[col.NAME] | date: 'MMM d, y, h:mm a' :'UTC'}}</span>
+							<span *ngIf="col.NAME==='DATE_CREATED' || col.NAME==='DATE_UPDATED' ">{{element[col.NAME] | date: 'MMM d, y, h:mm a'}}</span>
+							<span *ngIf="col.DATA_TYPE === 'Date'">{{element[col.NAME] | date: 'mediumDate' : 'UTC'}}</span>
+							<span
+								*ngIf="((col.BACKEND_TYPE === 'Integer' && col.DATA_TYPE !== 'Chronometer') || col.BACKEND_TYPE === 'Double' || col.BACKEND_TYPE === 'Float' || col.DATA_TYPE === 'Formula') && col.DATA_TYPE !== 'Auto Number' && element[col.NAME] !== null">{{element[col.NAME]
+								| numericFormat: col.NUMERIC_FORMAT: col.PREFIX: col.SUFFIX}}</span>
+							<span *ngIf="col.DATA_TYPE === 'Time'">{{element[col.NAME] | date: 'h:mm a' : 'UTC'}}</span>
+							<span class="underline-on-hover"
+								(click)="onClickRelationshipField(element[col.NAME],col.NAME, $event); $event.stopPropagation()"
+								*ngIf="col.DATA_TYPE === 'Relationship' && element[col.NAME] !== undefined && element[col.NAME] !== null"
+								style="color: blue">{{element[col.NAME].PRIMARY_DISPLAY_FIELD}}</span>
+							<span (click)="onClickRelationshipField(element[col.NAME],col.NAME, $event); $event.stopPropagation()"
+								*ngIf="col.DATA_TYPE === 'Relationship' && (element[col.NAME] === undefined || element[col.NAME] === null)"></span>
+							<span *ngIf="col.DATA_TYPE === 'Aggregate'">{{customModuleService.convertAggregateFields(col,module,element[col.NAME])
+								| async}}</span>
+							<div *ngIf="col.DATA_TYPE === 'Picklist'" style="overflow: hidden;text-overflow: ellipsis;line-height: 15px;">
+								<mat-menu #menu="matMenu">
+									<button mat-menu-item *ngFor="let item of col.PICKLIST_VALUES" (click)="updatePicklist(element,col,item)">
+										<span style="font-size: 12px;font-weight: normal;">{{item}}</span>
+										<mat-icon *ngIf="element[col.NAME] === item"
+											style="font-size: 18px;float: right;margin-right: 0px;line-height: 35px;font-weight: bold;height: 35px;">
+											done
+										</mat-icon>
+									</button>
+								</mat-menu>
+								<!-- column will only display pickListvalue drop down to select pickListValue-->
+								<button mat-icon-button [disableRipple]="true" [matMenuTriggerFor]="menu" *ngIf="editAccess"
+									(click)="$event.stopPropagation()" style="width:fit-content;">
+									<span style="font-size: 12px;font-weight: normal;">
+										<div fxFlex="90px" fxLayoutAlign="space-between center">
+											<div fxLayoutAlign="start start" style="overflow: hidden;text-overflow: ellipsis;width: 80%;"
+												*ngIf="element[col.NAME]">
+												{{element[col.NAME]}}
+											</div>
+											<div fxLayoutAlign="start start" *ngIf="!element[col.NAME]">
+												{{'NONE' | translate}}
+											</div>
+											<div fxLayoutAlign="end" style="padding-left:8px">
+												<mat-icon style="font-size: 20px;">keyboard_arrow_down</mat-icon>
+											</div>
+										</div>
+									</span>
+								</button>
+								<!-- column will only display pickListvalue -->
+								<span *ngIf="!editAccess">
+									{{element[col.NAME]}}
+								</span>
+							</div>
+							<span *ngIf="col.DATA_TYPE === 'Phone' && element[col.NAME] !== undefined && element[col.NAME] !== null 
+							&& element[col.NAME].PHONE_NUMBER!= null && element[col.NAME].PHONE_NUMBER!= null ">
+								{{element[col.NAME].DIAL_CODE}} {{element[col.NAME].PHONE_NUMBER}}
+							</span>
+							<span *ngIf="col.DATA_TYPE === 'Phone' && (element[col.NAME] == undefined ||  element[col.NAME] == null 
+							|| element[col.NAME].PHONE_NUMBER == null || element[col.NAME].PHONE_NUMBER== null) ">
+								-
+							</span>
+						</ng-template>
+					</app-custom-table>
+				</div>
+			</div>
+			<div *ngIf="!listLayoutExists">
+				<div fxLayoutAlign="center center" [ngStyle]="isModalTable?{'height':'400px'}:{'height':'86vh'}">
+					<div class="mat-h1" fxLayout="row" fxLayoutAlign="center center">
+						<div fxFlex="50" fxLayoutAlign="end center">
+							<div fxLayout="column" fxFlex="40" fxLayoutGap="5px">
+								<div style="text-align: left;">
+									<label class="mat-h3">{{'NO_LAYOUTS_FOR_ROLE' | translate}}</label>
+								</div>
+							</div>
+						</div>
+						<div fxFlex="50" fxLayout="column">
+							<div fxFlex=50>
+							</div>
+							<img src="../../assets/images/notFoundImage.png" style="width:35%;" alt="">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,39 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<div fxLayout="column" fxLayoutGap="20px" class="pad10">
+	<ng-template #headerTemplateRef>
+		<app-title-bar class="light-grey-color" [title]="'CHAT_SETTINGS' | translate" [buttonText]="'SAVE' | translate"
+			(buttonRightOnClick)="saveGeneralSettings()" [buttonColor]="'primary'"></app-title-bar>
+	</ng-template>
+	<div [formGroup]="generalSettingsForm" fxLayout="row" fxLayoutAlign="center">
+		<mat-card fxLayout="column" fxFlex="100" style="overflow: auto;">
+			<div fxLayout="row" fxLayoutAlign="start center">
+				<div fxFlex fxLayoutAlign="flex-start center">
+					<label class="mat-h3" [ngStyle]="{'margin-bottom':'0px'}">{{'MAX_CHATS_PER_AGENT' | translate}}</label>
+				</div>
+				<div fxFlex fxLayoutAlign="flex-start center">
+					<mat-form-field fxFlex=40>
+						<mat-select formControlName="MAX_CHATS_PER_AGENT">
+							<mat-option *ngFor="let maxChatOption of maxChatOptions" [value]="maxChatOption">
+								{{maxChatOption}}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+			</div>
+			<div fxLayout="row" fxLayoutAlign="start center">
+				<div fxFlex fxLayoutAlign="flex-start center">
+					<label class="mat-h3" [ngStyle]="{'margin-bottom':'0px'}">{{'ROLES_WITH_CHAT' | translate}}</label>
+				</div>
+				<div fxFlex fxLayoutAlign="flex-start center">
+					<mat-form-field style="width: 40%;">
+						<mat-select multiple formControlName="ROLES_WITH_CHAT">
+							<mat-option *ngFor="let role of roles" [value]="role">
+								{{role.NAME}}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+			</div>
+		</mat-card>
+	</div>
+</div>

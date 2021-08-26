@@ -1,0 +1,785 @@
+<mat-sidenav-container>
+	<mat-sidenav #sidenav [position]="'end'" style="width: 600px" [disableClose]="true">
+		<ng-container *ngIf="sidenavView === 'SEND_TEST_EMAIL'">
+			<ng-container *ngTemplateOutlet="sendTestEmailTemplate;"></ng-container>
+		</ng-container>
+		<ng-container *ngIf="sidenavView === 'SELECT_IMAGE'">
+			<ng-container *ngTemplateOutlet="selectImageTemplate;"></ng-container>
+		</ng-container>
+		<ng-container *ngIf="sidenavView === 'EDIT_ADDRESS'">
+			<ng-container *ngTemplateOutlet="editAddressTemplate;"></ng-container>
+		</ng-container>
+	</mat-sidenav>
+	<ng-template #sendTestEmailTemplate>
+		<div fxLayout="row" fxLayoutAlign="space-between center" style="border-bottom: 1px solid rgba(0,0,0,.12);padding: 20px;">
+			<h2 class="mat-h2" style="margin: 0px;">{{'SEND_TEST_EMAIL' | translate}}</h2>
+			<button mat-icon-button (click)="sidenav.close()">
+				<mat-icon>close</mat-icon>
+			</button>
+		</div>
+		<div fxLayout="column" style="padding: 20px">
+			<div style="margin-bottom: 20px">
+				<span class="mat-body" [innerHTML]="'SEND_TEST_EMAIL_DESCRIPTION' | translate:params"></span>
+			</div>
+
+			<mat-form-field appearance="outline" floatLabel="always">
+				<mat-label>{{'CHOOSE_ONE_OR_MORE_RECIPIENTS' | translate}}</mat-label>
+				<mat-chip-list #testUsersChipList aria-label="Select user" required>
+					<mat-chip *ngFor="let user of testUsers" [selectable]="true" [removable]="true" (removed)="removeUsers(user, 'testUsers')">
+						{{user.EMAIL_ADDRESS}}
+						<mat-icon matChipRemove>cancel</mat-icon>
+					</mat-chip>
+
+					<input placeholder="{{'ADD_USER' | translate}}" [matAutocomplete]="testUsers_auto" [(ngModel)]="tempUserInput"
+						[matChipInputFor]="testUsersChipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
+						(matChipInputTokenEnd)="resetInput($event)" (ngModelChange)="searchUser()">
+				</mat-chip-list>
+				<mat-autocomplete (closed)="userAutocompleteClosed()" (appAutocompleteScroll)="onUsersScroll()" #testUsers_auto="matAutocomplete"
+					(optionSelected)="selected($event,'testUsers')">
+					<mat-option *ngFor="let filteredUser of allUsers" [value]="filteredUser"
+						[disabled]="disabledCheck(filteredUser, testUsersDisable,'testUsers')">
+						{{filteredUser.EMAIL_ADDRESS}}
+					</mat-option>
+				</mat-autocomplete>
+				<mat-error>{{ "IS_REQUIRED" | translate }}.</mat-error>
+			</mat-form-field>
+
+			<mat-form-field appearance="outline" floatLabel="always">
+				<mat-label>{{'RECEIVE_EMAIL_AS_SPECIFIC_USER' | translate}}</mat-label>
+				<input type="text" matInput [(ngModel)]="tempUserInput" (ngModelChange)="searchUser()" [matAutocomplete]="previewAsUserAuto">
+				<mat-autocomplete #previewAsUserAuto="matAutocomplete" (appAutocompleteScroll)="onUsersScroll()" [displayWith]="displayNameFn">
+					<mat-option *ngFor="let filteredUser of allUsers" [value]="filteredUser">
+						{{filteredUser.EMAIL_ADDRESS}}
+					</mat-option>
+				</mat-autocomplete>
+			</mat-form-field>
+			<div>
+				<button mat-raised-button [disabled]="testUsers.length === 0" color="primary"
+					(click)="sendTest()">{{'SEND_TEST_EMAIL' | translate}}</button>
+			</div>
+		</div>
+	</ng-template>
+	<ng-template #selectImageTemplate>
+		<div fxLayout="row" fxLayoutAlign="space-between center" style="border-bottom: 1px solid rgba(0,0,0,.12);padding: 20px;">
+			<h2 class="mat-h2" style="margin: 0px;">{{'INSERT_IMAGE' | translate}}</h2>
+			<button mat-icon-button (click)="sidenav.close()">
+				<mat-icon>close</mat-icon>
+			</button>
+		</div>
+		<div fxLayout="column" style="padding: 20px">
+			<div fxLayoutAlign="center center" style="margin-bottom: 20px">
+				<span class="mat-body" [innerHTML]="'SELECT_IMAGE_DESCRIPTION' | translate"></span>
+			</div>
+			<div fxLayoutAlign="center center"><button [ngStyle]="{'border-radius': '20px'}" mat-flat-button color="primary" type="button"
+					(click)="sidebarFileInput.click()">{{'UPLOAD' | translate}}&nbsp;<mat-icon class="notranslate">cloud_upload
+					</mat-icon></button></div>
+			<input type="file" hidden #sidebarFileInput accept="image/x-png, image/png, image/jpeg" (change)="onFileChange($event, 'LOGO')">
+			<ng-container *ngIf="imageGalleryData.length > 0 && !galleryLoading">
+				<h3 class="mat-h3">{{'IMAGES_LIBRARY' | translate}}</h3>
+				<div fxLayout="row wrap" fxLayoutGap="20px" fxLayoutAlign="flex-start">
+					<ng-container *ngFor="let image of imageGalleryData; let index = i">
+						<div fxLayout="column" fxLayoutAlign="center center" fxFlex="0 1 calc(25%-20px)" style="cursor: pointer"
+							(click)="setImage(image)">
+							<img [src]="image.LOGO.FILE" alt="logo" height="100%" width="100%">
+						</div>
+					</ng-container>
+				</div>
+			</ng-container>
+			<div fxLayoutAlign="center center" *ngIf="galleryLoading" style="margin-top: 20px">
+				<mat-spinner></mat-spinner>
+			</div>
+		</div>
+	</ng-template>
+	<ng-template #editAddressTemplate>
+		<div fxLayout="row" fxLayoutAlign="space-between center" style="border-bottom: 1px solid rgba(0,0,0,.12);padding: 20px;">
+			<h2 class="mat-h2" style="margin: 0px;">{{'EDIT_ADDRESS' | translate}}</h2>
+			<button type="button" mat-icon-button (click)="sidenav.close()">
+				<mat-icon>close</mat-icon>
+			</button>
+		</div>
+		<ng-container [formGroup]="footerForm">
+			<form [formGroupName]="'ADDRESS'" fxLayout="column" style="padding: 20px" fxLayoutGap="20px">
+				<div fxLayout="row" fxLayoutAlign="center center">
+					<mat-form-field fxFlex="100" class="text-no-bottom-padding text-equal-infix-padding" appearance="outline" [floatLabel]="'always'">
+						<mat-label>{{'COMPANY_NAME' | translate}}</mat-label>
+						<input matInput type="text" formControlName="COMPANY_NAME" required>
+					</mat-form-field>
+				</div>
+				<div fxLayout="row" fxLayoutAlign="center center">
+					<mat-form-field fxFlex="100" class="text-no-bottom-padding text-equal-infix-padding" appearance="outline" [floatLabel]="'always'">
+						<mat-label>{{'ADDRESS' | translate}}</mat-label>
+						<input matInput type="text" formControlName="ADDRESS_1" required>
+					</mat-form-field>
+				</div>
+				<div fxLayout="row" fxLayoutAlign="center center">
+					<mat-form-field fxFlex="100" class="text-no-bottom-padding text-equal-infix-padding" appearance="outline" [floatLabel]="'always'">
+						<mat-label>{{'ADDRESS_2' | translate}}</mat-label>
+						<input matInput type="text" formControlName="ADDRESS_2">
+					</mat-form-field>
+				</div>
+				<div fxLayout="row" fxLayoutAlign="center center">
+					<mat-form-field fxFlex="100" class="text-no-bottom-padding text-equal-infix-padding" appearance="outline" [floatLabel]="'always'">
+						<mat-label>{{'CITY' | translate}}</mat-label>
+						<input matInput type="text" formControlName="CITY" required>
+					</mat-form-field>
+				</div>
+				<div fxLayout="row" fxLayoutAlign="center center">
+					<mat-form-field fxFlex="100" class="text-no-bottom-padding text-equal-infix-padding" appearance="outline" [floatLabel]="'always'">
+						<mat-label>{{'STATE' | translate}}</mat-label>
+						<input matInput type="text" formControlName="STATE" required>
+					</mat-form-field>
+				</div>
+				<div fxLayout="row" fxLayoutAlign="center center">
+					<mat-form-field fxFlex="100" class="text-no-bottom-padding text-equal-infix-padding" appearance="outline" [floatLabel]="'always'">
+						<mat-label>{{'ZIP_CODE' | translate}}</mat-label>
+						<input matInput type="number" formControlName="ZIP_CODE" required>
+					</mat-form-field>
+				</div>
+				<div fxLayout="row" fxLayoutAlign="center center">
+					<mat-form-field fxFlex="100" class="text-no-bottom-padding text-equal-infix-padding" appearance="outline" [floatLabel]="'always'">
+						<mat-label>{{'COUNTRY' | translate}}</mat-label>
+						<input matInput type="text" formControlName="COUNTRY" required>
+					</mat-form-field>
+				</div>
+				<div fxLayout="row" fxLayoutAlign="center center">
+					<mat-form-field fxFlex="100" class="text-no-bottom-padding text-equal-infix-padding" appearance="outline" [floatLabel]="'always'">
+						<mat-label>{{'PHONE' | translate}}</mat-label>
+						<input matInput type="text" formControlName="PHONE">
+					</mat-form-field>
+				</div>
+				<div fxLayout="row">
+					<button mat-raised-button color="primary" type="submit" (click)="saveAddress()"
+						[disabled]="!footerForm.get('ADDRESS').valid">{{'SAVE' | translate}}</button>
+				</div>
+			</form>
+		</ng-container>
+	</ng-template>
+	<ng-template #sideColumn>
+		<div *ngIf="campaignType !== 'Plain'" fxFlex.xs="0" fxFlex.sm="5" fxFlex.md="10" fxFlex.lg="20"
+			[ngStyle]="{'background': campaignType === 'Welcome' ? '#e8eaf6' : 'none'}"></div>
+	</ng-template>
+	<mat-sidenav-content>
+		<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+		<ng-template #headerTemplateRef>
+			<app-title-bar title="{{'CAMPAIGNS' | translate}}" buttonText="{{'SAVE_AND_CLOSE' | translate}}" (buttonRightOnClick)="save('close')">
+			</app-title-bar>
+		</ng-template>
+		<form [formGroup]="campaignForm" fxLayout="column" (ngSubmit)="save('close')">
+			<div class="pad10">
+				<app-new-name-description [altButton]="true" altButtonTitle="{{'SEND_TEST_EMAIL' | translate}}"
+					(altButtonAction)="openSidenav('SEND_TEST_EMAIL')">
+				</app-new-name-description>
+			</div>
+			<div fxLayout="column">
+				<mat-tab-group #tabGroup [(selectedIndex)]="tabIndex" (selectedTabChange)="tabChanged()">
+					<mat-tab label="{{'EDIT' | translate}}">
+						<div fxLayout="row" style="min-height: calc(100vh - 190px);">
+							<div class="elements-container"
+								style="background: rgb(248, 249, 249); border-right: 1px solid rgba(0,0,0,.12); padding: 20px; min-width: 390px; max-width: 390px;">
+								<ng-container *ngIf="sidepaneView === 'CONTENT'">
+									<h3>{{'CONTENT' | translate}}</h3>
+									<div fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="flex-start">
+										<ng-container *ngFor="let item of availableItems">
+											<div fxFlex="0 1 calc(30%-10px)" cdkDropList [cdkDropListConnectedTo]="dropList">
+												<mat-card id="{{item.TYPE}}" fxLayoutAlign="center center" style="cursor: move" [cdkDragData]="item" cdkDrag>
+													<mat-card-content fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+														<mat-icon>{{item.ICON}}</mat-icon>
+														<span>{{item.DISPLAY}}</span>
+													</mat-card-content>
+												</mat-card>
+											</div>
+										</ng-container>
+									</div>
+								</ng-container>
+								<ng-container *ngIf="sidepaneView === 'ROW_SETTINGS' && campaignType !== 'Plain'">
+									<div [formGroup]="selectedRow">
+										<div fxLayoutAlign="start">
+											<button mat-stroked-button color="default"
+												(click)="sidepaneView = 'CONTENT'; footerSelected = false; selectedRow = null; selectedRowIndex = null;">Done</button>
+										</div>
+										<h3>{{'ROW_SETTINGS' | translate}}</h3>
+										<label class="mat-h3">{{'COLUMN_LAYOUT' | translate}}</label>
+										<div [formGroupName]="'SETTINGS'" fxLayout="row">
+											<mat-radio-group fxLayout="column" fxLayoutGap="5px" formControlName="COLUMN_LAYOUT"
+												(change)="columnLayoutChanged($event)">
+												<mat-radio-button *ngFor="let layout of availableLayouts; let i = index;" [value]="layout.DISPLAY">
+													{{layout.DISPLAY}}
+												</mat-radio-button>
+											</mat-radio-group>
+										</div>
+									</div>
+								</ng-container>
+								<div *ngIf="sidepaneView === 'EDIT_BUTTON' && selectedElement.value.TYPE === 'BUTTON'">
+									<div [formGroup]="selectedElement" fxLayout="column" fxLayoutGap="10px">
+										<div fxLayoutAlign="start">
+											<button mat-stroked-button color="default"
+												(click)="sidepaneView = 'CONTENT'; selectedElement = null; selectedElementIndex = null; selectedRowIndex = null;">Done</button>
+										</div>
+										<h3>{{'EDIT_BUTTON' | translate}}</h3>
+										<ng-container [formGroupName]="'SETTINGS'">
+											<div fxLayout="row">
+												<mat-form-field fxFlex="100" class="text-no-bottom-padding text-equal-infix-padding" appearance="outline"
+													[floatLabel]="'always'">
+													<mat-label>{{'LINK_TO' | translate}}</mat-label>
+													<mat-select formControlName="LINK_TO" required>
+														<mat-option *ngFor="let linkTo of linkToOptions" [value]="linkTo.OPTION">
+															{{linkTo.DISPLAY}}
+														</mat-option>
+													</mat-select>
+												</mat-form-field>
+											</div>
+											<div fxLayout="row" *ngIf="selectedElement.get('SETTINGS').value.LINK_TO !== 'FILE_DOWNLOAD'">
+												<mat-form-field fxFlex="100" class="text-no-bottom-padding text-equal-infix-padding" appearance="outline"
+													[floatLabel]="'always'">
+													<mat-label *ngIf="selectedElement.get('SETTINGS').value.LINK_TO === 'URL'">{{'LINK_URL' | translate}}</mat-label>
+													<mat-label *ngIf="selectedElement.get('SETTINGS').value.LINK_TO === 'EMAIL_ADDRESS'">
+														{{'EMAIL_ADDRESS' | translate}}
+													</mat-label>
+													<input placeholder="{{selectedElement.get('SETTINGS').value.LINK_TO === 'URL' ? 'http://' : ''}}" matInput
+														type="text" formControlName="LINK_VALUE" required>
+												</mat-form-field>
+											</div>
+											<div *ngIf="selectedElement.get('SETTINGS').value.LINK_TO === 'FILE_DOWNLOAD'" fxLayoutAlign="center center"
+												style="border: 1px solid rgba(0,0,0,.12);width: 100%;height: 170px">
+												<span *ngIf="selectedElement.get('SETTINGS').value.FILE === ''">preview</span>
+												<img *ngIf="selectedElement.get('SETTINGS').value.FILE !== ''" [src]="selectedElement.get('SETTINGS').value.FILE"
+													alt="{{selectedElement.get('SETTINGS').value.ALTERNATE_TEXT}}"
+													style="width: 100%; height: 100%; object-fit: contain; overflow: hidden;">
+											</div>
+											<div fxLayout="row">
+												<mat-form-field fxFlex="100" class="text-no-bottom-padding text-equal-infix-padding" appearance="outline"
+													[floatLabel]="'always'">
+													<mat-label>{{'BUTTON_TEXT' | translate}}</mat-label>
+													<input matInput type="text" formControlName="TEXT" required>
+												</mat-form-field>
+											</div>
+											<div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="flex-start center">
+												<mat-form-field fxFlex="45" class="text-no-bottom-padding text-equal-infix-padding" appearance="outline"
+													[floatLabel]="'always'">
+													<mat-label>{{'FONT' | translate}}</mat-label>
+													<mat-select formControlName="FONT_FAMILY" required>
+														<mat-option *ngFor="let font of fontFamilies" [value]="font">
+															{{font}}
+														</mat-option>
+													</mat-select>
+												</mat-form-field>
+												<mat-form-field fxFlex="25" class="text-no-bottom-padding text-equal-infix-padding" appearance="outline"
+													[floatLabel]="'always'">
+													<mat-label>{{'FONT_SIZE' | translate}}</mat-label>
+													<input matInput type="number" min="0" max="60" formControlName="FONT_SIZE" required>
+												</mat-form-field>
+												<mat-button-toggle-group multiple formControlName="FONT_STYLING" name="fontStyle" aria-label="Font Style"
+													(change)="buttonTextStyleChange($event)">
+													<mat-button-toggle value="bold"><b>B</b></mat-button-toggle>
+													<mat-button-toggle value="italic"><i>I</i></mat-button-toggle>
+													<mat-button-toggle value="underline"><span style="text-decoration: underline;">U</span>
+													</mat-button-toggle>
+												</mat-button-toggle-group>
+											</div>
+											<div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="flex-start center">
+												<mat-form-field class="text-no-bottom-padding text-equal-infix-padding" appearance="outline"
+													[floatLabel]="'always'">
+													<mat-label>{{'TEXT_COLOR' | translate}}</mat-label>
+													<input matInput type="text" formControlName="TEXT_COLOR" required>
+												</mat-form-field>
+												<input fxFlex="20" type="color" [value]="selectedElement.value['SETTINGS']['TEXT_COLOR']" style="cursor: pointer;"
+													(change)="onTextColorChange($event)" required>
+											</div>
+											<div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="flex-start center">
+												<mat-form-field class="text-no-bottom-padding text-equal-infix-padding" appearance="outline"
+													[floatLabel]="'always'">
+													<mat-label>{{'BACKGROUND_COLOR' | translate}}</mat-label>
+													<input matInput type="text" formControlName="BACKGROUND_COLOR" required>
+												</mat-form-field>
+												<input fxFlex="20" type="color" (change)="onBackgroundColorChange($event)"
+													[value]="selectedElement.value['SETTINGS']['BACKGROUND_COLOR']" required>
+											</div>
+											<div fxLayout="row">
+												<mat-slide-toggle color="primary" formControlName="HAS_BORDER">
+													{{'BORDER' | translate}}
+												</mat-slide-toggle>
+											</div>
+											<ng-container *ngIf="selectedElement.get('SETTINGS').get('HAS_BORDER').value">
+												<div fxLayout="row">
+													<mat-form-field fxFlex="100" class="text-no-bottom-padding text-equal-infix-padding" appearance="outline"
+														[floatLabel]="'always'">
+														<mat-label>{{'BORDER_WIDTH' | translate}}</mat-label>
+														<input matInput type="number" min="1" max="10" formControlName="BORDER_WIDTH" required>
+													</mat-form-field>
+												</div>
+												<div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="flex-start center">
+													<mat-form-field class="text-no-bottom-padding text-equal-infix-padding" appearance="outline"
+														[floatLabel]="'always'">
+														<mat-label>{{'BORDER_COLOR' | translate}}</mat-label>
+														<input matInput type="text" formControlName="BORDER_COLOR" required>
+													</mat-form-field>
+													<input fxFlex="20" type="color" (change)="onBorderColorChange($event)"
+														[value]="selectedElement.value['SETTINGS']['BORDER_COLOR']" required>
+												</div>
+											</ng-container>
+											<div fxLayout="row">
+												<mat-form-field class="text-no-bottom-padding text-equal-infix-padding" appearance="outline"
+													[floatLabel]="'always'">
+													<mat-label>{{'CORNER_RADIUS' | translate}}</mat-label>
+													<input matInput [min]="0" [max]="25" type="number" formControlName="CORNER_RADIUS" required>
+												</mat-form-field>
+												<mat-slider fxFlex [max]="25" [min]="0" [thumbLabel]="true" [vertical]="vertical" (change)="onRadiusChange($event)"
+													[value]="selectedElement.value['SETTINGS']['CORNER_RADIUS']">
+												</mat-slider>
+											</div>
+											<div fxLayout="row">
+												<mat-slide-toggle color="primary" formControlName="HAS_FULL_WIDTH">
+													{{'FULL_WIDTH' | translate}}
+												</mat-slide-toggle>
+											</div>
+											<div fxLayout="row">
+												<mat-form-field fxFlex="100" class="text-no-bottom-padding text-equal-infix-padding" appearance="outline"
+													[floatLabel]="'always'">
+													<mat-label>{{'ALIGNMENT' | translate}}</mat-label>
+													<mat-select formControlName="ALIGNMENT" required>
+														<mat-option *ngFor="let alignment of alignmentOptions" [value]="alignment.ALIGN">
+															{{alignment.DISPLAY}}
+														</mat-option>
+													</mat-select>
+												</mat-form-field>
+											</div>
+										</ng-container>
+									</div>
+								</div>
+								<div *ngIf="sidepaneView === 'EDIT_IMAGE'  && selectedElement.value.TYPE === 'IMAGE'">
+									<div [formGroup]="selectedElement" fxLayout="column" fxLayoutGap="10px">
+										<div fxLayoutAlign="start">
+											<button mat-stroked-button color="default"
+												(click)="sidepaneView = 'CONTENT'; selectedElement = null; selectedElementIndex = null; selectedRowIndex = null;">Done</button>
+										</div>
+										<div fxLayout="row" fxLayoutAlign="center center">
+											<div fxFlex="50">
+												<h3 style="margin: 0px;">{{'EDIT_IMAGE' | translate}}</h3>
+											</div>
+											<div fxFlex="50" fxLayoutAlign="end center">
+												<span class="mat-body" style="cursor: pointer; color: blue; text-decoration: underline"
+													(click)="openSidenav('SELECT_IMAGE')">{{'REPLACE' | translate}}</span>
+											</div>
+										</div>
+										<div fxLayoutAlign="center center" style="border: 1px solid rgba(0,0,0,.12);width: 100%;height: 170px">
+											<span *ngIf="selectedElement.get('SETTINGS').value.FILE === ''">preview</span>
+											<img *ngIf="selectedElement.get('SETTINGS').value.FILE !== ''" [src]="selectedElement.get('SETTINGS').value.FILE"
+												alt="{{selectedElement.get('SETTINGS').value.ALTERNATE_TEXT}}"
+												style="width: 100%; height: 100%; object-fit: contain; overflow: hidden;">
+										</div>
+										<ng-container [formGroupName]="'SETTINGS'">
+											<div fxLayout="row" *ngIf="selectedElement.get('SETTINGS').value.FILE !== ''">
+												<div fxFlex="45" fxLayoutAlign="center center">
+													<div fxFlex="50"></div>
+													<mat-form-field fxFlex="50" class="text-no-bottom-padding text-equal-infix-padding" appearance="outline"
+														[floatLabel]="'always'">
+														<mat-label>Width</mat-label>
+														<input matInput type="number" formControlName="WIDTH" [max]="getMaxImageWidth(selectedElement)">
+													</mat-form-field>
+												</div>
+												<div fxFlex="10" fxLayoutAlign="center center"
+													style="color: rgba(0,0,0,.12); transform: rotateY(0deg) rotate(90deg);">
+													<mat-icon>link</mat-icon>
+												</div>
+												<div fxFlex="45" fxLayoutAlign="center center">
+													<mat-form-field fxFlex="50" class="text-no-bottom-padding text-equal-infix-padding" appearance="outline"
+														[floatLabel]="'always'">
+														<mat-label>Height</mat-label>
+														<input matInput type="number" formControlName="HEIGHT">
+													</mat-form-field>
+													<div fxFlex="50"></div>
+												</div>
+											</div>
+											<div fxLayout="row" *ngIf="selectedElement.get('SETTINGS').value.FILE !== ''">
+												<mat-form-field fxFlex="100" class="text-no-bottom-padding text-equal-infix-padding" appearance="outline"
+													[floatLabel]="'always'">
+													<mat-label>{{'ALTERNATE_TEXT' | translate}}</mat-label>
+													<input matInput type="text" formControlName="ALTERNATE_TEXT">
+												</mat-form-field>
+											</div>
+											<div fxLayout="row" *ngIf="selectedElement.get('SETTINGS').value.FILE !== ''">
+												<mat-form-field fxFlex="100" class="text-no-bottom-padding text-equal-infix-padding" appearance="outline"
+													[floatLabel]="'always'">
+													<mat-label>{{'LINK' | translate}}</mat-label>
+													<input matInput type="text" formControlName="LINK_VALUE">
+												</mat-form-field>
+											</div>
+											<div fxLayout="row" *ngIf="selectedElement.get('SETTINGS').value.FILE !== ''">
+												<mat-form-field fxFlex="100" class="text-no-bottom-padding text-equal-infix-padding" appearance="outline"
+													[floatLabel]="'always'">
+													<mat-label>{{'ALIGNMENT' | translate}}</mat-label>
+													<mat-select formControlName="ALIGNMENT" required>
+														<mat-option *ngFor="let alignment of alignmentOptions" [value]="alignment.ALIGN">
+															{{alignment.DISPLAY}}
+														</mat-option>
+													</mat-select>
+												</mat-form-field>
+											</div>
+										</ng-container>
+									</div>
+								</div>
+								<ng-container *ngIf="sidepaneView === 'EDIT_FOOTER'">
+									<div fxLayoutAlign="start">
+										<button mat-stroked-button color="default" (click)="sidepaneView = 'CONTENT'; footerSelected = false;">Done</button>
+									</div>
+									<h3>{{'EDIT_FOOTER' | translate}}</h3>
+									<div [formGroup]="footerForm" fxLayout="column" fxLayoutGap="20px">
+										<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+											<mat-form-field fxFlex class="text-no-bottom-padding text-equal-infix-padding" appearance="outline"
+												[floatLabel]="'always'">
+												<mat-label>{{'ADDRESS' | translate}}</mat-label>
+												<input matInput type="text" formControlName="FULL_ADDRESS" required>
+											</mat-form-field>
+											<div><button type="button" mat-stroked-button color="default"
+													(click)="openSidenav('EDIT_ADDRESS')">{{'EDIT' | translate}}</button>
+											</div>
+										</div>
+										<div fxLayout="row">
+											<mat-form-field fxFlex="100" class="text-no-bottom-padding text-equal-infix-padding" appearance="outline"
+												[floatLabel]="'always'">
+												<mat-label>{{'ALIGNMENT' | translate}}</mat-label>
+												<mat-select formControlName="ALIGNMENT" required>
+													<mat-option *ngFor="let alignment of alignmentOptions" [value]="alignment.ALIGN">
+														{{alignment.DISPLAY}}
+													</mat-option>
+												</mat-select>
+											</mat-form-field>
+										</div>
+									</div>
+								</ng-container>
+							</div>
+							<div fxLayout="column" fxFlex="calc(70%-390px)"
+								[ngStyle]="{'background-color': campaignType === 'Welcome' ? 'rgb(232, 234, 246)' : 'white'}">
+								<!-- BEGIN SUBJECT -->
+								<div fxLayout="row" fxLayoutAlign="center">
+									<div fxLayout="column" class="pad10"
+										[ngClass]="{'formatted-container': campaignType !== 'Plain', 'container': campaignType === 'Plain'}">
+										<mat-form-field appearance="outline" floatLabel="always" class="text-equal-infix-padding">
+											<mat-label>{{'SUBJECT' | translate}}</mat-label>
+											<div fxLayout="column">
+												<input matInput formControlName="SUBJECT"
+													(focus)="sidepaneView = 'CONTENT'; selectedElement = null; selectedElementIndex = null; footerSelected = false;"
+													required>
+												<span matPrefix>
+													<button type="button" mat-button [matMenuTriggerFor]="menu">{{'PERSONALIZE' | translate}}</button>
+													<mat-menu #menu="matMenu">
+														<button type="button" mat-menu-item *ngFor="let field of usersFields"
+															(click)="insertBodyVariable(i, j, field, 'subject')">{{field.DISPLAY_LABEL}}</button>
+													</mat-menu>
+												</span>
+											</div>
+											<mat-error>{{'REQUIRED_FIELD' | translate}}</mat-error>
+										</mat-form-field>
+									</div>
+								</div>
+								<!-- END SUBJECT -->
+								<!-- BEGIN DROPPABLE AREA -->
+								<div fxLayout="row" fxLayoutAlign="center" formArrayName="ROWS" (mouseenter)="row.hovered = true"
+									(mouseleave)="row.hovered = false" *ngFor="let row of campaignForm.get('ROWS')['controls'];let i = index"
+									[ngStyle]="{border: selectedRowIndex === i && selectedElementIndex === null ? '2px solid #3f51b5' : 'none', cursor: row.hovered ? 'grab' : 'default'}"
+									style="position: relative;" (click)="rowSelected(i)">
+									<div *ngIf="row.hovered" fxLayout="row" fxLayoutAlign="start" class="z9999"
+										[ngStyle]="{'left': campaignType !== 'Plain' ? '40px' : '20px'}"
+										style="position: absolute;top:-20px;box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12); background-color: #808080;color:white;">
+										<button mat-icon-button matTooltip="{{'DELETE_ROW' | translate}}" type="button" (click)="removeRow(i)"
+											[disabled]="campaignForm.get('ROWS').controls.length === 1">
+											<mat-icon>delete</mat-icon>
+										</button>
+										<button mat-icon-button matTooltip="{{'ADD_ROW' | translate}}" type="button" (click)="openRowDialog(i)">
+											<mat-icon>add</mat-icon>
+										</button>
+										<button mat-icon-button matTooltip="{{'MOVE_ROW_UP' | translate}}" type="button" (click)="moveRow(i, i-1)"
+											[disabled]="i === 0">
+											<mat-icon>keyboard_arrow_up</mat-icon>
+										</button>
+										<button mat-icon-button matTooltip="{{'MOVE_ROW_DOWN' | translate}}" type="button" (click)="moveRow(i, i+1)"
+											[disabled]="i === campaignForm.get('ROWS').controls.length - 1">
+											<mat-icon>keyboard_arrow_down</mat-icon>
+										</button>
+									</div>
+									<div style="background-color: white;"
+										[ngClass]="{'formatted-container': campaignType !== 'Plain', 'container': campaignType === 'Plain'}">
+										<div *ngIf="elementsLoaded" fxLayout="row" [formGroupName]="i">
+											<div *ngFor="let column of row.controls.COLUMNS.controls;let j = index;" formArrayName="COLUMNS"
+												[fxFlex]="column.value.WIDTH === .3333 ? 'calc(33%-10px)' : (column.value.WIDTH === .6667 ? 'calc(66%-10px)' : (column.value.WIDTH === 1.5 ? '50%' : (column.value.WIDTH === 1 ? '33.333%' : 'auto')))">
+												<div id="{{i}}_{{j}}" cdkDropList (cdkDropListDropped)="dropElements($event)"
+													[cdkDropListData]="{ROW: i, COLUMN: j}" [cdkDropListDisabled]="column.value.TYPE !== ''" style="margin:10px;"
+													[formGroupName]="j">
+													<div *ngIf="column.value.TYPE === 'TEXT'" #editors (blur)="selectedElementIndex = null"
+														[ngStyle]="{'border': selectedRowIndex === i && selectedElementIndex === j ? '1px solid #3f51b5' : 'none'}"
+														style="position: relative;margin-bottom: 5px;" [formGroupName]="'SETTINGS'">
+														<div *ngIf="selectedRowIndex === i && selectedElementIndex === j" class="z9999"
+															style="position: absolute;right:0;background-color: white;height:24px;cursor: pointer;"
+															(click)="removeElement(i, j)">
+															<mat-icon>close</mat-icon>
+														</div>
+														<tinymce placeholder="" (click)="elementSelected(column, j, i)" formControlName="TEXT" [config]="config">
+														</tinymce>
+														<div
+															style="background: white;border-left: 1px solid #ccc;border-right: 1px solid #ccc;border-bottom: 1px solid #ccc;">
+															<button type="button" mat-button [matMenuTriggerFor]="menu">{{'PERSONALIZE' | translate}}</button>
+															<mat-menu #menu="matMenu">
+																<button type="button" mat-menu-item *ngFor="let field of usersFields"
+																	(click)="insertBodyVariable(i, j, field, 'text')">{{field.DISPLAY_LABEL}}</button>
+															</mat-menu>
+														</div>
+													</div>
+													<div *ngIf="column.value.TYPE === 'BUTTON'"
+														[ngStyle]="{'border': selectedRowIndex === i && selectedElementIndex === j ? '1px solid #3f51b5' : 'none'}"
+														(click)="elementSelected(column, j, i)" style="position: relative;">
+														<div *ngIf="selectedRowIndex === i && selectedElementIndex === j" class="z9999"
+															style="position: absolute;right:0;background-color: white;height:24px;cursor: pointer;"
+															(click)="removeElement(i, j)">
+															<mat-icon>close</mat-icon>
+														</div>
+														<div fxLayoutAlign="{{column.value['SETTINGS']['ALIGNMENT']}}">
+															<button *ngIf="column.value['SETTINGS']['BORDER_WIDTH'] > 0" type="button" mat-stroked-button
+																style="white-space: pre-line; word-break: break-word;"
+																[style.color]="column.value['SETTINGS']['TEXT_COLOR']"
+																[style.lineHeight.px]="(column.value['SETTINGS']['FONT_SIZE']-14)+36"
+																[style.borderRadius.px]="column.value['SETTINGS']['CORNER_RADIUS']"
+																[style.borderColor]="column.value['SETTINGS']['BORDER_COLOR']"
+																[style.borderWidth.px]="column.value['SETTINGS']['BORDER_WIDTH']"
+																[style.backgroundColor]="column.value['SETTINGS']['BACKGROUND_COLOR']"
+																[style.fontSize.px]="column.value['SETTINGS']['FONT_SIZE']"
+																[style.fontWeight]="column.value['SETTINGS']['FONT_WEIGHT']"
+																[style.textDecoration]="column.value['SETTINGS']['FONT_UNDERLINE']"
+																[ngStyle]="{'font-family': column.value['SETTINGS']['FONT_FAMILY'], 'font-style': column.value['SETTINGS']['FONT_ITALICS'], 'width' : column.value['SETTINGS']['HAS_FULL_WIDTH'] === true ? '100%' : 'auto'}">
+																{{column.value['SETTINGS']['TEXT']}}
+															</button>
+															<button *ngIf="column.value['SETTINGS']['BORDER_WIDTH'] === 0" type="button" mat-button
+																style="white-space: pre-line; word-break: break-word;"
+																[style.color]="column.value['SETTINGS']['TEXT_COLOR']"
+																[style.lineHeight.px]="(column.value['SETTINGS']['FONT_SIZE']-14)+36"
+																[style.borderRadius.px]="column.value['SETTINGS']['CORNER_RADIUS']"
+																[style.backgroundColor]="column.value['SETTINGS']['BACKGROUND_COLOR']"
+																[style.fontSize.px]="column.value['SETTINGS']['FONT_SIZE']"
+																[style.fontWeight]="column.value['SETTINGS']['FONT_WEIGHT']"
+																[style.textDecoration]="column.value['SETTINGS']['FONT_UNDERLINE']"
+																[ngStyle]="{'font-family': column.value['SETTINGS']['FONT_FAMILY'], 'font-style': column.value['SETTINGS']['FONT_ITALICS'], 'width' : column.value['SETTINGS']['HAS_FULL_WIDTH'] === true ? '100%' : 'auto'}">
+																{{column.value['SETTINGS']['TEXT']}}
+															</button>
+														</div>
+													</div>
+													<div *ngIf="column.value.TYPE === 'IMAGE'"
+														[ngStyle]="{'cursor': row.focused ? 'text' : 'pointer', 'border': selectedRowIndex === i && selectedElementIndex === j ? '1px solid #3f51b5' : 'none'}"
+														style="position: relative;margin-bottom: 5px;" [formGroupName]="'SETTINGS'"
+														(click)="elementSelected(column, j, i)" fxLayout="column" fxLayoutGap="10px">
+														<div *ngIf="selectedRowIndex === i && selectedElementIndex === j" class="z9999"
+															style="position: absolute;right:0;background-color: white;height:24px;cursor: pointer;"
+															(click)="removeElement(i, j)">
+															<mat-icon>close</mat-icon>
+														</div>
+														<ng-container *ngIf="column.value.SETTINGS.FILE === ''">
+															<div fxLayoutAlign="center center">
+																<mat-icon style="font-size: 30px;height:30px;width:30px;">image</mat-icon>
+															</div>
+															<div fxLayoutAlign="center center">
+																<button type="button" mat-stroked-button color="default" (click)="openSidenav('SELECT_IMAGE')">
+																	{{'SELECT_IMAGE' | translate}}
+																</button>
+															</div>
+														</ng-container>
+														<ng-container *ngIf="column.value.SETTINGS.FILE !== ''">
+															<div #images fxLayoutAlign="{{column.value.SETTINGS.ALIGNMENT}}"
+																[style.height.px]="column.value.SETTINGS.HEIGHT" style="max-width: 100%">
+																<img id="image_{{column.value.SETTINGS.ID}}" [src]="column.value.SETTINGS.FILE"
+																	alt="{{column.value.SETTINGS.ALTERNATE_TEXT}}" [style.width.px]="column.value.SETTINGS.WIDTH"
+																	style="height: 100%; object-fit: contain; overflow: hidden;">
+															</div>
+														</ng-container>
+													</div>
+													<div *ngIf="column.value.TYPE === ''">
+														<div fxFlex fxLayoutAlign="center center" class="pad10"
+															style="border: 1px dashed black;border-radius: 5px; background: #f5f8fa; color: #7c98b6; height: 70px">
+															<div>{{'DRAG_CONTENT_HERE' | translate}}</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- END DROPPABLE AREA -->
+								<!-- BEGIN FOOTER -->
+								<div fxLayout="row" style="padding: 0 10px;">
+									<div fxLayout="column" class="mat-body" fxLayoutGap="10px"
+										[ngStyle]="{'border' : hover ? '2px solid black' : footerSelected ? '2px solid #3f51b5' : 'none',
+											'text-align': footerForm.get('ALIGNMENT').value === 'flex-start' ? 'start' : (footerForm.get('ALIGNMENT').value === 'flex-end' ? 'end' : 'center')}"
+										style="padding: 10px;border-radius: 5px;"
+										[ngClass]="{'formatted-container': campaignType !== 'Plain', 'container': campaignType === 'Plain'}"
+										(click)="editFooter()" (mouseenter)="hover=true" (mouseleave)="hover=false"
+										fxLayoutAlign=" {{footerForm.get('ALIGNMENT').value}}" (appClickOutside)="footerSelected = false">
+										<span>{{footerForm.get('FULL_ADDRESS').value ? footerForm.get('FULL_ADDRESS').value : 'Address'}}</span>
+										<span style="color:blue; text-decoration:underline;">{{'UNSUBSCRIBE' | translate}}</span>
+										<div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
+											<div style="max-width: 25px; max-height: 25px;">
+												<img [src]="defaultLogo.LOGO.FILE" alt="logo"
+													style="width: 100%; height: 100%; object-fit: contain; overflow: hidden;">
+											</div>
+											<label [innerHTML]="'BACKLINK_TEXT' | translate"></label>
+										</div>
+									</div>
+								</div>
+								<!-- END FOOTER -->
+							</div>
+						</div>
+					</mat-tab>
+					<mat-tab label="{{'SEND_OR_SCHEDULE' | translate}}">
+						<div fxLayout="row" style="min-height: calc(100vh - 45px);">
+							<div fxLayout="row" class="pad10" fxFlex>
+								<div fxFlex></div>
+								<div fxLayout="column" fxFlex="70" style="margin-top: 20px">
+									<h2 class="mat-h2">{{'RECIPIENTS' | translate}}</h2>
+									<mat-form-field appearance="outline" floatLabel="always">
+										<mat-label>{{'SEND_TO' | translate}}</mat-label>
+										<mat-chip-list #usersChipList aria-label="Select user">
+											<mat-chip *ngFor="let user of users" [selectable]="true" [removable]="true" (removed)="removeUsers(user, 'users')">
+												{{user.EMAIL_ADDRESS}}
+												<mat-icon matChipRemove>cancel</mat-icon>
+											</mat-chip>
+											<input placeholder="{{'ADD_USER' | translate}}" [formControl]="usersCtrl" [matAutocomplete]="usersAuto"
+												[matChipInputFor]="usersChipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [(ngModel)]="tempUserInput"
+												[matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="resetInput($event)" (ngModelChange)="searchUser()">
+										</mat-chip-list>
+										<mat-autocomplete (closed)="userAutocompleteClosed()" (appAutocompleteScroll)="onUsersScroll()"
+											#usersAuto="matAutocomplete" (optionSelected)="selected($event, 'users')">
+											<mat-option *ngFor="let filteredUser of allUsers" [value]="filteredUser"
+												[disabled]="disabledCheck(filteredUser, usersDisable,'users')">
+												{{filteredUser.EMAIL_ADDRESS}}
+											</mat-option>
+										</mat-autocomplete>
+										<mat-error>{{'REQUIRED_FIELD' | translate}}</mat-error>
+									</mat-form-field>
+									<mat-form-field appearance="outline" floatLabel="always">
+										<mat-label>{{'SEND_TO_LIST' | translate}}</mat-label>
+										<mat-chip-list #emailListChipList aria-label="Select a list">
+											<mat-chip *ngFor="let emailList of emailLists" [selectable]="selectable" [removable]="removable"
+												(removed)="remove(emailList, emailLists)">
+												{{emailList.NAME}}
+												<mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+											</mat-chip>
+											<input placeholder="{{'ADD_LIST' | translate}}" #emailListsInput [formControl]="emailListsCtrl"
+												[matAutocomplete]="emailListsAuto" [matChipInputFor]="emailListChipList"
+												[matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+												(matChipInputTokenEnd)="addEmailList($event)">
+										</mat-chip-list>
+										<mat-autocomplete #emailListsAuto="matAutocomplete" (optionSelected)="selected($event, 'emailList')">
+											<div *ngIf="filteredEmailLists && allEmailLists.length > 0">
+												<mat-option *ngFor="let filteredEmailList of filteredEmailLists | async" [value]="filteredEmailList"
+													[disabled]="emailLists.indexOf(filteredEmailList) !== -1">
+													{{filteredEmailList.NAME}}
+												</mat-option>
+											</div>
+											<mat-option *ngIf="allEmailLists.length === 0">
+												<a [routerLink]="['','company-settings','marketing','email-lists','new']">{{'NEW_EMAIL_LIST' | translate}}</a>
+											</mat-option>
+										</mat-autocomplete>
+										<mat-error>{{'REQUIRED_FIELD' | translate}}</mat-error>
+									</mat-form-field>
+								</div>
+								<div fxFlex></div>
+							</div>
+							<div fxFlex="40" fxLayout="column"
+								style="background: rgb(248, 249, 249); border-right: 1px solid rgba(0,0,0,.12); padding: 30px 40px; border-left: 1px solid rgba(0,0,0,.12); padding: 30px 40px;">
+								<h2 class="mat-h2">{{'SENDING_OPTIONS' | translate}}</h2>
+								<mat-radio-group formControlName="SEND_OPTION" aria-label="Select an option" fxLayoutGap="20px"
+									style="margin-bottom: 20px;">
+									<mat-radio-button value="Send now">{{'SEND_NOW' | translate}}</mat-radio-button>
+									<mat-radio-button value="Send later">{{'SEND_LATER' | translate}}</mat-radio-button>
+								</mat-radio-group>
+								<div fxLayout="row" fxLayoutGap="20px" *ngIf="campaignForm.get('SEND_OPTION').value === 'Send later'"
+									style="margin-top: 20px;">
+									<mat-form-field fxFlex appearance="outline" floatLabel="always">
+										<mat-label>{{'SEND_DATE' | translate}}</mat-label>
+										<input matInput [min]="minDate" [owlDateTimeTrigger]="dt" [owlDateTime]="dt" formControlName="SEND_DATE">
+										<owl-date-time #dt></owl-date-time>
+										<mat-error>{{'REQUIRED_FIELD' | translate}}</mat-error>
+									</mat-form-field>
+								</div>
+								<div><button mat-raised-button type="button" color="primary" (click)="save('send')">
+										<span *ngIf="campaignForm.get('SEND_OPTION').value === 'Send now'">{{'SAVE_AND_SEND' | translate}}</span>
+										<span *ngIf="campaignForm.get('SEND_OPTION').value === 'Send later'">{{'SAVE_AND_SCHEDULE' | translate}}</span>
+									</button>
+								</div>
+								<div *ngIf="campaignId !== 'new' && campaignLoaded" fxLayout="row" style="margin-top: 20px;">
+									<h2 class="mat-h2">{{'STATUS' | translate}}:&nbsp;</h2>
+									<h2 class="mat-h2" [ngClass]="{'green-text': campaignForm.get('STATUS').value === 'Sent',
+																		'blue-text': campaignForm.get('STATUS').value === 'Processing',
+																		'orange-text': campaignForm.get('STATUS').value === 'Scheduled'}">
+										{{campaignForm.get('STATUS').value | translate}}
+									</h2>
+								</div>
+							</div>
+						</div>
+					</mat-tab>
+				</mat-tab-group>
+			</div>
+		</form>
+	</mat-sidenav-content>
+</mat-sidenav-container>
+
+
+<ng-template #newRowDialog>
+	<div fxLayout="column" fxFlex>
+		<div fxFlexAlign="center">
+			<h1 mat-dialog-title>{{'SPECIFY_NO_OF_COLUMNS' | translate}}</h1>
+		</div>
+		<div fxFlex>
+			<div fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="center">
+				<ng-container *ngFor="let layout of availableLayouts; let i = index">
+					<div fxFlex="0 1 calc(30%-10px)">
+						<mat-card fxLayoutAlign="center center" (click)="selectedLayoutIndex = i" style="cursor: pointer;"
+							[ngStyle]="{border: selectedLayoutIndex === i ? '2px solid #3f51b5' : ''}">
+							<mat-card-content fxFlex="100" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
+								<div fxFlex fxLayout="column" fxLayoutAlign="stretch" fxLayoutGap="10px">
+									<div *ngIf="layout.DISPLAY === '1/3 : 2/3'" fxFlex="100" fxLayout="row" fxLayoutGap="5px">
+										<mat-card fxFlex="calc(.3333*100)" fxLayoutAlign="center"
+											style="background-color: rgb(245, 248, 250); border: 1px dashed;">
+										</mat-card>
+										<mat-card fxFlex=".6667" fxLayoutAlign="center" style="background-color: rgb(245, 248, 250); border: 1px dashed;">
+										</mat-card>
+									</div>
+									<div *ngIf="layout.DISPLAY === '2/3 : 1/3'" fxFlex="100" fxLayout="row" fxLayoutGap="5px">
+										<mat-card fxFlex="2 2 calc(67%-5px)" fxLayoutAlign="center"
+											style="background-color: rgb(245, 248, 250); border: 1px dashed;">
+										</mat-card>
+										<mat-card fxFlex="1 1 calc(33%-5px)" fxLayoutAlign="center"
+											style="background-color: rgb(245, 248, 250); border: 1px dashed;">
+										</mat-card>
+									</div>
+									<div *ngIf="layout.DISPLAY === '3'" fxFlex="100" fxLayout="row" fxLayoutGap="5px">
+										<mat-card fxFlex fxLayoutAlign="center" style="background-color: rgb(245, 248, 250); border: 1px dashed;">
+										</mat-card>
+										<mat-card fxFlex fxLayoutAlign="center" style="background-color: rgb(245, 248, 250); border: 1px dashed;">
+										</mat-card>
+										<mat-card fxFlex fxLayoutAlign="center" style="background-color: rgb(245, 248, 250); border: 1px dashed;">
+										</mat-card>
+									</div>
+									<div *ngIf="layout.DISPLAY === '2'" fxFlex="100" fxLayout="row" fxLayoutGap="5px">
+										<mat-card fxFlex="1 1 calc(50%-5px)" fxLayoutAlign="center"
+											style="background-color: rgb(245, 248, 250); border: 1px dashed;">
+										</mat-card>
+										<mat-card fxFlex="1 1 calc(50%-5px)" fxLayoutAlign="center"
+											style="background-color: rgb(245, 248, 250); border: 1px dashed;">
+										</mat-card>
+									</div>
+									<div *ngIf="layout.DISPLAY === '1'" fxFlex="100" fxLayout="row" fxLayoutGap="5px">
+										<mat-card fxFlex fxLayoutAlign="center" style="background-color: rgb(245, 248, 250); border: 1px dashed;">
+										</mat-card>
+									</div>
+									<label class="mat-h3 no-margin-bottom" fxLayoutAlign="center">{{layout.DISPLAY}}</label>
+								</div>
+							</mat-card-content>
+						</mat-card>
+					</div>
+				</ng-container>
+			</div>
+		</div>
+		<div mat-dialog-actions fxFlexAlign="end" [ngStyle]="{'margin-top':'20px'}">
+			<button mat-raised-button [mat-dialog-close]="'cancel'">{{'CLOSE' | translate}}</button>
+			<button mat-raised-button [mat-dialog-close]="availableLayouts[selectedLayoutIndex]"
+				color="primary">{{'ADD_ROW' | translate}}</button>
+		</div>
+	</div>
+</ng-template>

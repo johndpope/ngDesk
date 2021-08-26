@@ -1,0 +1,18 @@
+<html>
+<body>
+Hello FIRST_NAME LAST_NAME,
+<br> 
+<br>Thank you for signing up with ngDesk.
+<br> 
+<br>To complete the setup, <a href="https://SUBDOMAIN.ngdesk.com/email/verify?email=EMAIL&uuid=UUID">
+click here to verify your email address</a>.
+<br> 
+<br>After you're verified, you can sign in to your ngDesk account at <a href="https://SUBDOMAIN.ngdesk.com">https://SUBDOMAIN.ngdesk.com</a>. Please bookmark this URL now.
+<br>
+<br>ngDesk is also available for mobile. Visit the <a href="https://play.google.com/store/apps/details?id=com.ngdesk.ngdesk2">Google Play Store</a> or <a href="https://apps.apple.com/us/app/ngdesk-support/id1444147469">Apple App Store</a> to download the app on your phone. 
+<br>
+<br>If you have questions, contact our team at <a href="mailto:support@ngdesk.com">support@ngdesk.com</a>
+<br>
+Your ngDesk team
+</body>
+</html>

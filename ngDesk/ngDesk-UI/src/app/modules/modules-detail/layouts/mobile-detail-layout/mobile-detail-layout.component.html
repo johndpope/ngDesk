@@ -1,0 +1,24 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef>
+	<app-title-bar title="{{ layoutType.toUpperCase() | translate }}" buttonText="{{'SAVE' | translate}}" (buttonRightOnClick)="save()">
+	</app-title-bar>
+</ng-template>
+<form [formGroup]="listLayoutForm" (ngSubmit)="save()" class="pad10">
+	<app-new-name-description *ngIf="roles" [additionalFields]="additionalFields"></app-new-name-description>
+	<div cdkDropListGroup>
+		<div class="columns-container">
+			<h2 class="mat-h2">{{'AVAILABLE' | translate}}</h2>
+			<div cdkDropList #columnAvailableList="cdkDropList" id="available" [cdkDropListData]="availableFields" class="column-list"
+				(cdkDropListDropped)="drop($event)">
+				<div class="columns-box mat-body" *ngFor="let availableField of availableFields" cdkDrag>{{availableField.DISPLAY_LABEL}}</div>
+			</div>
+		</div>
+		<div class="columns-container">
+			<h2 class="mat-h2">{{'SHOWN' | translate}}</h2>
+			<div cdkDropList #columnShowList="cdkDropList" id="shown" [cdkDropListData]="shownColumns" class="column-list"
+				(cdkDropListDropped)="drop($event)">
+				<div class="columns-box mat-body" *ngFor="let shownColumn of shownColumns" cdkDrag>{{shownColumn.DISPLAY_LABEL}}</div>
+			</div>
+		</div>
+	</div>
+</form>

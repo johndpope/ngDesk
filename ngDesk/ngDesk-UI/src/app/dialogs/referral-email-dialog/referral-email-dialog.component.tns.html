@@ -1,0 +1,34 @@
+<StackLayout>
+  <Label text="referral-email-dialog works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+
+<div fxFlex >
+    <h3 class="mat-h3" style="text-align: center" [innerHTML]="'EMAIL_TO_SEND_REFERRAL_LINK' | translate"></h3>
+        <div style="padding-left: 10%">
+        <mat-form-field style="width: 70%;">
+            <mat-chip-list #developerEmail>
+                <mat-chip *ngFor="let email of referralEmails" [selectable]="true" [removable]="true" (removed)="remove(email)">
+                    {{email}}
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip>
+                <input placeholder="{{'ENTER_EMAIL_HERE' | translate}}" [formControl]="emailFormControl" [matChipInputFor]="developerEmail"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="add($event)">
+                </mat-chip-list>
+           
+        </mat-form-field>
+       
+        <button mat-raised-button color="primary" style="margin-left: 2%;" (click)="sendEmailToDevelopers()">
+            <mat-icon aria-hidden="false">send</mat-icon>
+        </button>
+        <mat-error  *ngIf="invalidEmail" [innerHTML]="'INVALID_EMAIL' | translate"></mat-error>
+     
+        </div>
+        <h3 class="mat-small" style="text-align: center" [innerHTML]="'MULTIPLE_EMAIL' | translate"></h3>
+</div>
+-->

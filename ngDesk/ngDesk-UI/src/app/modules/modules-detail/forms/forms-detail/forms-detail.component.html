@@ -1,0 +1,162 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef>
+	<app-title-bar class="light-grey-color" title="{{ 'FORMS' | translate }}" buttonText="{{'SAVE' | translate}}"
+		(buttonRightOnClick)="save()">
+	</app-title-bar>
+</ng-template>
+<div class="pad10">
+	<form [formGroup]="forms" (ngSubmit)="save()">
+		<app-new-name-description></app-new-name-description>
+	</form>
+</div>
+<mat-tab-group *ngIf="!loading">
+	<mat-tab label="Form Builder">
+		<div fxLayout="row" fxLayoutGap="10px">
+			<div fxLayout="column" fxFlex="15">
+
+				<div class="scroll" style="position: sticky; top: 1vh; overflow-y: auto; max-height: 72vh;
+              margin-left: 5px; border: solid; border-color: #e0e0e0; background: white;">
+					<div style="width: 18vw; max-width: 100%; min-height: 50px; overflow: hidden;" *ngIf="module" cdkDropList
+						[cdkDropListConnectedTo]="this.dropList">
+						<div class="pad10 pointer" *ngFor="let field of module.FIELDS; let last = last;" cdkDrag id="{{field.FIELD_ID}}" fxLayout="row"
+							fxLayoutAlign=" center" [ngStyle]="{'border-bottom': last ? '' : '1px solid #9e9e9e'}"
+							style="padding: 12px 10px; box-sizing: border-box;cursor: move;">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+								<path fill="none" d="M0 0h24v24H0V0z" />
+								<path
+									d="M11 18c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zm-2-8c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 4c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
+							</svg>
+							<label class="mat-body pointer" style="cursor:move;vertical-align: super;">{{ field.DISPLAY_LABEL }}</label>
+							<div *cdkDragPreview class="pad10 pointer" [ngStyle]="{'border-bottom': '1px solid rgba(0,0,0,.12)'}">
+								<div class="mat-body">{{ field.DISPLAY_LABEL }}<span class='mat-caption'> ({{ field.DATA_TYPE.DISPLAY }})</span></div>
+							</div>
+						</div>
+						<div class="pad10" fxLayout="row" *ngIf="module.FIELDS.length === 0 " fxLayoutAlign=" center"
+							style="padding: 12px 10px; box-sizing: border-box;">
+							<label class="mat-body pointer">{{ 'NO_FIELDS' | translate }}</label>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div fxFlex="85">
+				<div style="border-top: 1px solid #BDBDBD; border-left: 1px solid #BDBDBD; border-bottom: 1px solid #BDBDBD;">
+					<app-dynamic [context]="this" [material-module]="dataMaterialModule" [template]="customLayout"> </app-dynamic>
+					<!-- <div style="padding: 10px;" [p3x-compile]="customLayout" [p3x-compile-ctx]="this" [p3x-compile-module]="dataMaterialModule"
+						class="p3x-angular-compile-element">
+					</div> -->
+					<div style="padding-bottom: 10px; margin: 0px 12px" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
+						<button mat-raised-button fxFlex fxLayoutAlign="center center" style="cursor: pointer; height: 5vh;" (click)="gridRow(i, 1)">
+							<span class="icon-height">
+								<mat-icon style="vertical-align: middle;">add</mat-icon> Add row
+							</span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</mat-tab>
+	<mat-tab label="Style" fxFlex>
+		<div class="pad10" fxLayout="row" fxFlex="100">
+			<div fxLayout="column" fxLayoutGap=10px>
+				<label class="mat-body-strong">{{"FIELD_STYLE" | translate}}</label>
+				<mat-radio-group fxLayout="column" [(ngModel)]="layoutStyle">
+					<mat-radio-button class="example-radio-button" value="fill">
+						{{"FILL" | translate}}
+					</mat-radio-button>
+					<mat-radio-button class="example-radio-button" value="standard">
+						{{"STANDARD" | translate}}
+					</mat-radio-button>
+					<mat-radio-button class="example-radio-button" value="outline">
+						{{"OUTLINE" | translate}}
+					</mat-radio-button>
+				</mat-radio-group>
+			</div>
+			<div fxFlex style="width: 50px;" fxLayoutAlign="center center">
+				<mat-form-field appearance="outline" *ngIf="layoutStyle === 'outline'">
+					<mat-label>Preview</mat-label>
+					<input matInput type="text">
+				</mat-form-field>
+				<mat-form-field appearance="standard" *ngIf="layoutStyle === 'standard'">
+					<mat-label>Preview</mat-label>
+					<input matInput type="text">
+				</mat-form-field>
+				<mat-form-field appearance="fill" *ngIf="layoutStyle === 'fill'">
+					<mat-label>Preview</mat-label>
+					<input matInput type="text">
+				</mat-form-field>
+			</div>
+		</div>
+		<div fxLayout="row" fxFlex="100" class='pad10'>
+			<div fxLayout="column" fxLayoutGap="10px">
+				<label class="mat-body-strong">{{"BUTTON_ALIGNMENT" | translate}}</label>
+				<mat-radio-group fxLayout="column" [(ngModel)]="saveButton.ALIGNMENT">
+					<mat-radio-button class="example-radio-button" value="center">
+						{{"CENTER" | translate}}
+					</mat-radio-button>
+					<mat-radio-button class="example-radio-button" value="start">
+						{{"START" | translate}}
+					</mat-radio-button>
+					<mat-radio-button class="example-radio-button" value="end">
+						{{"END" | translate}}
+					</mat-radio-button>
+					<mat-radio-button class="example-radio-button" value="stretch">
+						{{"STRETCH" | translate}}
+					</mat-radio-button>
+				</mat-radio-group>
+
+				<mat-form-field floatLabel="always">
+					<mat-label>{{"BUTTON_LABEL" | translate}}</mat-label>
+					<input matInput type="text" [(ngModel)]="saveButton.LABEL">
+				</mat-form-field>
+			</div>
+			<div fxFlex fxLayoutAlign="center {{saveButton.ALIGNMENT}}" fxLayout="column" fxLayoutGap="10px">
+				<button mat-raised-button color='primary'>{{saveButton.LABEL}}</button>
+			</div>
+		</div>
+
+		<div fxLayout="row" fxFlex="100" class='pad10'>
+			<div fxLayout="column" fxLayoutGap="10px">
+				<label class="mat-body-strong">{{"AFTER_FORM_SAVE" | translate}}</label>
+				<mat-radio-group fxLayout="row" [(ngModel)]="saveButton.SAVE_TYPE">
+					<mat-radio-button class="example-radio-button" value="message">
+						{{"DISPLAY_THANK_YOU" | translate}}
+					</mat-radio-button>
+					<mat-radio-button class="example-radio-button" value="url">
+						{{"REDIRECT_TO_PAGE" | translate}}
+					</mat-radio-button>
+				</mat-radio-group>
+
+				<mat-form-field floatLabel="always" *ngIf="saveButton.SAVE_TYPE ==='message'">
+					<mat-label>{{"MESSAGE" | translate}}</mat-label>
+					<input matInput type="text" [(ngModel)]="saveButton.SAVE_MESSAGE">
+				</mat-form-field>
+				<mat-form-field floatLabel="always" *ngIf="saveButton.SAVE_TYPE ==='url'">
+					<mat-label>{{"REDIRECT_URL" | translate}}</mat-label>
+					<input matInput type="url" [(ngModel)]="saveButton.URL">
+				</mat-form-field>
+			</div>
+
+		</div>
+
+	</mat-tab>
+	<mat-tab label="Script" fxFlex>
+		<div fxLayout="row" fxFlex="100">
+			<div class="pad10" *ngIf="formId !== 'new'">
+				<pre style="background-color: #000; border-radius: 8px;; padding-right: 2%; cursor: pointer; white-space: pre-wrap; margin: 0;"
+					(click)="copyToClipboard()">
+				  <ol style=" margin-top: 0; margin-bottom: 0; cursor: pointer; color: rgb(255, 255, 255); word-break: break-word;" fxLayout="column" fxLayoutGap="5px">
+					<div fxLayoutAlign="end start">	<mat-icon aria-hidden="false"  matTooltip="{{'COPY_TO_CLIPBOARD' | translate}}">content_copy</mat-icon></div>
+                    <li><span><span>&lt;script id ="ngdesk-form-widget"&gt;</span></span></li><li><span>var script = document.createElement(&#34;script&#34;);</span></li><li><span>script.type = &#34;text/javascript&#34;;</span></li><li><span>script.src = &#34;https://{{subdomain}}.ngdesk.com/forms-widget/{{moduleId}}/{{formId}}/ngdesk_form_widget.js&#34;;</span></li><li><span>document.getElementsByTagName(&#34;head&#34;)[0].appendChild(script);</span></li><li><span class="tag">&lt;/script&gt;</span></li>
+                  </ol>
+                </pre>
+			</div>
+			<div class='mat-caption pad10' *ngIf="formId === 'new'">
+				{{"CREATE_NEW_FORM_MESSAGE" | translate }}
+			</div>
+		</div>
+	</mat-tab>
+</mat-tab-group>
+<div fxLayoutAlign="center center" *ngIf="loading">
+	<mat-spinner></mat-spinner>
+</div>

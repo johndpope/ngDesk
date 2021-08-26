@@ -1,0 +1,209 @@
+<mat-sidenav-container>
+
+	<mat-sidenav #sidenav mode="over" position="start">
+		<div class="mat-h4 pad10" style="padding-top: 50px;">
+			<div style="margin: 5px;" *ngFor="let dashboard of dashboards">
+				<mat-card fxLayout="row" fxLayoutAlign="start center" [ngClass]="{'highlight': dashboard.DASHBOARD_ID === dashboardId}"
+					(click)="selectDashboard(dashboard.DASHBOARD_ID); sidenav.toggle()">
+					{{dashboard.NAME}}
+				</mat-card>
+			</div>
+			<div style="margin: 5px;">
+				<mat-card *ngIf="currentRole === 'SystemAdmin'" fxLayout="row" fxLayoutAlign="start center" (click)="newDashboard()">Add a
+					new
+					dashboard <mat-icon>add</mat-icon>
+				</mat-card>
+			</div>
+		</div>
+	</mat-sidenav>
+
+	<mat-sidenav-content>
+
+		<app-toolbar [templateRef]="customTemplateRef"></app-toolbar>
+
+		<ng-template #customTemplateRef>
+			<div fxLayoutAlign="space-between center" fxLayoutGap="10px">
+				<div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="center center">
+					<button (click)="sidenav.toggle()" mat-button style="min-width: 24px; padding: 0 10px; margin-right: 10px;"
+						id="layouts-button" #layoutButton>
+						<mat-icon class="pointer grey-balck-color" matTooltip="Dashboards">menu</mat-icon>
+					</button>
+					<div fxLayout="column">
+						<div fxLayout="row" style="height:3vh"><span class="mat-h3 grey-balck-color">{{dashboard.NAME}}</span></div>
+						<div *ngIf="dashboard.DESCRIPTION !== null" fxLayout="row" style="height:2vh;width:50vw;"><span
+								class="mat-h5 grey-balck-color">{{dashboard.DESCRIPTION}}</span></div>
+					</div>
+				</div>
+				<div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="end center">
+					<button type="button" *ngIf="!editEnabled && !isDefault && currentRole === 'SystemAdmin'" (click)="editDashboard(true)"
+						mat-raised-button color="primary">Edit</button>
+					<button type="submit" *ngIf="editEnabled" (click)="save()" mat-raised-button color="primary">Save</button>
+					<button type="button" *ngIf="dashboardId !== 'new' && !isDefault  && currentRole === 'SystemAdmin'"
+						(click)="deleteDashboard()" mat-raised-button color="primary">Delete</button>
+					<button type="button" *ngIf="editEnabled" (click)="editDashboard(false); setDefaultBoard()" mat-raised-button
+						color="primary">Cancel</button>
+				</div>
+			</div>
+		</ng-template>
+
+		<ng-container *ngIf="isLoading; else elseTemplate">
+			<mat-spinner style="position:relative;top:10vw;left:50%"></mat-spinner>
+		</ng-container>
+		<ng-template #elseTemplate>
+			<div fxLayout="column">
+				<div class="mat-body" fxLayout="column" style="height: 93vh;">
+					<form [formGroup]="dashboardForm" style="padding: 5px 10px;" fxLayout="column" *ngIf="editEnabled">
+						<div fxLayoutAlign="center">
+							<mat-error class="mat-body">{{errorMessage}}</mat-error>
+							<label class="green-color mat-body">{{successMessage}}</label>
+						</div>
+						<div fxLayout="row" fxLayoutGap="40px" *ngIf="editEnabled ">
+							<div fxFlex="50">
+								<mat-form-field>
+									<input matInput type="text" formControlName="NAME" name="NAME" placeholder="Name" required />
+									<mat-error><strong>Name is required</strong></mat-error>
+								</mat-form-field>
+							</div>
+							<div fxFlex="50">
+								<mat-form-field>
+									<mat-select placeholder="Teams" formControlName="TEAMS" multiple required>
+										<mat-option *ngFor="let team of teams" [value]="team.DATA_ID">
+											{{team.NAME}}
+										</mat-option>
+									</mat-select>
+									<mat-error><strong>Teams is required</strong></mat-error>
+								</mat-form-field>
+							</div>
+						</div>
+						<div style="width: 49%;" fxLayout="row" *ngIf="editEnabled ">
+							<mat-form-field>
+								<input matInput type="text" formControlName="DESCRIPTION" name="DESCRIPTION" placeholder="Description" />
+							</mat-form-field>
+						</div>
+					</form>
+					<mat-divider></mat-divider>
+					<div fxFlex fxLayout="row">
+						<div fxFlex={{flexSize}} fxLayout="row" fxLayoutGap="5px">
+							<ng-container *ngIf="layout.length > 0">
+								<gridster [options]="options">
+									<gridster-item *ngFor="let item of layout" [item]="item" (click)="editItem(item.id);"
+										[ngClass]="{'border': item.id === selectedWidget}">
+										<ng-container appStoryboardItem [componentRef]="layoutService.getComponentRef(item.id)"
+											[id]="item.id">
+										</ng-container>
+										<!-- <button *ngIf="editEnabled" mat-mini-fab color="primary" style="margin: 0 5px;"
+								(click)="editItem(item.id);">
+							<mat-icon>edit</mat-icon>
+						</button> -->
+									</gridster-item>
+								</gridster>
+							</ng-container>
+							<ng-container *ngIf="layout.length === 0">
+								<div class="mat-h1" fxFlex fxLayout="row" fxLayoutAlign="center center">
+									Please add widgets from the sidebar
+								</div>
+							</ng-container>
+
+						</div>
+						<ng-container *ngIf="editEnabled">
+							<mat-divider [vertical]="true"></mat-divider>
+							<div fxFlex fxLayout="column" fxLayoutGap="5px">
+								<ng-container *ngIf="!scoreForm && !barForm">
+									<div class="mat-h3 widget-header" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
+										<mat-icon>widgets</mat-icon> Widget Library
+									</div>
+									<div class="pad10" fxLayout="column" fxLayoutGap="10px">
+										<div class="mat-body-strong">
+											Live Widgets
+										</div>
+										<div class="mat-h4" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="6px">
+											<!-- <div fxFlex (click)="addChart('score', 3, 2)">
+									<div><mat-icon>chrome_reader_mode</mat-icon></div>
+									<div>Score card</div>
+								</div>
+								<div fxFlex (click)="addChart('bar', 5, 4)">
+									<div><mat-icon>insert_chart_outlined</mat-icon></div>
+									<div>Bar chart</div>
+								</div> -->
+											<mat-card style="height: 110px;" fxFlex="50" fxLayout="column" fxLayoutAlign="center center"
+												fxLayoutGap="5px" (click)="addChart('score', 3, 2)">
+												<mat-icon>chrome_reader_mode</mat-icon>
+												<span>Score card</span>
+											</mat-card>
+											<mat-card style="height: 110px;" fxFlex="50" fxLayout="column" fxLayoutAlign="center center"
+												fxLayoutGap="5px" (click)="addChart('bar', 5, 4)">
+												<mat-icon>insert_chart_outlined</mat-icon>
+												<span>Bar chart</span>
+											</mat-card>
+										</div>
+									</div>
+								</ng-container>
+								<ng-container *ngIf="scoreForm || barForm">
+									<div class="mat-h3 widget-header" style="padding: 11px;" fxLayout="row"
+										fxLayoutAlign="space-between center" fxLayoutGap="10px">
+										<mat-icon style="cursor: pointer;"
+											(click)="scoreForm=false; barForm=false; selectedWidget=undefined;">arrow_back
+										</mat-icon>
+										<div>Save and back</div>
+										<button *ngIf="editEnabled" mat-stroked-button color="primary" style="margin: 0 5px;"
+											(click)="layoutService.deleteItem(components[components.length - 1].id); scoreForm=false; barForm=false;">
+											Remove
+										</button>
+									</div>
+									<div class="pad10" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="center center">
+										<mat-form-field appearance="outline">
+											<mat-label>Widget Title</mat-label>
+											<input required maxlength="32" matInput placeholder="Widget title" type="text" name="score"
+												value="Widget title" [ngModel]="components[components.length - 1].name"
+												(ngModelChange)="changeTitle($event, components[components.length - 1].id)" />
+										</mat-form-field>
+										<mat-form-field appearance="outline">
+											<mat-label>Select Module</mat-label>
+											<mat-select required [(value)]="components[components.length - 1].setModule">
+												<mat-option *ngFor="let module of modules" [value]="module.NAME"
+													(onSelectionChange)="setModuleEntries($event,module,components[components.length - 1].id)">
+													{{module.NAME}}
+												</mat-option>
+											</mat-select>
+										</mat-form-field>
+										<mat-form-field appearance="outline">
+											<mat-label>{{selectedModuleName}} view</mat-label>
+											<mat-select required [(value)]="components[components.length - 1].layout"
+												(selectionChange)="changeLayout($event, components[components.length - 1].id)">
+												<mat-option *ngFor="let layout of listLayouts" [value]="layout.LAYOUT_ID">
+													{{layout.NAME}}
+												</mat-option>
+											</mat-select>
+										</mat-form-field>
+										<ng-container *ngIf="barForm">
+											<mat-form-field appearance="outline">
+												<mat-label>Categorised by</mat-label>
+												<mat-select required [(value)]="components[components.length - 1].field"
+													(selectionChange)="changeCategory($event, components[components.length - 1].id)">
+													<mat-option *ngFor="let category of fields" [value]="category.FIELD_ID">
+														{{category.DISPLAY_LABEL}}
+													</mat-option>
+												</mat-select>
+											</mat-form-field>
+											<div style="width: 100%;">
+												Represented in
+												<mat-radio-group fxLayout="row" fxLayoutGap="10px"
+													[ngModel]="components[components.length - 1].representedIn"
+													(ngModelChange)="changeType($event,  components[components.length - 1].id)">
+													<mat-radio-button value="COUNT">Count</mat-radio-button>
+													<mat-radio-button value="PERCENTAGE">Percentage</mat-radio-button>
+												</mat-radio-group>
+											</div>
+										</ng-container>
+									</div>
+								</ng-container>
+							</div>
+						</ng-container>
+					</div>
+				</div>
+			</div>
+		</ng-template>
+
+
+	</mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,21 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<div fxLayout="column" fxLayoutGap="10px" class="pad10">
+	<ng-template #headerTemplateRef>
+		<app-title-bar class="light-grey-color" title="{{'EMAIL_LISTS' | translate }}" buttonText="{{'NEW'|translate}}"
+			(buttonRightOnClick)="NewEmailList()">
+		</app-title-bar>
+	</ng-template>
+	<div fxLayout="row">
+		<div fxFlex>
+			<app-custom-table [templateRef]="columnTemplateRef" (rowClickedEvent)="rowClicked($event)"
+				noRecordsMessage="{{'NO_EMAIL_LISTS_FOUND' | translate}}" [actions]="emailListsActions.actions"
+				(menuItemTrigger)="emailListsActions[$event.ACTION.NAME]($event.ROW_DATA);"
+				(pageChangeEmit)="pageChangeEmit($event);customTableService.isLoading = true"
+				(sortData)="sortData();customTableService.isLoading = true">
+				<ng-template #columnTemplateRef let-element="element" let-col="col">
+					{{element[col.NAME]}}
+				</ng-template>
+			</app-custom-table>
+		</div>
+	</div>
+</div>

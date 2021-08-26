@@ -1,0 +1,466 @@
+/* You can add global styles to this file, and also import other style files */ 
+// @import '~material-design-icons/iconfont/material-icons.css';
+@import 'src/app/theme.scss';
+@import 'src/app/function.scss';
+@import "~@danielmoncada/angular-datetime-picker/assets/style/picker.min.css";
+
+.custom-primary-theme {
+	background-color: var(--primaryColor);
+}
+
+.color-primary {
+	color: var(--primaryColor);
+}
+
+.offset-hover-theme {
+	background-color: var(--hoverColor);
+}
+
+.custom-theme-offset-background-Color {
+	background-color: var(--secondaryColor);
+}
+
+body {
+	margin: 0 0 0 0 !important;
+	// height: 100vh;
+}
+
+.pad10 {
+	padding: 10px;
+}
+
+.border-round {
+	border: 1px solid #ddd !important;
+	border-radius: 5px !important;
+	padding: 10px !important;
+}
+
+.no-margin-bottom {
+	margin-bottom: 0;
+}
+
+.no-wrap {
+	white-space: nowrap;
+}
+
+.z9999 {
+	z-index: 9999;
+}
+
+.pointer {
+	cursor: pointer;
+}
+
+.white-color {
+	color: white;
+}
+
+.white-background {
+	background-color: #ffff;
+}
+
+.green-color {
+	color: green;
+}
+
+.grey-balck-color {
+	color: #3a3a3a;
+}
+
+.no-hover-effect .mat-button-focus-overlay {
+	background-color: transparent;
+}
+
+.field-no-bottom-padding {
+	.mat-form-field-wrapper {
+		padding-bottom: 10px !important;
+	}
+
+	.mat-form-field-infix {
+		padding: 5px 0 10px 0 !important;
+	}
+}
+
+.text-padding {
+	.mat-form-field-infix {
+		padding: 5px 0 10px 0 !important;
+	}
+}
+
+.icon-height {
+	.mat-icon {
+		height: 27px !important;
+	}
+}
+
+.module-detail-sidebar-table {
+	.mat-header-row {
+		height: 45px !important;
+	}
+
+	.mat-row {
+		height: 41px !important;
+	}
+
+	.mat-cell {
+		color: #4a4a4a !important;
+		font-size: 12px !important;
+	}
+
+	.mat-icon-button {
+		height: 30px !important;
+		width: 30px !important;
+	}
+}
+
+.custom-stepper-number-icon-outline {
+	background-repeat: no-repeat;
+	display: inline-block;
+	fill: currentColor;
+	font-size: 14px;
+	height: 20px;
+	width: 20px;
+	border-radius: 50%;
+	color: #3f51b5;
+	border: 2px solid #3f51b5;
+}
+
+.text-no-bottom-padding {
+	.mat-form-field-wrapper {
+		padding-bottom: 0 !important;
+	}
+
+	.mat-form-field-infix {
+		padding: 1em 0 0 0 !important;
+	}
+
+	.mat-form-field-prefix {
+		top: 0 !important;
+	}
+}
+
+.text-equal-infix-padding {
+	.mat-form-field-wrapper {
+		padding-bottom: 0 !important;
+	}
+
+	.mat-form-field-infix {
+		padding: 0.5em 0 0.5em 0 !important;
+	}
+}
+
+.sender-avatar {
+	justify-content: center;
+	align-items: center;
+	display: flex;
+	border: 1px solid gray;
+	border-radius: 50%;
+	width: 30px;
+	height: 30px;
+	background: #f1f1f1;
+}
+
+.icon-display {
+	transform: scale(2);
+}
+
+.small-button {
+	width: 25px !important;
+	height: 25px !important;
+	line-height: 25px !important;
+	min-height: 25px !important;
+	vertical-align: top !important;
+	font-size: 12px !important;
+	padding: 0 !important;
+	margin: 0 !important;
+}
+
+.mat-form-field--no-underline .mat-form-field-underline {
+	display: none;
+}
+
+@mixin mat-icon-size($size) {
+	font-size: $size;
+	height: $size;
+	width: $size;
+	line-height: $size;
+}
+
+.is-active {
+	background-color: var(--hoverColor);
+	outline: none;
+}
+
+.trim-info {
+	display: inline-block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	line-height: 15px;
+	position: relative;
+}
+
+.module-page-active {
+	background-color: #ececec;
+}
+
+.mat-form-field--search-bar .mat-form-field-wrapper {
+	padding-bottom: 0;
+
+	.mat-standard-chip {
+		border-radius: 0;
+		min-height: 28px;
+		margin-top: 0;
+	}
+
+	.mat-form-field-outline {
+		background: #ffff;
+	}
+
+	.mat-form-field-infix {
+		padding: 0;
+		border-top: 0.3em solid transparent;
+	}
+
+	.mat-form-field-prefix {
+		top: 0.35em;
+	}
+
+	.mat-form-field-suffix {
+		top: 0.35em;
+	}
+}
+
+.bot-card {
+	max-width: 210px;
+	max-height: 750px;
+}
+
+.mat-form-field--guide-search .mat-form-field-wrapper {
+	padding-bottom: 0;
+
+	.mat-form-field-outline {
+		border-radius: 50px;
+		background: #ffff;
+		border: 0px;
+
+		.mat-form-field-outline-start {
+			border: 0px;
+		}
+
+		.mat-form-field-outline-end {
+			border: 0px;
+		}
+	}
+
+	// .mat-form-field-flex {
+	//   .mat-form-field-outline-start {
+	//      border: 0px;
+	//    }
+	// }
+
+	.mat-form-field-infix {
+		padding: 15px;
+		border-top: 0.3em solid transparent;
+	}
+
+	.mat-form-field-prefix {
+		top: 0.45em;
+	}
+
+	.mat-form-field-suffix {
+		top: 0.45em;
+	}
+}
+
+.cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
+	&.dark-backdrop {
+		background: rgba(0, 0, 0, 0.32);
+		opacity: 1 !important;
+	}
+}
+
+.chat-textbox .mat-form-field-wrapper .mat-form-field-infix {
+	height: 120px;
+}
+
+#links-text-white {
+	a,
+	a:link,
+	a:-webkit-any-link {
+		color: #fff !important;
+		-webkit-text-fill-color: #fff !important;
+		text-decoration-color: #fff !important;
+	}
+}
+
+#chat-widget {
+	display: none;
+}
+
+.DISCUSSION_SECTION_REPLACE {
+	img {
+		max-width: 100%;
+		height: auto;
+	}
+}
+
+// STYLES FOR CUSTOM LAYOUTS
+
+//STYLE FOR CLOSE AND EDIT BUTTON
+.layout-icons {
+	height: auto !important;
+	width: auto !important;
+}
+
+.cdk-drag-animating {
+	transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drag-preview {
+	box-sizing: border-box;
+	border-radius: 4px;
+	box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+		0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+	background: white;
+}
+
+div[class^='CELL_'] {
+	.mat-input-element:disabled {
+		color: rgba(0, 0, 0, 0.6);
+		opacity: 0.6;
+	}
+
+	.mat-form-field-disabled {
+		.mat-form-field-wrapper:hover {
+			.mat-form-field-ripple {
+				opacity: 0;
+				transform: scaleX(1);
+				transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+					opacity 0.1s cubic-bezier(0.25, 0.8, 0.25, 1),
+					background-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+				background-color: #5e6fc7 !important;
+			}
+		}
+
+		.mat-form-field-underline {
+			height: 0px !important;
+		}
+	}
+
+	.mat-form-field-wrapper:hover {
+		.mat-form-field-ripple {
+			opacity: 1;
+			transform: scaleX(1);
+			transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+				opacity 0.1s cubic-bezier(0.25, 0.8, 0.25, 1),
+				background-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+			background-color: #5e6fc7 !important;
+		}
+	}
+
+	.mat-form-field-underline {
+		//height: 0px !important;
+		background-color: rgba(0, 0, 0, 0.1);
+	}
+}
+
+// padding fix on one-to-many dialog compoenent
+.onetomany-dialog .mat-dialog-container {
+	padding-top: 0px;
+}
+
+// style added to the table checkbox to width,pading and border for render list layout.
+.mat-table-custom {
+	.mat-column-select {
+		width: 35px;
+
+		&.mat-cell:first-of-type,
+		&.mat-header-cell:first-of-type,
+		&.mat-footer-cell:first-of-type {
+			padding-left: 10px;
+			padding-right: 10px;
+			width: 35px;
+		}
+	}
+
+	.mat-cell {
+		font-size: 12px;
+	}
+
+	.mat-row {
+		height: 40px;
+	}
+
+	.mat-header-row {
+		height: 45px;
+	}
+
+	.mat-checkbox-frame {
+		border-width: 1.5px;
+	}
+
+	//align the action button to right of table
+	td.mat-cell:last-of-type,
+	td.mat-footer-cell:last-of-type,
+	th.mat-header-cell:last-of-type {
+		width: 35px;
+	}
+}
+
+// Class added for the paginator height for render list layout.
+.mat-paginator-height {
+	.mat-paginator-outer-container {
+		.mat-paginator-container {
+			height: 45px;
+			min-height: 45px;
+		}
+	}
+}
+
+// Used to add the grey color to the text and icon for render list layout
+.light-grey-color {
+	color: #4a4a4a;
+}
+
+#tabsOnRenderDetail .mat-tab-label {
+	margin-right: 10px;
+	border-style: solid;
+	border-color: gray;
+	border-width: 1.5px;
+	border-radius: 2px;
+	border-bottom: 0px !important;
+}
+
+#tabsOnRenderDetail .mat-ink-bar {
+	display: none;
+	background-color: white;
+}
+
+// used for using buttons in mat tab group aligned to end
+.mat-tab-group-with-button {
+	.mat-tab-labels :last-child.mat-tab-label {
+		color: unset;
+		opacity: unset;
+		display: flex;
+		flex: 1 1 auto;
+		place-content: flex-end;
+		padding: 0px;
+	}
+}
+
+.tinymce-height {
+	.tox-tinymce {
+		height: 100% !important;
+	  }
+}
+
+.style-suffix {
+	.mat-form-field-suffix {
+		display: inline-flex !important;
+	  }
+}
+
+.custom-tooltip {
+	word-break: break-word;
+  }

@@ -1,0 +1,72 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef>
+	<app-title-bar title="{{ 'ACTION_ITEMS' | translate }}" buttonText="{{'SAVE' | translate}}" (buttonRightOnClick)="save()">
+	</app-title-bar>
+</ng-template>
+<form [formGroup]="roleLayoutForm" (ngSubmit)="save()" class="pad10" style="overflow: auto;">
+	<app-new-name-description *ngIf="roles" [additionalFields]="additionalFields" [additionalCheckboxFields]="additionalCheckboxFields">
+	</app-new-name-description>
+	<mat-tab-group [(selectedIndex)]="selectedTabIndex" animationDuration="0ms" #moduleTabsGroup>
+		<mat-tab *ngFor="let tab of roleLayout.tabs;let index = index;" formArrayName="TABS">
+			<div *ngIf="modules.length === 0" fxLayoutAlign="center" style="margin-top: 20px">
+				<mat-spinner></mat-spinner>
+			</div>
+			<ng-template mat-tab-label>
+				<div *ngIf="roleLayoutForm.get('TABS').value[index].MODULE === ''">New</div>
+				<div *ngIf="roleLayoutForm.get('TABS').value[index].MODULE !== '' && roleLayoutForm.get('TABS').value[index].MODULE">
+					{{getModuleName(roleLayoutForm.get('TABS').value[index].MODULE)}}</div>
+				<button mat-icon-button *ngIf="roleLayout.tabs.length > 1" (click)="removeTab(index)">
+					<mat-icon>close</mat-icon>
+				</button>
+			</ng-template>
+
+			<div *ngIf="modules.length > 0" class="pad10" [formGroupName]="index">
+				<mat-form-field>
+					<mat-select placeholder="{{'SELECT_MODULE' | translate}}" formControlName="MODULE" (selectionChange)="selectModule($event, index)"
+						required>
+						<mat-option *ngFor="let module of modules" [disabled]="modulesAvaialable.indexOf(module)!==-1" [(value)]="module.MODULE_ID">
+							{{module.NAME}}
+						</mat-option>
+					</mat-select>
+					<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params.module"></mat-error>
+				</mat-form-field>
+				<div *ngIf="roleLayoutForm.get('TABS').value[index].MODULE && roleLayoutForm.get('TABS').value[index].MODULE !== ''"
+					[formGroup]="getForm(index)">
+					<div fxLayout="row" fxLayoutGap="10px">
+						<div fxLayoutGap="10px" formGroupName="ORDER_BY">
+							<mat-form-field>
+								<mat-select placeholder="{{'ORDER_BY' | translate}}" formControlName="COLUMN" required>
+									<mat-option *ngFor="let column of shownColumns[roleLayoutForm.get('TABS').value[index].MODULE]" [value]="column.FIELD_ID">
+										{{column.DISPLAY_LABEL}}
+									</mat-option>
+								</mat-select>
+								<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params.orderBy"></mat-error>
+							</mat-form-field>
+							<mat-form-field floatLabel="always" class="mat-form-field--no-underline">
+								<input matInput placeholder="{{'ORDER' | translate}}" formControlName="ORDER" style="display: none" required>
+								<mat-radio-group formControlName="ORDER" fxLayoutGap="10px" #order>
+									<mat-radio-button value="Asc">Asc</mat-radio-button>
+									<mat-radio-button value="Desc">Desc</mat-radio-button>
+								</mat-radio-group>
+								<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params.order"></mat-error>
+							</mat-form-field>
+						</div>
+					</div>
+					<app-conditions *ngIf="roleLayoutLoaded" [parentName]="'roleLayoutComponent'" [conditions]="roleLayout.tabs[index].conditions"
+						[passedInModule]="roleLayout.tabs[index].module" [(fields)]="fields">
+					</app-conditions>
+					<app-drag-drop-fields [availableFields]="availableFields[roleLayoutForm.get('TABS').value[index].MODULE]"
+						[shownColumns]="shownColumns[roleLayoutForm.get('TABS').value[index].MODULE]"></app-drag-drop-fields>
+				</div>
+			</div>
+		</mat-tab>
+		<mat-tab disabled>
+			<ng-template mat-tab-label>
+				<button type="button" style="color: black;" mat-icon-button (click)="addLayout();addTab()">
+					<mat-icon>add_circle</mat-icon>
+				</button>
+			</ng-template>
+		</mat-tab>
+	</mat-tab-group>
+
+</form>

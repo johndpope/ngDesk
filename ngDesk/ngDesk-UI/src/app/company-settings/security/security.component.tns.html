@@ -1,0 +1,45 @@
+<StackLayout>
+  <Label text="CompanySecurityComponent works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<app-toolbar></app-toolbar>
+<form [formGroup]="securityForm" (ngSubmit)="save()" class="pad10">
+  <div fxLayout="row">
+    <div fxFlex fxLayoutAlign="flex-start center">
+      <label class="mat-h1">{{'SECURITY' | translate}}</label>
+    </div>
+    <div fxFlex fxLayoutAlign="flex-end baseline">
+      <button mat-raised-button color="primary" type="submit">{{'SAVE' | translate}}</button>
+    </div>
+  </div>
+  <mat-card fxLayout="column" fxLayoutGap="20px" style="overflow:auto">
+    <mat-error>{{errorMssage}}</mat-error>
+    <label class="green-color">{{successMssage}}</label>
+    <div fxLayout="row">
+      <div fxFlex fxLayoutAlign="flex-start center">
+        <label class="mat-h3">{{'OPEN_ENROLLMENT' | translate}}</label>
+      </div>
+      <div fxFlex fxLayoutAlign="flex-start center">
+        <mat-checkbox color="primary" class="mat-h3" formControlName="ENABLE_SIGNUPS">{{'ALLOW_USER_SIGNUP' | translate}}</mat-checkbox>
+      </div>
+    </div>
+    <div fxLayout="row">
+      <div fxFlex fxLayoutAlign="flex-start center">
+        <label class="mat-h3">{{'MAX_LOGIN_RETRIES' | translate}}</label>
+      </div>
+      <div fxFlex fxLayoutAlign="flex-start center">
+        <mat-form-field fxLayoutAlign="flex-start center">
+          <input type="number" min="1" matInput placeholder="{{'MAX_RETRIES' | translate}}"
+              formControlName="MAX_LOGIN_RETRIES">
+          <mat-error *ngIf="!securityForm.valid">{{'PLEASE_ENETER_VALUE' | translate}}</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-card>
+</form>
+-->

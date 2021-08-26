@@ -1,0 +1,111 @@
+{
+	"PERMISSIONS": [
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Normal",
+				"EDIT": "None",
+				"VIEW": "All",
+				"ACCESS": "Enabled"
+			},
+			"MODULE": "ACCOUNTS_REPLACE"
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Not Set",
+				"EDIT": "None",
+				"VIEW": "All",
+				"ACCESS": "Enabled"
+			},
+			"MODULE": "USERS_REPLACE"
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Not Set",
+				"EDIT": "None",
+				"VIEW": "All",
+				"ACCESS": "Enabled"
+			},
+			"MODULE": "TEAMS_REPLACE"
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Not Set",
+				"EDIT": "None",
+				"VIEW": "All",
+				"ACCESS": "Enabled"
+			},
+			"MODULE": "TICKETS_REPLACE"
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Not Set",
+				"EDIT": "None",
+				"VIEW": "None",
+				"ACCESS": "Disabled"
+			},
+			"MODULE": "LIVECHAT_REPLACE"
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Normal",
+				"EDIT": "None",
+				"VIEW": "None",
+				"ACCESS": "Disabled"
+			},
+			"MODULE": "Schedules",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Normal",
+				"EDIT": "None",
+				"VIEW": "None",
+				"ACCESS": "Disabled"
+			},
+			"MODULE": "Escalations",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Normal",
+				"EDIT": "None",
+				"VIEW": "All",
+				"ACCESS": "Enabled"
+			},
+			"MODULE": "CATEGORIES_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Normal",
+				"EDIT": "None",
+				"VIEW": "All",
+				"ACCESS": "Enabled"
+			},
+			"MODULE": "SECTIONS_REPLACE",
+			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Normal",
+				"EDIT": "None",
+				"VIEW": "All",
+				"ACCESS": "Enabled"
+			},
+			"MODULE": "ARTICLES_REPLACE",
+			"FIELD_PERMISSIONS": []
+		}		
+	],
+	"DESCRIPTION": "This is for the default Public",
+	"NAME": "Public"
+}

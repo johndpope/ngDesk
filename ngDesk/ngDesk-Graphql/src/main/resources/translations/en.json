@@ -1,0 +1,23 @@
+{
+	"LAYOUT_MISSING": "The layout you are trying to access may have been deleted",
+	"INVALID_ENTRY": "The entry you are trying to access may have been deleted, please try again",
+	"INVALID_MODULE": "The module you are trying to access may have been deleted, please try again",
+	"INVALID_FIELD": "The field you are trying to access may have been deleted, please try again",
+	"INVALID_RELATED_FIELD": "The Relationship field you are trying to access may have been deleted, please try again",
+	"INVALID_DASHBOARD": "The Dashboard you are trying to access may have been deleted, please try again",
+	"INVALID_WIDGET": "The Widget you are trying to access may have been deleted, please try again",
+	"INVALID_WIDGET_FIELD": "The ${1} Widget field you are trying to access may have been deleted, please try again",
+	"INVALID_RELATED_MODULE": "The Relationship module you are trying to access may have been deleted, please try again",
+	"INVALID_PRIMARY_FIELD": "The primary display field you have selected may have been deleted, please try again",
+	"FORBIDDEN": "Access Restricted",
+	"INVALID_AGGREGATION_FIELD": "The Aggregation field you have selected may have been deleted, please try again",
+	"INVALID_STATUS": "The status you have selected is invalid,please select any value among Published,Pending Approval,Draft",
+	"INVALID_PLUGIN_ID":"The plugin you are trying to access may have been deleted, please try again",
+	"INVALID_RELATED_AGGREGATION_FIELD": "The Related Aggregation field you have selected may have been deleted, please try again",
+	"INVALID_CHANNEL_NAME":"The channel you are trying to access may have been deleted,please try again",
+	"INVALID_PROMPT_ID":"The chat prompt you are trying to access doesnot exists, please try with valid prompt id",
+	"INVALID_QUERY": "The Query You are trying to access is invalid, Please try again",
+	"INVALID_MODULE_ENTRIES": "The ${1} entries you are trying to access may have been deleted Please try again",
+	"INVALID_COMPANY": "The company you are trying to access may have been deleted",
+	"INVALID_TEAM":"Public team doesnt exist, Contact support"
+}

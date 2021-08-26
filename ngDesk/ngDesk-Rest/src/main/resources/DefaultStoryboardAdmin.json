@@ -1,0 +1,145 @@
+{
+	"NAME": "Default TEAM_NAME_REPLACE",
+	"DESCRIPTION": "This is the default dashboard",
+	"TEAMS": [
+		"TEAM_ID_REPLACE"
+	],
+	"WIDGETS": [
+		{
+			"WIDGET_ID": "e7b59400-b116-78ac-6673-7023436ffae8",
+			"TITLE": "Total tickets",
+			"TYPE": "score",
+			"MODULE": "MODULE_ID_REPLACE",
+			"LIST_LAYOUT": "635e7787-6beb-49e3-9b01-60d152a15842",
+			"CATEGORISED_BY": null,
+			"REPRESENTED_IN": null,
+			"POSITION": {
+				"COL": 3,
+				"ROW": 2,
+				"X_AXIS": 0,
+				"Y_AXIS": 0
+			}
+		},
+		{
+			"WIDGET_ID": "7d1b63c2-a795-2f25-068e-a2c70d67f256",
+			"POSITION": {
+				"COL": 5,
+				"ROW": 4,
+				"X_AXIS": 0,
+				"Y_AXIS": 2
+			},
+			"TITLE": "All tickets by status (count)",
+			"TYPE": "bar",
+			"MODULE": "MODULE_ID_REPLACE",
+			"LIST_LAYOUT": "LIST_LAYOUT_REPLACE",
+			"CATEGORISED_BY": "02285079-81d3-46db-8061-d5bcee1d8c84",
+			"REPRESENTED_IN": "COUNT"
+		},
+		{
+			"WIDGET_ID": "a9121e40-2693-487f-b8a6-793e7a0e6f5b",
+			"POSITION": {
+				"COL": 3,
+				"ROW": 2,
+				"X_AXIS": 3,
+				"Y_AXIS": 0
+			},
+			"TITLE": "My tickets",
+			"TYPE": "score",
+			"MODULE": "MODULE_ID_REPLACE",
+			"LIST_LAYOUT": "e645e173-f5b3-4155-9ed5-682e8addd962",
+			"CATEGORISED_BY": null,
+			"REPRESENTED_IN": null
+		},
+		{
+			"WIDGET_ID": "5437f62b-2659-4cc7-9945-e48ff734295c",
+			"POSITION": {
+				"COL": 3,
+				"ROW": 2,
+				"X_AXIS": 6,
+				"Y_AXIS": 0
+			},
+			"TITLE": "New tickets",
+			"TYPE": "score",
+			"MODULE": "MODULE_ID_REPLACE",
+			"LIST_LAYOUT": "4386fbcd-c3f3-4e10-aa01-54ab92afb8a3",
+			"CATEGORISED_BY": null,
+			"REPRESENTED_IN": null
+		},
+		{
+			"WIDGET_ID": "e7554fff-79e5-425e-8412-70b9d9342dca",
+			"POSITION": {
+				"COL": 3,
+				"ROW": 2,
+				"X_AXIS": 9,
+				"Y_AXIS": 0
+			},
+			"TITLE": "Open tickets",
+			"TYPE": "score",
+			"MODULE": "MODULE_ID_REPLACE",
+			"LIST_LAYOUT": "89e7317e-f06b-411b-861b-6b7fc224286b",
+			"CATEGORISED_BY": null,
+			"REPRESENTED_IN": null
+		},
+		{
+			"WIDGET_ID": "14dd9916-83bd-4f69-a754-ee2c76b02b31",
+			"POSITION": {
+				"COL": 3,
+				"ROW": 2,
+				"X_AXIS": 12,
+				"Y_AXIS": 0
+			},
+			"TITLE": "Pending tickets",
+			"TYPE": "score",
+			"MODULE": "MODULE_ID_REPLACE",
+			"LIST_LAYOUT": "270aecf3-8699-4312-baec-b4d7be933437",
+			"CATEGORISED_BY": null,
+			"REPRESENTED_IN": null
+		},
+		{
+			"WIDGET_ID": "0d5af0a8-8e75-4e49-9a97-c6f855bd5ee2",
+			"POSITION": {
+				"COL": 3,
+				"ROW": 2,
+				"X_AXIS": 15,
+				"Y_AXIS": 0
+			},
+			"TITLE": "Resolved tickets",
+			"TYPE": "score",
+			"MODULE": "MODULE_ID_REPLACE",
+			"LIST_LAYOUT": "f15f6c32-14ea-45c0-834f-992c5cf5ff63",
+			"CATEGORISED_BY": null,
+			"REPRESENTED_IN": null
+		},
+		{
+			"WIDGET_ID": "40ac6061-c145-4da7-aecf-a6fea8374e8d",
+			"POSITION": {
+				"COL": 3,
+				"ROW": 2,
+				"X_AXIS": 18,
+				"Y_AXIS": 0
+			},
+			"TITLE": "Closed tickets",
+			"TYPE": "score",
+			"MODULE": "MODULE_ID_REPLACE",
+			"LIST_LAYOUT": "83d43213-0de6-4c86-9890-2b80c702690a",
+			"CATEGORISED_BY": null,
+			"REPRESENTED_IN": null
+		},
+		{
+			"WIDGET_ID": "da382c47-41e2-4bb1-81be-7d03abc163de",
+			"POSITION": {
+				"COL": 5,
+				"ROW": 4,
+				"X_AXIS": 5,
+				"Y_AXIS": 2
+			},
+			"TITLE": "All tickets by priority (count)",
+			"TYPE": "bar",
+			"MODULE": "MODULE_ID_REPLACE",
+			"LIST_LAYOUT": "LIST_LAYOUT_REPLACE",
+			"CATEGORISED_BY": "34e5212e-6be4-4e69-915b-2b27ed1c746f",
+			"REPRESENTED_IN": "COUNT"
+		}
+	],
+	"DEFAULT": true
+}

@@ -1,0 +1,311 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef>
+	<app-title-bar title="{{'REPORTS' | translate}}" buttonText="{{'SAVE' | translate}}" (buttonRightOnClick)="saveReport()">
+	</app-title-bar>
+</ng-template>
+<div id="content" class="pad10" style="overflow: auto;">
+	<form [formGroup]="reportForm" (ngSubmit)="saveReport()">
+		<app-new-name-description [schedulesButton]="true" schedulesButtonTitle="{{'SCHEDULES' | translate}}"
+			(schedulesButtonAction)="scheduleReport()" [altButton]="true" altButtonTitle="{{'DOWNLOAD' | translate}}"
+			(altButtonAction)="generateReport()">
+		</app-new-name-description>
+	</form>
+	<div *ngIf="isLoadingTable" fxLayout="row" fxLayoutAlign="center center">
+		<mat-spinner *ngIf="isLoadingTable"></mat-spinner>
+	</div>
+
+	<div *ngIf="!isLoadingTable" fxLayout="column" [ngStyle]="{'float':'left','width':'19%', 'margin-right':'1%'}" fxLayoutGap="10px">
+		<div [ngStyle]="{'overflow':'auto', 'max-height': '87vh', 'width':'100%'}" class="mat-elevation-z8">
+			<mat-tab-group fxFlex [@.disabled]="true" backgroundColor="primary">
+				<mat-tab fxFlex="50" label="Fields">
+					<mat-tab-group fxFlex [@.disabled]="true" backgroundColor="primary">
+						<mat-tab fxFlex="50" label="General">
+							<table fxFlex mat-table [dataSource]="fieldsDataSource" [ngStyle]="{'width':'100%'}">
+								<ng-container matColumnDef="DISPLAY_LABEL">
+									<th mat-header-cell *matHeaderCellDef style="color: white;"> {{'AVAILABLE_COLUMNS' | translate}}
+									</th>
+									<td matRipple class="no-wrap" mat-cell *matCellDef="let element" class="pointer">
+										{{element.DISPLAY_LABEL}}
+									</td>
+								</ng-container>
+								<tr mat-row *matRowDef="let row; columns: ['DISPLAY_LABEL'];" (click)="fieldClicked(row)"></tr>
+							</table>
+						</mat-tab>
+
+						<mat-tab fxFlex="50" label="Aggregation">
+							<table fxFlex mat-table [dataSource]="relationshipFieldsSource" [ngStyle]="{'width':'100%'}">
+								<ng-container matColumnDef="DISPLAY_LABEL">
+									<th mat-header-cell *matHeaderCellDef style="color: white;"> {{'AVAILABLE_COLUMNS' | translate}}
+									</th>
+									<td matRipple class="no-wrap" mat-cell *matCellDef="let element" class="pointer">
+										{{element.DISPLAY_LABEL}}
+									</td>
+								</ng-container>
+								<tr mat-row *matRowDef="let row; columns: ['DISPLAY_LABEL'];" (click)="onRelationFieldClick(row)"
+									[matMenuTriggerFor]="relationshipVars">
+								</tr>
+
+								<mat-menu #relationshipVars="matMenu">
+									<ng-container *ngFor="let relField of chaildFields; index as j">
+										<button mat-menu-item [disabled]="relField.DISPLAY_LABEL =='NO DATA'"
+											(click)="fieldClicked(relField, true)">{{relField.DISPLAY_LABEL}}</button>
+									</ng-container>
+								</mat-menu>
+							</table>
+						</mat-tab>
+					</mat-tab-group>
+				</mat-tab>
+				<mat-tab fxFlex="50" label="Filters">
+					<div fxLayoutAlign="center center" fxLayout="column" class="pad10">
+						<div fxLayout="column" [ngStyle]="{'width':'100%'}">
+							<mat-form-field fxFlex [floatLabel]="(filters.length > 0 ) ? 'always' : 'auto'">
+								<mat-select placeholder="{{'ADD_FILTER' | translate}}" [(ngModel)]="filterField.FIELD"
+									(ngModelChange)="filterFieldSelection($event)">
+									<mat-option *ngFor="let field of allFieldsForFilter" [value]="field">{{field.DISPLAY_LABEL}}
+									</mat-option>
+								</mat-select>
+							</mat-form-field>
+						</div>
+						<div fxLayout="column" *ngIf="(filterField.FIELD | json) != '{}' && editField == null"
+							[ngStyle]="{'width':'100%', 'border': '1px solid #d9dbdd', 'border-radius': '.25rem', 'margin-top': '-10px'}"
+							class="pad10">
+							<ng-container *ngTemplateOutlet="filterDialog; context:{icon:'close'}"></ng-container>
+						</div>
+						<div class="z9999" [ngStyle]="{'width':'100%'}">
+							<div *ngFor="let filter of filters; let filterIndex = index;">
+								<div class="pointer pad10" fxLayout="row" fxLayoutAlign="space-between center"
+									*ngIf="editField != filterIndex" (click)="editFilter(filterIndex)"
+									[ngStyle]="{ 'margin-top': (((filterField.FIELD | json) != '{}' && editField == null) || filterIndex != 0 ) ? '10px' : '-10px'}"
+									style="border: 1px solid #d9dbdd; border-radius: .25rem;">
+									<div fxLayout="column">
+										<mat-label [ngStyle]="{ 'color': 'rgba(0,0,0,.6)', 'font-size': 'smaller'}">
+											{{filter.FIELD.DISPLAY_LABEL}}</mat-label>
+										<span *ngIf="filter.OPERATOR !== 'DAYS_BEFORE_TODAY'"
+											style="font-size: .8125rem; font-weight: 400;">{{filter.OPERATOR | translate}}&nbsp;<span
+												*ngIf="filter.FIELD.NAME !== 'TIME_WINDOW'">{{filter.VALUE |
+												reportFilterFields:filter.FIELD}}</span><span
+												*ngIf="filter.FIELD.NAME === 'TIME_WINDOW'">{{filter.VALUE}}</span></span>
+										<span *ngIf="filter.OPERATOR === 'DAYS_BEFORE_TODAY'"
+											style="font-size: .8125rem; font-weight: 400;">{{filter.OPERATOR |
+											translate}}:&nbsp;{{filter.VALUE}}</span>
+									</div>
+									<mat-icon class="pointer" [ngStyle]="{ 'color': 'rgb(176, 173, 171)'}"
+										(click)="removeFilter(filterIndex)">close
+									</mat-icon>
+								</div>
+								<div fxLayout="column" *ngIf="editField == filterIndex"
+									[ngStyle]="{'width':'100%', 'border': '1px solid #d9dbdd', 'border-radius': '.25rem', 'margin-top': (filterIndex != 0 ) ? '10px' : '-10px'}"
+									class="pad10">
+									<ng-container *ngTemplateOutlet="filterDialog; context:{icon:'expand_less'}"></ng-container>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</mat-tab>
+			</mat-tab-group>
+		</div>
+		<div></div>
+	</div>
+
+	<div *ngIf="!isLoadingTable" fxLayout="row" [ngStyle]="{'float':'left', 'width':'80%'}" id="report-table">
+		<div fxLayout="column" *ngIf="displayedColumns.length > 0" class="mat-elevation-z8" [ngStyle]="{'overflow':'auto'}">
+			<table mat-table [dataSource]="dataSource" multiTemplateDataRows [ngStyle]="{'width':'100%'}">
+				<ng-container matColumnDef="{{col.DISPLAY}}" *ngFor="let col of displayedColumnsObj; let i = index">
+					<th mat-header-cell *matHeaderCellDef>
+						<div fxLayout="row" fxFlexAlign="start">
+							<div fxLayout="row" fxLayoutGap="20px">
+								<div fxLayout="column" fxFlexAlign="center">
+									<div fxLayout="row" fxFlexAlign="center">
+										<div class="custom-theme-icon-color" fxFlexAlign="center"> {{col.DISPLAY}} </div>
+									</div>
+								</div>
+								<div fxLayout="column" fxFlexAlign="center" fxLayoutAlign="end">
+									<button mat-icon-button [matMenuTriggerFor]="menu" (click)="getOperators(col)">
+										<mat-icon class="custom-theme-icon-color">more_vert</mat-icon>
+									</button>
+								</div>
+
+							</div>
+							<mat-menu #menu="matMenu">
+								<div fxLayout="column">
+									<div fxLayout="row" *ngFor="let item of menuItems">
+										<button mat-menu-item fxLayout="column" (click)="actioncFunctions[item.ACTION](i, item.NAME, col)"
+											*ngIf="item.NAME != 'FILTER' && (displayedColumnsObj.length != 1 ||(item.NAME != 'MOVE_LEFT' &&  item.NAME != 'MOVE_RIGHT')) && (i != 0 || item.NAME != 'MOVE_LEFT') && (i != displayedColumnsObj.length -1  || item.NAME != 'MOVE_RIGHT')">
+											<div fxLayout="row">
+												<div>
+													<mat-icon>{{item.ICON}}</mat-icon>
+												</div>
+												<div [ngStyle]="{'min-width': '120px'}">{{item.NAME| translate}}</div>
+											</div>
+										</button>
+									</div>
+								</div>
+							</mat-menu>
+						</div>
+					</th>
+					<td mat-cell *matCellDef="let element" (click)="colSelected(col.parentName)">
+						<ng-container [ngSwitch]="col.DATA_TYPE.DISPLAY">
+							<span *ngSwitchCase="'Date/Time'">{{element[col.NAME] | dateFormat: 'medium'}}</span>
+							<span *ngSwitchCase="'Date'">{{element[col.NAME] | dateFormat: 'mediumDate'}}</span>
+							<span *ngSwitchCase="'Time'">{{element[col.NAME] | dateFormat: 'shortTime'}}</span>
+							<span *ngSwitchDefault>
+								<span *ngIf="!col?.parentDataType">
+									{{element[col.NAME]}}
+								</span>
+								<span *ngIf="col?.parentDataType && element[col.NAME] =='View'" style="cursor: pointer;"> <button mat-button color="primary"
+										type="button">
+										View</button>
+								</span>
+								<span *ngIf="col?.parentDataType && element[col.NAME] =='NO DATA'">No Data</span>
+							</span>
+						</ng-container>
+					</td>
+				</ng-container>
+
+				<ng-container matColumnDef="expandedDetail">
+					<td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumnsObj.length">
+						<div class="example-element-detail"
+							[@detailExpand]="element == expandedElement && aggregationData?.length>0? 'expanded' : 'collapsed'">
+							<div fxLayout="column" fxFlex>
+								<h4>{{getFieldName(selectedColName)}}</h4>
+								<div class="mat-elevation-z8" style="margin: 10px;">
+									<table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="aggregationDataSource"
+										[matSortActive]="aggregationSorting?.active" [matSortDirection]="aggregationSorting?.direction"
+										id="custom">
+										<ng-container matColumnDef="{{col.DISPLAY}}"
+											*ngFor="let col of aggregationTableHeaders; let i = index">
+											<th mat-header-cell *matHeaderCellDef style="height: 50px;">
+												<div class="custom-theme-icon-color" fxLayoutAlign="center center"
+													[mat-sort-header]="col.NAME">
+													{{col.DISPLAY}} </div>
+											</th>
+											<td mat-cell *matCellDef="let element">
+												<span fxLayoutAlign="center center">{{element[col.NAME] || 'No Data'}}</span>
+											</td>
+										</ng-container>
+										<tr class="custom-theme-primary-color" mat-header-row *matHeaderRowDef="aggregationColumns"></tr>
+										<tr mat-row *matRowDef="let row; columns:aggregationColumns ; let index = dataIndex"></tr>
+									</table>
+									<mat-paginator (page)="onPageChange($event)" [length]="aggregationPagination?.totalRecords"
+										[pageSize]="aggregationPagination?.pageSize" [pageSizeOptions]="[1, 5, 10, 20]"
+										[pageIndex]="aggregationPagination?.pageIndex" showFirstLastButtons>
+									</mat-paginator>
+								</div>
+							</div>
+						</div>
+					</td>
+				</ng-container>
+
+				<tr class="custom-theme-primary-color" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+				<tr mat-row *matRowDef="let row; columns: displayedColumns; let index = dataIndex" class="example-element-row"
+					(click)="onClickOfRow(index);expandedElement = expandedElement === row ? null : row"
+					[class.example-expanded-row]="expandedElement === row">
+				</tr>
+				<tr class="example-detail-row" mat-row *matRowDef="let row; columns: ['expandedDetail']"></tr>
+			</table>
+			<mat-paginator (page)="pageChanged($event)" [length]="totalRecords" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 20,50]"
+				[pageIndex]="page" showFirstLastButtons>
+			</mat-paginator>
+		</div>
+		<div fxLayoutAlign="center" fxFlexFill *ngIf="displayedColumns.length === 0" [ngStyle]="{'margin-top':'20%'}" class="mat-h1">
+			<div fxFlexAlign="center">
+				<mat-icon style="margin:10px">poll</mat-icon>
+			</div>
+			<div fxFlexAlign="center">
+				{{'SELECT_FIELD_TO_VIEW_REPORT'| translate}}
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!--filterbox template  -->
+<ng-template #filterDialog let-icon="icon">
+	<div fxLayoutAlign="space-between center">
+		<label style="font-size: smaller;" [ngStyle]="{ 'color': 'rgba(0,0,0,.6)'}">{{filterField.FIELD.DISPLAY_LABEL}}</label>
+		<mat-icon class="pointer" [ngStyle]="{ 'color': 'rgb(176, 173, 171)'}" (click)="resetFilterField()">{{icon}}</mat-icon>
+	</div>
+	<mat-form-field [floatLabel]="'always'" fxFlexOffset="10px">
+		<mat-select placeholder="{{ 'REQUIREMENT_TYPE' | translate}}" [(ngModel)]="filterField.REQUIREMENT_TYPE">
+			<mat-option value="All">{{'ALL' | translate}}</mat-option>
+			<mat-option value="Any">{{'ANY' | translate}}</mat-option>
+		</mat-select>
+	</mat-form-field>
+	<mat-form-field [floatLabel]="'always'" fxFlexOffset="10px">
+		<mat-select placeholder="{{ 'OPERATOR' | translate}}" [(ngModel)]="filterField.OPERATOR">
+			<mat-option *ngFor="let operator of operators" [value]="operator.BACKEND">{{operator.DISPLAY}}</mat-option>
+		</mat-select>
+	</mat-form-field>
+
+	<mat-form-field [floatLabel]="'always'"
+		*ngIf="filterField.FIELD.DATA_TYPE.DISPLAY  != 'Picklist' && filterField.FIELD.DATA_TYPE.DISPLAY  != 'Checkbox' && filterField.FIELD.DATA_TYPE.DISPLAY  != 'Number' && filterField.FIELD.DATA_TYPE.DISPLAY  != 'Auto Number' && filterField.FIELD.RELATIONSHIP_TYPE != 'Many to One' && filterField.FIELD.DATA_TYPE.DISPLAY != 'Chronometer' && filterField.FIELD.DATA_TYPE.BACKEND != 'Timestamp' && filterField.FIELD.DATA_TYPE.BACKEND != 'Date' && filterField.FIELD.NAME != 'ROLE'">
+		<input matInput placeholder="{{ 'VALUE' | translate}}" [(ngModel)]="filterField.VALUE">
+	</mat-form-field>
+	<mat-form-field [floatLabel]="'always'"
+		*ngIf="filterField.FIELD.DATA_TYPE.DISPLAY == 'Date/Time' && filterField.OPERATOR === 'DAYS_BEFORE_TODAY'">
+		<input placeholder="{{ 'NUMBER_OF_DAYS' | translate}}" matInput type="number" [(ngModel)]="filterField.VALUE">
+	</mat-form-field>
+	<mat-form-field [floatLabel]="'always'"
+		*ngIf="filterField.FIELD.DATA_TYPE.DISPLAY == 'Date' && filterField.OPERATOR === 'DAYS_BEFORE_TODAY'">
+		<input placeholder="{{ 'NUMBER_OF_DAYS' | translate}}" matInput type="number" [(ngModel)]="filterField.VALUE">
+	</mat-form-field>
+	<mat-form-field [floatLabel]="'always'"
+		*ngIf="filterField.FIELD.DATA_TYPE.DISPLAY == 'Date/Time' && filterField.OPERATOR !== 'DAYS_BEFORE_TODAY'">
+		<input placeholder="{{ 'VALUE' | translate}}" matInput [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1"
+			[(ngModel)]="filterField.VALUE">
+		<owl-date-time #dt1></owl-date-time>
+	</mat-form-field>
+	<mat-form-field [floatLabel]="'always'"
+		*ngIf="filterField.FIELD.DATA_TYPE.DISPLAY == 'Date' && filterField.OPERATOR !== 'DAYS_BEFORE_TODAY'">
+		<input placeholder="{{ 'VALUE' | translate}}" matInput [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2"
+			[(ngModel)]="filterField.VALUE">
+		<owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
+	</mat-form-field>
+	<mat-form-field [floatLabel]="'always'" *ngIf="filterField.FIELD.DATA_TYPE.DISPLAY == 'Time'">
+		<input placeholder="{{ 'VALUE' | translate}}" matInput [owlDateTimeTrigger]="dt3" [owlDateTime]="dt3"
+			[(ngModel)]="filterField.VALUE">
+		<owl-date-time [pickerType]="'timer'" #dt3></owl-date-time>
+	</mat-form-field>
+
+	<mat-form-field [floatLabel]="'always'" *ngIf="filterField.FIELD.NAME == 'ROLE'">
+		<mat-select placeholder="{{ 'VALUE' | translate}}" [(ngModel)]="filterField.VALUE">
+			<mat-option *ngFor="let role of roles" [value]="role.ROLE_ID">{{role.NAME}}</mat-option>
+		</mat-select>
+	</mat-form-field>
+	<mat-form-field [floatLabel]="'always'" *ngIf="filterField.FIELD.RELATIONSHIP_TYPE == 'Many to One'">
+		<mat-select placeholder="{{ 'VALUE' | translate}}" [(ngModel)]="filterField.VALUE">
+			<mat-option *ngFor="let field of filterField.FIELD.RELATION_FIELD_VALUE" [value]="field.DATA_ID">
+				{{field[filterField.FIELD.RELATION_FIELD_NAME]}}</mat-option>
+		</mat-select>
+	</mat-form-field>
+	<div fxLayout='row' fxFlex="90" fxLayoutAlign="center center" *ngIf="filterField.FIELD.NAME === 'TIME_WINDOW'">
+		<mat-form-field fxFlex="90" floatLabel="always">
+			<input type="text" placeholder="days(current_date-20)" matInput [(ngModel)]="filterField.VALUE">
+		</mat-form-field>
+		<span>
+			<mat-icon matTooltip="format: days | months(current_date-daysValue | monthsValue)" class="light-grey-color"
+				style="font-size: 18px;">help_outline</mat-icon>
+		</span>
+	</div>
+	<mat-form-field floatLabel="always" fxFlex="90" *ngIf="filterField.FIELD.DATA_TYPE.DISPLAY  == 'Picklist'">
+		<mat-label>{{ 'VALUE' | translate}}</mat-label>
+		<mat-select [(ngModel)]="filterField.VALUE">
+			<mat-option *ngFor="let entry of filterField.FIELD.PICKLIST_VALUES" [value]="entry">{{entry}}</mat-option>
+		</mat-select>
+	</mat-form-field>
+	<mat-form-field floatLabel="always" fxFlex="90"
+		*ngIf="filterField.FIELD.DATA_TYPE.DISPLAY  == 'Number' || filterField.FIELD.DATA_TYPE.DISPLAY  == 'Auto Number' || filterField.FIELD.DATA_TYPE.DISPLAY  == 'Chronometer'">
+		<mat-label>{{ 'VALUE' | translate}}</mat-label>
+		<input type="number" matInput placeholder="{{ 'VALUE' | translate}}" [(ngModel)]="filterField.VALUE">
+	</mat-form-field>
+	<div fxLayoutGap="10px" style="margin-bottom: 20px;" *ngIf="filterField.FIELD.DATA_TYPE.DISPLAY  == 'Checkbox'">
+		<mat-radio-group [(ngModel)]="filterField.VALUE">
+			<mat-radio-button [value]="true"> True </mat-radio-button>
+			<mat-radio-button [value]="false" style="margin-left: 10px;"> False </mat-radio-button>
+		</mat-radio-group>
+	</div>
+	<div fxLayoutAlign="flex-end flex-end">
+		<button mat-raised-button color="primary" (click)="applyFilter()">{{'APPLY' | translate}}</button>
+	</div>
+</ng-template>

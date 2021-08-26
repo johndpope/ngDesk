@@ -1,0 +1,66 @@
+<StackLayout>
+  <Label text="schedule-reports-dialog works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<form [formGroup]="schedulesForm">
+  <div fxLayout="column" fxLayoutGap="20px">
+    <mat-label class="mat-h2" fxFlexAlign="center">{{'SCHEDULES' | translate}}</mat-label>
+    <div fxLayout="row" fxLayoutGap="20px">
+      <mat-form-field>
+        <mat-select formControlName="schedule" (selectionChange)="change($event)" required>
+          <mat-option *ngFor="let option of options" [value]="option">
+            {{option}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="schedulesForm.get('schedule').hasError('required')">Please choose a Schedule</mat-error>
+      </mat-form-field>
+      <mat-form-field *ngIf="weeklySchedule">
+        <mat-label>{{ 'on' }}</mat-label>
+        <mat-select formControlName="weekday" required>
+          <mat-option *ngFor="let day of weekdays" [value]="day.day">
+            {{day.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>{{ 'at' }}</mat-label>
+        <mat-select formControlName="time" required>
+          <mat-option *ngFor="let time of times" [value]="time">
+            {{time}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutGap="20px">
+      <mat-form-field style="width: 100%">
+        <mat-chip-list #emailList>
+          <!--Iterate by array of data and display a chip for eavh value.->
+          <mat-chip *ngFor="let email of emails" removable (removed)="onRemoveEmail(email)">
+            {{email}}
+            <!--Icon that is used as a button when 'removable' set to true.->
+            <mat-icon matChipRemove>cancel</mat-icon>
+          </mat-chip>
+          <input placeholder="Enter emails" [matChipInputAddOnBlur]="true" [matChipInputFor]="emailList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="addEmail($event)">
+        </mat-chip-list>
+      </mat-form-field>
+    </div>
+    <mat-error *ngIf="schedulesForm.get('emails').hasError('validateEmails')">Please check the email entered</mat-error>
+    <mat-error *ngIf="errorMessage !== ''">{{ errorMessage }}</mat-error>
+    <div mat-dialog-actions fxLayoutAlign="center center">
+      <button mat-raised-button [mat-dialog-close] cdkFocusInitial>
+        {{ 'CLOSE' | translate }}
+      </button>
+      <button mat-raised-button color="primary" [disabled]="!schedulesForm.valid" (click)="save()">
+        {{ 'DONE' | translate }}
+      </button>
+    </div>
+  </div>
+</form>
+
+-->

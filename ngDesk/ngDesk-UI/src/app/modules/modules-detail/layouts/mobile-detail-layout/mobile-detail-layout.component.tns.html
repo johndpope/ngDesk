@@ -1,0 +1,44 @@
+<StackLayout>
+  <Label text="MobileDetailLayoutComponent works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<app-toolbar></app-toolbar>
+<form [formGroup]="listLayoutForm" (ngSubmit)="save()" class="pad10">
+  <div fxLayout="row" fxLayoutAlign="center">
+    <mat-error class="mat-body">{{errorMessage}}</mat-error>
+  </div>
+  <app-new-name-description buttonText="{{'SAVE' | translate}}" (save)="save()"></app-new-name-description>
+  <div fxLayoutGap="10px">
+    <mat-form-field>
+      <mat-select placeholder="{{'ROLE' | translate}}" formControlName="ROLE" required>
+        <mat-option *ngFor="let role of roles" [value]="role.ROLE_ID">
+          {{role.NAME}}
+        </mat-option>
+      </mat-select>
+      <mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params.role"></mat-error>
+    </mat-form-field>
+  </div>
+  <div cdkDropListGroup>
+    <div class="columns-container">
+      <h2 class="mat-h2">{{'AVAILABLE' | translate}}</h2>
+      <div cdkDropList #columnAvailableList="cdkDropList" id="available" [cdkDropListData]="availableFields" class="column-list"
+        (cdkDropListDropped)="drop($event)">
+        <div class="columns-box mat-body" *ngFor="let availableField of availableFields" cdkDrag>{{availableField.DISPLAY_LABEL}}</div>
+      </div>
+    </div>
+    <div class="columns-container">
+      <h2 class="mat-h2">{{'SHOWN' | translate}}</h2>
+      <div cdkDropList #columnShowList="cdkDropList" id="shown" [cdkDropListData]="shownColumns" class="column-list"
+        (cdkDropListDropped)="drop($event)">
+        <div class="columns-box mat-body" *ngFor="let shownColumn of shownColumns" cdkDrag>{{shownColumn.DISPLAY_LABEL}}</div>
+      </div>
+    </div>
+  </div>
+</form>
+
+-->

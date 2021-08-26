@@ -1,0 +1,100 @@
+<div fxLayout="column" fxLayoutGap="10px" class="pad10">
+	<div fxLayout="column">
+		<label class="mat-h2" style="margin-bottom:0px;">{{'RESTRICTIONS' | translate}}</label>
+		<label class="mat-body-2">
+			{{'SHIFT_DURATION'|translate}}
+		</label>
+	</div>
+	<mat-divider></mat-divider>
+	<div fxLayout="row">
+		<div class="mat-small" style="background-color:#A9A9A9;color:white;border-radius:5px;padding:2px">
+			{{'ONE_WEEK_SHIFT'|translate}}
+		</div>
+	</div>
+	<div fxLayout="row" fxLayoutAlign="center">
+		<mat-error class="mat-body-strong">{{ errorMessage }}</mat-error>
+	</div>
+	<mat-radio-group class="radio-group" [(ngModel)]="data.layer.restrictionType" fxLayout="column" fxLayoutGap="10px">
+		<mat-radio-button color="primary" value="Day">
+			{{'RESTRICT_ON_CALL_DUTY_TO_TIMES_OF_DAY'|translate}}
+		</mat-radio-button>
+		<div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center" *ngFor="
+        let restriction of restrictionsDaily;
+        let restrictionIndex = index
+      ">
+			<label class="mat-body">{{'FROM'|translate}}</label>
+			<mat-form-field>
+				<mat-select placeholder="Start Time" [(ngModel)]="restriction.startTime" [disabled]="data.layer.restrictionType == 'Week'">
+					<mat-option *ngFor="let time of times" [value]="time">
+						{{ time }}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<label class="mat-body">{{'TO'|translate}} {{ restriction.endTime }}</label>
+			<mat-form-field>
+				<mat-select [disabled]="data.layer.restrictionType == 'Week'" placeholder="End Time" [(ngModel)]="restriction.endTime">
+					<mat-option *ngFor="let time of times" [value]="time">
+						{{ time }}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<button [disabled]="data.layer.restrictionType == 'Week'" mat-mini-fab color="primary" (click)="addRestriction('Day')">
+				<mat-icon>add</mat-icon>
+			</button>
+			<button [disabled]="data.layer.restrictionType == 'Week'" mat-mini-fab (click)="removeRestriction('Day', restrictionIndex)"
+				*ngIf="restrictionsDaily.length > 1">
+				<mat-icon>close</mat-icon>
+			</button>
+		</div>
+		<mat-radio-button color="primary" value="Week">
+			{{'RESTRICT_ON_CALL_DUTY_TO_TIMES_OF_WEEK'|translate}}
+		</mat-radio-button>
+		<div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center" *ngFor="
+        let restriction of restrictionsSpecific;
+        let restrictionIndex = index
+      ">
+			<label class="mat-body">{{'FROM'|translate}}</label>
+			<mat-form-field fxFlex="15">
+				<mat-select [disabled]="data.layer.restrictionType == 'Day'" placeholder="Start Day" [(ngModel)]="restriction.startDay">
+					<mat-option *ngFor="let day of weekDays" [value]="day">
+						{{ day }}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<mat-form-field fxFlex="15">
+				<mat-select [disabled]="data.layer.restrictionType == 'Day'" placeholder="Start Time" [(ngModel)]="restriction.startTime">
+					<mat-option *ngFor="let time of times" [value]="time">
+						{{ time }}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<label class="mat-body">{{'TO'|translate}}</label>
+			<mat-form-field fxFlex="15">
+				<mat-select [disabled]="data.layer.restrictionType == 'Day'" placeholder="End Day" [(ngModel)]="restriction.endDay">
+					<mat-option *ngFor="let day of weekDays" [value]="day">
+						{{ day }}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<mat-form-field fxFlex="15">
+				<mat-select [disabled]="data.layer.restrictionType == 'Day'" placeholder="End Time" [(ngModel)]="restriction.endTime">
+					<mat-option *ngFor="let time of times" [value]="time">
+						{{ time }}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<button [disabled]="data.layer.restrictionType == 'Day'" mat-mini-fab color="primary" (click)="addRestriction('Week')">
+				<mat-icon>add</mat-icon>
+			</button>
+			<button [disabled]="data.layer.restrictionType == 'Day'" mat-mini-fab (click)="removeRestriction('Week', restrictionIndex)"
+				*ngIf="restrictionsSpecific.length > 1">
+				<mat-icon>close</mat-icon>
+			</button>
+		</div>
+	</mat-radio-group>
+	<mat-divider></mat-divider>
+	<div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="10px" mat-dialog-actions>
+		<button mat-button (click)="onNoClick()">{{'CANCEL'|translate}}</button>
+		<button mat-button (click)="saveRestrictions()">{{'SAVE'|translate}}</button>
+	</div>
+</div>

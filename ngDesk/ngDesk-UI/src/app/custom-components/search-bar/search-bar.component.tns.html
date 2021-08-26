@@ -1,0 +1,53 @@
+<StackLayout>
+  <Label text="search-bar works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<div fxLayout="row" class="mat-body">
+	<div fxFlex="100">
+		<div fxLayout="row" fxLayoutAlign="space-around center" fxFlex="100">
+			<div fxLayout="column" fxFlex>
+				<mat-form-field class="mat-form-field--search-bar" appearance="outline" style="height: 38px;"
+					[ngStyle]="{ 'margin-top': (savedFields.length == 0) ? '-5px' : '-8.3px' }">
+					<mat-chip-list #searchChipList>
+						<mat-chip *ngFor="let field of savedFields; let ind = index" [selectable]="true" [removable]="true"
+							(removed)="removeItem(field, ind)"
+							[ngStyle]="{'background': (field['TYPE'] != 'field') ? '#e0e0e0' : '#f8f8f8', 'color': (field['TYPE'] == 'field') ? 'rgba(0, 0, 0, 0.55)' : 'black' }">
+							{{field.VALUE}}
+							<mat-icon *ngIf="field['TYPE'] !== 'field'" matChipRemove>cancel</mat-icon>
+						</mat-chip>
+						<input placeholder="Search or filter results..." #searchInput [matAutocomplete]="auto" [matChipInputFor]="searchChipList"
+							[matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
+							(matChipInputTokenEnd)="resetInput($event)" [formControl]="searchCtrl" (click)="openPopup()" (keydown.backspace)="openPopup()"
+							style="min-height:35px">
+					</mat-chip-list>
+					<mat-autocomplete #auto="matAutocomplete" (optionSelected)="fieldSelected($event.option.value)" [displayWith]="displayFn">
+						<mat-option *ngFor="let field of filteredFields" [owlDateTimeTrigger]="Range" [value]="field" [disabled]="isDisabled(field)">
+							{{field.VALUE}}
+						</mat-option>
+						<input type="hidden" [ngModel]="dateTimeRange" (ngModelChange)="dateRange($event)" [selectMode]="'range'" [owlDateTime]="Range">
+						<owl-date-time [disabled]="datePicker" (afterPickerClosed)="closePanel()" [pickerMode]="'dialog'" #Range></owl-date-time>
+					</mat-autocomplete>
+					<span matPrefix>
+						<mat-icon class="grey-black-color">search</mat-icon>
+					</span>
+					<!-- CLEAR BUTTON ->
+					<button mat-button *ngIf="(searchCtrl.value || savedFields.length > 0) && !isLoading" matSuffix mat-icon-button aria-label="Clear"
+						(click)="removeAll()">
+						<mat-icon>close</mat-icon>
+					</button>
+					<!-- SPINNER INDICATOR ->
+					<button mat-button matSuffix fxLayoutAlign="center center" *ngIf="isLoading">
+						<mat-spinner [diameter]="20"></mat-spinner>
+					</button>
+				</mat-form-field>
+			</div>
+		</div>
+	</div>
+</div>
+
+-->

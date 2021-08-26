@@ -1,0 +1,54 @@
+<app-toolbar [templateRef]="template"></app-toolbar>
+<ng-template #template>
+  <app-title-bar class="light-grey-color" title="{{'ENTERPRISE_SEARCH' | translate}}" buttonText="{{'SAVE' | translate}}"
+    (buttonRightOnClick)="save()"></app-title-bar>
+</ng-template>
+
+<div fxLayout="column" class="pad10">
+  <mat-card>
+    <form [formGroup]="enterpriseSearchForm">
+      <div fxLayout="column" fxLayoutGap="5px">
+        <app-new-name-description>
+        </app-new-name-description>
+        <div fxLayout="row" fxFlex="100" fxLayoutGap="10px">
+          <div fxLayout="column" fxFlex="50">
+            <mat-form-field fxFlex>
+              <mat-label>{{'TAGS' | translate}} *</mat-label>
+              <mat-chip-list #tags_ChipList>
+                <mat-chip *ngFor="let tag of enterpriseSearch.tags" [selectable]='true' [removable]=true
+                  (removed)="removeTags(tag)">
+                  {{tag}}
+                  <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip>
+                <input matInput [matAutocomplete]="auto_tags" formControlName="TAGS" [matChipInputFor]="tags_ChipList"
+                  [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="resetInput($event)" required>
+              </mat-chip-list>
+              <mat-error *ngIf="enterpriseSearchForm.controls.TAGS.hasError('required')"
+                [innerHTML]="'FIELD_REQUIRED' | translate:params.TAGS">
+              </mat-error>
+              <mat-autocomplete #auto_tags="matAutocomplete" (optionSelected)="addTags($event);">
+                <mat-option *ngFor="let tag of tags" [value]="tag">
+                  {{tag}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <div fxLayout="column" fxFlex="50">
+            <mat-form-field fxFlex>
+                <input matInput placeholder="{{'FILE_PATH' | translate}}" formControlName="FILE_PATH" required>
+                <mat-error>{{'FIELD_IS' | translate:params.FILE_PATH}} <strong>{{'REQUIRED' | translate}}</strong></mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div fxLayout="row" fxFlex="100">
+          <div fxLayout="column" fxFlex="50">
+            <mat-form-field fxFlex>
+                <textarea matInput placeholder="{{'REGEX' | translate}}" formControlName="REGEX" required></textarea>
+                <mat-error>{{'FIELD_IS' | translate:params.REGEX}} <strong>{{'REQUIRED' | translate}}</strong></mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </form>
+  </mat-card>
+</div>

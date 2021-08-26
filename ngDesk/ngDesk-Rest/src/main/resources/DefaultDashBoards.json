@@ -1,0 +1,48 @@
+{
+  "ROLE": "ROLE_ID_REPLACE",
+  "KPIS": [
+    {
+      "NAME": "Tickets",
+      "MODULE": "TICKET_MODULE_REPLACE",
+      "CONDITIONS": []
+    },
+    {
+      "NAME": "Resolved",
+      "MODULE": "TICKET_MODULE_REPLACE",
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "OPERATOR": "equals to",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Resolved"
+        }
+      ]
+    },
+    {
+      "NAME": "New",
+      "MODULE": "TICKET_MODULE_REPLACE",
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "OPERATOR": "equals to",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "New"
+        }
+      ]
+    },
+    {
+      "NAME": "Open",
+      "MODULE": "TICKET_MODULE_REPLACE",
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "OPERATOR": "equals to",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Open"
+        }
+      ]
+    }
+  ],
+  "LEFT_TAB_MODULE": "TICKET_MODULE_REPLACE",
+  "RIGHT_TAB_MODULE": "LIVE_CHAT_MODULE_REPLACE"
+}

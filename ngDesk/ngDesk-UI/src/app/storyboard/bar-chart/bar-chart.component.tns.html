@@ -1,0 +1,38 @@
+<StackLayout>
+  <Label text="bar-chart works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<div fxLayout="column" fxLayoutGap="5px" class="pad10 mat-body" style="height: 100%;">
+	<div class="mat-body-strong">
+		{{component.name}}
+	</div>
+	<!-- <div style="width: 90%; height: 85%;" class="mat-small">
+		<ngx-charts-bar-horizontal [scheme]="colorScheme" [results]="component.chartData" [gradient]="gradient" [xAxis]="showXAxis"
+			[yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel"
+			[xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" [showDataLabel]="showDataLabel" [barPadding]="barPadding"
+			(select)="onSelect($event)">
+		</ngx-charts-bar-horizontal>
+	</div> ->
+	<div *ngIf="component.chartData !== null && (component.chartData | keyvalue).length > 0 && component.chartData.data[0].data.length > 0"
+		class="mat-small" fxLayoutAlign="left" style="width: 100%; height: 100%;">
+		<canvas baseChart [datasets]="component.chartData.data" [labels]="component.chartData.labels" [options]="barChartOptions"
+			[legend]="barChartLegend" [chartType]="barChartType" [colors]="chartColors" style="height:200px;
+			width: 272px;">
+		</canvas>
+	</div>
+	<div *ngIf="component.chartData !== null && (component.chartData | keyvalue).length >0 && component.chartData.data[0].data.length === 0"
+		style="height:135px;" fxLayoutAlign="center center" class="mat-body">
+		{{'NO_DATA_FOR_WIDGET' | translate}}
+	</div>
+	<div *ngIf="component.chartData !== null && (component.chartData | keyvalue).length === 0" style="height:135px;"
+		fxLayoutAlign="center center" class="mat-body">
+		{{'NO_LIST_LAYOUT_FOUND' | translate}}
+	</div>
+</div>
+
+-->

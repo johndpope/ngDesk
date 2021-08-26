@@ -1,0 +1,478 @@
+<StackLayout>
+  <Label text="ChatBotsDetailComponent works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<div style="height:100vh" fxLayout="column">
+	<app-toolbar></app-toolbar>
+	<form [formGroup]="chatBotForm" (ngSubmit)="save()" class="pad10">
+		<app-new-name-description buttonText="{{'SAVE' | translate}}" (modelChange)="save()">
+		</app-new-name-description>
+	</form>
+
+	<mat-tab-group [selectedIndex]="0" (selectedTabChange)="onSelectTabs($event)">
+		<mat-tab label="Builder">
+		</mat-tab>
+		<mat-tab label="Preview"></mat-tab>
+	</mat-tab-group>
+	<div id="workflow-wrapper" *ngIf="showType==='Builder'">
+
+
+		<!-- SIDEBAR ->
+		<div id="node-container" *ngIf="showSidebar" fxFlex="30" fxLayout="column" [@inOutAnimation]>
+
+			<!-- NODES LIST ->
+			<div *ngIf="!showNodeDetail">
+				<div fxLayout="row" fxLayoutAlign="center center">
+					<label class="mat-title no-margin">{{ 'BOT_NODES' | translate}}</label>
+				</div>
+				<mat-divider></mat-divider>
+				<div fxLayout="column" *ngFor="let node of availableBotNodes; let i = index;let lastItem = last;" (click)="toggleNodesDetail(node)">
+					<div class="pad10 sidebar-node pointer" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+						<mat-icon fontSet="material-icons-outlined" class="sidebar-icons" style="color: #72909d">
+							{{ botIcons[node.SUB_TYPE] }}
+						</mat-icon>
+						<label class="mat-h3 no-margin pointer" style="font-weight: 500;color: #72909d"> {{ node.NAME }} </label>
+					</div>
+					<mat-divider></mat-divider>
+				</div>
+			</div>
+			<!-- END NODES LIST ->
+
+			<!-- NODES DETAIL ->
+			<div *ngIf="showNodeDetail" class="pad10" fxLayout="column" fxFlex fxLayoutAlign="space-between" style="overflow: hidden"
+				fxLayoutGap="10px">
+
+				<div fxLayout="column" fxLayoutGap="10px" fxFlex="80" style="overflow:auto">
+					<!-- HEADER WITH EDIT AND CLOSE BUTTONS ->
+					<div fxLayout="row" fxLayoutAlign="space-between center">
+						<mat-icon [ngStyle]="{'visibility': sidebarState === 'add' ? 'visible':'hidden'}" class="no-select pointer"
+							style="color: #A0A0A0; font-size: 20px;" (click)="showNodeDetail = !showNodeDetail"> arrow_back </mat-icon>
+						<label class="mat-h3 no-margin no-select" style="color: #3895D3;"> {{ 'EDIT' | translate }} </label>
+						<div>
+							<mat-icon *ngIf="chatBot.WORKFLOW.NODES.length > 1" (click)="resetContainer()" class="no-select pointer"
+								style="color: #A0A0A0; font-size: 20px;"> close </mat-icon>
+						</div>
+					</div>
+					<!-- END HEADER WITH EDIT AND CLOSE BUTTONS ->
+
+					<!-- LABELS WITH TEXT BOX FOR DIFFERENT TYPES OF NODES ->
+					<div fxLayout="column" style="color: #72909d">
+						<label class="mat-h4 no-margin" *ngIf="nodeSelected.SUB_TYPE === 'Email'"> {{ 'ASK_EMAIL' | translate }} </label>
+						<label class="mat-h4 no-margin" *ngIf="nodeSelected.SUB_TYPE === 'Phone'"> {{ 'ASK_PHONE' | translate }} </label>
+						<label class="mat-h4 no-margin" *ngIf="nodeSelected.SUB_TYPE === 'Name'"> {{ 'ASK_NAME' | translate }} </label>
+						<label class="mat-h4 no-margin" *ngIf="nodeSelected.SUB_TYPE === 'FreeText' || nodeSelected.SUB_TYPE === 'Buttons'">
+							{{ 'ASK_QUESTION' | translate }} </label>
+						<label class="mat-h4 no-margin" *ngIf="nodeSelected.SUB_TYPE === 'SendMessage'"> {{ 'SEND_MESSAGE' | translate }} </label>
+						<label class="mat-h4 no-margin" *ngIf="nodeSelected.SUB_TYPE === 'TransferToAgent'"> {{ 'TRANSFER_TO_AGENT' | translate }}
+						</label>
+
+						<mat-form-field appearance="outline" *ngIf="nodeSelected.SUB_TYPE !== 'TransferToAgent'">
+							<textarea matInput matTextareaAutosize matAutosizeMinRows=2 matAutosizeMaxRows=2 [(ngModel)]="currentNodeQuestion"></textarea>
+						</mat-form-field>
+					</div>
+					<!-- END LABELS WITH TEXT BOX FOR DIFFERENT TYPES OF NODES ->
+
+					<!-- BUTTONS SECTION ->
+					<div fxLayout="column" style="color: #72909d" fxLayoutGap="10px" *ngIf="nodeSelected.SUB_TYPE === 'Buttons'" fxFlex>
+						<label class="mat-h4 no-margin" style="font-weight: 500;">{{ 'BUTTONS' | translate }}</label>
+						<mat-form-field style="color: black; font-weight: 400">
+							<mat-icon matSuffix style="color: #A0A0A0;">edit</mat-icon>
+							<input matInput [(ngModel)]="buttonOption" (keydown.enter)="addToButtons()" placeholder="{{'ADD_OPTION' | translate}}">
+						</mat-form-field>
+
+						<div *ngFor="let option of buttonOptions; let lastItem = last; let optionIndex = index"
+							style="border: 1px solid #d8d8d8; border-radius: 8px; user-select: none; padding: 5px">
+							<div fxLayout="row" fxLayoutAlign="space-between center">
+								<div fxLayoutGap="10px" fxLayoutAlign="start center">
+									<mat-icon class="mat-icon-18 pointer" fontSet="material-icons-outlined"> radio_button_unchecked </mat-icon>
+									<label class="mat-body" style="cursor: grab">{{option.OPTION}}</label>
+								</div>
+								<mat-icon class="custom-mat-icon pointer" fontSet="material-icons-outlined" (click)="removeOption(optionIndex)">
+									delete_outline</mat-icon>
+							</div>
+						</div>
+					</div>
+					<!-- END BUTTONS SECTION ->
+
+					<!-- ADDITIONAL OPTIONS ->
+					<div fxLayoutGap="15px" fxLayout="column">
+						<mat-divider style="border-color: #f1f1f1"></mat-divider>
+						<div fxLayout="column" style="color: #72909d;">
+							<div fxLayout="row" class="pointer" fxLayoutAlign="space-between center"
+								(click)="additionalOptionsOpen = !additionalOptionsOpen">
+								<label class="mat-h4 no-margin" style="font-weight: 500;">{{ 'ADDITIONAL_OPTIONS' | translate }}</label>
+								<mat-icon class="no-select pointer" style="color: #A0A0A0;" *ngIf="!additionalOptionsOpen">keyboard_arrow_down</mat-icon>
+								<mat-icon class="no-select pointer" style="color: #A0A0A0;" *ngIf="additionalOptionsOpen">keyboard_arrow_up</mat-icon>
+							</div>
+							<div *ngIf="additionalOptionsOpen" fxLayout="column" style="margin-top: 20px; user-select: none;" fxLayoutGap="15px">
+								<!-- NODE NAME ->
+								<div fxLayout="column" fxLayoutGap="5px">
+									<label class="mat-h4 no-margin"> {{ 'NAME_THIS_NODE' | translate}}: </label>
+									<label class="mat-h4 no-margin pointer" style="color: black;" *ngIf="!showEditableLabel"
+										(click)="showEditableLabel=!showEditableLabel"> {{ currentNodeName }} </label>
+									<mat-form-field *ngIf="showEditableLabel" style="color: black; font-weight: 400">
+										<mat-icon matSuffix style="color: #A0A0A0;">edit</mat-icon>
+										<input matInput [(ngModel)]="currentNodeName" (blur)="showEditableLabel=!showEditableLabel"
+											(ngModelChange)="validateNodeName()">
+									</mat-form-field>
+								</div>
+								<!-- END NODE NAME ->
+
+								<!-- NODE MAPPING ->
+								<div fxLayout="column" fxLayoutGap="5px"
+									*ngIf="nodeSelected.SUB_TYPE !== 'Email'
+                  && nodeSelected.SUB_TYPE !== 'Phone' && nodeSelected.SUB_TYPE !== 'Name' && nodeSelected.SUB_TYPE !== 'TransferToAgent' && nodeSelected.SUB_TYPE !== 'SendMessage'">
+									<label class="mat-h4 no-margin"> {{ 'PROVIDE_MAPPING' | translate}}: </label>
+									<mat-form-field style="color: black; font-weight: 400">
+										<mat-label>{{'MAPPING' | translate}}</mat-label>
+										<mat-select [(ngModel)]="currentNodeMapping">
+											<mat-option [value]="">{{'NO_MAPPING' | translate}}</mat-option>
+											<mat-option *ngFor="let field of module.FIELDS | filterDefaultFields: nodeSelected" [value]="field.FIELD_ID">
+												{{ field.DISPLAY_LABEL }}</mat-option>
+										</mat-select>
+									</mat-form-field>
+									<mat-checkbox *ngIf="nodeSelected.SUB_TYPE === 'Buttons'" [(ngModel)]="disableTextInput">
+										{{ 'DISABLE_TEXT_INPUT' | translate}}</mat-checkbox>
+								</div>
+								<!-- END NODE MAPPING ->
+							</div>
+						</div>
+						<mat-divider *ngIf="!additionalOptionsOpen" style="border-color: #f1f1f1;"></mat-divider>
+					</div>
+					<!-- END ADDITIONAL OPTIONS ->
+					<!-- DUMMY DIVS TO INCREASE HEIGHT ->
+					<div></div>
+					<div></div>
+				</div>
+				<mat-divider style="border-color: #d8d8d8"></mat-divider>
+				<div fxFlex fxLayout="column" fxLayoutGap="10px">
+					<!-- INFO SECTION ->
+					<div fxLayout="row" fxLayoutGap="5px" style="margin-top: 10px">
+						<mat-icon fontSet="material-icons-outlined">info_outline</mat-icon>
+						<label fxFlex style="color: #72909d" class="mat-h4 no-margin" *ngIf="nodeSelected.SUB_TYPE === 'SendMessage'">
+							{{ 'SEND_MESSAGE_INFO' | translate }}
+						</label>
+						<label fxFlex style="color: #72909d" class="mat-h4 no-margin" *ngIf="nodeSelected.SUB_TYPE === 'TransferToAgent'">
+							{{ 'TRANSFER_AGENT_INFO' | translate }}
+						</label>
+						<label fxFlex style="color: #72909d" class="mat-h4 no-margin" *ngIf="nodeSelected.SUB_TYPE === 'FreeText'">
+							{{ 'FREE_TEXT_REPLY_INFO' | translate }}
+						</label>
+						<label fxFlex style="color: #72909d" class="mat-h4 no-margin" *ngIf="nodeSelected.SUB_TYPE === 'Buttons'">
+							{{ 'MULTIPLE_CHOICE_INFO' | translate }}
+						</label>
+						<label fxFlex style="color: #72909d" class="mat-h4 no-margin" *ngIf="nodeSelected.SUB_TYPE === 'Name'">
+							{{ 'NAME_INFO' | translate }}
+						</label>
+						<label fxFlex style="color: #72909d" class="mat-h4 no-margin" *ngIf="nodeSelected.SUB_TYPE === 'Phone'">
+							{{ 'PHONE_INFO' | translate }}
+						</label>
+						<label fxFlex style="color: #72909d" class="mat-h4 no-margin" *ngIf="nodeSelected.SUB_TYPE === 'Email'">
+							{{ 'EMAIL_INFO' | translate }}
+						</label>
+					</div>
+					<!-- END INFO SECTION ->
+					<mat-divider style="border-color: #d8d8d8"></mat-divider>
+					<div fxFlex>
+						<button mat-raised-button
+							[disabled]="!((nodeSelected.SUB_TYPE === 'TransferToAgent' || (currentNodeQuestion.length > 0 && nodeSelected.SUB_TYPE !== 'TransferToAgent')) && isValidNodeName)"
+							*ngIf="nodeSelected.SUB_TYPE !== 'Buttons' && sidebarState === 'add'"
+							[ngStyle]="{'background': ((nodeSelected.SUB_TYPE === 'TransferToAgent' || (currentNodeQuestion.length > 0 && nodeSelected.SUB_TYPE !== 'TransferToAgent')) && isValidNodeName) ? '#3895D3' : '#cccccc'}"
+							style="width: 100%; margin-top: 15px; color: white" (click)="addNode()">
+							{{ 'ADD_NODE' | translate}}
+						</button>
+						<button mat-raised-button [disabled]="!(currentNodeQuestion.length > 0 && buttonOptions.length > 0 && isValidNodeName)"
+							*ngIf="nodeSelected.SUB_TYPE === 'Buttons' && sidebarState === 'add'"
+							[ngStyle]="{'background': (currentNodeQuestion.length > 0 && buttonOptions.length > 0 && isValidNodeName) ? '#3895D3' : '#cccccc'}"
+							style="width: 100%; margin-top: 15px; color: white" (click)="addNode()">
+							{{ 'ADD_NODE' | translate}}
+						</button>
+						<button mat-raised-button
+							[disabled]="!((nodeSelected.SUB_TYPE === 'TransferToAgent' || (currentNodeQuestion.length > 0 && nodeSelected.SUB_TYPE !== 'TransferToAgent')) && isValidNodeName)"
+							*ngIf="nodeSelected.SUB_TYPE !== 'Buttons' && sidebarState === 'update'"
+							[ngStyle]="{'background': ((nodeSelected.SUB_TYPE === 'TransferToAgent' || (currentNodeQuestion.length > 0 && nodeSelected.SUB_TYPE !== 'TransferToAgent')) && isValidNodeName) ? '#3895D3' : '#cccccc'}"
+							style="width: 100%; margin-top: 15px; color: white" (click)="updateNode()">
+							{{ 'UPDATE_NODE' | translate}}
+						</button>
+						<button mat-raised-button [disabled]="!(currentNodeQuestion.length > 0 && buttonOptions.length > 0 && isValidNodeName)"
+							*ngIf="nodeSelected.SUB_TYPE === 'Buttons' && sidebarState === 'update'"
+							[ngStyle]="{'background': (currentNodeQuestion.length > 0 && buttonOptions.length > 0) ? '#3895D3' : '#cccccc'}"
+							style="width: 100%; margin-top: 15px; color: white" (click)="updateNode()">
+							{{ 'UPDATE_NODE' | translate}}
+						</button>
+					</div>
+				</div>
+
+			</div>
+			<!-- END NODES DETAIL ->
+		</div>
+		<!-- END SIDEBAR ->
+
+		<!-- MAIN CONTAINER ->
+		<div id="workflow-container" style="cursor: grab" (click)="resetContainer()" fxFlex>
+			<div id="diagram-container" fxFlex>
+
+				<!-- ZOOM CONTROLS ->
+				<div id="zoom-controls" class="mat-elevation-z8" fxLayoutGap="5px" fxLayoutAlign="center center" style="margin-right: 20px">
+					<mat-icon class="gray pointer no-select" (click)="zoomOut()">remove</mat-icon>
+					<label class="mat-small gray no-select">{{transform}}%</label>
+					<mat-icon class="gray pointer no-select" (click)="zoomIn()">add</mat-icon>
+				</div>
+				<!-- END ZOOM CONTROLS ->
+
+				<!-- MAIN BOT CONTAINER ->
+				<div id="container" [ngStyle]="{'transform': 'scale('+ (transform / 100) +')'}" style="height: 100%; width: 100%;">
+					<div fxLayout="column" *ngFor="let node of chatBot.WORKFLOW.NODES; let firstNode = first; let lastNode =  last; let i = index;">
+
+						<!-- LINES FOR DROPPABLE ->
+						<div class="droppable-area box" *ngIf="node.TYPE === 'Droppable'" fxLayoutAlign="center center" style="user-select: none"
+							[ngStyle]="{'top': node.POSITION_Y + 'px', 'left': node.POSITION_X + 'px'}">
+							<label class="mat-body"> {{ 'DROP_NODE_PLACEHOLDER' | translate }} </label>
+						</div>
+						<!-- CONNECTOR ->
+						<div *ngIf="fromNode.CONNECTS_TO && fromNode.CONNECTS_TO.trim().length > 0 && node.TYPE === 'Droppable'"
+							style="height: 90px; width: 2px; background: #979797; position: absolute"
+							[ngStyle]="{'left': node.POSITION_X + 30 + 'px', 'top': node.POSITION_Y + 100 + 'px'}">
+						</div>
+						<!-- END CONNECTOR ->
+
+						<div *ngIf="node.TYPE !== 'Droppable' && nodeSettings[node.ID].SHOW_NODE">
+							<!-- ADD NODE BUTTON AT TOP ->
+							<!-- <div class="add-node pointer" fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center"
+                [ngStyle]="{'top': node.POSITION_Y - 40 + 'px' , 'left': node.POSITION_X + 'px'}" *ngIf="firstNode && dropPosition !== i + '-before'" (click)="toggleSidebar(node, i, 'before', $event); $event.stopPropagation()">
+                <mat-icon class="mat-icon-15 pointer" style="color: #3895D3">add</mat-icon>
+                <label class="mat-caption pointer"> {{ 'NODE' | translate }} </label>
+              </div> ->
+							<!-- END ADD NODE BUTTON AT TOP ->
+
+							<!-- REMOVE NODE ICON ->
+							<div style="position: absolute; width: 25px; height: 25px" (mouseenter)="toggleNodeFocus(node, 'enter')"
+								(mouseleave)="toggleNodeFocus(node, 'leave')" (click)="removeNode(i, $event); $event.stopPropagation();"
+								[ngStyle]="{'top': node.POSITION_Y - 10 + 'px', 'left': node.POSITION_X + 185 + 'px'}">
+								<div class="trash-wrapper mat-elevation-z8 pointer" fxLayoutAlign="center center"
+									[ngStyle]="{'visibility': nodeSettings[node.ID].SHOW_REMOVE ? 'visible' : 'hidden'}">
+									<mat-icon class="custom-mat-icon" fontSet="material-icons-outlined">delete_outline</mat-icon>
+								</div>
+							</div>
+							<!-- END REMOVE NODE ICON ->
+
+							<!-- NODE ->
+							<div class="node pointer" fxLayoutGap="10px" (mouseenter)="toggleNodeFocus(node, 'enter')"
+								(mouseleave)="toggleNodeFocus(node, 'leave')" (click)="nodeClicked(node, $event); $event.stopPropagation();" [ngStyle]="{'top': node.POSITION_Y + 'px', 'left': node.POSITION_X + 'px',
+                'border-color': node.ID === nodeInFocus ? '#3895D3' : '#E7E7E7'}">
+								<div style="position: relative;" fxLayoutGap="5px">
+									<div fxLayout="row" style="overflow: hidden" fxLayoutAlign="start center" fxLayoutGap="10px">
+										<mat-icon class="custom-mat-icon" fontSet="material-icons-outlined">{{ botIcons[node.SUB_TYPE] }}</mat-icon>
+										<label class="mat-body no-margin">{{ node.NAME }}</label>
+									</div>
+
+									<div *ngIf="node.SUB_TYPE !== 'TransferToAgent'" style="overflow: hidden" fxLayout="row" fxLayoutAlign="start"
+										fxLayoutGap="10px">
+										<mat-icon class="custom-mat-icon" style="color: #FF6464; margin-top: 3px">question_answer</mat-icon>
+										<label class="mat-caption"> {{ node.VALUES.MESSAGE | truncate : 45 : true }} </label>
+									</div>
+								</div>
+							</div>
+							<!-- END NODE ->
+
+							<!-- OPTIONS ->
+							<div *ngIf="node.SUB_TYPE === 'Buttons' && nodeSettings[node.ID].SHOW_CHILDREN">
+								<div *ngFor="let option of node.VALUES.OPTIONS;let optionIndex = index; let lastItem = last; let firstItem = first">
+
+									<div *ngIf="firstItem" style="width: 2px; height: 15px; background: #979797; position: absolute"
+										[ngStyle]="{'left': node.POSITION_X + 30 + 'px', 'top': node.POSITION_Y + 90 + 'px' }">
+									</div>
+
+									<div class="option" fxLayoutAlign="start center" style="overflow: hidden" [ngStyle]="{'left': node.POSITION_X + ((125 + 100) * optionIndex) + 'px', 'top': node.POSITION_Y + 105 + 'px',
+                    'border-color': node.ID === nodeInFocus ? '#3895D3' : '#E7E7E7'}">
+										<label class="mat-caption">{{ (option.OPTION.length>15)? (option.OPTION | slice:0:15)+'..':(option.OPTION) }}</label>
+									</div>
+
+									<div *ngIf="!lastItem" style="width: 100px; height: 2px; background: #979797; position: absolute"
+										[ngStyle]="{'left': node.POSITION_X + (125 * (optionIndex + 1)) + (100 * optionIndex) + 'px', 'top': node.POSITION_Y + 90 + 30 + 'px' }">
+									</div>
+
+									<!-- ADD NODE BUTTON BELOW OPTION ->
+									<div style="position: absolute; width: 100px; height: 25px"
+										*ngIf="(option.CONNECTS_TO.trim().length === 0) && !(fromNode.ID === node.ID && fromOption === optionIndex)"
+										(click)="toggleSidebar(node, i, 'after', optionIndex, $event); $event.stopPropagation()"
+										[ngStyle]="{'top': node.POSITION_Y + 90 + 15 + 35 + 15 + 'px' , 'left': node.POSITION_X + ((125 + 100) * optionIndex) + 'px'}">
+										<div class="add-node pointer" fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center"
+											*ngIf="dropPosition !== i + '.' + optionIndex + '-after'">
+											<mat-icon class="mat-icon-15 pointer" style="color: #3895D3">add</mat-icon>
+											<label class="mat-caption pointer"> {{ 'NODE' | translate }} </label>
+										</div>
+									</div>
+									<!-- END ADD NODE BUTTON BELOW OPTION ->
+
+									<div *ngIf="(option.CONNECTS_TO.trim().length > 0) || (fromNode.ID === node.ID && fromOption === optionIndex)"
+										style="height: 100px; width: 2px; background: #979797; position: absolute"
+										[ngStyle]="{'left': node.POSITION_X + ((125 + 100) * optionIndex) + 30 + 'px', 'top': node.POSITION_Y + 90 + 15 + 35 + 'px'}">
+									</div>
+
+								</div>
+							</div>
+							<!-- END OPTIONS ->
+
+							<!-- ADD NODE ON CONNECTOR ->
+							<div style="position: absolute; width: 100px; height: 25px"
+								*ngIf="node.SUB_TYPE !== 'Buttons' && node.SUB_TYPE !== 'TransferToAgent' && nodeSettings[node.ID].SHOW_CHILDREN"
+								(click)="toggleSidebar(node, i, 'after', $event); $event.stopPropagation()" (mouseenter)="toggleNodeFocus(node, 'enter')"
+								(mouseleave)="toggleNodeFocus(node, 'leave')"
+								[ngStyle]="{'top': node.POSITION_Y + 90 + 15 + 'px' , 'left': node.POSITION_X + 'px'}">
+								<div class="add-node pointer" fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center"
+									*ngIf="dropPosition !== i + '-after' && !lastNode"
+									[ngStyle]="{'visibility': nodeSettings[node.ID].SHOW_ADD_NODE ? 'visible' : 'hidden'}">
+									<mat-icon class="mat-icon-15 pointer" style="color: #3895D3">add</mat-icon>
+									<label class="mat-caption pointer"> {{ 'NODE' | translate }} </label>
+								</div>
+							</div>
+							<!-- END ADD NODE ON CONNECTOR ->
+
+							<!-- ADD NODE BUTTON BELOW NODE ->
+							<div style="position: absolute; width: 100px; height: 25px"
+								*ngIf="node.SUB_TYPE !== 'Buttons' && node.SUB_TYPE !== 'TransferToAgent' && nodeSettings[node.ID].SHOW_CHILDREN"
+								(mouseenter)="toggleNodeFocus(node, 'enter')" (mouseleave)="toggleNodeFocus(node, 'leave')"
+								(click)="toggleSidebar(node, i, 'after', $event); $event.stopPropagation()"
+								[ngStyle]="{'top': node.POSITION_Y + 90 + 15 + 'px' , 'left': node.POSITION_X + 'px'}">
+								<div class="add-node pointer" fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center"
+									*ngIf="dropPosition !== i + '-after' && node.CONNECTS_TO.trim().length === 0"
+									[ngStyle]="{'border-color': nodeSettings[node.ID].SHOW_ADD_NODE ? '#3895D3' : '#E7E7E7'}">
+									<mat-icon class="mat-icon-15 pointer" style="color: #3895D3">add</mat-icon>
+									<label class="mat-caption pointer"> {{ 'NODE' | translate }} </label>
+								</div>
+							</div>
+							<!-- END ADD NODE BUTTON BELOW NODE ->
+
+							<!-- CONNECTOR ->
+							<div
+								*ngIf="nodeSettings[node.ID].SHOW_CHILDREN && node.SUB_TYPE !== 'Buttons' && (node.CONNECTS_TO.trim().length > 0 || fromNode.ID === node.ID)"
+								style="height: 100px; width: 2px; background: #979797; position: absolute"
+								[ngStyle]="{'left': node.POSITION_X + 30 + 'px', 'top': node.POSITION_Y + 90 + 'px'}">
+							</div>
+							<!-- END CONNECTOR ->
+
+							<!-- MORE NODES ->
+							<div *ngIf="!nodeSettings[node.ID].SHOW_CHILDREN && node.CONNECTS_TO.trim().length > 0">
+								<div (click)="nodeClicked(node, $event); $event.stopPropagation();" style="position: absolute"
+									class="trash-wrapper mat-elevation-z8 pointer" fxLayoutAlign="center center"
+									[ngStyle]="{'left': node.POSITION_X - 5 + 'px', 'top': node.POSITION_Y + 60 + 5 + 'px'}">
+									<mat-icon class="custom-mat-icon" fontSet="material-icons-outlined">add_outline</mat-icon>
+								</div>
+							</div>
+							<!-- END MORE NODES ->
+						</div>
+					</div>
+				</div>
+				<!-- END MAIN BOT CONTAINER ->
+			</div>
+		</div>
+		<!-- END MAIN CONTAINER ->
+	</div>
+	<div *ngIf="showType==='Preview'">
+		<div style="height: 100%;" fxLayoutAlign="center">
+			<div id="scroll-top-fixer"></div>
+			<div>
+				<div fxLayout="column" style="width: 100%;">
+					<div fxLayout="column"
+						style="height: 630px; width: 450px; background-color: white; border: 1px solid #b0b0b0; border-radius: 10px;margin-top:8%;margin-bottom: 6%;"
+						id="chat-preview-area">
+						<div fxLayoutAlign="space-between center" style="background-color:#3f51b5;border-top-left-radius: 10px;
+								border-top-right-radius: 10px;height:7%">
+							<div fxLayout="column" fxLayoutAlign="center center" style="margin: 10px 0px" fxFlex>
+								<h3 class="mat-h3" style="margin: 0px;color:white;"> Chat Bot Preview</h3>
+							</div>
+						</div>
+						<mat-divider></mat-divider>
+						<!-- CHAT-CONVERSATION ->
+						<div fxFlex="100" fxLayout="column">
+							<div fxFlex #scrollMe [scrollTop]="scrollMe.scrollHeight" style="overflow: auto; margin-bottom: 10px;" fxLayout="column"
+								fxLayoutGap="10px">
+								<div *ngFor="let key of getKeys();index as i" style="padding: 0px 5px;">
+									<div>
+										<!--LEFT-MESSAGE->
+										<div fxFlex fxLayout="row" *ngIf="getValue(key).MESSAGE && getValue(key).MESSAGE!==''">
+											<div fxFlex="90" fxLayout="column" fxLayoutAlign="flex-start flex-start">
+												<div fxLayout="column" fxLayoutGap="2px">
+													<div fxLayoutAlign="start ">
+														<span style="font-size: 10px; font-weight: 300;"
+															class="mat-small">{{getValue(key).DATE_CREATED | date: 'shortTime'}}</span>
+													</div>
+													<div class="mat-body" fxLayout="column"
+														style="background: rgb(248, 249, 249); color: black; border-radius: 10px; padding: 10px;word-break: break-word">
+														<label [innerHTML]="getValue(key).MESSAGE"></label>
+													</div>
+												</div>
+											</div>
+											<div fxFlex="10"></div>
+										</div>
+										<!--RIGHT-MESSAGE->
+										<div fxFlex fxLayout="row" *ngIf="getValue(key).REPLY" style="margin-top: 50px">
+											<div fxFlex="10"></div>
+											<div fxFlex="90" fxLayout="column" fxLayoutAlign="flex-end flex-end">
+												<div fxLayout="column" fxLayoutGap="2px">
+													<div fxLayoutAlign="end ">
+														<span style="font-size: 10px; font-weight: 300;"
+															class="mat-small">{{getValue(key).DATE_RESPONDED | date: 'shortTime'}}</span>
+													</div>
+													<div class="mat-body" fxLayout="column"
+														style="background: #3f51b5; color: white; border-radius: 10px; padding: 10px;word-break: break-word">
+														<label id="links-text-white" [innerHTML]="getValue(key).REPLY"></label>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<ng-container *ngIf="getValue(key).META_DATA && getValue(key).META_DATA!==''">
+										<div fxLayout="row" style="padding:5px" fxLayoutAlign="center center" fxLayoutGap="5px">
+											<mat-divider fxFlex="1 1 auto"></mat-divider>
+											<div fxLayout="column" style="text-align: center">
+												<div class="mat-caption" [innerHtml]="getValue(key).META_DATA | allowStyles"
+													style="text-align: center;color: #68737D">
+												</div>
+												<span class="mat-caption" style="color: #888">{{agentAssignedTime | date: 'shortTime'}}</span>
+											</div>
+											<mat-divider fxFlex="1 1 auto"></mat-divider>
+										</div>
+									</ng-container>
+								</div>
+
+								<!-- RENDER MESSAGE ON BUTTON ->
+								<div *ngIf="buttonMessageArr.length > 0" fxLayout="column">
+									<div class="mat-body" fxFlex="1 0 auto" fxLayoutAlign=" center" style="background: white; color: #68737D; margin-right: 5px; margin-left: 5px;
+										  font-size: 12px;">
+										Please choose an option below
+									</div>
+									<div fxLayout="column">
+										<div class="mat-body message-on-button" *ngFor="let buttonMessage of buttonMessageArr; index as i"
+											fxLayoutAlign=" center">
+											<button style="border-radius: 10px; margin: 0 8px;" mat-raised-button color="primary"
+												(click)="appendMessage(buttonMessage)">
+												{{buttonMessage.OPTION}}
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div style="position: relative;" fxLayout="column" fxLayoutAlign="flex-end">
+								<mat-divider class="text-area"></mat-divider>
+								<mat-form-field *ngIf="!sendMessageDisabled" class="mat-form-field--message-textarea chat-reply" floatLabel="never" fxFlex
+									style="margin: 0 5px;">
+									<mat-label>{{'TYPE_MESSAGE_PLACEHOLDER' | translate}}</mat-label>
+									<textarea style="margin-bottom: 5px;" #messageTextBox matInput maxlength="2000" matTextareaAutosize="true"
+										matAutosizeMaxRows="5" matAutosizeMinRows="1" [(ngModel)]="submitMessage"
+										(keydown)="triggerFunction($event, submitMessage)"></textarea>
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+-->

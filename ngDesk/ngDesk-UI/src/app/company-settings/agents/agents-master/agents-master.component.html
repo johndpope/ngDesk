@@ -1,0 +1,35 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef>
+	<div fxLayoutAlign="space-between center" fxLayoutGap="10px">
+		<app-title-bar class="light-grey-color" title="{{'AGENTS' | translate}}"></app-title-bar>
+		<app-search-bar fxHide.lt-md fxShow.gt-sm fxFlex="1 1 auto" [isController]="isController"
+			(searchFieldsEvent)="searchValuesChange($event)">
+		</app-search-bar>
+		<div fxHide.gt-sm fxShow.lt-md fxFlex="1 1 auto" fxLayoutAlign="end" style="margin:10px;">
+			<button mat-icon-button (click)="isOpen = !isOpen">
+				<mat-icon>search</mat-icon>
+			</button>
+		</div>
+	</div>
+</ng-template>
+
+
+<div fxLayout="column" fxLayoutGap="10px" class="pad10">
+	<div fxHide.gt-sm fxShow.lt-md fxLayout="row" [@showHideSearchBar]="isOpen ? 'open' : 'closed'">
+		<app-search-bar fxFlex="1 1 auto" [isController]="isController" (searchFieldsEvent)="searchValuesChange($event)">
+		</app-search-bar>
+	</div>
+	<div fxLayout="row">
+		<div fxFlex>
+			<app-custom-table [templateRef]="columnTemplateRef" noRecordsMessage="{{'NO_AGENTS_FOUND' | translate}}"
+				[actions]="controllerActions.actions" (menuItemTrigger)="restartAgent($event.ROW_DATA);"
+				(rowClickedEvent)="rowClicked($event)" (sortData)="sortData();customTableService.isLoading = true"
+				(pageChangeEmit)="pageChangeEmit($event);customTableService.isLoading = true">
+				<ng-template #columnTemplateRef let-element="element" let-col="col">
+					<span *ngIf="col.NAME === 'LAST_SEEN'">{{element[col.NAME] | dateFormat: 'MMM d, y, h:mm a'}}</span>
+					<span *ngIf="col.NAME !== 'LAST_SEEN'">{{element[col.NAME] | booleanToYesNo}}</span>
+				</ng-template>
+			</app-custom-table>
+		</div>
+	</div>
+</div>

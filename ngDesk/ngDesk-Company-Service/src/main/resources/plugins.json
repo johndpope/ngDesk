@@ -1,0 +1,309 @@
+{
+	"PLUGINS": [
+		{
+			"NAME": "Ticketing",
+			"TIERS": [
+				{
+					"NAME": "free",
+					"PRICE": "0",
+					"SUBSCRIBED": true,
+					"MODULES": [
+						{
+							"NAME": "Tickets"
+						}
+					],
+					"FEATURES": [
+						{
+							"SLAS": {
+								"MAX_COUNT": 5,
+								"ENABLED": true
+							},
+							"TRIGGERS": {
+								"MAX_COUNT": 5,
+								"ENABLED": true
+							},
+							"FIELDS": {
+								"MAX_COUNT": 50,
+								"ENABLED": true
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"NAME": "Software Asset Management",
+			"TIERS": [
+				{
+					"NAME": "free",
+					"PRICE": "0",
+					"SUBSCRIBED": false,
+					"MODULES": [
+						{
+							"NAME": "Assets",
+							"CHILD_MODULE": [
+								"Physical Servers",
+								"Laptops"
+							]
+						},
+						{
+							"NAME": "Patch" 
+						},
+						{
+							"NAME": "Software Installation" 
+						},
+						{
+							"NAME": "Standardized Software Installation"
+						},
+						{
+							"NAME": "Software Products"
+						},
+						{
+							"NAME": "Software Model"
+						},
+						{
+							"NAME": "Personally Identifiable Information"
+						}
+					],
+					"FEATURES": [
+						{
+							"SLAS": {
+								"MAX_COUNT": 5,
+								"ENABLED": true
+							},
+							"TRIGGERS": {
+								"MAX_COUNT": 5,
+								"ENABLED": true
+							},
+							"FIELDS": {
+								"MAX_COUNT": 50,
+								"ENABLED": true
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"NAME": "CRM",
+			"TIERS": [
+				{
+					"NAME": "free",
+					"PRICE": "0",
+					"SUBSCRIBED": false,
+					"MODULES": [
+						{
+							"NAME": "Opportunities"
+						},
+						{
+							"NAME": "Quotes"
+						},
+						{
+							"NAME": "Invoices"
+						},
+						{
+							"NAME": "Products"
+						},
+						{
+							"NAME": "Revenue Line Items"
+						},
+						{
+							"NAME": "Contracts"
+						}
+					],
+					"FEATURES": [
+						{
+							"SLAS": {
+								"MAX_COUNT": 5,
+								"ENABLED": true
+							},
+							"TRIGGERS": {
+								"MAX_COUNT": 5,
+								"ENABLED": true
+							},
+							"FIELDS": {
+								"MAX_COUNT": 50,
+								"ENABLED": true
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"NAME": "Expenses",
+			"TIERS": [
+				{
+					"NAME": "free",
+					"PRICE": "0",
+					"SUBSCRIBED": false,
+					"MODULES": [
+						{
+							"NAME": "Expenses"
+						},
+						{
+							"NAME": "Expense Reports"
+						},												
+						{
+							"NAME": "Taxes"
+						},
+						{
+							"NAME": "GL Codes"
+						},
+						{
+							"NAME": "Categories"
+						}
+					],
+					"FEATURES": [
+						{
+							"SLAS": {
+								"MAX_COUNT": 5,
+								"ENABLED": true
+							},
+							"TRIGGERS": {
+								"MAX_COUNT": 5,
+								"ENABLED": true
+							},
+							"FIELDS": {
+								"MAX_COUNT": 50,
+								"ENABLED": true
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+
+			"NAME": "Change Requests",
+			"TIERS": [
+				{
+					"NAME": "free",
+					"PRICE": "0",
+					"SUBSCRIBED": false,
+					"MODULES": [
+					 {
+						 	"NAME": "Change Request"
+					  }
+					
+					],
+					"FEATURES": [
+						{
+							"SLAS": {
+								"MAX_COUNT": 5,
+								"ENABLED": true
+							},
+							"TRIGGERS": {
+								"MAX_COUNT": 5,
+								"ENABLED": true
+							},
+							"FIELDS": {
+								"MAX_COUNT": 50,
+								"ENABLED": true
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"NAME": "Pager",
+			"TIERS": [
+				{
+					"NAME": "free",
+					"PRICE": "0",
+					"SUBSCRIBED": false,
+					"MODULES": [
+						{
+							"NAME": "Schedules"
+						},
+						{
+							"NAME": "Escalations"
+						}
+					],
+					"FEATURES": []
+				}
+			]
+		},
+		{
+			"NAME": "Chats",
+			"TIERS": [
+				{
+					"NAME": "free",
+					"PRICE": "0",
+					"SUBSCRIBED": false,
+					"MODULES": [
+						{
+							"NAME": "Chat"
+						}
+					],
+					"FEATURES": []
+				}
+			]
+		},
+		{
+			"NAME": "Human Resource Management",
+			"TIERS": [
+				{
+					"NAME": "free",
+					"PRICE": "0",
+					"SUBSCRIBED": true,
+					"MODULES": [
+						{
+							"NAME": "Employees"
+						},
+						{
+							"NAME": "Bonus Issuances"
+						},
+						{
+							"NAME": "Exit Details"
+						},
+						{
+							"NAME": "Promotions"
+						},
+						{
+							"NAME": "Time Off Requests"
+						},
+						{
+							"NAME": "Travel Expense Line Items"
+						},
+						{
+							"NAME": "Travel Authorizations"
+						},
+						{
+							"NAME": "Travel Expenses"
+						},
+						{
+							"NAME": "Onboardings"
+						},
+						{
+							"NAME": "Document Checklist"
+						},
+						{
+							"NAME": "Travel Itinerary Line Items"
+						},
+						{
+							"NAME": "Healthcare Insurances"
+						}
+					],
+					"FEATURES": [
+						{
+							"SLAS": {
+								"MAX_COUNT": 5,
+								"ENABLED": true
+							},
+							"TRIGGERS": {
+								"MAX_COUNT": 5,
+								"ENABLED": true
+							},
+							"FIELDS": {
+								"MAX_COUNT": 50,
+								"ENABLED": true
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}

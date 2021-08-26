@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: escalation
+  namespace: NAMESPACE_REPLACE
+spec:
+  selector:
+    matchLabels:
+      app: escalation
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: escalation
+    spec:
+      containers:
+        - name: escalation
+          image: image-registry.openshift-image-registry.svc:5000/NAMESPACE_REPLACE/escalation:1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8081

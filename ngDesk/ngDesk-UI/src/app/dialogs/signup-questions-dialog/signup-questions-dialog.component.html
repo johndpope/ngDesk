@@ -1,0 +1,90 @@
+<mat-horizontal-stepper #stepper>
+	<mat-step [stepControl]="industryTypeForm">
+		<form [formGroup]="industryTypeForm" (ngSubmit)="setIndustryType()">
+			<div fxLayout="row" class="mat-h1" fxLayoutAlign="center">
+				{{'PLEASE_SELECT_INDUSTRY_TYPE' | translate}}
+			</div>
+			<strong fxLayout="row" fxLayoutAlign="center">
+				{{'ADMIN_QUESTION_PROGRESS_1' | translate}}
+			</strong>
+			<div fxLayout="row" fxLayoutAlign="center">
+				<mat-error>{{errorMessage}}</mat-error>
+			</div>
+			<div fxLayout="column" style="margin-top:30px">
+				<mat-form-field>
+					<mat-select placeholder="{{'PLEASE_SELECT_INDUSTRY_TYPE' | translate}}" formControlName="INDUSTRY">
+						<mat-option *ngFor="let industry of industryTypes" [value]="industry">
+							{{industry | translate}}
+						</mat-option>
+					</mat-select>
+					<mat-error *ngIf="industryTypeForm.controls.INDUSTRY.hasError('required')">
+						{{'INDUSTRY_TYPE' | translate}} <strong>{{'REQUIRED' | translate}}</strong>
+						{{'TO_CONTINUE' | translate}}
+					</mat-error>
+				</mat-form-field>
+				<div fxLayoutAlign="center" fxLayoutGap="10px" style="margin-top:28px">
+					<button mat-raised-button color="primary" [disabled]="industryTypeForm.controls.INDUSTRY.hasError('required')"
+						type="submit">{{'NEXT' | translate}}</button>
+				</div>
+			</div>
+		</form>
+	</mat-step>
+	<mat-step [stepControl]="companySizeForm">
+		<form [formGroup]="companySizeForm" (ngSubmit)="setCompanySize()">
+			<div fxLayout="row" class="mat-h1" fxLayoutAlign="center">
+				{{'SELECT_COMPANY_SIZE' | translate}}
+			</div>
+			<strong fxLayout="row" fxLayoutAlign="center">
+				{{'ADMIN_QUESTION_PROGRESS_2' | translate}}
+			</strong>
+			<div fxLayout="row" fxLayoutAlign="center">
+				<mat-error>{{errorMessage}}</mat-error>
+			</div>
+			<div fxLayout="column" style="margin-top:30px">
+				<mat-form-field>
+					<mat-select placeholder="{{'SELECT_COMPANY_SIZE' | translate}}" formControlName="COMPANY_SIZE">
+						<mat-option *ngFor="let size of companySizes" [value]="size">
+							{{size | translate }}
+						</mat-option>
+					</mat-select>
+					<mat-error *ngIf="companySizeForm.controls.COMPANY_SIZE.hasError('required')">
+						{{'SIZE_OF_COMPANY' | translate}} <strong>{{'REQUIRED' | translate}}</strong>
+						{{'TO_CONTINUE' | translate}}
+					</mat-error>
+				</mat-form-field>
+				<div fxLayoutAlign="center" fxLayoutGap="10px" style="margin-top:28px">
+					<button mat-raised-button color="primary" [disabled]="companySizeForm.controls.COMPANY_SIZE.hasError('required')"
+						type="submit">{{'NEXT' | translate}}</button>
+				</div>
+			</div>
+		</form>
+	</mat-step>
+	<mat-step [stepControl]="ticketsOrPagerForm">
+		<form [formGroup]="ticketsOrPagerForm" (ngSubmit)="setUsage()">
+			<div fxLayout="column">
+				<div class="mat-h1" fxLayoutAlign="center">
+					{{'WHAT_ARE_YOU_USING_NGDESK_FOR' | translate}}
+				</div>
+			</div>
+			<strong fxLayout="row" fxLayoutAlign="center">
+				{{'ADMIN_QUESTION_PROGRESS_3' | translate}}
+			</strong>
+			<div fxLayout="column" fxLayoutAlign="center">
+				<div fxLayoutAlign="center">
+					<mat-error>{{errorMessage}}</mat-error>
+				</div>
+			</div>
+			<div fxLayout="column" style="margin-top:25px">
+				<div fxLayout="column" fxLayoutGap="15px" fxFlexAlign="center">
+					<mat-checkbox formControlName="TICKETS" color="primary">{{'TICKETS' | translate}}</mat-checkbox>
+					<mat-checkbox formControlName="PAGER" color="primary">{{'PAGER' | translate}}</mat-checkbox>
+				</div>
+				<div fxLayoutAlign="center" style="margin-top:25px">
+					<button mat-raised-button color="primary" [disabled]="ticketsOrPagerForm.errors"
+						type="submit">{{'GET_STARTED' | translate}}</button>
+				</div>
+			</div>
+		</form>
+	</mat-step>
+
+</mat-horizontal-stepper>

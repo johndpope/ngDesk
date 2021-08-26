@@ -1,0 +1,17 @@
+<div *ngIf="displayPage" style="margin:20px;text-align: center">
+  <div style="border: ridge; width: 542px;display: inline-block;padding: 20px;height: 20%;background-color: #2196f317">
+    <label class="mat-display-1" style="font-size: x-large;
+      font-family: sans-serif; color: grey; ">{{'UNSUBSCRIBE_SUCCESSFUL' | translate}}!</label>
+    <div style="padding-top: 20px;font-family: sans-serif;font-size: 15px;">
+      {{'UNSUBSCRIBE_SUCCESS_MESSAGE' | translate}} </div>
+  </div>
+</div>
+<div *ngIf="!displayPage" style="margin:20px;text-align: center">
+  <div style="border: ridge; width: 542px;display: inline-block;padding: 20px;height: 20%;background-color: #2196f317">
+    <label class="mat-display-1" style="font-size: x-large;
+        font-family: sans-serif; color: red; ">{{'UNSUBSCRIBE_ERROR' | translate}}!</label>
+    <div style="padding-top: 20px;font-family: sans-serif;font-size: 15px;">
+      {{errorMessage}}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,68 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<div fxLayout="column" class="pad10" style="overflow:auto;">
+	<ng-template #headerTemplateRef>
+		<app-title-bar class="light-grey-color" title="{{'ALLOWED_BLOCKED' | translate }}" buttonText="{{'SAVE'|translate}}"
+			(buttonRightOnClick)="save()">
+		</app-title-bar>
+	</ng-template>
+	<!-- WHITE_LIST -->
+	<label class="mat-h2">{{'SENDERS_ALLOWED' | translate}}</label>
+	<mat-form-field appearance="outline">
+		<mat-label>{{'ADD_EMAIL_ADDRESSES_OR_DOMAINS_TO_ALLOWED' | translate}}</mat-label>
+		<mat-chip-list #whitelistReceivers>
+			<mat-chip *ngFor="let email of EMAIL_LIST.WHITE_LIST_OUTGOING" [selectable]="true" [removable]="true"
+				(removed)="remove(email, 'WHITE_LIST_OUTGOING')">
+				{{email}}
+				<mat-icon matChipRemove>cancel</mat-icon>
+			</mat-chip>
+			<input [matChipInputFor]="whitelistReceivers" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
+				(matChipInputTokenEnd)="add($event, 'WHITE_LIST_OUTGOING')">
+		</mat-chip-list>
+		<mat-hint>{{'OUTGOING_ALLOWED_DESCRIPTION' | translate}}</mat-hint>
+	</mat-form-field>
+	<label class="mat-h2">{{'RECEIVERS_ALLOWED' | translate}}</label>
+	<mat-form-field appearance="outline">
+		<mat-label>{{'ADD_EMAIL_ADDRESSES_OR_DOMAINS_TO_ALLOWED' | translate}}</mat-label>
+		<mat-chip-list #whitelistSenders>
+			<mat-chip *ngFor="let email of EMAIL_LIST.WHITE_LIST_INCOMING" [selectable]="true" [removable]="true"
+				(removed)="remove(email, 'WHITE_LIST_INCOMING')">
+				{{email}}
+				<mat-icon matChipRemove>cancel</mat-icon>
+			</mat-chip>
+			<input [matChipInputFor]="whitelistSenders" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
+				(matChipInputTokenEnd)="add($event, 'WHITE_LIST_INCOMING')">
+		</mat-chip-list>
+		<mat-hint>{{'INCOMING_ALLOWED_DESCRIPTION' | translate}}</mat-hint>
+	</mat-form-field>
+
+	<!--BLACKLIST-->
+	<label class="mat-h2">{{'SENDERS_BLOCKED' | translate}}</label>
+	<mat-form-field appearance="outline">
+		<mat-label>{{'ADD_EMAIL_ADDRESSES_OR_DOMAINS_TO_BLOCKED' | translate}}</mat-label>
+		<mat-chip-list #receivers>
+			<mat-chip *ngFor="let email of EMAIL_LIST.BLACK_LIST_OUTGOING" [selectable]="true" [removable]="true"
+				(removed)="remove(email, 'BLACK_LIST_OUTGOING')">
+				{{email}}
+				<mat-icon matChipRemove>cancel</mat-icon>
+			</mat-chip>
+			<input [matChipInputFor]="receivers" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
+				(matChipInputTokenEnd)="add($event, 'BLACK_LIST_OUTGOING')">
+		</mat-chip-list>
+		<mat-hint>{{'OUTGOING_BLOCKED_DESCRIPTION' | translate}}</mat-hint>
+	</mat-form-field>
+	<label class="mat-h2">{{'RECEIVERS_BLOCKED' | translate}}</label>
+	<mat-form-field appearance="outline">
+		<mat-label>{{'ADD_EMAIL_ADDRESSES_OR_DOMAINS_TO_BLOCKED' | translate}}</mat-label>
+		<mat-chip-list #senders>
+			<mat-chip *ngFor="let email of EMAIL_LIST.BLACK_LIST_INCOMING" [selectable]="true" [removable]="true"
+				(removed)="remove(email, 'BLACK_LIST_INCOMING')">
+				{{email}}
+				<mat-icon matChipRemove>cancel</mat-icon>
+			</mat-chip>
+			<input [matChipInputFor]="senders" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
+				(matChipInputTokenEnd)="add($event, 'BLACK_LIST_INCOMING')">
+		</mat-chip-list>
+		<mat-hint>{{'INCOMING_BLOCKED_DESCRIPTION' | translate}}</mat-hint>
+	</mat-form-field>
+
+</div>

@@ -1,0 +1,83 @@
+<app-toolbar [templateRef]="customTemplateRef"></app-toolbar>
+<ng-template #customTemplateRef>
+	<div fxLayoutAlign="flex-end center" fxLayoutGap="10px">
+		<button mat-raised-button color="default" *ngIf="roleName == 'SystemAdmin' || roleName == 'Agent'"
+			[routerLink]="['','guide', 'articles', 'manage']">
+			{{'MANAGE_ARTICLES' | translate}}
+		</button>
+		<button mat-raised-button color="primary" [matMenuTriggerFor]="categoryMenu"
+			*ngIf="roleName === 'SystemAdmin'">{{'MANAGE_CATEGORY' | translate}}</button>
+	</div>
+	<mat-menu #categoryMenu="matMenu">
+		<button mat-menu-item (click)="navigate(['guide', 'categories', category.categoryId])">
+			<mat-icon>edit</mat-icon>
+			<span>{{'EDIT' | translate}}</span>
+		</button>
+		<button mat-menu-item [matMenuTriggerFor]="addCategoryMenu">
+			<mat-icon>add_box</mat-icon>
+			<span>{{'ADD' | translate}}</span>
+		</button>
+	</mat-menu>
+	<mat-menu #addCategoryMenu="matMenu">
+		<button mat-menu-item (click)="newSection()">
+			<mat-icon>note_add</mat-icon>
+			<span>{{'SECTION' | translate}}</span>
+		</button>
+	</mat-menu>
+</ng-template>
+<div fxLayout="column" class="pad10" fxLayoutGap="40px" [ngStyle]="{'margin-top': '20px', 'min-height': '94vh'}">
+	<div fxLayout="row" fxLayoutAlign=" center">
+		<div fxFlex></div>
+		<div fxLayout="column" fxFlex="50">
+			<div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxFlex="100" fxLayoutAlign="start center">
+				<label class="mat-body" fxFlex> <a class="link pointer" style="color: #3f51b5;"
+						(click)="navigate(['guide'])">{{'GUIDE_HOME' | translate}}</a>
+					&nbsp;&gt;&nbsp;<span>{{category.name}}</span> </label>
+				<!-- <mat-form-field>
+          <input matInput placeholder="{{'SEARCH' | translate}}">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field> -->
+			</div>
+		</div>
+		<div fxFlex></div>
+	</div>
+	<div>
+		<div fxFlex></div>
+		<mat-card fxLayout="column" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="100" fxLayoutAlign="center" *ngIf="!isLoading">
+			<h1 class="mat-headline" [ngStyle]="{'padding-left': '16px'}">{{category.name}}</h1>
+			<div fxLayout="row wrap" fxLayout.sm="column" fxLayout.xs="column">
+				<div fxFlex="50" *ngFor="let section of sections; let i=index">
+					<mat-list>
+						<h3 mat-subheader class="mat-subheading-2" fxFlexFill [ngStyle]="{'font-size': '19px', 'color': '#000000'}">
+							<a class="link pointer" (click)="viewDetail(section, 'Sections')">{{section.NAME}}</a>
+						</h3>
+						<div *ngIf="section['ARTICLES']" fxLayoutGap="20px">
+							<div *ngFor="let article of section['ARTICLES']; last as last">
+								<mat-list-item> <a class="section-heading link pointer" fxFlexFill
+										(click)="viewDetail(article, 'Articles')">{{article.TITLE}}</a>
+									<mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+								</mat-list-item>
+							</div>
+							<div *ngIf="section['ARTICLES'].length===0">
+								<mat-list-item><i>{{'EMPTY' | translate}}</i></mat-list-item>
+							</div>
+						</div>
+					</mat-list>
+				</div>
+				<div fxFlex *ngIf="sections.length===0">
+					<mat-list>
+						<h3 mat-subheader class="mat-subheading-2">{{'EMPTY' | translate}}</h3>
+					</mat-list>
+				</div>
+			</div>
+		</mat-card>
+		<div *ngIf="isLoading" fxLayoutAlign="center" fxFlex="50">
+			<mat-spinner></mat-spinner>
+		</div>
+		<div fxFlex></div>
+	</div>
+	<div fxFlex></div>
+	<div *ngIf="!isAuthenticated" fxLayoutAlign="flex-end end" style="padding: 20px">
+		<label class="mat-body" [innerHTML]="'BACKLINK_TEXT' | translate"></label>
+	</div>
+</div>

@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+    tier: frontend
+    track: pre
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+      tier: frontend
+      track: pre
+  template:
+    metadata:
+      labels:
+        app: nginx
+        tier: frontend
+        track: pre
+    spec:
+      containers:
+      - name: nginx
+        image: master:5000/nginx:1
+        readinessProbe:
+          tcpSocket:
+            port: 443
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        ports:
+        - containerPort: 443
+      - name: consul
+        image: master:5000/consul:1
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/config
+        imagePullPolicy: Always
+      volumes:
+      - name: config-volume
+        configMap:
+          name: consul-agent-nginx

@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification
+  namespace: NAMESPACE_REPLACE
+spec:
+  selector:
+    matchLabels:
+      app: notification
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: notification
+    spec:
+      containers:
+        - name: notification
+          image: gitlab.bluemsp.com:5050/ngdesk/ngdesk/notification:latest
+          env:
+          - name: SPRING_PROFILES_ACTIVE
+            value: prod
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8096
+

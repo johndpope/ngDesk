@@ -1,0 +1,75 @@
+<StackLayout>
+  <Label text="blacklist works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<app-toolbar></app-toolbar>
+<div fxLayout="column" class="pad10" style="overflow:auto;">
+  <app-title-bar title="{{'WHITELIST_BLACKLIST' | translate }}" buttonText="{{'SAVE'|translate}}"
+      (buttonRightOnClick)="save()"></app-title-bar>
+  <!-- WHITE_LIST ->
+  <label class="mat-h2">{{'SENDERS_WHITELIST' | translate}}</label>
+  <mat-form-field appearance="outline">
+    <mat-label>{{'ADD_EMAIL_ADDRESSES_OR_DOMAINS_TO_WHITELIST' | translate}}</mat-label>
+    <mat-chip-list #whitelistReceivers>
+      <mat-chip *ngFor="let email of EMAIL_LIST.WHITE_LIST_OUTGOING" [selectable]="true"
+          [removable]="true" (removed)="remove(email, 'WHITE_LIST_OUTGOING')">
+        {{email}}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+      <input [matChipInputFor]="whitelistReceivers" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="add($event, 'WHITE_LIST_OUTGOING')">
+    </mat-chip-list>
+    <mat-hint>{{'OUTGOING_WHITELIST_DESCRIPTION' | translate}}</mat-hint>
+  </mat-form-field>
+  <label class="mat-h2">{{'RECEIVERS_WHITELIST' | translate}}</label>
+  <mat-form-field appearance="outline">
+    <mat-label>{{'ADD_EMAIL_ADDRESSES_OR_DOMAINS_TO_WHITELIST' | translate}}</mat-label>
+    <mat-chip-list #whitelistSenders>
+      <mat-chip *ngFor="let email of EMAIL_LIST.WHITE_LIST_INCOMING" [selectable]="true"
+          [removable]="true" (removed)="remove(email, 'WHITE_LIST_INCOMING')">
+        {{email}}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+      <input [matChipInputFor]="whitelistSenders" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="add($event, 'WHITE_LIST_INCOMING')">
+    </mat-chip-list>
+    <mat-hint>{{'INCOMING_WHITELIST_DESCRIPTION' | translate}}</mat-hint>
+  </mat-form-field>
+
+  <!--BLACKLIST->
+  <label class="mat-h2">{{'SENDERS_BLACKLIST' | translate}}</label>
+  <mat-form-field appearance="outline">
+    <mat-label>{{'ADD_EMAIL_ADDRESSES_OR_DOMAINS_TO_BLACKLIST' | translate}}</mat-label>
+    <mat-chip-list #receivers>
+      <mat-chip *ngFor="let email of EMAIL_LIST.BLACK_LIST_OUTGOING" [selectable]="true"
+          [removable]="true" (removed)="remove(email, 'BLACK_LIST_OUTGOING')">
+        {{email}}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+      <input [matChipInputFor]="receivers" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="add($event, 'BLACK_LIST_OUTGOING')">
+    </mat-chip-list>
+    <mat-hint>{{'OUTGOING_BLACKLIST_DESCRIPTION' | translate}}</mat-hint>
+  </mat-form-field>
+  <label class="mat-h2">{{'RECEIVERS_BLACKLIST' | translate}}</label>
+  <mat-form-field appearance="outline">
+    <mat-label>{{'ADD_EMAIL_ADDRESSES_OR_DOMAINS_TO_BLACKLIST' | translate}}</mat-label>
+    <mat-chip-list #senders>
+      <mat-chip *ngFor="let email of EMAIL_LIST.BLACK_LIST_INCOMING" [selectable]="true"
+          [removable]="true" (removed)="remove(email, 'BLACK_LIST_INCOMING')">
+        {{email}}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+      <input [matChipInputFor]="senders" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="add($event, 'BLACK_LIST_INCOMING')">
+    </mat-chip-list>
+    <mat-hint>{{'INCOMING_BLACKLIST_DESCRIPTION' | translate}}</mat-hint>
+  </mat-form-field>
+
+</div>
+-->

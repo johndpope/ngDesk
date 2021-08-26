@@ -1,0 +1,26 @@
+.flag-img {
+	vertical-align: middle;
+	margin-right: 8px;
+}
+
+[dir='rtl'] .flag-img {
+	margin-right: 0;
+	margin-left: 8px;
+}
+
+.phone .mat-select {
+	max-width: 15px;
+	display: inline-flex;
+}
+
+::ng-deep .no-line .mat-form-field-underline {
+	display: none;
+}
+
+.no-line {
+	top: 17px;
+}
+
+::ng-deep .phone .mat-select-arrow {
+	display: none;
+}

@@ -1,0 +1,32 @@
+<StackLayout>
+  <Label text="panel-settings-dialog works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<h1 mat-dialog-title class="mat-h1">{{'PANEL_SETTINGS' | translate}}</h1>
+<div mat-dialog-content style="width:700px;height:480px">
+    <form [formGroup]="actionForm" (ngSubmit)="save()">
+        <div fxLayout="column" fxLayoutAlign="center start" fxLayoutGap="10px">
+            <mat-form-field>
+                <mat-select placeholder="Action" formControlName="ACTION">
+                <mat-option value="SHOW">Show</mat-option>
+                <mat-option value="HIDE">Hide</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div>
+                <app-conditions *ngIf="panelSettingsDialogLoaded" [parentName]="'validationComponent'" [passedInModule]="moduleId" [conditions]="settings.conditions" [fields]="fields">
+                </app-conditions>
+            </div>
+        </div>
+    </form>
+</div>
+<div mat-dialog-actions fxLayoutAlign="end" [ngStyle]="{'margin-top':'40px'}">
+  <button mat-raised-button (click)="cancel()">{{data.closeDialog}}</button>
+  <button mat-raised-button (click)="save()" color="primary">{{data.buttonText}}</button>
+</div>
+
+-->

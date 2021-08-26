@@ -1,0 +1,17 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<div fxLayout="column" fxLayoutGap="10px" class="pad10">
+	<ng-template #headerTemplateRef>
+		<app-title-bar (buttonRightOnClick)="inviteUsers()" title="{{'MANAGE_INVITES' | translate}}" [buttonText]="'NEW' | translate">
+		</app-title-bar>
+	</ng-template>
+	<div fxFlex>
+		<app-custom-table [actions]="manageActions.actions"
+			(menuItemTrigger)="manageActions[$event.ACTION.NAME.toLowerCase()]($event.ROW_DATA);" [templateRef]="columnTemplateRef"
+			noRecordsMessage="No pending invites found" (pageChangeEmit)="pageChangeEmit($event);customTableService.isLoading = true"
+			(sortData)="sortData($event);customTableService.isLoading = true" (timer)="getInvites()">
+			<ng-template #columnTemplateRef let-element="element" let-col="col">
+				{{element[col.NAME]}}
+			</ng-template>
+		</app-custom-table>
+	</div>
+</div>

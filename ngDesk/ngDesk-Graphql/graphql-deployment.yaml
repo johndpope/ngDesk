@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: graphql
+  namespace: NAMESPACE_REPLACE
+spec:
+  selector:
+    matchLabels:
+      app: graphql
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: graphql
+    spec:
+      containers:
+        - name: graphql
+          image: gitlab.bluemsp.com:5050/ngdesk/ngdesk/graphql:latest
+          env:
+          - name: SPRING_PROFILES_ACTIVE
+            value: prod
+          - name: JAVA_OPTS
+            value: '-Xmx7g -Xms2g'
+          resources:
+            limits:
+              memory: 8Gi
+            requests:
+              memory: 8Gi
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8094

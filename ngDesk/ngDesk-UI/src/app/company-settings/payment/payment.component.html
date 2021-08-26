@@ -1,0 +1,102 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<div class="pad10" fxLayout="column" fxLayoutGap="50px">
+	<ng-template #headerTemplateRef>
+		<app-title-bar class="light-grey-color" [title]="'SUBSCRIPTION' | translate"></app-title-bar>
+	</ng-template>
+
+	<mat-card [ngStyle]="{'display': isLoading === true ? 'none' : 'block'}" style="width: 60%; height: 60%;" style="padding: 5%;">
+		<div *ngIf="subscritionStatus !== 'ACTIVE'" fxLayout="column" fxLayoutGap="30px">
+			<div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="50px">
+				<mat-card class="pointer" style="padding: 0" (click)="toggleSelected('Team')">
+					<mat-card-header style="padding: 5px;" [ngStyle]="{'background': plan === 'Team' ? '#f44336': 'rgba(0,0,0,.06)'}">
+						<mat-card-title style="margin-bottom: 0;" fxLayoutAlign="center center" fxLayoutGap="10px">
+							{{"ON_PREMISE" | translate}}
+							<mat-icon style="transform: scale(0.8);" (mouseover)="isOpenPremise = !isOpenPremise"
+								(mouseout)="isOpenPremise = !isOpenPremise" cdkOverlayOrigin #onPremise="cdkOverlayOrigin">help_outline
+							</mat-icon>
+							<ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="onPremise" [cdkConnectedOverlayOpen]="isOpenPremise">
+								<ul class="plan-overlay">
+									<li>{{'ON_PREMISE_HINT_1' | translate}}</li>
+									<li>{{'ON_PREMISE_HINT_2' | translate}}</li>
+									<li>{{'ON_PREMISE_HINT_3' | translate}}</li>
+									<li>{{'ON_PREMISE_HINT_4' | translate}}</li>
+									<li>{{'ON_PREMISE_HINT_5' | translate}}</li>
+									<li>{{'ON_PREMISE_HINT_6' | translate}}</li>
+								</ul>
+							</ng-template>
+						</mat-card-title>
+					</mat-card-header>
+					<mat-card-content style="padding: 5px">
+						<div fxLayout="row" fxLayoutAlign="center center">
+							<label class="mat-body" style="font-weight: 500">$4</label>
+							<sub>
+								{{"PER_AGENT_PER_MONTH" | translate}}
+							</sub>
+						</div>
+					</mat-card-content>
+				</mat-card>
+				<mat-card class="pointer" style="padding: 0" (click)="toggleSelected('Enterprise')">
+					<mat-card-header style="padding: 5px;" [ngStyle]="{'background': plan === 'Enterprise' ? '#f44336': 'rgba(0,0,0,.06)'}">
+						<mat-card-title style="margin-bottom: 0;" fxLayoutAlign="center center" fxLayoutGap="10px">
+							{{"ENTERPRISE" | translate}}
+							<mat-icon style="transform: scale(0.8);" (mouseover)="isOpenEnterprise = !isOpenEnterprise"
+								(mouseout)="isOpenEnterprise = !isOpenEnterprise" cdkOverlayOrigin #enterprise="cdkOverlayOrigin">help_outline
+							</mat-icon>
+							<ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="enterprise" [cdkConnectedOverlayOpen]="isOpenEnterprise">
+								<ul class="plan-overlay">
+									<li>{{'ENTERPRISE_HINT_1' | translate}}</li>
+									<li>{{'ENTERPRISE_HINT_2' | translate}}</li>
+									<li>{{'ENTERPRISE_HINT_3' | translate}}</li>
+									<li>{{'ENTERPRISE_HINT_4' | translate}}</li>
+									<li>{{'ENTERPRISE_HINT_5' | translate}}</li>
+									<li>{{'ENTERPRISE_HINT_6' | translate}}</li>
+								</ul>
+							</ng-template>
+						</mat-card-title>
+					</mat-card-header>
+					<mat-card-content style="padding: 5px">
+						<div fxLayout="row" fxLayoutAlign="center center">
+							<label class="mat-body" style="font-weight: 500">$7</label>
+							<sub>
+								{{"PER_AGENT_PER_MONTH" | translate}}
+							</sub>
+						</div>
+					</mat-card-content>
+				</mat-card>
+			</div>
+			<div fxLayout="column" fxLayoutGap="20px">
+				<div fxLayout="row" fxLayoutAlign="center center">
+					<form #checkout="ngForm" (ngSubmit)="onSubmit(checkout)" class="checkout">
+						<div fxLayoutAlign="space-between center">
+							<mat-form-field>
+								<mat-label>{{'AGENTS_PER_MONTH' | translate}}</mat-label>
+								<input type="number" name="users" min="1" matInput [(ngModel)]="noOfUsers" (ngModelChange)="calculateBill()"
+									[required]="true" />
+							</mat-form-field>
+							<div *ngIf="estimatedPay && estimatedPay > 0"
+								style="border-width: 2px; border-style: solid; border-radius: 5px;padding: 5px; border-color: #9E9E9E;">
+								<mat-label class="billEstimate">
+									{{'BILL_PER_MONTH' | translate}}</mat-label>
+								<mat-label class="billEstimate"> ${{estimatedPay}}
+								</mat-label>
+							</div>
+						</div>
+						<div class="form-row">
+							<div id="card-info" #cardInfo></div>
+						</div>
+					</form>
+				</div>
+				<div fxLayout="row" fxLayoutAlign="center center">
+					<button mat-raised-button color="primary" (click)="onSubmit(checkout)">{{'COMPLETE_PAYMENT' | translate}}</button>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="subscritionStatus === 'ACTIVE'" fxLayout="column" fxLayoutGap="30px" fxLayoutAlign="center center">
+			<mat-icon style="transform: scale(4);" [ngStyle]="{'color':'#00E676'}">done</mat-icon>
+			<mat-label [innerHTML]="'ACTIVE_SUBSCRIPTION' | translate:{'plan': plan, 'noOfUsers': noOfUsers, 'estimatedPay': estimatedPay}">
+			</mat-label>
+			<mat-label>{{'CHANGE_SUBSCRIPTION' | translate}}</mat-label>
+		</div>
+	</mat-card>
+	<mat-spinner [ngStyle]="{'display': isLoading === false ? 'none' : 'block'}"></mat-spinner>
+</div>

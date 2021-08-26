@@ -1,0 +1,144 @@
+<!-- <mat-toolbar style="height:48px; padding-right: 66px;"> -->
+<mat-toolbar style="min-height:48px;">
+	<!-- START PUBLIC TOOLBAR -->
+	<div class="app-toolbar">
+		<div *ngIf="!authToken" fxLayoutAlign="space-between center" style="padding: 6px 10px; position:relative;flex-grow: 1;"
+			class="mat-elevation-z1">
+			<div>
+				<img *ngIf="logo" fxLayoutAlign="" [src]="logo" height="35" width="35" />
+			</div>
+			<div fxLayoutGap="10px">
+				<button mat-raised-button color="primary" (click)="goToLogin()">
+					{{ 'LOGIN' | translate }}
+				</button>
+				<button *ngIf="enableSignup" mat-raised-button color="default" (click)="goToSignup()">
+					{{ 'SIGNUP' | translate }}
+				</button>
+			</div>
+		</div>
+		<!--BEGIN DROPDOWN MENU + HELP + SUBMENU BUTTONS  -->
+		<div *ngIf="authToken !== '' && authToken !== null" fxLayoutAlign="space-between center"
+			style="padding: 6px 10px; position:relative;flex-grow: 1;" class="mat-elevation-z1">
+			<!--BEGIN MENU-->
+			<div fxFlex="1 1 auto">
+				<ng-container *ngTemplateOutlet="templateRef"></ng-container>
+			</div>
+			<span fxFlex="10px"></span>
+
+			<div *ngIf="showGettingStarted" fxLayoutAlign="center center">
+				<button (click)="navigateToGettingStarted()" mat-raised-button *ngIf="!loaded && !gettingStarted"
+					style="margin: 0px;  border-radius: 8px;" class="mat-h4">
+					{{'GETTING_STARTED' | translate}}
+				</button>
+				<button (click)="navigateToGettingStarted()" mat-raised-button *ngIf="!gettingStarted && loaded"
+					style="margin: 0px;  border-radius: 8px;" class="mat-h4">
+					{{'GETTING_STARTED' | translate}}: {{value}}%
+				</button>
+			</div>
+
+			<a href="https://support.ngdesk.com" target="_blank" style="color: inherit;">
+				<button mat-button style="padding: 0px; min-width: 40px;" matTooltip="{{ 'HELP_CENTER' | translate }}">
+					<mat-icon class="light-grey-color">help_outline</mat-icon>
+				</button>
+			</a>
+
+			<button mat-button style="padding: 0px; min-width: 40px;" matTooltip="{{ 'CATALOGUES' | translate }}" (click)="navigateToCatalogue()">
+				<mat-icon class="light-grey-color">design_services</mat-icon>
+			</button>
+
+			<button mat-button style="padding: 0px; min-width: 40px;" (click)="openAutocomplete($event)"
+				matTooltip="{{ 'NOTIFICATIONS' | translate }}">
+				<!--TODO: Set number of notififcation and hide badge if no notifications-->
+				<mat-icon style="position: relative;left:8px;bottom: -1px;" fontSet="material-icons-outlined" [matBadge]="unreadNotificationsLength"
+					matBadgeColor="primary" matBadgeSize="medium" [matBadgeHidden]="unreadNotificationsLength < 1" class="light-grey-color">
+					notifications</mat-icon>
+				<input style="width: 0%;height: 0%;border: white;background: white;padding-top: 20px;" #inputAutoComplete type="button"
+					[matAutocomplete]="notificationDropdown">
+				<mat-autocomplete (appAutocompleteScroll)="onScroll()" [panelWidth]="panelWidth" #notificationDropdown="matAutocomplete">
+					<mat-option style="font-weight: 500;" *ngIf="unreadNotificationsLength < 1">
+						{{ 'NO_NOTIFICATIONS' | translate }}
+					</mat-option>
+					<div *ngIf="unreadNotificationsLength > 0">
+						<mat-option style="font-weight: 500;font-size: 20px;position:sticky;top: 0px;z-index: 10;background: white;">
+							{{ 'NOTIFICATIONS' | translate }}
+							<mat-icon color="primary" style="margin-right: 0px;float: right;padding-top: 12px;"
+								matTooltip="{{ 'READ_ALL_NOTIFICATIONS' | translate }}" (click)="readAll()">done_all</mat-icon>
+							<mat-divider style="border-color: black;"></mat-divider>
+						</mat-option>
+						<mat-option *ngFor="let notification of filteredUnreadNotifications" (click)="openEntry(notification)"
+							matTooltip="{{notification.message}}">
+							<mat-icon color="primary" style="font-size: 15px;padding-top: 6px;">fiber_manual_record</mat-icon>
+							{{notification.message}}
+							<mat-divider></mat-divider>
+						</mat-option>
+					</div>
+				</mat-autocomplete>
+			</button>
+			<button id="profile" mat-button [matMenuTriggerFor]="profileDropdown" style="padding: 0px; min-width: 40px;">
+				<mat-icon class="light-grey-color" fontSet="material-icons-outlined">person</mat-icon>
+				<!-- <mat-icon [ngStyle]="{color:statusColor}">fiber_manual_record</mat-icon> -->
+			</button>
+			<mat-menu id="menu" #profileDropdown="matMenu">
+				<div mat-menu-item (click)="viewProfile()" fxLayout="row" fxLayoutAlign="normal center">
+					<img *ngIf="profilePicURL!=''" [src]="profilePicURL" alt="" width="40px" height="40px"
+						style="margin-right: 10px; border: 2px solid rgb(145, 139, 139);border-radius: 40px;">
+					<mat-icon *ngIf="profilePicURL==''">account_circle</mat-icon>
+					<div fxLayout="column">
+						<span class="mat-body">{{ usersService.user?.FIRST_NAME }}
+							{{ usersService.user?.LAST_NAME }}</span>
+						<span class="mat-small">{{ 'VIEW_PROFILE' | translate }}</span>
+					</div>
+				</div>
+				<mat-divider></mat-divider>
+
+				<!-- Code reated to the chat actions in login menu Uncomment the code if need chat related UI -->
+
+				<!-- <button *ngIf="showAcceptChat" mat-menu-item (click)="chatStatus(true);$event.stopPropagation();" fxLayoutAlign="normal center">
+						<mat-icon>
+							<mat-spinner [diameter]="20" *ngIf="!accept && !isAcceptingChats"></mat-spinner>
+							<span *ngIf="isAcceptingChats">done</span>
+						</mat-icon>
+						<span>{{'ACCEPT_CHATS' | translate}}</span>
+					</button>
+					<button *ngIf="showAcceptChat" mat-menu-item (click)="chatStatus(false);$event.stopPropagation();">
+						<mat-icon>
+							<mat-spinner [diameter]="20" *ngIf="!accept && isAcceptingChats"></mat-spinner>
+							<span *ngIf="!isAcceptingChats">block</span>
+						</mat-icon>
+						<span>{{'DONT_ACCEPT_CHATS' | translate}}</span>
+					</button> -->
+				<!-- <button mat-menu-item [matMenuTriggerFor]="statusMenu">
+			<mat-icon>check_circle</mat-icon> <span >{{'STATUS' | translate}}</span>
+		  </button> -->
+				<button mat-menu-item (click)="logout()">
+					<mat-icon>exit_to_app</mat-icon> <span>{{ 'LOGOUT' | translate }}</span>
+				</button>
+			</mat-menu>
+			<!-- <mat-icon [ngStyle]="{color:statusColor}">fiber_manual_record</mat-icon> -->
+			<!-- <mat-menu #statusMenu="matMenu" xPosition="before">
+		  <span *ngFor="let status of statuses">
+			<button mat-menu-item (click)="statusChange(status.NAME); statusColor = status.COLOR">
+			  <mat-icon [ngStyle]="{'color': status.COLOR}">fiber_manual_record</mat-icon>{{status.NAME | translate}}
+			</button>
+		  </span>
+		</mat-menu> -->
+
+			<!--END MENU-->
+			<!-- TODO: ADD BACK WHEN HELP SECTION READY -->
+			<!-- <div>
+		  <button mat-icon-button>
+			<mat-icon aria-label=" icon-button with a help icon">help</mat-icon>
+		  </button>
+		</div> -->
+
+			<!-- TODO: ADD BACK WHEN INTERNAL CHAT READY -->
+			<!-- <div>
+		  <button mat-icon-button>
+			<mat-icon aria-label="icon-button with a dehaze icon">dehaze</mat-icon>
+		  </button>
+		</div> -->
+		</div>
+	</div>
+	<!--END DROPDOWN MENU + HELP + SUBMENU BUTTONS  -->
+</mat-toolbar>
+<!-- <mat-divider></mat-divider> -->

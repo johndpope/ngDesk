@@ -1,0 +1,106 @@
+<StackLayout>
+  <Label text="FacebookChannelDialogComponent works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<app-sliding-view-panel [activePane]="active">
+  <div fxLayout="column" fxLayoutAlign="space around center" paneOne>
+    <h1 mat-dialog-title class="mat-headline" fxLayoutAlign="center">
+      {{ 'FACEBOOK_CHANNEL' | translate }}
+    </h1>
+    <div fxLayoutAlign="center" *ngIf="errorMessage != ''">
+      <mat-error class="mat-h3" fxLayoutAlign="center">{{
+        errorMessage
+      }}</mat-error>
+    </div>
+    <form [formGroup]="facebookChannelForm">
+      <div mat-dialog-content fxLayout="column">
+        <mat-form-field>
+          <input matInput placeholder="{{ 'NAME' | translate }}" formControlName="name" required />
+          <mat-error [innerHTML]="'FIELD_REQUIRED' | translate: errorParams.name"></mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="{{ 'DESCRIPTION' | translate }}" formControlName="description" />
+        </mat-form-field>
+      </div>
+      <div mat-dialog-actions fxLayoutAlign="center center">
+        <button mat-raised-button [mat-dialog-close]="facebookChannelForm" cdkFocusInitial>
+          {{ 'CLOSE' | translate }}
+        </button>
+        <button mat-raised-button color="primary" (click)="save()">
+          {{ 'SAVE' | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+  <div fxLayout="column" fxLayoutAlign="space around center" fxLayoutGap="10px" paneTwo>
+    <h1 mat-dialog-title class="mat-headline" fxLayoutAlign="center">
+      {{ 'CONNECT_TO_FACEBOOK' | translate }}
+    </h1>
+    <div fxLayoutAlign="center center">
+      <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="20px">
+        <label class="mat-body" fxFlex>{{'THIS_MIGHT_TAKE_UP_TO_MINUTE' | translate}}
+        </label>
+        <mat-spinner></mat-spinner>
+        <button mat-raised-button color="primary" (click)="cancel()">
+          {{ 'CANCEL' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div fxLayout="column" fxLayoutAlign="space around center" fxLayoutGap="10px" paneThree>
+    <div fxLayout="column">
+      <span class="mat-h1 no-margin-bottom">
+        {{ 'ADD_FACEBOOK_PAGES' | translate }}
+      </span>
+      <span class="mat-h3 no-margin-bottom">
+        ({{entry? entry.PAGES.length: 0 }} {{'PAGES_ADDED' | translate }} )
+      </span>
+      <span class="mat-body">
+        {{'SIGNED_IN_FOR_FACEBOOK' | translate }} {{facebookUserName.FIRST_NAME}} {{facebookUserName.LAST_NAME}}
+      </span>
+    </div>
+    <div fxLayoutAlign="center" *ngIf="errorMessage != ''">
+      <mat-error class="mat-h3" fxLayoutAlign="center">{{
+        errorMessage
+      }}</mat-error>
+    </div>
+    <div *ngIf="!pages" fxLayoutAlign="center">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div fxLayoutAlign="center" fxLayout="column" fxLayoutGap="10px">
+      <div *ngFor="let page of pages" fxLayoutAlign="space-between center" style="border:1px solid #ddd; padding:5px;border-radius:5px">
+        <div fxLayout="row" fxLayoutGap="10px">
+          <span style='border:1px solid #dddddd'>
+            <img src="https://graph.facebook.com/{{page.PAGE_ID}}/picture">
+          </span>
+          <div fxLayout="column" fxLayoutAlign="center">
+            <span class="mat-body"><a href="https://facebook.com/{{page.PAGE_ID}}">{{page["PAGE_NAME"]}}</a></span>
+            <span class="mat-caption">{{page.PAGE_CATEGORY}}</span>
+          </div>
+        </div>
+        <div>
+          <mat-checkbox color="primary" [(ngModel)]="page.IS_ACTIVE">
+            {{'IMPORT' | translate }}
+          </mat-checkbox>
+        </div>
+      </div>
+    </div>
+
+    <div fxLayoutAlign="center" fxLayoutGap="10px">
+      <button mat-raised-button [mat-dialog-close]>
+        {{ 'CLOSE' | translate }}
+      </button>
+      <button mat-raised-button color="primary" (click)="savePages()">
+        {{ 'DONE' | translate }}
+      </button>
+    </div>
+  </div>
+</app-sliding-view-panel>
+
+-->

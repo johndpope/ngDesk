@@ -1,0 +1,24 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef>
+  <div fxLayoutAlign="space-between center" fxLayoutGap="10px">
+    <app-title-bar class="light-grey-color" title="{{'FILE_RULES' | translate}}"></app-title-bar>
+    <button mat-raised-button color="primary" (click)="createNewRule()" #customButton>
+      {{'NEW' | translate}}
+    </button>
+  </div>
+</ng-template>
+
+<div fxLayout="column" fxLayoutGap="10px" class="pad10">
+  <div fxLayout="row">
+    <div fxFlex>
+      <app-custom-table [templateRef]="columnTemplateRef" noRecordsMessage="{{'NO_FILE_RULES_FOUND' | translate}}"
+        (rowClickedEvent)="rowClicked($event)" (sortData)="sortData();customTableService.isLoading = true"
+        (pageChangeEmit)="pageChangeEmit($event);customTableService.isLoading = true">
+        <ng-template #columnTemplateRef let-element="element" let-col="col">
+          <span *ngIf="col.NAME !== 'DATE_CREATED'">{{element[col.NAME]}}</span>
+          <span *ngIf="col.NAME === 'DATE_CREATED'">{{element[col.NAME] | dateFormat: 'MMM d, y, h:mm a'}}</span>
+        </ng-template>
+      </app-custom-table>
+    </div>
+  </div>
+</div>

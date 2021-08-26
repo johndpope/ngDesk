@@ -1,0 +1,208 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef>
+	<div fxLayoutAlign="space-between center" fxLayoutGap="10px">
+		<app-title-bar class="light-grey-color" [labelTemplateRef]="labelTemplateRef" title="{{controller.HOST_NAME}}"
+			buttonText="{{'RESTART_AGENT' | translate}}" (buttonRightOnClick)="restartAgent()" style="min-width: 100%"></app-title-bar>
+	</div>
+</ng-template>
+
+<ng-template #labelTemplateRef>
+	<span class="status-dot-online" *ngIf="controller.STATUS==='Online'">
+
+	</span>
+	<span class="status-dot-offline" *ngIf="controller.STATUS==='Offline'"></span>
+</ng-template>
+
+<div fxLayout="column" [ngStyle]="{'height': 'calc(100vh - 49px)'}">
+	<div fxLayout="row" fxLayoutAlign="space-between center"
+		[ngStyle]="{'min-height': '50px' , 'border-bottom' : '1px solid rgba(0,0,0,.12)' }">
+		<mat-tab-group dynamicHeight [(selectedIndex)]="controllerTabIndex" (selectedTabChange)="onSelectTabs($event)"
+			class="mat-tab-group-with-button">
+			<mat-tab label="{{'APPLICATIONS' | translate}}">
+			</mat-tab>
+			<mat-tab label="{{'LOGS' | translate}}"></mat-tab>
+			<mat-tab disabled>
+				<!--ToDo: Need to enable install button -->
+				<!-- <ng-template mat-tab-label>
+								<button mat-raised-button color="primary"> {{'INSTALL' | translate}} </button>
+							</ng-template> -->
+			</mat-tab>
+		</mat-tab-group>
+	</div>
+	<div fxLayout="row" fxLayoutAlign="center">
+		<div fxFlex="100">
+			<mat-card style="padding:0px">
+				<div fxLayout="column" *ngIf="tabType==='Applications'">
+					<!--Download button for Agent -->
+					<!-- <div class="pad10" fxLayoutAlign="end start" fxLayoutGap="10px"> -->
+
+					<!-- TODO: Will enable in future with subapp update feature -->
+					<!-- <div fxLayout="column">
+									<label class="mat-body-strong" style="font-style: italic; color: blue;"> {{'SUBAPPS_UPDATE_AVAIABLE' | translate}} </label>
+									<mat-progress-bar mode="indeterminate" style="height: 5px;" value="40"></mat-progress-bar>
+								</div>
+								<div>
+									<button class="light-button" mat-stroked-button color="primary"> {{'UPDATE_ALL' | translate}} </button>
+								</div> -->
+					<!-- </div> -->
+					<!--End of download button for Agent -->
+
+					<!--Adding Table for SubApps -->
+					<div fxFlex>
+						<div *ngIf="showSubApps; else elseblock">
+
+							<!--spinner for when retrieving data from back end  -->
+							<div flxLayout="row" fxLayoutAlign="center" *ngIf="isLoading ; else elseblock" style="margin-top:30px">
+								<mat-progress-spinner color="primary" mode="indeterminate">
+								</mat-progress-spinner>
+							</div>
+							<ng-template #elseblock>
+								<mat-list *ngFor="let subApp of controller.SUB_APPS;let i=index">
+									<mat-list-item>
+										<div mat-line>
+											<div fxFlex fxLayoutAlign="start" style="padding: 5px;">
+												<span class="mat-body-strong" style="padding: 5px;font:19px">{{subApp.NAME}}
+													<span class="status-dot-online" *ngIf="subApp.STATUS==='Online'"></span>
+													<span class="status-dot-offline" *ngIf="subApp.STATUS==='Offline'"></span>
+												</span>
+											</div>
+											<div fxFlex fxLayoutAlign="end" style="padding: 5px;">
+												<label class="mat-body-strong">{{'LAST_SEEN' | translate}}:</label>
+												<span class="mat-body"
+													style="margin-top: 2px;">{{subApp.LAST_SEEN | dateFormat: 'MMM d, y, h:mm a'}}</span>
+											</div>
+										</div>
+									</mat-list-item>
+									<mat-list-item>
+										<div mat-line>
+											<div fxLayoutAlign="start" fxFlex="90">
+												<button mat-raised-button color="primary" (click)="menuItemClicked(actions[0],subApp)">
+													<span>{{'VIEW_LOGS' | translate}}</span>
+												</button>
+											</div>
+											<div fxLayoutAlign="end" fxFlex="10">
+												<button mat-icon-button
+													[ngStyle]=" {'color': (controller.STATUS==='Online' && subApp.STATUS==='Offline' ) ? 'green' :'black'}"
+													(click)=" menuItemClicked(actions[1],subApp)" [disabled]="subApp.STATUS==='Online'">
+													<span class="material-icons">
+														play_circle_filled
+													</span>
+												</button>
+												<button mat-icon-button style="margin-left: 10px;"
+													[ngStyle]="{'color': (controller.STATUS === 'Online' && subApp.STATUS==='Online') ? 'red':'black'}"
+													(click)="menuItemClicked(actions[2],subApp)" [disabled]="subApp.STATUS==='Offline'">
+													<span class="material-icons">
+														stop_circle
+													</span>
+												</button>
+											</div>
+										</div>
+										<mat-divider *ngIf="i==0"></mat-divider>
+									</mat-list-item>
+									<!-- <mat-list-item>
+										<div mat-line>
+											<button mat-raised-button color="primary" (click)="menuItemClicked('VIEW_LOGS',subApp)">
+												<span>{{'VIEW_LOGS' | translate}}</span>
+											</button>
+										</div>
+
+										<div style="margin-top: 5%;">
+											<mat-divider *ngIf="i==0"></mat-divider>
+										</div>
+									</mat-list-item> -->
+
+								</mat-list>
+							</ng-template>
+						</div>
+
+						<!-- no records for when table is empty  -->
+						<ng-template #elseblock>
+							<div class="mat-h3" fxLayoutAlign="center center">
+								{{'SUB_APPLICATIONS_ERROR_MESSAGE' | translate}}</div>
+						</ng-template>
+					</div>
+					<!--End Table -->
+				</div>
+
+
+				<!--Log Tab -->
+				<div class="pad10" fxLayout="column" fxLayoutGap="10px" *ngIf="tabType==='Logs'">
+
+					<div fxLayout="row">
+						<div fxFlex="50" fxLayoutAlign="start start" fxLayoutGap="20px">
+							<div fxLayout="row" fxLayoutGap="20px">
+								<!--Select Menu for all the subApps and Controller-->
+								<mat-form-field>
+									<mat-label>{{'SELECT_APPLICATION' | translate}}</mat-label>
+									<mat-select [(ngModel)]="selectedApplication.NAME" (selectionChange)="applicationChanged($event)">
+										<mat-option *ngFor="let subApp of applications" [value]="subApp.NAME">
+											{{subApp.NAME}}
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+
+								<!--Select log level for application-->
+								<mat-form-field>
+									<mat-label>{{'APPLICATION_LOG_LEVEL' | translate}}</mat-label>
+									<mat-select [(ngModel)]="selectedApplication.LOG_LEVEL" (selectionChange)="changeLogLevel($event)">
+										<mat-option *ngFor="let log of logs" [value]="log">
+											{{log}}
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+
+								<!--Select Menu to the limit the log message-->
+								<mat-form-field>
+									<mat-label>{{'SELECT_LIMIT' | translate}}</mat-label>
+									<mat-select [(ngModel)]="limitSelected" (selectionChange)="getLogMessages()">
+										<mat-option *ngFor="let limit of limits" [value]="limit">
+											{{limit}}
+										</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+						</div>
+						<div fxFlex="50">
+
+							<!-- Console play and pause feature -->
+							<div fxLayoutAlign="end start" fxLayoutGap="10px" style="margin-top: 10px;">
+								<div fxLayout="row">
+									<button mat-icon-button [ngStyle]="{'color': (streamLogs) ? 'black':'limegreen'}"
+										(click)="getLogMessages();streamLogs = true;" [disabled]="streamLogs">
+										<mat-icon style="vertical-align: baseline; transform: scale(1.3);">
+											play_circle_outline
+										</mat-icon>
+									</button>
+									<button mat-icon-button [ngStyle]="{'color': (streamLogs) ? 'red':'black'}" [disabled]="!streamLogs"
+										(click)="streamLogs = false;">
+										<mat-icon style="vertical-align: baseline; transform: scale(1.3);">
+											pause_circle_outline
+										</mat-icon>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Begin Console -->
+					<div fxFlex>
+						<div class="pad10" style="background-color:black;width: inherit;height: 500px;overflow: auto;">
+							<div class="pad10" style="color:white;">
+								<div *ngFor="let logMessage of logMessages">
+									<!-- Display only Logs of selected level -->
+									<div
+										*ngIf="logMessage.LOGING_LEVEL === selectedApplication.LOG_LEVEL || selectedApplication.LOG_LEVEL === 'ALL'">
+										{{logMessage.DATE_CREATED | dateFormat : 'MMM d, y, h:mm a'}}
+										{{logMessage.LOGING_LEVEL}} ---
+										{{logMessage.LOG_MESSAGE}}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--End Console -->
+			</mat-card>
+		</div>
+	</div>
+</div>

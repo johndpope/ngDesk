@@ -1,0 +1,287 @@
+{
+  "NAME": "Tickets",
+  "DESCRIPTION": "Tickets Channel for incoming tickets",
+  "SOURCE_TYPE": "email",
+  "WORKFLOW": {
+    "NODES": [
+      {
+        "POSITION_X": "100px",
+        "POSITION_Y": "100px",
+        "VALUES": {},
+        "ID": "node-id-7592a496-af6d-8213-1123-42fc70d20b3b",
+        "TYPE": "Start",
+        "CONNECTIONS_TO": [
+          {
+            "TITLE": "START",
+            "FROM": "OUT",
+            "TO_NODE": "node-id-6b9556ca-c7b2-0036-cd75-4b21612ab21c"
+          }
+        ],
+        "NAME": "Start",
+        "PLUGS": [
+          {
+            "NAME": "OUT",
+            "ID": "output-plug-a4e68ec2-3316-7c1e-8521-ab293598c137",
+            "ORDER": 1
+          }
+        ]
+      },
+      {
+        "POSITION_X": "504px",
+        "POSITION_Y": "244px",
+        "VALUES": {
+          "VARIABLE": "DATA_ID",
+          "CONDITIONS": [
+            {
+              "ORDER": 1,
+              "VALUE": null,
+              "VALUES": null,
+              "TO_NODE": "node-id-43dbe5ce-d3a7-4fb3-b4df-07cf49fa75bec",
+              "OPERATOR": "not equals"
+            },
+            {
+              "ORDER": 0,
+              "VALUE": "",
+              "VALUES": null,
+              "TO_NODE": "node-id-5d33b3df-bdbb-50d1-1463-a8ada9994187",
+              "OPERATOR": ""
+            }
+          ]
+        },
+        "ID": "node-id-6b9556ca-c7b2-0036-cd75-4b21612ab21c",
+        "TYPE": "Route",
+        "CONNECTIONS_TO": [
+          {
+            "TITLE": "IF NO CONDITION MATCHES",
+            "FROM": "NO MATCH",
+            "TO_NODE": "node-id-5d33b3df-bdbb-50d1-1463-a8ada9994187"
+          },
+          {
+            "TITLE": "SUBJECT REGEX",
+            "FROM": "OUT 1",
+            "TO_NODE": "node-id-43dbe5ce-d3a7-4fb3-b4df-07cf49fa75bec"
+          }
+        ],
+        "NAME": "Route 1",
+        "PLUGS": [
+          {
+            "NAME": "INPUT",
+            "ID": "input-plug-705b5385-73a8-f8e5-715c-8233e78ba0b3",
+            "ORDER": 0
+          },
+          {
+            "NAME": "NO MATCH",
+            "ID": "output-plug-0788aaf5-ab48-a5bc-5000-323f81e510f2",
+            "ORDER": 1
+          },
+          {
+            "NAME": "OUT 1",
+            "ID": "output-plug-f3da42d7-c139-45d8-9dde-a01b03bc1e62",
+            "ORDER": 2
+          }
+        ]
+      },
+      {
+        "POSITION_X": "304px",
+        "POSITION_Y": "244px",
+        "VALUES": {
+          "CODE": "if({{inputMessage.SENDER.ROLE_NAME}}=='Customers'){PROPOGATE_TO OUT-1;}else{PROPOGATE_TO NO-MATCH;}"
+        },
+        "ID": "node-id-43dbe5ce-d3a7-4fb3-b4df-07cf49fa75bec",
+        "TYPE": "Javascript",
+        "CONNECTIONS_TO": [
+          {
+            "TITLE": "IF NO CONDITION MATCHES",
+            "FROM": "NO-MATCH",
+            "TO_NODE": "node-id-28a6e3f4-958f-a824-3948-8d0995ad4ab5"
+          },
+          {
+            "TITLE": "UPDATE STATUS",
+            "FROM": "OUT-1",
+            "TO_NODE": "node-id-f5dbe132-fc83-4eaf-bb18-951cc605d98b"
+          }
+        ],
+        "NAME": "Javascript 1",
+        "PLUGS": [
+          {
+            "NAME": "INPUT",
+            "ID": "input-plug-8f3b9a2e-4609-11e9-b210-d663bd873d93",
+            "ORDER": 0
+          },
+          {
+            "NAME": "NO-MATCH",
+            "ID": "output-plug-8f3b9f06-4609-11e9-b210-d663bd873d93",
+            "ORDER": 1
+          },
+          {
+            "NAME": "OUT-1",
+            "ID": "output-plug-8f3ba0be-4609-11e9-b210-d663bd873d93",
+            "ORDER": 2
+          }
+        ]
+      },
+      {
+        "POSITION_X": "308px",
+        "POSITION_Y": "448px",
+        "VALUES": {
+          "MODULE": "MODULE_ID",
+          "ENTRY_ID": "{{inputMessage.DATA_ID}}",
+          "FIELDS": [
+            {
+              "FIELD": "edbef7ac-0f4b-4b68-a3ea-8f0435a0e7b9",
+              "VALUE": [
+                "{{inputMessage.BODY}}"
+              ],
+              "ATTACHMENTS": "{{inputMessage.ATTACHMENTS}}"
+            },
+            {
+              "FIELD": "02285079-81d3-46db-8061-d5bcee1d8c84",
+              "VALUE": [
+                "Pending"
+              ]
+            },
+            {
+              "FIELD": "cc3282db-a464-4c64-b15f-1824e128387f",
+              "VALUE": [
+                "{{inputMessage.CC_EMAILS}}"
+              ]
+            }
+          ]
+        },
+        "ID": "node-id-28a6e3f4-958f-a824-3948-8d0995ad4ab5",
+        "TYPE": "UpdateEntry",
+        "CONNECTIONS_TO": [],
+        "NAME": "Update Entry 1",
+        "PLUGS": [
+          {
+            "NAME": "INPUT",
+            "ID": "input-plug-4df6887f-4f74-b799-cc44-c3043966ec2f",
+            "ORDER": 0
+          },
+          {
+            "NAME": "OUT-1",
+            "ID": "output-plug-93bfbd67-f994-96fe-98ca-f0aa151716e7",
+            "ORDER": 1
+          }
+        ]
+      },
+      {
+        "POSITION_X": "608px",
+        "POSITION_Y": "448px",
+        "VALUES": {
+          "MODULE": "MODULE_ID",
+          "ENTRY_ID": "{{inputMessage.DATA_ID}}",
+          "FIELDS": [
+            {
+              "FIELD": "edbef7ac-0f4b-4b68-a3ea-8f0435a0e7b9",
+              "VALUE": [
+                "{{inputMessage.BODY}}"
+              ],
+              "ATTACHMENTS": "{{inputMessage.ATTACHMENTS}}"
+            },
+            {
+              "FIELD": "02285079-81d3-46db-8061-d5bcee1d8c84",
+              "VALUE": [
+                "Open"
+              ]
+            },
+            {
+              "FIELD": "cc3282db-a464-4c64-b15f-1824e128387f",
+              "VALUE": [
+                "{{inputMessage.CC_EMAILS}}"
+              ]
+            }
+            
+          ]
+        },
+        "ID": "node-id-f5dbe132-fc83-4eaf-bb18-951cc605d98b",
+        "TYPE": "UpdateEntry",
+        "CONNECTIONS_TO": [],
+        "NAME": "Update Entry 2",
+        "PLUGS": [
+          {
+            "NAME": "INPUT",
+            "ID": "input-plug-4df6887f-4f74-b799-cc44-c3043966ec2f",
+            "ORDER": 0
+          },
+          {
+            "NAME": "OUT-1",
+            "ID": "output-plug-93bfbd67-f994-96fe-98ca-f0aa151716e7",
+            "ORDER": 1
+          }
+        ]
+      },
+      {
+        "POSITION_X": "713px",
+        "POSITION_Y": "168px",
+        "VALUES": {
+          "MODULE": "MODULE_ID",
+          "FIELDS": [
+            {
+              "FIELD": "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+              "VALUE": [
+                "{{inputMessage.SUBJECT}}"
+              ]
+            },
+            {
+              "ATTACHMENTS": "{{inputMessage.ATTACHMENTS}}",
+              "FIELD": "edbef7ac-0f4b-4b68-a3ea-8f0435a0e7b9",
+              "VALUE": [
+                "{{inputMessage.BODY}}"
+              ]
+            },
+            {
+              "FIELD": "cc3282db-a464-4c64-b15f-1824e128387f",
+              "VALUE": [
+                "{{inputMessage.CC_EMAILS}}"
+              ]
+            },
+            {
+              "FIELD": "02285079-81d3-46db-8061-d5bcee1d8c84",
+              "VALUE": [
+                "New"
+              ]
+            },
+            {
+              "FIELD": "1556aab3-1f0c-4893-b0fe-d45c52294cd1",
+              "VALUE": [
+                "TEAM_ID_REPLACE"
+              ]
+            },
+            {
+              "FIELD": "30e7e42c-ca90-49b5-986e-341f11d37de5",
+              "VALUE": [
+                "{{inputMessage.USER_ID}}"
+              ]
+            }, 
+            {
+              "FIELD": "a5accd94-cc42-4ba5-aaff-79ae5524bcb8",
+              "VALUE": [
+              	"{{inputMessage.WIDGET_ID}}"
+              ]
+            }
+          ]
+        },
+        "ID": "node-id-5d33b3df-bdbb-50d1-1463-a8ada9994187",
+        "TYPE": "CreateEntry",
+        "CONNECTIONS_TO": [],
+        "NAME": "Create Entry",
+        "PLUGS": [
+          {
+            "NAME": "INPUT",
+            "ID": "input-plug-55edbf99-d8da-8fc5-c2c1-622690f57d53",
+            "ORDER": 0
+          },
+          {
+            "NAME": "OUT-1",
+            "ID": "output-plug-8136b142-24b8-9f44-717c-cd39ea28fbb1",
+            "ORDER": 1
+          }
+        ]
+      }
+    ]
+  },
+  "EMAIL_ADDRESS": "support@SUPPORT_EMAIL_ADDRESS.ngdesk.com",
+  "TYPE": "Internal",
+  "IS_VERIFIED": true
+}

@@ -1,0 +1,52 @@
+<StackLayout>
+  <Label text="role-detail works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<div fxLayout="column" fxLayoutGap="20px" class="pad10">
+	<ng-template #headerTemplateRef>
+		<app-title-bar [title]="pageTitle" [buttonText]="buttonText" fxLayoutGap="10px" (buttonRightOnClick)="saveRole()">
+		</app-title-bar>
+	</ng-template>
+	<div *ngIf="isSystemAdmin" class='mat-body-strong' fxLayoutAlign="center center">
+		{{"SYSTEM_ADMIN_PERMISSION" | translate}}
+	</div>
+
+	<app-custom-table *ngIf="!isSystemAdmin" [templateRef]="columnTemplateRef" (sortData)="sortData($event)" fxFlex fxLayoutGap="20px"
+		noRecordsMessage="No record found">
+		<ng-template #columnTemplateRef let-element="element" let-col="col">
+			<span *ngIf="col.NAME === 'MODULE_NAME'">
+				{{element[col.NAME]}}
+			</span>
+			<span *ngIf="col.NAME != 'MODULE_NAME'">
+				<mat-select *ngIf="col.NAME != 'Modules'" placeholder="Permission" [(ngModel)]="element[col.NAME]" style="width:75px">
+					<ng-container *ngIf="col.NAME === 'ACCESS'">
+						<mat-option *ngFor="let option of accessOptions" [value]="option">
+							{{option}}
+						</mat-option>
+					</ng-container>
+					<ng-container *ngIf="col.NAME === 'ACCESS_TYPE'">
+						<mat-option *ngFor="let option of accessTypeOptions" [value]="option">
+							{{option}}
+						</mat-option>
+					</ng-container>
+					<ng-container *ngIf="col.NAME != 'ACCESS' && col.NAME != 'ACCESS_TYPE' ">
+						<mat-option *ngFor="let option of modifyOptions" [value]="option">
+							{{option}}
+						</mat-option>
+					</ng-container>
+				</mat-select>
+			</span>
+		</ng-template>
+	</app-custom-table>
+	<!-- <div fxLayout="row" fxLayoutAlign="end">
+      <button mat-raised-button color="primary" (click)="saveRole()">Save</button>
+    </div> ->
+</div>
+
+-->

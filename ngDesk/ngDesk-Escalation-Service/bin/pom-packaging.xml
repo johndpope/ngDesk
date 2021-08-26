@@ -1,0 +1,14 @@
+<project>
+        <modelVersion>4.0.0</modelVersion>
+        <groupId>com.ngdesk</groupId>
+        <artifactId>ngDesk-Main</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <name>ngDesk-Main</name>
+        <packaging>pom</packaging>
+
+
+        <modules>
+                <module>../ngdesk-commons</module>
+                <module>./</module>
+        </modules>
+</project>

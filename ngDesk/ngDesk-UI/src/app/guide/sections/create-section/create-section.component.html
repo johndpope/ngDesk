@@ -1,0 +1,97 @@
+<app-toolbar [templateRef]="customTemplateRef"></app-toolbar>
+<ng-template #customTemplateRef>
+	<div fxLayoutAlign="flex-end center">
+		<button mat-raised-button color="primary" [routerLink]="['','guide']">{{'NGDESK_GUIDE' | translate}}</button>
+	</div>
+</ng-template>
+<form [formGroup]="sectionForm" fxLayout="row" style="min-height: calc(100vh - 49px);" *ngIf="!isLoading">
+	<div fxLayout="column" fxFlex="20" fxFlex.lt-md="50" fxFlexGap="15" class="pad10"
+		[ngStyle]="{'background': '#F8F9F9', 'padding': '20px'}">
+		<mat-form-field>
+			<mat-select placeholder="{{'SOURCE_LANGUAGE' | translate}}" formControlName="SOURCE_LANGUAGE" required>
+				<mat-option *ngFor="let language of languages" [value]="language.CODE">{{language.NAME}}</mat-option>
+			</mat-select>
+			<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:errorParams.sourceLanguage"></mat-error>
+		</mat-form-field>
+		<mat-form-field>
+			<mat-select placeholder="{{'CATEGORY' | translate}}" formControlName="CATEGORY" required>
+				<mat-option *ngFor="let category of categories" [value]="category.CATEGORY_ID">{{category.NAME}}</mat-option>
+			</mat-select>
+			<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:errorParams.category"></mat-error>
+		</mat-form-field>
+		<mat-form-field>
+			<mat-label>{{'VISIBLE_TO' | translate}}</mat-label>
+			<mat-chip-list #visibleToChipList required>
+				<mat-chip *ngFor="let team of sectionForm.value.VISIBLE_TO" [selectable]="true" [removable]="true"
+					(removed)="remove(team, 'VISIBLE_TO')">
+					{{team.NAME}}
+					<mat-icon matChipRemove>cancel</mat-icon>
+				</mat-chip>
+				<input #visibleToInput [matAutocomplete]="autoVisibleTo" [matChipInputFor]="visibleToChipList"
+					[matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="resetInput($event)"
+					[formControl]="visibleToCtrl" (ngModelChange)="filterInputValues($event, 'visibleTo', visibleToInitial)">
+			</mat-chip-list>
+			<mat-autocomplete #autoVisibleTo="matAutocomplete" (optionSelected)="selected($event, 'visibleTo')"
+				(closed)="visibleTo = visibleToInitial">
+				<mat-option *ngFor="let team of visibleTo" [value]="team" [disabled]="sectionForm.value.VISIBLE_TO.indexOf(team) != -1">
+					{{team.NAME}}
+				</mat-option>
+			</mat-autocomplete>
+			<mat-error *ngIf="visibleToChipList.errorState" [innerHTML]="'FIELD_REQUIRED' | translate:errorParams.visibleTo"></mat-error>
+		</mat-form-field>
+		<mat-form-field>
+			<mat-label>{{'MANAGED_BY' | translate}}</mat-label>
+			<mat-chip-list #managedByChipList required>
+				<mat-chip *ngFor="let team of sectionForm.value.MANAGED_BY" [selectable]="true" [removable]="true"
+					(removed)="remove(team, 'MANAGED_BY')">
+					{{team.NAME}}
+					<mat-icon matChipRemove>cancel</mat-icon>
+				</mat-chip>
+				<input #managedByInput [matAutocomplete]="autoManagedBy" [matChipInputFor]="managedByChipList"
+					[matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="resetInput($event)"
+					[formControl]="managedByCtrl" (ngModelChange)="filterInputValues($event, 'managedBy', managedByInitial)">
+			</mat-chip-list>
+			<mat-autocomplete #autoManagedBy="matAutocomplete" (optionSelected)="selected($event, 'managedBy')"
+				(closed)="managedBy = managedByInitial">
+				<mat-option *ngFor="let team of managedBy" [value]="team" [disabled]="sectionForm.value.MANAGED_BY.indexOf(team) != -1">
+					{{team.NAME}}
+				</mat-option>
+			</mat-autocomplete>
+			<mat-error *ngIf="managedByChipList.errorState" [innerHTML]="'FIELD_REQUIRED' | translate:errorParams.managedBy"></mat-error>
+		</mat-form-field>
+		<mat-form-field>
+			<mat-select placeholder="{{'SORT_BY' | translate}}" formControlName="SORT_BY" required>
+				<mat-option *ngFor="let field of fields" [value]="field">{{field}}</mat-option>
+			</mat-select>
+			<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:errorParams.sortBy"></mat-error>
+		</mat-form-field>
+		<div *ngIf="sectionId !=='new'">
+			<mat-checkbox formControlName="IS_DRAFT">{{'MARK_AS_DRAFT' | translate}}</mat-checkbox>
+			<div [ngStyle]="{'margin-top': '20px'}">
+				<mat-divider></mat-divider>
+			</div>
+			<div fxLayoutAlign="center" [ngStyle]="{'margin-top': '20px'}">
+				<button mat-raised-button color="warn" type="button" (click)="deleteSection()">{{'DELETE_SECTION' | translate}}</button>
+			</div>
+		</div>
+	</div>
+	<mat-divider [vertical]="true"></mat-divider>
+	<div fxLayout="column" fxFlex="80" fxFlex.lt-md="50" class="pad10">
+		<div fxLayoutAlign="center">
+			<mat-error class="mat-body">{{errorMessage}}</mat-error>
+		</div>
+		<app-title-bar title="{{title | translate}}" buttonText="{{'SAVE'|translate}}" (buttonRightOnClick)="save()"></app-title-bar>
+		<mat-form-field>
+			<mat-label>{{'NAME' | translate}}</mat-label>
+			<input matInput formControlName="NAME" required>
+			<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:errorParams.name"></mat-error>
+		</mat-form-field>
+		<mat-form-field>
+			<mat-label>{{'DESCRIPTION' | translate}}</mat-label>
+			<textarea matInput matTextareaAutosize="true" matAutosizeMaxRows="7" matAutosizeMinRows="7" formControlName="DESCRIPTION"></textarea>
+		</mat-form-field>
+	</div>
+</form>
+<div *ngIf="isLoading" style="margin-top: 70px" fxLayoutAlign="center">
+	<mat-spinner></mat-spinner>
+</div>

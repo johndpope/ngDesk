@@ -1,0 +1,32 @@
+<StackLayout>
+  <Label text="role-master works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<div fxLayout="column" fxLayoutGap="10px" class="pad10">
+	<ng-template #headerTemplateRef>
+		<app-title-bar (buttonRightOnClick)="createNewRole()" title="{{'ROLE_PERMISSIONS' | translate}}" [buttonText]="'NEW' | translate">
+		</app-title-bar>
+		<div fxLayoutGap="10px">
+		</div>
+	</ng-template>
+	<div fxLayout="row">
+		<div fxFlex>
+			<app-custom-table [templateRef]="columnTemplateRef" (rowClickedEvent)="rowClicked($event)" [actions]="rolesActions.actions"
+				(menuItemTrigger)="rolesActions[$event.ACTION.NAME]($event.ROW_DATA);" noRecordsMessage="{{'NO_ROLES_FOUND' | translate}}"
+				(sortData)="sortData();customTableService.isLoading = true"
+				(pageChangeEmit)="pageChangeEmit($event);customTableService.isLoading = true">
+				<ng-template #columnTemplateRef let-element="element" let-col="col">
+					{{element[col.NAME]}}
+				</ng-template>
+			</app-custom-table>
+		</div>
+	</div>
+</div>
+
+-->

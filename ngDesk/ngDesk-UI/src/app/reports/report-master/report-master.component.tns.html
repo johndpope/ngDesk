@@ -1,0 +1,31 @@
+<StackLayout>
+  <Label text="ReportMasterComponent works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<div fxLayout="column" fxLayoutGap="10px" class="pad10">
+  <ng-template #headerTemplateRef>
+    <app-title-bar title="{{'REPORTS' | translate}}" buttonText="{{'NEW' | translate}}"
+        (buttonRightOnClick)="newReport()"></app-title-bar>
+  </ng-template>
+  <div fxLayout="row">
+    <div fxFlex>
+      <app-custom-table [templateRef]="columnTemplateRef" (rowClickedEvent)="rowClicked($event)"
+          [actions]="reportsAction.actions"
+          (menuItemTrigger)="reportsAction[$event.ACTION.NAME]($event.ROW_DATA);"
+          noRecordsMessage="{{'NO_REPORTS_FOUND' | translate}}"
+          (pageChangeEmit)="pageChangeEmit($event);customTableService.isLoading = true"
+          (sortData)="sortData();customTableService.isLoading = true">
+        <ng-template #columnTemplateRef let-element="element" let-col="col">
+          {{element[col.NAME]}}
+        </ng-template>
+      </app-custom-table>
+    </div>
+  </div>
+</div>
+-->

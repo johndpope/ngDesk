@@ -1,0 +1,76 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<div class="pad10">
+	<ng-template #headerTemplateRef>
+		<app-title-bar title="{{'CREATE_CHATBOT' | translate}}"></app-title-bar>
+	</ng-template>
+	<ng-container *ngIf="isLoading; else elseTemplate">
+		<mat-spinner style="position:relative;top:20%;left:50%"></mat-spinner>
+	</ng-container>
+	<ng-template #elseTemplate>
+		<div fxLayout="column" style="margin-top: 10px;" fxLayoutGap="10px">
+			<div fxLayout="row" fxLayoutWrap fxLayoutGap="10px" fxLayoutAlign="start flex-start">
+				<div fxFlex="20" fxLayoutAlign="flex-start">
+					<table fxFlex="68.9" fxFlex.lt-lg="100" *ngIf="showSideNav" mat-table [dataSource]="navigations" class="mat-elevation-z8">
+						<ng-container matColumnDef="NAME">
+							<th class="custom-theme-icon-color" mat-header-cell *matHeaderCellDef>
+								<div class="trim-info" matTooltip="{{module.PLURAL_NAME}}">
+									{{ module.PLURAL_NAME | truncate : 10}} {{'MODULE' | translate}}</div>
+							</th>
+							<td matRipple class="no-wrap" mat-cell *matCellDef="let element" class="pointer"
+								[ngClass]="{ 'module-page-active': element.NAME == 'CHAT_BOTS'}">
+								{{element.NAME | translate}} </td>
+						</ng-container>
+						<tr class="custom-theme-primary-color" mat-header-row *matHeaderRowDef="['NAME']"></tr>
+						<tr mat-row *matRowDef="let row; columns: ['NAME'];" [routerLink]="row.PATH" [appHighlight]="{BACKGROUND: '#ececec'}"></tr>
+					</table>
+					<div class="pad10" style="margin-left: -10px;">
+						<button mat-icon-button
+							[ngStyle]="{'border': (showSideNav) ? '2px solid white' : '2px solid #3f51b5', 'margin-left' : (showSideNav) ? '-48px' : '0px'}"
+							(click)="showSideNav = !showSideNav" style="border-radius: 3px; margin-top: -2px;">
+							<mat-icon color="primary" style="margin-top: -5px;" *ngIf="!showSideNav">
+								keyboard_arrow_right</mat-icon>
+							<mat-icon class="custom-theme-icon-color" style="margin-top: -5px;" *ngIf="showSideNav">
+								keyboard_arrow_left</mat-icon>
+						</button>
+					</div>
+					<span fxFlex="1 1 auto"></span>
+				</div>
+
+				<div style="padding-left:40px">
+					<div fxLayout="row" style="padding-left:240px" class="mat-h1"> How would you like to build your bot?
+					</div>
+
+					<div fxLayoutGap="20px" fxLayout="row" style="padding-top:80px">
+						<mat-card fxFlex="35%" [appHighlight]="{BACKGROUND: 'ghostwhite'}" fxFlex="40" fxLayout="column" fxLayoutAlign="center center"
+							class="pointer" (click)="createNew()">
+							<!-- <mat-icon fontSet="material-icons-outlined">create</mat-icon> -->
+							<!-- <img  mat-card-image raisedElevation="40"  class="pointer" class="logo" src='../../../../../../assets/images/fromScratch.png'
+								height="200"> -->
+							<mat-label class="mat-body-2">{{'CREATE_NEW' | translate}}</mat-label>
+							<mat-card-content fxLayoutAlign="center center">
+								<p>Great for experienced bot builders who have a clear vision</p>
+							</mat-card-content>
+							<mat-card-actions>
+								<button mat-raised-button color="primary" (click)="createNew()">Select</button>
+							</mat-card-actions>
+						</mat-card>
+
+						<mat-card fxFlex="35%" [appHighlight]="{BACKGROUND: 'ghostwhite'}" fxFlex="40" fxLayout="column" fxLayoutAlign="center center"
+							class="pointer">
+							<!-- <mat-icon fontSet="material-icons-outlined">view_list</mat-icon> -->
+							<!-- <img  mat-card-image raisedElevation="40"  class="pointer" class="logo" src='../../../../../../assets/images/fromTemplate.png'
+						height="200"> -->
+							<mat-label class="mat-body-2">{{'BUILD_FROM_TEMPLATES' | translate}}</mat-label>
+							<mat-card-content fxLayoutAlign="center center">
+								<p>A simple decision tree-based bot that can give you an idea of how chatbot works and get you up and running quickly</p>
+							</mat-card-content>
+							<mat-card-actions>
+								<button mat-raised-button color="primary" (click)="createWithTemplate()">Select</button>
+							</mat-card-actions>
+						</mat-card>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ng-template>
+</div>

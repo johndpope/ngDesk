@@ -1,0 +1,10 @@
+<div fxLayout="row" fxLayoutAlign="start start" style="width: 100%;">
+    <div fxLayout="column" fxFlex='5'></div>
+    <app-dynamic fxLayout="column" fxFlex='90' [context]="this" [material-module]="dataMaterialModule" [template]="htmlConntent">
+    </app-dynamic>
+    <div fxLayout="column" fxFlex='5'></div>
+</div>
+<div *ngIf="htmlConntent" fxLayout="row" fxLayoutAlign="end  end" style="margin-bottom: 20px;margin-right: 20px;">
+    <button style="margin-right: 10px;" mat-raised-button color="primary" (click)="openSignaturePad()">Sign the Document</button>
+    <button mat-raised-button color="primary" (click)="updateDocument()" [disabled]="!isDocumentSigned">Submit the Document</button>
+</div>

@@ -1,0 +1,13 @@
+::ng-deep .mat-horizontal-stepper-header-container {
+  display: none !important;
+}
+
+.highlight {
+  white-space: nowrap;
+  border-radius: 3px;
+  font-size: 85%;
+  line-height: 1.45;
+  overflow: auto;
+  padding: 16px;
+  margin: 0px 14px 0px 14px;
+}

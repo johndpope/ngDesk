@@ -1,0 +1,2202 @@
+{
+  "FIELDS": [
+    {
+      "NAME": "PRIORITY",
+      "INTERNAL": false,
+      "HELP_TEXT": "",
+      "NOT_EDITABLE": false,
+      "DISPLAY_LABEL": "Priority",
+      "DATA_TYPE": {
+        "DISPLAY": "Picklist",
+        "BACKEND": "String"
+      },
+      "PICKLIST_VALUES": ["Low", "Medium", "High", "Critical"],
+      "FIELD_ID": "34e5212e-6be4-4e69-915b-2b27ed1c746f",
+      "REQUIRED": false
+    },
+    {
+			"NAME": "WORKFLOW_STAGES",
+			"INTERNAL": false,
+			"NOT_EDITABLE": false,
+			"DEFAULT_VALUE": "",
+			"DISPLAY_LABEL": "Workflow Stages",
+			"DATA_TYPE": {
+				"DISPLAY": "Workflow Stages",
+				"BACKEND": "Array"
+			},
+			"FIELD_ID": "f1041c25-d987-4d30-b2fb-9c843db7df95",
+			"REQUIRED": false
+	},
+    {
+      "DISPLAY_LABEL": "Channel",
+      "FIELD_ID": "a5accd94-cc42-4ba5-aaff-79ae5524bcb8",
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "NAME": "CHANNEL"
+    },
+    {
+      "DISPLAY_LABEL": "Deleted",
+      "FIELD_ID": "f1041c25-c928-4d30-b2fb-9c843dbe9f95",
+      "INTERNAL": true,
+      "REQUIRED": false,
+      "NOT_EDITABLE": true,
+      "DATA_TYPE": {
+        "DISPLAY": "Checkbox",
+        "BACKEND": "Boolean"
+      },
+      "NAME": "DELETED"
+    },
+    {
+      "FIELD_ID": "f79dba1a-f470-4540-bec6-6ba448ec4f53",
+      "NAME": "EFFECTIVE_TO",
+      "DISPLAY_LABEL": "Effective to",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "LENGTH": 0,
+      "DECIMAL_PLACES": 0,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": null,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": [],
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": true,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "RELATIONSHIP_FIELD": null,
+      "FORMULA": null,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Date/Time",
+        "BACKEND": "Timestamp"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": null,
+      "LAST_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false
+    },
+    {
+      "FIELD_ID": "9784dbfc-f002-4807-ab73-868cf1a89223",
+      "NAME": "EFFECTIVE_FROM",
+      "DISPLAY_LABEL": "Effective from",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "LENGTH": 0,
+      "DECIMAL_PLACES": 0,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": null,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": [],
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": true,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "RELATIONSHIP_FIELD": null,
+      "FORMULA": null,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Date/Time",
+        "BACKEND": "Timestamp"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": null,
+      "LAST_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false
+    },
+    {
+      "DISPLAY_LABEL": "Post Id",
+      "FIELD_ID": "5b616354-3de1-4006-91c4-a6d175e89f9c",
+      "INTERNAL": true,
+      "REQUIRED": false,
+      "NOT_EDITABLE": true,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "NAME": "POST_ID"
+    },
+    {
+      "DISPLAY_LABEL": "Source Type",
+      "FIELD_ID": "96bf35ea-dcb5-4183-8679-f27f776b92df",
+      "INTERNAL": true,
+      "REQUIRED": false,
+      "NOT_EDITABLE": true,
+      "DATA_TYPE": {
+        "DISPLAY": "Picklist",
+        "BACKEND": "String"
+      },
+      "PICKLIST_VALUES": [
+        "web",
+        "email",
+        "facebook",
+        "whatsapp",
+        "mobile",
+        "chat",
+        "twitter",
+        "sms"
+      ],
+      "NAME": "SOURCE_TYPE",
+      "DEFAULT_VALUE": "web"
+    },
+    {
+      "DEFAULT_VALUE": null,
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "HELP_TEXT": "",
+      "LAST_UPDATED": "LAST_UPDATED_REPLACE",
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": "",
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": "Enter Values",
+      "PICKLIST_RESTRICT": true,
+      "LAST_UPDATED_BY": null,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+      "MAX_SIZE": 0,
+      "REQUIRED": true,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "SUBJECT",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Subject",
+      "EXAMPLE": null
+    },
+    {
+      "DEFAULT_VALUE": null,
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "HELP_TEXT": "",
+      "LAST_UPDATED": "LAST_UPDATED_REPLACE",
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": "",
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Discussion",
+        "BACKEND": "String"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": "Enter Values",
+      "PICKLIST_RESTRICT": true,
+      "LAST_UPDATED_BY": null,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "edbef7ac-0f4b-4b68-a3ea-8f0435a0e7b9",
+      "MAX_SIZE": 0,
+      "REQUIRED": true,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "MESSAGES",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Messages",
+      "EXAMPLE": null
+    },
+    {
+      "DEFAULT_VALUE": "",
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "HELP_TEXT": "",
+      "LAST_UPDATED": "LAST_UPDATED_REPLACE",
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "List Text",
+        "BACKEND": "Array"
+      },
+      "IS_LIST_TEXT_UNIQUE": true,
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": null,
+      "PICKLIST_RESTRICT": false,
+      "LAST_UPDATED_BY": "",
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "cc3282db-a464-4c64-b15f-1824e128387f",
+      "MAX_SIZE": 0,
+      "REQUIRED": false,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "CC_EMAILS",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Cc Emails",
+      "EXAMPLE": null
+    },
+    {
+      "DEFAULT_VALUE": null,
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "HELP_TEXT": "",
+      "LAST_UPDATED": "LAST_UPDATED_REPLACE",
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": "",
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Date/Time",
+        "BACKEND": "Timestamp"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": "Enter Values",
+      "PICKLIST_RESTRICT": true,
+      "LAST_UPDATED_BY": null,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "9d3c5936-21d8-44cd-b523-6732c9386650",
+      "MAX_SIZE": 0,
+      "REQUIRED": false,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": true,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "DATE_CREATED",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Date Created",
+      "EXAMPLE": null
+    },
+    {
+      "DEFAULT_VALUE": "",
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "HELP_TEXT": "",
+      "LAST_UPDATED": "LAST_UPDATED_REPLACE",
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": false,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Date/Time",
+        "BACKEND": "Timestamp"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": null,
+      "PICKLIST_RESTRICT": false,
+      "LAST_UPDATED_BY": "",
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "7087da64-031f-41b3-8a1c-f649fbfe98ea",
+      "MAX_SIZE": 10,
+      "REQUIRED": false,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "DUE_DATE",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Due Date",
+      "EXAMPLE": null
+    },
+    {
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "FIELD_ID": "ec79ed72-b3e0-47d8-ba75-ac2ca380ddd7",
+      "LAST_UPDATED": "LAST_UPDATED_REPLACE",
+      "REQUIRED": false,
+      "RELATIONSHIP_FIELD": "",
+      "NOT_EDITABLE": true,
+      "NAME": "LAST_UPDATED_BY",
+      "MODULE": "USERS_MODULE_REPLACE",
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Last Updated by",
+      "RELATIONSHIP_TYPE": "Many to One",
+      "INTERNAL": true,
+      "PRIMARY_DISPLAY_FIELD": "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "String"
+      }
+    },
+    {
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "FIELD_ID": "0d7c6fa8-1bff-489d-bce3-097c8ab16512",
+      "LAST_UPDATED": "LAST_UPDATED_REPLACE",
+      "REQUIRED": false,
+      "RELATIONSHIP_FIELD": "",
+      "NOT_EDITABLE": true,
+      "NAME": "CREATED_BY",
+      "MODULE": "USERS_MODULE_REPLACE",
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Created By",
+      "RELATIONSHIP_TYPE": "Many to One",
+      "INTERNAL": true,
+      "PRIMARY_DISPLAY_FIELD": "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "String"
+      }
+    },
+    {
+      "DEFAULT_VALUE": null,
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "HELP_TEXT": "",
+      "LAST_UPDATED": "LAST_UPDATED_REPLACE",
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": "",
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Date/Time",
+        "BACKEND": "Timestamp"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": "Enter Values",
+      "PICKLIST_RESTRICT": true,
+      "LAST_UPDATED_BY": null,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "99f33168-9456-456a-97ff-166548a799ca",
+      "MAX_SIZE": 0,
+      "REQUIRED": false,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": true,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "DATE_UPDATED",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Date Updated",
+      "EXAMPLE": null
+    },
+    {
+      "DEFAULT_VALUE": null,
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "HELP_TEXT": "",
+      "LAST_UPDATED": "LAST_UPDATED_REPLACE",
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": "",
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "File Upload",
+        "BACKEND": "String"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": "Enter Values",
+      "PICKLIST_RESTRICT": true,
+      "LAST_UPDATED_BY": null,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "95556e66-513b-488e-b8c9-9c7bb7477d1b",
+      "MAX_SIZE": 0,
+      "REQUIRED": false,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "FILE_UPLOAD",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Attach Files",
+      "EXAMPLE": null
+    },
+    {
+      "DEFAULT_VALUE": "New",
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "HELP_TEXT": "",
+      "LAST_UPDATED": "LAST_UPDATED_REPLACE",
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": ["New", "Open", "Pending", "Resolved", "Closed"],
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": "",
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Picklist",
+        "BACKEND": "String"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": "Enter Values",
+      "PICKLIST_RESTRICT": true,
+      "LAST_UPDATED_BY": null,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "02285079-81d3-46db-8061-d5bcee1d8c84",
+      "MAX_SIZE": 0,
+      "REQUIRED": true,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "STATUS",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Status",
+      "EXAMPLE": null
+    },
+    {
+      "DEFAULT_VALUE": "",
+      "DATE_CREATED": null,
+      "HELP_TEXT": "",
+      "LAST_UPDATED": null,
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": null,
+      "PICKLIST_RESTRICT": false,
+      "LAST_UPDATED_BY": "",
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "b190baa2-180b-4eb4-b935-af08a07377db",
+      "MAX_SIZE": 100,
+      "REQUIRED": false,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": true,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "DATA_ID",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": true,
+      "DISPLAY_LABEL": "Data ID",
+      "EXAMPLE": null
+    },
+    {
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "FIELD_ID": "30e7e42c-ca90-49b5-986e-341f11d37de5",
+      "LAST_UPDATED": "LAST_UPDATED_REPLACE",
+      "REQUIRED": true,
+      "RELATIONSHIP_FIELD": "9e68b9c7-c0f2-4422-8cbe-b0104f8c11d5",
+      "NAME": "REQUESTOR",
+      "MODULE": "USERS_MODULE_REPLACE",
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Requestor",
+      "INTERNAL": true,
+      "RELATIONSHIP_TYPE": "Many to One",
+      "PRIMARY_DISPLAY_FIELD": "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "String"
+      },
+      "DEFAULT_VALUE": "{{CURRENT_USER}}"
+    },
+    {
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "FIELD_ID": "62c5c3a3-0008-4c4e-b1a8-3d5784e9dd6d",
+      "LAST_UPDATED": "LAST_UPDATED_REPLACE",
+      "REQUIRED": false,
+      "RELATIONSHIP_FIELD": "3105993e-8b89-4e3b-8389-2deae8f70716",
+      "NAME": "ASSIGNEE",
+      "MODULE": "USERS_MODULE_REPLACE",
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "Assignee",
+      "INTERNAL": true,
+      "RELATIONSHIP_TYPE": "Many to One",
+      "PRIMARY_DISPLAY_FIELD": "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "String"
+      }
+    },
+    {
+      "DEFAULT_VALUE": null,
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "HELP_TEXT": "",
+      "LAST_UPDATED": "LAST_UPDATED_REPLACE",
+      "LENGTH": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": "",
+      "DECIMAL_PLACES": null,
+      "AUTO_NUMBER_GENERATION": true,
+      "DATA_TYPE": {
+        "DISPLAY": "Auto Number",
+        "BACKEND": "Integer"
+      },
+      "MASK_CHARACTER": null,
+      "PICKLIST": "Enter Values",
+      "PICKLIST_RESTRICT": true,
+      "LAST_UPDATED_BY": null,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+      "REQUIRED": true,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": true,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "TICKET_ID",
+      "AUTO_NUMBER_STARTING_NUMBER": 1,
+      "VISIBILITY": false,
+      "DISPLAY_LABEL": "ID",
+      "EXAMPLE": null
+    },
+    {
+      "MODULE": "TEAMS_MODULE_REPLACE",
+      "FIELD_ID": "1556aab3-1f0c-4893-b0fe-d45c52294cd1",
+      "DISPLAY_LABEL": "Teams",
+      "INTERNAL": true,
+      "HELP_TEXT": "",
+      "RELATIONSHIP_TYPE": "Many to Many",
+      "REQUIRED": true,
+      "RELATIONSHIP_FIELD": "",
+      "PRIMARY_DISPLAY_FIELD": "b1c48961-43e0-4071-b30c-0f7be5daa7a9",
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "Array"
+      },
+      "NAME": "TEAMS",
+      "DEFAULT_VALUE": "GLOBAL_TEAM_REPLACE"
+    },
+    {
+      "DISPLAY_LABEL": "Time Spent",
+      "FIELD_ID": "048232fa-eb4d-4997-a3df-4886ef5e8e3b",
+      "INTERNAL": true,
+      "REQUIRED": false,
+      "HELP_TEXT": "",
+      "NOT_EDITABLE": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Chronometer",
+        "BACKEND": "Integer"
+      },
+      "NAME": "TIME_SPENT"
+    },
+    {
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "FIELD_ID": "276a0197-f33c-457b-a49e-36cfa9324a33",
+      "LAST_UPDATED": "LAST_UPDATED_REPLACE",
+      "REQUIRED": false,
+      "RELATIONSHIP_FIELD": "cdbcc77d-885f-4120-9fac-93a52300bec5",
+      "NOT_EDITABLE": false,
+      "NAME": "OPPORTUNITY",
+      "MODULE": "OPPORTUNITIES_MODULE_REPLACE",
+      "DISPLAY_LABEL": "Opportunity",
+      "RELATIONSHIP_TYPE": "One to One",
+      "INTERNAL": true,
+      "PRIMARY_DISPLAY_FIELD": "84010f2c-5a2f-4e6c-a79b-91a42f046d90",
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "String"
+      },
+      "TYPE": 0
+    },
+    {
+      "FIELD_ID": "c962e5b9-9da9-4fd3-8e99-3bb2e4c3fa92",
+      "NAME": "APPROVAL",
+      "DISPLAY_LABEL": "Approval",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "LENGTH": 0,
+      "DECIMAL_PLACES": 0,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": null,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": [],
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": true,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "RELATIONSHIP_FIELD": null,
+      "FORMULA": null,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Approval",
+        "BACKEND": "Approval"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": null,
+      "LAST_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "NOT_EDITABLE": false,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false
+    }
+  ],
+  "WORKFLOWS": [
+    {
+      "TYPE": "CREATE_OR_UPDATE",
+      "NAME": "Send Confirmation",
+      "DESCRIPTION": "this workflow send a confirmation to everybody involved",
+      "CONDITIONS": [],
+      "WORKFLOW_ID": "70cb8774-2fa7-41b8-a062-5cdaa61c910b",
+      "WORKFLOW": {
+        "NODES": [
+          {
+            "POSITION_X": "100px",
+            "POSITION_Y": "100px",
+            "VALUES": {},
+            "ID": "node-id-7fc84ff2-ca9a-499d-08ae-5585a4efaba8",
+            "TYPE": "Start",
+            "CONNECTIONS_TO": [
+              {
+                "TITLE": "START",
+                "FROM": "OUT",
+                "TO_NODE": "node-id-e1df26bd-1796-4b0e-7f07-845ab6f79264"
+              }
+            ],
+            "NAME": "Update",
+            "PLUGS": [
+              {
+                "NAME": "OUT",
+                "ID": "output-plug-3b42989b-69f5-71fe-caf9-df84eced06ed",
+                "ORDER": 1
+              }
+            ]
+          },
+          {
+            "POSITION_X": "194px",
+            "POSITION_Y": "356px",
+            "VALUES": {
+              "TO": "{{inputMessage.REQUESTOR.EMAIL_ADDRESS}}",
+              "FROM": "support@SUBDOMAIN_REPLACE.ngdesk.com",
+              "SUBJECT": "[#{{inputMessage.TICKET_ID}}] {{inputMessage.SUBJECT}}",
+              "BODY": "{{inputMessage.MESSAGES}}"
+            },
+            "ID": "node-id-e1df26bd-1796-4b0e-7f07-845ab6f79264",
+            "TYPE": "SendEmail",
+            "CONNECTIONS_TO": [
+              {
+                "TITLE": "IF EMAIL SENT",
+                "FROM": "OUT-1",
+                "TO_NODE": "node-id-ab2e4c88-4fd7-da33-7722-b16b45fa64fa"
+              }
+            ],
+            "NAME": "Send Email 1",
+            "PLUGS": [
+              {
+                "NAME": "INPUT",
+                "ID": "input-plug-8f8521b3-5c86-2c54-2438-a55d653a4ebe",
+                "ORDER": 0
+              },
+              {
+                "NAME": "OUT-1",
+                "ID": "output-plug-067970cb-cb54-09c9-9021-30125725eb03",
+                "ORDER": 1
+              }
+            ]
+          },
+          {
+            "POSITION_X": "602px",
+            "POSITION_Y": "393px",
+            "VALUES": {
+              "TO": "{{inputMessage.CC_EMAILS}}",
+              "FROM": "support@SUBDOMAIN_REPLACE.ngdesk.com",
+              "SUBJECT": "[#{{inputMessage.TICKET_ID}}] {{inputMessage.SUBJECT}}",
+              "BODY": "{{inputMessage.MESSAGES}}"
+            },
+            "ID": "node-id-ab2e4c88-4fd7-da33-7722-b16b45fa64fa",
+            "TYPE": "SendEmail",
+            "CONNECTIONS_TO": [
+              {
+                "TITLE": "START",
+                "FROM": "OUT",
+                "TO_NODE": "node-id-47ff373b-bd2c-4cdd-b037-05cc6b723609"
+              }
+            ],
+            "NAME": "Send Email 2",
+            "PLUGS": [
+              {
+                "NAME": "INPUT",
+                "ID": "input-plug-d17c05d9-1594-0201-1df8-6c6a80865b02",
+                "ORDER": 0
+              },
+              {
+                "NAME": "OUT-1",
+                "ID": "output-plug-dbdb4609-05fa-8545-d9e6-3ca368b8a23a",
+                "ORDER": 1
+              }
+            ]
+          },
+          {
+            "POSITION_X": "250px",
+            "POSITION_Y": "250px",
+            "VALUES": {
+              "TO": "{{InputMessage.ASSIGNEE.EMAIL_ADDRESS}}",
+              "FROM": "support@SUBDOMAIN_REPLACE.ngdesk.com",
+              "SUBJECT": "[#{{inputMessage.TICKET_ID}}] {{inputMessage.SUBJECT}}",
+              "BODY": " {{InputMessage.MESSAGES}} "
+            },
+            "ID": "node-id-47ff373b-bd2c-4cdd-b037-05cc6b723609",
+            "TYPE": "SendEmail",
+            "CONNECTIONS_TO": [],
+            "NAME": "SendEmail 3",
+            "PLUGS": [
+              {
+                "NAME": "INPUT",
+                "ID": "input-plug-34f01db0-1b17-400c-8ef2-74e261d6363f",
+                "ORDER": 0
+              },
+              {
+                "NAME": "OUT",
+                "ID": "output-plug-3374af82-3e22-41d0-bcc8-395494f07e4e",
+                "ORDER": 1
+              }
+            ]
+          }
+        ],
+        "DATE_UPDATED": null,
+        "LAST_UPDATED_BY": null
+      },
+      "ORDER": 0,
+      "DATE_CREATED": null,
+      "DATE_UPDATED": "2019-08-09T10:17:01.399Z",
+      "LAST_UPDATED_BY": "5d4d0c5765675c3046cf2ce7"
+    },
+    {
+      "TYPE": "CREATE",
+      "NAME": "Block out of office tickets",
+      "DESCRIPTION": "This workflow will not let the ticket to be created due the out of office auto replies ",
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "CONDITION_VALUE": "Out of Office"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "CONTAINS",
+          "CONDITION": "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "CONDITION_VALUE": "Out of Office"
+        }
+      ],
+      "WORKFLOW_ID": "f18af1af-9073-40f4-a4c1-7e6a314fe3c7",
+      "WORKFLOW": {
+        "NODES": [
+          {
+            "POSITION_X": "100px",
+            "POSITION_Y": "100px",
+            "VALUES": {},
+            "ID": "node-id-42f22740-e43d-4f96-95c5-f972be52904e",
+            "TYPE": "Start",
+            "CONNECTIONS_TO": [
+              {
+                "TITLE": "START",
+                "FROM": "OUT",
+                "TO_NODE": "node-id-a7c08978-ba13-4d39-b774-d11baa5dda3e"
+              }
+            ],
+            "NAME": "Start",
+            "PLUGS": [
+              {
+                "NAME": "OUT",
+                "ID": "output-plug-77cb2090-f664-4d8b-ac8c-420b2899126d",
+                "ORDER": 0
+              }
+            ]
+          },
+          {
+            "POSITION_X": "150px",
+            "POSITION_Y": "150px",
+            "VALUES": {},
+            "ID": "node-id-a7c08978-ba13-4d39-b774-d11baa5dda3e",
+            "TYPE": "DeleteEntry",
+            "CONNECTIONS_TO": [],
+            "NAME": "DeleteEntry 1",
+            "PLUGS": [
+              {
+                "NAME": "INPUT",
+                "ID": "input-plug-3dff2ef7-a4c0-4158-9ad8-3dc4954113a0",
+                "ORDER": 0
+              },
+              {
+                "NAME": "OUT",
+                "ID": "output-plug-deaf690e-cfa6-4055-9817-4b42987d0f45",
+                "ORDER": 1
+              }
+            ]
+          }
+        ],
+        "DATE_UPDATED": null,
+        "LAST_UPDATED_BY": null
+      },
+      "DATE_CREATED": null,
+      "DATE_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "ORDER": 1
+    }
+  ],
+  "PLURAL_NAME": "Tickets",
+  "FIELD_RULES": [],
+  "CREATE_LAYOUTS": [
+    {
+      "LAYOUT_STYLE": "standard",
+      "ROLE": "SystemAdmin",
+      "DESCRIPTION": "",
+      "LAYOUT_ID": "2d3b6b14-5066-4891-8388-733131a396ef",
+      "NAME": "Tickets",
+      "PREDEFINED_TEMPLATE": [
+        {
+          "ID": "SIDE_BAR",
+          "FIELDS": [
+            {
+              "FIELD_ID": "30e7e42c-ca90-49b5-986e-341f11d37de5"
+            },
+            {
+              "FIELD_ID": "62c5c3a3-0008-4c4e-b1a8-3d5784e9dd6d"
+            },
+            {
+              "FIELD_ID": "02285079-81d3-46db-8061-d5bcee1d8c84"
+            },
+            {
+              "FIELD_ID": "34e5212e-6be4-4e69-915b-2b27ed1c746f"
+            },
+            {
+              "FIELD_ID": "1556aab3-1f0c-4893-b0fe-d45c52294cd1"
+            },
+            {
+              "FIELD_ID": "cc3282db-a464-4c64-b15f-1824e128387f"
+            },
+            {
+              "FIELD_ID": "7087da64-031f-41b3-8a1c-f649fbfe98ea"
+            }
+          ],
+          "FIELD_STYLE": "EDITABLE"
+        }
+      ]
+    },
+    {
+      "LAYOUT_STYLE": "standard",
+      "ROLE": "Agent",
+      "DESCRIPTION": "",
+      "LAYOUT_ID": "d42df608-c690-4b6c-815e-0526b6fd665d",
+      "NAME": "Tickets",
+      "PREDEFINED_TEMPLATE": [
+        {
+          "ID": "SIDE_BAR",
+          "FIELDS": [
+            {
+              "FIELD_ID": "30e7e42c-ca90-49b5-986e-341f11d37de5"
+            },
+            {
+              "FIELD_ID": "62c5c3a3-0008-4c4e-b1a8-3d5784e9dd6d"
+            },
+            {
+              "FIELD_ID": "02285079-81d3-46db-8061-d5bcee1d8c84"
+            },
+            {
+              "FIELD_ID": "34e5212e-6be4-4e69-915b-2b27ed1c746f"
+            },
+            {
+              "FIELD_ID": "1556aab3-1f0c-4893-b0fe-d45c52294cd1"
+            },
+            {
+              "FIELD_ID": "cc3282db-a464-4c64-b15f-1824e128387f"
+            },
+            {
+              "FIELD_ID": "7087da64-031f-41b3-8a1c-f649fbfe98ea"
+            }
+          ],
+          "FIELD_STYLE": "EDITABLE"
+        }
+      ]
+    },
+    {
+      "LAYOUT_STYLE": "standard",
+      "ROLE": "Customer",
+      "DESCRIPTION": "",
+      "LAYOUT_ID": "61128077-78f2-4909-8036-ea4c86146831",
+      "NAME": "Tickets",
+      "PREDEFINED_TEMPLATE": [
+        {
+          "ID": "SIDE_BAR",
+          "FIELDS": [
+            {
+              "FIELD_ID": "cc3282db-a464-4c64-b15f-1824e128387f"
+            }
+          ],
+          "FIELD_STYLE": "EDITABLE"
+        }
+      ]
+    }
+  ],
+  "EDIT_MOBILE_LAYOUTS": [
+    {
+      "ROLE": "SystemAdmin",
+      "DESCRIPTION": "Ticket Description",
+      "FIELDS": [
+        "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+        "02285079-81d3-46db-8061-d5bcee1d8c84",
+        "edbef7ac-0f4b-4b68-a3ea-8f0435a0e7b9",
+        "1556aab3-1f0c-4893-b0fe-d45c52294cd1"
+      ],
+      "LAYOUT_ID": "391348e4-4369-4cd0-9e07-5a32ecac0392",
+      "NAME": "Tickets"
+    },
+    {
+      "ROLE": "Agent",
+      "DESCRIPTION": "Ticket Description",
+      "FIELDS": [
+        "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+        "02285079-81d3-46db-8061-d5bcee1d8c84",
+        "edbef7ac-0f4b-4b68-a3ea-8f0435a0e7b9",
+        "1556aab3-1f0c-4893-b0fe-d45c52294cd1"
+      ],
+      "LAYOUT_ID": "a457d89b-d9fa-4140-a516-9c62236bc5b7",
+      "NAME": "Tickets"
+    },
+    {
+      "ROLE": "Customer",
+      "DESCRIPTION": "Ticket Description",
+      "FIELDS": [
+        "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+        "02285079-81d3-46db-8061-d5bcee1d8c84",
+        "edbef7ac-0f4b-4b68-a3ea-8f0435a0e7b9",
+        "1556aab3-1f0c-4893-b0fe-d45c52294cd1"
+      ],
+      "LAYOUT_ID": "327712e8-170a-4238-81d2-9a33340b5064",
+      "NAME": "Tickets"
+    }
+  ],
+  "DETAIL_LAYOUTS": [
+    {
+      "LAYOUT_STYLE": "standard",
+      "ROLE": "SystemAdmin",
+      "DESCRIPTION": "",
+      "LAYOUT_ID": "7e92c631-783e-4526-82bd-480ae893dca7",
+      "NAME": "Tickets",
+      "CUSTOM_LAYOUT": null,
+      "PREDEFINED_TEMPLATE": [
+        {
+          "ID": "SIDE_BAR",
+          "FIELDS": [
+            {
+              "FIELD_ID": "34e5212e-6be4-4e69-915b-2b27ed1c746f"
+            },
+            {
+              "FIELD_ID": "02285079-81d3-46db-8061-d5bcee1d8c84"
+            },
+            {
+              "FIELD_ID": "cc3282db-a464-4c64-b15f-1824e128387f"
+            },
+            {
+              "FIELD_ID": "62c5c3a3-0008-4c4e-b1a8-3d5784e9dd6d"
+            },
+            {
+              "FIELD_ID": "1556aab3-1f0c-4893-b0fe-d45c52294cd1"
+            },
+            {
+              "FIELD_ID": "7087da64-031f-41b3-8a1c-f649fbfe98ea"
+            },
+            {
+              "FIELD_ID": "048232fa-eb4d-4997-a3df-4886ef5e8e3b"
+            }
+          ],
+          "FIELD_STYLE": "EDITABLE"
+        },
+        {
+          "ID": "HEADER",
+          "FIELDS": [
+            {
+              "FIELD_ID": "51bf883f-f16b-4a0a-b2b8-6e965392af82"
+            },
+            {
+              "FIELD_ID": "30e7e42c-ca90-49b5-986e-341f11d37de5"
+            }
+          ],
+          "FIELD_STYLE": "NON_EDITABLE_PILLS"
+        }
+      ]
+    },
+    {
+      "LAYOUT_STYLE": "standard",
+      "ROLE": "Agent",
+      "DESCRIPTION": "",
+      "LAYOUT_ID": "178d7a17-8b14-4285-aa96-f4719a4e3731",
+      "NAME": "Tickets",
+      "CUSTOM_LAYOUT": null,
+      "PREDEFINED_TEMPLATE": [
+        {
+          "ID": "SIDE_BAR",
+          "FIELDS": [
+            {
+              "FIELD_ID": "34e5212e-6be4-4e69-915b-2b27ed1c746f"
+            },
+            {
+              "FIELD_ID": "02285079-81d3-46db-8061-d5bcee1d8c84"
+            },
+            {
+              "FIELD_ID": "cc3282db-a464-4c64-b15f-1824e128387f"
+            },
+            {
+              "FIELD_ID": "62c5c3a3-0008-4c4e-b1a8-3d5784e9dd6d"
+            },
+            {
+              "FIELD_ID": "1556aab3-1f0c-4893-b0fe-d45c52294cd1"
+            },
+            {
+              "FIELD_ID": "7087da64-031f-41b3-8a1c-f649fbfe98ea"
+            },
+            {
+              "FIELD_ID": "048232fa-eb4d-4997-a3df-4886ef5e8e3b"
+            }
+          ],
+          "FIELD_STYLE": "EDITABLE"
+        },
+        {
+          "ID": "HEADER",
+          "FIELDS": [
+            {
+              "FIELD_ID": "51bf883f-f16b-4a0a-b2b8-6e965392af82"
+            },
+            {
+              "FIELD_ID": "30e7e42c-ca90-49b5-986e-341f11d37de5"
+            }
+          ],
+          "FIELD_STYLE": "NON_EDITABLE_PILLS"
+        }
+      ]
+    },
+    {
+      "LAYOUT_STYLE": "standard",
+      "ROLE": "Customer",
+      "DESCRIPTION": "",
+      "LAYOUT_ID": "4dc1f5a9-4f82-44bf-a50b-2d55fe458f0e",
+      "NAME": "Tickets",
+      "CUSTOM_LAYOUT": null,
+      "PREDEFINED_TEMPLATE": [
+        {
+          "ID": "HEADER",
+          "FIELDS": [
+            {
+              "FIELD_ID": "51bf883f-f16b-4a0a-b2b8-6e965392af82"
+            },
+            {
+              "FIELD_ID": "30e7e42c-ca90-49b5-986e-341f11d37de5"
+            }
+          ],
+          "FIELD_STYLE": "NON_EDITABLE_PILLS"
+        }
+      ]
+    }
+  ],
+  "NAME": "Tickets",
+  "VALIDATIONS": [],
+  "SINGULAR_NAME": "Ticket",
+  "EDIT_LAYOUTS": [
+    {
+      "LAYOUT_STYLE": "standard",
+      "ROLE": "SystemAdmin",
+      "DESCRIPTION": "",
+      "LAYOUT_ID": "3a5dad41-e9be-4594-a334-bf35d759faf7",
+      "NAME": "Tickets",
+      "PREDEFINED_TEMPLATE": [
+        {
+          "ID": "SIDE_BAR",
+          "FIELDS": [
+            {
+              "FIELD_ID": "34e5212e-6be4-4e69-915b-2b27ed1c746f"
+            },
+            {
+              "FIELD_ID": "02285079-81d3-46db-8061-d5bcee1d8c84"
+            },
+            {
+              "FIELD_ID": "cc3282db-a464-4c64-b15f-1824e128387f"
+            },
+            {
+              "FIELD_ID": "62c5c3a3-0008-4c4e-b1a8-3d5784e9dd6d"
+            },
+            {
+              "FIELD_ID": "1556aab3-1f0c-4893-b0fe-d45c52294cd1"
+            },
+            {
+              "FIELD_ID": "7087da64-031f-41b3-8a1c-f649fbfe98ea"
+            },
+            {
+              "FIELD_ID": "048232fa-eb4d-4997-a3df-4886ef5e8e3b"
+            }
+          ],
+          "FIELD_STYLE": "EDITABLE"
+        },
+        {
+          "ID": "HEADER",
+          "FIELDS": [
+            {
+              "FIELD_ID": "51bf883f-f16b-4a0a-b2b8-6e965392af82"
+            },
+            {
+              "FIELD_ID": "30e7e42c-ca90-49b5-986e-341f11d37de5"
+            }
+          ],
+          "FIELD_STYLE": "NON_EDITABLE_PILLS"
+        }
+      ]
+    },
+    {
+      "LAYOUT_STYLE": "standard",
+      "ROLE": "Agent",
+      "DESCRIPTION": "",
+      "LAYOUT_ID": "571f247d-03e9-4aab-8d90-e4c8e92bc899",
+      "NAME": "Tickets",
+      "PREDEFINED_TEMPLATE": [
+        {
+          "ID": "SIDE_BAR",
+          "FIELDS": [
+            {
+              "FIELD_ID": "34e5212e-6be4-4e69-915b-2b27ed1c746f"
+            },
+            {
+              "FIELD_ID": "02285079-81d3-46db-8061-d5bcee1d8c84"
+            },
+            {
+              "FIELD_ID": "cc3282db-a464-4c64-b15f-1824e128387f"
+            },
+            {
+              "FIELD_ID": "62c5c3a3-0008-4c4e-b1a8-3d5784e9dd6d"
+            },
+            {
+              "FIELD_ID": "1556aab3-1f0c-4893-b0fe-d45c52294cd1"
+            },
+            {
+              "FIELD_ID": "7087da64-031f-41b3-8a1c-f649fbfe98ea"
+            },
+            {
+              "FIELD_ID": "048232fa-eb4d-4997-a3df-4886ef5e8e3b"
+            }
+          ],
+          "FIELD_STYLE": "EDITABLE"
+        },
+        {
+          "ID": "HEADER",
+          "FIELDS": [
+            {
+              "FIELD_ID": "51bf883f-f16b-4a0a-b2b8-6e965392af82"
+            },
+            {
+              "FIELD_ID": "30e7e42c-ca90-49b5-986e-341f11d37de5"
+            }
+          ],
+          "FIELD_STYLE": "NON_EDITABLE_PILLS"
+        }
+      ]
+    },
+    {
+      "LAYOUT_STYLE": "standard",
+      "ROLE": "Customer",
+      "DESCRIPTION": "",
+      "LAYOUT_ID": "5a040862-6ea6-4281-b08b-c20c33f7781f",
+      "NAME": "Tickets",
+      "PREDEFINED_TEMPLATE": [
+        {
+          "ID": "HEADER",
+          "FIELDS": [
+            {
+              "FIELD_ID": "51bf883f-f16b-4a0a-b2b8-6e965392af82"
+            },
+            {
+              "FIELD_ID": "30e7e42c-ca90-49b5-986e-341f11d37de5"
+            }
+          ],
+          "FIELD_STYLE": "NON_EDITABLE_PILLS"
+        }
+      ]
+    }
+  ],
+  "DESCRIPTION": "Tickets",
+  "MONITORS": [],
+  "CREATE_MOBILE_LAYOUTS": [
+    {
+      "ROLE": "SystemAdmin",
+      "DESCRIPTION": "Ticket Description",
+      "FIELDS": [
+        "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+        "02285079-81d3-46db-8061-d5bcee1d8c84",
+        "edbef7ac-0f4b-4b68-a3ea-8f0435a0e7b9",
+        "1556aab3-1f0c-4893-b0fe-d45c52294cd1",
+        "30e7e42c-ca90-49b5-986e-341f11d37de5"
+      ],
+      "LAYOUT_ID": "2f5661e2-84d1-493a-bc63-3879038f304b",
+      "NAME": "Ticket"
+    },
+    {
+      "ROLE": "Agent",
+      "DESCRIPTION": "Ticket Description",
+      "FIELDS": [
+        "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+        "02285079-81d3-46db-8061-d5bcee1d8c84",
+        "edbef7ac-0f4b-4b68-a3ea-8f0435a0e7b9",
+        "1556aab3-1f0c-4893-b0fe-d45c52294cd1",
+        "30e7e42c-ca90-49b5-986e-341f11d37de5"
+      ],
+      "LAYOUT_ID": "9dddd02-d63d-4f2f-9b20-6190b7174fe7",
+      "NAME": "Tickets"
+    },
+    {
+      "ROLE": "Customer",
+      "DESCRIPTION": "Ticket Description",
+      "FIELDS": [
+        "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+        "02285079-81d3-46db-8061-d5bcee1d8c84",
+        "edbef7ac-0f4b-4b68-a3ea-8f0435a0e7b9",
+        "1556aab3-1f0c-4893-b0fe-d45c52294cd1",
+        "30e7e42c-ca90-49b5-986e-341f11d37de5"
+      ],
+      "LAYOUT_ID": "417a5c80-c996-42b0-a176-18317aa66ebc",
+      "NAME": "Tickets"
+    }
+  ],
+  "DETAIL_MOBILE_LAYOUTS": [
+    {
+      "ROLE": "SystemAdmin",
+      "DESCRIPTION": "Ticket Description",
+      "FIELDS": [
+        "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+        "02285079-81d3-46db-8061-d5bcee1d8c84",
+        "9d3c5936-21d8-44cd-b523-6732c9386650",
+        "edbef7ac-0f4b-4b68-a3ea-8f0435a0e7b9",
+        "99f33168-9456-456a-97ff-166548a799ca"
+      ],
+      "LAYOUT_ID": "e2e8cdf0-2065-4acf-924a-1aee976e6737c",
+      "NAME": "Tickets"
+    },
+    {
+      "ROLE": "Agent",
+      "DESCRIPTION": "Ticket Description",
+      "FIELDS": [
+        "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+        "02285079-81d3-46db-8061-d5bcee1d8c84",
+        "9d3c5936-21d8-44cd-b523-6732c9386650",
+        "edbef7ac-0f4b-4b68-a3ea-8f0435a0e7b9",
+        "99f33168-9456-456a-97ff-166548a799ca"
+      ],
+      "LAYOUT_ID": "e1042129-b650-4d95-8ec6-01e64b458236",
+      "NAME": "Tickets"
+    },
+    {
+      "ROLE": "Customer",
+      "DESCRIPTION": "Ticket Description",
+      "FIELDS": [
+        "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+        "02285079-81d3-46db-8061-d5bcee1d8c84",
+        "9d3c5936-21d8-44cd-b523-6732c9386650",
+        "edbef7ac-0f4b-4b68-a3ea-8f0435a0e7b9",
+        "99f33168-9456-456a-97ff-166548a799ca"
+      ],
+      "LAYOUT_ID": "ecbaef9e-de5d-4d7b-bb59-96d19e18998c",
+      "NAME": "Tickets"
+    }
+  ],
+  "LIST_LAYOUTS": [
+    {
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "9d3c5936-21d8-44cd-b523-6732c9386650"
+      },
+      "ROLE": "SystemAdmin",
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+          "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "9d3c5936-21d8-44cd-b523-6732c9386650",
+          "99f33168-9456-456a-97ff-166548a799ca",
+          "02285079-81d3-46db-8061-d5bcee1d8c84"
+        ]
+      },
+      "DESCRIPTION": "Create, view and resolve current tickets ",
+      "CONDITIONS": [],
+      "LAYOUT_ID": "635e7787-6beb-49e3-9b01-60d152a15842",
+      "IS_DEFAULT": false,
+      "NAME": "All Tickets"
+    },
+    {
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "9d3c5936-21d8-44cd-b523-6732c9386650"
+      },
+      "ROLE": "Agent",
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+          "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "9d3c5936-21d8-44cd-b523-6732c9386650",
+          "99f33168-9456-456a-97ff-166548a799ca",
+          "02285079-81d3-46db-8061-d5bcee1d8c84"
+        ]
+      },
+      "DESCRIPTION": "Create, view and resolve current tickets ",
+      "CONDITIONS": [],
+      "LAYOUT_ID": "e1d125f5-3be7-46be-b941-e1197589984b",
+      "IS_DEFAULT": false,
+      "NAME": "All Tickets"
+    },
+    {
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "9d3c5936-21d8-44cd-b523-6732c9386650"
+      },
+      "ROLE": "Customer",
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+          "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "9d3c5936-21d8-44cd-b523-6732c9386650",
+          "99f33168-9456-456a-97ff-166548a799ca",
+          "02285079-81d3-46db-8061-d5bcee1d8c84"
+        ]
+      },
+      "DESCRIPTION": "Create, view and resolve current tickets ",
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "CONDITION": "30e7e42c-ca90-49b5-986e-341f11d37de5",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION_VALUE": "{{CURRENT_USER}}"
+        }
+      ],
+      "LAYOUT_ID": "0d3f322a-14e3-4df6-b750-a39b6459283a",
+      "IS_DEFAULT": false,
+      "NAME": "All Tickets"
+    },
+    {
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "9d3c5936-21d8-44cd-b523-6732c9386650"
+      },
+      "ROLE": "SystemAdmin",
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+          "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "9d3c5936-21d8-44cd-b523-6732c9386650",
+          "99f33168-9456-456a-97ff-166548a799ca",
+          "02285079-81d3-46db-8061-d5bcee1d8c84"
+        ]
+      },
+      "DESCRIPTION": "Create, view and resolve current tickets ",
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "62c5c3a3-0008-4c4e-b1a8-3d5784e9dd6d",
+          "CONDITION_VALUE": "{{CURRENT_USER}}"
+        }
+      ],
+      "LAYOUT_ID": "e645e173-f5b3-4155-9ed5-682e8addd962",
+      "IS_DEFAULT": false,
+      "NAME": "Your Tickets"
+    },
+    {
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "9d3c5936-21d8-44cd-b523-6732c9386650"
+      },
+      "ROLE": "Agent",
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+          "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "9d3c5936-21d8-44cd-b523-6732c9386650",
+          "99f33168-9456-456a-97ff-166548a799ca",
+          "02285079-81d3-46db-8061-d5bcee1d8c84"
+        ]
+      },
+      "DESCRIPTION": "Create, view and resolve current tickets ",
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "62c5c3a3-0008-4c4e-b1a8-3d5784e9dd6d",
+          "CONDITION_VALUE": "{{CURRENT_USER}}"
+        }
+      ],
+      "LAYOUT_ID": "965591db-1e40-4ac7-9fc2-becc8d0d46ff",
+      "IS_DEFAULT": false,
+      "NAME": "Your Tickets"
+    },
+    {
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "9d3c5936-21d8-44cd-b523-6732c9386650"
+      },
+      "ROLE": "Customer",
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+          "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "9d3c5936-21d8-44cd-b523-6732c9386650",
+          "99f33168-9456-456a-97ff-166548a799ca",
+          "02285079-81d3-46db-8061-d5bcee1d8c84"
+        ]
+      },
+      "DESCRIPTION": "Create, view and resolve current tickets ",
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "CONDITION": "30e7e42c-ca90-49b5-986e-341f11d37de5",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION_VALUE": "{{CURRENT_USER}}"
+        }
+      ],
+      "LAYOUT_ID": "df0120c4-2550-479f-88b1-ec867005a28c",
+      "IS_DEFAULT": false,
+      "NAME": "Your Tickets"
+    },
+    {
+      "ROLE": "SystemAdmin",
+      "ORDER_BY": {
+        "ORDER": "Asc",
+        "COLUMN": "9d3c5936-21d8-44cd-b523-6732c9386650"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+          "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "9d3c5936-21d8-44cd-b523-6732c9386650",
+          "99f33168-9456-456a-97ff-166548a799ca",
+          "02285079-81d3-46db-8061-d5bcee1d8c84"
+        ]
+      },
+      "DESCRIPTION": "Create, view and resolve current tickets ",
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "New"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Open"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Pending"
+        }
+      ],
+      "LAYOUT_ID": "8d09fa40-787c-49fe-8444-0ea51aa0ad37",
+      "IS_DEFAULT": true,
+      "NAME": "Active Tickets"
+    },
+    {
+      "ROLE": "Agent",
+      "ORDER_BY": {
+        "ORDER": "Asc",
+        "COLUMN": "9d3c5936-21d8-44cd-b523-6732c9386650"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+          "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "9d3c5936-21d8-44cd-b523-6732c9386650",
+          "99f33168-9456-456a-97ff-166548a799ca",
+          "02285079-81d3-46db-8061-d5bcee1d8c84"
+        ]
+      },
+      "DESCRIPTION": "Create, view and resolve current tickets ",
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "New"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Open"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Pending"
+        }
+      ],
+      "LAYOUT_ID": "000faa23-df37-4a8c-8571-52f4ea501642",
+      "IS_DEFAULT": true,
+      "NAME": "Active Tickets"
+    },
+    {
+      "ROLE": "Customer",
+      "ORDER_BY": {
+        "ORDER": "Asc",
+        "COLUMN": "9d3c5936-21d8-44cd-b523-6732c9386650"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+          "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "9d3c5936-21d8-44cd-b523-6732c9386650",
+          "99f33168-9456-456a-97ff-166548a799ca",
+          "02285079-81d3-46db-8061-d5bcee1d8c84"
+        ]
+      },
+      "DESCRIPTION": "Create, view and resolve current tickets ",
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "CONDITION": "30e7e42c-ca90-49b5-986e-341f11d37de5",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION_VALUE": "{{CURRENT_USER}}"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "New"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Open"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Pending"
+        }
+      ],
+      "LAYOUT_ID": "a348a348-305b-493c-8b90-5a2a2f9ddbfe",
+      "IS_DEFAULT": true,
+      "NAME": "Active Tickets"
+    },
+    {
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "9d3c5936-21d8-44cd-b523-6732c9386650"
+      },
+      "ROLE": "SystemAdmin",
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+          "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "9d3c5936-21d8-44cd-b523-6732c9386650",
+          "99f33168-9456-456a-97ff-166548a799ca",
+          "02285079-81d3-46db-8061-d5bcee1d8c84"
+        ]
+      },
+      "DESCRIPTION": "Create, view and resolve current tickets ",
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Closed"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Resolved"
+        }
+      ],
+      "LAYOUT_ID": "e121783f-40b6-45f4-ab7d-5cac596c2741",
+      "IS_DEFAULT": false,
+      "NAME": "Inactive Tickets"
+    },
+    {
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "9d3c5936-21d8-44cd-b523-6732c9386650"
+      },
+      "ROLE": "Agent",
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+          "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "9d3c5936-21d8-44cd-b523-6732c9386650",
+          "99f33168-9456-456a-97ff-166548a799ca",
+          "02285079-81d3-46db-8061-d5bcee1d8c84"
+        ]
+      },
+      "DESCRIPTION": "Create, view and resolve current tickets ",
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Closed"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Resolved"
+        }
+      ],
+      "LAYOUT_ID": "d79a2eb8-e2bd-403f-8453-604ab183e17e",
+      "IS_DEFAULT": false,
+      "NAME": "Inactive Tickets"
+    },
+    {
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "9d3c5936-21d8-44cd-b523-6732c9386650"
+      },
+      "ROLE": "Customer",
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+          "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "9d3c5936-21d8-44cd-b523-6732c9386650",
+          "99f33168-9456-456a-97ff-166548a799ca",
+          "02285079-81d3-46db-8061-d5bcee1d8c84"
+        ]
+      },
+      "DESCRIPTION": "Create, view and resolve current tickets ",
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "CONDITION": "30e7e42c-ca90-49b5-986e-341f11d37de5",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION_VALUE": "{{CURRENT_USER}}"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Closed"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Resolved"
+        }
+      ],
+      "LAYOUT_ID": "db37f0b1-d170-4803-8120-2d20f60b9744",
+      "IS_DEFAULT": false,
+      "NAME": "Inactive Tickets"
+    },
+    {
+      "LAYOUT_ID": "4386fbcd-c3f3-4e10-aa01-54ab92afb8a3",
+      "NAME": "New Tickets",
+      "DESCRIPTION": "All the new tickets can be viewed",
+      "ID": null,
+      "ROLE": "SystemAdmin",
+      "ORDER_BY": {
+        "COLUMN": "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+        "ORDER": "Asc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+          "34e5212e-6be4-4e69-915b-2b27ed1c746f",
+          "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "9d3c5936-21d8-44cd-b523-6732c9386650"
+        ]
+      },
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "New"
+        }
+      ],
+      "IS_DEFAULT": false
+    },
+    {
+      "LAYOUT_ID": "0256f433-287a-449d-a865-b5a1ddbb086c",
+      "NAME": "New Tickets",
+      "DESCRIPTION": "All the new tickets can be viewed",
+      "ID": null,
+      "ROLE": "Agent",
+      "ORDER_BY": {
+        "COLUMN": "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+        "ORDER": "Asc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+          "34e5212e-6be4-4e69-915b-2b27ed1c746f",
+          "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "9d3c5936-21d8-44cd-b523-6732c9386650"
+        ]
+      },
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "New"
+        }
+      ],
+      "IS_DEFAULT": false
+    },
+    {
+      "LAYOUT_ID": "89e7317e-f06b-411b-861b-6b7fc224286b",
+      "NAME": "Open Tickets",
+      "DESCRIPTION": "All the open tickets can be viewed",
+      "ID": null,
+      "ROLE": "SystemAdmin",
+      "ORDER_BY": {
+        "COLUMN": "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+        "ORDER": "Asc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+          "34e5212e-6be4-4e69-915b-2b27ed1c746f",
+          "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "9d3c5936-21d8-44cd-b523-6732c9386650"
+        ]
+      },
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Open"
+        }
+      ],
+      "IS_DEFAULT": false
+    },
+    {
+      "LAYOUT_ID": "9c51ea94-90ae-4fd7-acd4-841952a7d563",
+      "NAME": "Open Tickets",
+      "DESCRIPTION": "All the open tickets can be viewed",
+      "ID": null,
+      "ROLE": "Agent",
+      "ORDER_BY": {
+        "COLUMN": "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+        "ORDER": "Asc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+          "34e5212e-6be4-4e69-915b-2b27ed1c746f",
+          "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "9d3c5936-21d8-44cd-b523-6732c9386650"
+        ]
+      },
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Open"
+        }
+      ],
+      "IS_DEFAULT": false
+    },
+    {
+      "LAYOUT_ID": "270aecf3-8699-4312-baec-b4d7be933437",
+      "NAME": "Pending tickets",
+      "DESCRIPTION": "All the pending tickets can be viewed ",
+      "ID": null,
+      "ROLE": "SystemAdmin",
+      "ORDER_BY": {
+        "COLUMN": "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+        "ORDER": "Asc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+          "34e5212e-6be4-4e69-915b-2b27ed1c746f",
+          "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "9d3c5936-21d8-44cd-b523-6732c9386650"
+        ]
+      },
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Pending"
+        }
+      ],
+      "IS_DEFAULT": false
+    },
+    {
+      "LAYOUT_ID": "f56bda8a-b504-40fe-9dc8-347b6935a15a",
+      "NAME": "Pending tickets",
+      "DESCRIPTION": "All the pending tickets can be viewed ",
+      "ID": null,
+      "ROLE": "Agent",
+      "ORDER_BY": {
+        "COLUMN": "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+        "ORDER": "Asc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+          "34e5212e-6be4-4e69-915b-2b27ed1c746f",
+          "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "9d3c5936-21d8-44cd-b523-6732c9386650"
+        ]
+      },
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Pending"
+        }
+      ],
+      "IS_DEFAULT": false
+    },
+    {
+      "LAYOUT_ID": "f15f6c32-14ea-45c0-834f-992c5cf5ff63",
+      "NAME": "Resolved Tickets",
+      "DESCRIPTION": "Can view the resolved Tickets",
+      "ID": null,
+      "ROLE": "SystemAdmin",
+      "ORDER_BY": {
+        "COLUMN": "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+        "ORDER": "Asc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+          "34e5212e-6be4-4e69-915b-2b27ed1c746f",
+          "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "9d3c5936-21d8-44cd-b523-6732c9386650",
+          "99f33168-9456-456a-97ff-166548a799ca"
+        ]
+      },
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Resolved"
+        }
+      ],
+      "IS_DEFAULT": false
+    },
+    {
+      "LAYOUT_ID": "83d43213-0de6-4c86-9890-2b80c702690a",
+      "NAME": "Closed Tickets",
+      "DESCRIPTION": "Can view the closed Tickets",
+      "ID": null,
+      "ROLE": "SystemAdmin",
+      "ORDER_BY": {
+        "COLUMN": "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+        "ORDER": "Asc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+          "34e5212e-6be4-4e69-915b-2b27ed1c746f",
+          "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+          "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "9d3c5936-21d8-44cd-b523-6732c9386650",
+          "99f33168-9456-456a-97ff-166548a799ca"
+        ]
+      },
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Closed"
+        }
+      ],
+      "IS_DEFAULT": false
+    }
+  ],
+  "LIST_MOBILE_LAYOUTS": [
+    {
+      "ROLE": "SystemAdmin",
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "9d3c5936-21d8-44cd-b523-6732c9386650"
+      },
+      "DESCRIPTION": "New, Open and Pending Tickets",
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "New"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Open"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Pending"
+        }
+      ],
+      "LAYOUT_ID": "ddf7eed9-b93f-428f-b5c4-2f51fccf980b",
+      "NAME": "Tickets",
+      "IS_DEFAULT": true,
+      "FIELDS": [
+        "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+        "02285079-81d3-46db-8061-d5bcee1d8c84"
+      ]
+    },
+    {
+      "ROLE": "SystemAdmin",
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "9d3c5936-21d8-44cd-b523-6732c9386650"
+      },
+      "DESCRIPTION": "Closed and Resolved Tickets",
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Closed"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Resolved"
+        }
+      ],
+      "LAYOUT_ID": "59b7f649-5fed-4f58-9ff1-8414d8dee0e9",
+      "NAME": "Closed and Resolved",
+      "FIELDS": [
+        "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+        "02285079-81d3-46db-8061-d5bcee1d8c84"
+      ]
+    },
+    {
+      "ROLE": "Customer",
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "9d3c5936-21d8-44cd-b523-6732c9386650"
+      },
+      "DESCRIPTION": "Ticket",
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "New"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Open"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Pending"
+        }
+      ],
+      "LAYOUT_ID": "8d114be8-512d-450e-a771-80eac5b992c4",
+      "NAME": "Tickets",
+      "IS_DEFAULT": true,
+      "FIELDS": [
+        "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+        "02285079-81d3-46db-8061-d5bcee1d8c84"
+      ]
+    },
+    {
+      "ROLE": "Customer",
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "9d3c5936-21d8-44cd-b523-6732c9386650"
+      },
+      "DESCRIPTION": "Closed and Resolved Tickets",
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Closed"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Resolved"
+        }
+      ],
+      "LAYOUT_ID": "670a37ff-a2d7-49ee-b6a7-b0d5f6eed239",
+      "NAME": "Closed and Resolved",
+      "FIELDS": [
+        "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+        "02285079-81d3-46db-8061-d5bcee1d8c84"
+      ]
+    },
+    {
+      "ROLE": "Agent",
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "9d3c5936-21d8-44cd-b523-6732c9386650"
+      },
+      "DESCRIPTION": "Ticket",
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "New"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Open"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Pending"
+        }
+      ],
+      "LAYOUT_ID": "95a7b232-b76c-4cd8-a781-4ba307edf609",
+      "NAME": "Tickets",
+      "IS_DEFAULT": true,
+      "FIELDS": [
+        "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+        "02285079-81d3-46db-8061-d5bcee1d8c84"
+      ]
+    },
+    {
+      "ROLE": "Agent",
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "9d3c5936-21d8-44cd-b523-6732c9386650"
+      },
+      "DESCRIPTION": "Closed and Resolved Tickets",
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Closed"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION": "02285079-81d3-46db-8061-d5bcee1d8c84",
+          "CONDITION_VALUE": "Resolved"
+        }
+      ],
+      "LAYOUT_ID": "23341ca8-98f5-4f30-8772-f2c26b50d9e3",
+      "NAME": "Closed and Resolved",
+      "FIELDS": [
+        "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+        "02285079-81d3-46db-8061-d5bcee1d8c84"
+      ]
+    }
+  ],
+  "CHAT_BOTS": []
+}

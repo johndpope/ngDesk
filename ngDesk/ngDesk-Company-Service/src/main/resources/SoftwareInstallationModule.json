@@ -1,0 +1,1981 @@
+{
+	"NAME": "Software Installation",
+	"DESCRIPTION": "",
+	"SINGULAR_NAME": "Software Installation",
+	"PLURAL_NAME": "Software Installations",
+	"VALIDATIONS": [],
+	"FIELDS": [
+		{
+			"FIELD_ID": "703c039c-b97a-48c6-b723-7107aa07cf80",
+			"NAME": "DELETED",
+			"DISPLAY_LABEL": "Deleted",
+			"DATA_TYPE": {
+				"DISPLAY": "Checkbox",
+				"BACKEND": "Boolean"
+			},
+			"REQUIRED": false,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+		},
+		{
+			"FIELD_ID": "ce2a02ae-c5ff-49fe-af84-605f467d098b",
+			"NAME": "PUBLISHER",
+			"DISPLAY_LABEL": "Publisher",
+			"DATA_TYPE": {
+				"DISPLAY": "Text",
+				"BACKEND": "String"
+			},
+			"REQUIRED": false,
+			"INTERNAL": true,
+			"NOT_EDITABLE": false,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"HELP_TEXT": "",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+		},
+		{
+			"FIELD_ID": "be52fbf5-2f05-475e-a6f8-0f25eb4a8028",
+			"NAME": "DISPLAY_NAME",
+			"DISPLAY_LABEL": "Display Name",
+			"HELP_TEXT": "",
+			"DATA_TYPE": {
+				"DISPLAY": "Text",
+				"BACKEND": "String"
+			},
+			"REQUIRED": true,
+			"INTERNAL": true,
+			"NOT_EDITABLE": false,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+		},
+		{
+			"FIELD_ID": "15044d64-e3f6-4000-b12a-abb8ea418906",
+			"NAME": "DATE_CREATED",
+			"DISPLAY_LABEL": "Date Created",
+			"HELP_TEXT": "",
+			"DATA_TYPE": {
+				"DISPLAY": "Date/Time",
+				"BACKEND": "Date"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE"
+		},
+		{
+			"FIELD_ID": "238c1a42-0431-448f-8a0d-98f6186d1da1",
+			"NAME": "DATA_ID",
+			"DISPLAY_LABEL": "Data ID",
+			"HELP_TEXT": "",
+			"DEFAULT_VALUE": "",
+			"DATA_TYPE": {
+				"DISPLAY": "Text",
+				"BACKEND": "String"
+			},
+			"VISIBILITY": true,
+			"REQUIRED": false,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"MAX_SIZE": 100,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"DATE_UPDATED": "DATE_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE"
+		},
+		{
+			"FIELD_ID": "9b63054f-139f-48ef-b1ae-29e4c5b270f5",
+			"NAME": "DATE_UPDATED",
+			"DISPLAY_LABEL": "Date Updated",
+			"HELP_TEXT": "",
+			"DATA_TYPE": {
+				"DISPLAY": "Date/Time",
+				"BACKEND": "Date"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE"
+		},
+		{
+			"FIELD_ID": "11906a71-0b45-4e59-917c-0172df6ec360",
+			"NAME": "LAST_UPDATED_BY",
+			"DISPLAY_LABEL": "Last Updated by",
+			"HELP_TEXT": "",
+			"RELATIONSHIP_TYPE": "Many to One",
+			"PRIMARY_DISPLAY_FIELD": "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+			"RELATIONSHIP_FIELD": "",
+			"MODULE": "USERS_MODULE_REPLACE",
+			"DATA_TYPE": {
+				"DISPLAY": "Relationship",
+				"BACKEND": "String"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE"
+		},
+		{
+			"FIELD_ID": "cddfe259-9bf2-4ac7-aaa7-65b8ec80dd53",
+			"NAME": "PRODUCT",
+			"DISPLAY_LABEL": "Product",
+			"HELP_TEXT": "",
+			"RELATIONSHIP_TYPE": "Many to One",
+			"PRIMARY_DISPLAY_FIELD": "69c9e328-da33-4cbe-aa46-87e746731cfa",
+			"RELATIONSHIP_FIELD": "",
+			"MODULE": "SOFTWARE_PRODUCTS_MODULE_REPLACE",
+			"DATA_TYPE": {
+				"DISPLAY": "Relationship",
+				"BACKEND": "String"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE"
+		},
+		{
+			"FIELD_ID": "71220976-6403-4016-919e-acff30ce1256",
+			"NAME": "CREATED_BY",
+			"DISPLAY_LABEL": "Created by",
+			"HELP_TEXT": "",
+			"RELATIONSHIP_TYPE": "Many to One",
+			"PRIMARY_DISPLAY_FIELD": "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+			"RELATIONSHIP_FIELD": "",
+			"MODULE": "USERS_MODULE_REPLACE",
+			"DATA_TYPE": {
+				"DISPLAY": "Relationship",
+				"BACKEND": "String"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE"
+		},
+		{
+			"FIELD_ID": "0dd16d16-5da5-41d3-8262-a52f9ffc7305",
+			"NAME": "TEAMS",
+			"DISPLAY_LABEL": "Teams",
+			"HELP_TEXT": "",
+			"DEFAULT_VALUE": "GLOBAL_TEAM_REPLACE",
+			"RELATIONSHIP_TYPE": "Many to Many",
+			"PRIMARY_DISPLAY_FIELD": "b1c48961-43e0-4071-b30c-0f7be5daa7a9",
+			"RELATIONSHIP_FIELD": "",
+			"MODULE": "TEAMS_MODULE_REPLACE",
+			"DATA_TYPE": {
+				"DISPLAY": "Relationship",
+				"BACKEND": "Array"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": true,
+			"INTERNAL": true,
+			"NOT_EDITABLE": false,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE"
+		},
+		{
+			"FIELD_ID": "96bf35ea-dcb5-4183-8679-f27f776b92df",
+			"NAME": "SOURCE_TYPE",
+			"DISPLAY_LABEL": "Source Type",
+			"HELP_TEXT": "",
+			"DEFAULT_VALUE": "web",
+			"DATA_TYPE": {
+				"DISPLAY": "Picklist",
+				"BACKEND": "String"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_VALUES": [
+				"chat",
+				"email",
+				"facebook",
+				"forms",
+				"mobile",
+				"sms",
+				"twitter",
+				"web",
+				"whatsapp"
+			],
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE"
+		},
+		{
+			"FIELD_ID": "a5accd94-cc42-4ba5-aaff-79ae5524bcb8",
+			"NAME": "CHANNEL",
+			"DISPLAY_LABEL": "Channel",
+			"HELP_TEXT": "",
+			"DATA_TYPE": {
+				"DISPLAY": "Text",
+				"BACKEND": "String"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE"
+		},
+		{
+			"FIELD_ID": "02d265bb-6dd1-42be-bebe-54845f832c69",
+			"NAME": "EFFECTIVE_FROM",
+			"DISPLAY_LABEL": "Effective From",
+			"HELP_TEXT": "",
+			"DATA_TYPE": {
+				"DISPLAY": "Date/Time",
+				"BACKEND": "Date"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_VALUES": [],
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+		},
+		{
+			"FIELD_ID": "847e1658-cb89-47ad-8a0d-e67e38024cf6",
+			"NAME": "EFFECTIVE_TO",
+			"DISPLAY_LABEL": "Effective To",
+			"HELP_TEXT": "",
+			"DATA_TYPE": {
+				"DISPLAY": "Date/Time",
+				"BACKEND": "Date"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_VALUES": [],
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+		},
+		{
+			"FIELD_ID": "b2f7be75-c5d7-4dcc-b4a1-a6d98319f400",
+			"NAME": "INSTALL_LOCATION",
+			"DISPLAY_LABEL": "Install Location",
+			"HELP_TEXT": "",
+			"DATA_TYPE": {
+				"DISPLAY": "Text",
+				"BACKEND": "String"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": false,
+			"NOT_EDITABLE": false,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_VALUES": [],
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+		},
+		{
+			"FIELD_ID": "f98ab3a5-958e-4f10-ae27-b506e243270b",
+			"NAME": "VERSION",
+			"DISPLAY_LABEL": "Version",
+			"HELP_TEXT": "",
+			"DATA_TYPE": {
+				"DISPLAY": "Text",
+				"BACKEND": "String"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": true,
+			"INTERNAL": false,
+			"NOT_EDITABLE": false,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_VALUES": [],
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+		},
+		{
+			"FIELD_ID": "35ab219d-a978-49bf-8407-a877a074c480",
+			"NAME": "FOUND_BY",
+			"DISPLAY_LABEL": "Found By",
+			"HELP_TEXT": "",
+			"DATA_TYPE": {
+				"DISPLAY": "List Text",
+				"BACKEND": "Array"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": false,
+			"NOT_EDITABLE": false,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_VALUES": [],
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+		},
+		{
+			"FIELD_ID": "559cf3de-75a6-4ea8-b433-cced14c3e9c8",
+			"NAME": "EDITION",
+			"DISPLAY_LABEL": "Edition",
+			"HELP_TEXT": "",
+			"DATA_TYPE": {
+				"DISPLAY": "Text",
+				"BACKEND": "String"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": false,
+			"NOT_EDITABLE": false,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_VALUES": [],
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+		},
+		{
+			"FIELD_ID": "886a6a73-b3c7-464c-9483-dedc97e76821",
+			"NAME": "STANDARDIZED_SOFTWARE_INSTALLATION",
+			"DISPLAY_LABEL": "Standardized Software Installation",
+			"HELP_TEXT": "",
+			"RELATIONSHIP_TYPE": "Many to One",
+			"PRIMARY_DISPLAY_FIELD": "43318a23-7572-4fed-a8c4-04da8712196b",
+			"RELATIONSHIP_FIELD": "646bd385-b3b0-4a7f-afa4-7ce9a3adc3ac",
+			"MODULE": "STANDARDIZED_SOFTWARE_INSTALLATION_MODULE_REPLACE",
+			"DATA_TYPE": {
+				"DISPLAY": "Relationship",
+				"BACKEND": "Array"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": false,
+			"NOT_EDITABLE": false,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_VALUES": [],
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+		},
+		{
+			"FIELD_ID": "93ef2924-b95a-4e73-a929-dd428fc74709",
+			"NAME": "ASSET",
+			"DISPLAY_LABEL": "Asset",
+			"HELP_TEXT": "",
+			"RELATIONSHIP_TYPE": "Many to One",
+			"PRIMARY_DISPLAY_FIELD": "d55c0487-6ae7-4ff8-9d23-035af1786e88",
+			"MODULE": "ASSETS_MODULE_REPLACE",
+			"DATA_TYPE": {
+				"DISPLAY": "Relationship",
+				"BACKEND": "String"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": true,
+			"INTERNAL": false,
+			"NOT_EDITABLE": false,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_VALUES": [],
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+		},
+		{
+			"FIELD_ID": "cc9940bb-d341-4303-befb-494043b4dda0",
+			"NAME": "APPROVAL",
+			"DISPLAY_LABEL": "Approval",
+			"HELP_TEXT": "",
+			"DATA_TYPE": {
+				"DISPLAY": "Approval",
+				"BACKEND": "Approval"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": true,
+			"NOT_EDITABLE": false,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_VALUES": [],
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE"
+		},
+		{
+			"FIELD_ID": "5fceb23f-3bb1-42f8-9103-2776fe59be42",
+			"NAME": "STATUS",
+			"DISPLAY_LABEL": "Status",
+			"HELP_TEXT": "",
+			"DEFAULT_VALUE": "Installed",
+			"DATA_TYPE": {
+				"DISPLAY": "Picklist",
+				"BACKEND": "String"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": true,
+			"INTERNAL": false,
+			"NOT_EDITABLE": false,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": true,
+			"PICKLIST_VALUES": [
+				"Installed",
+				"Not Found",
+				"Uninstalled"
+			],
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE"
+		},
+		{
+			"FIELD_ID": "0763ba70-49fe-4c78-97ce-4a246d8ea9ec",
+			"NAME": "PLATFORM",
+			"DISPLAY_LABEL": "Platform",
+			"HELP_TEXT": "",
+			"DATA_TYPE": {
+				"DISPLAY": "Picklist",
+				"BACKEND": "String"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": false,
+			"NOT_EDITABLE": false,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_VALUES": [
+				"Mac",
+				"Linux",
+				"Windows"
+			],
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE"
+		},
+		 {
+      "FIELD_ID": "ec928c4f-f1f6-424d-b120-7e7747360ff2",
+      "NAME": "TIME_WINDOW",
+      "DISPLAY_LABEL": "Time Window",
+      "HELP_TEXT": "",
+      "DATA_TYPE": {
+        "DISPLAY": "Time Window",
+        "BACKEND": "Timestamp"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_VALUES": [],
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+     {
+      "FIELD_ID": "4024c953-87aa-4d4e-97ae-2a467b83db3a",
+      "NAME": "PDFS",
+      "DISPLAY_LABEL": "PDFS",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": null,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": [],
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": true,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "RELATIONSHIP_FIELD": null,
+      "FORMULA": null,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "DATA_TYPE": {
+        "DISPLAY": "PDF",
+        "BACKEND": "BLOB"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": "DATE_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "MESSAGES": null,
+      "INTERNAL": false,
+      "NOT_EDITABLE": true,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false,
+      "WORKFLOW": null,
+      "DATA_FILTER": null,
+      "AGGREGATION_TYPE": null,
+      "AGGREGATION_FIELD": null,
+      "AGGREGATION_RELATED_FIELD": null,
+      "INHERITANCE_MAPPING": null,
+      "UNIQUE": false,
+      "DATE_UPDATED": "DATE_REPLACE"
+     }
+	],
+	"LIST_LAYOUTS": [
+		{
+			"LAYOUT_ID": "ca487266-e448-4cff-9050-057f0d6f6492",
+			"NAME": "All Softwares",
+			"DESCRIPTION": "List layout for agents",
+			"ID": "",
+			"ROLE": "AGENT_ROLE_REPLACE",
+			"IS_DEFAULT": true,
+			"ORDER_BY": {
+				"COLUMN": "15044d64-e3f6-4000-b12a-abb8ea418906",
+				"ORDER": "Asc"
+			},
+			"COLUMN_SHOW": {
+				"FIELDS": [
+					"be52fbf5-2f05-475e-a6f8-0f25eb4a8028",
+					"15044d64-e3f6-4000-b12a-abb8ea418906",
+					"11906a71-0b45-4e59-917c-0172df6ec360",
+					"5fceb23f-3bb1-42f8-9103-2776fe59be42"
+				]
+			},
+			"CONDITIONS": [],
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+		},
+		{
+			"LAYOUT_ID": "bb1da423-a126-44f9-b93d-822662a907ed",
+			"NAME": "All Softwares",
+			"DESCRIPTION": "List layout for System Admin",
+			"ID": "",
+			"ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+			"IS_DEFAULT": true,
+			"ORDER_BY": {
+				"COLUMN": "15044d64-e3f6-4000-b12a-abb8ea418906",
+				"ORDER": "Asc"
+			},
+			"COLUMN_SHOW": {
+				"FIELDS": [
+					"be52fbf5-2f05-475e-a6f8-0f25eb4a8028",
+					"15044d64-e3f6-4000-b12a-abb8ea418906",
+					"11906a71-0b45-4e59-917c-0172df6ec360",
+					"5fceb23f-3bb1-42f8-9103-2776fe59be42"
+				]
+			},
+			"CONDITIONS": [],
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+		}
+	],
+	"CREATE_LAYOUTS": [
+		{
+			"LAYOUT_ID": "34f91230-a5a3-41bb-9b8d-c2478b8a7819",
+			"NAME": "Create Software Installation",
+			"DESCRIPTION": "Create layout for Admin",
+			"PANELS": [
+				{
+					"SETTINGS": {
+						"COLLAPSABLE": false,
+						"ACTION": "",
+						"CONDITIONS": []
+					},
+					"ID": "PANEL_1",
+					"PANEL_NAME": "Software Details",
+					"GRIDS": [
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "be52fbf5-2f05-475e-a6f8-0f25eb4a8028",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "f98ab3a5-958e-4f10-ae27-b506e243270b",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "ce2a02ae-c5ff-49fe-af84-605f467d098b",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "886a6a73-b3c7-464c-9483-dedc97e76821",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "93ef2924-b95a-4e73-a929-dd428fc74709",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "5fceb23f-3bb1-42f8-9103-2776fe59be42",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "559cf3de-75a6-4ea8-b433-cced14c3e9c8",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "b2f7be75-c5d7-4dcc-b4a1-a6d98319f400",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						]
+					],
+					"DISPLAY_TYPE": "Panel"
+				}
+			],
+			"TITLE_BAR": [],
+			"PREDEFINED_TEMPLATE": null,
+			"CUSTOM_LAYOUT": null,
+			"ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAYOUT_STYLE": "standard"
+		},
+		{
+			"LAYOUT_ID": "9d20ab8c-a5f5-4741-992c-cc62ff39f8b9",
+			"NAME": "Create Software Installation",
+			"DESCRIPTION": "Create layout for Agent",
+			"PANELS": [
+				{
+					"SETTINGS": {
+						"COLLAPSABLE": false,
+						"ACTION": "",
+						"CONDITIONS": []
+					},
+					"ID": "PANEL_1",
+					"PANEL_NAME": "Software Details",
+					"GRIDS": [
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "be52fbf5-2f05-475e-a6f8-0f25eb4a8028",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "f98ab3a5-958e-4f10-ae27-b506e243270b",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "ce2a02ae-c5ff-49fe-af84-605f467d098b",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "886a6a73-b3c7-464c-9483-dedc97e76821",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "93ef2924-b95a-4e73-a929-dd428fc74709",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "5fceb23f-3bb1-42f8-9103-2776fe59be42",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "559cf3de-75a6-4ea8-b433-cced14c3e9c8",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "b2f7be75-c5d7-4dcc-b4a1-a6d98319f400",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						]
+					],
+					"DISPLAY_TYPE": "Panel"
+				}
+			],
+			"TITLE_BAR": [],
+			"PREDEFINED_TEMPLATE": null,
+			"CUSTOM_LAYOUT": null,
+			"ROLE": "AGENT_ROLE_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAYOUT_STYLE": "standard"
+		}
+	],
+	"EDIT_LAYOUTS": [
+		{
+			"LAYOUT_ID": "d069887c-5add-44b7-a3e9-afd971a4261c",
+			"NAME": "Edit Software Installation",
+			"DESCRIPTION": "Edit layout for System Admin",
+			"PANELS": [
+				{
+					"SETTINGS": {
+						"COLLAPSABLE": false,
+						"ACTION": "",
+						"CONDITIONS": []
+					},
+					"ID": "PANEL_1",
+					"PANEL_NAME": "Software Details",
+					"GRIDS": [
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "be52fbf5-2f05-475e-a6f8-0f25eb4a8028",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "f98ab3a5-958e-4f10-ae27-b506e243270b",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "ce2a02ae-c5ff-49fe-af84-605f467d098b",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "886a6a73-b3c7-464c-9483-dedc97e76821",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "93ef2924-b95a-4e73-a929-dd428fc74709",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "5fceb23f-3bb1-42f8-9103-2776fe59be42",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "559cf3de-75a6-4ea8-b433-cced14c3e9c8",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "b2f7be75-c5d7-4dcc-b4a1-a6d98319f400",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						]
+					],
+					"DISPLAY_TYPE": "Panel"
+				}
+			],
+			"TITLE_BAR": [],
+			"PREDEFINED_TEMPLATE": null,
+			"CUSTOM_LAYOUT": null,
+			"ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAYOUT_STYLE": "outline"
+		},
+		{
+			"LAYOUT_ID": "bbe346a8-aa83-43bd-928a-d9b0bb0f47b7",
+			"NAME": "Edit Software Installation",
+			"DESCRIPTION": "Edit layout for Agent",
+			"PANELS": [
+				{
+					"SETTINGS": {
+						"COLLAPSABLE": false,
+						"ACTION": "",
+						"CONDITIONS": []
+					},
+					"ID": "PANEL_1",
+					"PANEL_NAME": "Software Details",
+					"GRIDS": [
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "be52fbf5-2f05-475e-a6f8-0f25eb4a8028",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "f98ab3a5-958e-4f10-ae27-b506e243270b",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "ce2a02ae-c5ff-49fe-af84-605f467d098b",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "886a6a73-b3c7-464c-9483-dedc97e76821",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "93ef2924-b95a-4e73-a929-dd428fc74709",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "5fceb23f-3bb1-42f8-9103-2776fe59be42",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "559cf3de-75a6-4ea8-b433-cced14c3e9c8",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "b2f7be75-c5d7-4dcc-b4a1-a6d98319f400",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						]
+					],
+					"DISPLAY_TYPE": "Panel"
+				}
+			],
+			"TITLE_BAR": [],
+			"PREDEFINED_TEMPLATE": null,
+			"CUSTOM_LAYOUT": null,
+			"ROLE": "AGENT_ROLE_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAYOUT_STYLE": "outline"
+		}
+	],
+	"LIST_MOBILE_LAYOUTS": [
+    {
+      "LAYOUT_ID": "826007a5-b165-4518-bb79-90c504b130a7",
+      "NAME": "All Softwares",
+      "DESCRIPTION": "Mobile list layout for admin",
+      "ID": "",
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "ORDER_BY": {
+        "COLUMN": "15044d64-e3f6-4000-b12a-abb8ea418906",
+        "ORDER": "Asc"
+      },
+      "FIELDS": [
+        "be52fbf5-2f05-475e-a6f8-0f25eb4a8028",
+        "15044d64-e3f6-4000-b12a-abb8ea418906"
+      ],
+      "CONDITIONS": [],
+      "IS_DEFAULT": true,
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE"
+    },
+    {
+      "LAYOUT_ID": "89a1b3f8-8315-4c7a-8fa3-ba77a445e9b6",
+      "NAME": "All Softwares",
+      "DESCRIPTION": "Mobile List layout for agents",
+      "ID": "",
+      "ROLE": "AGENT_ROLE_REPLACE",
+      "ORDER_BY": {
+        "COLUMN": "15044d64-e3f6-4000-b12a-abb8ea418906",
+        "ORDER": "Asc"
+      },
+      "FIELDS": [
+        "be52fbf5-2f05-475e-a6f8-0f25eb4a8028",
+        "15044d64-e3f6-4000-b12a-abb8ea418906"
+      ],
+      "CONDITIONS": [],
+      "IS_DEFAULT": true,
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE"
+    }
+  ],
+  "CREATE_MOBILE_LAYOUTS": [
+    {
+      "LAYOUT_ID": "1af2c8ce-a612-46b9-991a-2bcb05f77513",
+      "NAME": "Create Software Installation",
+      "DESCRIPTION": "Create mobile layout for admin",
+      "FIELDS": [
+        "be52fbf5-2f05-475e-a6f8-0f25eb4a8028",
+        "f98ab3a5-958e-4f10-ae27-b506e243270b",
+        "ce2a02ae-c5ff-49fe-af84-605f467d098b",
+        "886a6a73-b3c7-464c-9483-dedc97e76821",
+        "93ef2924-b95a-4e73-a929-dd428fc74709",
+        "5fceb23f-3bb1-42f8-9103-2776fe59be42",
+        "559cf3de-75a6-4ea8-b433-cced14c3e9c8",
+        "b2f7be75-c5d7-4dcc-b4a1-a6d98319f400",
+        "0dd16d16-5da5-41d3-8262-a52f9ffc7305"
+      ],
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE"
+    },
+    {
+      "LAYOUT_ID": "f8c2ca97-e483-4731-ad75-cf31ae2d42d7",
+      "NAME": "Create Software Installation",
+      "DESCRIPTION": "Create mobile layout for agent",
+      "FIELDS": [
+        "be52fbf5-2f05-475e-a6f8-0f25eb4a8028",
+        "f98ab3a5-958e-4f10-ae27-b506e243270b",
+        "ce2a02ae-c5ff-49fe-af84-605f467d098b",
+        "886a6a73-b3c7-464c-9483-dedc97e76821",
+        "93ef2924-b95a-4e73-a929-dd428fc74709",
+        "5fceb23f-3bb1-42f8-9103-2776fe59be42",
+        "559cf3de-75a6-4ea8-b433-cced14c3e9c8",
+        "b2f7be75-c5d7-4dcc-b4a1-a6d98319f400",
+        "0dd16d16-5da5-41d3-8262-a52f9ffc7305"
+      ],
+      "ROLE": "AGENT_ROLE_REPLACE",
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE"
+    }
+  ],
+  "EDIT_MOBILE_LAYOUTS": [
+    {
+      "LAYOUT_ID": "266732c3-e787-4ae3-8cc6-6e68aaf5644d",
+      "NAME": "Edit Software Installation",
+      "DESCRIPTION": "Edit mobile layout for agent",
+      "FIELDS": [
+        "be52fbf5-2f05-475e-a6f8-0f25eb4a8028",
+        "f98ab3a5-958e-4f10-ae27-b506e243270b",
+        "ce2a02ae-c5ff-49fe-af84-605f467d098b",
+        "886a6a73-b3c7-464c-9483-dedc97e76821",
+        "93ef2924-b95a-4e73-a929-dd428fc74709",
+        "5fceb23f-3bb1-42f8-9103-2776fe59be42",
+        "559cf3de-75a6-4ea8-b433-cced14c3e9c8",
+        "b2f7be75-c5d7-4dcc-b4a1-a6d98319f400",
+        "0dd16d16-5da5-41d3-8262-a52f9ffc7305"
+      ],
+      "ROLE": "AGENT_ROLE_REPLACE",
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE"
+    },
+    {
+      "LAYOUT_ID": "79f75df2-5896-460b-b8a8-a5b7a89f6d21",
+      "NAME": "Edit Software Installation",
+      "DESCRIPTION": "Edit mobile layout for admin",
+      "FIELDS": [
+        "be52fbf5-2f05-475e-a6f8-0f25eb4a8028",
+        "f98ab3a5-958e-4f10-ae27-b506e243270b",
+        "ce2a02ae-c5ff-49fe-af84-605f467d098b",
+        "886a6a73-b3c7-464c-9483-dedc97e76821",
+        "93ef2924-b95a-4e73-a929-dd428fc74709",
+        "5fceb23f-3bb1-42f8-9103-2776fe59be42",
+        "559cf3de-75a6-4ea8-b433-cced14c3e9c8",
+        "b2f7be75-c5d7-4dcc-b4a1-a6d98319f400",
+        "0dd16d16-5da5-41d3-8262-a52f9ffc7305"
+      ],
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE"
+    }
+  ],
+	"ALTERNATE_PRIMARY_KEYS": [
+		"f98ab3a5-958e-4f10-ae27-b506e243270b",
+		"be52fbf5-2f05-475e-a6f8-0f25eb4a8028",
+		"ce2a02ae-c5ff-49fe-af84-605f467d098b"
+	],
+	"_class": "com.ngdesk.company.module.dao.Module",
+	"CREATED_BY": "CREATED_BY_REPLACE",
+	"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+	"DATE_CREATED": "DATE_REPLACE",
+	"DATE_UPDATED": "DATE_REPLACE"
+}

@@ -1,0 +1,41 @@
+::ng-deep .mat-header-cell {
+
+	// TODO: need to find better solution
+	.mat-checkbox-frame {
+		border-color: white;
+		border-width: 1.5px;
+	}
+
+	.mat-sort-header-arrow {
+		color: white;
+	}
+
+	// top: 48px !important;
+}
+
+::ng-deep .mat-menu-content {
+	padding-top: 0px !important;
+	padding-bottom: 0px !important;
+}
+
+::ng-deep .mat-menu-panel {
+	max-width: none !important;
+	min-width: 100px !important;
+	min-height: 35px !important;
+}
+
+.mat-cell {
+	font-size: 12px;
+}
+
+.mat-row {
+	height: 40px;
+}
+
+.mat-header-row {
+	height: 45px;
+}
+
+::ng-deep .mat-checkbox-frame {
+	border-width: 0.5px !important;
+}

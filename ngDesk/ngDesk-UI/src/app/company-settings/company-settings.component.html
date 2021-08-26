@@ -1,0 +1,81 @@
+<app-toolbar [templateRef]="customTemplateRef"></app-toolbar>
+<div fxLayout="column" fxLayoutGap="10px" class="pad10">
+	<ng-template #customTemplateRef>
+		<app-title-bar (buttonRightOnClick)="openDialog()" [title]="'COMPANY_SETTINGS' | translate"
+			[buttonText]="'DELETE_COMPANY' | translate" [buttonColor]="'warn'"></app-title-bar>
+	</ng-template>
+</div>
+
+<!--Search Bar Section-->
+<div fxLayout="row" fxLayoutAlign="center">
+	<mat-form-field class="mat-form-field--search-bar" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="100"
+		style="flex-grow: 1;height: 38px;" appearance="outline">
+		<div fxLayout="row">
+			<span fxLayoutAlign="start center">
+				<mat-icon>search</mat-icon>
+			</span>
+			<input matInput placeholder=" {{ 'SEARCH_SETTINGS' | translate }}" [formControl]="searchCtrl"
+				style="min-height:35px;padding-left:1.3%;" autocomplete="off" />
+			<span fxLayoutAlign="end center">
+				<mat-icon class="pointer" *ngIf="searchCtrl.value" (click)="removeAll()" matSuffix>close</mat-icon>
+			</span>
+		</div>
+	</mat-form-field>
+</div>
+
+<!-- no records for when table is empty  -->
+<div fxLayoutAlign="center center" style="height: 61vh;" *ngIf="settingLists.length === 0">
+	<div class="mat-h1" fxLayout="row" fxLayoutAlign="center center">
+		<div fxFlex="50" fxLayoutAlign="end center">
+			<div fxLayout="column" fxFlex="40" fxLayoutGap="4px">
+				<div style="text-align: left;">
+					<label class="mat-h3">{{'NO_SETTINGS_FOUND' | translate}}</label>
+				</div>
+			</div>
+		</div>
+		<div fxFlex="50" fxLayout="column">
+			<div fxFlex=50>
+			</div>
+			<img src="../../assets/images/notFoundImage.png" style="width:35%;" alt="">
+		</div>
+	</div>
+</div>
+
+<div class="pad10">
+
+	<!-- Mat-cards with all the company settings -->
+	<div *ngFor="let item of settingLists">
+		<div fxLayout="row" fxLayoutAlign="center" [ngStyle]="{'margin-top':'20px'}">
+			<mat-card fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="100" style="flex-grow: 1;">
+				<mat-card-title>
+					<h1 class="mat-title light-grey-color">{{item.header}}</h1>
+				</mat-card-title>
+				<mat-card-content>
+					<div fxLayout="row wrap" fxLayoutGap="20px grid">
+						<div fxFlex.lg="33.33" fxFlex.md="50" fxFlex.sm="100" *ngFor="let companySetting of item.options">
+							<button mat-button fxFlex="100" fxLayoutAlign="flex-start center"
+								(click)="goToSeletctedSetting(companySetting.PATH)">
+								<div fxLayout="row" class="mat-body light-grey-color" fxLayoutGap="6px">
+									<div *ngIf="companySetting.PATH === 'zoom-integration'">
+										<img src="../../assets/images/Zoom.png" style="height:14px;padding: 10px;">
+									</div>
+									<div *ngIf="companySetting.PATH === 'aws-integration'">
+										<img src="../../assets/images/aws-cloudwatch-logo.png" style="height:25px;">
+									</div>
+									<div *ngIf="companySetting.PATH === 'teams-integration'">
+										<img src="../../assets/images/teams.png" style="height:43px;">
+									</div>
+									<mat-icon *ngIf="companySetting.PATH !== 'aws-integration' && companySetting.PATH !== 'teams-integration' " class="light-grey-color" fontSet="material-icons-outlined">{{companySetting.ICON}}</mat-icon>
+									<div fxFlex="90" fxLayoutAlign="center center">{{companySetting.NAME | translate}}</div>
+									<div *ngIf="companySetting.PATH === 'docusign-integration'">
+										<img src="../../assets/images/Docusign.png" style="height:35px;padding: 10px;">
+									</div>
+								</div>
+							</button>
+						</div>
+					</div>
+				</mat-card-content>
+			</mat-card>
+		</div>
+	</div>
+</div>

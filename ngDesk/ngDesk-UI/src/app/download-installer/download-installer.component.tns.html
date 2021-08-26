@@ -1,0 +1,52 @@
+<StackLayout>
+  <Label text="download-installer works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<app-toolbar></app-toolbar>
+<div style="height: 100vh; background-size: 100vw 170vh">
+	<div fxFlex="500" style="margin-top:220px">
+		<div fxLayout="row" fxLayoutAlign="center center">
+			<mat-card fxFlex="550px" style="border:1px dotted #ddd">
+				<mat-card-title>
+					<div fxLayout="row" *ngIf="isInstallInProgress" fxLayoutAlign="center center">
+						<mat-icon>cloud_download</mat-icon>
+						<label class="pad10 mat-subheading-4" fxLayout="row" color="primary">
+							{{'DOWNLOADING_SPINNER' | translate}}
+						</label>
+					</div>
+					<label class="pad10 mat-subheading-4" *ngIf="!isInstallInProgress" fxLayout="row" fxLayoutAlign="center center" color="primary">
+						{{'DOWNLOADING_START_SOON' | translate}}
+					</label>
+				</mat-card-title>
+				<mat-card-content>
+					<div fxLayout="column" fxFlex="100%">
+						<div fxLayout="row" fxLayoutAlign="center" *ngIf="!isInstalled && isInstallInProgress">
+							<mat-progress-bar mode="indeterminate"></mat-progress-bar>
+						</div>
+						<div fxLayout="row" fxLayoutAlign="center" *ngIf="!isInstallInProgress">
+							Wait for {{downloadTimeInterval}} seconds...
+						</div>
+						<div fxLayout="row" fxLayoutAlign="center" style="margin-top: 2%;">
+							<label>{{'DOWNLOAD_START_AUTOMATICALLY' | translate}}
+							</label>
+						</div>
+						<div fxLayout="row" fxLayoutAlign="center" style="margin-top: 2%;" *ngIf="isInstalled">
+							<label>
+								If Not, <a class="underline-on-hover" (click)="linkClicked();" style="color: blue">Download the file </a>
+								<span>here.</span>
+							</label>
+						</div>
+					</div>
+				</mat-card-content>
+			</mat-card>
+		</div>
+
+	</div>
+</div>
+
+-->

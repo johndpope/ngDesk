@@ -1,0 +1,69 @@
+<StackLayout>
+  <Label text="ChatPromptMasterComponent works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef>
+	<app-title-bar *ngIf="moduleWorkflowId === 'new'" title="{{'CHAT_PROMPT_NEW' | translate}}" (buttonRightOnClick)="save()">
+	</app-title-bar>
+	<app-title-bar *ngIf="moduleWorkflowId !== 'new'" title="{{'CHAT_PROMPT_UPDATE' | translate}}" (buttonRightOnClick)="save()">
+	</app-title-bar>
+</ng-template>
+<div>
+	<form [formGroup]="promptForm" (ngSubmit)="savePrompt()">
+		<div fxFlex style="padding: 15px;" fxLayout="column">
+			<app-new-name-description buttonText="Save" (save)="savePrompt()"></app-new-name-description>
+			<div fxLayout="row" fxLayoutAlign="normal center" fxLayoutGap='20px'>
+				<label class="mat-body-2">{{'RUN_TRIGGER'|translate}}</label>
+				<mat-form-field style="width:340px">
+					<mat-select placeholder="{{'SELECT_WHEN_TO_TRIGGER' | translate}}" formControlName="RUN_TRIGGER" required>
+						<mat-option *ngFor="let when of runTriggers" [value]="when">
+							<label> {{ when | translate }} </label>
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</div>
+			<div fxLayout="row" fxLayoutAlign="space-between start">
+				<app-conditions *ngIf="promptLoaded" [conditions]="prompt.conditions" [parentName]="'promptsComponent'" [fields]="fields"
+					[pageInfo]="pageInfo">
+				</app-conditions>
+			</div>
+			<div fxLayout="row" fxLayoutAlign="normal center" fxLayoutGap='5px'>
+				<div><label class="mat-h1">{{'ACTIONS'|translate}}</label></div>
+				<mat-icon class="pointer" (click)="addAction()">add_circle</mat-icon>
+			</div>
+			<div formGroupName="WORKFLOW">
+				<div formArrayName="NODES"
+					*ngFor="let action of promptForm.get('WORKFLOW').get('NODES')['controls'] | slice:1; let actionIndex = index;">
+					<div [formGroupName]="actionIndex+1">
+						<div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign=" center">
+							<mat-form-field>
+								<mat-select placeholder="{{'SELECT_AN_ACTION' | translate}}" formControlName="TYPE" name="action"
+									(selectionChange)="changeAction(action)">
+									<mat-option *ngFor="let name of actionNames" [value]="name.TYPE">
+										<label> {{ name.ACTION }} </label>
+									</mat-option>
+								</mat-select>
+							</mat-form-field>
+							<button mat-icon-button (click)="removeActions(actionIndex + 1)">
+								<mat-icon>remove_circle</mat-icon>
+							</button>
+						</div>
+						<div *ngIf="action.get('TYPE').value === 'ShowPopUpMessage'" formGroupName="VALUES">
+							<mat-form-field>
+								<input matInput placeholder="Enter a message" formControlName="MESSAGE" name="message">
+							</mat-form-field>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+-->

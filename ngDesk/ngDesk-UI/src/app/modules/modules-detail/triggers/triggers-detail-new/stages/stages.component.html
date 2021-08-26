@@ -1,0 +1,35 @@
+<div fxLayoutGap="20px" fxLayout="column">
+
+	<label class="mat-body">Add Stages <button mat-icon-button (click)="addStages()">
+			<mat-icon>add_circle</mat-icon>
+		</button></label>
+	<mat-accordion multi>
+		<mat-expansion-panel *ngFor="let item of data.STAGES">
+			<mat-expansion-panel-header>
+				<mat-panel-title>
+					{{item.NAME}}
+				</mat-panel-title>
+				<!-- <mat-panel-description>
+				{{item.NAME}}
+				<mat-icon>account_circle</mat-icon>
+				</mat-panel-description> -->
+			</mat-expansion-panel-header>
+			<mat-form-field>
+				<input matInput type="text" [(ngModel)]="item.NAME" placeholder="{{'STAGE_NAME' | translate}}">
+			</mat-form-field>
+			<div *ngFor="let cell of data.NODE_DATA">
+				<div *ngIf="cell.STAGE_ID === item.STAGE_ID" fxLayoutAlign="start center" fxLayoutGap="15px">
+					<mat-icon>
+						assignment_turned_in
+					</mat-icon><label>{{cell.VALUE.NAME}}</label>
+				</div>
+			</div>
+		</mat-expansion-panel>
+	</mat-accordion>
+
+	<div fxLayoutAlign="end end" fxLayoutGap="10px">
+		<button mat-raised-button color="primary" (click)="saveData()">{{'SAVE' | translate}}</button>
+		<button mat-raised-button type="button" [mat-dialog-close]="'close'">{{'CANCEL' | translate}}</button>
+	</div>
+
+</div>

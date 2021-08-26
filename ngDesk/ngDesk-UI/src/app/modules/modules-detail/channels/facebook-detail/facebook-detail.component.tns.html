@@ -1,0 +1,97 @@
+<StackLayout>
+  <Label text="FacebookDetailComponent works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<div *ngIf="facebookChannel.PAGES" class="pad10">
+  <div style="margin-bottom: 10px;" fxLayout="row" fxLayoutGap="90%">
+    <div fxLayoutAlign="center center">
+      <h2 class="mat-h2" style="margin-bottom: 0px">{{ this.facebookChannel.NAME}}</h2>
+    </div>
+    <div fxLayoutGap="15px" fxLayoutAlign="end center">
+      <div fxFlex=20 fxLayoutGap="15px" fxLayoutAlign="end">
+        <button color="primary" mat-raised-button (click)="save('form')"> {{'SAVE' | translate}}</button>
+      </div>
+    </div>
+  </div>
+  <div fxLayoutGap="20px" fxLayout="column">
+    <mat-card class="box-shadow">
+      <div fxLayout="column" fxFlex fxLayoutGap="10px">
+        <div fxFlex>
+          <label class="mat-body-strong">{{'ACTIVE_PAGES'| translate}}</label>
+        </div>
+        <div fxLayoutAlign="center center" *ngIf="getPageCount(true) == 0" fxLayout="column">
+          <div fxLayoutAlign="center start" fxLayout="column" fxLayoutGap="5px">
+            <label class="mat-body">{{'ADD_MORE_FACEBOOK_PAGES' | translate}}</label>
+            <img (click)="connectToFacebook()" style="cursor: pointer; max-width: 185px;"
+              src="../../../../../assets/images/continue_with_facebook.png">
+          </div>
+        </div>
+        <div *ngFor="let page of facebookChannel.PAGES">
+          <div *ngIf="page.SUBSCRIBED" [ngStyle]="{' border-radius':'5px','border':'1px solid #ddd', 'padding':'10px'}">
+            <div fxLayoutGap="10px">
+              <span>
+                <img [ngStyle]="{'max-width':'100%','height':'auto'}" src="https://graph.facebook.com/{{page.PAGE_ID}}/picture" /></span>
+              <div fxFlex fxLayout="column">
+                <label class="mat-body-strong"><a href="http://facebook.com/{{page.PAGE_ID}}">{{page["PAGE_NAME"]}}</a></label>
+                <label class="mat-small" [ngStyle]="{'color':'#68737D'}"></label>
+              </div>
+              <div fxLayout="column">
+                <div fxFlex>
+                  <mat-slide-toggle [checked]="page.IS_ACTIVE" [(ngModel)]="page.IS_ACTIVE"><span class="mat-caption">De-Activate</span>
+                  </mat-slide-toggle>
+                </div>
+                <div fxFlex><span class="mat-body a-unlink" (click)="unlinkPage(page.PAGE_ID)">unlink</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="getPageCount(true) != 0" fxLayoutAlign="start center">
+          <div fxLayoutGap="10px" fxLayoutAlign="start center">
+            <label class="mat-body">{{'ADD_MORE_FACEBOOK_PAGES' | translate}}</label>
+            <img (click)="connectToFacebook()" style="cursor: pointer; max-width: 185px;"
+              src="../../../../../assets/images/continue_with_facebook.png">
+          </div>
+        </div>
+      </div>
+    </mat-card>
+    <mat-card class="box-shadow">
+      <div fxLayout="column" fxFlex fxLayoutGap="10px">
+        <div fxFlex fxLayout="row">
+          <label class="mat-body-strong">{{'INACTIVE_PAGES' | translate}}</label>
+        </div>
+        <div *ngIf="getPageCount(false) == 0" fxLayoutAlign="center center">
+          <label class="mat-body">{{'NO_INACTIVE_PAGES' | translate}}</label>
+        </div>
+        <div *ngFor="let page of facebookChannel.PAGES">
+          <div *ngIf="!page.SUBSCRIBED" [ngStyle]="{' border-radius':'5px','border':'1px solid #ddd', 'padding':'10px'}">
+            <div fxLayoutGap="10px">
+              <span>
+                <img [ngStyle]="{'max-width':'100%','height':'auto'}" src="https://graph.facebook.com/{{page.PAGE_ID}}/picture" /></span>
+              <div fxFlex fxLayout="column">
+                <label class="mat-body-strong"><a href="http://facebook.com/{{page.PAGE_ID}}">{{page["PAGE_NAME"]}}</a></label>
+                <label class="mat-small" [ngStyle]="{'color':'#68737D'}"></label>
+              </div>
+              <div fxLayout="column">
+                <div fxFlex>
+                  <mat-slide-toggle [checked]="page.IS_ACTIVE" [(ngModel)]="page.IS_ACTIVE"><span class="mat-caption">Activate</span>
+                  </mat-slide-toggle>
+                </div>
+                <div fxFlex>
+                  <span style="cursor: pointer" class="mat-body a-unlink" (click)="unlinkPage(page.PAGE_ID)">unlink</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>
+
+-->

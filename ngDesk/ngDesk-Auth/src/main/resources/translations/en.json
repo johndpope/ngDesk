@@ -1,0 +1,13 @@
+{
+	"MACHINE_ID_NOT_FOUND": "machine id is not found please check the machine id",
+	"MAC_ADDRESS_NOT_FOUND": "mac address is not found please check the mac address",
+	"HASH_STRING_INVALID": "hash string is invalid please check the hash string ",
+	"COMPANY_SUBDOMAIN": "company subdomain",
+	"LICENSE_KEY": "license key",
+	"USER_COUNT": "user count",
+	"CAPTCHA_FAILED": "Captcha verification failed",
+	"INVALID_SUB_DOMAIN": "The given company subdomain is not valid",
+	"INVALID_USER_DETAILS": "For given Email address the user details is not found",
+	"INVALID_USER": "The user does not exist,please regenerate the link using forgot password and try again",
+	"LINK_EXPIRED": "The reset password link may be outdated or expired,please generate new link"
+}

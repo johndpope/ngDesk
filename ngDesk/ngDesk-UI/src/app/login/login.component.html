@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<div fxLayout="column" style="height: 100vh;background: linear-gradient(var(--primaryColor),var(--blendColor))">
+	<div style="height:95vh" *ngIf="!isIE" fxLayoutGap="20px">
+		<div fxLayout="row" fxLayoutAlign="center center">
+			<div fxFlex="40" fxLayoutAlign="center center" style="margin-top: 100px;">
+				<mat-card fxLayout="column" fxLayoutGap="20px" style="border-radius: 15px;min-width: 700px;padding: 20px;">
+					<div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
+						<img *ngIf="loginIcon" [src]="loginIcon" alt="logo" height="64" width="64">
+						<label style="margin-bottom: 0px;" class="mat-h1">{{ header }}</label>
+					</div>
+					<div fxLayout="row" fxLayoutAlign="center center">
+						<div fxFlex fxLayout="row" fxLayoutGap="25px">
+							<div *ngIf="enableFacebook || enableGoogle || enableTwitter||enableMicrosoft" fxFlex="50" fxLayout="column"
+								style="padding-top: 15px;">
+								<div fxFlex="10" fxLayout="column" fxLayoutGap="10px">
+									<button *ngIf="enableFacebook" style="padding-top: 5px; padding-bottom: 5px; " fxFlex="none"
+										(click)="loginWithFacebook()" mat-raised-button>
+										<div>
+											<div fxFlex="20"> </div>
+											<div fxLayout="row" fxLayoutGap="15px">
+												<div fxLayoutAlign="center center">
+													<mat-icon svgIcon="facebook"></mat-icon>
+												</div>
+												<div>
+													{{'LOGIN_WITH_FACEBOOK' | translate}}
+												</div>
+											</div>
+										</div>
+									</button>
+									<button *ngIf="enableGoogle" style="padding-top: 5px; padding-bottom: 5px; " color="basic"
+										(click)="loginWithGoogle()" fxFlex="none" mat-raised-button>
+										<div>
+											<div fxFlex="20"> </div>
+											<div fxLayout="row" fxLayoutGap="15px">
+												<div fxLayoutAlign="center center">
+													<mat-icon svgIcon="google"></mat-icon>
+												</div>
+												<div>
+													{{'LOGIN_WITH_GOOGLE' | translate}}
+												</div>
+											</div>
+										</div>
+									</button>
+									<button *ngIf="enableTwitter" style="padding-top: 5px; padding-bottom: 5px; " color="basic"
+										fxFlex="none" (click)="loginWithTwitter()" mat-raised-button>
+										<div>
+											<div fxFlex="20"> </div>
+											<div fxLayout="row" fxLayoutGap="15px">
+												<div fxLayoutAlign="center center">
+													<mat-icon svgIcon="twitter"></mat-icon>
+												</div>
+												<div>
+													{{'LOGIN_WITH_TWITTER' | translate}}
+												</div>
+											</div>
+										</div>
+									</button>
+									<!-- <button *ngIf="enableMicrosoft" style="padding-top: 5px; padding-bottom: 5px;" fxFlex="none" color="basic"
+										(click)="loginWithMicrosoft()" mat-raised-button>
+										<div>
+											<div fxFlex="20"> </div>
+											<div fxLayout="row" fxLayoutGap="15px">
+												<div fxLayoutAlign="center center">
+													<mat-icon svgIcon="microsoft"></mat-icon>
+												</div>
+												<div>
+													{{'LOGIN_WITH_MICROSOFT' | translate}}
+												</div>
+											</div>
+										</div>
+									</button> -->
+								</div>
+							</div>
+							<mat-divider fxFlex *ngIf="enableFacebook || enableGoogle || enableTwitter||enableMicrosoft" [vertical]="true">
+							</mat-divider>
+							<form [formGroup]="loginForm" (ngSubmit)="login()" fxFlex="100">
+								<div fxLayout="column" fxFlex>
+									<mat-error fxLayoutAlign="center">{{errorMessage}}</mat-error>
+									<mat-form-field class="text-padding" fxFlex appearance="outline" floatLabel="always">
+										<mat-label>{{'EMAIL' | translate}}</mat-label>
+										<input type="text" matInput formControlName="emailAddress" value="ngdesk-devs@allbluesolutions.com">
+										<mat-error *ngIf="loginForm.controls.emailAddress.invalid" [innerHTML]="getEmailErrorMessage()">
+										</mat-error>
+									</mat-form-field>
+									<mat-form-field class="text-padding" fxFlex appearance="outline" floatLabel="always">
+										<mat-label>{{'PASSWORD' | translate}}</mat-label>
+										<input type="password" matInput formControlName="password" value="Pn35x2dUW@">
+										<mat-error *ngIf="loginForm.controls.password.invalid" [innerHTML]="getPasswordErrorMessage()">
+										</mat-error>
+									</mat-form-field>
+
+									<button mat-raised-button color="primary" type="submit" id="login-button"
+										*ngIf="!isSubmitting">{{'LOGIN' | translate}}</button>
+									<div style="min-height: 36px;" fxflex.lt-sm="40px" fxLayoutAlign="center center" *ngIf="isSubmitting">
+										<mat-spinner [diameter]="30"></mat-spinner>
+									</div>
+									<div fxLayout="column" fxLayoutAlign="center center" style="margin-top: 15px;">
+										<span (click)="forgotPassword()" style="cursor: pointer;" class="mat-h5 ">{{'FORGOT_PASSWORD' |
+											translate}}?</span>
+										<div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="3px">
+											<span class="mat-h5">Don't have an account?</span>
+											<span (click)="signup()" style="cursor: pointer;color: #3f51b5;font-weight: bolder;"
+												class="mat-h5">{{'SIGNUP' | translate}}</span>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</mat-card>
+			</div>
+		</div>
+	</div>
+	<div fxLayoutAlign="flex-end end" style="padding: 20px">
+		<label style="color: white;" class=" mat-body"><a style="color: white;" href="https://www.ngdesk.com" target="_blank">Powered by
+				ngDesk</a> &#169;</label>
+	</div>
+</div>

@@ -1,0 +1,108 @@
+<StackLayout>
+  <Label text="ModulesDetailComponent works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef>
+	<app-title-bar *ngIf="moduleId == 'new'" title="{{'MODULE_DETAIL' | translate}}" buttonText="{{'SAVE' | translate}}"
+		(buttonRightOnClick)="save()">
+	</app-title-bar>
+	<app-title-bar *ngIf="moduleId != 'new'" title="{{'MODULE_DETAIL' | translate}}">
+	</app-title-bar>
+</ng-template>
+<div fxLayout="column" fxLayoutGap="10px" class="pad10" *ngIf="moduleForm">
+	<div fxLayout="row" fxLayoutAlign="flex-start">
+		<div *ngIf="moduleId == 'new'" fxFlex="25" fxLayoutAlign="flex-start"></div>
+		
+		<div  *ngIf="moduleId != 'new'" fxFlex >
+			<form  [formGroup]="moduleForm" (ngSubmit)="save()">
+				<div fxLayout="row" fxLayoutGap="5px" >
+					<div >
+					<label class="mat-h1" >{{getControlLabel('NAME')}} </label>
+					<label class="mat-caption" style="color: #888;">{{getControlLabel('DESCRIPTION')}}</label>
+					</div>
+				</div>
+
+			</form>
+
+			<div fxLayout="column" fxLayoutGap="20px" >
+			 
+			<div fxLayoutAlign="center" style="padding-top: 20px;" fxLayout="row" fxLayoutGap="20px">
+			<mat-card  [appHighlight]="{BACKGROUND: 'ghostWhite'}" style="width: 200px; height: 230px; text-align: center;cursor: pointer;"  *ngFor="let nav of navigationList1" (click)="clicked(nav)" mat-ripple>
+				<div style="margin: -16px;height: 150px;"  [style.backgroundColor]="backGroundColor" >
+					<mat-icon fontSet="material-icons-outlined" style="transform: scale(2);padding-top: 40px" >{{nav.SRC}}</mat-icon>
+				</div>
+				<mat-card-content>
+					 <div style="padding-top: 20px;text-align: start;font-weight: bold;" class="mat-h3" >
+						{{nav.NAME | translate}}
+					 </div >
+					 <div style="text-align: start;" class="mat-caption" >
+						{{nav.DESCRIPTION | translate}}
+					 </div>
+			</mat-card-content>
+			</mat-card>
+			</div>
+			<div fxLayoutAlign="center" fxLayout="row" fxLayoutGap="20px" >
+				<mat-card [appHighlight]="{BACKGROUND: 'ghostWhite'}" style="width: 200px; height: 230px;text-align: center;cursor: pointer;"  *ngFor="let nav of navigationList2" (click)="clicked(nav)" mat-ripple>
+					<div style="margin: -16px;height: 150px" [style.backgroundColor]="backGroundColor" >
+						<mat-icon fontSet="material-icons-outlined" style="transform: scale(2);padding-top: 40px" >{{nav.SRC}}</mat-icon>
+					</div>
+					<mat-card-content>
+					 <div style="padding-top: 20px;text-align: start;font-weight:bold;" class="mat-h3" >
+						{{nav.NAME | translate}}
+					 </div >
+					 <div style="text-align: start;" class="mat-caption" >
+						{{nav.DESCRIPTION | translate}}
+					 </div>
+				</mat-card-content>
+				</mat-card>
+			</div>
+			</div>
+		</div>
+		<mat-card *ngIf="moduleId === 'new'" fxFlex="50">
+			<div fxLayout="column" fxLayoutAlign="center center" *ngIf='errorMessage != undefined || successMessage != undefined'>
+				<mat-error class="mat-body">{{errorMessage}}</mat-error>
+				<label class="green-color mat-body">{{successMessage}}</label>
+			</div>
+			<form [formGroup]="moduleForm" (ngSubmit)="save()">
+				<div fxLayout="row" fxLayoutAlign="center">
+					<mat-label  class="mat-h2">{{'CREATE_NEW_MODULE' | translate}}
+					</mat-label>
+				</div>
+				<div fxLayout="row" fxLayoutAlign="center">
+					<mat-form-field fxFlex="70">
+						<input matInput placeholder="{{'MODULE_NAME' | translate}}" formControlName="NAME" required>
+						<mat-error [innerHTML]="getRequiredFieldErrorMessage('REQUIRED_MODULE_NAME')"></mat-error>
+					</mat-form-field>
+				</div>
+				<div fxLayout="row" fxLayoutAlign="center">
+					<mat-form-field fxFlex="70">
+						<input matInput placeholder="{{'MODULE_NAME_SINGULAR' | translate}}" formControlName="SINGULAR_NAME" required>
+						<mat-error [innerHTML]="getRequiredFieldErrorMessage('REQUIRED_MODULE_SINGULAR_NAME')"></mat-error>
+					</mat-form-field>
+				</div>
+				<div fxLayout="row" fxLayoutAlign="center">
+					<mat-form-field fxFlex="70">
+						<input matInput placeholder="{{'MODULE_NAME_PLURAL' | translate}}" formControlName="PLURAL_NAME" required>
+						<mat-error [innerHTML]="getRequiredFieldErrorMessage('REQUIRED_MODULE_PLURAL_NAME')"></mat-error>
+					</mat-form-field>
+				</div>
+				<div fxLayout="row" fxLayoutAlign="center">
+					<mat-form-field fxFlex="70">
+						<input matInput placeholder="{{'DESCRIPTION' | translate}}" formControlName="DESCRIPTION">
+					</mat-form-field>
+				</div>
+				<div></div>
+			</form>
+		</mat-card>
+		</div>
+</div>		
+
+
+
+-->

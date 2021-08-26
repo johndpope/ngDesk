@@ -1,0 +1,49 @@
+<StackLayout>
+  <Label text="invite-email works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<app-toolbar></app-toolbar>
+<div class="pad10">
+  <form [formGroup]="inviteEmailForm" fxLayout="column" fxLayoutGap="10px">
+    <app-title-bar title="{{'USER_INVITE_EMAIL' | translate }}" buttonText="{{'SAVE'|translate}}"
+      (buttonRightOnClick)="saveInviteEmailMessage()"></app-title-bar>
+    <mat-card fxLayout="column" fxLayoutGap="10px">
+      <div fxLayout="row">
+        <mat-form-field fxFlex>
+          <input matInput placeholder="{{'SUBJECT' | translate}}" formControlName="SUBJECT">
+          <mat-error [innerHTML]="'FIELD_REQUIRED' | translate:errors.subject"></mat-error>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row">
+        <mat-form-field fxFlex="100">
+          <textarea matInput #bodyText placeholder="{{'INVITE_EMAIL_BODY' | translate:labels.greeting}}" matTextareaAutosize="true"
+            matAutosizeMinRows="7" formControlName="MESSAGE_1"> </textarea>
+          <mat-error [innerHTML]="'FIELD_REQUIRED' | translate:errors.greeting"></mat-error>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutGap="10px" class="mat-h3">
+        *{{'PASSWORD_LINK_PLACEHOLDER' | translate}}.*
+      </div>
+      <div fxLayout="row">
+        <mat-form-field fxFlex="100">
+          <textarea matInput placeholder="{{'INVITE_EMAIL_BODY' | translate:labels.signature}}" matTextareaAutosize="true"
+            matAutosizeMinRows="7" formControlName="MESSAGE_2"> </textarea>
+          <mat-error [innerHTML]="'FIELD_REQUIRED' | translate:errors.signature"></mat-error>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row wrap">
+        <div *ngFor="let variable of variables; index as i">
+          <button type="button" style="margin-top:5px; margin-right:5px" mat-raised-button color="default"
+            (click)="insertBodyVariable(variable.backend, bodyText)">{{variable.display}}</button>
+        </div>
+      </div>
+    </mat-card>
+  </form>
+</div>
+
+-->

@@ -1,0 +1,8 @@
+{
+	"CONTROLLER_AGENT_NOT_FOUND": "The controller agent you are trying to get does not exist",
+	"CONTROLLER_NOT_RECOGNIZED": "Temporary authentication is invalid",
+	"NOT_NULL": "${1} ${2} should not be null",
+	"DAO_VARIABLE_REQUIRED": "${1} ${2} cannot be blank",
+	"DAO_NOT_FOUND": "The ${1} you are trying to get does not exist",
+	"DAO_VARIABLE_ALREADY_EXISTS": "An ${1} with this ${2} already exists, please try again with a different ${2}"
+}

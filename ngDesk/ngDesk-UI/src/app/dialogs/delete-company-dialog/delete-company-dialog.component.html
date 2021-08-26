@@ -1,0 +1,36 @@
+<form [formGroup]="deleteCompanyForm" fxLayout="column" fxFlexFill>
+	<div fxFlexAlign="center">
+		<label class="mat-h2" matDialogTitle>{{'COMPANY_DELETE_CONFIRM' | translate}}</label>
+	</div>
+	<div fxFlexAlign="center">
+		<label class="mat-h3" matDialogContent [innerHTML]="'COMPANY_DELETE_CONFIRM_MESSAGE' | translate:params"></label>
+	</div>
+	<mat-form-field fxFlexOffset="15px" matDialogContent appearance="outline">
+		<mat-label>{{'ENTER_SUBDOMAIN' | translate }}</mat-label>
+		<input matInput formControlName="TYPED_SUBDOMAIN" required>
+		<mat-error *ngIf="deleteCompanyForm.controls['TYPED_SUBDOMAIN'].errors?.required"
+			[innerHTML]="'FIELD_REQUIRED' | translate:params.typedSubdomain"></mat-error>
+		<mat-error *ngIf="deleteCompanyForm.controls['TYPED_SUBDOMAIN'].errors?.pattern">{{'SUBDOMAIN_DOESNT_MATCH' | translate}}
+		</mat-error>
+	</mat-form-field>
+	<mat-form-field matDialogContent appearance="outline">
+		<mat-label>{{'WHAT_CAUSED_YOU_TO_LEAVE' | translate }}</mat-label>
+		<mat-select formControlName="DELETION_FEEDBACK" required>
+			<mat-option *ngFor="let feedback of feedbacks" [value]="feedback.NAME">
+				{{feedback.NAME | translate}}
+			</mat-option>
+		</mat-select>
+		<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params.reason"></mat-error>
+	</mat-form-field>
+	<mat-form-field matDialogContent appearance="outline">
+		<mat-label>{{'HOW_CAN_WE_IMPROVE' | translate}}</mat-label>
+		<textarea matInput matTextareaAutosize="true" cdkAutosizeMinRows="5" cdkAutosizeMaxRows="5" formControlName="DELETION_REASON"
+			required></textarea>
+		<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params.feedback"></mat-error>
+	</mat-form-field>
+	<mat-dialog-actions align="end">
+		<button mat-raised-button [mat-dialog-close]>{{'CLOSE' | translate}}</button>
+		<button mat-raised-button [mat-dialog-close]="'DELETE' | translate" color="warn"
+			[disabled]="!deleteCompanyForm.valid">{{'DELETE' | translate}}</button>
+	</mat-dialog-actions>
+</form>

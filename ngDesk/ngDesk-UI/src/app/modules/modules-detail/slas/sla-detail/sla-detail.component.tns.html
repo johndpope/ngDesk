@@ -1,0 +1,347 @@
+<StackLayout>
+  <Label text="SlaDetailComponent works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<app-toolbar></app-toolbar>
+<form [formGroup]="slaForm" (ngSubmit)="save()" class="pad10">
+	<div fxLayoutAlign="center" *ngIf="errorMessage">
+		<mat-error class="mat-h3">{{errorMessage}}</mat-error>
+	</div>
+	<app-new-name-description buttonText="{{'SAVE' | translate}}" (modelChange)="save()">
+	</app-new-name-description>
+	<app-conditions *ngIf="slaLoaded" [conditions]="sla.conditions" [fields]="fields" [parentName]="'slaComponent'"></app-conditions>
+	<div fxLayout="row" fxLayoutAlign="normal center" fxLayoutGap='5px'>
+		<div><label class="mat-h1">{{'VIOLATIONS' | translate}}</label></div>
+	</div>
+	<div formArrayName="VIOLATIONS" *ngFor="let violation of slaForm.get('VIOLATIONS')['controls']; let violationIndex = index">
+		<div [formGroupName]="violationIndex" fxLayout="column" fxLayoutAlign="start">
+			<div fxLayout="row" fxLayoutAlign='start center' fxLayoutGap='10px'>
+				<mat-form-field>
+					<input type="text" placeholder="{{'CONDITION' | translate}}" matInput [matAutocomplete]="auto" formControlName="CONDITION"
+						(ngModelChange)="filterInputValues($event, violation, 'conditions')">
+					<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayConditionFn" (closed)="resetOptions('conditions')"
+						(optionSelected)="conditionSelected($event.option.value, violation)">
+						<mat-option *ngFor=" let option of autocompleteConditionsFiltered" [value]="option">
+							{{option.DISPLAY_LABEL}}
+						</mat-option>
+					</mat-autocomplete>
+					<mat-error>{{'FIELD_IS' | translate:params.condition}} <strong>{{'REQUIRED' | translate}}</strong></mat-error>
+				</mat-form-field>
+				<mat-form-field>
+					<input type="text" placeholder="{{'OPERATOR' | translate}}" aria-label="Number" matInput [matAutocomplete]="autoGroup"
+						formControlName="OPERATOR" (ngModelChange)="filterInputValues($event, violation, 'operators')"
+						(click)="conditionSelected(slaForm.get('VIOLATIONS').value[violationIndex].CONDITION, violation,true)">
+					<mat-autocomplete #autoGroup="matAutocomplete" [displayWith]="displayOperator" (closed)="resetOptions('operators')"
+						(optionSelected)="operatorSelected($event.option.value, violation)">
+						<mat-option *ngFor="let option of autocompleteOperatorsFiltered" [value]="option">
+							{{option.DISPLAY}}
+						</mat-option>
+					</mat-autocomplete>
+					<mat-error>{{'FIELD_IS' | translate:params.operator}} <strong>{{'REQUIRED' | translate}}</strong></mat-error>
+				</mat-form-field>
+				<mat-form-field
+					*ngIf="violation.value.CONDITION.DATA_TYPE?.DISPLAY != 'Discussion' && violation.value.CONDITION.DATA_TYPE?.DISPLAY != 'Picklist' &&
+        violation.value.OPERATOR.BACKEND != 'HAS_NOT_CHANGED' && violation.value.OPERATOR.BACKEND != 'IS_PAST_BY' && violation.value.OPERATOR.BACKEND != 'IS_WITHIN'">
+					<input type="text" placeholder="{{'ENTER_VALUE' | translate}}" aria-label="Number" matInput formControlName="CONDITION_VALUE">
+				</mat-form-field>
+				<mat-form-field *ngIf="violation.value.CONDITION.DATA_TYPE?.DISPLAY == 'Discussion'">
+					<mat-select placeholder="{{ 'TEAM' | translate}}" formControlName="CONDITION_VALUE">
+						<mat-option *ngFor="let team of teams" [value]="team.DATA_ID">{{team.NAME}}</mat-option>
+					</mat-select>
+				</mat-form-field>
+				<mat-form-field
+					*ngIf="violation.value.CONDITION.DATA_TYPE?.DISPLAY == 'Picklist' && violation.value.OPERATOR.BACKEND != 'HAS_NOT_CHANGED' && violation.value.OPERATOR.BACKEND != 'IS_PAST_BY' && violation.value.OPERATOR.BACKEND != 'IS_WITHIN'">
+					<input type="text" placeholder="{{ 'VALUE' | translate}}" matInput [matAutocomplete]="autoViolationsValue"
+						formControlName="CONDITION_VALUE" (ngModelChange)="filterInputValues($event, violation, 'picklistValues')">
+					<mat-autocomplete #autoViolationsValue="matAutocomplete" (closed)="resetOptions('picklistValues')">
+						<mat-option *ngFor="let option of autocompleteValuesFiltered[violation.value.CONDITION.NAME]" [value]="option">
+							{{option}}
+						</mat-option>
+					</mat-autocomplete>
+				</mat-form-field>
+				<mat-label *ngIf=" violation.value.OPERATOR.BACKEND !== 'IS_PAST_BY' && violation.value.OPERATOR.BACKEND !== 'IS_WITHIN'"
+					class="mat-body-strong">{{'FOR' | translate}}</mat-label>
+				<mat-label *ngIf=" violation.value.OPERATOR.BACKEND === 'IS_PAST_BY'" class="mat-body-strong">{{'BY' | translate}}</mat-label>
+				<mat-form-field>
+					<input type="number" placeholder="{{'ENTER_SLA_EXPIRY' | translate}}" aria-label="Number" matInput formControlName="SLA_EXPIRY"
+						(keypress)="numberOnly($event)">
+					<label matSuffix>mins</label>
+					<mat-error>{{'FIELD_IS' | translate:params.slaExpiry}} <strong>{{'REQUIRED' | translate}}</strong></mat-error>
+				</mat-form-field>
+			</div>
+		</div>
+	</div>
+
+	<div fxLayout="row" fxLayoutAlign='start center' fxLayoutGap='20px' style="min-height: 65px">
+		<div fxLayoutGap='10px'>
+			<mat-checkbox formControlName="IS_RECURRING" (change)="onRecurring($event)">{{'IS_RECURRING'|translate}}</mat-checkbox>
+			<span *ngIf="slaForm.get('IS_RECURRING').value">
+				<mat-form-field>
+					<input type="number" placeholder="{{'ENTER_INTERVAL_TIME' | translate}}" aria-label="Number" matInput
+						formControlName="INTERVAL_TIME" (keypress)="numberOnly($event)">
+					<label matSuffix>mins</label>
+					<mat-error *ngIf="slaForm.get('INTERVAL_TIME').invalid">{{getErrorMessage()}}</mat-error>
+				</mat-form-field>
+				<span *ngIf="slaForm.get('IS_RECURRING').value">
+					<mat-form-field style="margin: 20px">
+						<input type="number" min="1" max="99" placeholder="{{'MAX_NO_OF_RECCURENCE' | translate}}" aria-label="Number" matInput
+							formControlName="MAX_RECCURENCE" (keypress)="numberOnly($event)">
+						<mat-error *ngIf="slaForm.get('MAX_RECCURENCE').invalid">{{ErrorMessage()}}</mat-error>
+					</mat-form-field>
+				</span>
+			</span>
+		</div>
+	</div>
+
+	<div fxLayout="column" style="margin-bottom: 2%;">
+		<div fxLayout="row" fxLayoutGap="5px">
+			<mat-checkbox [checked]="checked" color="primary" formControlName="HAS_RESTRICTIONS" (change)="toggleRestrictions($event)">
+				{{ 'BUSINESS_HOURS' | translate}} </mat-checkbox>
+			<label class="mat-body-strong pointer" (click)="toggleRestrictions($event,true)"
+				*ngIf="checked && sla.slaBusinessRules.HAS_RESTRICTIONS">Edit</label>
+		</div>
+		<!-- MARGIN LEFT SET TO 24px TO MATCH THE CHECKBOX AT THE TOP ->
+		<div fxLayout="row" *ngFor="let restriction of sla.slaBusinessRules.SLA_RESTRICTIONS;" style="margin-left:24px" fxLayoutGap="5px"
+			class="mat-body">
+			<label>From</label>
+			<label *ngIf="sla.slaBusinessRules.RESTRICTION_TYPE == 'Week'">{{restriction.START_DAY}}</label>
+			<label>{{restriction.START_TIME}}</label>
+			<label>to</label>
+			<label *ngIf="sla.slaBusinessRules.RESTRICTION_TYPE == 'Week'">{{restriction.END_DAY}}</label>
+			<label>{{restriction.END_TIME}}</label>
+		</div>
+	</div>
+
+	<div fxLayout="row" fxLayoutAlign="normal center" fxLayoutGap='5px'>
+		<div><label class="mat-h1">{{'ACTIONS'|translate}}</label></div>
+		<mat-icon class="pointer" (click)="addAction()">add_circle</mat-icon>
+	</div>
+	<div formGroupName="WORKFLOW">
+		<div formArrayName="NODES" *ngFor="let action of slaForm.get('WORKFLOW').get('NODES')['controls'] | slice:1; let actionIndex = index;">
+			<div [formGroupName]="actionIndex+1">
+				<div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign=" center">
+					<mat-form-field>
+						<mat-select placeholder="{{'SELECT_AN_ACTION' | translate}}" formControlName="TYPE" name="action"
+							(selectionChange)="changeAction(action)">
+							<mat-option *ngFor="let name of actionNames" [value]="name.TYPE">
+								<label> {{ name.ACTION }} </label>
+							</mat-option>
+						</mat-select>
+						<mat-error>{{'FIELD_IS' | translate:params.action}} <strong>{{'REQUIRED' | translate}}</strong></mat-error>
+					</mat-form-field>
+					<div *ngIf="action.get('TYPE').value === 'StartEscalation'" formGroupName="VALUES">
+						<mat-form-field *ngIf="escalations.length > 0">
+							<mat-select placeholder="{{'SELECT_AN_ESCALTION' | translate}}" formControlName="ESCALATION" name="escalation" required>
+								<mat-option *ngFor="let escalation of escalations" [value]="escalation.ESCALATION_ID">
+									<label> {{ escalation.NAME }} </label>
+								</mat-option>
+							</mat-select>
+							<mat-error>{{'FIELD_IS' | translate:params.escalation}} <strong>{{'REQUIRED' | translate}}</strong></mat-error>
+						</mat-form-field>
+						<label *ngIf="escalations.length === 0" class="mat-body">
+							{{'NO_ESCALATIONS' | translate}} {{'CLICK' | translate}} <a
+								[routerLink]="['','escalations', 'new']">{{'HERE' | translate}}</a>
+							{{'CREATE_NEW_ESCALATION' | translate}}
+						</label>
+					</div>
+					<button mat-icon-button (click)="removeActions(actionIndex + 1)">
+						<mat-icon>remove_circle</mat-icon>
+					</button>
+				</div>
+				<div fxLayout="column" *ngIf="action.get('TYPE').value == 'SendEmail' ||
+    (action.get('TYPE').value == 'StartEscalation' && action.get('VALUES').get('ESCALATION').value)" formGroupName="VALUES">
+					<div *ngIf="action.get('TYPE').value == 'SendEmail'">
+						<div>
+							<mat-form-field fxFlex="25">
+								<mat-select matInput placeholder="From" name="FROM" formControlName="FROM">
+									<mat-option *ngFor="let channel of emailChannels" [value]="channel.EMAIL_ADDRESS" [title]="channel.EMAIL_ADDRESS">
+										{{channel.EMAIL_ADDRESS}}
+									</mat-option>
+								</mat-select>
+							</mat-form-field>
+						</div>
+						<div>
+							<mat-form-field fxFlex="25">
+								<input type="text" placeholder="To" matInput [matAutocomplete]="auto" formControlName="TO" required />
+								<mat-autocomplete #auto="matAutocomplete" (closed)="resetVariables()">
+									<mat-option *ngFor="let variable of variables" [value]="variable.NAME">
+										{{variable.DISPLAY_LABEL}}
+									</mat-option>
+								</mat-autocomplete>
+								<mat-error *ngIf="action.get('VALUES').get('TO').hasError('required')">{{'FIELD_IS' | translate:params.to}}
+									<strong>{{'REQUIRED' | translate}}</strong></mat-error>
+								<mat-error *ngIf="action.get('VALUES').get('TO').hasError('invalidEmail') &&
+                  !action.get('VALUES').get('TO').hasError('required')">{{'PLEASE_ENTER_VALID_EMAIL_ADDRESS' | translate}}</mat-error>
+							</mat-form-field>
+						</div>
+					</div>
+					<div>
+						<mat-form-field fxFlex="25">
+							<input type="text" placeholder="Subject" matInput [matAutocomplete]="auto" formControlName="SUBJECT" required />
+							<mat-autocomplete #auto="matAutocomplete" (closed)="resetVariables()">
+								<mat-option *ngFor=" let variable of variables" [value]="variable.NAME">
+									{{variable.DISPLAY_LABEL}}
+								</mat-option>
+							</mat-autocomplete>
+							<mat-error>{{'FIELD_IS' | translate:params.subject}} <strong>{{'REQUIRED' | translate}}</strong></mat-error>
+						</mat-form-field>
+					</div>
+					<div>
+						<mat-form-field fxFlex="50">
+							<textarea matInput placeholder="Body" rows="4" formControlName="BODY" name="EMAIL-BODY" required></textarea>
+							<mat-error>{{'FIELD_IS' | translate:params.body}} <strong>{{'REQUIRED' | translate}}</strong></mat-error>
+						</mat-form-field>
+					</div>
+					<div fxLayout="row wrap" fxLayoutGap="10px grid">
+						<mat-chip-list fxFlex="50">
+							<mat-chip class="mat-h4" *ngFor="let field of this.bodyFields" (click)="insertBodyVariable(action, field)" color="primary"
+								selected>{{field.DISPLAY_LABEL}}</mat-chip>
+						</mat-chip-list>
+					</div>
+				</div>
+				<div fxLayout="column" *ngIf="action.get('TYPE').value == 'MakePhoneCall'" formGroupName="VALUES">
+					<div>
+						<mat-form-field fxFlex="25">
+							<input type="text" placeholder="To" matInput [matAutocomplete]="auto" formControlName="TO" required />
+							<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFullName" (closed)="resetVariables()">
+								<mat-option *ngFor="let user of users" [value]="user">
+									{{user.NAME}}
+								</mat-option>
+							</mat-autocomplete>
+							<mat-error>{{'FIELD_IS' | translate:params.to}} <strong>{{'REQUIRED' | translate}}</strong></mat-error>
+						</mat-form-field>
+					</div>
+					<div>
+						<mat-form-field fxFlex="50">
+							<textarea matInput placeholder="Body" rows="4" formControlName="BODY" name="BODY" required></textarea>
+							<mat-error>{{'FIELD_IS' | translate:params.body}} <strong>{{'REQUIRED' | translate}}</strong></mat-error>
+						</mat-form-field>
+					</div>
+					<div fxLayout="row wrap" fxLayoutGap="10px grid">
+						<mat-chip-list fxFlex="50">
+							<mat-chip class="mat-h4" *ngFor="let field of bodyFields" (click)="insertBodyVariable(action, field)" color="primary"
+								selected>
+								{{field.DISPLAY_LABEL}}</mat-chip>
+						</mat-chip-list>
+					</div>
+				</div>
+				<div fxLayout="column" *ngIf="action.get('TYPE').value == 'SendSms'" formGroupName="VALUES">
+					<div>
+						<mat-form-field fxFlex="25">
+							<input type="text" placeholder="To" matInput [matAutocomplete]="auto" formControlName="TO" required />
+							<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFullName" (closed)="resetVariables()">
+								<mat-option *ngFor="let user of users" [value]="user">
+									{{user.NAME}}
+								</mat-option>
+							</mat-autocomplete>
+							<mat-error>{{'FIELD_IS' | translate:params.to}} <strong>{{'REQUIRED' | translate}}</strong></mat-error>
+						</mat-form-field>
+					</div>
+					<div>
+						<mat-form-field fxFlex="50">
+							<textarea matInput placeholder="Body" rows="4" formControlName="BODY" name="BODY" required></textarea>
+							<mat-error>{{'FIELD_IS' | translate:params.body}} <strong>{{'REQUIRED' | translate}}</strong></mat-error>
+						</mat-form-field>
+					</div>
+					<div fxLayout="row wrap" fxLayoutGap="10px grid">
+						<mat-chip-list fxFlex="50">
+							<mat-chip class="mat-h4" *ngFor="let field of bodyFields" (click)="insertBodyVariable(action, field)" color="primary"
+								selected>
+								{{field.DISPLAY_LABEL}}</mat-chip>
+						</mat-chip-list>
+					</div>
+				</div>
+
+				<div fxLayout="column" *ngIf="action.get('TYPE').value == 'UpdateEntry'" formGroupName="VALUES">
+					<div>
+						<label class="mat-h4" i18>Update these fields </label>
+						<button mat-icon-button type="button" (click)="addField()">
+							<mat-icon>add_circle</mat-icon>
+						</button>
+					</div>
+					<div formArrayName="FIELDS">
+						<div *ngFor="let item of FIELDS.controls; let fieldIndex = index">
+							<div [formGroupName]="fieldIndex" fxLayoutGap="20px">
+								<mat-form-field fxFlex=25>
+									<input type="text" placeholder="Field" matInput [matAutocomplete]="auto" formControlName="FIELD" required />
+									<mat-autocomplete #auto="matAutocomplete" (closed)="resetVariables()" [displayWith]="displayFieldName">
+										<mat-option *ngFor=" let variable of variables" [value]="variable"
+											[disabled]="variable.DATA_TYPE.DISPLAY==='Discussion'">
+											{{variable.DISPLAY_LABEL}}
+										</mat-option>
+									</mat-autocomplete>
+									<mat-error>{{'FIELD_IS' | translate:params.field}} <strong>{{'REQUIRED' | translate}}</strong></mat-error>
+								</mat-form-field>
+								<mat-form-field *ngIf="item.value.FIELD.DATA_TYPE?.DISPLAY != 'Relationship'
+                    && item.value.FIELD.DATA_TYPE?.DISPLAY != 'Picklist' &&
+                    item.value.FIELD.DATA_TYPE?.DISPLAY != 'Discussion'" fxFlex="25">
+									<input type="text" placeholder="{{'ENTER_VALUE' | translate}}" aria-label="Number" matInput formControlName="VALUE">
+									<mat-error>{{'FIELD_IS' | translate:params.value}} <strong>{{'REQUIRED' | translate}}</strong></mat-error>
+								</mat-form-field>
+								<mat-form-field
+									*ngIf="item.value.FIELD.DATA_TYPE?.DISPLAY == 'Relationship' && item.value.FIELD.RELATIONSHIP_TYPE != 'Many to Many'"
+									fxFlex="25">
+									<input type="text" placeholder="{{ 'VALUE' | translate}}" matInput [matAutocomplete]="autoAllConditionValue"
+										formControlName="VALUE" (ngModelChange)="filterVariables($event, 'users')">
+									<mat-autocomplete #autoAllConditionValue="matAutocomplete" (closed)="resetVariables('values')"
+										[displayWith]="displayFullName">
+										<mat-option *ngFor="let user of users" [value]="user">
+											{{user.NAME}}
+										</mat-option>
+									</mat-autocomplete>
+									<mat-error>{{'FIELD_IS' | translate:params.value}} <strong>{{'REQUIRED' | translate}}</strong></mat-error>
+								</mat-form-field>
+								<mat-form-field *ngIf="item.value.FIELD.DATA_TYPE?.DISPLAY == 'Picklist'" fxFlex="25">
+									<input type="text" placeholder="{{ 'VALUE' | translate}}" matInput [matAutocomplete]="autoAllConditionValue"
+										formControlName="VALUE" (ngModelChange)="filterVariables($event, 'picklistValues', item.value.FIELD.PICKLIST_VALUES)">
+									<mat-autocomplete #autoAllConditionValue="matAutocomplete" (closed)="resetVariables('picklistValues')">
+										<mat-option *ngFor="let option of item.value.FIELD.PICKLIST_VALUES" [value]="option">
+											{{option}}
+										</mat-option>
+									</mat-autocomplete>
+									<mat-error>{{'FIELD_IS' | translate:params.value}} <strong>{{'REQUIRED' | translate}}</strong></mat-error>
+								</mat-form-field>
+								<mat-form-field *ngIf="item.value.FIELD.DATA_TYPE?.DISPLAY == 'Relationship'
+                && item.value.FIELD.RELATIONSHIP_TYPE == 'Many to Many'" fxFlex="25">
+									<input type="text" placeholder="{{ 'VALUE' | translate}}" matInput [matAutocomplete]="teamsAutoComplete"
+										formControlName="VALUE" (ngModelChange)="filterVariables($event, 'teams')">
+									<mat-autocomplete #teamsAutoComplete="matAutocomplete" (closed)="resetVariables('values')" [displayWith]="displayName">
+										<mat-option *ngFor="let team of teams" [value]="team">
+											{{team.NAME}}
+										</mat-option>
+									</mat-autocomplete>
+									<mat-error>{{'FIELD_IS' | translate:params.value}} <strong>{{'REQUIRED' | translate}}</strong></mat-error>
+								</mat-form-field>
+								<button mat-icon-button type="button" (click)="removeField(fieldIndex)">
+									<mat-icon>remove_circle</mat-icon>
+								</button>
+								<br>
+								<div fxLayout="column">
+									<div fxFlex>
+										<mat-form-field fxFlex=50 *ngIf="item.value.FIELD.DATA_TYPE?.DISPLAY === 'Discussion'">
+											<textarea matInput placeholder=" Body" rows="4" formControlName="VALUE" name="EMAIL-BODY" required></textarea>
+											<mat-error>{{'FIELD_IS' | translate:params.body}} <strong>{{'REQUIRED' | translate}}</strong></mat-error>
+										</mat-form-field>
+									</div>
+									<div fxLayout="row wrap" fxLayoutGap="10px grid" *ngIf="item.value.FIELD.DATA_TYPE?.DISPLAY === 'Discussion'">
+										<mat-chip-list fxFlex=50>
+											<mat-chip class="mat-h4" *ngFor="let field of this.bodyFields" (click)="insertBodyVariable(item, field, true)"
+												color="primary" selected>{{field.DISPLAY_LABEL}}</mat-chip>
+										</mat-chip-list>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div><!-- Update Entry  ->
+			</div>
+		</div>
+	</div>
+</form>
+
+-->

@@ -1,0 +1,22 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<div fxLayout="column" fxLayoutGap="20px" class="pad10">
+	<ng-template #headerTemplateRef>
+		<app-title-bar class="light-grey-color" [title]="'GENERAL_SETTINGS' | translate" [buttonText]="'SAVE' | translate"
+			(buttonRightOnClick)="saveGeneralSettings()" [buttonColor]="'primary'"></app-title-bar>
+	</ng-template>
+	<div [formGroup]="generalSettingsForm" fxLayout="row" fxLayoutAlign="center">
+		<mat-card fxLayout="column" fxFlex="100" fxLayoutGap="20px">
+			<div fxLayout="row" fxLayoutAlign="flex-start center" fxLayoutGap="20px">
+				<div fxFlex fxLayoutAlign="flex-start">
+					<label class="mat-h3" [ngStyle]="{'margin-bottom':'0px'}">{{'ENABLE_KNOWLEDGE_BASE' | translate}}</label>
+				</div>
+				<div fxFlex fxLayoutAlign="flex-start center">
+					<div fxFlex=40>
+						<mat-checkbox formControlName="ENABLE_DOCS" color="primary" class="mat-h3">
+						</mat-checkbox>
+					</div>
+				</div>
+			</div>
+		</mat-card>
+	</div>
+</div>

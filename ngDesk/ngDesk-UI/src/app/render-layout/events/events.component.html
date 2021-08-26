@@ -1,0 +1,25 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<div fxLayout="column" fxLayoutGap="8px" class="pad10">
+	<ng-template #headerTemplateRef>
+		<app-title-bar class="light-grey-color" title="{{ module?.SINGULAR_NAME }}" buttonText="{{'BACK'|translate}}"
+        (buttonRightOnClick)="backButton()"></app-title-bar>
+	</ng-template>
+</div>
+<div fxLayout="column" fxLayoutGap="10px" class="pad10">
+    <div *ngIf="metaData.EVENTS.length > 0" class= "mat-body" style="font-size: 20px;">{{'EVENTS' | translate}}</div> 
+    <div *ngIf="metaData.EVENTS.length === 0" class= "mat-body" style="font-size: 20px; padding-top: 20px;">{{'NO_EVENTS_FOUND' | translate}}</div>
+    <div *ngFor = "let event of metaData.EVENTS | reverse"> 
+        <div fxLayout="row" fxLayoutGap="20px" [ngStyle]="{'padding': '15px'}">
+            <div fxLayout="column" fxFlex="100" fxLayoutGap="10px">
+                <div fxLayout="row" fxLayoutAlign=" center" [ngStyle]="{'color': '#68737D'}">
+                    <label class="mat-caption">Event occurred at {{event.DATE_CREATED | dateFormat:'medium'}}</label>
+                </div>
+                <p class="mat-body" [ngStyle]="{'margin-bottom': '0px'}" [innerHtml]="event.MESSAGE | allowStyles"></p>
+            </div>
+        </div>
+        <mat-divider></mat-divider>
+    </div>
+</div>
+
+
+

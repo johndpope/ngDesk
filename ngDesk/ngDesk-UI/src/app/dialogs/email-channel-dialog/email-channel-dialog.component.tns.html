@@ -1,0 +1,143 @@
+<StackLayout>
+  <Label text="EmailChannelDialogComponent works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<app-sliding-view-panel id="appslide" [activePane]="active">
+	<div fxLayout="column" fxLayoutAlign="space around center" paneOne>
+		<h1 mat-dialog-title class="mat-headline" style="margin-bottom: 0px;" fxLayoutAlign="center">
+			{{ 'EMAIL_CHANNEL' | translate }}
+		</h1>
+		<div fxLayoutAlign="center" *ngIf="errorMessage != ''">
+			<mat-error class="mat-h3" fxLayoutAlign="center">{{
+        errorMessage
+      }}</mat-error>
+		</div>
+		<form [formGroup]="emailChannelForm">
+			<div mat-dialog-content fxLayout="column">
+				<div fxLayoutAlign="center center" fxLayoutGap="10px">
+					<div style="padding-bottom: 20px;">
+						<p class="mat-body" style="margin-bottom: 0px;">{{ 'SELECT_EMAIL_TYPE' | translate }}:</p>
+					</div>
+					<mat-form-field floatLabel="always" class="mat-form-field--no-underline">
+						<!-- TODO: the matInput with display:none makes the magic. It's ugly, I've warned you ->
+						<input matInput formControlName="type" style="display: none" required />
+						<mat-radio-group class="mat-body" formControlName="type" fxLayoutGap="10px" (change)="typeSelected($event)" required>
+							<mat-radio-button value="Internal">{{
+                'INTERNAL' | translate
+              }}</mat-radio-button>
+							<mat-radio-button value="External">{{
+                'EXTERNAL' | translate
+              }}</mat-radio-button>
+						</mat-radio-group>
+						<mat-error [innerHTML]="'FIELD_REQUIRED' | translate: errorParams.type"></mat-error>
+					</mat-form-field>
+				</div>
+				<mat-form-field>
+					<input matInput placeholder="{{ 'NAME' | translate }}" formControlName="name" required />
+					<mat-error [innerHTML]="'FIELD_REQUIRED' | translate: errorParams.name"></mat-error>
+					<!-- <div *ngIf="emailChannelForm.value.name.errors.pattern">
+            <mat-error [innerHTML]="'CHANNEL_NAME_INVALID' | translate:errorParams.name"></mat-error>
+          </div> ->
+				</mat-form-field>
+				<mat-form-field>
+					<input matInput placeholder="{{ 'DESCRIPTION' | translate }}" formControlName="description" />
+				</mat-form-field>
+				<mat-form-field>
+					<input matInput placeholder="{{ 'EMAIL_ADDRESS' | translate }}" formControlName="emailAddress" required />
+					<label style="color: #999;" *ngIf="emailChannelForm.value.type === 'Internal'" matSuffix>@{{ subdomain }}.ngdesk.com</label>
+					<mat-error *ngIf="emailChannelForm.get('emailAddress').hasError('required')"
+						[innerHTML]="'FIELD_REQUIRED' | translate: errorParams.emailAddress"></mat-error>
+					<mat-error *ngIf="emailChannelForm.get('emailAddress').hasError('email')">
+						{{ 'EMAIL_MUST_BE_VALID' | translate }}</mat-error>
+				</mat-form-field>
+			</div>
+			<div mat-dialog-actions fxLayoutAlign="center center">
+				<button mat-raised-button [mat-dialog-close]="emailChannelForm" cdkFocusInitial>
+					{{ 'CLOSE' | translate }}
+				</button>
+				<button mat-raised-button color="primary" (click)="save()">
+					{{ 'SAVE' | translate }}
+				</button>
+			</div>
+		</form>
+	</div>
+	<div fxLayout="column" fxLayoutAlign="center center" fxFlex="100" paneTwo>
+		<h1 mat-dialog-title class="mat-headline" fxLayoutAlign="center">
+			{{ 'EMAIL_FORWARDING' | translate }}
+		</h1>
+		<h3 class="mat-h3">{{ 'SETUP_FORWARD_TO_ADDRESS' | translate }}:</h3>
+		<label class="mat-h4">support@{{ subdomain }}.ngdesk.com </label><br />
+		<div fxLayoutAlign="center" fxFlex>
+			<div fxLayout="row" fxFlex="70" fxLayoutGap="10px">
+				<mat-checkbox color="primary" [(ngModel)]="forwardingConfirmed"></mat-checkbox>
+				<div class="mat-body" i18n style="text-align: center;">
+					{{ 'SETUP_FORWARDING_CONFIRM' | translate: params.emailAddress }}
+					<br />
+					<p [innerHTML]="'FOR_MORE_INFORMATION' | translate"></p>
+				</div>
+			</div>
+		</div>
+		<div fxLayoutGap="10px">
+			<button mat-raised-button (click)="active = 'paneOne'">
+				{{ 'BACK' | translate }}
+			</button>
+			<button mat-raised-button color="primary" (click)="verifyEmail()" [disabled]="!forwardingConfirmed">
+				{{ 'TEST_FORWARDING' | translate }}
+			</button>
+		</div>
+	</div>
+	<div fxLayout="column" fxLayoutAlign="start center" fxFlex="100" paneThree>
+		<label class="mat-h1" *ngIf="isVerifying">{{
+      'EMAIL_FORWARDING_VERIFICATION' | translate
+    }}</label>
+		<label class="mat-h1" *ngIf="!isVerifying && !isVerified">{{
+      'COULDNT_COMPLETE_SETUP' | translate
+    }}</label>
+		<label *ngIf="isVerifying && !isVerified" class="mat-body" style="margin-bottom: 15%;">{{
+      'THIS_MIGHT_TAKE_UP_TO_MINUTE' | translate
+    }}</label>
+		<div fxLayoutAlign="center center">
+			<mat-spinner *ngIf="isVerifying && !isVerified"></mat-spinner>
+			<label fxFlex="90" class="mat-h3" *ngIf="!isVerifying && !isVerified"
+				[ngStyle]="{ color: '#7f0000' }">{{ 'VERIFICATION_FAILED' | translate }}</label>
+
+			<div *ngIf="!isVerifying && isVerified" fxLayout="column" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+				<label class="mat-h2">{{ 'VERIFICATION_SUCCEEDED' | translate }}</label>
+				<mat-icon class="green-color">done</mat-icon>
+				<span class="mat-body">{{ 'EMAIL_FORWARDING_SUCCESS_MESSAGE' | translate }}
+					<b>support@{{ subdomain }}.ngdesk.com </b></span>
+				<button mat-raised-button color="primary" [mat-dialog-close]="emailChannelForm">
+					{{ 'DONE' | translate }}
+				</button>
+			</div>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between center" fxFlex *ngIf="!isVerifying && !isVerified">
+			<div fxLayout="column" fxLayoutAlign="center center">
+				<label fxFlex="100" class="mat-h3" [innerHTML]="'VERIFICATION_HELP' | translate"></label>
+				<label fxFlex="100" class="mat-body-strong">{{
+          'NEED_HELP' | translate
+        }}</label>
+				<label fxFlex="100" class="mat-body">{{
+          'REACH_OUT' | translate
+        }}</label>
+			</div>
+			<div>
+				<div fxLayoutGap="20px">
+					<button mat-raised-button [mat-dialog-close]="emailChannelForm" cdkFocusInitial>
+						{{ 'CLOSE' | translate }}
+					</button>
+					<button mat-raised-button color="primary" (click)="active = 'paneTwo'">
+						{{ 'START_OVER' | translate }}
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</app-sliding-view-panel>
+
+-->

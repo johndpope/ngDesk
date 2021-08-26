@@ -1,0 +1,72 @@
+<StackLayout>
+  <Label text="ListLayoutComponent works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef>
+	<app-title-bar title="{{ 'LIST_LAYOUTS' | translate }}">
+	</app-title-bar>
+</ng-template>
+<form [formGroup]="listLayoutForm" (ngSubmit)="save()" class="pad10" style="overflow: auto;">
+  <div fxLayout="row" fxLayoutAlign="center">
+    <mat-error class="mat-body">{{errorMessage}}</mat-error>
+  </div>
+  <app-new-name-description buttonText="{{'SAVE' | translate}}" (save)="save()"></app-new-name-description>
+  <div fxLayoutGap="10px">
+    <mat-form-field>
+      <mat-select placeholder="{{'ROLE' | translate}}" formControlName="ROLE" required>
+        <mat-option *ngFor="let role of roles" [value]="role.ROLE_ID">
+          {{role.NAME}}
+        </mat-option>
+      </mat-select>
+      <mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params.role"></mat-error>
+    </mat-form-field>
+    <mat-checkbox color="primary" matTooltip="{{'DEFAULT_LAYOUT' | translate}}" matTooltipPosition="after" formControlName="IS_DEFAULT">
+      {{'DEFAULT' | translate}}
+    </mat-checkbox>
+  </div>
+  <app-conditions *ngIf="listLayoutLoaded" [parentName]="'listLayoutComponent'" [conditions]="listLayout.CONDITIONS" [fields]="fields">
+  </app-conditions>
+  <div fxLayoutGap="10px" formGroupName="ORDER_BY">
+    <mat-form-field>
+      <mat-select placeholder="{{'ORDER_BY' | translate}}" formControlName="COLUMN" required>
+        <mat-option *ngFor="let column of shownColumns" [value]="column.FIELD_ID">
+          {{column.DISPLAY_LABEL}}
+        </mat-option>
+      </mat-select>
+      <mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params.orderBy"></mat-error>
+    </mat-form-field>
+    <mat-form-field floatLabel="always" class="mat-form-field--no-underline">
+      <!-- TODO: the matInput with display:none makes the magic. It's ugly, I've warned you ->
+      <input matInput placeholder="{{'ORDER' | translate}}" formControlName="ORDER" style="display: none" required>
+      <mat-radio-group formControlName="ORDER" fxLayoutGap="10px" #order>
+        <mat-radio-button value="Asc">Asc</mat-radio-button>
+        <mat-radio-button value="Desc">Desc</mat-radio-button>
+      </mat-radio-group>
+      <mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params.order"></mat-error>
+    </mat-form-field>
+  </div>
+  <div cdkDropListGroup>
+    <div class="columns-container">
+      <h2 class="mat-h2">{{'AVAILABLE' | translate}}</h2>
+      <div cdkDropList #columnAvailableList="cdkDropList" [cdkDropListData]="availableFields" class="column-list"
+        (cdkDropListDropped)="drop($event)">
+        <div class="columns-box mat-body" *ngFor="let availableField of availableFields" cdkDrag>{{availableField.DISPLAY_LABEL}}</div>
+      </div>
+    </div>
+    <div class="columns-container">
+      <h2 class="mat-h2">{{'SHOWN' | translate}}</h2>
+      <div cdkDropList #columnShowList="cdkDropList" [cdkDropListData]="shownColumns" class="column-list"
+        (cdkDropListDropped)="drop($event)">
+        <div class="columns-box mat-body" *ngFor="let shownColumn of shownColumns" cdkDrag>{{shownColumn.DISPLAY_LABEL}}</div>
+      </div>
+    </div>
+  </div>
+</form>
+
+-->

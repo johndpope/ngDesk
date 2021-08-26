@@ -1,0 +1,19 @@
+<div style="position:absolute;top:0;right:0;background:#3f51b5;height:1250px;" class="z9999">
+	<div [@onSideNavChange]="sideNavState">
+		<mat-list fxLayout="column" style="padding:0">
+			<mat-list-item fxFlex="100">
+				<mat-icon class="no-wrap white-color" fxFlex="10">{{'CHAT' | translate}}</mat-icon>
+				<div *ngIf="sideNavState==='open'" fxLayout="row" fxFlex="100">
+					<span class="no-wrap white-color" fxFlex>{{'NGDESK_CHAT' | translate}}</span>
+					<mat-icon class="no-wrap white-color" (click)="closeSideNav();" fxFlex="5">{{'CLOSE' | translate}}</mat-icon>
+				</div>
+			</mat-list-item>
+			<div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="20px" style="width: 56px;">
+				<div *ngFor="let user of users" style="padding-left: 0px;" fxFlex>
+					<app-user-profile-icon [user]="user" matTooltip="{{user.FIRST_NAME}} {{user.LAST_NAME}}" [matTooltipPosition]="'before'">
+					</app-user-profile-icon>
+				</div>
+			</div>
+		</mat-list>
+	</div>
+</div>

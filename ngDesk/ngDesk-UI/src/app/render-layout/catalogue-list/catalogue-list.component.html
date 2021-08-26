@@ -1,0 +1,48 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef>
+	<app-title-bar title="{{'CATALOGUES' | translate}}"></app-title-bar>
+</ng-template>
+
+<div fxLayout="column" fxLayoutAlign="center center" style="padding-top: 10px;" fxLayout.lt-md="row" fxLayoutGap="20px">
+	<div fxLayoutAlign="center" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px"
+		*ngFor="let catalogueSplit of numberOfIterations(); let i=index">
+		<div style="width: 200px; height: 245px;cursor: pointer; max-width: 100%;" *ngFor="let catalogue of getCatalogues(i);let j=index;">
+			<div class="mat-elevation-z2" [appHighlight]="{BACKGROUND: 'ghostWhite'}" (click)="navigate(catalogue.catalogueId)" fxLayout="column"
+				style="border-radius: 5px;">
+				<div fxLayoutAlign="center center" class="custom-theme-offset-background-Color" style="height: 140px;">
+					<mat-icon *ngIf="!catalogue.displayImage">assignment</mat-icon>
+					<img *ngIf="catalogue.displayImage" width=200px height=140px [src]="catalogue.displayImage">
+				</div>
+				<div fxFlex="50" fxLayoutAlign="start start" fxLayout="column" style="padding: 10px;" fxLayoutGap="5px">
+					<div class="mat-body-strong" style="font-size: 15px; word-break: break-word;">
+						{{catalogue.name}}
+					</div>
+					<div class="mat-caption" style="word-break: break-word; text-overflow: ellipsis;">
+						{{catalogue.description}}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div fxLayoutAlign="center center" [ngStyle]="isModalTable?{'height':'400px'}:{'height':'86vh'}" *ngIf="catalogues.length === 0">
+		<div class="mat-h1" fxLayout="row" fxLayoutAlign="center center">
+			<div fxFlex="50" fxLayoutAlign="end center">
+				<div fxLayout="column" fxFlex="40" fxLayoutGap="5px">
+					<div style="text-align: left;">
+						<label class="mat-h3">{{'NO_CATALOGUE_LAYOUT' | translate}}</label>
+						<label *ngIf="roleName === 'SystemAdmin'" class="mat-h3">{{'CATALOGUE_LINK' | translate}}</label>
+					</div>
+					<div *ngIf="roleName === 'SystemAdmin'" fxLayoutAlign="start start">
+						<button (click)="navigateToCompanySettings()" mat-raised-button color="primary">{{'NEW_CATALOGUES' | translate}}</button>
+					</div>
+				</div>
+			</div>
+			<div fxFlex="50" fxLayout="column">
+				<div fxFlex=50>
+				</div>
+				<img src="../../assets/images/notFoundImage.png" style="width:50%;" alt="">
+			</div>
+		</div>
+	</div>
+	<button (click)="loadMore()" mat-raised-button fxFlex *ngIf="totalCount !== catalogues.length">{{"LOAD_MORE" | translate}}</button>
+</div>

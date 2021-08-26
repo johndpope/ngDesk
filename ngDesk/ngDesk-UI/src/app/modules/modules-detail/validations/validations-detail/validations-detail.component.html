@@ -1,0 +1,19 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef>
+	<app-title-bar class="light-grey-color" title="{{'VALIDATIONS' | translate}}" buttonText="{{'SAVE' | translate}}"
+		(buttonRightOnClick)="save()"></app-title-bar>
+</ng-template>
+<form [formGroup]="validationForm" (ngSubmit)="save()" class="pad10">
+	<app-new-name-description *ngIf="roles" [additionalFields]="additionalFields">
+	</app-new-name-description>
+	<app-conditions *ngIf="validationLoaded" [parentName]="'validationComponent'" [conditions]="conditions" [fields]="fields">
+	</app-conditions>
+	<label class="mat-h1 light-grey-color"> {{'EXPRESSION_OF_CONDITIONS' | translate}} </label>
+	<label class="mat-body" *ngIf="validationForm.get('CONDITIONS').value.length < 1 ">
+		{{'NO_CONDITIONS_ADDED' | translate}} </label>
+	<div *ngIf="conditionMessage !== '' && conditionMessage !=='<strong>If </strong>( '" [innerHTML]="conditionMessage" class="mat-body"
+		style="line-height: 25px"></div>
+	<span *ngIf="validationForm.get('CONDITIONS').value.length > 0" class="mat-h3" fxLayoutGap="5px">
+		<strong>{{'THEN' | translate}}</strong><label>{{'MODULE_FIELDS_ARE_VALID' | translate}}</label>
+	</span>
+</form>

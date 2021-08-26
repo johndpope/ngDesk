@@ -1,0 +1,48 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<div fxLayout="column" fxLayoutGap="10px" class="pad10">
+	<ng-template #headerTemplateRef>
+		<app-title-bar title="{{'CHAT_BOTS' | translate}}" buttonText="{{'NEW' | translate}}" (click)="newChatBot()">
+		</app-title-bar>
+	</ng-template>
+	<ng-container *ngIf="isLoading; else elseTemplate">
+		<mat-spinner style="position:relative;top:20%;left:50%"></mat-spinner>
+	</ng-container>
+	<ng-template #elseTemplate>
+		<div fxLayout="row">
+			<div fxFlex>
+				<table *ngIf="showSideNav" fxFlex="13" fxFlex.lt-lg="20" mat-table [dataSource]="navigations" class="mat-elevation-z8">
+					<ng-container matColumnDef="NAME">
+						<th mat-header-cell *matHeaderCellDef style="color: white;">
+							<div class="trim-info" matTooltip="{{module.PLURAL_NAME}}">
+								{{ module.PLURAL_NAME | truncate : 10}} {{'MODULE' | translate}}
+							</div>
+						</th>
+						<td matRipple class="no-wrap" mat-cell *matCellDef="let element" class="pointer"
+							[ngClass]="{ 'module-page-active': element.NAME == 'CHAT_BOTS'}">
+							{{element.NAME | translate}} </td>
+					</ng-container>
+					<tr class="custom-theme-primary-color" mat-header-row *matHeaderRowDef="['NAME']"></tr>
+					<tr mat-row *matRowDef="let row; columns: ['NAME'];" [routerLink]="row.PATH" [appHighlight]="{BACKGROUND: '#ececec'}"></tr>
+				</table>
+				<div class="pad10" style="margin-left: -10px;">
+					<button mat-icon-button
+						[ngStyle]="{'border': (showSideNav) ? '2px solid white' : '2px solid #3f51b5', 'margin-left' : (showSideNav) ? '-48px' : '0px'}"
+						(click)="showSideNav = !showSideNav" style="border-radius: 3px; margin-top: -2px;">
+						<mat-icon color="primary" style="margin-top: -5px;" *ngIf="!showSideNav">
+							keyboard_arrow_right</mat-icon>
+						<mat-icon class="white-color" style="margin-top: -5px;" *ngIf="showSideNav">
+							keyboard_arrow_left</mat-icon>
+					</button>
+				</div>
+				<app-custom-table [templateRef]="columnTemplateRef" (rowClickedEvent)="rowClicked($event)" noRecordsMessage="No Chatbots found"
+					[actions]="chatBotActions.actions" (menuItemTrigger)="chatBotActions[$event.ACTION.NAME]($event.ROW_DATA);"
+					(sortData)="sortData($event);customTableService.isLoading = true" (pageChangeEmit)="pageChangeEmit($event)" fxFlex>
+					<ng-template #columnTemplateRef let-element="element" let-col="col">
+						{{element[col.NAME]}}
+					</ng-template>
+				</app-custom-table>
+
+			</div>
+		</div>
+	</ng-template>
+</div>

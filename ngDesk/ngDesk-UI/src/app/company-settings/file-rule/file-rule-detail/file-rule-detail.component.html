@@ -1,0 +1,120 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef>
+  <div fxLayoutAlign="space-between center" fxLayoutGap="10px">
+    <app-title-bar class="light-grey-color" title="{{'FILE_RULE' | translate}}" buttonText="{{'SAVE' | translate}}"
+      (buttonRightOnClick)="save()" style="min-width: 100%"></app-title-bar>
+  </div>
+</ng-template>
+
+<div fxLayout="column" fxLayoutGap="10px" class="pad10">
+  <div fxLayout="row" fxLayoutAlign="center">
+    <!--Start of mat-card-->
+    <mat-card style="margin-top: 3%; padding-bottom: 3%;" fxFlex="80">
+      <!--Start of form-->
+      <form [formGroup]="samFileRuleForm" fxFlex fxLayout="column" (ngSubmit)="save()">
+        <!--Show error messages-->
+        <div fxLayout="row" fxLayoutAlign="center center" *ngIf="errorMessage != undefined || errorMessage !== ''">
+          <mat-error class="mat-body">{{errorMessage}}</mat-error>
+        </div>
+        <!--Form heading-->
+        <div fxLayout="row" fxLayoutAlign="center" style="padding-bottom: 2%;"> 
+          <mat-label *ngIf="ruleId === 'new'" class="mat-h1">{{'CREATE_NEW_SAM_FILE_RULE' | translate}}
+          </mat-label>
+          <mat-label *ngIf="ruleId !== 'new'" class="mat-h1">{{'EDIT_SAM_FILE_RULE' | translate}}
+          </mat-label>
+        </div>
+
+        <div fxLayout="row" fxFlex="60" fxLayoutGap="6px" fxLayoutAlign="center">
+          <!--File name section-->
+          <div fxLayout="column" fxFlex="30">
+            <mat-form-field appearance="outline" floatLabel="always" fxFlex="70" fxLayout.xs="calc(50%-25)">
+              <mat-label>{{'FILE_NAME' | translate}}</mat-label>
+              <input type="text" matInput formControlName="FILE_NAME">
+              <mat-error *ngIf="samFileRuleForm.controls.FILE_NAME.hasError('required')"
+                [innerHTML]="'FIELD_REQUIRED' | translate:params.fileName">
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <!--File path section-->
+          <div fxLayout="column" fxFlex="30">
+            <mat-form-field appearance="outline" floatLabel="always" fxFlex="70" fxLayout.xs="calc(50%-25)">
+              <mat-label>{{'FILE_PATH' | translate}}</mat-label>
+              <input type="text" matInput formControlName="FILE_PATH">
+              <mat-error *ngIf="samFileRuleForm.controls.FILE_PATH.hasError('required')"
+                [innerHTML]="'FIELD_REQUIRED' | translate:params.filePath">
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div fxLayout="row" fxFlex="60" fxLayoutGap="6px" fxLayoutAlign="center">
+          <!--File name section-->
+              <!--File name section-->
+              <div fxLayout="column" fxFlex="45">
+                <mat-form-field appearance="outline" floatLabel="always" fxFlex="70" fxLayout.xs="calc(50%-25)">
+                  <mat-label>{{'SOFTWARE_NAME' | translate}}</mat-label>
+                  <input type="text" matInput formControlName="SOFTWARE_NAME">
+                  <mat-error *ngIf="samFileRuleForm.controls.SOFTWARE_NAME.hasError('required')"
+                    [innerHTML]="'FIELD_REQUIRED' | translate:params.fileName">
+                  </mat-error>
+                </mat-form-field>
+              </div>
+          
+          <!--File path section-->
+          <div fxLayout="column" fxFlex="15">
+            <mat-form-field appearance="outline" floatLabel="always" fxFlex="70" fxLayout.xs="calc(50%-25)">
+              <mat-label>{{'VERSION' | translate}}</mat-label>
+              <input type="text" matInput formControlName="VERSION">
+              <mat-error *ngIf="samFileRuleForm.controls.VERSION.hasError('required')"
+                [innerHTML]="'FIELD_REQUIRED' | translate:params.filePath">
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div fxLayout="row" fxFlex="60" fxLayoutGap="6px" fxLayoutAlign="center">
+      
+          <div fxLayout="column" fxFlex="45">
+            <mat-form-field appearance="outline" floatLabel="always" fxFlex="70" fxLayout.xs="calc(50%-25)">
+              <mat-label>{{'PUBLISHER' | translate}}</mat-label>
+              <input type="text" matInput formControlName="PUBLISHER">
+              <mat-error *ngIf="samFileRuleForm.controls.PUBLISHER.hasError('required')"
+                [innerHTML]="'FIELD_REQUIRED' | translate:params.fileName">
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <!--Edition section-->
+          <div fxLayout="column" fxFlex="15">
+            <mat-form-field appearance="outline" floatLabel="always" fxFlex="70" fxLayout.xs="calc(50%-25)">
+              <mat-label>{{'EDITION' | translate}}</mat-label>
+              <input type="text" matInput formControlName="EDITION">
+              <mat-error *ngIf="samFileRuleForm.controls.EDITION.hasError('required')"
+                [innerHTML]="'FIELD_REQUIRED' | translate:params.filePath">
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        
+    
+        <!--Condition section-->
+        <div fxLayout="row" fxFlex="60" fxLayoutGap="15px" fxLayoutAlign="center">
+          <div fxLayout="column" fxFlex="60">
+            <mat-label class="mat-h2">{{'RULE_CONDITION' | translate}}
+            </mat-label>
+            <mat-radio-group fxFlex="30" fxLayout="column" fxLayoutGap="10px" #rGroup formControlName="RULE_CONDITION" required
+              fxLayout.xs="calc(50%-25)" (change)="radioChange()">
+              <mat-radio-button radioGroup="rGroup" *ngFor="let samRule of allSamRules" [value]="samRule">
+                {{samRule.DISPLAY | translate}}
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+      </form>
+      <!--End of form-->
+    </mat-card>
+    <!--End of mat-card-->
+  </div>
+</div>

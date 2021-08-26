@@ -1,0 +1,98 @@
+<StackLayout>
+  <Label text="chat-business-rule-dialog works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<div fxLayout="column" fxLayoutGap="10px" class="pad10">
+  <div fxLayout="column">
+    <label class="mat-h2" style="margin-bottom:0px;">Operating Hours</label>
+  </div>
+  <mat-divider></mat-divider>
+  <mat-radio-group class="radio-group" [(ngModel)]="buisnessRule.RESTRICTION_TYPE" fxLayout="column" fxLayoutGap="10px"
+    style="padding-top:10px">
+    <mat-radio-button color="primary" value="Day">
+      Operating hours for specific times-of-the-day
+    </mat-radio-button>
+    <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center"
+      *ngFor="let restriction of restrictionsDaily;let restrictionIndex = index;">
+      <label class="mat-body">From</label>
+      <mat-form-field>
+        <mat-select placeholder="Start Time" [(ngModel)]="restriction.START_TIME" [disabled]="buisnessRule.RESTRICTION_TYPE == 'Week'">
+          <mat-option *ngFor="let time of times" [value]="time">
+            {{time}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <label class="mat-body">to {{restriction.END_TME}}</label>
+      <mat-form-field>
+        <mat-select [disabled]="buisnessRule.RESTRICTION_TYPE == 'Week'" placeholder="End Time" [(ngModel)]="restriction.END_TIME">
+          <mat-option *ngFor="let time of times" [value]="time">
+            {{time}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button [disabled]="buisnessRule.RESTRICTION_TYPE == 'Week'" mat-mini-fab color="primary" (click)="addRestriction('Day')">
+        <mat-icon>add</mat-icon>
+      </button>
+      <button [disabled]="buisnessRule.RESTRICTION_TYPE == 'Week'" mat-mini-fab (click)="removeRestriction('Day', restrictionIndex)"
+        *ngIf="restrictionsDaily.length > 1">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <mat-radio-button color="primary" value="Week">
+      Operating hours for specific times-of-the-week
+    </mat-radio-button>
+    <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center"
+      *ngFor="let restriction of restrictionsSpecific;let restrictionIndex = index;">
+      <label class="mat-body">From</label>
+      <mat-form-field fxFlex="15">
+        <mat-select [disabled]="buisnessRule.RESTRICTION_TYPE == 'Day'" placeholder="Start Day" [(ngModel)]="restriction.START_DAY">
+          <mat-option *ngFor="let day of weekDays" [value]="day">
+            {{day}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field fxFlex="15">
+        <mat-select [disabled]="buisnessRule.RESTRICTION_TYPE == 'Day'" placeholder="Start Time" [(ngModel)]="restriction.START_TIME">
+          <mat-option *ngFor="let time of times" [value]="time">
+            {{time}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <label class="mat-body">to</label>
+      <mat-form-field fxFlex="15">
+        <mat-select [disabled]="buisnessRule.RESTRICTION_TYPE == 'Day'" placeholder="End Day" [(ngModel)]="restriction.END_DAY">
+          <mat-option *ngFor="let day of weekDays" [value]="day">
+            {{day}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field fxFlex="15">
+        <mat-select [disabled]="buisnessRule.RESTRICTION_TYPE == 'Day'" placeholder="End Time" [(ngModel)]="restriction.END_TIME">
+          <mat-option *ngFor="let time of times" [value]="time">
+            {{time}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button [disabled]="buisnessRule.RESTRICTION_TYPE == 'Day'" mat-mini-fab color="primary" color="primary"
+        (click)="addRestriction('Week')">
+        <mat-icon>add</mat-icon>
+      </button>
+      <button [disabled]="buisnessRule.RESTRICTION_TYPE == 'Day'" mat-mini-fab (click)="removeRestriction('Week', restrictionIndex)"
+        *ngIf="restrictionsSpecific.length > 1">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </mat-radio-group>
+  <mat-divider></mat-divider>
+  <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="10px" mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cancel</button>
+    <button mat-button (click)="saveRestrictions()">Save</button>
+  </div>
+</div>
+
+-->

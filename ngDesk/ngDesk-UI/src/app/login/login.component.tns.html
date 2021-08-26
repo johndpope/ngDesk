@@ -1,0 +1,21 @@
+<ActionBar title="">
+  <NavigationButton text="Back" android.systemIcon="ic_menu_back" (tap)="onBackTap()" (touch)="onBackTap()"></NavigationButton> 
+</ActionBar>
+  <StackLayout [formGroup]="loginForm">
+
+    <Label class="title" text="{{'WELCOME_TO_NGDESK' | translate}}" textWrap="true"></Label>
+    <label style="color: red;padding-top: 50px;text-align: center;" *ngIf="!this.isSubmitting" text="{{this.errorMessage}}"></label>
+    <TextField formControlName="emailAddress" style="width: 90%;font-size:medium;margin: 40px;padding-top: 90px;" autocapitalizationType="none" hint="{{ 'EMAIL'| translate}}" ></TextField>
+
+    <label style="color: red;margin-left:20 ;" *ngIf="loginForm.controls.emailAddress.invalid && loginForm.controls.emailAddress.touched "  [text]="getErrorMessageEmail()"></label>
+    
+    <TextField formControlName="password" style="width: 90%;font-size:medium;margin: 40px;padding-top: 90px;" secure="true" autocapitalizationType="none" hint="{{'PASSWORD'| translate}}" ></TextField>
+   
+    <label style="color: red;margin-left:20 ;" *ngIf="loginForm.controls.password.invalid && loginForm.controls.password.touched "  [text]="getErrorMessagePassword()"></label>
+    <!-- <TextField formControlName="subdomain" style="width: 90%;font-size:medium;margin: 40px;padding-top: 90px;"  autocapitalizationType="none" hint="{{'SUBDOMAIN'| translate}}" ></TextField> -->
+
+    <StackLayout>
+    <Button class ="-outline -rounded-sm" [isEnabled]="!isSubmitting" text="{{'LOGIN' | translate}}" style="width: 80%;"  (touch)="login()"></Button>
+    <ActivityIndicator [busy]="isSubmitting"></ActivityIndicator>
+    </StackLayout>
+  </StackLayout>

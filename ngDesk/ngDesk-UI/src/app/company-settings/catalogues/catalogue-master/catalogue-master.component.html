@@ -1,0 +1,20 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<div fxLayout="column" fxLayoutGap="10px" class="pad10">
+	<ng-template #headerTemplateRef>
+		<app-title-bar title="{{'CATALOGUES' | translate}}" buttonText="{{'NEW' | translate}}"
+			(buttonRightOnClick)="newCatalogue()">
+		</app-title-bar>
+	</ng-template>
+	<div fxFlex>
+		<app-custom-table [templateRef]="columnTemplateRef" (rowClickedEvent)="rowClicked($event)"
+			noRecordsMessage="{{'NO_CATALOGUES_FOUND' | translate}}" [actions]="catalogueActions.actions"
+			(sortData)="sortData();customTableService.isLoading = true"
+			(menuItemTrigger)="catalogueActions[$event.ACTION.NAME]($event.ROW_DATA);"
+			(pageChangeEmit)="pageChangeEmit($event);customTableService.isLoading = true" fxFlex>
+			<ng-template #columnTemplateRef let-element="element" let-col="col">
+				{{element[col.NAME]}}
+			</ng-template>
+		</app-custom-table>
+	</div>
+</div>
+	

@@ -1,0 +1,21 @@
+<button style="margin-right: 5px;" [disabled]="disabledButton2" mat-raised-button color="{{buttonColor2}}" (click)="customEmit2()"
+	*ngIf="!loaderService.isLoading2 && enableButton2">
+	{{buttonText2}}
+</button>
+<div style="margin-right: 5px;" fxFlex fxFlex.lt-sm="40px" fxLayoutAlign="center center" *ngIf="loaderService.isLoading2 && enableButton2">
+	<mat-spinner [diameter]="30"></mat-spinner>
+</div>
+
+<button style="margin-right: 5px;" [disabled]="disabledButton" mat-raised-button color="{{buttonColor}}" (click)="customEmit()" *ngIf="!loaderService.isLoading">
+	{{buttonText}}
+</button>
+<div style="margin-right: 5px;" fxFlex fxFlex.lt-sm="40px" fxLayoutAlign="center center" *ngIf="loaderService.isLoading && customButtonShow === undefined">
+	<mat-spinner [diameter]="30"></mat-spinner>
+</div>
+
+<button [disabled]="disabledButton3"  mat-raised-button (click)="customEmit3()" *ngIf="!loaderService.isLoading3 && enableButton3">
+	{{buttonText3}}
+</button>
+<div fxFlex fxFlex.lt-sm="40px" fxLayoutAlign="center center" *ngIf="loaderService.isLoading3 && enableButton3">
+	<mat-spinner [diameter]="30"></mat-spinner>
+</div>

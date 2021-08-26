@@ -1,0 +1,63 @@
+{
+  "companyId": "COMPANY_ID_REPLACE",
+  "role": "AGENT_ROLE_REPLACE",
+  "name": "My Tickets",
+  "description": "This is the default role Layout for Agent",
+  "defaultLayout": true,
+  "tabs": [
+    {
+      "module": "TICKETS_MODULE_ID_REPLACE",
+      "columnsShow": [
+        "51bf883f-f16b-4a0a-b2b8-6e965392af82",
+        "99f33168-9456-456a-97ff-166548a799ca",
+        "2c4e6e7d-e4aa-43b8-a8ef-bbe7160f3505",
+        "9d3c5936-21d8-44cd-b523-6732c9386650",
+        "02285079-81d3-46db-8061-d5bcee1d8c84",
+        "34e5212e-6be4-4e69-915b-2b27ed1c746f"
+      ],
+      "orderBy": {
+        "column": "99f33168-9456-456a-97ff-166548a799ca",
+        "order": "Desc"
+      },
+      "conditions": [
+        {
+          "requirementType": "All",
+          "operator": "EQUALS_TO",
+          "condition": "62c5c3a3-0008-4c4e-b1a8-3d5784e9dd6d",
+          "conditionValue": "{{CURRENT_USER}}"
+        }
+      ]
+    },
+    {
+      "tabId": "2d5fee31-a74d-452b-8cd3-fecebbc6204c",
+      "module": "CHANGE_REQUEST_MODULE_ID_REPLACE",
+      "columnsShow": [
+        "08ae80de-1005-4ce4-bacf-81a011e42bd7",
+        "c4a4b1c8-d8a1-4415-acf3-9f2c3544df0b",
+        "01a2d02c-3acd-4a76-b861-ca2d3e42edf2",
+        "0ba9b18b-2ad1-471c-8e95-1ea98260424f",
+        "928ff7a5-275d-430a-921a-93685d7b6a5b",
+        "bfa96bdd-1c6e-45ee-b1f3-be041d764f9f",
+        "15044d64-e3f6-4000-b12a-abb8ea418906"
+      ],
+      "orderBy": {
+        "column": "08ae80de-1005-4ce4-bacf-81a011e42bd7",
+        "order": "Asc"
+      },
+      "conditions": [
+        {
+          "requirementType": "Any",
+          "operator": "EQUALS_TO",
+          "condition": "43238de7-bbe8-4bca-af42-7756e6ddc465",
+          "conditionValue": "{{CURRENT_USER}}"
+        },
+        {
+          "requirementType": "Any",
+          "operator": "EQUALS_TO",
+          "condition": "a571463c-f3b7-4b6b-91ae-8bca81049910",
+          "conditionValue": "REQUIRED"
+        }
+      ]
+    }
+  ]
+}

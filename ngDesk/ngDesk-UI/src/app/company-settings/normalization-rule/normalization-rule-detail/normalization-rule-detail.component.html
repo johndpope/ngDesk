@@ -1,0 +1,99 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef>
+  <div fxLayoutAlign="space-between center" fxLayoutGap="10px">
+    <app-title-bar class="light-grey-color" title="{{'NORMALIZATION_RULE' | translate}}" buttonText="{{'SAVE' | translate}}"
+      (buttonRightOnClick)="save()" style="min-width: 100%"></app-title-bar>
+  </div>
+</ng-template>
+<div fxLayout="column" fxLayoutGap="10px" class="pad10">
+  <form [formGroup]="normalizationRuleForm" (ngSubmit)="save()">
+    <app-new-name-description>
+    </app-new-name-description>
+  </form>
+  <mat-divider></mat-divider>
+  <div class="pad10">
+    <div fxLayout="column">
+      <!--Publisher form-->
+      <form [formGroup]="publisherForm">
+        <div fxLayout="row" fxLayout.md="row wrap" fxLayout.sm="row wrap" fxLayout.xs="row wrap" fxLayoutAlign="flex-start center"
+          fxLayoutGap="10px" fxFlex="100">
+          <span fxFlex="5">{{'IF_PUBLISHER' | translate}}</span>
+          <mat-form-field floatLabel="always" fxFlex="20">
+            <mat-select placeholder="{{'OPERATOR' | translate}}" formControlName="operator">
+              <mat-option *ngFor="let operator of allOperators" [value]="operator.BACKEND">
+                {{operator.DISPLAY}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <!--Publisher input field-->
+          <mat-form-field floatLabel="always" fxFlex="20">
+            <input matInput formControlName="key" placeholder="{{'PUBLISHER' | translate}}" type=" text" [matAutocomplete]="auto_publishers">
+            <mat-autocomplete #auto_publishers="matAutocomplete" (appAutocompleteScroll)="onScroll('publishers')">
+              <mat-option *ngFor="let publisher of allPublishers" [value]="publisher">
+                {{publisher}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <span fxFlex="8">{{'THEN_NORMALIZED_TO' | translate}}</span>
+          <mat-form-field floatLabel="always" fxFlex="20">
+            <input type=" text" placeholder="{{ 'VALUE' | translate}}" matInput formControlName="value">
+          </mat-form-field>
+        </div>
+      </form>
+      <!--Products form-->
+      <form [formGroup]="productForm">
+        <div fxLayout="row" fxLayout.md="row wrap" fxLayout.sm="row wrap" fxLayout.xs="row wrap" fxLayoutAlign="flex-start center"
+          fxLayoutGap="10px" fxFlex="100">
+          <span fxFlex="5">{{'IF_PRODUCT' | translate}}</span>
+          <mat-form-field floatLabel="always" fxFlex="20">
+            <mat-select placeholder="{{'OPERATOR' | translate}}" formControlName="operator">
+              <mat-option *ngFor="let operator of allOperators" [value]="operator.BACKEND">
+                {{operator.DISPLAY}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <!--Products input field-->
+          <mat-form-field floatLabel="always" fxFlex="20">
+            <input matInput formControlName="key" placeholder="{{'PRODUCT' | translate}}" type="text" [matAutocomplete]="auto_products">
+            <mat-autocomplete #auto_products="matAutocomplete" (appAutocompleteScroll)="onScroll('products')">
+              <mat-option *ngFor="let product of allProducts" [value]="product">
+                {{product}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <span fxFlex=" 8">{{'THEN_NORMALIZED_TO' | translate}}</span>
+          <mat-form-field floatLabel="always" fxFlex="20">
+            <input type=" text" placeholder="{{ 'VALUE' | translate}}" matInput formControlName="value">
+          </mat-form-field>
+        </div>
+      </form>
+      <!--Version form-->
+      <form [formGroup]="versionForm">
+        <div fxLayout="row" fxLayout.md="row wrap" fxLayout.sm="row wrap" fxLayout.xs="row wrap" fxLayoutAlign="flex-start center"
+          fxLayoutGap="10px" fxFlex="100">
+          <span fxFlex="5">{{'IF_VERSION' | translate}}</span>
+          <mat-form-field floatLabel="always" fxFlex="20">
+            <mat-select placeholder="{{'OPERATOR' | translate}}" formControlName="operator">
+              <mat-option *ngFor="let operator of allOperators" [value]="operator.BACKEND">
+                {{operator.DISPLAY}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <!--Version input field-->
+          <mat-form-field floatLabel="always" fxFlex="20">
+            <input matInput formControlName="key" placeholder="{{'VERSION' | translate}}" type="text" [matAutocomplete]="auto_versions">
+            <mat-autocomplete #auto_versions="matAutocomplete" (appAutocompleteScroll)="onScroll('versions')">
+              <mat-option *ngFor="let version of allVersions" [value]="version">
+                {{version}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <span fxFlex="8">{{'THEN_NORMALIZED_TO' | translate}}</span>
+          <mat-form-field floatLabel="always" fxFlex="20">
+            <input type=" text" placeholder="{{ 'VALUE' | translate}}" matInput formControlName="value">
+          </mat-form-field>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

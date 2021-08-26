@@ -1,0 +1,95 @@
+
+<ActionBar title=" " >
+		
+    <!-- <ActionItem  ios.position="left"  
+    *ngIf="isIosDevice" (tap)="onBackTap()" >
+    <label *ngIf="showBackButton"  style="font-size: 24;" class="fas" text="&#xf053;"></label>
+    </ActionItem> -->
+
+    <!-- (tap)="openDropDown()" -->
+    <StackLayout  *ngIf="!showSearchBar" orientation="horizontal"  (tap)="openMobileDropDown()">
+    <label style="font-size: 20;" [text]="pageTitle"></label>
+    <label  *ngIf="listLayoutExists && !isloadingMobileData" style="font-size: 24;" class="fas" text="&#xf0d7;" ></label>
+    </StackLayout>
+
+        <ActionItem  *ngIf="showSearchBar"  
+        android.position="right"  ios.position="right"  (tap)="showSearchBar = !showSearchBar" style="font-size: 13;"  >
+        <label style="font-size: 12;color: white;" text="  Cancel"></label>
+        </ActionItem>
+        <ActionItem  *ngIf="!showSearchBar"  
+        android.position="right"  ios.position="right" class="fas"  icon="font://&#xf002;"  style="font-size:13;" (tap)="showSearchBar = !showSearchBar" >
+        <!-- <label  style="font-size: 22;" class="fas" text="&#xf002;"></label> -->
+        </ActionItem>
+
+      <!-- <ActionItem  *ngIf="!showSearchBar" ios.position="right"  
+    android.position="right" class="fas"  icon="font://&#xf002;"  style="font-size:13;" (tap)="showSearchBar = !showSearchBar" >
+    <label  style="font-size: 22;" class="fas" text="&#xf002;"></label>
+    </ActionItem> -->
+
+    <!-- <ActionItem  *ngIf="showSearchBar" ios.position="right"  
+    android.position="right"  (tap)="showSearchBar = !showSearchBar" style="font-size: 13;color: white;" text="Cancel"  >
+    <label  style="font-size: 20;" text="Cancel"></label>
+    </ActionItem> -->
+
+        <SearchBar *ngIf="showSearchBar" style="font-size:15;" hint="Search" ios:style="color: #ffffff"
+        [text]="searchPhrase" (clear)="onClearForMobile()" (submit)="searchForMobile($event)" >
+        </SearchBar>
+        <!-- (clear)="onClear($event)" -->
+     <!-- <NavigationButton  text=" "  *ngIf="isAndroisDevice" android.systemIcon="ic_menu_back" (tap)="onBackTap()" ></NavigationButton>   -->
+    
+</ActionBar>
+<GridLayout>
+<ActivityIndicator [busy]="isloadingMobileData && listLayoutExists" ></ActivityIndicator>
+<label *ngIf="mobileEntries.length === 0 && listLayoutExists && !isloadingMobileData" style="font-size: large;text-align: center;" text="No {{recordName}} found"></label>
+<label textWrap="true" *ngIf="!listLayoutExists && !isloadingMobileData" style="font-size: large;text-align: center;" text="{{'NO_LIST_LAYOUT_FOUND'| translate}}"></label>
+
+            <RadListView  *ngIf="!isloadingMobileData" loadOnDemandMode="Auto" (loadMoreDataRequested)="onMobileLoadMoreItemsRequested($event)" [items]="mobileEntries" >
+                <ng-template let-entry="item">
+                    <StackLayout (touch)="rowClicked(entry)">
+                        <label  textWrap="true" *ngIf="mobileDisplayTitleField.DATA_TYPE.DISPLAY === 'Relationship'" style="font-size: 16;margin-left:2px;" text="{{entry[mobileDisplayTitleField.NAME].PRIMARY_DISPLAY_FIELD}}"></label>
+                        <label  textWrap="true" *ngIf="mobileSubTitleField.DATA_TYPE.DISPLAY === 'Relationship'" style="color: gray;margin-left:2px;" text="{{entry[mobileSubTitleField.NAME].PRIMARY_DISPLAY_FIELD}}"></label>
+                        
+                        <label  textWrap="true" *ngIf="mobileDisplayTitleField.DATA_TYPE.DISPLAY !== 'Relationship' && mobileDisplayTitleField.DATA_TYPE.DISPLAY !== 'Time' && mobileDisplayTitleField.DATA_TYPE.DISPLAY !== 'Date/Time' && mobileDisplayTitleField.DATA_TYPE.DISPLAY !== 'Date'" style="font-size: 16;margin-left:2px;" text="{{entry[mobileDisplayTitleField.NAME]}}"></label>
+                        <label  textWrap="true" *ngIf="mobileSubTitleField.DATA_TYPE.DISPLAY !== 'Relationship' && mobileSubTitleField.DATA_TYPE.DISPLAY !== 'Time' && mobileSubTitleField.DATA_TYPE.DISPLAY !== 'Date/Time' &&  mobileSubTitleField.DATA_TYPE.DISPLAY !== 'Date'" style="color: gray;margin-left:2px;" text="{{entry[mobileSubTitleField.NAME]}}"></label>
+
+                        <label  textWrap="true" *ngIf="mobileDisplayTitleField.DATA_TYPE.DISPLAY == 'Time'" style="font-size: 16;margin-left:2px;" text="{{entry[mobileDisplayTitleField.NAME] | dateFormat: 'h:mm a'}}"></label>
+                        <label  textWrap="true" *ngIf="mobileSubTitleField.DATA_TYPE.DISPLAY == 'Time'"  style="color: gray;margin-left:2px;" text="{{entry[mobileSubTitleField.NAME] | dateFormat: 'h:mm a'}}"></label>
+
+                        <label  textWrap="true" *ngIf="mobileDisplayTitleField.DATA_TYPE.DISPLAY == 'Date/Time'" style="font-size: 16;margin-left:2px;" text="{{entry[mobileDisplayTitleField.NAME] | dateFormat: 'MMM d, y, h:mm a' }}"></label>
+                        <label  textWrap="true" *ngIf="mobileSubTitleField.DATA_TYPE.DISPLAY == 'Date/Time'" style="color: gray;margin-left:2px;" text="{{entry[mobileSubTitleField.NAME] | dateFormat: 'MMM d, y, h:mm a' }}"></label>
+
+                        <label  textWrap="true" *ngIf="mobileDisplayTitleField.DATA_TYPE.DISPLAY == 'Date'" style="font-size: 16;margin-left:2px;" text="{{entry[mobileDisplayTitleField.NAME] | dateFormat: 'mediumDate'}}"></label>
+                        <label  textWrap="true" *ngIf="mobileSubTitleField.DATA_TYPE.DISPLAY == 'Date'" style="color: gray;margin-left:2px;" text="{{entry[mobileSubTitleField.NAME] | dateFormat: 'mediumDate'}}"></label>
+                        <StackLayout style="height: 1;background-color: #e0dede;"></StackLayout>
+                    </StackLayout>
+                </ng-template>
+            </RadListView>
+
+<!--         
+<ScrollView>
+    <StackLayout *ngIf="!isloadingMobileData">
+        <StackLayout *ngFor="let entry of entries;"  >  
+            <StackLayout orientation="vertical" >
+                    <StackLayout style="height: 60;">
+                        <label  textWrap="true" *ngIf="mobileDisplayTitleField.DATA_TYPE.DISPLAY === 'Relationship'" style="font-size: 16;margin-left:2px;" text="{{entry[mobileDisplayTitleField.NAME].PRIMARY_DISPLAY_FIELD}}"></label>
+                        <label  textWrap="true" *ngIf="mobileSubTitleField.DATA_TYPE.DISPLAY === 'Relationship'" style="color: gray;margin-left:2px;" text="{{entry[mobileSubTitleField.NAME].PRIMARY_DISPLAY_FIELD}}"></label>
+                        
+                        <label  textWrap="true" *ngIf="mobileDisplayTitleField.DATA_TYPE.DISPLAY !== 'Relationship' || mobileDisplayTitleField.DATA_TYPE.DISPLAY !== 'Time' || mobileDisplayTitleField.DATA_TYPE.DISPLAY !== 'Date/Time' ||  mobileDisplayTitleField.DATA_TYPE.DISPLAY !== 'Date'" style="font-size: 16;margin-left:2px;" text="{{entry[mobileDisplayTitleField.NAME]}}"></label>
+                        <label  textWrap="true" *ngIf="mobileDisplayTitleField.DATA_TYPE.DISPLAY !== 'Relationship' || mobileDisplayTitleField.DATA_TYPE.DISPLAY !== 'Time' || mobileDisplayTitleField.DATA_TYPE.DISPLAY !== 'Date/Time' ||  mobileDisplayTitleField.DATA_TYPE.DISPLAY !== 'Date'" style="color: gray;margin-left:2px;" text="{{entry[mobileSubTitleField.NAME]}}"></label>
+
+                        <label  textWrap="true" *ngIf="mobileDisplayTitleField.DATA_TYPE.DISPLAY == 'Time'" style="font-size: 16;margin-left:2px;" text="{{entry[mobileDisplayTitleField.NAME] | dateFormat: 'h:mm a'}}"></label>
+                        <label  textWrap="true" *ngIf="mobileDisplayTitleField.DATA_TYPE.DISPLAY == 'Time'"  style="color: gray;margin-left:2px;" text="{{entry[mobileSubTitleField.NAME] | dateFormat: 'h:mm a'}}"></label>
+
+                        <label  textWrap="true" *ngIf="mobileDisplayTitleField.DATA_TYPE.DISPLAY == 'Date/Time'" style="font-size: 16;margin-left:2px;" text="{{entry[mobileDisplayTitleField.NAME] | dateFormat: 'MMM d, y, h:mm a' }}"></label>
+                        <label  textWrap="true" *ngIf="mobileDisplayTitleField.DATA_TYPE.DISPLAY == 'Date/Time'" style="color: gray;margin-left:2px;" text="{{entry[mobileSubTitleField.NAME] | dateFormat: 'MMM d, y, h:mm a' }}"></label>
+
+                        <label  textWrap="true" *ngIf="mobileDisplayTitleField.DATA_TYPE.DISPLAY == 'Date'" style="font-size: 16;margin-left:2px;" text="{{entry[mobileDisplayTitleField.NAME] | dateFormat: 'mediumDate'}}"></label>
+                        <label  textWrap="true" *ngIf="mobileDisplayTitleField.DATA_TYPE.DISPLAY == 'Date'" style="color: gray;margin-left:2px;" text="{{entry[mobileSubTitleField.NAME] | dateFormat: 'mediumDate'}}"></label>
+                    </StackLayout>
+            </StackLayout>
+            <StackLayout style="height: 1;background-color: #e0dede;"></StackLayout>
+        </StackLayout>
+    </StackLayout>
+</ScrollView> -->
+
+</GridLayout>

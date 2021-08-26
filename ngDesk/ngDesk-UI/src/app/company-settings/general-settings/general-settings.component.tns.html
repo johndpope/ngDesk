@@ -1,0 +1,72 @@
+<StackLayout>
+  <Label text="general-settings works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<app-toolbar></app-toolbar>
+<div fxLayout="column" fxLayoutGap="20px" class="pad10">
+
+	<app-title-bar [title]="'GENERAL_SETTINGS' | translate" [buttonText]="'SAVE' | translate" (buttonRightOnClick)="saveGeneralSettings()"
+		[buttonColor]="'primary'"></app-title-bar>
+	<div [formGroup]="generalSettingsForm" fxLayout="row" fxLayoutAlign="center">
+		<mat-card fxLayout="column" fxFlex="100" fxLayoutGap="20px">
+			<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+				<div fxFlex fxLayoutAlign="flex-start center">
+					<label class="mat-h3" [ngStyle]="{'margin-bottom':'0px'}">{{'LANGUAGE' | translate}}</label>
+				</div>
+				<div fxFlex fxLayoutAlign="flex-start center">
+					<mat-form-field fxFlex=40>
+						<mat-label>{{SELECT_LANGUAGE | translate}}</mat-label>
+						<mat-select formControlName="LANGUAGE">
+							<mat-option *ngFor="let lang of languageObject" [value]="lang.CODE">
+								{{lang.NAME | translate}}
+							</mat-option>
+						</mat-select>
+						<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params.language"></mat-error>
+					</mat-form-field>
+
+				</div>
+			</div>
+			<div fxLayout="row" fxLayoutAlign="flex-start center" fxLayoutGap="20px">
+				<div fxFlex fxLayoutAlign="flex-start">
+					<label class="mat-h3" [ngStyle]="{'margin-bottom':'0px'}">{{'TIMEZONE' | translate}}</label>
+				</div>
+				<div fxFlex fxLayoutAlign="flex-start center">
+					<mat-form-field fxFlex=40>
+						<mat-label>{{SELECT_TIMEZONE | translate}}</mat-label>
+						<mat-select formControlName="TIMEZONE">
+							<mat-option *ngFor="let timezone of timeZones" [value]="timezone">
+								{{timezone}}
+							</mat-option>
+						</mat-select>
+						<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params.timezone"></mat-error>
+					</mat-form-field>
+				</div>
+			</div>
+
+			<div fxLayout="row" fxLayoutAlign="flex-start center" fxLayoutGap="20px">
+				<div fxFlex fxLayoutAlign="flex-start">
+					<label class="mat-h3" [ngStyle]="{'margin-bottom':'0px'}">{{'LOCALE' | translate}}</label>
+				</div>
+				<div fxFlex fxLayoutAlign="flex-start center">
+					<mat-form-field fxFlex=40>
+						<mat-label>{{SELECT_LOCALE | translate}}</mat-label>
+						<mat-select formControlName="LOCALE">
+							<mat-option *ngFor="let loc of locales" [value]="loc.CODE">
+								{{loc.NAME}}
+							</mat-option>
+						</mat-select>
+						<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params.locale"></mat-error>
+					</mat-form-field>
+
+				</div>
+			</div>
+		</mat-card>
+	</div>
+</div>
+
+-->

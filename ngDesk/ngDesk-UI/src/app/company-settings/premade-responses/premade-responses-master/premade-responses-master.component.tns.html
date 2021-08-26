@@ -1,0 +1,28 @@
+<StackLayout>
+  <Label text="premade-responses-master works" textWrap="true"></Label>
+  <Label text="This is a migrated component" textWrap="true"></Label>
+  <Label text="Update it to provide the UI elements required in your mobile app" textWrap="true"></Label>
+</StackLayout>
+
+<!--
+Original Web template:
+
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef>
+  <app-title-bar  title="{{'PREMADE_RESPONSES' | translate}}" buttonText="{{'NEW' | translate}}"  (buttonRightOnClick)="newPremadeResponse()"></app-title-bar>
+</ng-template>
+<div fxLayout="column" fxLayoutGap="10px" class="pad10">
+  <div fxLayout="row">
+    <div fxFlex>
+      <app-custom-table [templateRef]="columnTemplateRef" (rowClickedEvent)="rowClicked($event)"
+          [actions]="premadeResponseActions.actions" (menuItemTrigger)="premadeResponseActions[$event.ACTION.NAME]($event.ROW_DATA);"
+          noRecordsMessage="{{'NO_PREMADE_RESPONSES_FOUND' | translate}}" (pageChangeEmit)="pageChangeEmit($event);customTableService.isLoading = true"
+          (sortData)="sortData();customTableService.isLoading = true">
+        <ng-template #columnTemplateRef let-element="element" let-col="col">
+          {{element[col.NAME]}}
+        </ng-template>
+      </app-custom-table>
+    </div>
+  </div>
+</div>
+-->

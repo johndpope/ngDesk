@@ -1,0 +1,64 @@
+.StripeElement {
+	margin: 1rem 0 1rem;
+	background-color: white;
+	padding: 8px 12px;
+	border-radius: 4px;
+	border: 1px solid transparent;
+	box-shadow: 0 1px 3px 0 #e6ebf1;
+	-webkit-transition: box-shadow 150ms ease;
+	transition: box-shadow 150ms ease;
+}
+
+.StripeElement--focus {
+	box-shadow: 0 1px 3px 0 #8196aa;
+}
+
+.StripeElement--invalid {
+	border-color: #ec4423;
+}
+
+.StripeElement--webkit-autofill {
+	background-color: #fefde5 !important;
+}
+
+form.checkout {
+	min-width: 500px;
+	max-width: 500px;
+	text-align: center;
+	border: 2px solid #eee;
+	border-radius: 8px;
+	padding: 1rem 2rem;
+	background: white;
+
+	font-family: monospace;
+	color: #000000;
+	font-size: 1.1rem;
+}
+
+form.checkout button {
+	padding: 0.5rem 1rem;
+	color: white;
+	background: coral;
+	border: none;
+	border-radius: 4px;
+	margin-top: 1rem;
+}
+
+.plan-overlay>li {
+	list-style-type: none;
+	padding: 8px 0;
+}
+
+.plan-overlay {
+	width: 200px;
+	border: solid 1px #ccc;
+	border-radius: 5px;
+	background: #fff;
+	text-align: center;
+	padding: 10px;
+	margin: 0;
+}
+
+.billEstimate {
+	color: #9E9E9E;
+}

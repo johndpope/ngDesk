@@ -1,0 +1,9 @@
+<form [formGroup]="conditionsForm">
+	<app-conditions [parentName]="'triggersComponent'" [conditions]="conditions" [passedInModule]="moduleId" [fields]="moduleFields">
+	</app-conditions>
+</form>
+
+<div fxLayoutAlign="end end" fxLayoutGap="10px">
+	<button mat-raised-button color="primary" (click)="saveData()">{{'SAVE' | translate}}</button>
+	<button mat-raised-button type="button" [mat-dialog-close]="'close'">{{'CANCEL' | translate}}</button>
+</div>

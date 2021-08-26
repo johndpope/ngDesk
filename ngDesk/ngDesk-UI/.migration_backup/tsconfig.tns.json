@@ -1,0 +1,33 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "ES2017",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "noEmitHelpers": true,
+    "noEmitOnError": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "lib": [
+      "es2018", "es2017", "dom", "es6"
+    ],
+    "paths": {
+      "@src/*": [
+        "src/*.tns.ts",
+        "src/*.ts"
+      ]
+    },
+    "plugins": [{
+      "transform": "@nativescript/webpack/transformers/ns-transform-native-classes",
+      "type": "raw"
+    }]
+  },
+  "files": [
+    "src/main.tns.ts"
+  ],
+  "exclude": [
+    "src/app/app.component.html",
+    "**/*.spec.ts"
+  ]
+}

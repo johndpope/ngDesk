@@ -1,0 +1,6 @@
+{
+	"REPLY_ABOVE": "Si prega di inserire la vostra risposta sopra di questa linea",
+	"UNAUTHORIZED_ERROR": "Invalid Credentials",
+	"INTERNAL_ERROR": "Errore del server",
+	"FILE_NOT_FOUND": "File does not exist"
+}

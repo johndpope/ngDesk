@@ -1,0 +1,328 @@
+{
+  "NAME": "Chat",
+  "DESCRIPTION": "Chat Channel",
+  "SOURCE_TYPE": "chat",
+  "TITLE": "COMPANY_SUBDOMAIN_REPLACE",
+  "SUBTITLE": "Chat with COMPANY_SUBDOMAIN_REPLACE support",
+  "FILE": "data:image/png;base64,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",
+  "HEADER_COLOR": "#3f51b5",
+  "HEADER_TEXT_COLOR": "#ffffff",
+  "SENDER_BUBBLE_COLOR": "#3f51b5",
+  "SENDER_TEXT_COLOR": "#ffffff",
+  "RECEIVER_BUBBLE_COLOR": "#f8f9f9",
+  "RECEIVER_TEXT_COLOR": "#000000",
+  "MODULE": "MODULE_ID",
+  "WORKFLOW": {
+    "TYPE": "CREATE_OR_UPDATE",
+    "NAME": "Default chat channel workfow",
+    "CONDITIONS": [],
+    "STAGES": [
+      {
+        "STAGE_ID": "f8f4520a-6780-a7d0-bb58-5438d031c6f6",
+        "CONDITIONS": [],
+        "NODES": [
+          {
+            "ID": "node-id-7592a496-af6d-8213-1123-42fc70d20b3b",
+            "TYPE": "Start",
+            "CONNECTIONS_TO": [
+              {
+                "TITLE": "START",
+                "FROM": "OUT",
+                "TO_NODE": "node-id-ecc63675-b6d1-41d0-98cf-226ec660af99"
+              }
+            ],
+            "NAME": "Start",
+            "_class": "com.ngdesk.workflow.dao.StartNode"
+          },
+          {
+            "CODE": "if(inputMessage.DATA_ID&&inputMessage.DATA_ID!=null){if(inputMessage.STATUS=='Browsing'||inputMessage.STATUS=='Offline'){if(inputMessage.START_CHAT){if(inputMessage.IS_BOT_ENABLED&&!inputMessage.PRECHAT_SURVEY_ENABLED){PROPOGATE_TO OUT-4}else{PROPOGATE_TO OUT-1}}else{PROPOGATE_TO OUT-2}}else if(inputMessage.STATUS=='Chatting'){if(inputMessage.META_DATA!=null&&inputMessage.META_DATA.IS_BEING_SERVED_BY_BOT){PROPOGATE_TO OUT-3}else{PROPOGATE_TO OUT-2}}}else{PROPOGATE_TO NO-MATCH}",
+            "ID": "node-id-ecc63675-b6d1-41d0-98cf-226ec660af99",
+            "TYPE": "Javascript",
+            "CONNECTIONS_TO": [
+              {
+                "TITLE": "IF NO CONDITION MATCHES",
+                "FROM": "NO-MATCH",
+                "TO_NODE": "node-id-11a5eb24-8168-11e9-bc42-526af7764f64"
+              },
+              {
+                "TITLE": "UPDATE STATUS",
+                "FROM": "OUT-1",
+                "TO_NODE": "node-id-1d2f578b-269c-4ffc-9e0f-bcea03d6ac00"
+              },
+              {
+                "TITLE": "UPDATE REQUESTOR",
+                "FROM": "OUT-2",
+                "TO_NODE": "node-id-f6b6f65e-c0b1-44f0-b064-84b4e670fd05"
+              },
+              {
+                "TITLE": "CHAT BOT",
+                "FROM": "OUT-3",
+                "TO_NODE": "node-id-6e05bda3-4c76-4504-95c5-bd95a9dfe679"
+              },
+              {
+                "TITLE": "UPDATE STATUS",
+                "FROM": "OUT-4",
+                "TO_NODE": "node-id-22409719-611d-4acf-b3cf-4e98bda1cfd6"
+              }
+            ],
+            "NAME": "Javascript 1",
+            "_class": "com.ngdesk.workflow.dao.JavascriptNode"
+          },
+          {
+            "MODULE": "MODULE_ID",
+            "FIELDS": [
+              {
+                "FIELD": "1e9db082-b23a-4840-b7ba-b8a5e755bfd5",
+                "VALUE": [
+                  "{{inputMessage.WIDGET_ID}}"
+                ]
+              },
+              {
+                "FIELD": "31ab05b2-071b-480c-8529-80f406be2366",
+                "VALUE": [
+                  "Browsing"
+                ]
+              },
+              {
+                "FIELD": "b4258f11-8ced-473b-adb9-8a4f2c8c1080",
+                "VALUE": [
+                  "{{inputMessage.IP_ADDRESS}}"
+                ]
+              },
+              {
+                "FIELD": "11a5d788-8168-11e9-bc42-526af7764f64",
+                "VALUE": [
+                  "{{inputMessage.USER_AGENT}}"
+                ]
+              },
+              {
+                "FIELD": "26fc37c0-b77d-46d2-a665-38c94288b771",
+                "VALUE": [
+                  "{{inputMessage.BROWSER}}"
+                ]
+              },
+              {
+                "FIELD": "11a5da1c-8168-11e9-bc42-526af7764f64",
+                "VALUE": [
+                  "{{inputMessage.URL}}"
+                ]
+              },
+              {
+                "FIELD": "27139cdf-d2d1-4cdf-a6fa-569d97498a17",
+                "VALUE": [
+                  "{{inputMessage.LOCATION}}"
+                ]
+              },
+              {
+                "FIELD": "11a5dc92-8168-11e9-bc42-526af7764f64",
+                "VALUE": [
+                  "{{inputMessage.PLATFORM}}"
+                ]
+              },
+              {
+                "FIELD": "e6529099-0a6e-4ea9-a0c0-43c7ff061abb",
+                "VALUE": [
+                  "{{inputMessage.DEVICE}}"
+                ]
+              },
+              {
+                "FIELD": "11a5ddbe-8168-11e9-bc42-526af7764f64",
+                "VALUE": [
+                  "{{inputMessage.HOST_NAME}}"
+                ]
+              },
+              {
+                "FIELD": "da26e0fa-7f57-4a60-b0d1-5bcd860c59f7",
+                "VALUE": [
+                  "{{inputMessage.SESSION_UUID}}"
+                ]
+              },
+              {
+                "FIELD": "cc861047-0ee9-49cb-8d33-67d53addbb49",
+                "VALUE": [
+                  "{{inputMessage.REFERRER}}"
+                ]
+              },
+              {
+                "FIELD": "4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
+                "VALUE": [
+                  "{{inputMessage.REQUESTOR}}"
+                ]
+              },
+              {
+                "FIELD": "0e1835cd-40eb-4114-8e6e-8ff2957d70a6",
+                "VALUE": [
+                  "{{inputMessage.COUNTRY}}"
+                ]
+              }
+            ],
+            "ID": "node-id-11a5eb24-8168-11e9-bc42-526af7764f64",
+            "TYPE": "CreateEntry",
+            "CONNECTIONS_TO": [],
+            "NAME": "Create Entry1",
+            "_class": "com.ngdesk.workflow.dao.CreateEntryNode"
+          },
+          {
+            "CODE": "if(inputMessage.START_CHAT){if(inputMessage.IS_BOT_ENABLED){PROPOGATE_TO OUT-1}else{PROPOGATE_TO NO-MATCH}}",
+            "ID": "node-id-0b19101c-ded9-47c9-af89-5ca32d24bdcd",
+            "TYPE": "Javascript",
+            "CONNECTIONS_TO": [
+              {
+                "TITLE": "IF NO CONDITION MATCHES",
+                "FROM": "NO-MATCH",
+                "TO_NODE": "node-id-66760596-ee2e-4518-b37b-890b69d986c3"
+              },
+              {
+                "TITLE": "UPDATE STATUS",
+                "FROM": "OUT-1",
+                "TO_NODE": "node-id-22409719-611d-4acf-b3cf-4e98bda1cfd6"
+              }
+            ],
+            "NAME": "Javascript 3",
+            "_class": "com.ngdesk.workflow.dao.JavascriptNode"
+          },
+          {
+            "MODULE": "MODULE_ID",
+            "ENTRY_ID": "{{inputMessage.DATA_ID}}",
+            "ID": "node-id-66760596-ee2e-4518-b37b-890b69d986c3",
+            "TYPE": "FindAgentAndAssign",
+            "CONNECTIONS_TO": [
+              {
+                "TITLE": "OUT 1",
+                "FROM": "OUT-1",
+                "TO_NODE": "node-id-c3e64c7e-b447-49f4-9ccd-284f8da33439"
+              }
+            ],
+            "NAME": "Find Agent And Assign",
+            "_class": "com.ngdesk.workflow.dao.FindAgentAndAssign"
+          },
+          {
+            "CODE": "if(inputMessage.AGENTS.length > 0){PROPOGATE_TO NO-MATCH}",
+            "ID": "node-id-c3e64c7e-b447-49f4-9ccd-284f8da33439",
+            "TYPE": "Javascript",
+            "CONNECTIONS_TO": [
+              {
+                "TITLE": "IF NO CONDITION MATCHES",
+                "FROM": "NO-MATCH",
+                "TO_NODE": "node-id-cd726547-a3b8-4ad6-bdff-08e141cb4c9e"
+              }
+            ],
+            "NAME": "Javascript 4",
+            "_class": "com.ngdesk.workflow.dao.JavascriptNode"
+          },
+          {
+            "MODULE": "MODULE_ID",
+            "ENTRY_ID": "{{inputMessage.DATA_ID}}",
+            "FIELDS": [
+              {
+                "FIELD": "08c272b5-3fd6-4d11-8410-c5caa89fb9a3",
+                "VALUE": [
+                  "{{inputMessage.AGENTS}}"
+                ]
+              },
+              {
+                "FIELD": "31ab05b2-071b-480c-8529-80f406be2366",
+                "VALUE": [
+                  "Chatting"
+                ]
+              }
+            ],
+            "ID": "node-id-cd726547-a3b8-4ad6-bdff-08e141cb4c9e",
+            "TYPE": "UpdateEntry",
+            "CONNECTIONS_TO": [],
+            "NAME": "Update Entry 4",
+            "_class": "com.ngdesk.workflow.dao.UpdateEntryNode"
+          },
+          {
+            "MODULE": "MODULE_ID",
+            "ENTRY_ID": "{{inputMessage.DATA_ID}}",
+            "FIELDS": [
+              {
+                "FIELD": "27139cdf-d2d1-4cdf-a6fa-569d97498a17",
+                "VALUE": [
+                  "{{inputMessage.LOCATION}}"
+                ]
+              }
+            ],
+            "ID": "node-id-f6b6f65e-c0b1-44f0-b064-84b4e670fd05",
+            "TYPE": "UpdateEntry",
+            "CONNECTIONS_TO": [],
+            "NAME": "Update Entry 5",
+            "_class": "com.ngdesk.workflow.dao.UpdateEntryNode"
+          },
+          {
+            "MODULE": "MODULE_ID",
+            "ENTRY_ID": "{{inputMessage.DATA_ID}}",
+            "FIELDS": [
+              {
+                "FIELD": "4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
+                "VALUE": [
+                  "{{inputMessage.REQUESTOR}}"
+                ]
+              }
+            ],
+            "ID": "node-id-1d2f578b-269c-4ffc-9e0f-bcea03d6ac00",
+            "TYPE": "UpdateEntry",
+            "CONNECTIONS_TO": [
+              {
+                "TITLE": "OUT 1",
+                "FROM": "OUT-1",
+                "TO_NODE": "node-id-0b19101c-ded9-47c9-af89-5ca32d24bdcd"
+              }
+            ],
+            "NAME": "Update Entry 6",
+            "_class": "com.ngdesk.workflow.dao.UpdateEntryNode"
+          },
+          {
+            "MODULE": "MODULE_ID",
+            "ENTRY_ID": "{{inputMessage.DATA_ID}}",
+            "FIELDS": [
+              {
+                "FIELD": "31ab05b2-071b-480c-8529-80f406be2366",
+                "VALUE": [
+                  "Chatting"
+                ]
+              }
+            ],
+            "ID": "node-id-22409719-611d-4acf-b3cf-4e98bda1cfd6",
+            "TYPE": "UpdateEntry",
+            "CONNECTIONS_TO": [
+              {
+                "TITLE": "OUT 1",
+                "FROM": "OUT-1",
+                "TO_NODE": "node-id-6e05bda3-4c76-4504-95c5-bd95a9dfe679"
+              }
+            ],
+            "NAME": "Update Entry 10",
+            "_class": "com.ngdesk.workflow.dao.UpdateEntryNode"
+          },
+          {
+            "TYPE": "End",
+            "ID": "node-id-1ca7669e-e2fb-48ba-aa4f-8fce388710a9",
+            "CONNECTIONS_TO": [],
+            "NAME": "End",
+            "CONDITIONS": [],
+            "_class": "com.ngdesk.workflow.dao.EndNode"
+          }
+        ]
+      }
+    ],
+    "ORDER": 0,
+    "_class": "com.ngdesk.workflow.dao.Workflow"
+  },
+  "SETTINGS": {
+    "BUSINESS_RULES": {
+      "TIMEZONE": "COMPANY_TIMEZONE",
+      "ACTIVE": false,
+      "RESTRICTION_TYPE": "",
+      "RESTRICTIONS": []
+    },
+    "ENABLE_FAQS": false,
+    "PRE_SURVEY_REQUIRED": false,
+    "BOT_SETTINGS": {
+      "BOT_ENABLED": false,
+      "CHAT_BOT": ""
+    }
+  },
+  "CHAT_PROMPTS": []
+}

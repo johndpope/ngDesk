@@ -1,0 +1,15 @@
+<!-- custom mat card navigate to different components -->
+<div class="mat-elevation-z2" [appHighlight]="{BACKGROUND: 'ghostWhite'}" fxLayout="column" style="border-radius: 5px;">
+	<div fxLayoutAlign="center center" class="custom-theme-offset-background-Color" style="height: 140px;">
+		<mat-icon fontSet="material-icons-outlined" style="transform: scale(2);">{{src}}</mat-icon>
+	</div>
+	<div fxFlex="50" fxLayoutAlign="start start" fxLayout="column" style="padding: 10px;" fxLayoutGap="5px">
+		<div class="mat-body-strong" style="font-size: 15px;">
+			{{name}}
+		</div>
+		<div class="mat-caption">
+			{{description}}
+		</div>
+	</div>
+</div>
+<!--  end of mat-card-->

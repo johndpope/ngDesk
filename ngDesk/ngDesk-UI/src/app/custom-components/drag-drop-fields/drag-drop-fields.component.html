@@ -1,0 +1,33 @@
+<!-- Drag and Drop -->
+<div cdkDropListGroup>
+	<div fxLayout="row">
+		<!-- AVAILABLE List of fields -->
+		<div class="columns-container" fxLayout="column">
+			<h2 class="mat-body light-grey-color" style="font-size: 18px;">{{'AVAILABLE' | translate}}</h2>
+
+			<div cdk-scrollable cdkDropList #columnAvailableList="cdkDropList" [cdkDropListData]="availableFields" class="dragColumn-list"
+				(cdkDropListDropped)="drop($event)">
+				<div class="columns-box mat-body" *ngFor="let availableField of availableFields" cdkDrag>
+					{{availableField.DISPLAY_LABEL}}</div>
+			</div>
+		</div>
+		<div fxFlex="5"></div>
+		<!-- SHOWN List of fields -->
+		<div class="columns-container" fxLayout="column">
+			<div fxLayout="column">
+				<h2 class="mat-body light-grey-color" style="font-size: 18px;">{{'SHOWN' | translate}}</h2>
+				<div fxLayout="column" cdk-scrollable cdkDropList #columnShowList="cdkDropList" [cdkDropListData]="shownColumns"
+					class="dropColumn-list" (cdkDropListDropped)="drop($event)">
+					<div class="columns-box mat-body" *ngFor="let shownColumn of shownColumns" cdkDrag>{{shownColumn.DISPLAY_LABEL}}
+					</div>
+				</div>
+			</div>
+			<!-- display message when Shown List is Empty -->
+			<div class="mat-body" cdkDropList #columnShowList="cdkDropList" [cdkDropListData]="shownColumns" (cdkDropListDropped)="drop($event)"
+				fxLayoutAlign="center center" fxFlex
+				style="background-color:#ececec;border: dashed;border-color:lightgrey;color:grey;border-radius: 4px;height:30px;">
+				{{'DRAG_COLUMN_HERE' | translate}}
+			</div>
+		</div>
+	</div>
+</div>

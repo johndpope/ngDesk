@@ -1,0 +1,1596 @@
+{
+	"NAME": "Patch",
+	"DESCRIPTION": "",
+	"SINGULAR_NAME": "Patch",
+	"PLURAL_NAME": "Patches",
+	"VALIDATIONS": [],
+	"FIELDS": [
+		{
+			"FIELD_ID": "15044d64-e3f6-4000-b12a-abb8ea418906",
+			"NAME": "DATE_CREATED",
+			"DISPLAY_LABEL": "Date Created",
+			"HELP_TEXT": "",
+			"DATA_TYPE": {
+				"DISPLAY": "Date/Time",
+				"BACKEND": "Date"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+		},
+		{
+			"FIELD_ID": "76aaee8a-294a-4bf1-8760-3a14efa745fe",
+			"NAME": "EFFECTIVE_TO",
+			"DISPLAY_LABEL": "Effective to",
+			"HELP_TEXT": "",
+			"DATA_TYPE": {
+				"DISPLAY": "Date/Time",
+				"BACKEND": "Date"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+		},
+		{
+			"FIELD_ID": "2219475d-0c31-4d94-9951-c9f6eaf30654",
+			"NAME": "DATA_ID",
+			"DISPLAY_LABEL": "Data ID",
+			"DEFAULT_VALUE": "",
+			"DATA_TYPE": {
+				"DISPLAY": "Text",
+				"BACKEND": "String"
+			},
+			"VISIBILITY": true,
+			"REQUIRED": false,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+		},
+		{
+			"FIELD_ID": "a9bb32e2-e709-4f34-8596-4ef35510cb75",
+			"NAME": "EFFECTIVE_FROM",
+			"DISPLAY_LABEL": "Effective from",
+			"HELP_TEXT": "",
+			"DATA_TYPE": {
+				"DISPLAY": "Date/Time",
+				"BACKEND": "Date"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+		},
+		{
+			"FIELD_ID": "9b63054f-139f-48ef-b1ae-29e4c5b270f5",
+			"NAME": "DATE_UPDATED",
+			"DISPLAY_LABEL": "Date Updated",
+			"HELP_TEXT": "",
+			"DATA_TYPE": {
+				"DISPLAY": "Date/Time",
+				"BACKEND": "Date"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+		},
+		{
+			"FIELD_ID": "11906a71-0b45-4e59-917c-0172df6ec360",
+			"NAME": "LAST_UPDATED_BY",
+			"DISPLAY_LABEL": "Last Updated by",
+			"RELATIONSHIP_TYPE": "Many to One",
+			"PRIMARY_DISPLAY_FIELD": "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+			"RELATIONSHIP_FIELD": "",
+			"MODULE": "USERS_MODULE_REPLACE",
+			"DATA_TYPE": {
+				"DISPLAY": "Relationship",
+				"BACKEND": "String"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+		},
+		{
+			"FIELD_ID": "71220976-6403-4016-919e-acff30ce1256",
+			"NAME": "CREATED_BY",
+			"DISPLAY_LABEL": "Created by",
+			"RELATIONSHIP_TYPE": "Many to One",
+			"PRIMARY_DISPLAY_FIELD": "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+			"RELATIONSHIP_FIELD": "",
+			"MODULE": "USERS_MODULE_REPLACE",
+			"DATA_TYPE": {
+				"DISPLAY": "Relationship",
+				"BACKEND": "String"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+		},
+		{
+			"FIELD_ID": "b6eef848-39e4-47e6-91d9-7f219d6eb07f",
+			"NAME": "TEAMS",
+			"DISPLAY_LABEL": "Teams",
+			"DEFAULT_VALUE": "GLOBAL_TEAM_REPLACE",
+			"RELATIONSHIP_TYPE": "Many to Many",
+			"PRIMARY_DISPLAY_FIELD": "b1c48961-43e0-4071-b30c-0f7be5daa7a9",
+			"RELATIONSHIP_FIELD": "",
+			"MODULE": "TEAMS_MODULE_REPLACE",
+			"DATA_TYPE": {
+				"DISPLAY": "Relationship",
+				"BACKEND": "Array"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": true,
+			"INTERNAL": true,
+			"NOT_EDITABLE": false,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+		},
+		{
+			"FIELD_ID": "f1041c25-c928-4d30-b2fb-9c843dbe9f95",
+			"NAME": "DELETED",
+			"DISPLAY_LABEL": "Deleted",
+			"DATA_TYPE": {
+				"DISPLAY": "Checkbox",
+				"BACKEND": "Boolean"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+		},
+		{
+			"FIELD_ID": "96bf35ea-dcb5-4183-8679-f27f776b92df",
+			"NAME": "SOURCE_TYPE",
+			"DISPLAY_LABEL": "Source Type",
+			"DEFAULT_VALUE": "web",
+			"DATA_TYPE": {
+				"DISPLAY": "Picklist",
+				"BACKEND": "String"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_VALUES": [
+				"chat",	
+				"email",	
+				"facebook",	
+				"forms",
+				"mobile",	
+				"sms",	
+				"twitter",	
+				"web",	
+				"whatsapp"
+			],
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+		},
+		{
+			"FIELD_ID": "a5accd94-cc42-4ba5-aaff-79ae5524bcb8",
+			"NAME": "CHANNEL",
+			"DISPLAY_LABEL": "Channel",
+			"DATA_TYPE": {
+				"DISPLAY": "Text",
+				"BACKEND": "String"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": true,
+			"NOT_EDITABLE": true,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+		},
+		{
+			"FIELD_ID": "a571463c-f3b7-4b6b-91ae-8bca81049910",
+			"NAME": "APPROVAL",
+			"DISPLAY_LABEL": "Approval",
+			"HELP_TEXT": "",
+			"DATA_TYPE": {
+				"DISPLAY": "Approval",
+				"BACKEND": "Approval"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": false,
+			"NOT_EDITABLE": false,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+		},
+		{
+			"FIELD_ID": "04bd14d7-f170-4b2d-be4e-25c7169c7861",
+			"NAME": "ID",
+			"DISPLAY_LABEL": "ID",
+			"HELP_TEXT": "",
+			"DEFAULT_VALUE": " ",
+			"DATA_TYPE": {
+				"DISPLAY": "Text",
+				"BACKEND": "String"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": true,
+			"INTERNAL": false,
+			"NOT_EDITABLE": false,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_VALUES": [],
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+		},
+		{
+			"FIELD_ID": "acba7abf-a9eb-4e4d-ad33-df1b10757169",
+			"NAME": "DESCRIPTION",
+			"DISPLAY_LABEL": "Description",
+			"HELP_TEXT": "",
+			"DEFAULT_VALUE": " ",
+			"DATA_TYPE": {
+				"DISPLAY": "Text",
+				"BACKEND": "String"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": true,
+			"INTERNAL": false,
+			"NOT_EDITABLE": false,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_VALUES": [],
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+		},
+		{
+			"FIELD_ID": "a1c99142-0691-4930-9e22-4d151d3b4831",
+			"NAME": "OS_VERSION",
+			"DISPLAY_LABEL": "OS Version",
+			"HELP_TEXT": "",
+			"DATA_TYPE": {
+				"DISPLAY": "Text",
+				"BACKEND": "String"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": false,
+			"NOT_EDITABLE": false,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_VALUES": [],
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+		},
+		{
+			"FIELD_ID": "d6f656e1-7415-41ca-91bd-6e958f6a4e08",
+			"NAME": "PLATFORM",
+			"DISPLAY_LABEL": "Platform",
+			"HELP_TEXT": "",
+			"DATA_TYPE": {
+				"DISPLAY": "Text",
+				"BACKEND": "String"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": false,
+			"NOT_EDITABLE": false,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_VALUES": [],
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+		},
+		{
+			"FIELD_ID": "cea934f3-a09a-468f-b0c0-2a7a2edc520c",
+			"NAME": "OS_NAME",
+			"DISPLAY_LABEL": "OS Name",
+			"HELP_TEXT": "",
+			"DATA_TYPE": {
+				"DISPLAY": "Text",
+				"BACKEND": "String"
+			},
+			"VISIBILITY": false,
+			"REQUIRED": false,
+			"INTERNAL": false,
+			"NOT_EDITABLE": false,
+			"MAX_SIZE": 0,
+			"AUTO_NUMBER_GENERATION": false,
+			"AUTO_NUMBER_STARTING_NUMBER": 0,
+			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
+			"PICKLIST_USE_FIRST_VALUE": false,
+			"PICKLIST_VALUES": [],
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+		},
+		{
+  			"FIELD_ID": "5eb4c1d8-fa76-4140-b1df-293fe0e4eafa",
+  			"NAME": "APPLY_PATCH",
+  			"DISPLAY_LABEL": "Apply Patch",
+  			"HELP_TEXT": "",
+ 			"DATA_TYPE": {
+   				 "DISPLAY": "Button",
+    				 "BACKEND": "Button"
+ 				      },
+ 			 "VISIBILITY": false,
+  			 "REQUIRED": false,
+  			 "INTERNAL": false,
+  			 "NOT_EDITABLE": false,
+  			 "MAX_SIZE": 0,
+  			 "WORKFLOW":"WORKFLOW_NOTIFY_PROBE_REPLACE",
+  			 "AUTO_NUMBER_GENERATION": false,
+  			 "AUTO_NUMBER_STARTING_NUMBER": 0,
+  			 "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+  			 "PICKLIST_USE_FIRST_VALUE": false,
+  			 "PICKLIST_VALUES": [],
+  			 "DATE_CREATED": "DATE_REPLACE",
+  			 "CREATED_BY": "CREATED_BY_REPLACE",
+  			 "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+   		},
+   		 {
+      			 "FIELD_ID": "e52b1cf5-ca1d-48bb-ace8-e290d447d188",
+     			 "NAME": "ASSET",
+     			 "DISPLAY_LABEL": "Asset",
+     			 "HELP_TEXT": "",
+     			 "RELATIONSHIP_TYPE": "Many to One",
+     			 "PRIMARY_DISPLAY_FIELD": "d55c0487-6ae7-4ff8-9d23-035af1786e88",
+     			 "MODULE": "ASSETS_MODULE_REPLACE",
+     			 "DATA_TYPE": {
+       			 "DISPLAY": "Relationship",
+       			 "BACKEND": "String"
+      					},
+     			 "VISIBILITY": false,
+     			 "REQUIRED": true,
+     			 "INTERNAL": false,
+     			 "NOT_EDITABLE": false,
+     			 "MAX_SIZE": 0,
+     			 "AUTO_NUMBER_GENERATION": false,
+     			 "AUTO_NUMBER_STARTING_NUMBER": 0,
+     			 "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+     			 "PICKLIST_USE_FIRST_VALUE": false,
+     			 "PICKLIST_VALUES": [],
+     			 "DATE_CREATED": "DATE_REPLACE",
+     			 "DATE_UPDATED": "DATE_REPLACE",
+     			 "CREATED_BY": "CREATED_BY_REPLACE",
+    			 "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "ec928c4f-f1f6-424d-b120-7e7747360ff2",
+      "NAME": "TIME_WINDOW",
+      "DISPLAY_LABEL": "Time Window",
+      "HELP_TEXT": "",
+      "DATA_TYPE": {
+        "DISPLAY": "Time Window",
+        "BACKEND": "Timestamp"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_VALUES": [],
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+     {
+      "FIELD_ID": "4024c953-87aa-4d4e-97ae-2a467b83db3a",
+      "NAME": "PDFS",
+      "DISPLAY_LABEL": "PDFS",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": null,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": [],
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": true,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "RELATIONSHIP_FIELD": null,
+      "FORMULA": null,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "DATA_TYPE": {
+        "DISPLAY": "PDF",
+        "BACKEND": "BLOB"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": "DATE_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "MESSAGES": null,
+      "INTERNAL": false,
+      "NOT_EDITABLE": true,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false,
+      "WORKFLOW": null,
+      "DATA_FILTER": null,
+      "AGGREGATION_TYPE": null,
+      "AGGREGATION_FIELD": null,
+      "AGGREGATION_RELATED_FIELD": null,
+      "INHERITANCE_MAPPING": null,
+      "UNIQUE": false,
+      "DATE_UPDATED": "DATE_REPLACE"
+     }
+	],
+	"WORKFLOWS":[
+	{
+  "MODULE_ID": "PATCH_MODULE_REPLACE",
+  "COMPANY_ID": "COMPANY_ID_REPLACE",
+  "TYPE": "CREATE_OR_UPDATE",
+  "NAME": "Notify Probe",
+  "DESCRIPTION": null,
+  "CONDITIONS": [],
+  "STAGES": [
+    {
+      "STAGE_ID": "23ba5f01-7072-8ce5-1b01-6e469b49ade5",
+      "NAME": "Default Stage",
+      "CONDITIONS": [],
+      "NODES": [
+        {
+          "TYPE": "Start",
+          "ID": "a255ccdb-3fc8-4639-be3b-18a04148807c",
+          "CONNECTIONS_TO": [
+            {
+              "TITLE": "t10.9973688551462145",
+              "FROM": "t20.8112731117802185",
+              "TO_NODE": "d8cd4235-5caa-4fc5-9b44-d00aa9c1a660",
+              "ON_ERROR": false
+            }
+          ],
+          "NAME": "Start",
+          "CONDITIONS": []
+        },
+        {
+          "TYPE": "End",
+          "ID": "1ca7669e-e2fb-48ba-aa4f-8fce388710a9",
+          "CONNECTIONS_TO": [],
+          "NAME": "End",
+          "CONDITIONS": []
+        },
+        {
+          "TYPE": "NotifyProbe",
+          "ID": "d8cd4235-5caa-4fc5-9b44-d00aa9c1a660",
+          "CONNECTIONS_TO": [
+            {
+              "TITLE": "t10.8276224001949615",
+              "FROM": "t20.24986578688490857",
+              "TO_NODE": "1ca7669e-e2fb-48ba-aa4f-8fce388710a9",
+              "ON_ERROR": false
+            }
+          ],
+          "NAME": "Notify Probe",
+          "CONDITIONS": [],
+          "ACTION": "INSTALL_PATCH",
+          "APPLICATION_NAME": "ngDesk-Patch-Probe",
+          "LOG_LEVEL": null,
+          "CONTROLLER":null
+        }
+      ]
+    }
+  ],
+  "ORDER": 0,
+  "DATE_CREATED": "DATE_REPLACE",
+  "DATE_UPDATED": "DATE_REPLACE",
+  "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+  "CREATED_BY": "CREATED_BY_REPLACE",
+  "RAPID_UI_PAYLOAD": "{\"cells\":[{\"type\":\"app.FlowchartStart\",\"size\":{\"width\":48,\"height\":48},\"ports\":{\"items\":[{\"group\":\"out\",\"id\":\"e4b63033-c7b2-4db8-b680-d18c37f24fe7\"}]},\"position\":{\"x\":24,\"y\":32},\"id\":\"a255ccdb-3fc8-4639-be3b-18a04148807c\",\"z\":1,\"attrs\":{\"label\":{\"text\":\"Start\"}}},{\"type\":\"app.FlowchartEnd\",\"size\":{\"width\":48,\"height\":48},\"ports\":{\"items\":[{\"group\":\"in\",\"id\":\"a8c6382b-0a22-4ad8-badb-7d72aafea97a\"}]},\"position\":{\"x\":24,\"y\":344},\"id\":\"1ca7669e-e2fb-48ba-aa4f-8fce388710a9\",\"z\":2,\"attrs\":{\"label\":{\"text\":\"End\"}}},{\"type\":\"app.NotifyProbe\",\"size\":{\"width\":368,\"height\":80},\"ports\":{\"items\":[{\"group\":\"in\",\"id\":\"4ea0588e-dc52-4eb6-973e-40e0000be2b5\"},{\"group\":\"out\",\"attrs\":{\"portLabel\":{\"text\":\"out\"}},\"id\":\"8817fda5-10c3-4766-8756-8babafc41418\"}]},\"position\":{\"x\":-192,\"y\":128},\"id\":\"d8cd4235-5caa-4fc5-9b44-d00aa9c1a660\",\"z\":3,\"attrs\":{\"body\":{\"stroke\":\"#E8E8E8\"},\"label\":{\"text\":\"Notify Probe\"},\"icon\":{\"xlinkHref\":\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjI0Ij48cGF0aCBkPSJNMCAwaDI0djI0SDB6IiBmaWxsPSJub25lIi8+PHBhdGggZD0iTTYgNmgxMnYxMkg2eiIvPjwvc3ZnPg==\"}}},{\"type\":\"app.Link\",\"labels\":[{\"attrs\":{\"labelText\":{\"text\":\"Connection\"}},\"position\":{\"distance\":0.25}}],\"source\":{\"id\":\"a255ccdb-3fc8-4639-be3b-18a04148807c\",\"magnet\":\"portBody\",\"port\":\"e4b63033-c7b2-4db8-b680-d18c37f24fe7\"},\"target\":{\"id\":\"d8cd4235-5caa-4fc5-9b44-d00aa9c1a660\",\"magnet\":\"portBody\",\"port\":\"4ea0588e-dc52-4eb6-973e-40e0000be2b5\"},\"id\":\"ea1e5ebf-e450-456d-96d9-8698d69126e6\",\"z\":4,\"attrs\":{}},{\"type\":\"app.Link\",\"labels\":[{\"attrs\":{\"labelText\":{\"text\":\"Connection\"}},\"position\":{\"distance\":0.25}}],\"source\":{\"id\":\"d8cd4235-5caa-4fc5-9b44-d00aa9c1a660\",\"magnet\":\"portBody\",\"port\":\"8817fda5-10c3-4766-8756-8babafc41418\"},\"target\":{\"id\":\"1ca7669e-e2fb-48ba-aa4f-8fce388710a9\",\"magnet\":\"portBody\",\"port\":\"a8c6382b-0a22-4ad8-badb-7d72aafea97a\"},\"id\":\"e1ff6a26-1b40-4fb8-ba1c-42480329ee82\",\"z\":5,\"attrs\":{}}]}"
+}
+	],
+	"LIST_LAYOUTS": [
+		{
+			"LAYOUT_ID": "fc8731fa-90d0-4851-98da-49ffe5937ab2",
+			"NAME": "All Patches",
+			"DESCRIPTION": "List layout for patch",
+			"ID": "",
+			"ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+			"IS_DEFAULT": true,
+			"ORDER_BY": {
+				"COLUMN": "15044d64-e3f6-4000-b12a-abb8ea418906",
+				"ORDER": "Asc"
+			},
+			"COLUMN_SHOW": {
+				"FIELDS": [
+					"cea934f3-a09a-468f-b0c0-2a7a2edc520c",
+					"15044d64-e3f6-4000-b12a-abb8ea418906",
+					"11906a71-0b45-4e59-917c-0172df6ec360",
+					"d6f656e1-7415-41ca-91bd-6e958f6a4e08",
+					"a1c99142-0691-4930-9e22-4d151d3b4831"
+				]
+			},
+			"CONDITIONS": [],
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+		},
+		{
+			"LAYOUT_ID": "171370bb-871b-4643-9db5-6147280512eb",
+			"NAME": "All patches",
+			"DESCRIPTION": "List layout for agent",
+			"ID": "",
+			"ROLE": "AGENT_ROLE_REPLACE",
+			"IS_DEFAULT": true,
+			"ORDER_BY": {
+				"COLUMN": "15044d64-e3f6-4000-b12a-abb8ea418906",
+				"ORDER": "Asc"
+			},
+			"COLUMN_SHOW": {
+				"FIELDS": [
+					"cea934f3-a09a-468f-b0c0-2a7a2edc520c",
+					"15044d64-e3f6-4000-b12a-abb8ea418906",
+					"11906a71-0b45-4e59-917c-0172df6ec360",
+					"d6f656e1-7415-41ca-91bd-6e958f6a4e08",
+					"a1c99142-0691-4930-9e22-4d151d3b4831"
+				]
+			},
+			"CONDITIONS": [],
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+		}
+	],
+	"CREATE_LAYOUTS": [
+		{
+			"LAYOUT_ID": "077c9c03-7eaf-48a3-9920-2aa8e869e1e4",
+			"NAME": "Create patch",
+			"DESCRIPTION": "create  patch for admin",
+			"PANELS": [
+				{
+					"SETTINGS": {
+						"COLLAPSABLE": false,
+						"ACTION": "",
+						"CONDITIONS": []
+					},
+					"ID": "PANEL_1",
+					"PANEL_NAME": "Patch details",
+					"GRIDS": [
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "cea934f3-a09a-468f-b0c0-2a7a2edc520c",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 50,
+								"FIELD_ID": "acba7abf-a9eb-4e4d-ad33-df1b10757169",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 0,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "04bd14d7-f170-4b2d-be4e-25c7169c7861",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "a1c99142-0691-4930-9e22-4d151d3b4831",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "d6f656e1-7415-41ca-91bd-6e958f6a4e08",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "e52b1cf5-ca1d-48bb-ace8-e290d447d188",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						]
+					],
+					"DISPLAY_TYPE": "Panel"
+				}
+			],
+			"TITLE_BAR": [],
+			"PREDEFINED_TEMPLATE": null,
+			"CUSTOM_LAYOUT": null,
+			"ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAYOUT_STYLE": "standard"
+		},
+		{
+			"LAYOUT_ID": "a935658b-7f4c-4da7-b1b5-22e364da8aa9",
+			"NAME": "Create Patch",
+			"DESCRIPTION": "Create layout for agent",
+			"PANELS": [
+				{
+					"SETTINGS": {
+						"COLLAPSABLE": false,
+						"ACTION": "",
+						"CONDITIONS": []
+					},
+					"ID": "PANEL_1",
+					"PANEL_NAME": "Patch details",
+					"GRIDS": [
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "cea934f3-a09a-468f-b0c0-2a7a2edc520c",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 50,
+								"FIELD_ID": "acba7abf-a9eb-4e4d-ad33-df1b10757169",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 0,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "04bd14d7-f170-4b2d-be4e-25c7169c7861",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "a1c99142-0691-4930-9e22-4d151d3b4831",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "d6f656e1-7415-41ca-91bd-6e958f6a4e08",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": false,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "e52b1cf5-ca1d-48bb-ace8-e290d447d188",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "04bd14d7-f170-4b2d-be4e-25c7169c7861",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						],
+						[
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							},
+							{
+								"IS_EMPTY": true,
+								"HEIGHT": 10,
+								"WIDTH": 25,
+								"FIELD_ID": "",
+								"SETTINGS": {
+									"ACTION": "",
+									"CONDITIONS": []
+								}
+							}
+						]
+					],
+					"DISPLAY_TYPE": "Panel"
+				}
+			],
+			"TITLE_BAR": [],
+			"PREDEFINED_TEMPLATE": null,
+			"CUSTOM_LAYOUT": null,
+			"ROLE": "AGENT_ROLE_REPLACE",
+			"DATE_CREATED": "DATE_REPLACE",
+			"DATE_UPDATED": "DATE_REPLACE",
+			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+			"CREATED_BY": "CREATED_BY_REPLACE",
+			"LAYOUT_STYLE": "standard"
+		}
+	],
+  "EDIT_LAYOUTS": [
+  			{
+      			"LAYOUT_ID": "03e7ea66-9061-4587-ab13-2bcebf205f66",
+      			"NAME": "Edit Patch",
+     			"DESCRIPTION": "Edit layout for agent",
+      			"PANELS": [
+        				{
+          				"SETTINGS": {
+            				"COLLAPSABLE": false,
+            				"ACTION": "",
+           		 		"CONDITIONS": []
+          					},
+          				"ID": "PANEL_1",
+          				"PANEL_NAME": "Patch details",
+          				"GRIDS": [
+            						[
+             					{
+                					 "IS_EMPTY": false,
+               					 "HEIGHT": 10,
+               					 "WIDTH": 25,
+               					 "FIELD_ID": "cea934f3-a09a-468f-b0c0-2a7a2edc520c",
+               					 "SETTINGS": {
+                 					 "ACTION": "",
+                 					 "CONDITIONS": []
+                					}
+             					},
+             					{
+               					 "IS_EMPTY": false,
+                					 "HEIGHT": 10,
+                					 "WIDTH": 75,
+               					 "FIELD_ID": "acba7abf-a9eb-4e4d-ad33-df1b10757169",
+               					 "SETTINGS": {
+                  					 "ACTION": "",
+                 					 "CONDITIONS": []
+               					 }
+             					 },
+             					 {
+               					  "IS_EMPTY": true,
+               					  "HEIGHT": 10,
+                					  "WIDTH": 0,
+               					  "FIELD_ID": "",
+               					  "SETTINGS": {
+                 					  "ACTION": "",
+                 				         "CONDITIONS": []
+                					}
+             					 },
+              					 {
+                					  "IS_EMPTY": true,
+                					  "HEIGHT": 10,
+                					  "WIDTH": 0,
+               					  "FIELD_ID": "",
+                    					  "SETTINGS": {
+                  					  "ACTION": "",
+                  					  "CONDITIONS": []
+                					}
+              					}
+           	 ],
+            	 [
+              					{
+                					 "IS_EMPTY": false,
+                					 "HEIGHT": 10,
+               					 "WIDTH": 25,
+               					 "FIELD_ID": "04bd14d7-f170-4b2d-be4e-25c7169c7861",
+               					 "SETTINGS": {
+                 					 "ACTION": "",
+                 					 "CONDITIONS": []
+                					}
+             					},
+              					{
+                					"IS_EMPTY": false,
+                					"HEIGHT": 10,
+                					"WIDTH": 25,
+                					"FIELD_ID": "a1c99142-0691-4930-9e22-4d151d3b4831",
+               					"SETTINGS": {
+                  					"ACTION": "",
+                  					"CONDITIONS": []
+                					}
+              					},
+             					{
+               					 "IS_EMPTY": false,
+                					 "HEIGHT": 10,
+                					 "WIDTH": 25,
+               					 "FIELD_ID": "d6f656e1-7415-41ca-91bd-6e958f6a4e08",
+               					 "SETTINGS": {
+                 					 "ACTION": "",
+                 					 "CONDITIONS": []
+                					}
+             					 },
+             					 {
+               					 "IS_EMPTY": false,
+                					 "HEIGHT": 10,
+                					 "WIDTH": 25,
+                					 "FIELD_ID": "e52b1cf5-ca1d-48bb-ace8-e290d447d188",
+               					 "SETTINGS": {
+                 					 "ACTION": "",
+                 					 "CONDITIONS": []
+               					 }
+              					}
+           	 			]
+          			],
+          		"DISPLAY_TYPE": "Panel"
+       	 }
+      ],
+      			"TITLE_BAR": [
+      			 {
+         			 "FIELD_ID": "5eb4c1d8-fa76-4140-b1df-293fe0e4eafa",
+         			 "SETTINGS": {
+            			 "ACTION": "",
+            			 "CONDITIONS": []
+        			  }
+        			  
+        			  }
+      			],
+      			"ROLE": "AGENT_ROLE_REPLACE",
+      			"LAYOUT_STYLE": "outline",
+      			"DATE_CREATED":"DATE_REPLACE",
+      			"DATE_UPDATED": "DATE_REPLACE",
+      			"CREATED_BY": "CREATED_BY_REPLACE",
+     			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    		},
+   		{
+      			"LAYOUT_ID": "6e44bbe5-fe4b-4536-ba7e-a6fb22d87320",
+      			"NAME": "Edit patch",
+      			"DESCRIPTION": "Edit layout for patch",
+      			"PANELS": [
+        				{
+          					"SETTINGS": {
+            					"COLLAPSABLE": false,
+            					"ACTION": "",
+            					"CONDITIONS": []
+         					 },
+          					"ID": "PANEL_1",
+          					"PANEL_NAME": "Patch details",
+          					"GRIDS": [
+           						 [
+              							{
+                						 "IS_EMPTY": false,
+               						 "HEIGHT": 10,
+               						 "WIDTH": 25,
+               						 "FIELD_ID": "cea934f3-a09a-468f-b0c0-2a7a2edc520c",
+               						 "SETTINGS": {
+                 						 "ACTION": "",
+                 						 "CONDITIONS": []
+               						 	}
+             							 },
+              							 {
+                						  "IS_EMPTY": false,
+                						  "HEIGHT": 10,
+              							  "WIDTH": 50,
+              							  "FIELD_ID": "acba7abf-a9eb-4e4d-ad33-df1b10757169",
+              							  "SETTINGS": {
+                						  "ACTION": "",
+                						  "CONDITIONS": []
+               							 }
+            							  },
+            							  {
+               						   "IS_EMPTY": true,
+               						   "HEIGHT": 10,
+               						   "WIDTH": 0,
+              							   "FIELD_ID": "",
+               						   "SETTINGS": {
+                 						   "ACTION": "",
+                						   "CONDITIONS": []
+              								  }
+            							  },
+            							  {
+                						   "IS_EMPTY": true,
+                						   "HEIGHT": 10,
+                						   "WIDTH": 25,
+               						   "FIELD_ID": "",
+              							   "SETTINGS": {
+                 						   "ACTION": "",
+                 						   "CONDITIONS": []
+               							 }
+            							  }
+           					 ],
+           					 [
+              							  {
+                						   "IS_EMPTY": false,
+                						   "HEIGHT": 10,
+                						   "WIDTH": 25,
+                						   "FIELD_ID": "04bd14d7-f170-4b2d-be4e-25c7169c7861",
+                						   "SETTINGS": {
+                 						   "ACTION": "",
+                 						   "CONDITIONS": []
+                							}
+            							  },
+             							  {
+                						   "IS_EMPTY": false,
+                						   "HEIGHT": 10,
+               						   "WIDTH": 25,
+               						   "FIELD_ID": "a1c99142-0691-4930-9e22-4d151d3b4831",
+               						   "SETTINGS": {
+                 						   "ACTION": "",
+                 						   "CONDITIONS": []
+                							}
+             							  },
+             							  {
+                						   "IS_EMPTY": false,
+               						   "HEIGHT": 10,
+              							   "WIDTH": 25,
+                						   "FIELD_ID": "d6f656e1-7415-41ca-91bd-6e958f6a4e08",
+               						   "SETTINGS": {
+                 						   "ACTION": "",
+                  						   "CONDITIONS": []
+                							}
+               						  },
+             							  {
+                						   "IS_EMPTY": false,
+                						   "HEIGHT": 10,
+                						   "WIDTH": 25,
+               						   "FIELD_ID": "e52b1cf5-ca1d-48bb-ace8-e290d447d188",
+               						   "SETTINGS": {
+                  						   "ACTION": "",
+                  						   "CONDITIONS": []
+              								  }
+              							  }
+           						 ]
+          					],
+          			"DISPLAY_TYPE": "Panel"
+      			  }
+      			],
+     				 "TITLE_BAR": [
+     				 {
+         			 "FIELD_ID": "5eb4c1d8-fa76-4140-b1df-293fe0e4eafa",
+         			 "SETTINGS": {
+            			 "ACTION": "",
+            			 "CONDITIONS": []
+        			  }
+        			}
+     				 ],
+     				 "PREDEFINED_TEMPLATE": null,
+     				 "CUSTOM_LAYOUT": null,
+      				"ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      				"DATE_CREATED":"DATE_REPLACE",
+      				"DATE_UPDATED":"DATE_REPLACE",
+      				"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      				"CREATED_BY": "CREATED_BY_REPLACE",
+      				"LAYOUT_STYLE": "outline"
+    }
+  ]
+,
+"LIST_MOBILE_LAYOUTS": [
+    {
+      "LAYOUT_ID": "0dc0d124-4559-45ad-b76b-e8cc5755b0a9",
+      "NAME": "All patches",
+      "DESCRIPTION": "Mobile list layout for patch",
+      "ID": "",
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "ORDER_BY": {
+        "COLUMN": "15044d64-e3f6-4000-b12a-abb8ea418906",
+        "ORDER": "Asc"
+      },
+      "FIELDS": [
+        "cea934f3-a09a-468f-b0c0-2a7a2edc520c",
+        "15044d64-e3f6-4000-b12a-abb8ea418906"
+      ],
+      "CONDITIONS": [],
+      "IS_DEFAULT": true,
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE"
+    },
+    {
+      "LAYOUT_ID": "5f17381c-a255-4ee9-860d-871f7c036ce4",
+      "NAME": "All Patches",
+      "DESCRIPTION": "Mobile list layout for patch",
+      "ID": "",
+      "ROLE": "AGENT_ROLE_REPLACE",
+      "ORDER_BY": {
+        "COLUMN": "15044d64-e3f6-4000-b12a-abb8ea418906",
+        "ORDER": "Asc"
+      },
+      "FIELDS": [
+        "cea934f3-a09a-468f-b0c0-2a7a2edc520c",
+        "15044d64-e3f6-4000-b12a-abb8ea418906"
+      ],
+      "CONDITIONS": [],
+      "IS_DEFAULT": true,
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE"
+    }
+  ],
+  "CREATE_MOBILE_LAYOUTS": [
+    {
+      "LAYOUT_ID": "603efee7-3892-4987-85d8-a4de96c716a1",
+      "NAME": "create patch",
+      "DESCRIPTION": "create mobile layout for agent",
+      "FIELDS": [
+        "04bd14d7-f170-4b2d-be4e-25c7169c7861",
+        "acba7abf-a9eb-4e4d-ad33-df1b10757169",
+        "cea934f3-a09a-468f-b0c0-2a7a2edc520c",
+        "a1c99142-0691-4930-9e22-4d151d3b4831",
+        "d6f656e1-7415-41ca-91bd-6e958f6a4e08",
+        "b6eef848-39e4-47e6-91d9-7f219d6eb07f"
+      ],
+      "ROLE": "AGENT_ROLE_REPLACE",
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE"
+    },
+    {
+      "LAYOUT_ID": "a80dad6b-1739-4b93-a124-bc78564d2fdd",
+      "NAME": "create patch",
+      "DESCRIPTION": "create mobile layout for admin",
+      "FIELDS": [
+        "cea934f3-a09a-468f-b0c0-2a7a2edc520c",
+        "acba7abf-a9eb-4e4d-ad33-df1b10757169",
+        "04bd14d7-f170-4b2d-be4e-25c7169c7861",
+        "a1c99142-0691-4930-9e22-4d151d3b4831",
+        "d6f656e1-7415-41ca-91bd-6e958f6a4e08",
+        "b6eef848-39e4-47e6-91d9-7f219d6eb07f"
+      ],
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE"
+    }
+  ],
+  "EDIT_MOBILE_LAYOUTS": [
+    {
+      "LAYOUT_ID": "16573234-6b1e-4723-b4dc-05eb1dc2b1ec",
+      "NAME": "Edit patch",
+      "DESCRIPTION": "Edit mobile layout for agent",
+      "FIELDS": [
+        "cea934f3-a09a-468f-b0c0-2a7a2edc520c",
+        "acba7abf-a9eb-4e4d-ad33-df1b10757169",
+        "04bd14d7-f170-4b2d-be4e-25c7169c7861",
+        "a1c99142-0691-4930-9e22-4d151d3b4831",
+        "d6f656e1-7415-41ca-91bd-6e958f6a4e08",
+        "b6eef848-39e4-47e6-91d9-7f219d6eb07f"
+      ],
+      "ROLE": "AGENT_ROLE_REPLACE",
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE"
+    },
+    {
+      "LAYOUT_ID": "585ed9e8-5e0e-40ad-ab5f-abf9c9dfcd4c",
+      "NAME": "Edit patch",
+      "DESCRIPTION": "Edit mobile layout for admin",
+      "FIELDS": [
+        "cea934f3-a09a-468f-b0c0-2a7a2edc520c",
+        "acba7abf-a9eb-4e4d-ad33-df1b10757169",
+        "04bd14d7-f170-4b2d-be4e-25c7169c7861",
+        "a1c99142-0691-4930-9e22-4d151d3b4831",
+        "d6f656e1-7415-41ca-91bd-6e958f6a4e08",
+        "b6eef848-39e4-47e6-91d9-7f219d6eb07f"
+      ],
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE"
+    }
+  ],
+	"DATE_CREATED": "DATE_REPLACE",
+	"DATE_UPDATED": "DATE_REPLACE",
+	"CREATED_BY": "CREATED_BY_REPLACE",
+	"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+	"_class": "com.ngdesk.company.module.dao.Module"
+}

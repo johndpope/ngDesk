@@ -1,0 +1,10 @@
+[
+  {
+    "ACCOUNT_NAME": "ACCOUNT_NAME_REPLACE",
+    "TEAMS": [
+      "GLOBAL_TEAM_TEPLACE"
+    ],
+    "DELETED": false,
+    "MODULE": "Accounts"
+  }
+]

@@ -1,0 +1,234 @@
+<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+<ng-template #headerTemplateRef>
+	<app-title-bar class="light-grey-color" title="{{ 'SERVICE_CATALOGUE' | translate }}" buttonText="{{'SAVE' | translate}}"
+		(buttonRightOnClick)="save()">
+	</app-title-bar>
+</ng-template>
+<div class="pad10">
+	<form [formGroup]="forms" fxLayoutGap=10px>
+		<div fxLayout="row" fxLayoutGap=10px>
+			<mat-form-field>
+				<input matInput placeholder="{{'NAME' | translate}}" formControlName="name" required>
+			</mat-form-field>
+			<mat-form-field fxFlex>
+				<input matInput placeholder="{{'DESCRIPTION' | translate}}" formControlName="description" value="">
+			</mat-form-field>
+		</div>
+		<div fxLayout="row">
+			<mat-form-field fxFlex=20>
+				<mat-label>{{'VISIBLE_TO' | translate}} *</mat-label>
+				<mat-chip-list #teamsChipList>
+					<mat-chip *ngFor="let team of visibleTo" [selectable]='true' [removable]=true (removed)="removeTeam(team)">
+						{{team.name}}
+						<mat-icon matChipRemove>cancel</mat-icon>
+					</mat-chip>
+					<input matInput [matAutocomplete]="autoTeams" formControlName="visibleTo" [matChipInputFor]="teamsChipList"
+						[matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="resetInput($event)" (keyup)="onSearch()">
+				</mat-chip-list>
+				<mat-autocomplete #autoTeams="matAutocomplete" (appAutocompleteScroll)="onScrollTeams();" (closed)="autocompleteClosed()"
+					(optionSelected)="addTeam($event);">
+					<mat-option *ngFor="let team of teamNames" [value]="team" [disabled]="disableSelectedValues(team)">
+						{{team.name}}
+					</mat-option>
+				</mat-autocomplete>
+			</mat-form-field>
+		</div>
+	</form>
+</div>
+<mat-tab-group *ngIf="!loading">
+	<mat-tab label="Form Builder">
+		<div fxLayout="row" fxLayoutGap="10px">
+			<div fxLayout="column" fxFlex="15">
+				<div class="scroll" style="position: sticky; top: 1vh; overflow-y: auto; max-height: 72vh;
+              margin-left: 5px; border: solid; border-color: #e0e0e0; background: white;">
+					<div style="width: 18vw; max-width: 100%; min-height: 50px; overflow: hidden;" *ngIf="module" cdkDropList
+						[cdkDropListConnectedTo]="this.dropList">
+						<div class="pad10 pointer" *ngFor="let field of module.FIELDS; let last = last;" cdkDrag id="{{field.FIELD_ID}}"
+							fxLayout="row" fxLayoutAlign=" center" [ngStyle]="{'border-bottom': last ? '' : '1px solid #9e9e9e'}"
+							style="padding: 12px 10px; box-sizing: border-box;cursor: move;">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+								<path fill="none" d="M0 0h24v24H0V0z" />
+								<path
+									d="M11 18c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zm-2-8c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 4c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
+							</svg>
+							<label class="mat-body pointer" style="cursor:move;vertical-align: super;">{{ field.DISPLAY_LABEL }}</label>
+							<div *cdkDragPreview class="pad10 pointer" [ngStyle]="{'border-bottom': '1px solid rgba(0,0,0,.12)'}">
+								<div class="mat-body">{{ field.DISPLAY_LABEL }}<span class='mat-caption'> ({{ field.DATA_TYPE.DISPLAY
+										}})</span></div>
+							</div>
+						</div>
+						<div class="pad10" fxLayout="row" *ngIf="module.FIELDS.length === 0 " fxLayoutAlign=" center"
+							style="padding: 12px 10px; box-sizing: border-box;">
+							<label class="mat-body pointer">{{ 'NO_FIELDS' | translate }}</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div fxFlex="85" fxLayout="column">
+				<div fxLayoutGap="5px"
+					style="padding:5px; border-top: 1px solid #BDBDBD; border-left: 1px solid #BDBDBD; border-bottom: 1px solid #BDBDBD;">
+					<mat-label [ngStyle]="{'height': '50px'}" class="mat-h1 no-margin-bottom" fxFlex fxLayoutAlign="start center">
+						{{forms.value.name}}
+					</mat-label>
+				</div>
+				<div *ngFor="let customLayout of customLayouts; let i = index"
+					style="border-top: 1px solid #BDBDBD; border-left: 1px solid #BDBDBD; border-bottom: 1px solid #BDBDBD;">
+					<div style="padding: 10px;padding-bottom: 10px;" fxLayout="row" fxLayoutAlign="space-between center">
+						<mat-form-field>
+							<input matInput placeholder="Panel name" [(ngModel)]="customLayout.panelDisplayName">
+						</mat-form-field>
+						<div fxLayout="row" fxLayoutGap="20px">
+							<div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
+								<mat-checkbox [(ngModel)]="customLayout.collapse">Collapsed?</mat-checkbox>
+								<button mat-icon-button style="border-radius: 20px;" *ngIf="i!==0" (click)="removeLayout(i)"
+									matTooltip="Remove Panel">
+									<mat-icon>close</mat-icon>
+								</button>
+							</div>
+						</div>
+					</div>
+					<app-dynamic [context]="this" [material-module]="dataMaterialModule" [template]="customLayout.customLayout">
+					</app-dynamic>
+					<div style="padding-bottom: 10px; margin: 0px 12px" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
+						<button mat-raised-button fxFlex fxLayoutAlign="center center" *ngIf="customLayout.grids.length < 21"
+							style="cursor: pointer; height: 5vh;" (click)="gridRow(customLayout.name, i, 1)">
+							<span class="icon-height">
+								<mat-icon style="vertical-align: middle;">add</mat-icon> Add row
+							</span>
+						</button>
+					</div>
+				</div>
+				<div style="margin: 12px;" fxLayoutAlign="center center">
+					<button mat-raised-button fxFlex fxLayoutAlign="center center" style="cursor: pointer; height: 5vh;"
+						(click)="newLayout()">
+						<div class="icon-height">
+							<mat-icon style="vertical-align: middle;">add</mat-icon> Add a new panel
+						</div>
+					</button>
+				</div>
+			</div>
+		</div>
+	</mat-tab>
+
+
+	<mat-tab label="Settings" fxFlex>
+		<div class="pad10" fxLayout="row" fxFlex="100">
+			<div fxLayout="column" fxFlex fxLayoutGap=25px>
+				<mat-accordion class="headers-align">
+					<mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)">
+						<mat-expansion-panel-header>
+							<mat-panel-title>
+								Workflow
+							</mat-panel-title>
+						</mat-expansion-panel-header>
+						<div fxLayout="row">
+							<mat-form-field fxFlex="25" floatLabel="always">
+								<input matInput [(ngModel)]="workflow" placeholder="{{'WORKFLOW' | translate}}"
+									[matAutocomplete]="infinite_workflow">
+								<mat-autocomplete #infinite_workflow="matAutocomplete" (appAutocompleteScroll)="onScrollWorkflow()"
+									[displayWith]="displayWorkflowName">
+									<mat-option *ngFor="let workflow of workflows" [value]="workflow">
+										{{workflow.NAME}}
+									</mat-option>
+								</mat-autocomplete>
+								<mat-hint>{{'WORKFLOW_HINT' | translate}}</mat-hint>
+							</mat-form-field>
+						</div>
+					</mat-expansion-panel>
+					<mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)">
+						<mat-expansion-panel-header>
+							<mat-panel-title>
+								Field Style
+							</mat-panel-title>
+						</mat-expansion-panel-header>
+						<div fxLayout="row">
+							<div fxLayout="column" fxLayoutGap=10px>
+								<label class="mat-body-strong">{{"FIELD_STYLE" | translate}}</label>
+								<mat-radio-group fxLayout="column" [(ngModel)]="layoutStyle">
+									<mat-radio-button class="example-radio-button" value="fill">
+										{{"FILL" | translate}}
+									</mat-radio-button>
+									<mat-radio-button class="example-radio-button" value="standard">
+										{{"STANDARD" | translate}}
+									</mat-radio-button>
+									<mat-radio-button class="example-radio-button" value="outline">
+										{{"OUTLINE" | translate}}
+									</mat-radio-button>
+								</mat-radio-group>
+							</div>
+							<div fxFlex style="width: 50px;" fxLayoutAlign="center center">
+								<mat-form-field appearance="outline" *ngIf="layoutStyle === 'outline'">
+									<mat-label>Preview</mat-label>
+									<input matInput type="text">
+								</mat-form-field>
+								<mat-form-field appearance="standard" *ngIf="layoutStyle === 'standard'">
+									<mat-label>Preview</mat-label>
+									<input matInput type="text">
+								</mat-form-field>
+								<mat-form-field appearance="fill" *ngIf="layoutStyle === 'fill'">
+									<mat-label>Preview</mat-label>
+									<input matInput type="text">
+								</mat-form-field>
+							</div>
+						</div>
+					</mat-expansion-panel>
+					<mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)">
+						<mat-expansion-panel-header>
+							<mat-panel-title>
+								Preview of catalogue icon
+							</mat-panel-title>
+						</mat-expansion-panel-header>
+						<div class="pad10" fxLayout="row" fxFlex="100">
+							<div fxLayout="column" fxLayoutGap=10px>
+								<button mat-raised-button fxLayoutAlign="center center" style="height:48px;border-radius: 5px;"
+									(click)="fileInput.click()">
+									<div fxLayout="row" style="height:48px;">
+										<div fxLayoutAlign="center center">
+											<label class="mat-h4" style="margin: 0px;cursor: pointer; font-weight:500;">Select Image</label>
+										</div>
+										<div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px"
+											[ngStyle]="{'font-size': '20px', 'font-weight':'500'}">
+											<mat-icon inline class="pointer">
+												attach_file</mat-icon>
+											<input accept="image/x-png, image/png, image/jpeg" hidden type="file" #fileInput
+												(change)="onFileChangeForGeneral($event)">
+										</div>
+
+									</div>
+								</button>
+							</div>
+							<div style="padding-top: 12px;padding-left: 10px;">
+								<mat-icon color="primary" matTooltip="{{'SELECT_IMAGE_HINT' | translate}}">help_outline</mat-icon>
+							</div>
+
+							<div fxFlex style="width: 50px;" fxLayoutAlign="center center">
+								<div style="width: 200px; cursor: pointer;">
+									<div class="mat-elevation-z2" [appHighlight]="{BACKGROUND: 'ghostWhite'}" fxLayout="column"
+										style="border-radius: 5px;">
+										<div fxLayoutAlign="center center" class="custom-theme-offset-background-Color"
+											style="height: 140px;">
+											<mat-icon *ngIf="!image">assignment</mat-icon>
+											<img *ngIf="image" width=140px height=140px [src]="image">
+										</div>
+										<div fxFlex="50" fxLayoutAlign="start start" fxLayout="column" style="padding: 10px;"
+											fxLayoutGap="5px">
+											<div class="mat-body-strong" style="font-size: 15px; word-break: break-word;">
+												{{forms.value.name}}
+											</div>
+											<div class="mat-caption" style="word-break: break-word; text-overflow: ellipsis;">
+												{{forms.value.description}}
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</mat-expansion-panel>
+				</mat-accordion>
+			</div>
+		</div>
+	</mat-tab>
+</mat-tab-group>
+<div fxLayoutAlign="center center" *ngIf="loading">
+	<mat-spinner></mat-spinner>
+</div>
