@@ -142,8 +142,6 @@ public class DataService {
 	Account account;
 
 	private final Logger log = LoggerFactory.getLogger(DataService.class);
-	private static String ACCOUNT_SID = "AC33f4c48eb80254d9949a76b1ef46ec01";
-	private static String AUTH_TOKEN = "544358a59ac3c0d9b15e75852883bffa";
 
 	@GetMapping("/modules/relationship/many/data")
 	public ResponseEntity<Object> getRelationData(HttpServletRequest request,

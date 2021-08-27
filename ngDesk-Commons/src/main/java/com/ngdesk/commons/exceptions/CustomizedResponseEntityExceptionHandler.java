@@ -44,9 +44,6 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 	@Value("${env}")
 	private String environment;
 
-	public String ACCOUNT_SID = "AC33f4c48eb80254d9949a76b1ef46ec01";
-	public String AUTH_TOKEN = "544358a59ac3c0d9b15e75852883bffa";
-
 	@Autowired
 	SendMail sendMail;
 
@@ -78,33 +75,6 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 			sendMail.send("phaneendra.ar@subscribeit.com", "error@ngdesk.com", subject, body);
 			sendMail.send("eanugula.charan@subscribeit.com", "error@ngdesk.com", subject, body);
 
-//			if (body.contains("Command failed with error 112")) {
-//				// Commented as per shashank
-//				try {
-//					
-//					Calendar calendar = Calendar.getInstance();
-//					Integer hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
-//					
-//					Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
-//					Call.creator(new PhoneNumber("+14692009202"), new PhoneNumber("+14695189179"),
-//							new URI("https://prod.ngdesk.com/ngdesk-rest/ngdesk/TwilioCall?text=" + URLEncoder.encode(
-//									"Command failed with error 112 (WriteConflict): 'WriteConflict error: this operation conflicted with another operation",
-//									"utf-8")))
-//							.setMethod(HttpMethod.GET).create();
-//					
-//					Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
-//					Call.creator(new PhoneNumber("+13126784446"), new PhoneNumber("+14695189179"),
-//							new URI("https://prod.ngdesk.com/ngdesk-rest/ngdesk/TwilioCall?text=" + URLEncoder.encode(
-//									"Command failed with error 112 (WriteConflict): 'WriteConflict error: this operation conflicted with another operation",
-//									"utf-8")))
-//							.setMethod(HttpMethod.GET).create();
-//					
-//				} catch (UnsupportedEncodingException e) {
-//					e.printStackTrace();
-//				} catch (URISyntaxException e) {
-//					e.printStackTrace();
-//				}
-//			}
 		}
 		return new ResponseEntity<Object>("Internal error, please contact support", HttpStatus.INTERNAL_SERVER_ERROR);
 	}

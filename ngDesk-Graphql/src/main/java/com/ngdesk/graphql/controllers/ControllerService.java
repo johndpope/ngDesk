@@ -65,7 +65,7 @@ public class ControllerService {
 
 	public void generateCsvForEntries(Map<String, Object> map, List<String> fieldNames, String fileName,
 			List<String> emailIds) {
-
+		
 		String companyId = authManager.getUserDetails().getCompanyId();
 		String subdomain = authManager.getUserDetails().getCompanySubdomain();
 
@@ -248,11 +248,10 @@ public class ControllerService {
 			String messageHTML = global.getFile("report_download_email.html");
 			messageHTML = messageHTML.replaceAll("REPORT_NAME", fileName);
 			messageHTML = messageHTML.replaceAll("LINK_REPLACE", link);
-
 			if (emailIds != null) {
-				for (int i = 0; i < emailIds.size(); i++) {
-					sendMail.send(emailIds.get(i), "support@" + subdomain + ".ngdesk.com",
-							"Download" + fileName + " Report", messageHTML);
+				for (String emailId : emailIds) {
+					sendMail.send(emailId, "support@" + subdomain + ".ngdesk.com", "Download" + fileName + " Report",
+							messageHTML);
 				}
 			} else {
 				String emailId = authManager.getUserDetails().getEmailAddress();

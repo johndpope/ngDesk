@@ -23,26 +23,29 @@ public class ScheduleJobForReportCsv {
 		File filesList[] = directoryPath.listFiles();
 		if (filesList != null) {
 			for (File file : filesList) {
+				if (file.getName().contains(".csv")) {
+					try {
+						BasicFileAttributes attr = Files.readAttributes(file.toPath(), BasicFileAttributes.class);
+						FileTime fileTime = attr.creationTime();
+						SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+						Date fileDateCreated = dateFormat.parse(dateFormat.format(fileTime.toMillis()));
 
-				try {
-					BasicFileAttributes attr = Files.readAttributes(file.toPath(), BasicFileAttributes.class);
-					FileTime fileTime = attr.creationTime();
-					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-					Date fileDateCreated = dateFormat.parse(dateFormat.format(fileTime.toMillis()));
+						Calendar calendar = Calendar.getInstance();
+						calendar.setTime(fileDateCreated);
+						calendar.add(Calendar.DATE, 1);
 
-					Calendar calendar = Calendar.getInstance();
-					calendar.setTime(fileDateCreated);
-					calendar.add(Calendar.DATE, 1);
+						if (calendar.getTime().before(new Date())) {
+							file.deleteOnExit();
+							if (file.delete()) {
+							}
+						}
 
-					if (calendar.getTime().before(new Date())) {
-						file.deleteOnExit();
+					} catch (IOException ex) {
+						ex.printStackTrace();
+
+					} catch (ParseException e) {
+						e.printStackTrace();
 					}
-
-				} catch (IOException ex) {
-					ex.printStackTrace();
-
-				} catch (ParseException e) {
-					e.printStackTrace();
 				}
 			}
 		}

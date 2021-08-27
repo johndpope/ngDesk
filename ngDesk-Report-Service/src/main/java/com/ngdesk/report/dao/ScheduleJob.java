@@ -66,7 +66,6 @@ public class ScheduleJob {
 	@Scheduled(cron = "0 0,30 * ? * *")
 	public void schedule() {
 		try {
-
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 			DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
 			Timestamp cronParseTime = new Timestamp(new Date().getTime()); // Get the current time up here so that even
@@ -97,93 +96,101 @@ public class ScheduleJob {
 							Module currentModule = modules.stream()
 									.filter(module -> module.getModuleId().equals(report.getModule())).findFirst()
 									.orElse(null);
+							if (currentModule != null) {
+								List<ReportField> reportFields = report.getFields();
 
-							List<ReportField> reportFields = report.getFields();
+								List<String> reportFieldNames = new ArrayList<String>();
+								List<String> fieldNamesWithOneToMany = new ArrayList<String>();
+								List<String> relatedFieldNames = new ArrayList<String>();
 
-							List<String> reportFieldNames = new ArrayList<String>();
-							List<String> fieldNamesWithOneToMany = new ArrayList<String>();
-							List<String> relatedFieldNames = new ArrayList<String>();
+								if (!reportFields.isEmpty()) {
 
-							for (ReportField reportField : reportFields) {
-								String[] arrayOfFieldIds = reportField.getFieldId().split("[.]");
+									for (ReportField reportField : reportFields) {
+										String[] arrayOfFieldIds = reportField.getFieldId().split("[.]");
 
-								ModuleField moduleField = currentModule.getFields().stream()
-										.filter(filter -> filter.getFieldId().equals(arrayOfFieldIds[0])).findFirst()
-										.orElse(null);
-								reportFieldNames.add(moduleField.getName());
-								reportFieldNames = reportFieldNames.stream().distinct().collect(Collectors.toList());
+										ModuleField moduleField = currentModule.getFields().stream()
+												.filter(filter -> filter.getFieldId().equals(arrayOfFieldIds[0]))
+												.findFirst().orElse(null);
+										reportFieldNames.add(moduleField.getName());
+										reportFieldNames = reportFieldNames.stream().distinct()
+												.collect(Collectors.toList());
 
-								if (moduleField.getDataType().getDisplay().equalsIgnoreCase("Relationship")
-										&& moduleField.getRelationshipType().equalsIgnoreCase("one to many")) {
+										if (moduleField.getDataType().getDisplay().equalsIgnoreCase("Relationship")
+												&& moduleField.getRelationshipType().equalsIgnoreCase("one to many")) {
 
-									ModuleField relatedModuleField = validateRelatedOneToManyField(moduleField,
-											arrayOfFieldIds, companyId);
+											ModuleField relatedModuleField = validateRelatedOneToManyField(moduleField,
+													arrayOfFieldIds, companyId);
 
-									relatedFieldNames.add(moduleField.getName() + "." + relatedModuleField.getName());
-									relatedFieldNames = relatedFieldNames.stream().distinct()
-											.collect(Collectors.toList());
+											relatedFieldNames
+													.add(moduleField.getName() + "." + relatedModuleField.getName());
+											relatedFieldNames = relatedFieldNames.stream().distinct()
+													.collect(Collectors.toList());
 
-									fieldNamesWithOneToMany
-											.add(moduleField.getName() + "." + relatedModuleField.getName());
-								} else {
-									fieldNamesWithOneToMany.add(moduleField.getName());
-								}
-
-							}
-							String userId = report.getCreatedBy();
-							if (userId != null) {
-								Map<String, Object> user = moduleEntryRepository.findById(userId, "Users_" + companyId)
-										.orElse(null);
-								if (user != null && report.getSchedules() != null) {
-									ReportSchedule schedules = report.getSchedules();
-									String cronExpression = schedules.getCron();
-
-									String timeZone = "UTC";
-
-									if (company.getTimezone() != null) {
-										// All the schdules are set in company time zone, UTC if absent
-										timeZone = company.getTimezone();
-									}
-
-									now = now.toInstant().atZone(ZoneId.of(timeZone)); // current time in company time
-																						// zone
-									// Day, Hour and Minute to be compared to the Schedule time
-									int currentDay = now.getDayOfMonth();
-									int currentHour = now.getHour();
-									int currentMinute = now.getMinute();
-									CronSequenceGenerator generator = new CronSequenceGenerator(cronExpression);
-									ZonedDateTime z = cronParseTime.toInstant().atZone(ZoneId.of(timeZone));
-									String cronTime = z.format(fmt);
-									Date cronparsedDate = dateFormat.parse(cronTime);
-									Date nextRunDate = generator.next(cronparsedDate);
-									LocalDateTime nextRun = LocalDateTime.ofInstant(nextRunDate.toInstant(),
-											ZoneId.systemDefault());
-									int scheduleDay = nextRun.getDayOfMonth();
-									int scheduleHour = nextRun.getHour();
-									int scheduleMinute = nextRun.getMinute();
-
-									// create a report only if the schedule matches the current time
-									if (scheduleDay == currentDay && scheduleHour == currentHour
-											&& scheduleMinute == currentMinute) {
-										String query = buildQuery(reportFieldNames, currentModule, modules,
-												relatedFieldNames, report);
-										List<RoleLayoutCondition> conditions = new ArrayList<RoleLayoutCondition>();
-										List<Filter> filters = report.getFilters();
-										for (Filter filter : filters) {
-											RoleLayoutCondition condition = new RoleLayoutCondition();
-											condition.setCondition(filter.getField().getFieldId());
-											condition.setConditionValue(filter.getValue());
-											condition.setOperator(filter.getOperator());
-											condition.setRequirementType(filter.getRequirementType());
-											conditions.add(condition);
+											fieldNamesWithOneToMany
+													.add(moduleField.getName() + "." + relatedModuleField.getName());
+										} else {
+											fieldNamesWithOneToMany.add(moduleField.getName());
 										}
 
-										ReportInput reportInput = new ReportInput(query, conditions,
-												report.getReportName(), fieldNamesWithOneToMany,
-												report.getSchedules().getEmails());
-										graphqlProxy.reportGenerate(reportInput, companyId,
-												user.get("USER_UUID").toString());
+									}
+									String userId = report.getCreatedBy();
+									if (userId != null) {
+										Map<String, Object> user = moduleEntryRepository
+												.findById(userId, "Users_" + companyId).orElse(null);
+										if (user != null && report.getSchedules() != null) {
+											ReportSchedule schedules = report.getSchedules();
+											String cronExpression = schedules.getCron();
 
+											String timeZone = "UTC";
+
+											if (company.getTimezone() != null) {
+												// All the schdules are set in company time zone, UTC if absent
+												timeZone = company.getTimezone();
+											}
+
+											now = now.toInstant().atZone(ZoneId.of(timeZone)); // current time in
+																								// company
+																								// time
+																								// zone
+											// Day, Hour and Minute to be compared to the Schedule time
+											int currentDay = now.getDayOfMonth();
+											int currentHour = now.getHour();
+											int currentMinute = now.getMinute();
+											CronSequenceGenerator generator = new CronSequenceGenerator(cronExpression);
+											ZonedDateTime z = cronParseTime.toInstant().atZone(ZoneId.of(timeZone));
+											String cronTime = z.format(fmt);
+											Date cronparsedDate = dateFormat.parse(cronTime);
+											Date nextRunDate = generator.next(cronparsedDate);
+											LocalDateTime nextRun = LocalDateTime.ofInstant(nextRunDate.toInstant(),
+													ZoneId.systemDefault());
+											int scheduleDay = nextRun.getDayOfMonth();
+											int scheduleHour = nextRun.getHour();
+											int scheduleMinute = nextRun.getMinute();
+
+											// create a report only if the schedule matches the current time
+											if (scheduleDay == currentDay && scheduleHour == currentHour
+													&& scheduleMinute == currentMinute) {
+												String query = buildQuery(reportFieldNames, currentModule, modules,
+														relatedFieldNames, report);
+												List<RoleLayoutCondition> conditions = new ArrayList<RoleLayoutCondition>();
+												List<Filter> filters = report.getFilters();
+												for (Filter filter : filters) {
+													RoleLayoutCondition condition = new RoleLayoutCondition();
+													condition.setCondition(filter.getField().getFieldId());
+													condition.setConditionValue(filter.getValue());
+													condition.setOperator(filter.getOperator());
+													condition.setRequirementType(filter.getRequirementType());
+													conditions.add(condition);
+												}
+												ReportInput reportInput = new ReportInput(query, conditions,
+														report.getReportName(), fieldNamesWithOneToMany,
+														report.getSchedules().getEmails());
+												graphqlProxy.reportGenerate(reportInput, companyId,
+														user.get("USER_UUID").toString());
+
+											}
+
+										}
 									}
 								}
 							}

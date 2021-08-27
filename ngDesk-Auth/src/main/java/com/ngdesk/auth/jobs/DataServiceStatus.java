@@ -22,8 +22,17 @@ import com.twilio.type.PhoneNumber;
 @Component
 public class DataServiceStatus {
 
-	public String ACCOUNT_SID = "AC33f4c48eb80254d9949a76b1ef46ec01";
-	public String AUTH_TOKEN = "544358a59ac3c0d9b15e75852883bffa";
+	@Value("${twillo.from.number}")
+	private String fromNumber;
+
+	@Value("${twillo.account.sid}")
+	private String ACCOUNT_SID;
+
+	@Value("${twillo.auth.token}")
+	private String AUTH_TOKEN;
+
+	@Value("${twillo.phonecall.conference.url}")
+	private String twilloCallUrl;
 
 	@Autowired
 	Global global;
@@ -43,14 +52,14 @@ public class DataServiceStatus {
 			if (environment.equals("prd")) {
 				try {
 					Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
-					Call.creator(new PhoneNumber("+14692009202"), new PhoneNumber("+14695189179"),
-							new URI("https://prod.ngdesk.com/ngdesk-rest/ngdesk/TwilioCall?text="
+					Call.creator(new PhoneNumber("+14692009202"), new PhoneNumber(fromNumber),
+							new URI(twilloCallUrl + "?text="
 									+ URLEncoder.encode("Data Service not responding, Restart required", "utf-8")))
 							.setMethod(HttpMethod.GET).create();
 
 					Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
-					Call.creator(new PhoneNumber("+13126784446"), new PhoneNumber("+14695189179"),
-							new URI("https://prod.ngdesk.com/ngdesk-rest/ngdesk/TwilioCall?text="
+					Call.creator(new PhoneNumber("+13126784446"), new PhoneNumber(fromNumber),
+							new URI(twilloCallUrl + "?text="
 									+ URLEncoder.encode("Data Service not responding, Restart required", "utf-8")))
 							.setMethod(HttpMethod.GET).create();
 				} catch (UnsupportedEncodingException e1) {
