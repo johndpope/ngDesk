@@ -1,5 +1,6 @@
-<!doctype html>  
+<!doctype html>
 <html lang="en">
+
 <head>
 	<meta charset="utf-8">
 	<title>ngDesk</title>
@@ -15,29 +16,32 @@
 	<script>
 		var script = document.createElement("script");
 		script.type = "text/javascript";
-		if (window.location.hostname === 'localhost') {
-			script.src = "https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBfDg5xsRqVQa4SUr-Tx-F_xky99EFU0SS";
-		} else {
-			script.src = "https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBkS3BdZl4vMwLVyO6fUAx0S72dFmdDyFU";
-		}
 		document.getElementsByTagName("head")[0].appendChild(script);
+
 	</script>
-	
+
 	<!-- Hotjar Tracking Code for ngdesk.com -->
-    <script>
-        (function(h,o,t,j,a,r){
-            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-            h._hjSettings={hjid:1516141,hjsv:6};
-            a=o.getElementsByTagName('head')[0];
-            r=o.createElement('script');r.async=1;
-            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-            a.appendChild(r);
-        })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-    </script>
-	
-	
-	
-	
+	<script>
+		(function (h, o, t, j, a, r) {
+			h.hj = h.hj || function () {
+				(h.hj.q = h.hj.q || []).push(arguments)
+			};
+			h._hjSettings = {
+				hjid: 1516141,
+				hjsv: 6
+			};
+			a = o.getElementsByTagName('head')[0];
+			r = o.createElement('script');
+			r.async = 1;
+			r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+			a.appendChild(r);
+		})(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
+
+	</script>
+
+
+
+
 </head>
 
 <body>
@@ -46,6 +50,7 @@
 	<!-- TODO: Make change when issue is fixed https://github.com/stomp-js/ng2-stompjs/issues/70 -->
 	<script type="application/javascript">
 		var global = window;
+
 	</script>
 
 	<script>
