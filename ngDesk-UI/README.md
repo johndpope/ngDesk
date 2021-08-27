@@ -1,4 +1,4 @@
-# ngDesk-UI 
+# ngDesk-UI
 
 Angular CLI: 12.0.4
 
@@ -6,19 +6,17 @@ Node: 14.17.1 or higher
 
 ## Getting started
 
-git clone https://gitlab.bluemsp.com/ngDesk/ngDesk-Angular.git  
-cd ngDesk-Angular  
+git clone the project  
+cd ngDesk-UI  
 npm install  
 ng serve
 
 ## IDE Setup
 
-Open Atom editor  
-Install "atom-beautify"  
+Open VS Code  
+Install "Beautify, Prettier-Code formatter"  
 In atom-beautify setting check "Beautify on save" for both HTML and Typescript and set the "Wrap attribute indent size" to 4 and the "Wrap line length" to 100
-Turn on format on save for HTML, Typescript and SCSS  
-Install "file-icons"  
-Install "linter-tslint"
+Turn on format on save for HTML, Typescript and SCSS
 
 ## Style Guide
 
@@ -30,7 +28,7 @@ Install "linter-tslint"
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `ng serve --port 8200` for a dev server. Navigate to `http://localhost/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 
@@ -55,4 +53,3 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
-
