@@ -1039,7 +1039,7 @@
 	"INVITE_TEAM": "Invite members to the team",
 	"INVITE_TEAM_MESSAGE": "Invite members to the team via email",
 	"GETTING_STARTED": "Getting Started",
-	"NOT_EDITABLE_FIELDS": "The field cannot be added to the sidebar as it is a not editable field",
+	"NOT_EDITABLE_FIELDS": "The field cannot be added as it is a not editable field",
 	"FIELD_ALREADY AVAILABLE": "Field which you are trying to drop is already present in the layout.",
 	"NO_MAPPING": "No Mapping",
 	"NO_CHAT_PROMPTS_FOUND": "No Chat Prompts Found",

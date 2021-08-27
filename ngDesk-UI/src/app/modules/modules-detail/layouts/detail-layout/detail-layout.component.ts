@@ -398,12 +398,12 @@ export class DetailLayoutComponent implements OnInit {
 											});
 											this.layoutStyle = data.LAYOUT_STYLE;
 											this.layout.role = data.ROLE;
-											if(data.PANELS){
-											data.PANELS.forEach((value) => {
-												this.loadNewGridAndView(value);
-												this.globalIndex++;
-											});
-										}
+											if (data.PANELS) {
+												data.PANELS.forEach((value) => {
+													this.loadNewGridAndView(value);
+													this.globalIndex++;
+												});
+											}
 											if (data.TITLE_BAR) {
 												const titleBar = data.TITLE_BAR.map((value) => {
 													return {
@@ -484,7 +484,10 @@ export class DetailLayoutComponent implements OnInit {
 	public drop(event: CdkDragDrop<string[]>, div: string) {
 		let hasSection = false;
 		const fieldId = event.item.element.nativeElement.id;
-		if (this.fieldsMap[fieldId].NOT_EDITABLE && div === 'SIDE_BAR') {
+		if (
+			this.fieldsMap[fieldId].NOT_EDITABLE &&
+			this.layoutType === 'edit_layouts'
+		) {
 			this.bannerMessageService.errorNotifications.push({
 				message: this.translateService.instant('NOT_EDITABLE_FIELDS'),
 			});
