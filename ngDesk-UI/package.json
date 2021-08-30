@@ -65,6 +65,7 @@
     "@types/googlemaps": "^3.38.1",
     "acorn": "^6.1.1",
     "angular-gridster2": "^8.4.2",
+    "angular-resizable-element": "^3.4.0",
     "angular2-uuid": "^1.1.1",
     "backbone": "1.4.0",
     "canvg-rappid": "1.0.3",

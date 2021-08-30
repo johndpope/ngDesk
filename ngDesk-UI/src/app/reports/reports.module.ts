@@ -20,6 +20,8 @@ import { ReportsRoutingModule } from './reports-routing.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ResizableModule } from 'angular-resizable-element';
 
 @NgModule({
 	declarations: [
@@ -45,6 +47,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 		MatTooltipModule,
 		MatProgressSpinnerModule,
 		MatExpansionModule,
+		DragDropModule,
+		ResizableModule,
 	],
 	// entryComponents: [ReportsDialogComponent],
 	providers: [ReportService],
