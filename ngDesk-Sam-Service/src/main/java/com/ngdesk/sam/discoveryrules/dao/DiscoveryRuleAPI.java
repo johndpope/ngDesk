@@ -40,14 +40,16 @@ public class DiscoveryRuleAPI {
 	@PageableAsQueryParam
 	public Page<DiscoveryRule> getDiscoveryRules(
 			@Parameter(description = "Pageable object to control pagination", required = true, hidden = true) Pageable pageable) {
-		return discoveryRuleRepository.findAll(pageable, "sam_discovery_rules");
+		return discoveryRuleRepository.findAllByCompanyId(pageable, "sam_discovery_rules",
+				authManager.getUserDetails().getCompanyId());
 	}
 
 	@GetMapping("/rule/{id}")
 	@Operation(summary = "Get by ID", description = "Gets the discovery rules based on ID")
 	public DiscoveryRule getDiscoveryRuleById(
 			@Parameter(description = "Discovery rule ID", required = true) @PathVariable("id") String id) {
-		Optional<DiscoveryRule> optional = discoveryRuleRepository.findById(id, "sam_discovery_rules");
+		Optional<DiscoveryRule> optional = discoveryRuleRepository.findByIdAndCompanyId(id,
+				authManager.getUserDetails().getCompanyId(), "sam_discovery_rules");
 		if (optional.isEmpty()) {
 			String vars[] = { "Discovery rule" };
 			throw new NotFoundException("DAO_NOT_FOUND", vars);
@@ -73,8 +75,8 @@ public class DiscoveryRuleAPI {
 	@Operation(summary = "Put Discovery rule", description = "Update a discovery rule")
 	public DiscoveryRule putDiscoveryRule(@Valid @RequestBody DiscoveryRule discoveryRule) {
 
-		Optional<DiscoveryRule> optional = discoveryRuleRepository.findById(discoveryRule.getId(),
-				"sam_discovery_rules");
+		Optional<DiscoveryRule> optional = discoveryRuleRepository.findByIdAndCompanyId(discoveryRule.getId(),
+				authManager.getUserDetails().getCompanyId(), "sam_discovery_rules");
 
 		if (optional.isEmpty()) {
 			String vars[] = { "Discovery rule" };
@@ -98,7 +100,8 @@ public class DiscoveryRuleAPI {
 	@Operation(summary = "Delete discovery rule", description = "Delete a discovery rule by ID")
 	public void deleteDiscoveryRule(
 			@Parameter(description = "Discovery rule ID", required = true) @PathVariable("id") String id) {
-		Optional<DiscoveryRule> optional = discoveryRuleRepository.findById(id, "sam_discovery_rules");
+		Optional<DiscoveryRule> optional = discoveryRuleRepository.findByIdAndCompanyId(id,
+				authManager.getUserDetails().getCompanyId(), "sam_discovery_rules");
 
 		if (optional.isEmpty()) {
 			String vars[] = { "Discovery rule" };
