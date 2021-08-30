@@ -8,7 +8,8 @@
 		<mat-card fxLayout="column" fxFlex="100" style="overflow: auto;">
 			<div fxLayout="row" fxLayoutAlign="start center">
 				<div fxFlex fxLayoutAlign="flex-start center">
-					<label class="mat-h3" [ngStyle]="{'margin-bottom':'0px'}">{{'MAX_CHATS_PER_AGENT' | translate}}</label>
+					<label class="mat-h3" [ngStyle]="{'margin-bottom':'0px'}">{{'MAX_CHATS_PER_AGENT' |
+						translate}}</label>
 				</div>
 				<div fxFlex fxLayoutAlign="flex-start center">
 					<mat-form-field fxFlex=40>
@@ -22,16 +23,28 @@
 			</div>
 			<div fxLayout="row" fxLayoutAlign="start center">
 				<div fxFlex fxLayoutAlign="flex-start center">
-					<label class="mat-h3" [ngStyle]="{'margin-bottom':'0px'}">{{'ROLES_WITH_CHAT' | translate}}</label>
+					<label class="mat-h3" [ngStyle]="{'margin-bottom':'0px'}">{{'TEAMS_WHO_CAN_CHAT' |
+						translate}}</label>
 				</div>
 				<div fxFlex fxLayoutAlign="flex-start center">
 					<mat-form-field style="width: 40%;">
-						<mat-select multiple formControlName="ROLES_WITH_CHAT">
-							<mat-option *ngFor="let role of roles" [value]="role">
-								{{role.NAME}}
+						<mat-select multiple formControlName="TEAMS_WHO_CAN_CHAT">
+							<mat-option *ngFor="let team of teams" [value]="team">
+								{{team.NAME}}
 							</mat-option>
 						</mat-select>
 					</mat-form-field>
+				</div>
+			</div>
+			<div fxLayout="row" fxLayoutAlign="start center">
+				<div fxFlex fxLayoutAlign="flex-start center">
+					<!-- <mat-checkbox [checked]="checked" color="primary" [(ngModel)]="chatBusinessRules.HAS_RESTRICTIONS"
+						(change)="toggleRestrictions($event,true)"> {{ 'BUSINESS_HOURS' | translate}}</mat-checkbox> -->
+					<!-- <label class="mat-body-strong pointer" (click)="toggleRestrictions($event,true)"
+						*ngIf="checked && hasRestriction">Edit</label> -->
+					<!-- <mat-icon class="light-grey-color" style="transform: scale(0.9);"
+						matTooltip="{{'RESTRICT_TO_BUSINESS_HOURS' | translate}}">
+						help_outline</mat-icon> -->
 				</div>
 			</div>
 		</mat-card>

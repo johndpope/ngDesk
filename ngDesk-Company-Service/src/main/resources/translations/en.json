@@ -59,5 +59,9 @@
 	"COMPANY_TIMEZONE":"Company Timezone",
 	"ROLE_REQUIRED_CHAT_SETTINGS": "Atleast one role is required",
 	"MAX_NUMBER_OF_AGENTS_PER_CHAT": "Maximum number of agents must be between 1 - 5",
-	"INVALID_ROLE_SELECTED": "Invalid role selected"
+	"INVALID_ROLE_SELECTED": "Invalid role selected",
+	"START_TIME_CANNOT_BE_NULL":"Start time cannot be null",
+	"END_TIME_CANNOT_BE_NULL":"End time cannot be null",
+	"NOT_VALID_WEEK_DAY":"Invalid week day, please select a valid day",
+	"INVALID_RESTRICTION_TYPE":"Invalid restriction type, please select valid restriction type"
 }

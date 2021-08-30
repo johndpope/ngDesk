@@ -2193,8 +2193,8 @@
 	"NO_TEMPLATES_FOUND_CLICK_HERE_TO_CREATE_NEW": "No templates found, click here to create new",
 	"CREATE_NEW_FIELD_OF_DATA_TYPE_FILE_UPLOAD_TO_STORE_SIGNED_PDF": "Create a new field of data type File Upload to store the Signed PDF",
 	"NO_ESCALATION_FOUND": "No Escalations Found, Click here to create new",
-	"ROLES_WITH_CHAT": "Roles that have chat",
 	"ATLEAST_ONE_ROLE": "Select atleast one role",
 	"SELECT_MAX_CHATS": "Select maximum number if chats per agents",
-	"SCHEDULES_USER_SEARCH": "Search is based on email address"
+	"SCHEDULES_USER_SEARCH": "Search is based on email address",
+	"TEAMS_WHO_CAN_CHAT":"Teams who can chat"
 }

@@ -52,28 +52,28 @@ public class CompanySettingsApi {
 		String companySubdomain = (String) chatSettings.getCompanySubdomain();
 		Optional<Company> optionalCompany = companyRepository.findByCompanySubdomain(companySubdomain);
 		Company company = optionalCompany.get();
-		company.setMaxChatPerAgent(chatSettings.getMaxChatsPerAgent());
-		if (chatSettings.getRolesWithChat() == null || chatSettings.getRolesWithChat().size() == 0) {
-			throw new BadRequestException("ROLE_REQUIRED_CHAT_SETTINGS", null);
-		}
-		if (chatSettings.getMaxChatsPerAgent() <= 0 || chatSettings.getMaxChatsPerAgent() > 5) {
-			throw new BadRequestException("MAX_NUMBER_OF_AGENTS_PER_CHAT", null);
-		}
-		List<Role> roles = rolesRepository.findAllRolesByCollectionName("roles_" + company.getCompanyId()).get();
-		List<String> roleIds = new ArrayList<String>();
-
-		for (Role role : roles) {
-			if (!role.getName().equals("Customers") && !role.getName().equals("SystemAdmin")) {
-				roleIds.add(role.getId());
-			}
-		}
-		for (String role : chatSettings.getRolesWithChat()) {
-			if (!roleIds.contains(role)) {
-				throw new BadRequestException("INVALID_ROLE_SELECTED", null);
-			}
-		}
-		company.setRolesWithChat(chatSettings.getRolesWithChat());
-		companyRepository.updateEntry(company, "companies");
+//		company.setMaxChatPerAgent(chatSettings.getMaxChatsPerAgent());
+//		if (chatSettings.getRolesWithChat() == null || chatSettings.getRolesWithChat().size() == 0) {
+//			throw new BadRequestException("ROLE_REQUIRED_CHAT_SETTINGS", null);
+//		}
+//		if (chatSettings.getMaxChatsPerAgent() <= 0 || chatSettings.getMaxChatsPerAgent() > 5) {
+//			throw new BadRequestException("MAX_NUMBER_OF_AGENTS_PER_CHAT", null);
+//		}
+//		List<Role> roles = rolesRepository.findAllRolesByCollectionName("roles_" + company.getCompanyId()).get();
+//		List<String> roleIds = new ArrayList<String>();
+//
+//		for (Role role : roles) {
+//			if (!role.getName().equals("Customers") && !role.getName().equals("SystemAdmin")) {
+//				roleIds.add(role.getId());
+//			}
+//		}
+//		for (String role : chatSettings.getRolesWithChat()) {
+//			if (!roleIds.contains(role)) {
+//				throw new BadRequestException("INVALID_ROLE_SELECTED", null);
+//			}
+//		}
+//		company.setRolesWithChat(chatSettings.getRolesWithChat());
+//		companyRepository.updateEntry(company, "companies");
 		return company;
 	}
 }
