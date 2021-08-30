@@ -37,21 +37,21 @@ public class DiscoveryRule {
 	@JsonProperty("HASH")
 	private String hash;
 
-	@Schema(description = "Rule type of the discovery rules", required = true, example = "Discovery rule")
+	@Schema(description = "Rule type of the discovery rules", required = true, example = "COMMAND|FILE")
 	@Field("RULE_TYPE")
 	@JsonProperty("RULE_TYPE")
 	@Pattern(regexp = "COMMAND|FILE", message = "INVALID_RULE_TYPE")
 	@CustomNotEmpty(message = "DAO_VARIABLE_REQUIRED", values = { "DISCOVERY_RULE_RULE_TYPE" })
 	private String ruleType;
 
-	@Schema(description = "Operating system of the discovery rules", required = true, example = "windows")
+	@Schema(description = "Operating system of the discovery rules", required = true, example = "Windows|Linux|Mac")
 	@Field("OS")
 	@JsonProperty("OS")
 	@Pattern(regexp = "Windows|Linux|Mac", message = "INVALID_OS_TYPE")
 	@CustomNotEmpty(message = "DAO_VARIABLE_REQUIRED", values = { "DISCOVERY_RULE_OS" })
 	private String os;
 
-	@Schema(description = "Distribution type of linux", required = false, example = "fedora, red hat, debian")
+	@Schema(description = "Distribution type of linux", required = false, example = "fedora|red hat|debian")
 	@Field("DISTRIBUTION_TYPE")
 	@JsonProperty("DISTRIBUTION_TYPE")
 	@Pattern(regexp = "fedora|red hat|debian", message = "INVALID_OS_TYPE")
