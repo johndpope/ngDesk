@@ -106,9 +106,6 @@ public class CompanyService {
 	@Value("${env}")
 	private String environment;
 
-	@Value("${spring.data.mongodb.host}")
-	private String mongoHost;
-
 	private final Logger log = LoggerFactory.getLogger(CompanyService.class);
 
 	@GetMapping("/health")
@@ -138,7 +135,7 @@ public class CompanyService {
 			e.printStackTrace();
 		}
 		return new ResponseEntity<>(
-				"I'm healthy, Mongodb Hostname is: " + mongoHost + " Redis is connected - mongo connect: "
+				"I'm healthy, Mongodb Hostname is: Redis is connected - mongo connect: "
 						+ (mongoEndTime - mongoStartTime) + " - redis connect: " + (redisEndTime - redisStartTime),
 				HttpStatus.OK);
 	}
