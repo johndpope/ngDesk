@@ -70,10 +70,10 @@ public class SmsChannelService {
 	@Autowired
 	private RoleService roleService;
 
-	@Value("${twilio.account.sid}")
+	@Value("${twillo.account.sid}")
 	private String ACCOUNT_SID;
 	
-	@Value("${twilio.account.authToken}")
+	@Value("${twillo.auth.token}")
 	private String AUTH_TOKEN;
 	
 	@Value("${email.host}")
