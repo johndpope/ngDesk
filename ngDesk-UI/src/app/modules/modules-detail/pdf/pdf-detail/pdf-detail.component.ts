@@ -59,21 +59,20 @@ export class PdfDetailComponent implements OnInit, OnDestroy {
 		this.pdfId = this.route.snapshot.params['pdfId'];
 		const signature = {
 			DISPLAY_LABEL: 'Signature',
-			NAME: 'SIGNATURE'
-		}
-		this.companyInfoSubscription = this.cacheService.companyInfoSubject.subscribe(
-			(dataStored) => {
+			NAME: 'SIGNATURE',
+		};
+		this.companyInfoSubscription =
+			this.cacheService.companyInfoSubject.subscribe((dataStored) => {
 				if (dataStored) {
 					this.modules = this.cacheService.companyData['MODULES'];
 					this.module = this.modules.find(
 						(data) => data.MODULE_ID === this.moduleId
-					);					
+					);
 					this.fields = JSON.parse(JSON.stringify(this.module.FIELDS));
 					this.fields.push(signature);
 					this.isLoading = false;
 				}
-			}
-		);
+			});
 		this.pdfForm = this.formBuilder.group({
 			TITLE: ['', Validators.required],
 			HTML_TEMPLATE: ['', Validators.required],
@@ -82,22 +81,24 @@ export class PdfDetailComponent implements OnInit, OnDestroy {
 		if (this.pdfId !== 'new') {
 			this.isLoading = true;
 			this.pdfForm.addControl('TEMPLATE_ID', new FormControl(''));
-			this.htmlTemplatenApiService.getTemplateById(this.moduleId, this.pdfId).subscribe(
-				(response: any) => {
-					this.isLoading = false;
-					this.pdfForm.setValue({
-						TITLE: response.TITLE,
-						HTML_TEMPLATE: response.HTML_TEMPLATE,
-						MODULE: response.MODULE,
-						TEMPLATE_ID: response.TEMPLATE_ID,
-					});
-				},
-				(error: any) => {
-					this.bannerMessageService.errorNotifications.push({
-						message: error.error.ERROR,
-					});
-				}
-			);
+			this.htmlTemplatenApiService
+				.getTemplateById(this.moduleId, this.pdfId)
+				.subscribe(
+					(response: any) => {
+						this.isLoading = false;
+						this.pdfForm.setValue({
+							TITLE: response.TITLE,
+							HTML_TEMPLATE: response.HTML_TEMPLATE,
+							MODULE: response.MODULE,
+							TEMPLATE_ID: response.TEMPLATE_ID,
+						});
+					},
+					(error: any) => {
+						this.bannerMessageService.errorNotifications.push({
+							message: error.error.ERROR,
+						});
+					}
+				);
 		}
 	}
 
@@ -118,9 +119,9 @@ export class PdfDetailComponent implements OnInit, OnDestroy {
 				);
 				const fields = module.FIELDS;
 				const response = fields.find(
-					(data) => data.FIELD_ID === field.PRIMARY_DISPLAY_FIELD
+					(data) => data.FIELD_ID === field.FIELD_ID
 				);
-				fieldVar = `${fieldVar}.${response.NAME}`;
+				fieldVar = `${fieldVar}`;
 				const newBody = `${bodyEnd[0]} {{inputMessage.${fieldVar}}}</body></html>`;
 				tinymce.activeEditor.setContent(newBody);
 				this.pdfForm.get('HTML_TEMPLATE').setValue(newBody);
@@ -146,21 +147,23 @@ export class PdfDetailComponent implements OnInit, OnDestroy {
 				if (!pdfObj.HTML_TEMPLATE.includes('</body></html>')) {
 					pdfObj.HTML_TEMPLATE = pdfObj.HTML_TEMPLATE + '</body></html>';
 				}
-				this.htmlTemplatenApiService.postTemplate(this.moduleId, pdfObj).subscribe(
-					(pdfResponse: any) => {
-						this.isSubmitting = false;
-						this.bannerMessageService.successNotifications.push({
-							message: this.translateService.instant('SAVED_SUCCESSFULLY'),
-						});
-						this.router.navigate([`modules/${this.moduleId}/pdf`]);
-					},
-					(error: any) => {
-						this.isSubmitting = false;
-						this.bannerMessageService.errorNotifications.push({
-							message: error.error.ERROR,
-						});
-					}
-				);
+				this.htmlTemplatenApiService
+					.postTemplate(this.moduleId, pdfObj)
+					.subscribe(
+						(pdfResponse: any) => {
+							this.isSubmitting = false;
+							this.bannerMessageService.successNotifications.push({
+								message: this.translateService.instant('SAVED_SUCCESSFULLY'),
+							});
+							this.router.navigate([`modules/${this.moduleId}/pdf`]);
+						},
+						(error: any) => {
+							this.isSubmitting = false;
+							this.bannerMessageService.errorNotifications.push({
+								message: error.error.ERROR,
+							});
+						}
+					);
 			} else {
 				if (!pdfObj.HTML_TEMPLATE.includes('</body></html>')) {
 					pdfObj.HTML_TEMPLATE = pdfObj.HTML_TEMPLATE + '</body></html>';
@@ -168,21 +171,23 @@ export class PdfDetailComponent implements OnInit, OnDestroy {
 				if (!pdfObj.HTML_TEMPLATE.includes('<html><body>')) {
 					pdfObj.HTML_TEMPLATE = '<html><body>' + pdfObj.HTML_TEMPLATE;
 				}
-				this.htmlTemplatenApiService.putTemplate(this.moduleId, pdfObj).subscribe(
-					(pdf: any) => {
-						this.isSubmitting = false;
-						this.bannerMessageService.successNotifications.push({
-							message: this.translateService.instant('UPDATED_SUCCESSFULLY'),
-						});
-						this.router.navigate([`modules/${this.moduleId}/pdf`]);
-					},
-					(error: any) => {
-						this.isSubmitting = false;
-						this.bannerMessageService.errorNotifications.push({
-							message: error.error.ERROR,
-						});
-					}
-				);
+				this.htmlTemplatenApiService
+					.putTemplate(this.moduleId, pdfObj)
+					.subscribe(
+						(pdf: any) => {
+							this.isSubmitting = false;
+							this.bannerMessageService.successNotifications.push({
+								message: this.translateService.instant('UPDATED_SUCCESSFULLY'),
+							});
+							this.router.navigate([`modules/${this.moduleId}/pdf`]);
+						},
+						(error: any) => {
+							this.isSubmitting = false;
+							this.bannerMessageService.errorNotifications.push({
+								message: error.error.ERROR,
+							});
+						}
+					);
 			}
 		}
 	}
