@@ -323,8 +323,14 @@ public class Validator {
 					try {
 						Date date = (Date) entry.get(fieldName);
 					} catch (ClassCastException e) {
-						e.printStackTrace();
-						throw new BadRequestException("BASE_TYPE_TIMESTAMP_INVALID", vars);
+						try {
+							Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+									.parse((String) entry.get(fieldName));
+
+						} catch (ParseException e1) {
+							e1.printStackTrace();
+							throw new BadRequestException("BASE_TYPE_TIMESTAMP_INVALID", vars);
+						}
 					}
 				} else if (displayDataType.equals("Picklist") && !isBlank(entry, fieldName)) {
 
