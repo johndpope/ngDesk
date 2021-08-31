@@ -139,7 +139,6 @@ public class ModuleService {
 			field.setLastUpdatedBy(authManager.getUserDetails().getUserId());
 			field.setDateCreated(new Date());
 			field.setDateUpdated(new Date());
-			System.out.println(field.getName());
 			if (field.getName().equalsIgnoreCase("Teams")) {
 				Optional<Map<String, Object>> optionalGlobalTeam = entryRepository.findEntryByName("NAME", "Global",
 						"Teams_" + authManager.getUserDetails().getCompanyId());
