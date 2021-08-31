@@ -240,7 +240,8 @@ export class ConditionsComponent implements OnInit {
 				// field.DATA_TYPE.DISPLAY !== 'Approval' &&
 				field.DATA_TYPE.DISPLAY !== 'File Upload' &&
 				field.DATA_TYPE.DISPLAY !== 'PDF' &&
-				field.DATA_TYPE.DISPLAY !== 'Password'
+				field.DATA_TYPE.DISPLAY !== 'Password' &&
+				field.RELATIONSHIP_TYPE !== 'One to Many'
 		);
 		if (this.parentName === 'dashboardsComponent') {
 			fields = fields.filter(
