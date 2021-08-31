@@ -123,8 +123,6 @@ public class ModuleService {
 	}
 
 	private List<ModuleField> initializeFields(List<ModuleField> fields) {
-		for (ModuleField fld : fields) {
-		}
 		String[] modulesToFind = { "Users", "Teams" };
 
 		Optional<List<Module>> optionalModules = moduleRepository.findAllModules(Arrays.asList(modulesToFind),
