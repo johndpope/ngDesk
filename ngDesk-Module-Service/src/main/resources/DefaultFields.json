@@ -1,21 +1,25 @@
 [
 	{
 		"DEFAULT_VALUE": null,
+		"DATE_CREATED": "DATE_CREATED_REPLACE",
 		"HELP_TEXT": "",
+		"DATE_UPDATED": "DATE_UPDATED_REPLACE",
+		"NAME": "DATE_CREATED",
 		"INTERNAL": true,
 		"DATA_TYPE": {
 			"DISPLAY": "Date/Time",
 			"BACKEND": "Timestamp"
 		},
 		"FIELD_ID": "15044d64-e3f6-4000-b12a-abb8ea418906",
-		"NAME": "DATE_CREATED",
 		"VISIBILITY": false,
 		"REQUIRED": false,
 		"DISPLAY_LABEL": "Date Created",
 		"NOT_EDITABLE": true
 	},
 	{
+	    "DATE_CREATED": "DATE_CREATED_REPLACE",
 		"FIELD_ID": "76aaee8a-294a-4bf1-8760-3a14efa745fe",
+		"DATE_UPDATED": "DATE_UPDATED_REPLACE",
 		"NAME": "EFFECTIVE_TO",
 		"DISPLAY_LABEL": "Effective to",
 		"HELP_TEXT": "",
@@ -31,6 +35,8 @@
 	},
 	{
 		"DEFAULT_VALUE": "",
+		"DATE_CREATED": "DATE_CREATED_REPLACE",
+		"DATE_UPDATED": "DATE_UPDATED_REPLACE",
 		"INTERNAL": true,
 		"DATA_TYPE": {
 			"DISPLAY": "Text",
@@ -44,7 +50,9 @@
 		"DISPLAY_LABEL": "Data ID"
 	},
 	{
+	    "DATE_CREATED": "DATE_CREATED_REPLACE",
 		"FIELD_ID": "a9bb32e2-e709-4f34-8596-4ef35510cb75",
+		"DATE_UPDATED": "DATE_UPDATED_REPLACE",
 		"NAME": "EFFECTIVE_FROM",
 		"DISPLAY_LABEL": "Effective from",
 		"HELP_TEXT": "",
@@ -60,7 +68,9 @@
 	},
 	{
 		"DEFAULT_VALUE": null,
+		"DATE_CREATED": "DATE_CREATED_REPLACE",
 		"HELP_TEXT": "",
+		"DATE_UPDATED": "DATE_UPDATED_REPLACE",
 		"INTERNAL": true,
 		"DATA_TYPE": {
 			"DISPLAY": "Date/Time",
@@ -74,7 +84,9 @@
 		"NOT_EDITABLE": true
 	},
 	{
+	    "DATE_CREATED": "DATE_CREATED_REPLACE",
 		"FIELD_ID": "11906a71-0b45-4e59-917c-0172df6ec360",
+	    "DATE_UPDATED": "DATE_UPDATED_REPLACE",
 		"NAME": "LAST_UPDATED_BY",
 		"MODULE": "USER_MODULE_REPLACE",
 		"VISIBILITY": false,
@@ -91,7 +103,9 @@
 		"NOT_EDITABLE": true
 	},
 	{
+	    "DATE_CREATED": "DATE_CREATED_REPLACE",
 		"FIELD_ID": "71220976-6403-4016-919e-acff30ce1256",
+		"DATE_UPDATED": "DATE_UPDATED_REPLACE",
 		"NAME": "CREATED_BY",
 		"MODULE": "USER_MODULE_REPLACE",
 		"VISIBILITY": false,
@@ -115,7 +129,9 @@
 			"BACKEND": "Array"
 		},
 		"RELATIONSHIP_TYPE": "Many to Many",
+		"DATE_CREATED": "DATE_CREATED_REPLACE",
 		"FIELD_ID": "b6eef848-39e4-47e6-91d9-7f219d6eb07f",
+		"DATE_UPDATED": "DATE_UPDATED_REPLACE",
 		"RELATIONSHIP_FIELD": "",
 		"NAME": "TEAMS",
 		"PRIMARY_DISPLAY_FIELD": "b1c48961-43e0-4071-b30c-0f7be5daa7a9",
@@ -132,12 +148,16 @@
 			"DISPLAY": "Checkbox",
 			"BACKEND": "Boolean"
 		},
+		"DATE_CREATED": "DATE_CREATED_REPLACE",
 		"FIELD_ID": "f1041c25-c928-4d30-b2fb-9c843dbe9f95",
+		"DATE_UPDATED": "DATE_UPDATED_REPLACE",
 		"REQUIRED": false
 	},
 	{
 		"DISPLAY_LABEL": "Source Type",
+		"DATE_CREATED": "DATE_CREATED_REPLACE",
 		"FIELD_ID": "96bf35ea-dcb5-4183-8679-f27f776b92df",
+		"DATE_UPDATED": "DATE_UPDATED_REPLACE",
 		"INTERNAL": true,
 		"REQUIRED": false,
 		"NOT_EDITABLE": true,
@@ -161,7 +181,9 @@
 	},
 	{
 		"DISPLAY_LABEL": "Channel",
+		"DATE_CREATED": "DATE_CREATED_REPLACE",
 		"FIELD_ID": "a5accd94-cc42-4ba5-aaff-79ae5524bcb8",
+		"DATE_UPDATED": "DATE_UPDATED_REPLACE",
 		"REQUIRED": false,
 		"INTERNAL": true,
 		"NOT_EDITABLE": true,
@@ -172,7 +194,25 @@
 		"NAME": "CHANNEL"
 	},
 	{
+
+		"NAME": "WORKFLOW_STAGES",
+		"INTERNAL": false,
+		"NOT_EDITABLE": false,
+		"DEFAULT_VALUE": "",
+		"DISPLAY_LABEL": "Workflow Stages",
+		"DATA_TYPE": {
+			"DISPLAY": "Workflow Stages",
+			"BACKEND": "Array"
+		},
+		"DATE_CREATED": "DATE_CREATED_REPLACE",
+		"FIELD_ID": "f1041c25-c928-4d30-b2fb-9c843db7df95",
+		"DATE_UPDATED": "DATE_UPDATED_REPLACE",
+		"REQUIRED": false
+	},
+	{
+	    "DATE_CREATED": "DATE_CREATED_REPLACE",
 		"FIELD_ID": "a571463c-f3b7-4b6b-91ae-8bca81049910",
+		"DATE_UPDATED": "DATE_UPDATED_REPLACE",
 		"NAME": "APPROVAL",
 		"DISPLAY_LABEL": "Approval",
 		"HELP_TEXT": "",
@@ -187,7 +227,9 @@
 		"NOT_EDITABLE": false
 	},
 	{
+	    "DATE_CREATED": "DATE_CREATED_REPLACE",
 		"FIELD_ID": "ec928c4f-f1f6-424d-b120-7e7747360ff2",
+		"DATE_UPDATED": "DATE_UPDATED_REPLACE",
 		"NAME": "TIME_WINDOW",
 		"DISPLAY_LABEL": "Time Window",
 		"HELP_TEXT": "",
@@ -215,5 +257,7 @@
 		"INTERNAL": false,
 		"NOT_EDITABLE": true
 	}
-	
+
 ]
+
+

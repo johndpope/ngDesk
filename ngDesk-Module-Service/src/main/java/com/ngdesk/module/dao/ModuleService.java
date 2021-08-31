@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import javax.websocket.SendResult;
 
@@ -101,8 +103,12 @@ public class ModuleService {
 	}
 
 	private List<ModuleField> getDefaultFields() {
+		Date todaysDate = new Date();
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 		try {
 			String fieldString = globals.getFile("DefaultFields.json");
+			fieldString = fieldString.replaceAll("DATE_CREATED_REPLACE", df.format(todaysDate));
+			fieldString = fieldString.replaceAll("DATE_UPDATED_REPLACE", df.format(todaysDate));
 			ObjectMapper mapper = new ObjectMapper();
 			List<ModuleField> fields = mapper.readValue(fieldString,
 					mapper.getTypeFactory().constructCollectionLikeType(List.class, ModuleField.class));
@@ -117,7 +123,8 @@ public class ModuleService {
 	}
 
 	private List<ModuleField> initializeFields(List<ModuleField> fields) {
-
+		for (ModuleField fld : fields) {
+		}
 		String[] modulesToFind = { "Users", "Teams" };
 
 		Optional<List<Module>> optionalModules = moduleRepository.findAllModules(Arrays.asList(modulesToFind),
@@ -134,6 +141,7 @@ public class ModuleService {
 			field.setLastUpdatedBy(authManager.getUserDetails().getUserId());
 			field.setDateCreated(new Date());
 			field.setDateUpdated(new Date());
+			System.out.println(field.getName());
 			if (field.getName().equalsIgnoreCase("Teams")) {
 				Optional<Map<String, Object>> optionalGlobalTeam = entryRepository.findEntryByName("NAME", "Global",
 						"Teams_" + authManager.getUserDetails().getCompanyId());
