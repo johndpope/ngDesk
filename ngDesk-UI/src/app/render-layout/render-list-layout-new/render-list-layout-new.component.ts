@@ -639,14 +639,12 @@ export class RenderListLayoutNewComponent implements OnInit, OnDestroy {
 		this.formatChronometerFields(entriesReponse);
 		const entry = entriesReponse;
 		for (let i = 0; i < entriesReponse.DATA.length; i++) {
-			if (entriesReponse.DATA[i].ROLE !== undefined) {
-				const roleId = entriesReponse.DATA[i].ROLE;
-				const role = this.allRoles.find((allRole) => {
-					return allRole.ROLE_ID === roleId;
-				});
-				if (role !== undefined) {
-					entriesReponse.DATA[i].ROLE = role.NAME;
-				}
+			const roleId = entriesReponse.DATA[i].ROLE;
+			const role = this.allRoles.find((allRole) => {
+				return allRole.ROLE_ID === roleId;
+			});
+			if (role !== undefined) {
+				entriesReponse.DATA[i].ROLE = role.NAME;
 			}
 		}
 
