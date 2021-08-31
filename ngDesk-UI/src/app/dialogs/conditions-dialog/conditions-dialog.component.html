@@ -1,9 +1,13 @@
 <form [formGroup]="conditionsForm">
-    <app-conditions [parentName]="parentComponent" [conditions]="conditions" [passedInModule]="moduleId" [fields]="moduleFields">
-    </app-conditions>
+	<app-conditions [parentName]="parentComponent" [conditions]="conditions" [passedInModule]="moduleId" [fields]="moduleFields">
+	</app-conditions>
 </form>
+<ng-container fxFlex fxLayoutAlign="center center" *ngIf="isLoading">
+	<mat-spinner>
+	</mat-spinner>
+</ng-container>
 
 <div fxLayoutAlign="end end" fxLayoutGap="10px">
-    <button mat-raised-button color="primary" (click)="saveData()">{{'SAVE' | translate}}</button>
-    <button mat-raised-button type="button" [mat-dialog-close]="'close'">{{'CANCEL' | translate}}</button>
+	<button mat-raised-button color="primary" (click)="saveData()">{{'SAVE' | translate}}</button>
+	<button mat-raised-button type="button" [mat-dialog-close]="'close'">{{'CANCEL' | translate}}</button>
 </div>
