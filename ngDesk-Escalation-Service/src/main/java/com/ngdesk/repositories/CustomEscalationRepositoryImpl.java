@@ -1,5 +1,6 @@
 package com.ngdesk.repositories;
 
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +19,23 @@ public class CustomEscalationRepositoryImpl implements CustomEscalationRepositor
 
 	@Override
 	public Optional<Escalation> findEscalationByName(String name, String collectionName) {
-		return Optional.ofNullable(mongoOperations.findOne(new Query(Criteria.where("NAME").is(name)), Escalation.class, collectionName));
+		return Optional.ofNullable(
+				mongoOperations.findOne(new Query(Criteria.where("NAME").is(name)), Escalation.class, collectionName));
 	}
 
 	@Override
-	public Optional<Escalation> findOtherEscalationsWithDuplicateName(String name, String escalationId, String collectionName) {
+	public Optional<Escalation> findOtherEscalationsWithDuplicateName(String name, String escalationId,
+			String collectionName) {
 		Criteria criteria = new Criteria();
 		criteria.andOperator(Criteria.where("NAME").is(name), Criteria.where("_id").ne(escalationId));
 		return Optional.ofNullable(mongoOperations.findOne(new Query(criteria), Escalation.class, collectionName));
+	}
+
+	@Override
+	public Optional<Map<String, Object>> validateById(String id, String collectionName) {
+
+		return Optional.ofNullable(
+				mongoOperations.findOne(new Query(Criteria.where("_id").is(id)), Map.class, collectionName));
 	}
 
 }

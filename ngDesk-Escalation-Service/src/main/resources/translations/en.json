@@ -26,5 +26,9 @@
 	"ESCALATION_ORDER":"Escalation order",
 	"ESCALATE_TO":"Escalate to",
 	"TOKENS_NOT_FOUND": "This user currently have no device tokens registered",
-	"NAME":"Name"
+	"NAME":"Name",
+	"INVALID_USER_ID":"Selected User is invalid, Please Enter valid User",
+	"INVALID_TEAM_ID":"Selected Team is invalid, Please enter valid Team",
+	"INVILID_SCHEDULE_ID":"Selected Schedule is invalid, Please enter valid Schedule"
+
 }
