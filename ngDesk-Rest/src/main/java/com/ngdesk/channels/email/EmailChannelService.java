@@ -447,8 +447,12 @@ public class EmailChannelService {
 			Document existingChannel = emailCollection.find(Filters.eq("EMAIL_ADDRESS", channel.getEmailAddress()))
 					.first();
 
-			if (existingChannel != null) {
-				throw new BadRequestException("EMAIL_ADDRESS_IN_USE");
+			if (existingChannel != null && channel.getType().equals("External")) {
+				throw new BadRequestException("EMAIL_ADDRESS_IN_EXTERNAL_USE");
+			}
+			
+			if (existingChannel != null && channel.getType().equals("Internal")) {
+				throw new BadRequestException("EMAIL_ADDRESS_IN_INTERNAL_USE");
 			}
 
 			MongoCollection<Document> globalCollection = mongoTemplate.getCollection("external_emails");
@@ -456,7 +460,7 @@ public class EmailChannelService {
 				Document globalDoc = globalCollection.find(Filters.eq("EMAIL_ADDRESS", channel.getEmailAddress()))
 						.first();
 				if (globalDoc != null) {
-					throw new BadRequestException("EMAIL_ADDRESS_IN_USE");
+					throw new BadRequestException("EMAIL_ADDRESS_IN_EXTERNAL_USE");
 				}
 			}
 			if (channel.getCreateMapping() == null) {
