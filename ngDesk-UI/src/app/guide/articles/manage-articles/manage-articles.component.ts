@@ -11,7 +11,7 @@ import { GuideService } from '../../guide.service';
 @Component({
 	selector: 'app-manage-articles',
 	templateUrl: './manage-articles.component.html',
-	styleUrls: ['./manage-articles.component.scss']
+	styleUrls: ['./manage-articles.component.scss'],
 })
 export class ManageArticlesComponent implements OnInit {
 	public dialogRef: MatDialogRef<ConfirmDialogComponent>;
@@ -19,8 +19,8 @@ export class ManageArticlesComponent implements OnInit {
 		actions: [
 			{ NAME: '', ICON: 'delete', PERMISSION_NAME: 'DELETE' },
 			{ NAME: '', ICON: 'layers', PERMISSION_NAME: 'PUBLISH' },
-			{ NAME: '', ICON: 'layers_clear', PERMISSION_NAME: 'UNPUBLISH' }
-		]
+			{ NAME: '', ICON: 'layers_clear', PERMISSION_NAME: 'UNPUBLISH' },
+		],
 	};
 	constructor(
 		private router: Router,
@@ -31,20 +31,20 @@ export class ManageArticlesComponent implements OnInit {
 		private dialog: MatDialog
 	) {
 		this.translateService.get('DELETE').subscribe((value: string) => {
-			this.articleActions[value] = article => {
+			this.articleActions[value] = (article) => {
 				this.deleteArticle(article);
 			};
 			this.articleActions.actions[0].NAME = value;
 		});
 		this.translateService.get('PUBLISH').subscribe((enableValue: string) => {
-			this.articleActions[enableValue] = article => {
+			this.articleActions[enableValue] = (article) => {
 				this.updateArticle(article, true);
 			};
 			this.articleActions.actions[1].NAME = enableValue;
 		});
 
 		this.translateService.get('UNPUBLISH').subscribe((disableValue: string) => {
-			this.articleActions[disableValue] = article => {
+			this.articleActions[disableValue] = (article) => {
 				this.updateArticle(article, false);
 			};
 			this.articleActions.actions[2].NAME = disableValue;
@@ -59,7 +59,7 @@ export class ManageArticlesComponent implements OnInit {
 			{ DISPLAY: this.translateService.instant('TITLE'), NAME: 'TITLE' },
 			{
 				DISPLAY: this.translateService.instant('DATE_CREATED'),
-				NAME: 'DATE_CREATED'
+				NAME: 'DATE_CREATED',
 			},
 			{ DISPLAY: this.translateService.instant('PUBLISH'), NAME: 'PUBLISH' }
 		);
@@ -68,7 +68,7 @@ export class ManageArticlesComponent implements OnInit {
 		columnsHeaders.push(this.translateService.instant('PUBLISH'));
 		columnsHeadersObj.push({
 			DISPLAY: this.translateService.instant('ACTION'),
-			NAME: 'ACTION'
+			NAME: 'ACTION',
 		});
 		columnsHeaders.push(this.translateService.instant('ACTION'));
 		this.customTableService.columnsHeaders = columnsHeaders;
@@ -80,7 +80,7 @@ export class ManageArticlesComponent implements OnInit {
 		this.customTableService.activeSort = {
 			ORDER_BY: 'asc',
 			SORT_BY: this.translateService.instant('TITLE'),
-			NAME: 'TITLE'
+			NAME: 'TITLE',
 		};
 		this.getArticles();
 	}
@@ -101,7 +101,7 @@ export class ManageArticlesComponent implements OnInit {
 				},
 				(error: any) => {
 					this.bannerMessageService.errorNotifications.push({
-						message: error.error.ERROR
+						message: error.error.ERROR,
 					});
 				}
 			);
@@ -111,9 +111,9 @@ export class ManageArticlesComponent implements OnInit {
 		let dialogMessage = '';
 		this.translateService
 			.get('ARE_YOU_SURE_YOU_WANT_TO_DELETE_THIS', {
-				value: this.translateService.instant('ARTICLE').toLowerCase()
+				value: this.translateService.instant('ARTICLE').toLowerCase(),
 			})
-			.subscribe(res => {
+			.subscribe((res) => {
 				dialogMessage = res;
 			});
 		const dialogRef = this.dialog.open(ConfirmDialogComponent, {
@@ -122,12 +122,12 @@ export class ManageArticlesComponent implements OnInit {
 				buttonText: this.translateService.instant('DELETE'),
 				closeDialog: this.translateService.instant('CANCEL'),
 				action: this.translateService.instant('DELETE'),
-				executebuttonColor: 'warn'
-			}
+				executebuttonColor: 'warn',
+			},
 		});
 
 		// EVENT AFTER MODAL DIALOG IS CLOSED
-		dialogRef.afterClosed().subscribe(result => {
+		dialogRef.afterClosed().subscribe((result) => {
 			if (result === this.translateService.instant('DELETE')) {
 				this.guideService.deleteArticle(article.ARTICLE_ID).subscribe(
 					(response: any) => {
@@ -135,7 +135,7 @@ export class ManageArticlesComponent implements OnInit {
 					},
 					(error: any) => {
 						this.bannerMessageService.errorNotifications.push({
-							message: error.error.ERROR
+							message: error.error.ERROR,
 						});
 					}
 				);
@@ -151,7 +151,7 @@ export class ManageArticlesComponent implements OnInit {
 			},
 			(error: any) => {
 				this.bannerMessageService.errorNotifications.push({
-					message: error.error.ERROR
+					message: error.error.ERROR,
 				});
 			}
 		);
@@ -169,13 +169,17 @@ export class ManageArticlesComponent implements OnInit {
 		this.router.navigate([`guide/articles/detail/new`]);
 	}
 
+	public redirectToGuide() {
+		this.router.navigate([`guide`]);
+	}
+
 	public rowClicked(rowData): void {
 		if (rowData.PUBLISH) {
 			this.router.navigate([
 				'guide',
 				'articles',
 				rowData.SECTION,
-				rowData.TITLE
+				rowData.TITLE,
 			]);
 		} else {
 			this.router.navigate([`guide/articles/detail/${rowData.ARTICLE_ID}`]);

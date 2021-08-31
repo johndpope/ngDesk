@@ -28,15 +28,15 @@ export class TitleBarComponent {
 	@Input() public disable = false;
 	@Input() public buttonColor = 'primary';
 
+	@Input() public buttonColor3 = 'primary';
 	@Input() public buttonText2: string;
+	@Input() public buttonText3: string;
 	@Input() public enableButton2 = false;
+	@Input() public enableButton3: false;
 	@Input() public buttonColor2 = 'primary';
 
-	@Input() public buttonText3: string;
-	@Input() public enableButton3 = false;
-	
 	constructor() {}
-	
+
 	public customEmit() {
 		this.buttonRightOnClick.emit('custom');
 	}

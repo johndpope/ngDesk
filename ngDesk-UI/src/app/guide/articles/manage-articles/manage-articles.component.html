@@ -1,23 +1,22 @@
 <app-toolbar [templateRef]="customTemplateRef"></app-toolbar>
 <ng-template #customTemplateRef>
-	<div fxLayoutAlign="flex-end center">
-		<button mat-raised-button color="primary" [routerLink]="['','guide']">{{'NGDESK_GUIDE' | translate}}</button>
-	</div>
-</ng-template>
-<div fxLayout="column" fxLayoutGap="10px" class="pad10">
-	<app-title-bar title="{{'MANAGE_ARTICLES' | translate}}" buttonText="{{'NEW' | translate}}" (buttonRightOnClick)="newArticle()">
+
+	<app-title-bar title="{{'MANAGE_ARTICLES' | translate}}" buttonText="{{'NEW' | translate}}" [enableButton3]="true"
+		buttonText3="{{'NGDESK_GUIDE' | translate}}" (buttonRightOnClick)="newArticle()" (buttonRightOnClick3)="redirectToGuide()">
 	</app-title-bar>
-	<div fxLayout="row">
-		<div fxFlex>
-			<app-custom-table [templateRef]="columnTemplateRef" noRecordsMessage="{{'NO_ARTICLES_FOUND' | translate}}"
-				[actions]="articleActions.actions" (menuItemTrigger)="articleActions[$event.ACTION.NAME]($event.ROW_DATA);"
-				(rowClickedEvent)="rowClicked($event)" (sortData)="sortData();customTableService.isLoading = true"
-				(pageChangeEmit)="pageChangeEmit($event);customTableService.isLoading = true">
-				<ng-template #columnTemplateRef let-element="element" let-col="col">
-					<span *ngIf="col.NAME === 'DATE_CREATED'">{{element[col.NAME] | dateFormat: 'medium'}}</span>
-					<span *ngIf="col.NAME !== 'DATE_CREATED'">{{element[col.NAME] | booleanToYesNo}}</span>
-				</ng-template>
-			</app-custom-table>
-		</div>
+</ng-template>
+
+<div fxLayout="column" fxLayoutGap="10px" class="pad10"></div>
+<div fxLayout="row">
+	<div fxFlex>
+		<app-custom-table [templateRef]="columnTemplateRef" noRecordsMessage="{{'NO_ARTICLES_FOUND' | translate}}"
+			[actions]="articleActions.actions" (menuItemTrigger)="articleActions[$event.ACTION.NAME]($event.ROW_DATA);"
+			(rowClickedEvent)="rowClicked($event)" (sortData)="sortData();customTableService.isLoading = true"
+			(pageChangeEmit)="pageChangeEmit($event);customTableService.isLoading = true">
+			<ng-template #columnTemplateRef let-element="element" let-col="col">
+				<span *ngIf="col.NAME === 'DATE_CREATED'">{{element[col.NAME] | dateFormat: 'medium'}}</span>
+				<span *ngIf="col.NAME !== 'DATE_CREATED'">{{element[col.NAME] | booleanToYesNo}}</span>
+			</ng-template>
+		</app-custom-table>
 	</div>
 </div>
