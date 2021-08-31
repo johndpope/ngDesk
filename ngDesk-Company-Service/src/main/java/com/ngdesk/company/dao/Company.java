@@ -248,6 +248,7 @@ public class Company {
 	@Schema(required = false, description = "chat settings")
 	@JsonProperty("CHAT_SETTINGS")
 	@Field("CHAT_SETTINGS")
+	@Valid
 	private ChatSettings chatSettings;
 
 	public Company() {
@@ -269,7 +270,7 @@ public class Company {
 			boolean wildcardEmails, String industry, String department, String size, String version, Tracking tracking,
 			boolean enableDocs, Themes theme, Referral referal, String landingPage, SignUpMessage signupMessage,
 			InviteMessage inviteMessage, ForgotPasswordMessage forgotPasswordMessage, String domain, int numberOfUsers,
-			boolean accountLevelAccess, int maxChatsPerAgent, UsageType usageType, ChatSettings chatSettings) {
+			boolean accountLevelAccess, int maxChatsPerAgent, UsageType usageType, @Valid ChatSettings chatSettings) {
 		super();
 		this.companyId = companyId;
 		this.companyName = companyName;

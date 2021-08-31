@@ -64,8 +64,13 @@
 	"END_TIME_CANNOT_BE_NULL":"End time cannot be null",
 	"NOT_VALID_WEEK_DAY":"Invalid week day, please select a valid day",
 	"INVALID_RESTRICTION_TYPE":"Invalid restriction type, please select valid restriction type",
-	"INVALID_TEAM":"The team which you have selected is in valid, please select the valid team",
+	"INVALID_TEAM":"The team which you have selected is invalid, please select the valid team",
 	"INVALID_TIMEZONE":"The timezone which you have selected is invalid please select the valid timezone",
 	"SUBDOMAIN_DOESNOT_EXISTS":"Company with the given subdomain does not exists, please provide valid subdomain",
-	"SUBDOMAIN_NOT_NULL":"Subdomain cannot be null"
+	"SUBDOMAIN_NOT_NULL":"Subdomain cannot be null",
+	"BUSINESS_RESTRICTIONS_REQUIRED" : "Please enter Business Restrictions and try again",
+    "RESTRICTION_TYPE_REQUIRED" : "Please enter restriction type of Business and try again",
+    "RESTRICTIONS_REQUIRED" : "Please enter restrictions of Business and try again",
+    "START_TIME_AND_END_TIME_REQUIRED" : "Please enter Start Time and End Time and try again",
+    "START_DAY_AND_END_DAY_REQUIRED" : "Please enter Start Day and End Day and try again"
 }

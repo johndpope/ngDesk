@@ -46,6 +46,8 @@ export class ChatGeneralSettingsComponent implements OnInit {
 	public timezones;
 	public maxChatsPerAgent = 0;
 	public selectedTeams = [];
+	public hasRestrictions = false;
+
 	constructor(
 		private translateService: TranslateService,
 		private formBuilder: FormBuilder,
@@ -84,8 +86,8 @@ export class ChatGeneralSettingsComponent implements OnInit {
 							MAX_CHATS_PER_AGENT: maxChatsPerAgent
 						  CHAT_SETTINGS: chatSettings {
 							TEAMS_WHO_CAN_CHAT: teamsWhoCanChat
+							HAS_RESTRICTIONS: hasRestrictions
 							CHAT_BUSINESS_RULES: chatBusinessRules {
-							  HAS_RESTRICTIONS: hasRestrictions
 							  RESTRICTION_TYPE: restrictionType
 							  CHAT_RESTRICTIONS: chatRestrictions {
 								START_TIME: startTime
@@ -118,8 +120,8 @@ export class ChatGeneralSettingsComponent implements OnInit {
 									this.selectedTeams = currentTeams;
 
 								}
-								if (response.COMPANY.CHAT_SETTINGS.CHAT_BUSINESS_RULES.HAS_RESTRICTIONS) {
-									console.log('ruless', response.COMPANY.CHAT_SETTINGS.CHAT_BUSINESS_RULES);
+								this.hasRestrictions=response.COMPANY.CHAT_SETTINGS.HAS_RESTRICTIONS;
+								if (this.hasRestrictions) {
 									let businessRules = response.COMPANY.CHAT_SETTINGS.CHAT_BUSINESS_RULES;
 									this.chatBusinessRules = businessRules;
 								}
@@ -137,10 +139,6 @@ export class ChatGeneralSettingsComponent implements OnInit {
 	}
 
 	public saveGeneralSettings() {
-		console.log('max chats', this.maxChatsPerAgent);
-		console.log('selected teams', this.selectedTeams);
-		console.log('business rules in save', this.chatBusinessRules);
-		console.log('timezone', this.timezone);
 		this.companySettings.COMPANY_SUBDOMAIN = this.usersService.getSubdomain();
 		this.companySettings.TIMEZONE = this.timezone;
 		this.companySettings.MAX_CHATS_PER_AGENT = this.maxChatsPerAgent;
@@ -149,9 +147,9 @@ export class ChatGeneralSettingsComponent implements OnInit {
 			teams.push(team.id);
 		});
 		this.companySettings.CHAT_SETTINGS.TEAMS_WHO_CAN_CHAT = teams;
+		this.companySettings.CHAT_SETTINGS.HAS_RESTRICTIONS=this.hasRestrictions;
 		this.companySettings.CHAT_SETTINGS.CHAT_BUSINESS_RULES = this.chatBusinessRules;
 		if (this.companySettings.CHAT_SETTINGS.TEAMS_WHO_CAN_CHAT.length !== 0 && this.companySettings.MAX_CHATS_PER_AGENT !== 0) {
-			console.log('before save',this.companySettings);
 			this.companySettingsApiService
 				.putChatSettings(this.companySettings)
 				.subscribe(
@@ -203,7 +201,7 @@ export class ChatGeneralSettingsComponent implements OnInit {
 		return this.httpClient.post(`${this.appGlobals.graphqlUrl}`, query);
 	}
 	public toggleRestrictions(event, editModal: boolean) {
-		if (this.chatBusinessRules['HAS_RESTRICTIONS']) {
+		if (this.hasRestrictions) {
 			if (this.chatBusinessRules['RESTRICTION_TYPE'] !== 'Week') {
 				this.chatBusinessRules['RESTRICTION_TYPE'] = 'Day';
 			}
@@ -211,18 +209,17 @@ export class ChatGeneralSettingsComponent implements OnInit {
 				width: '600px',
 				data: {
 					businessRuleValue: this.chatBusinessRules,
-					isRestrictedValue: this.chatBusinessRules['HAS_RESTRICTIONS'],
+					isRestrictedValue: this.hasRestrictions,
 				},
 				disableClose: true,
 			});
 
 			dialogRef.afterClosed().subscribe((result) => {
-				console.log('result', result);
 				if (result) {
 					this.chatBusinessRules = result.data.businessRuleValue;
-					this.chatBusinessRules['HAS_RESTRICTIONS'] = result.data.isRestrictedValue;
+					this.hasRestrictions = result.data.isRestrictedValue;
 				} else {
-					this.chatBusinessRules['HAS_RESTRICTIONS'] = false;
+					this.hasRestrictions = false;
 					this.chatBusinessRules['RESTRICTION_TYPE'] = null;
 				}
 			});

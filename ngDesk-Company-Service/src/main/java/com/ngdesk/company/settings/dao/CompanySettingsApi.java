@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -52,7 +54,7 @@ public class CompanySettingsApi {
 
 	@PutMapping("company/settings/chat-settings/")
 	@Operation(summary = "Put company's chat settings", description = "Put company's chat settings max chat settings and role access")
-	public Company putChatSettings(@RequestBody CompanySettings companySettings) {
+	public Company putChatSettings(@Valid @RequestBody CompanySettings companySettings) {
 
 		if (companySettings.getCompanySubdomain() != null) {
 			Optional<Company> optionalCompany = companyRepository
@@ -68,6 +70,7 @@ public class CompanySettingsApi {
 				if (companySettings.getChatSettings() != null) {
 					ChatSettings chatSettings = companySettings.getChatSettings();
 					companySettingsService.validateTeams(chatSettings, company);
+					companySettingsService.validRestrictions(chatSettings);
 					company.setChatSettings(chatSettings);
 				}
 				return companyRepository.updateEntry(company, "companies");

@@ -8,9 +8,6 @@ import com.ngdesk.graphql.chat.channel.dao.ChatRestriction;
 
 public class ChatBusinessRules {
 
-	@Field("HAS_RESTRICTIONS")
-	private boolean hasRestrictions;
-
 	@Field("RESTRICTION_TYPE")
 	private String restrictionType;
 
@@ -21,19 +18,10 @@ public class ChatBusinessRules {
 
 	}
 
-	public ChatBusinessRules(boolean hasRestrictions, String restrictionType, List<ChatRestriction> chatRestrictions) {
+	public ChatBusinessRules(String restrictionType, List<ChatRestriction> chatRestrictions) {
 		super();
-		this.hasRestrictions = hasRestrictions;
 		this.restrictionType = restrictionType;
 		this.chatRestrictions = chatRestrictions;
-	}
-
-	public boolean isHasRestrictions() {
-		return hasRestrictions;
-	}
-
-	public void setHasRestrictions(boolean hasRestrictions) {
-		this.hasRestrictions = hasRestrictions;
 	}
 
 	public String getRestrictionType() {

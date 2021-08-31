@@ -53,11 +53,11 @@
 			</div>
 			<div fxLayout="column" fxLayoutAlign="start start">
 				<div fxFlex fxLayoutGap="10px" fxLayoutAlign="flex-start center">
-					<mat-checkbox  color="primary" [(ngModel)]="chatBusinessRules['HAS_RESTRICTIONS']"
+					<mat-checkbox  color="primary" [(ngModel)]="hasRestrictions"
 						(ngModelChange)="toggleRestrictions($event,true)"> {{
 						'BUSINESS_HOURS' | translate}}</mat-checkbox>
 					<label class="mat-body-strong pointer" (click)="toggleRestrictions($event,true)"
-						*ngIf="chatBusinessRules['HAS_RESTRICTIONS']">Edit</label>
+						*ngIf="hasRestrictions">Edit</label>
 					<mat-icon class="light-grey-color" style="transform: scale(0.9);"
 						matTooltip="{{'RESTRICT_TO_BUSINESS_HOURS' | translate}}">
 						help_outline</mat-icon>

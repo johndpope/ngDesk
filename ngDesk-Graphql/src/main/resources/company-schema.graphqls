@@ -768,11 +768,11 @@ type Company{
 }
 type ChatSettings{
 	teamsWhoCanChat: [String]
+	hasRestrictions: Boolean
 	chatBusinessRules: ChatBusinessRules
 }
 
 type ChatBusinessRules{
- 	hasRestrictions: Boolean
 	restrictionType: String
  	chatRestrictions: [ChatRestriction]
 }

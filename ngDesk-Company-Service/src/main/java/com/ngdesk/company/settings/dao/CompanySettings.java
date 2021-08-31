@@ -1,5 +1,7 @@
 package com.ngdesk.company.settings.dao;
 
+import javax.validation.Valid;
+
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -35,6 +37,7 @@ public class CompanySettings {
 	@Field("CHAT_SETTINGS")
 	@Schema(description = "Chat settings", required = false)
 	@JsonProperty("CHAT_SETTINGS")
+	@Valid
 	private ChatSettings chatSettings;
 
 	CompanySettings() {
@@ -42,7 +45,7 @@ public class CompanySettings {
 	}
 
 	public CompanySettings(String companySubdomain, boolean accountLevelAccess, String timezone, int maxChatsPerAgent,
-			ChatSettings chatSettings) {
+			@Valid ChatSettings chatSettings) {
 		super();
 		this.companySubdomain = companySubdomain;
 		this.accountLevelAccess = accountLevelAccess;

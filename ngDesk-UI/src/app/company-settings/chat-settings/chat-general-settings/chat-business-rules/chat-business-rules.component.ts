@@ -64,7 +64,6 @@ export class ChatBusinessRulesComponent implements OnInit {
             }
 
         } else {
-            console.log('business rules', this.data.businessRuleValue);
             if (this.data.businessRuleValue.CHAT_RESTRICTIONS !== null && this.data.businessRuleValue.CHAT_RESTRICTIONS !== undefined && this.data.businessRuleValue.CHAT_RESTRICTIONS.length > 0) {
                 this.restrictionsSpecific = this.data.businessRuleValue.CHAT_RESTRICTIONS;
                 this.restrictionsDaily.push(
@@ -130,7 +129,6 @@ export class ChatBusinessRulesComponent implements OnInit {
     }
 
     public onNoClick(): void {
-        console.log('on no click', this.data.businessRuleValue.CHAT_RESTRICTIONS);
         if (this.data.businessRuleValue.CHAT_RESTRICTIONS === null || this.data.businessRuleValue.CHAT_RESTRICTIONS === undefined || this.data.businessRuleValue.CHAT_RESTRICTIONS.length === 0) {
             this.data.isRestrictedValue = false;
         } else {

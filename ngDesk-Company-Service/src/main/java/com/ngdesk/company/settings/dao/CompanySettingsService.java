@@ -42,7 +42,41 @@ public class CompanySettingsService {
 
 	public void validTimezone(String timezone) {
 		if (!Global.timezones.contains(timezone)) {
-			throw new BadRequestException("INVALID_TIMEZONE", null);
+			String values[] = { timezone };
+			throw new BadRequestException("INVALID_TIMEZONE", values);
+		}
+	}
+
+	public void validRestrictions(ChatSettings chatSettings) {
+		if (chatSettings.getHasRestrictions() != null && chatSettings.getHasRestrictions() == true) {
+			if (chatSettings.getChatBusinessRules() == null) {
+				throw new BadRequestException("BUSINESS_RESTRICTIONS_REQUIRED", null);
+			}
+			ChatBusinessRules businessRules = chatSettings.getChatBusinessRules();
+			if (businessRules.getRestrictionType() == null) {
+				throw new BadRequestException("RESTRICTION_TYPE_REQUIRED", null);
+			}
+			if (businessRules.getChatRestrictions() == null) {
+				throw new BadRequestException("RESTRICTIONS_REQUIRED", null);
+			}
+			String restrictionType = businessRules.getRestrictionType();
+			List<ChatRestrictions> chatRestrictions = businessRules.getChatRestrictions();
+			if (restrictionType.equalsIgnoreCase("Day")) {
+				for (ChatRestrictions restriction : chatRestrictions) {
+					if (restriction.getStartTime() == null || restriction.getEndTime() == null) {
+						throw new BadRequestException("START_TIME_AND_END_TIME_REQUIRED", null);
+					}
+				}
+			} else if (restrictionType.equalsIgnoreCase("Week")) {
+				for (ChatRestrictions restriction : chatRestrictions) {
+					if (restriction.getStartTime() == null || restriction.getEndTime() == null) {
+						throw new BadRequestException("START_TIME_AND_END_TIME_REQUIRED", null);
+					} else if (restriction.getStartDay() == null || restriction.getEndDay() == null) {
+						throw new BadRequestException("START_DAY_AND_END_DAY_REQUIRED", null);
+					}
+				}
+			}
+
 		}
 	}
 }
