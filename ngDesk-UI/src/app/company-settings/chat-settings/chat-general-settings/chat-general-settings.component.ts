@@ -17,6 +17,8 @@ import { LoaderService } from '@src/app/custom-components/loader/loader.service'
 import { Router } from '@angular/router';
 import { ModulesService } from '@src/app/modules/modules.service';
 import { MatDialog } from '@angular/material/dialog';
+import { ChatGeneralSettingsService } from './chat-general-settings.service';
+import { ChatBusinessRulesComponent } from './chat-business-rules/chat-business-rules.component';
 
 @Component({
 	selector: 'app-chat-general-settings',
@@ -26,17 +28,24 @@ import { MatDialog } from '@angular/material/dialog';
 export class ChatGeneralSettingsComponent implements OnInit {
 	public maxChatOptions = [1, 2, 3, 4, 5];
 	public teams = [];
-	public generalSettingsForm: FormGroup;
 	public subdomain: string;
 	public params = {
 		max_chats_per_agent: {},
 	};
-	public companySettings: CompanySettings = {};
+	public companySettings: CompanySettings = {
+		COMPANY_SUBDOMAIN: '',
+		MAX_CHATS_PER_AGENT: 0,
+		TIMEZONE: '',
+		CHAT_SETTINGS: {},
+
+	};
 	public teamsModule;
-	public checked = false;
+	public isRestricted = false;
 	public timezone = '';
 	public chatBusinessRules = {};
-	public hasRestriction = false;
+	public timezones;
+	public maxChatsPerAgent = 0;
+	public selectedTeams = [];
 	constructor(
 		private translateService: TranslateService,
 		private formBuilder: FormBuilder,
@@ -51,6 +60,7 @@ export class ChatGeneralSettingsComponent implements OnInit {
 		private loaderService: LoaderService,
 		private modulesService: ModulesService,
 		public dialog: MatDialog,
+		public chatGeneralSettingsService: ChatGeneralSettingsService,
 
 	) {
 		// needs to subscribe here to get the translation once the actual file is loaded
@@ -63,21 +73,17 @@ export class ChatGeneralSettingsComponent implements OnInit {
 	}
 
 	public ngOnInit() {
-		this.generalSettingsForm = this.formBuilder.group({
-			MAX_CHATS_PER_AGENT: [''],
-			TEAMS_WHO_CAN_CHAT: ['']
-		});
+		this.timezones = this.chatGeneralSettingsService.timeZones;
 		this.modulesService.getModuleByName('Teams').subscribe((response: any) => {
 			this.teamsModule = response;
 			this.getTeamsData(0, '', this.teamsModule)
 				.subscribe((teamResponse) => {
 					this.teams = teamResponse['DATA'];
-
 					const query = `{
 						COMPANY: getCompanyDetails {
+							MAX_CHATS_PER_AGENT: maxChatsPerAgent
 						  CHAT_SETTINGS: chatSettings {
 							TEAMS_WHO_CAN_CHAT: teamsWhoCanChat
-							MAX_CHATS_PER_AGENT: maxChatsPerAgent
 							CHAT_BUSINESS_RULES: chatBusinessRules {
 							  HAS_RESTRICTIONS: hasRestrictions
 							  RESTRICTION_TYPE: restrictionType
@@ -96,24 +102,27 @@ export class ChatGeneralSettingsComponent implements OnInit {
 					  `;
 					this.makeGraphQLCall(query).subscribe(
 						(response: any) => {
-							this.generalSettingsForm.controls['MAX_CHATS_PER_AGENT'].setValue(
-								response.COMPANY.CHAT_SETTINGS.MAX_CHATS_PER_AGENT
-							);
-							let teams = [];
-							if (response.COMPANY.CHAT_SETTINGS.TEAMS_WHO_CAN_CHAT !== null) {
-								response.COMPANY.CHAT_SETTINGS.TEAMS_WHO_CAN_CHAT.forEach((teamsWhoCanChat) => {
-									let currentTeam = this.teams.find(
-										(team) => team.ID === teamsWhoCanChat
-									);
-									teams.push(currentTeam);
-								});
-							}
-							this.generalSettingsForm.controls['TEAMS_WHO_CAN_CHAT'].setValue(teams);
 							this.timezone = response.COMPANY.TIMEZONE;
-							this.hasRestriction = response.COMPANY.CHAT_SETTINGS.CHAT_BUSINESS_RULES.HAS_RESTRICTIONS;
-							this.checked = response.COMPANY.CHAT_SETTINGS.CHAT_BUSINESS_RULES.HAS_RESTRICTIONS;
-							if (response.COMPANY.CHAT_SETTINGS.CHAT_BUSINESS_RULES.HAS_RESTRICTIONS) {
-								this.chatBusinessRules = response.COMPANY.CHAT_SETTINGS.CHAT_BUSINESS_RULES;
+							this.maxChatsPerAgent
+								= response.COMPANY.MAX_CHATS_PER_AGENT;
+							if (response.COMPANY.CHAT_SETTINGS !== undefined && response.COMPANY.CHAT_SETTINGS !== null) {
+								if (response.COMPANY.CHAT_SETTINGS.TEAMS_WHO_CAN_CHAT !== null) {
+									let currentTeams = [];
+
+									response.COMPANY.CHAT_SETTINGS.TEAMS_WHO_CAN_CHAT.forEach((teamsWhoCanChat) => {
+										let currentTeam = this.teams.find(
+											(team) => team.id === teamsWhoCanChat
+										);
+										currentTeams.push(currentTeam);
+									});
+									this.selectedTeams = currentTeams;
+
+								}
+								if (response.COMPANY.CHAT_SETTINGS.CHAT_BUSINESS_RULES.HAS_RESTRICTIONS) {
+									console.log('ruless', response.COMPANY.CHAT_SETTINGS.CHAT_BUSINESS_RULES);
+									let businessRules = response.COMPANY.CHAT_SETTINGS.CHAT_BUSINESS_RULES;
+									this.chatBusinessRules = businessRules;
+								}
 							}
 
 						},
@@ -128,49 +137,55 @@ export class ChatGeneralSettingsComponent implements OnInit {
 	}
 
 	public saveGeneralSettings() {
-		// this.companySettings.COMPANY_SUBDOMAIN = this.usersService.getSubdomain();
-		// this.companySettings.MAX_CHATS_PER_AGENT =
-		// 	this.generalSettingsForm.value.MAX_CHATS_PER_AGENT;
-		// let roles = [];
-		// this.generalSettingsForm.value.ROLES_WITH_CHAT.forEach((role) => {
-		// 	roles.push(role.ROLE_ID);
-		// });
-		// this.companySettings.ROLES_WITH_CHAT = roles;
-		// if (this.companySettings.ROLES_WITH_CHAT.length !== 0 && this.companySettings.MAX_CHATS_PER_AGENT !== 0) {
-		// 	this.companySettingsApiService
-		// 		.putChatSettings(this.companySettings)
-		// 		.subscribe(
-		// 			(putSettingsResponse: any) => {
-		// 				this.router.navigate(['/company-settings']);
-		// 				this.bannerMessageService.successNotifications.push({
-		// 					message: this.translateService.instant(
-		// 						'Settings has been updated successfully!'
-		// 					),
-		// 				});
-		// 			},
-		// 			(error: any) => {
-		// 				this.bannerMessageService.errorNotifications.push({
-		// 					message: error.error.ERROR,
-		// 				});
-		// 			}
-		// 		);
-		// } else {
-		// 	if (this.companySettings.ROLES_WITH_CHAT.length === 0) {
-		// 		this.loaderService.isLoading = false;
-		// 		this.bannerMessageService.errorNotifications.push({
-		// 			message: this.translateService.instant(
-		// 				'ATLEAST_ONE_ROLE'
-		// 			),
-		// 		});
-		// 	} else if (this.companySettings.MAX_CHATS_PER_AGENT === 0) {
-		// 		this.loaderService.isLoading = false;
-		// 		this.bannerMessageService.errorNotifications.push({
-		// 			message: this.translateService.instant(
-		// 				'SELECT_MAX_CHATS'
-		// 			),
-		// 		});
-		// 	}
-		// }
+		console.log('max chats', this.maxChatsPerAgent);
+		console.log('selected teams', this.selectedTeams);
+		console.log('business rules in save', this.chatBusinessRules);
+		console.log('timezone', this.timezone);
+		this.companySettings.COMPANY_SUBDOMAIN = this.usersService.getSubdomain();
+		this.companySettings.TIMEZONE = this.timezone;
+		this.companySettings.MAX_CHATS_PER_AGENT = this.maxChatsPerAgent;
+		let teams = [];
+		this.selectedTeams.forEach((team) => {
+			teams.push(team.id);
+		});
+		this.companySettings.CHAT_SETTINGS.TEAMS_WHO_CAN_CHAT = teams;
+		this.companySettings.CHAT_SETTINGS.CHAT_BUSINESS_RULES = this.chatBusinessRules;
+		if (this.companySettings.CHAT_SETTINGS.TEAMS_WHO_CAN_CHAT.length !== 0 && this.companySettings.MAX_CHATS_PER_AGENT !== 0) {
+			console.log('before save',this.companySettings);
+			this.companySettingsApiService
+				.putChatSettings(this.companySettings)
+				.subscribe(
+					(putSettingsResponse: any) => {
+						this.router.navigate(['/company-settings']);
+						this.bannerMessageService.successNotifications.push({
+							message: this.translateService.instant(
+								'Settings has been updated successfully!'
+							),
+						});
+					},
+					(error: any) => {
+						this.bannerMessageService.errorNotifications.push({
+							message: error.error.ERROR,
+						});
+					}
+				);
+		} else {
+			if (this.companySettings.CHAT_SETTINGS.TEAMS_WHO_CAN_CHAT.length === 0) {
+				this.loaderService.isLoading = false;
+				this.bannerMessageService.errorNotifications.push({
+					message: this.translateService.instant(
+						'ATLEAST_ONE_TEAM'
+					),
+				});
+			} else if (this.companySettings.MAX_CHATS_PER_AGENT === 0) {
+				this.loaderService.isLoading = false;
+				this.bannerMessageService.errorNotifications.push({
+					message: this.translateService.instant(
+						'SELECT_MAX_CHATS'
+					),
+				});
+			}
+		}
 	}
 
 	public makeGraphQLCall(query: string) {
@@ -181,16 +196,39 @@ export class ChatGeneralSettingsComponent implements OnInit {
 		let query = '';
 		query = `{
 					DATA: getTeams(moduleId: "${teamsModule.MODULE_ID}", pageNumber: ${pageNumber}, pageSize: 10, sortBy: "NAME", orderBy: "Asc", search: "${searchValue}") {
-						id: ID
+						id: _id
 						name: NAME
 					}
 				}`;
 		return this.httpClient.post(`${this.appGlobals.graphqlUrl}`, query);
 	}
 	public toggleRestrictions(event, editModal: boolean) {
-		if (this.chatBusinessRules['RESTRICTION_TYPE'] !== 'Week') {
-			this.chatBusinessRules['RESTRICTION_TYPE'] = 'Day'
-		}
+		if (this.chatBusinessRules['HAS_RESTRICTIONS']) {
+			if (this.chatBusinessRules['RESTRICTION_TYPE'] !== 'Week') {
+				this.chatBusinessRules['RESTRICTION_TYPE'] = 'Day';
+			}
+			const dialogRef = this.dialog.open(ChatBusinessRulesComponent, {
+				width: '600px',
+				data: {
+					businessRuleValue: this.chatBusinessRules,
+					isRestrictedValue: this.chatBusinessRules['HAS_RESTRICTIONS'],
+				},
+				disableClose: true,
+			});
 
+			dialogRef.afterClosed().subscribe((result) => {
+				console.log('result', result);
+				if (result) {
+					this.chatBusinessRules = result.data.businessRuleValue;
+					this.chatBusinessRules['HAS_RESTRICTIONS'] = result.data.isRestrictedValue;
+				} else {
+					this.chatBusinessRules['HAS_RESTRICTIONS'] = false;
+					this.chatBusinessRules['RESTRICTION_TYPE'] = null;
+				}
+			});
+		} else {
+			this.chatBusinessRules['CHAT_RESTRICTIONS'] = [];
+			this.chatBusinessRules['RESTRICTION_TYPE'] = null;
+		}
 	}
 }

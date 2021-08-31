@@ -1,6 +1,5 @@
 package com.ngdesk.company.dao;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -236,6 +235,11 @@ public class Company {
 	@Field("ACCOUNT_LEVEL_ACCESS")
 	private boolean accountLevelAccess;
 
+	@Schema(description = "Max agents per chat", required = false, example = "1")
+	@JsonProperty("MAX_CHATS_PER_AGENT")
+	@Field("MAX_CHATS_PER_AGENT")
+	private int maxChatsPerAgent = 5;
+
 	@Schema(required = false, description = "usage type of ngdesk application")
 	@JsonProperty("USAGE_TYPE")
 	@Field("USAGE_TYPE")
@@ -265,7 +269,7 @@ public class Company {
 			boolean wildcardEmails, String industry, String department, String size, String version, Tracking tracking,
 			boolean enableDocs, Themes theme, Referral referal, String landingPage, SignUpMessage signupMessage,
 			InviteMessage inviteMessage, ForgotPasswordMessage forgotPasswordMessage, String domain, int numberOfUsers,
-			boolean accountLevelAccess, UsageType usageType, ChatSettings chatSettings) {
+			boolean accountLevelAccess, int maxChatsPerAgent, UsageType usageType, ChatSettings chatSettings) {
 		super();
 		this.companyId = companyId;
 		this.companyName = companyName;
@@ -304,6 +308,7 @@ public class Company {
 		this.domain = domain;
 		this.numberOfUsers = numberOfUsers;
 		this.accountLevelAccess = accountLevelAccess;
+		this.maxChatsPerAgent = maxChatsPerAgent;
 		this.usageType = usageType;
 		this.chatSettings = chatSettings;
 	}
@@ -522,6 +527,14 @@ public class Company {
 
 	public void setTracking(Tracking tracking) {
 		this.tracking = tracking;
+	}
+
+	public int getMaxChatsPerAgent() {
+		return maxChatsPerAgent;
+	}
+
+	public void setMaxChatsPerAgent(int maxChatsPerAgent) {
+		this.maxChatsPerAgent = maxChatsPerAgent;
 	}
 
 	public boolean isEnableDocs() {

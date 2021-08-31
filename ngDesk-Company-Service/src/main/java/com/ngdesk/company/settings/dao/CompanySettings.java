@@ -27,6 +27,11 @@ public class CompanySettings {
 	@Field("TIMEZONE")
 	private String timezone;
 
+	@Schema(description = "Max agents per chat", required = false, example = "1")
+	@JsonProperty("MAX_CHATS_PER_AGENT")
+	@Field("MAX_CHATS_PER_AGENT")
+	private int maxChatsPerAgent = 5;
+
 	@Field("CHAT_SETTINGS")
 	@Schema(description = "Chat settings", required = false)
 	@JsonProperty("CHAT_SETTINGS")
@@ -36,12 +41,13 @@ public class CompanySettings {
 
 	}
 
-	public CompanySettings(String companySubdomain, boolean accountLevelAccess, String timezone,
+	public CompanySettings(String companySubdomain, boolean accountLevelAccess, String timezone, int maxChatsPerAgent,
 			ChatSettings chatSettings) {
 		super();
 		this.companySubdomain = companySubdomain;
 		this.accountLevelAccess = accountLevelAccess;
 		this.timezone = timezone;
+		this.maxChatsPerAgent = maxChatsPerAgent;
 		this.chatSettings = chatSettings;
 	}
 
@@ -67,6 +73,14 @@ public class CompanySettings {
 
 	public void setTimezone(String timezone) {
 		this.timezone = timezone;
+	}
+
+	public int getMaxChatsPerAgent() {
+		return maxChatsPerAgent;
+	}
+
+	public void setMaxChatsPerAgent(int maxChatsPerAgent) {
+		this.maxChatsPerAgent = maxChatsPerAgent;
 	}
 
 	public ChatSettings getChatSettings() {

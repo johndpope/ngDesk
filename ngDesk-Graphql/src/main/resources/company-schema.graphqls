@@ -763,9 +763,19 @@ type Company{
 	companyUuid: String	
 	accountLevelAccess: Boolean
 	maxChatsPerAgent: Int
-    rolesWithChat: [String]
+	chatSettings: ChatSettings
+	
+}
+type ChatSettings{
+	teamsWhoCanChat: [String]
+	chatBusinessRules: ChatBusinessRules
 }
 
+type ChatBusinessRules{
+ 	hasRestrictions: Boolean
+	restrictionType: String
+ 	chatRestrictions: [ChatRestriction]
+}
 
 type ChatChannel{
 	name: String

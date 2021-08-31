@@ -4,7 +4,7 @@
 		<app-title-bar class="light-grey-color" [title]="'CHAT_SETTINGS' | translate" [buttonText]="'SAVE' | translate"
 			(buttonRightOnClick)="saveGeneralSettings()" [buttonColor]="'primary'"></app-title-bar>
 	</ng-template>
-	<div [formGroup]="generalSettingsForm" fxLayout="row" fxLayoutAlign="center">
+	<div fxLayout="row" fxLayoutAlign="center">
 		<mat-card fxLayout="column" fxFlex="100" style="overflow: auto;">
 			<div fxLayout="row" fxLayoutAlign="start center">
 				<div fxFlex fxLayoutAlign="flex-start center">
@@ -13,7 +13,7 @@
 				</div>
 				<div fxFlex fxLayoutAlign="flex-start center">
 					<mat-form-field fxFlex=40>
-						<mat-select formControlName="MAX_CHATS_PER_AGENT">
+						<mat-select [(ngModel)]="maxChatsPerAgent">
 							<mat-option *ngFor="let maxChatOption of maxChatOptions" [value]="maxChatOption">
 								{{maxChatOption}}
 							</mat-option>
@@ -28,9 +28,9 @@
 				</div>
 				<div fxFlex fxLayoutAlign="flex-start center">
 					<mat-form-field style="width: 40%;">
-						<mat-select multiple formControlName="TEAMS_WHO_CAN_CHAT">
+						<mat-select multiple [(ngModel)]="selectedTeams">
 							<mat-option *ngFor="let team of teams" [value]="team">
-								{{team.NAME}}
+								{{team.name}}
 							</mat-option>
 						</mat-select>
 					</mat-form-field>
@@ -38,13 +38,38 @@
 			</div>
 			<div fxLayout="row" fxLayoutAlign="start center">
 				<div fxFlex fxLayoutAlign="flex-start center">
-					<!-- <mat-checkbox [checked]="checked" color="primary" [(ngModel)]="chatBusinessRules.HAS_RESTRICTIONS"
-						(change)="toggleRestrictions($event,true)"> {{ 'BUSINESS_HOURS' | translate}}</mat-checkbox> -->
-					<!-- <label class="mat-body-strong pointer" (click)="toggleRestrictions($event,true)"
-						*ngIf="checked && hasRestriction">Edit</label> -->
-					<!-- <mat-icon class="light-grey-color" style="transform: scale(0.9);"
+					<label class="mat-h3" [ngStyle]="{'margin-bottom':'0px'}">{{'TIMEZONE' |
+						translate}}</label>
+				</div>
+				<div fxFlex fxLayoutAlign="flex-start center">
+					<mat-form-field style="width: 40%;">
+						<mat-select [(ngModel)]="timezone">
+							<mat-option *ngFor="let zone of timezones" [value]="zone">
+								{{zone}}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+			</div>
+			<div fxLayout="column" fxLayoutAlign="start start">
+				<div fxFlex fxLayoutGap="10px" fxLayoutAlign="flex-start center">
+					<mat-checkbox  color="primary" [(ngModel)]="chatBusinessRules['HAS_RESTRICTIONS']"
+						(ngModelChange)="toggleRestrictions($event,true)"> {{
+						'BUSINESS_HOURS' | translate}}</mat-checkbox>
+					<label class="mat-body-strong pointer" (click)="toggleRestrictions($event,true)"
+						*ngIf="chatBusinessRules['HAS_RESTRICTIONS']">Edit</label>
+					<mat-icon class="light-grey-color" style="transform: scale(0.9);"
 						matTooltip="{{'RESTRICT_TO_BUSINESS_HOURS' | translate}}">
-						help_outline</mat-icon> -->
+						help_outline</mat-icon>
+				</div>
+				<div fxLayout="row" *ngFor="let restriction of chatBusinessRules['CHAT_RESTRICTIONS']"
+					style="margin-left:24px" fxLayoutGap="5px" class="mat-body">
+					<label>From</label>
+					<label *ngIf="chatBusinessRules['RESTRICTION_TYPE'] == 'Week'">{{restriction.START_DAY}}</label>
+					<label>{{restriction.START_TIME}}</label>
+					<label>to</label>
+					<label *ngIf="chatBusinessRules['RESTRICTION_TYPE'] == 'Week'">{{restriction.END_DAY}}</label>
+					<label>{{restriction.END_TIME}}</label>
 				</div>
 			</div>
 		</mat-card>

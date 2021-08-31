@@ -1,8 +1,9 @@
 package com.ngdesk.company.settings.dao;
 
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ngdesk.commons.annotations.CustomNotNull;
@@ -11,26 +12,30 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 public class ChatRestrictions {
 
-	@CustomNotNull(message = "START_TIME_CANNOT_BE_NULL", values = { "START_TIME" })
-	@JsonProperty("START_TIME")
 	@Schema(description = "Start time", required = false, example = "00:00")
+	@CustomNotNull(message = "START_TIME_CANNOT_BE_NULL", values = { "START_TIME" })
+	@Field("START_TIME")
+	@JsonProperty("START_TIME")
 	private String startTime;
 
-	@CustomNotNull(message = "END_TIME_CANNOT_BE_NULL", values = { "END_TIME" })
-	@JsonProperty("END_TIME")
 	@Schema(description = "End time", required = false, example = "00:00")
+	@CustomNotNull(message = "END_TIME_CANNOT_BE_NULL", values = { "END_TIME" })
+	@Field("END_TIME")
+	@JsonProperty("END_TIME")
 	private String endTime;
 
-	@JsonProperty("START_DAY")
+	@Schema(description = "Start day", required = false, example = "Mon")
 	@Size(min = 1, message = "START_DAY_EMPTY")
 	@Pattern(regexp = "Sun|Mon|Tue|Wed|Thu|Fri|Sat", message = "NOT_VALID_WEEK_DAY")
-	@Schema(description = "Start day", required = false, example = "Mon")
+	@Field("START_DAY")
+	@JsonProperty("START_DAY")
 	private String startDay;
 
-	@JsonProperty("END_DAY")
+	@Schema(description = "End day", required = false, example = "Sat")
 	@Size(min = 1, message = "END_DAY_EMPTY")
 	@Pattern(regexp = "Sun|Mon|Tue|Wed|Thu|Fri|Sat", message = "NOT_VALID_WEEK_DAY")
-	@Schema(description = "End day", required = false, example = "Sat")
+	@Field("END_DAY")
+	@JsonProperty("END_DAY")
 	private String endDay;
 
 	public ChatRestrictions() {

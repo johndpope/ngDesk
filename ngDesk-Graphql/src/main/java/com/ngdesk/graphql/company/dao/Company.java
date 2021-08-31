@@ -1,11 +1,11 @@
 package com.ngdesk.graphql.company.dao;
 
-import java.util.ArrayList;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 
 public class Company {
 
@@ -30,18 +30,18 @@ public class Company {
 	@Field("ACCOUNT_LEVEL_ACCESS")
 	private String accountLevelAccess;
 
+	@Field("CHAT_SETTINGS")
+	private ChatSettings chatSettings;
+
 	@Field("MAX_CHATS_PER_AGENT")
 	private int maxChatsPerAgent;
-
-	@Field("ROLES_WITH_CHAT")
-	private ArrayList<String> rolesWithChat;
 
 	public Company() {
 
 	}
 
 	public Company(String companyId, String companySubdomain, String companyName, String companyUuid, String timezone,
-			String language, String accountLevelAccess, int maxChatsPerAgent, ArrayList<String> rolesWithChat) {
+			String language, String accountLevelAccess, ChatSettings chatSettings, int maxChatsPerAgent) {
 		super();
 		this.companyId = companyId;
 		this.companySubdomain = companySubdomain;
@@ -50,8 +50,8 @@ public class Company {
 		this.timezone = timezone;
 		this.language = language;
 		this.accountLevelAccess = accountLevelAccess;
+		this.chatSettings = chatSettings;
 		this.maxChatsPerAgent = maxChatsPerAgent;
-		this.rolesWithChat = rolesWithChat;
 	}
 
 	public String getCompanyId() {
@@ -110,6 +110,14 @@ public class Company {
 		this.accountLevelAccess = accountLevelAccess;
 	}
 
+	public ChatSettings getChatSettings() {
+		return chatSettings;
+	}
+
+	public void setChatSettings(ChatSettings chatSettings) {
+		this.chatSettings = chatSettings;
+	}
+
 	public int getMaxChatsPerAgent() {
 		return maxChatsPerAgent;
 	}
@@ -117,15 +125,5 @@ public class Company {
 	public void setMaxChatsPerAgent(int maxChatsPerAgent) {
 		this.maxChatsPerAgent = maxChatsPerAgent;
 	}
-
-	public ArrayList<String> getRolesWithChat() {
-		return rolesWithChat;
-	}
-
-	public void setRolesWithChat(ArrayList<String> rolesWithChat) {
-		this.rolesWithChat = rolesWithChat;
-	}
-
-	
 
 }

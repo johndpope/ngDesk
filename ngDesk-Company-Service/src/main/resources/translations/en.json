@@ -57,11 +57,15 @@
 	"NO_OF_USERS": "No of Users",
 	"INVALID_LICENSE_KEY": "This license key does not exist on our system please try again",
 	"COMPANY_TIMEZONE":"Company Timezone",
-	"ROLE_REQUIRED_CHAT_SETTINGS": "Atleast one role is required",
+	"TEAM_REQUIRED_CHAT_SETTINGS": "Atleast one team is required",
 	"MAX_NUMBER_OF_AGENTS_PER_CHAT": "Maximum number of agents must be between 1 - 5",
 	"INVALID_ROLE_SELECTED": "Invalid role selected",
 	"START_TIME_CANNOT_BE_NULL":"Start time cannot be null",
 	"END_TIME_CANNOT_BE_NULL":"End time cannot be null",
 	"NOT_VALID_WEEK_DAY":"Invalid week day, please select a valid day",
-	"INVALID_RESTRICTION_TYPE":"Invalid restriction type, please select valid restriction type"
+	"INVALID_RESTRICTION_TYPE":"Invalid restriction type, please select valid restriction type",
+	"INVALID_TEAM":"The team which you have selected is in valid, please select the valid team",
+	"INVALID_TIMEZONE":"The timezone which you have selected is invalid please select the valid timezone",
+	"SUBDOMAIN_DOESNOT_EXISTS":"Company with the given subdomain does not exists, please provide valid subdomain",
+	"SUBDOMAIN_NOT_NULL":"Subdomain cannot be null"
 }
