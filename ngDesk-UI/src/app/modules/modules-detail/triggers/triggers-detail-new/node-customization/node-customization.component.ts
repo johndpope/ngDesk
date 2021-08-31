@@ -80,8 +80,8 @@ export class NodeCustomizationComponent implements OnInit {
 	public updateEntryFieldsInitials: any[] = [];
 	public errors;
 	public approverConditionValue = [
-		'Any Approver',
 		'All Approvers',
+		'Any Approver',
 		'Minimum No. of Approvals',
 	];
 	public disableEntry: boolean;
@@ -399,7 +399,7 @@ export class NodeCustomizationComponent implements OnInit {
 		this.dialogRef.close();
 	}
 
-	createnewPdf(){
+	createnewPdf() {
 		this.router.navigate([`modules/${this.moduleId}/pdf/new`]);
 		this.dialogRef.close();
 	}

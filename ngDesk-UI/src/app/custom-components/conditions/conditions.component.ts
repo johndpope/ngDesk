@@ -139,6 +139,7 @@ export class ConditionsComponent implements OnInit {
 				this.roles = rolesResponse.ROLES.filter(
 					(role) => role.NAME !== 'Public'
 				);
+				this.roles = this.roles.sort((a, b) => a.NAME.localeCompare(b.NAME));
 			},
 			(error: any) => {
 				console.log(error);
@@ -362,6 +363,9 @@ export class ConditionsComponent implements OnInit {
 						this.rolesService.getRoles().subscribe((rolesResponse: any) => {
 							this.roles = rolesResponse.ROLES.filter(
 								(role) => role.NAME !== 'Public'
+							);
+							this.roles = this.roles.sort((a, b) =>
+								a.NAME.localeCompare(b.NAME)
 							);
 							const role = this.roles.find(
 								(foundRole) =>

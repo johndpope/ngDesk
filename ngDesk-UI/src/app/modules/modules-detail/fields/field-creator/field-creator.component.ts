@@ -645,7 +645,9 @@ export class FieldCreatorComponent implements OnInit {
 				// Get module for relationship type field
 				this.modulesService.getAllModules().subscribe(
 					(response: any) => {
-						this.modules = response.MODULES;
+						this.modules = response.MODULES.sort((a, b) =>
+							a.NAME.localeCompare(b.NAME)
+						);
 						this.moduleName = response.MODULES.find(
 							(moduleObj) => moduleObj.MODULE_ID === this.moduleId
 						).NAME;
