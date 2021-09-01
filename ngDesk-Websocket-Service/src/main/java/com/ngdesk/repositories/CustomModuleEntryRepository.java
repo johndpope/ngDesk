@@ -24,9 +24,8 @@ public interface CustomModuleEntryRepository {
 
 	public Optional<Map<String, Object>> findUserByEmailAddressIncludingDeleted(String emailAddress,
 			String collectionName);
-	
-	public Optional<Map<String, Object>> findUserByEmailAddress(String emailAddress,
-			String collectionName);
+
+	public Optional<Map<String, Object>> findUserByEmailAddress(String emailAddress, String collectionName);
 
 	public Optional<Map<String, Object>> findAccountByName(String accountName, String collectionName);
 
@@ -39,5 +38,7 @@ public interface CustomModuleEntryRepository {
 	public void setUserPhoneNumberAndDeletedToFalse(String emailAddress, Phone phone, String collectionName);
 
 	public void setUserDeletedToFalse(String emailAddress, String collectionName);
+
+	public void updateEntry(String dataId, String variable, Object value, String collectionName);
 
 }

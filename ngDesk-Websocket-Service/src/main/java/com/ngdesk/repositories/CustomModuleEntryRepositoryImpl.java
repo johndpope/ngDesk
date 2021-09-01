@@ -173,5 +173,14 @@ public class CustomModuleEntryRepositoryImpl implements CustomModuleEntryReposit
 				Criteria.where("EFFECTIVE_TO").is(null));
 		return Optional.ofNullable(mongoOperations.findOne(new Query(criteria), Map.class, collectionName));
 	}
-
+	
+	@Override
+    public void updateEntry(String dataId, String variable, Object value , String collectionName) {
+        Update update = new Update();
+        update.set(variable, value);
+        Criteria criteria = new Criteria();
+		criteria.andOperator(Criteria.where("DELETED").is(false), Criteria.where("_id").is(dataId),
+				Criteria.where("EFFECTIVE_TO").is(null));
+        mongoOperations.updateFirst(new Query(criteria), update, collectionName);
+    }
 }

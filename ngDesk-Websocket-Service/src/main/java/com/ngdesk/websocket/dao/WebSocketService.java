@@ -1,31 +1,15 @@
 package com.ngdesk.websocket.dao;
 
 import java.io.IOException;
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Random;
-import java.util.TimeZone;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import org.bson.Document;
-import org.bson.types.ObjectId;
-import org.redisson.api.RMap;
 import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,22 +24,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ngdesk.data.dao.DiscussionMessage;
 import com.ngdesk.data.dao.Sender;
 import com.ngdesk.data.dao.WorkflowPayload;
-import com.ngdesk.flowmanager.InputMessage;
 import com.ngdesk.repositories.ChatChannelRepository;
 import com.ngdesk.repositories.CompaniesRepository;
 import com.ngdesk.repositories.DnsRepository;
 import com.ngdesk.repositories.ModuleEntryRepository;
 import com.ngdesk.repositories.ModulesRepository;
 import com.ngdesk.websocket.SessionService;
-import com.ngdesk.websocket.channels.chat.BotSettings;
-import com.ngdesk.websocket.channels.chat.BusinessRules;
-import com.ngdesk.websocket.channels.chat.ChatChannel;
-import com.ngdesk.websocket.channels.chat.ChatChannelSettings;
-import com.ngdesk.websocket.channels.chat.PageLoad;
-import com.ngdesk.websocket.channels.chat.Restriction;
 import com.ngdesk.websocket.companies.dao.Company;
 import com.ngdesk.websocket.companies.dao.DnsRecord;
-import com.ngdesk.websocket.companies.dao.Phone;
 import com.ngdesk.websocket.modules.dao.Module;
 import com.ngdesk.websocket.modules.dao.ModuleField;
 import com.ngdesk.websocket.modules.dao.ModuleService;
@@ -150,6 +126,12 @@ public class WebSocketService {
 									entryRepository.addDiscussionToEntry(message, discussionField.getName(),
 											entry.get("_id").toString(),
 											moduleService.getCollectionName(module.getName(), company.getId()));
+									Date dateUpdated = new Date();
+
+									entryRepository.updateEntry(entry.get("_id").toString(), "DATE_UPDATED",
+											dateUpdated,
+											moduleService.getCollectionName(module.getName(), company.getId()));
+
 									if (!isTrigger) {
 										WorkflowPayload workflowPayload = new WorkflowPayload(
 												user.get("_id").toString(), module.getModuleId(), company.getId(),
