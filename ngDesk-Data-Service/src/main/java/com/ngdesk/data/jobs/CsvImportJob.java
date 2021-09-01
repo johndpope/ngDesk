@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
@@ -35,15 +36,18 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Sorts;
 import com.mongodb.client.model.Updates;
-import com.ngdesk.commons.Global;
 import com.ngdesk.data.company.dao.Company;
 import com.ngdesk.data.csvimport.dao.CsvImport;
 import com.ngdesk.data.csvimport.dao.CsvImportData;
+import com.ngdesk.data.csvimport.dao.CsvImportService;
+import com.ngdesk.data.dao.DataService;
 import com.ngdesk.data.dao.Phone;
+import com.ngdesk.data.elastic.Wrapper;
 import com.ngdesk.data.modules.dao.DataType;
 import com.ngdesk.data.modules.dao.Module;
 import com.ngdesk.data.modules.dao.ModuleField;
 import com.ngdesk.data.roles.dao.Role;
+import com.ngdesk.data.validator.Validator;
 import com.ngdesk.repositories.companies.CompanyRepository;
 import com.ngdesk.repositories.csvimport.CsvImportRepository;
 import com.ngdesk.repositories.module.entry.ModuleEntryRepository;
@@ -51,7 +55,6 @@ import com.ngdesk.repositories.module.entry.ModulesRepository;
 import com.ngdesk.repositories.roles.RolesRepository;
 import com.opencsv.CSVReader;
 
-import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
 
 @Component
@@ -71,9 +74,18 @@ public class CsvImportJob {
 
 	@Autowired
 	ModulesRepository modulesRepository;
-	
+
 	@Autowired
-	Global global;
+	DataService dataService;
+
+	@Autowired
+	Validator validator;
+
+	@Autowired
+	Wrapper wrapper;
+
+	@Autowired
+	CsvImportService csvImportService;
 
 	@Scheduled(fixedRate = 30000)
 	public void importCsv() {
@@ -103,8 +115,9 @@ public class CsvImportJob {
 					Map<String, Object> globalTeam = optionalGlobalTeam.get();
 					String globalTeamId = globalTeam.get("_id").toString();
 
-					Optional<Role> optionalRole = rolesRepository.findRoleName("Customers", "roles_" + companyId);
-					Role customerRole = optionalRole.get();
+					Optional<Role> optionalCustomerRole = rolesRepository.findRoleName("Customers",
+							"roles_" + companyId);
+					Role customerRole = optionalCustomerRole.get();
 					String customerRoleId = customerRole.getId();
 
 					csvImportRepository.updateEntry(csvDocument.getCsvImportId(), "STATUS", "PROCESSING", "csv_import");
@@ -234,8 +247,14 @@ public class CsvImportJob {
 									continue;
 								}
 
-								// SimpleDateFormat format = new
-								// SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+								if (inputMessage.containsKey("DATE_CREATED") || inputMessage.containsKey("DATE_UPDATED")
+										|| inputMessage.containsKey("LAST_UPDATED_BY")
+										|| inputMessage.containsKey("CREATED_BY")) {
+									inputMessage.remove("DATE_CREATED");
+									inputMessage.remove("DATE_UPDATED");
+									inputMessage.remove("LAST_UPDATED_BY");
+									inputMessage.remove("CREATED_BY");
+								}
 
 								inputMessage.put("DATE_CREATED", new Date());
 								inputMessage.put("DATE_UPDATED", new Date());
@@ -249,11 +268,11 @@ public class CsvImportJob {
 								Map<String, String> fieldIdNameMap = new HashMap<String, String>();
 								String phoneNumber = "";
 								if (moduleName.equals("Users")) {
-									if (inputMessage.get("PHONE_NUMBER") != null) {
+									if (inputMessage.containsKey("PHONE_NUMBER")) {
 										phoneNumber = inputMessage.get("PHONE_NUMBER").toString();
 										inputMessage.remove("PHONE_NUMBER");
 									}
-									if (inputMessage.get("EMAIL_ADDRESS") != null) {
+									if (inputMessage.containsKey("EMAIL_ADDRESS")) {
 										String userEmailAddress = inputMessage.get("EMAIL_ADDRESS").toString();
 										String[] splitEmail = userEmailAddress.split("@");
 										String accountName = "";
@@ -262,10 +281,10 @@ public class CsvImportJob {
 										}
 										String accountId = null;
 
-										if (!account.accountExists(accountName, companyId)) {
-											Document accountDocument = account.createAccount(accountName, companyId,
-													globalTeamId);
-											accountId = accountDocument.getObjectId("_id").toString();
+										if (!csvImportService.accountExists(accountName, companyId)) {
+											Map<String, Object> accountEntry = csvImportService
+													.createAccount(accountName, companyId, globalTeamId);
+											accountId = accountEntry.get("_id").toString();
 											inputMessage.put("ACCOUNT", accountId);
 										} else {
 											Optional<Map<String, Object>> optionalAccount = moduleEntryRepository
@@ -276,9 +295,11 @@ public class CsvImportJob {
 											inputMessage.put("ACCOUNT", accountId);
 										}
 									}
-									if (inputMessage.get("DEFAULT_CONTACT_METHOD") == null
-											|| inputMessage.get("DEFAULT_CONTACT_METHOD").toString().equals("")) {
-										inputMessage.put("DEFAULT_CONTACT_METHOD", "Email");
+									if (inputMessage.containsKey("DEFAULT_CONTACT_METHOD")) {
+										if (inputMessage.get("DEFAULT_CONTACT_METHOD") == null
+												|| inputMessage.get("DEFAULT_CONTACT_METHOD").toString().equals("")) {
+											inputMessage.put("DEFAULT_CONTACT_METHOD", "Email");
+										}
 									} else {
 										inputMessage.put("DEFAULT_CONTACT_METHOD", "Email");
 									}
@@ -299,7 +320,7 @@ public class CsvImportJob {
 
 									// VALIDATE IF THE PICKLIST VALUES ARE MATCHING WITH EXISTING PICKLISTS OR ELSE
 									// THROW ERROR
-									if (inputMessage.get(fieldName) != null) {
+									if (inputMessage.containsKey(fieldName)) {
 										if (dataType.getDisplay().equalsIgnoreCase("Picklist")) {
 											List<String> picklistValues = field.getPicklistValues();
 											String value = inputMessage.get(fieldName).toString();
@@ -314,14 +335,15 @@ public class CsvImportJob {
 												Map<String, Object> log = new HashMap<String, Object>();
 												log.put("LINE_NUMBER", i);
 												log.put("ERROR_MESSAGE", "Picklist values are incorrect");
-												String logString = new ObjectMapper().writeValueAsString(log); 
-												csvImportRepository.addToEntrySet(csvDocument.getCsvImportId(), "LOGS", logString, "csv_import");
+												String logString = new ObjectMapper().writeValueAsString(log);
+												csvImportRepository.addToEntrySet(csvDocument.getCsvImportId(), "LOGS",
+														logString, "csv_import");
 												error = true;
 												break;
 											}
 										}
 									}
-									if (inputMessage.get(fieldName) != null) {
+									if (inputMessage.containsKey(fieldName)) {
 										if (dataType.getDisplay().equalsIgnoreCase("Chronometer")) {
 											long chronometerValueInSecond = 0;
 											if (inputMessage.get(fieldName) != null) {
@@ -331,8 +353,8 @@ public class CsvImportJob {
 														|| valueWithoutSpace.charAt(0) == '-') {
 													inputMessage.put(fieldName, 0);
 												} else if (valueWithoutSpace.length() != 0) {
-													chronometerValueInSecond = global
-															.chronometerValueConversionInSeconds(valueWithoutSpace);
+													chronometerValueInSecond = dataService
+															.getChronometerValueInMinutes(valueWithoutSpace);
 													inputMessage.put(fieldName, chronometerValueInSecond);
 												}
 											}
@@ -346,13 +368,14 @@ public class CsvImportJob {
 											checkRequired = false;
 										}
 									}
-									if (inputMessage.has("ACCOUNT") && fieldName.equals("ACCOUNT")
+									if (inputMessage.containsKey("ACCOUNT") && fieldName.equals("ACCOUNT")
 											&& inputMessage.get(fieldName) != null) {
 										checkRequired = false;
 									}
-									if (dataType.getString("DISPLAY").equalsIgnoreCase("Auto Number")) {
-										int autoNumber = (int) field.get("AUTO_NUMBER_STARTING_NUMBER");
-										if (collection.countDocuments() == 0) {
+									if (dataType.getDisplay().equalsIgnoreCase("Auto Number")) {
+										int autoNumber = (int) field.getAutoNumberStartingNumber();
+										int count = (int) moduleEntryRepository.findCountOfEntries(collectionName);
+										if (count == 0) {
 											inputMessage.put(fieldName, autoNumber);
 										} else {
 											Document document = collection.find().sort(Sorts.descending(fieldName))
@@ -364,14 +387,14 @@ public class CsvImportJob {
 											inputMessage.put(fieldName, autoNumber);
 										}
 									}
-									if (field.getBoolean("REQUIRED")) {
-										if (inputMessage.isNull(fieldName)) {
-											if (dataType.getString("DISPLAY").equalsIgnoreCase("ID")) {
+									if (field.getRequired()) {
+										if (inputMessage.get(fieldName) == null) {
+											if (dataType.getDisplay().equalsIgnoreCase("ID")) {
 												inputMessage.put(fieldName, UUID.randomUUID().toString());
 											}
 										}
 
-										if (field.getString("NAME").equals("TEAMS")) {
+										if (field.getName().equals("TEAMS")) {
 											List<String> teams = new ArrayList<String>();
 											if (globalTeamId != null) {
 												teams.add(globalTeamId);
@@ -379,11 +402,11 @@ public class CsvImportJob {
 											inputMessage.put("TEAMS", teams);
 										}
 
-										if (!inputMessage.has(fieldName) || inputMessage.get(fieldName) == null) {
+										if (!inputMessage.containsKey(fieldName)
+												|| inputMessage.get(fieldName) == null) {
 
-											if (field.containsKey("DEFAULT_VALUE")
-													&& field.get("DEFAULT_VALUE") != null) {
-												String defaultValue = field.getString("DEFAULT_VALUE");
+											if (field.getDefaultValue() != null) {
+												String defaultValue = field.getDefaultValue();
 
 												Pattern pattern = Pattern.compile("\\{\\{(.*)\\}\\}");
 												Matcher matcher = pattern.matcher(defaultValue);
@@ -391,26 +414,24 @@ public class CsvImportJob {
 												if (matcher.find()) {
 
 													if (matcher.group(1).equals("CURRENT_CONTACT")) {
-														MongoCollection<Document> Contactcollection = mongoTemplate
-																.getCollection("Contacts_" + companyId);
-														ObjectId currentContactId = Contactcollection
-																.find(Filters.eq("USER",
-																		csvDocument.getString("CREATED_BY")))
-																.first().getObjectId("_id");
+
+														Optional<Map<String, Object>> optionalContactEntry = moduleEntryRepository
+																.findEntryByFieldName("USER",
+																		csvDocument.getCreatedBy(),
+																		"Contacts_" + companyId);
+														Map<String, Object> contactEntry = optionalContactEntry.get();
+
 														defaultValue = defaultValue.replaceAll(
 																"\\{\\{CURRENT_CONTACT\\}\\}",
-																currentContactId.toString());
+																contactEntry.get("_id").toString());
 
 													} else if (matcher.group(1).equals("CURRENT_USER")) {
 														defaultValue = defaultValue.replaceAll(
-																"\\{\\{CURRENT_USER\\}\\}",
-																csvDocument.getString("CREATED_BY"));
-
+																"\\{\\{CURRENT_USER\\}\\}", csvDocument.getCreatedBy());
 													}
 												}
-
 												if (backendDataType.equalsIgnoreCase("Array")) {
-													inputMessage.put(fieldName, new JSONArray().put(defaultValue));
+													inputMessage.put(fieldName, Arrays.asList(defaultValue));
 												} else if (backendDataType.equalsIgnoreCase("Boolean")) {
 													if (defaultValue.equals("true")) {
 														inputMessage.put(fieldName, true);
@@ -422,101 +443,108 @@ public class CsvImportJob {
 												}
 											}
 										}
-
 									}
 								}
 								if (error) {
 									continue;
 								}
-								boolean isValidBaseType = false;
 
 								try {
-
-									isValidBaseType = validator.isValidBaseTypes(inputMessage, companyId, moduleName,
-											"POST");
+									validator.validateBaseTypes(module, inputMessage, companyId);
 								} catch (Exception e) {
-									JSONObject log = new JSONObject();
+									Map<String, Object> log = new HashMap<String, Object>();
 									log.put("LINE_NUMBER", i);
 									log.put("ERROR_MESSAGE", e.getMessage());
-									csvCollection.findOneAndUpdate(
-											Filters.eq("_id", new ObjectId(csvDocument.getObjectId("_id").toString())),
-											Updates.addToSet("LOGS", Document.parse(log.toString())));
+									String logString = new ObjectMapper().writeValueAsString(log);
+									csvImportRepository.addToEntrySet(csvDocument.getCsvImportId(), "LOGS", logString,
+											"csv_import");
 									continue;
 								}
 
 								if (moduleName.equalsIgnoreCase("Users")) {
-									Document userDocument = usersCollection
-											.find(Filters.eq("EMAIL_ADDRESS", inputMessage.getString("EMAIL_ADDRESS")))
-											.first();
-									if (userDocument == null || userDocument.getBoolean("DELETED")) {
+									Optional<Map<String, Object>> optionalUser = moduleEntryRepository
+											.findEntryByFieldName("EMAIL_ADDRESS", inputMessage.get("EMAIL_ADDRESS"),
+													"Users_" + companyId);
+
+									Map<String, Object> userEntry = new HashMap<String, Object>();
+									boolean isDeleted;
+									
+									if (optionalUser.isPresent()) {
+										isDeleted = Boolean.valueOf(optionalUser.get().get("DELETED").toString());
+										userEntry = optionalUser.get();
+									}
+
+									if (optionalUser.isEmpty() || isDeleted) {
 										try {
-											String existingRoleName = rolesCollection
-													.find(Filters.eq("_id",
-															new ObjectId(inputMessage.getString("ROLE"))))
-													.first().getString("NAME");
-											Document roleTeam = teamsCollection
-													.find(Filters.eq("NAME", existingRoleName)).first();
-											String roleTeamId = roleTeam.getObjectId("_id").toString();
+											Optional<Role> optionalRole = rolesRepository.findById(
+													inputMessage.get("ROLE").toString(), "roles_" + companyId);
+											Role role = optionalRole.get();
+											String existingRoleName = role.getName();
 
-											Document teamsModule = modulecollection.find(Filters.eq("NAME", "Teams"))
-													.first();
-											String teamsModuleId = teamsModule.getObjectId("_id").toString();
+											Optional<Map<String, Object>> optionalTeamsEntry = moduleEntryRepository
+													.findEntryByFieldName("NAME", existingRoleName,
+															"Teams_" + companyId);
+											Map<String, Object> teamsEntry = optionalTeamsEntry.get();
+											String roleTeamId = teamsEntry.get("_id").toString();
 
-											if (userDocument != null) {
-												String teamName = userDocument.getString("FIRST_NAME") + " "
-														+ userDocument.getString("LAST_NAME");
+											Optional<Module> optionalTeamsModule = modulesRepository
+													.findIdbyModuleName("Teams", "modules_" + companyId);
+											Module teamsModule = optionalTeamsModule.get();
+											String teamsModuleId = teamsModule.getModuleId();
+
+											if (optionalUser.isPresent()) {
+												String teamName = userEntry.get("FIRST_NAME") + " "
+														+ userEntry.get("LAST_NAME");
 												Document personalTeam = teamsCollection
 														.find(Filters.and(Filters.eq("DELETED", true),
 																Filters.eq("NAME", teamName),
 																Filters.eq("IS_PERSONAL", true)))
 														.first();
 												List<String> users = new ArrayList<String>();
-												users.add(userDocument.getObjectId("_id").toString());
+												users.add(userEntry.get("_id").toString());
 												personalTeam.put("DELETED", false);
 												personalTeam.put("USERS", users);
-												wrapper.putData(companyId, teamsModuleId, "Teams",
-														personalTeam.toJson(),
+												wrapper.putData(companyId, teamsModule, personalTeam.toJson(),
 														personalTeam.getObjectId("_id").toString());
 
-												userDocument.put("DELETED", false);
-												List<String> existingTeams = (List<String>) userDocument.get("TEAMS");
+												userEntry.put("DELETED", false);
+												List<String> existingTeams = (List<String>) userEntry1.get("TEAMS");
 												if (!existingTeams
 														.contains(personalTeam.getObjectId("_id").toString())) {
 													existingTeams.add(personalTeam.getObjectId("_id").toString());
 												}
-												userDocument.put("TEAMS", existingTeams);
-												wrapper.putData(companyId, moduleId, moduleName, userDocument.toJson(),
-														userDocument.getObjectId("_id").toString());
+												userEntry.put("TEAMS", existingTeams);
+												wrapper.putData(companyId, module, userEntry,
+														userEntry.get("_id").toString());
 											} else {
 
-												userDocument = userDAO.createUser(
-														inputMessage.getString("EMAIL_ADDRESS"), companyId, "", false,
-														company.getString("COMPANY_SUBDOMAIN"), "alarm_classic", 0,
-														language, inputMessage.getString("ROLE"), false, globalTeamId);
+												userEntry = userDAO.createUser(inputMessage.getString("EMAIL_ADDRESS"),
+														companyId, "", false, company.getString("COMPANY_SUBDOMAIN"),
+														"alarm_classic", 0, language, inputMessage.getString("ROLE"),
+														false, globalTeamId);
 
-												String userId = userDocument.getObjectId("_id").toString();
+												String userId = userEntry.get("_id").toString();
 
 												Document contactsModule = modulecollection
 														.find(Filters.eq("NAME", "Contacts")).first();
 												String contactsModuleId = contactsModule.getObjectId("_id").toString();
 
 												Document contactDocument = userDAO.createContact(
-														inputMessage.getString("FIRST_NAME"),
-														inputMessage.getString("LAST_NAME"),
-														inputMessage.getString("ACCOUNT"),
+														inputMessage.get("FIRST_NAME"), inputMessage.get("LAST_NAME"),
+														inputMessage.get("ACCOUNT"),
 														new Phone("us", "+1", phoneNumber, "us.svg"), contactsModuleId,
 														companyId, globalTeamId, userId);
 
 												String teamJson = global.getFile("DefaultTeam.json");
 												teamJson = teamJson.replaceAll("USER_ID_REPLACE",
-														userDocument.getObjectId("_id").toString());
+														userEntry.getObjectId("_id").toString());
 
 												JSONObject team = new JSONObject(teamJson);
-												team.put("NAME", inputMessage.getString("FIRST_NAME") + " "
-														+ inputMessage.getString("LAST_NAME"));
+												team.put("NAME", inputMessage.get("FIRST_NAME") + " "
+														+ inputMessage.get("LAST_NAME"));
 												team.put("DESCRIPTION",
-														"Personal team for " + inputMessage.getString("FIRST_NAME")
-																+ " " + inputMessage.getString("LAST_NAME"));
+														"Personal team for " + inputMessage.get("FIRST_NAME") + " "
+																+ inputMessage.get("LAST_NAME"));
 												team.put("DATE_CREATED", new Date());
 												team.put("DATE_UPDATED", new Date());
 												team.put("IS_PERSONAL", true);
@@ -530,23 +558,22 @@ public class CsvImportJob {
 												teams.add(globalTeamId);
 
 												teams.add(roleTeamId);
-												userDocument.put("TEAMS", teams);
-												userDocument.put("IS_LOGIN_ALLOWED", false);
-												userDocument.put("CONTACT",
-														contactDocument.getObjectId("_id").toString());
+												userEntry.put("TEAMS", teams);
+												userEntry.put("IS_LOGIN_ALLOWED", false);
+												userEntry.put("CONTACT", contactDocument.getObjectId("_id").toString());
 
-												wrapper.putData(companyId, moduleId, moduleName, userDocument.toJson(),
-														userDocument.getObjectId("_id").toString());
+												wrapper.putData(companyId, module, userEntry,
+														userEntry.get("_id").toString());
 											}
 
 											List<String> globalUsers = (List<String>) globalTeam.get("USERS");
-											globalUsers.add(userDocument.getObjectId("_id").toString());
+											globalUsers.add(userEntry.get("_id").toString());
 											globalTeam.put("USERS", globalUsers);
 											wrapper.putData(companyId, teamsModuleId, "Teams", globalTeam.toJson(),
 													globalTeamId);
 
 											List<String> roleTeamUsers = (List<String>) roleTeam.get("USERS");
-											roleTeamUsers.add(userDocument.getObjectId("_id").toString());
+											roleTeamUsers.add(userEntry.get("_id").toString());
 											roleTeam.put("USERS", roleTeamUsers);
 											wrapper.putData(companyId, teamsModuleId, "Teams", roleTeam.toJson(),
 													roleTeamId);

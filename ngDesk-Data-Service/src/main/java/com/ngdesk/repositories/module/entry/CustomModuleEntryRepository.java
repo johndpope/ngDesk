@@ -108,4 +108,10 @@ public interface CustomModuleEntryRepository {
 
 	public Optional<List<Map<String, Object>>> findAllTeams(List<String> teamIds, String userId, String companyId);
 
+	public void addDataToSetByVariable(String filterVariable, String filterValue, String variable, String value,
+			String collectionName);
+
+	public void pullDataByVariable(String filterVariable, String filterValue, String variable, String value,
+			String collectionName);
+
 }

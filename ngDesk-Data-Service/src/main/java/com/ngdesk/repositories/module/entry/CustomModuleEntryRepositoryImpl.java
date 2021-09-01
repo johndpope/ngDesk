@@ -1407,4 +1407,34 @@ public class CustomModuleEntryRepositoryImpl implements CustomModuleEntryReposit
 
 	}
 
+	@Override
+	public void pullDataByVariable(String filterVariable, String filterValue, String variable, String value,
+			String collectionName) {
+		Criteria criteria = new Criteria();
+		criteria.andOperator(Criteria.where(filterVariable).is(filterValue), Criteria.where("DELETED").is(false),
+				Criteria.where("EFFECTIVE_TO").is(null));
+		Query query = new Query();
+		query.addCriteria(criteria);
+
+		Update update = new Update();
+		update.pull(variable, value);
+
+		mongoOperations.updateFirst(query, update, collectionName);
+	}
+
+	@Override
+	public void addDataToSetByVariable(String filterVariable, String filterValue, String variable, String value,
+			String collectionName) {
+		Criteria criteria = new Criteria();
+		criteria.andOperator(Criteria.where(filterVariable).is(filterValue), Criteria.where("DELETED").is(false),
+				Criteria.where("EFFECTIVE_TO").is(null));
+		Query query = new Query();
+		query.addCriteria(criteria);
+
+		Update update = new Update();
+		update.addToSet(variable, value);
+
+		mongoOperations.updateFirst(query, update, collectionName);
+	}
+
 }
