@@ -21,6 +21,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ngdesk.commons.Global;
 import com.ngdesk.commons.annotations.CustomNotEmpty;
 import com.ngdesk.commons.exceptions.BadRequestException;
@@ -53,6 +54,8 @@ public class SendEmailNode extends Node {
 
 	@Autowired
 	ConditionService conditionService;
+
+	private ObjectMapper mapper = new ObjectMapper();
 
 	@Value("${email.host}")
 	private String emailHost;
@@ -130,7 +133,6 @@ public class SendEmailNode extends Node {
 
 	@Override
 	public void execute(WorkflowExecutionInstance instance) {
-
 		if (isInfiniteLoop(instance)) {
 			return;
 		}
@@ -221,6 +223,11 @@ public class SendEmailNode extends Node {
 
 			// SENDING TO MULTIPLE PEOPLE
 			for (String emailAddress : toEmails) {
+				try {
+					emailAddress = mapper.readValue(emailAddress, String.class);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				if (emailsSent.containsKey(emailAddress)) {
 					continue;
 				}
@@ -231,11 +238,11 @@ public class SendEmailNode extends Node {
 				if (emailAddress.strip().equalsIgnoreCase("[]")) {
 					continue;
 				}
-				if (nodeOperations.isInternalCommentAdded(instance.getEntry(), instance.getOldCopy(),
-						discussionField)&&!nodeOperations.isAdminOrAgent(emailAddress, companyDetails.getCompanyId())) {
-					
+				if (nodeOperations.isInternalCommentAdded(instance.getEntry(), instance.getOldCopy(), discussionField)
+						&& !nodeOperations.isAdminOrAgent(emailAddress, companyDetails.getCompanyId())) {
+
 					continue;
-				
+
 				}
 
 				if (!nodeOperations.isEmailAddressAChannel(emailAddress, companyDetails.getCompanyId())) {
@@ -426,5 +433,5 @@ public class SendEmailNode extends Node {
 		return true;
 
 	}
-	
+
 }
