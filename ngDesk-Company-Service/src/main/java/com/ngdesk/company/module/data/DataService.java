@@ -60,6 +60,13 @@ public class DataService {
 		ObjectId publicTeamId = new ObjectId();
 
 		ObjectId contactId = new ObjectId();
+		
+		Phone defaultPhone = new Phone();
+		defaultPhone.setCountryCode("us");
+		defaultPhone.setDialCode("+1");
+		defaultPhone.setPhoneNumber("");
+		defaultPhone.setCountryFlag("us.svg");
+
 
 		String newAccountId = postNewAccount(accountName, globalTeamId, companyId);
 		String defaultAccountId = postDefaultAccount(globalTeamId, companyId);
@@ -67,18 +74,18 @@ public class DataService {
 		String userId = postNewUser(emailAddress, globalTeamId.toString(), personalTeamId.toString(),
 				adminTeamId.toString(), rolesMap.get("SystemAdmin"), companyId, hashedPassword, contactId.toString());
 
-		postContact(userId, phone, contactId, companyId, firstName, lastName, newAccountId, globalTeamId.toString());
+		postContact(userId, phone, defaultPhone, contactId, companyId, firstName, lastName, newAccountId, globalTeamId.toString());
 
 		ObjectId ghostContactId = new ObjectId();
 		String ghostUserId = postGhostUser(companyId, ghostTeamId.toString(), rolesMap.get("Customers"),
 				ghostContactId.toString());
-		postContact(ghostUserId, new Phone(), ghostContactId, companyId, "Ghost", "User", defaultAccountId,
+		postContact(ghostUserId, defaultPhone, defaultPhone, ghostContactId, companyId, "Ghost", "User", defaultAccountId,
 				ghostTeamId.toString());
 
 		ObjectId systemContactId = new ObjectId();
 		String systemUserId = postSystemUser(companyId, customersTeamId.toString(), rolesMap.get("Customers"),
 				systemContactId.toString());
-		postContact(systemUserId, new Phone(), systemContactId, companyId, "System", "User", defaultAccountId,
+		postContact(systemUserId, defaultPhone, defaultPhone, systemContactId, companyId, "System", "User", defaultAccountId,
 				customersTeamId.toString());
 
 		postDefaultTeams(companyId, systemUserId, ghostUserId, userId, globalTeamId, customersTeamId, agentTeamId,
@@ -154,10 +161,13 @@ public class DataService {
 		throw new BadRequestException("POST_NEW_USER_FAILED", null);
 	}
 
-	public void postContact(String userId, Phone phone, ObjectId contactId, String companyId, String firstName,
+	public void postContact(String userId, Phone phone, Phone defaultPhone, ObjectId contactId, String companyId, String firstName,
 			String lastName, String accountId, String globalTeamId) {
 		try {
 			Map<String, Object> phoneEntry = mapper.readValue(mapper.writeValueAsString(phone), Map.class);
+			
+			Map<String, Object> phoneDefaultEntry = mapper.readValue(mapper.writeValueAsString(defaultPhone),
+					Map.class);
 
 			Map<String, Object> entry = new HashMap<String, Object>();
 
@@ -177,6 +187,8 @@ public class DataService {
 			entry.put("DATE_UPDATED", new Date());
 			entry.put("USER", userId);
 			entry.put("PHONE_NUMBER", phoneEntry);
+			entry.put("OFFICE_PHONE", phoneDefaultEntry);
+			entry.put("OTHER_PHONE", phoneDefaultEntry);
 			entry.put("_id", contactId);
 
 			entryRepository.save(entry, "Contacts_" + companyId);
