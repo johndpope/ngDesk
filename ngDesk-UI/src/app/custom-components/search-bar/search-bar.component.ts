@@ -18,6 +18,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DataApiService } from '@ngdesk/data-api';
 import { TranslateService } from '@ngx-translate/core';
 import { CacheService } from '@src/app/cache.service';
+import { ChannelsService } from '@src/app/channels/channels.service';
 import { RenderListLayoutService } from '@src/app/render-layout/render-list-layout-new/render-list-layout.service';
 import { Subscription } from 'rxjs';
 import { ModulesService } from '../../modules/modules.service';
@@ -69,7 +70,8 @@ export class SearchBarComponent implements OnChanges {
 		private translateService: TranslateService,
 		private cacheService: CacheService,
 		private dataService: DataApiService,
-		private renderListLayoutService: RenderListLayoutService
+		private renderListLayoutService: RenderListLayoutService,
+		private channelsService: ChannelsService
 	) {}
 	// constructor(private modulesService: ModulesService, private route: ActivatedRoute,
 	// private autocompleteService: AutocompleteService) { }
@@ -633,6 +635,14 @@ export class SearchBarComponent implements OnChanges {
 						false,
 						this.searchString
 					);
+				} else if (selectedField['DATA_TYPE']['DISPLAY'] === 'Text') {
+					debugger;
+					this.channelsService
+						.getAllChannels(this.moduleId)
+						.subscribe((response: any) => {
+							this.fieldEntries = response.CHANNELS;
+							this.detectSearchValueChanges('entries');
+						});
 				} else {
 					this.fieldEntries = [];
 				}
