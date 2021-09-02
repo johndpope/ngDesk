@@ -177,7 +177,6 @@ export class RenderListLayoutNewComponent implements OnInit, OnDestroy {
 			}
 		});
 		this.reloadDataOnUpdate();
-		this.parseMethod();
 	}
 
 	public ngOnDestroy() {
@@ -231,43 +230,50 @@ export class RenderListLayoutNewComponent implements OnInit, OnDestroy {
 	}
 
 	public loadDefaultListLayout() {
-		this.cacheService.getModule(this.moduleId).subscribe((modulesResponse) => {
-			this.module = modulesResponse;
-			this.fields = modulesResponse['FIELDS'];
-			this.recordName = modulesResponse.PLURAL_NAME.toLowerCase();
-			let defaultListLayout;
-			let searchString = '';
-			if (typeof window !== 'undefined') {
-				defaultListLayout = this.module.LIST_LAYOUTS.find(
-					(layout) =>
-						layout.ROLE === this.usersService.user.ROLE && layout.IS_DEFAULT
-				);
-				searchString = this.renderListLayoutService.convertSearchString(
-					this.renderListLayoutService.getSearchQuey(this.moduleId)
-				);
-			} else {
-				defaultListLayout = this.renderListHelper.defaultListLayout(
-					this.module
-				);
-				const searchQuey = this.renderListHelper.getSearchQuey(this.moduleId);
-				searchString =
-					this.renderListLayoutService.convertSearchString(searchQuey);
-			}
-			if (defaultListLayout) {
-				this.pageTitle = defaultListLayout.NAME;
-				this.setShowListLayouts();
-				this.currentListLayout = defaultListLayout;
-				this.getListLayoutEntries(
-					this.moduleId,
-					this.currentListLayout,
-					searchString,
-					true
-				);
-			} else {
-				this.listLayoutExists = false;
-				this.customTableService.isLoading = false;
-				this.isloadingMobileData = false;
-			}
+		this.modulesService.getModules().subscribe((modulesResponse: any) => {
+			this.allModules = modulesResponse.MODULES;
+			this.cacheService
+				.getModule(this.moduleId)
+				.subscribe((modulesResponse) => {
+					this.module = modulesResponse;
+					this.fields = modulesResponse['FIELDS'];
+					this.recordName = modulesResponse.PLURAL_NAME.toLowerCase();
+					let defaultListLayout;
+					let searchString = '';
+					if (typeof window !== 'undefined') {
+						defaultListLayout = this.module.LIST_LAYOUTS.find(
+							(layout) =>
+								layout.ROLE === this.usersService.user.ROLE && layout.IS_DEFAULT
+						);
+						searchString = this.renderListLayoutService.convertSearchString(
+							this.renderListLayoutService.getSearchQuey(this.moduleId)
+						);
+					} else {
+						defaultListLayout = this.renderListHelper.defaultListLayout(
+							this.module
+						);
+						const searchQuey = this.renderListHelper.getSearchQuey(
+							this.moduleId
+						);
+						searchString =
+							this.renderListLayoutService.convertSearchString(searchQuey);
+					}
+					if (defaultListLayout) {
+						this.pageTitle = defaultListLayout.NAME;
+						this.setShowListLayouts();
+						this.currentListLayout = defaultListLayout;
+						this.getListLayoutEntries(
+							this.moduleId,
+							this.currentListLayout,
+							searchString,
+							true
+						);
+					} else {
+						this.listLayoutExists = false;
+						this.customTableService.isLoading = false;
+						this.isloadingMobileData = false;
+					}
+				});
 		});
 	}
 
@@ -581,38 +587,6 @@ export class RenderListLayoutNewComponent implements OnInit, OnDestroy {
 				searchString,
 				true
 			);
-		}
-	}
-	public parseMethod() {
-		let pair;
-		let fieldQuery = '';
-		let temp;
-		let value0;
-		let query;
-		const string = 'EMAIL_ADDRESS CONTACT.FULL_NAME CONTACT.FIRST_NAME';
-		if (string.length > 0) {
-			const values = string.split(' ');
-			for (let i = 0; i < values.length; i++) {
-				if (values[i] !== undefined) {
-					value0 = values[0];
-					const value = values[i];
-					if (value.indexOf('.') !== -1) {
-						pair = value.split('.');
-						if (pair !== undefined) {
-							fieldQuery += ' ' + pair[1];
-						}
-					}
-					if (pair !== undefined && i === values.length - 1) {
-						temp = `${pair[0]}` + '{' + fieldQuery + '}';
-					}
-				}
-			}
-			if (temp !== undefined) {
-				query = value0 + ' ' + temp;
-			} else {
-				query = value0;
-			}
-			console.log(query);
 		}
 	}
 

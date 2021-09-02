@@ -1296,13 +1296,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 			field.RELATIONSHIP_TYPE === 'Many to One' ||
 			field.RELATIONSHIP_TYPE === 'One to One'
 		) {
-			console.log('event.option.value', event.option.value);
 			this.entry[field.NAME] = event.option.value;
-			// event.option.value = {
-			// 	DATA_ID: '60fe2cf67eb38d15aa5a0021',
-			// 	PRIMARY_DISPLAY_FIELD:
-			// 		'akanksha.priya282@allbluesolutions.com Akanksha Priya',
-			// };
 			this.customModulesService.formControls[formControlFieldName].setValue(
 				event.option.value['PRIMARY_DISPLAY_FIELD']
 			);
@@ -1317,51 +1311,10 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 				this.entry[field.NAME] = [];
 			}
 			this.entry[field.NAME].push(event.option.value);
-			event.option.value = {
-				DATA_ID: '60fe2cf67eb38d15aa5a0021',
-				PRIMARY_DISPLAY_FIELD:
-					'AkankshaPriya akanksha.priya96@gmail.com Akanksha Priya',
-			};
-			this.parseMethod(event.option.value.PRIMARY_DISPLAY_FIELD);
 			this.customModulesService.formControls[formControlFieldName].setValue('');
 			if (field.NAME === 'USERS' && this.module.NAME === 'Teams') {
 				this.customModulesService.teamsAdded.push(event.option.value.DATA_ID);
 			}
-		}
-	}
-
-	public parseMethod(string) {
-		let fieldQuery = '';
-		let fieldQuery2 = '';
-		let temp;
-		let value0;
-		if (string.length > 0) {
-			const values = string.split(' ');
-			for (let i = 0; i < values.length; i++) {
-				if (values[i] !== undefined) {
-					value0 = values[0];
-					if (i > 0) {
-						temp = '<' + values[i] + '>';
-						console.log('temp', temp);
-						if (i > 1 && temp.indexOf('>') !== -1) {
-							const temp2 = temp.split('>');
-							const newvalue = '<' + values[i + 1] + '>';
-							fieldQuery = temp2[0] + newvalue + '>';
-							console.log('fieldQuery', fieldQuery);
-						}
-					}
-					if (i === values.length - 1) {
-						const temp2 = fieldQuery;
-						console.log('temp', temp2);
-					}
-				}
-			}
-			// if (temp !== undefined) {
-			// 	query = value0 + ' ' + temp;
-			// } else {
-			// 	query = value0;
-			// }
-			// console.log(query);
 		}
 	}
 
