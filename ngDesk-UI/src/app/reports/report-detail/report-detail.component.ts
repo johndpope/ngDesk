@@ -113,25 +113,17 @@ export class ReportDetailComponent implements OnInit {
 	public oneToManyFields: any[] = []; // one to many fields displayed in aggregation section
 	public relatedModuleFields: any[] = []; // validated other module fields
 	public reportInfo: any = {}; // save API Report info
-	public aggregationData;
-	public expandedElement;
-	public expandedElementIndex;
-	public sortByFieldsList: any[] = [];
-	public selectedColName: any = ' ';
-	public selectedColData: any = {};
-	public aggregationDataSource = new MatTableDataSource<any>();
-	public aggregationTableHeaders: any[] = [];
-	public aggregationColumns = [];
-	public aggregationPagination: any = {
-		pageSize: 2,
-		pageIndex: 0,
-		totalRecords: 0,
-	};
-
-	public aggregationSorting: any = {
-		direction: 'asc',
-		active: '',
-	};
+	// public aggregationData;
+	// public expandedElement;
+	// public expandedElementIndex;
+	// public sortByFieldsList: any[] = [];
+	// public selectedColName: any = ' ';
+	// public selectedColData: any = {};
+	// public aggregationDataSource = new MatTableDataSource<any>();
+	// public aggregationTableHeaders: any[] = [];
+	// public aggregationColumns = [];
+	public childPagination: any = {};
+	public childTableSorting: any = {};
 	public customisation: any = {};
 	public duplicateTableFields = [];
 
@@ -141,6 +133,7 @@ export class ReportDetailComponent implements OnInit {
 	public relationDropList: any = [];
 	public fieldsInList: any[] = [];
 	public currentIndex = 0;
+	public childTableLength = {};
 
 	constructor(
 		private route: ActivatedRoute,
@@ -394,18 +387,19 @@ export class ReportDetailComponent implements OnInit {
 						});
 
 						this.convertIdsToFields();
+						this.getTotalRecordsLength();
 						// setting data to Fields
 						this.changeFormatForTableData(reportInfo);
 						this.createDataSource();
 						this.addEmptyDataToRows();
 						this.loadEmptyTable();
+						if (!isSorted) {
+							this.setPaginationForChild();
+						}
+
 						this.totalRecords = reportDataResponse[1]?.COUNT;
-						console.log(this.source);
 					}
 					this.isLoadingTable = false;
-					// if (this.expandedElement && isSorted) {
-					// 	// this.onClickOfRow(this.expandedElementIndex, true);
-					// }
 				},
 				(error: any) => {
 					this.isLoadingTable = false;
@@ -478,27 +472,12 @@ export class ReportDetailComponent implements OnInit {
 				this.fieldsInTable.push(fieldData);
 			}
 
-			// if (!this.displayedColumns.includes(field.DISPLAY_LABEL)) {
-			// 	this.displayedColumns.push(field.DISPLAY_LABEL);
-			// 	this.displayedColumnsObj.push({
-			// 		NAME: field.NAME,
-			// 		DISPLAY: field.DISPLAY_LABEL,
-			// 		DATA_TYPE: field.DATA_TYPE,
-			// 	});
-			// }
-			// this.selectedColName = this.parentField.NAME;
-			// this.expandedElementIndex = 0;
-			this.postReportData(isRelationField);
+			this.postReportData();
 		} else {
 			this.fieldsInList = [];
 			this.removeDropHereData();
 			let insertedFieldIndex;
-			this.displayedColumns.push(field.DISPLAY_LABEL);
-			this.displayedColumnsObj.push({
-				NAME: field.NAME,
-				DISPLAY: field.DISPLAY_LABEL,
-				DATA_TYPE: field.DATA_TYPE,
-			});
+
 			this.fields.forEach((currentField, index) => {
 				if (currentField === field) {
 					field.fieldId = field.FIELD_ID;
@@ -520,7 +499,7 @@ export class ReportDetailComponent implements OnInit {
 					this.fieldsInList.push(field);
 				}
 			});
-			this.postReportData(false);
+			this.postReportData();
 		}
 	}
 
@@ -670,30 +649,27 @@ export class ReportDetailComponent implements OnInit {
 						this.displayedColumnsObj.splice(colIndex, 1);
 						this.displayedColumns.splice(colIndex, 1);
 						this.fieldsInTable.splice(index, 1);
-
-						this.allFields.forEach((field) => {
-							let isPresent = false;
-							this.fieldsIds.forEach((ids) => {
-								if (ids === field.FIELD_ID) {
-									isPresent = true;
-								}
-							});
-							if (!isPresent && field?.RELATIONSHIP_TYPE !== 'One to Many') {
-								this.fieldsInList.push(field);
-								// fieldsDataSource.push(field);
-							}
-						});
-						// this.fieldsDataSource = new MatTableDataSource<any>(
-						// 	fieldsDataSource
-						// );
 					}
 					this.source.forEach((record) => {
 						delete record[col.NAME];
 					});
 					this.dataSource = new MatTableDataSource<any>(this.source);
 					this.duplicateTableFields.splice(index, 1);
+
+					this.sortFieldsAlphabetically();
+
+					this.allFields.forEach((field) => {
+						let isPresent = false;
+						this.fieldsIds.forEach((ids) => {
+							if (ids === field.FIELD_ID) {
+								isPresent = true;
+							}
+						});
+						if (!isPresent && field?.RELATIONSHIP_TYPE !== 'One to Many') {
+							this.fieldsInList.push(field);
+						}
+					});
 				}
-				this.sortFieldsAlphabetically();
 			});
 		} else {
 			if (
@@ -857,9 +833,6 @@ export class ReportDetailComponent implements OnInit {
 	}
 
 	public removeParentId(relatedFields) {
-		// let tableFields = this.fieldsInTable.filter((field)=>!field.isParentField)
-		// this.fieldsInTable = tableFields
-
 		let relatedFieldsInTable = relatedFields;
 		relatedFieldsInTable.forEach((field) => {
 			field.fieldId = field.paentFieldId + '.' + field.fieldId;
@@ -1003,7 +976,6 @@ export class ReportDetailComponent implements OnInit {
 				{ NAME: 'REMOVE_COLUMN', ICON: 'delete', ACTION: 'delete' },
 			];
 		}
-		this.expandedElement = null;
 		this.operators = this.conditionsService.setOperators(field);
 	}
 
@@ -1110,6 +1082,7 @@ export class ReportDetailComponent implements OnInit {
 									parentDataType: field.DATA_TYPE,
 									parentModuleId: field.moduleId,
 									isParentField: true,
+									parentFieldId: field.fieldId,
 								});
 							} else {
 								this.displayedColumnsObj.push({
@@ -1123,9 +1096,7 @@ export class ReportDetailComponent implements OnInit {
 				});
 			}
 		});
-		// if (this.relatedModuleFields && this.relatedModuleFields.length > 0) {
-		// 	this.setOneToManyFieldsToTable(parentFieldKeys, reportInfo);
-		// }
+
 		this.filters.forEach((field, fIndex) => {
 			this.allFieldsForFilter.forEach((afld, afldIndex) => {
 				if (field.FIELD.FIELD_ID === afld.FIELD_ID) {
@@ -1430,12 +1401,8 @@ export class ReportDetailComponent implements OnInit {
 	public onRelationFieldClick(relationshipField) {
 		this.parentField = relationshipField;
 		this.chaildFields = [];
-		console.log(relationshipField.MODULE);
 		if (this.relatedFields.hasOwnProperty(relationshipField.MODULE)) {
 			this.chaildFields = this.relatedFields[relationshipField.MODULE];
-		}
-		if (this.chaildFields.length === 0) {
-			this.chaildFields = [{ DISPLAY_LABEL: 'NO DATA' }];
 		}
 	}
 
@@ -1472,9 +1439,7 @@ export class ReportDetailComponent implements OnInit {
 						data[field.parentFieldName] &&
 						data[field.parentFieldName].length > 0
 					) {
-						// data[field.parentFieldName].forEach((item) => {
 						field.data.push(data[field.parentFieldName]);
-						// });
 					} else if (
 						data[field.parentFieldName] &&
 						data[field.parentFieldName].length == 0
@@ -1517,122 +1482,6 @@ export class ReportDetailComponent implements OnInit {
 		});
 		return field;
 	}
-
-	// set the col Name to display expand row
-
-	public colSelected(value) {
-		console.log(value);
-		if (value.parentModuleId) {
-			this.selectedColName = value.NAME;
-		}
-		this.selectedColData = value;
-	}
-
-	// Expand and Display the Aggregation Entries
-
-	// public onClickOfRow(index: any, sorted?) {
-	// 	if (this.selectedColData.parentModuleId) {
-	// 		this.expandedElementIndex = index;
-	// 		this.aggregationData = [];
-	// 		this.aggregationTableHeaders = [];
-	// 		this.aggregationColumns = [];
-	// 		let currentRecord = this.reportInfo[index];
-	// 		let CurrentColData = [];
-	// 		let isPresent: boolean = false;
-	// 		let DATA_ID = currentRecord['DATA_ID'];
-	// 		let currentFieldId = '';
-
-	// 		if (this.oneToManyFields.length > 0) {
-	// 			this.oneToManyFields.forEach((field) => {
-	// 				if (field.NAME === this.selectedColName) {
-	// 					currentFieldId = field.FIELD_ID;
-	// 				}
-	// 			});
-
-	// 			this.reportService
-	// 				.buildQuireyToGetAggregationCount(
-	// 					this.reportForm.value['MODULE'],
-	// 					DATA_ID,
-	// 					currentFieldId
-	// 				)
-	// 				.subscribe((countData: any) => {
-	// 					this.aggregationDataSource = new MatTableDataSource<any>(
-	// 						this.aggregationData
-	// 					);
-	// 					if (currentRecord.hasOwnProperty(this.selectedColName)) {
-	// 						currentRecord[this.selectedColName].forEach((element) => {
-	// 							let keys = Object.keys(element);
-	// 							keys.forEach((key) => {
-	// 								if (!element[key]) {
-	// 									element[key] = 'No Data';
-	// 								}
-	// 								if (this.aggregationTableHeaders.length > 0) {
-	// 									this.aggregationTableHeaders.forEach((element) => {
-	// 										if (element.NAME === key) {
-	// 											isPresent = true;
-	// 										}
-	// 									});
-	// 								}
-	// 								if (!isPresent) {
-	// 									let Id;
-	// 									let relatedFields = [];
-	// 									let dataType;
-
-	// 									this.oneToManyFields.find((field) => {
-	// 										if (field.NAME === this.selectedColName) {
-	// 											Id = field.MODULE;
-	// 											return;
-	// 										}
-	// 									});
-
-	// 									if (Id) {
-	// 										relatedFields = this.relatedFields[Id];
-	// 										if (relatedFields.length > 0) {
-	// 											relatedFields.find((field) => {
-	// 												if (field.NAME == key) {
-	// 													dataType = field.DATA_TYPE;
-	// 												}
-	// 											});
-	// 										}
-	// 									}
-	// 									this.aggregationTableHeaders.push({
-	// 										NAME: key,
-	// 										DISPLAY: this.getFieldName(key),
-	// 										DATA_TYPE: dataType,
-	// 									});
-	// 								}
-
-	// 								if (
-	// 									!this.aggregationColumns.includes(this.getFieldName(key))
-	// 								) {
-	// 									this.aggregationColumns.push(this.getFieldName(key));
-	// 								}
-	// 							});
-	// 							CurrentColData.push(element);
-	// 						});
-	// 					}
-
-	// 					this.aggregationPagination.totalRecords = countData?.TOTAL_RECORDS;
-	// 					if (this.aggregationSorting?.active == '') {
-	// 						this.aggregationSorting.active =
-	// 							this.aggregationTableHeaders[0]?.NAME;
-	// 						this.aggregationSorting.direction = 'asc';
-	// 					}
-
-	// 					this.aggregationData = CurrentColData;
-	// 					this.aggregationDataSource = new MatTableDataSource<any>(
-	// 						this.aggregationData
-	// 					);
-	// 					if (sorted) {
-	// 						this.expandedElement = this.source[index];
-	// 					}
-	// 				});
-	// 		}
-	// 	} else {
-	// 		this.expandedElement = this.source[index];
-	// 	}
-	// }
-
 	// To get Field Dissplay lable from NAME
 
 	public getFieldName(raw_field) {
@@ -1687,46 +1536,70 @@ export class ReportDetailComponent implements OnInit {
 		}
 	}
 
-	public onPageChange(event) {
-		this.aggregationPagination.pageSize = event.pageSize;
-		this.aggregationPagination.pageIndex = event.pageIndex;
+	public onPageChange(event, rowIndex, colIndex, colName, moduleId) {
+		if (this.childPagination['table_' + rowIndex + '_' + colIndex]) {
+			this.childPagination['table_' + rowIndex + '_' + colIndex].pageSize =
+				event.pageSize;
+			this.childPagination['table_' + rowIndex + '_' + colIndex].pageIndex =
+				event.pageIndex;
 
-		this.customisation = {
-			customizeFor: this.selectedColName,
-			sortBy: this.aggregationSorting.active,
-			orederBy: this.aggregationSorting.direction,
-			pageSize: this.aggregationPagination.pageSize,
-			pageIndex: this.aggregationPagination.pageIndex,
-		};
-
-		this.postReportData(true);
-	}
-
-	public sortData(event) {
-		if (event.direction == '') {
-			this.aggregationSorting.direction =
-				this.aggregationSorting.direction === 'asc' ? 'dsc' : 'asc';
-		} else {
-			this.aggregationSorting.direction = event.direction;
+			if (
+				this.childTableSorting['table_' + rowIndex + '_' + colIndex].active ==
+				''
+			) {
+				this.childTableSorting['table_' + rowIndex + '_' + colIndex]['active'] =
+					this.relationFieldsInTable[moduleId][0].NAME;
+			}
+			this.customisation = {
+				customizeFor: colName,
+				sortBy:
+					this.childTableSorting['table_' + rowIndex + '_' + colIndex].active,
+				orederBy:
+					this.childTableSorting['table_' + rowIndex + '_' + colIndex]
+						.direction,
+				pageSize:
+					this.childPagination['table_' + rowIndex + '_' + colIndex].pageSize,
+				pageIndex: (this.childPagination[
+					'table_' + rowIndex + '_' + colIndex
+				].pageIndex = event.pageIndex),
+			};
+			this.postReportData(true);
 		}
-		this.aggregationSorting.active = event.active;
+	}
+
+	public sortData(event, rowIndex, colIndex, colName, moduleId) {
+		if (event.direction == '') {
+			this.childTableSorting['table_' + rowIndex + '_' + colIndex].direction =
+				this.childTableSorting['table_' + rowIndex + '_' + colIndex]
+					.direction === 'asc'
+					? 'dsc'
+					: 'asc';
+		} else {
+			this.childTableSorting['table_' + rowIndex + '_' + colIndex].direction =
+				event.direction;
+		}
+
+		if (event.active == '') {
+			this.childTableSorting['table_' + rowIndex + '_' + colIndex]['active'] =
+				this.relationFieldsInTable[moduleId][0].NAME;
+		} else {
+			this.childTableSorting['table_' + rowIndex + '_' + colIndex].active =
+				event.active;
+		}
+
 		this.customisation = {
-			customizeFor: this.selectedColName,
-			sortBy: this.aggregationSorting.active,
-			orederBy: this.aggregationSorting.direction,
-			pageSize: this.aggregationPagination.pageSize,
-			pageIndex: this.aggregationPagination.pageIndex,
+			customizeFor: colName,
+			sortBy:
+				this.childTableSorting['table_' + rowIndex + '_' + colIndex].active,
+			orederBy:
+				this.childTableSorting['table_' + rowIndex + '_' + colIndex].direction,
+			pageSize:
+				this.childPagination['table_' + rowIndex + '_' + colIndex].pageSize,
+			pageIndex:
+				this.childPagination['table_' + rowIndex + '_' + colIndex].pageIndex,
 		};
 		this.postReportData(true);
 	}
-
-	// public validateViewExpandRow(col, element) {
-	// 	if (element[col.NAME] && element[col.NAME] == 'View') {
-	// 		return true;
-	// 	} else if (element[col.NAME] && element[col.NAME] == 'NO DATA') {
-	// 		return false;
-	// 	}
-	// }
 
 	public getReatedFieldsOfAllmodules(moduleId?) {
 		let fieldsSet = [];
@@ -1882,9 +1755,91 @@ export class ReportDetailComponent implements OnInit {
 						});
 					}
 				});
-				// console.log(colData);
 				return colData;
 			}
+		}
+	}
+
+	// to get total records length for every child table
+	public getTotalRecordsLength() {
+		let totatalCounts = {};
+		this.displayedColumnsObj.forEach((colObj) => {
+			if (colObj.isParentField == true) {
+				this.reportInfo.forEach((data, index) => {
+					let dataId = data['DATA_ID'];
+					let fieldId = colObj.parentFieldId;
+					this.reportService
+						.buildQuireyToGetAggregationCount(
+							this.reportForm.value['MODULE'],
+							dataId,
+							fieldId
+						)
+						.subscribe((totalCount: any) => {
+							if (totatalCounts.hasOwnProperty('row' + index)) {
+								totatalCounts['row' + index].push({
+									NAME: colObj.NAME,
+									length: totalCount.TOTAL_RECORDS,
+								});
+							} else {
+								totatalCounts['row' + index] = [
+									{
+										NAME: colObj.NAME,
+										length: totalCount.TOTAL_RECORDS,
+									},
+								];
+							}
+
+							this.childTableLength = totatalCounts;
+						});
+				});
+			}
+		});
+	}
+
+	public displayTableLength(rowIndex, colName) {
+		let currentEntry: any = {};
+		let length;
+		currentEntry = this.childTableLength['row' + rowIndex];
+		if (currentEntry) {
+			currentEntry.forEach((element) => {
+				if (element?.NAME && element?.NAME == colName) {
+					length = element?.length;
+				}
+			});
+		}
+		return length ? length : 0;
+	}
+
+	public setPaginationForChild() {
+		this.displayedColumnsObj.forEach((col, colIndex) => {
+			if (col.isParentField == true) {
+				this.reportInfo.forEach((row, rowIndex) => {
+					this.childPagination['table_' + rowIndex + '_' + colIndex] = {
+						pageSize: 1,
+						pageIndex: 0,
+						totalRecords: 0,
+					};
+
+					this.childTableSorting['table_' + rowIndex + '_' + colIndex] = {
+						direction: 'asc',
+						active: '',
+					};
+				});
+			}
+		});
+	}
+
+	public getPageDetails(rowIndex, colIndex, param) {
+		if (this.childPagination['table_' + rowIndex + '_' + colIndex]) {
+			return this.childPagination['table_' + rowIndex + '_' + colIndex][param];
+		}
+	}
+
+	public getSortDetails(rowIndex, colIndex, param) {
+		if (this.childTableSorting['table_' + rowIndex + '_' + colIndex]) {
+			return this.childTableSorting['table_' + rowIndex + '_' + colIndex][
+				param
+			];
 		}
 	}
 }

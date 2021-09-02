@@ -47,13 +47,8 @@
 							</div>
 						</mat-tab>
 						<mat-tab fxFlex="50" label="Aggregation">
-							<!-- <div *ngIf="chaildFields.length>0" fxLayout="row" fxLayoutAlign="space-evenly center">
-								<p color="primary">Clear Fields</p>
-								<mat-icon class="pointer" [ngStyle]="{ 'color': 'rgb(176, 173, 171)'}" (click)="clearChaildList()">close
-								</mat-icon>
-							</div> -->
-							<table *ngIf="chaildFields?.length == 0" fxFlex mat-table [dataSource]="relationshipFieldsSource"
-								[ngStyle]="{'width':'100%'}">
+
+							<table fxFlex mat-table [dataSource]="relationshipFieldsSource" [ngStyle]="{'width':'100%'}">
 								<ng-container matColumnDef="DISPLAY_LABEL">
 									<th mat-header-cell *matHeaderCellDef style="color: white;"> {{'AVAILABLE_COLUMNS' | translate}}
 									</th>
@@ -69,6 +64,7 @@
 								<div fxLayout="column" fxFlex="100">
 									<div class="scroll" style="position: sticky; top: 1vh; overflow-y: auto; max-height: 72vh;
 											margin-left: 5px; border: solid; border-color: #e0e0e0; background: white;" *ngIf="chaildFields">
+										<p style="margin: 10px;">{{parentField.DISPLAY_LABEL}}</p>
 										<div style="width: 18vw; max-width: 100%; min-height: 60px; overflow: hidden;" cdkDropList
 											[cdkDropListConnectedTo]="relationDropList">
 											<div class="pad10 pointer" *ngFor="let field of chaildFields" fxLayout="row" fxLayoutAlign=" center"
@@ -145,7 +141,7 @@
 	<div *ngIf="!isLoadingTable" fxLayout="row" [ngStyle]="{'float':'left', 'width':'80%'}" id="report-table">
 		<div fxLayout="column" *ngIf="displayedColumns.length > 0" class="mat-elevation-z8" [ngStyle]="{'overflow':'auto'}">
 			<table mat-table [dataSource]="dataSource" multiTemplateDataRows [ngStyle]="{'width':'100%'}">
-				<ng-container matColumnDef="{{col.DISPLAY}}" *ngFor="let col of displayedColumnsObj; let i = index">
+				<ng-container matColumnDef="{{col.DISPLAY}}" *ngFor="let col of displayedColumnsObj; let j = index">
 					<th mat-header-cell *matHeaderCellDef mwlResizable [enableGhostResize]="true" (resizeEnd)="onResizeEnd($event, col)"
 						[resizeEdges]="{bottom: false, right: true, top: false, left: true}">
 						<div fxLayout="row" fxFlexAlign="start">
@@ -171,7 +167,7 @@
 							<mat-menu #menu="matMenu">
 								<div fxLayout="column">
 									<div fxLayout="row" *ngFor="let item of menuItems">
-										<button mat-menu-item fxLayout="column" (click)="actioncFunctions[item.ACTION](i, item.NAME, col)"
+										<button mat-menu-item fxLayout="column" (click)="actioncFunctions[item.ACTION](j, item.NAME, col)"
 											*ngIf="item.NAME != 'FILTER' && (displayedColumnsObj.length != 1 ||(item.NAME != 'MOVE_LEFT' &&  item.NAME != 'MOVE_RIGHT')) && (i != 0 || item.NAME != 'MOVE_LEFT') && (i != displayedColumnsObj.length -1  || item.NAME != 'MOVE_RIGHT')">
 											<div fxLayout="row">
 												<div>
@@ -185,7 +181,7 @@
 							</mat-menu>
 						</div>
 					</th>
-					<td mat-cell *matCellDef="let element" (click)="colSelected(col)">
+					<td mat-cell *matCellDef="let element;let k = dataIndex">
 						<ng-container [ngSwitch]="col.DATA_TYPE.DISPLAY">
 							<span *ngIf="!col?.parentDataType">
 								<span *ngSwitchCase="'Date/Time'">{{element[col.NAME] | dateFormat: 'medium'}}</span>
@@ -197,9 +193,9 @@
 									{{element[col.NAME]}}
 								</span>
 								<table *ngIf="col?.isParentField && element[col.NAME]" style="margin-top: 10px;margin-bottom: 10px; margin-right: 10px;"
-									class="mat-elevation-z8" mat-table matSort (matSortChange)="sortData($event)"
-									[dataSource]="createDynamicDataSource(element[col.NAME])" [matSortActive]="aggregationSorting?.active"
-									[matSortDirection]="aggregationSorting?.direction" id="i" [ngStyle]="{'width':'100%'}">
+									class="mat-elevation-z8" mat-table matSort (matSortChange)="sortData($event,k,j,col.NAME,col.parentModuleId)"
+									[dataSource]="createDynamicDataSource(element[col.NAME])" [matSortActive]="getSortDetails(k,j,'active')"
+									[matSortDirection]="getSortDetails(k,j,'direction')" [id]="k +'_'+j" [ngStyle]="{'width':'100%'}">
 									<ng-container matColumnDef="{{childcol?.DISPLAY}}"
 										*ngFor="let childcol of getChildTableColObj(element[col.NAME],col); let i = index">
 										<th mat-header-cell *matHeaderCellDef style="height: 50px;">
@@ -219,57 +215,20 @@
 										*matRowDef="let row; columns:getChaildTableColNames(element[col.NAME]) ; let index = dataIndex"></tr>
 								</table>
 
-								<!-- <mat-paginator *ngIf="col?.isParentField" (page)="onPageChange($event)" [length]="aggregationPagination?.totalRecords"
-									[pageSize]="aggregationPagination?.pageSize" [pageSizeOptions]="[1, 5, 10, 20]"
-									[pageIndex]="aggregationPagination?.pageIndex" showFirstLastButtons>
-								</mat-paginator> -->
+								<mat-paginator *ngIf="col?.isParentField" (page)="onPageChange($event,k,j,col.NAME,col.parentModuleId)"
+									[length]="displayTableLength(k,col.NAME)" [pageSize]="getPageDetails(k,j,'pageSize')" [pageSizeOptions]="[1, 5, 10, 20]"
+									[pageIndex]="getPageDetails(k,j,'pageIndex')" showFirstLastButtons>
+								</mat-paginator>
 							</span>
 						</ng-container>
 					</td>
 				</ng-container>
 
-				<!-- <ng-container matColumnDef="expandedDetail">
-					<td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumnsObj.length">
-						<div class="example-element-detail"
-							[@detailExpand]="element == expandedElement && aggregationData?.length>0? 'expanded' : 'collapsed'">
-							<div fxLayout="column" fxFlex>
-								<h4>{{getFieldName(selectedColName)}}</h4>
-								<div class="mat-elevation-z8" style="margin: 10px;">
-									<table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="aggregationDataSource"
-										[matSortActive]="aggregationSorting?.active" [matSortDirection]="aggregationSorting?.direction" id="custom">
-										<ng-container matColumnDef="{{col.DISPLAY}}" *ngFor="let col of aggregationTableHeaders; let i = index">
-											<th mat-header-cell *matHeaderCellDef style="height: 50px;">
-												<div class="custom-theme-icon-color" fxLayoutAlign="center center" [mat-sort-header]="col.NAME">
-													{{col.DISPLAY}} </div>
-											</th>
-											<td mat-cell *matCellDef="let element">
-												<ng-container [ngSwitch]="col.DATA_TYPE.DISPLAY">
-													<span *ngSwitchCase="'Date/Time'"
-														fxLayoutAlign="center center">{{element[col.NAME] | dateFormat: 'medium'}}</span>
-													<span *ngSwitchDefault fxLayoutAlign="center center">{{element[col.NAME] || 'No Data'}}</span>
-												</ng-container>
-											</td>
-										</ng-container>
-										<tr class="custom-theme-primary-color" mat-header-row *matHeaderRowDef="aggregationColumns"></tr>
-										<tr matRipple id="row-{{index}}" mat-row *matRowDef="let row; columns:aggregationColumns ; let index = dataIndex"></tr>
-									</table>
-									<mat-paginator (page)="onPageChange($event)" [length]="aggregationPagination?.totalRecords"
-										[pageSize]="aggregationPagination?.pageSize" [pageSizeOptions]="[1, 5, 10, 20]"
-										[pageIndex]="aggregationPagination?.pageIndex" showFirstLastButtons>
-									</mat-paginator>
-								</div>
-							</div>
-						</div>
-					</td>
-				</ng-container> -->
 
 				<tr class="custom-theme-primary-color" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-				<tr mat-row *matRowDef="let row; columns: displayedColumns; let index = dataIndex" class="example-element-row"
-					[class.example-expanded-row]="expandedElement === row">
+				<tr mat-row *matRowDef="let row; columns: displayedColumns; let index = dataIndex">
 
-					<!-- (click)="onClickOfRow(index);expandedElement = expandedElement === row ? null : row" -->
 				</tr>
-				<!-- <tr class="example-detail-row" mat-row *matRowDef="let row; columns: ['expandedDetail']"></tr> -->
 			</table>
 			<mat-paginator (page)="pageChanged($event)" [length]="totalRecords" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 20,50]"
 				[pageIndex]="page" showFirstLastButtons>

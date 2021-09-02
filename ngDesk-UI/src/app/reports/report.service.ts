@@ -91,7 +91,6 @@ sort=${sortBy}&order=${orderBy}&page=${page}&page_size=${pageSize}`);
 						)}
         }
 			}`;
-			console.log(query);
 			let payload: any = {
 				query: query,
 				conditions: filtres,
@@ -289,7 +288,7 @@ sort=${sortBy}&order=${orderBy}&page=${page}&page_size=${pageSize}`);
 		}
 		let moduleId = module.MODULE_ID;
 		let relationQuery = `
-		${key}(pageNumber:${pageNumber} pageSize: 2  moduleId: "${moduleId}" sortBy:"${sortBy}"
+		${key}(pageNumber:${pageNumber} pageSize: ${pageSize} moduleId: "${moduleId}" sortBy:"${sortBy}"
 		orderBy:"${orderBy}"){
 			${queryString}
 		}
