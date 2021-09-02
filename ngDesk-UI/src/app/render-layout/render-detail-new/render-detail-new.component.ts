@@ -1103,17 +1103,20 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 		}
 
 		//ADD DEFAULT PHONE FIELD
-		const phoneField = this.module['FIELDS'].find(
+		const phoneField = this.module['FIELDS'].filter(
 			(field) => field.DATA_TYPE.DISPLAY === 'Phone'
 		);
-		if (
-			phoneField &&
-			layoutType === 'edit' &&
-			module &&
-			this.module['FIELDS'].length > 0
-		) {
-			this.customModulesService.setDefaultPhoneEntry(this.entry, phoneField);
-		}
+		phoneField.forEach((field) => {
+			if (
+				field &&
+				layoutType == 'edit' &&
+				module &&
+				this.module['FIELDS'].length > 0
+			) {
+				this.customModulesService.setDefaultPhoneEntry(this.entry, field);
+			}
+		});
+
 		// INITIALIZE FORMULA FIELDS
 		this.renderDetailDataSerice.initializeFormulaFields(
 			this.module,
