@@ -114,4 +114,9 @@ public interface CustomModuleEntryRepository {
 	public void pullDataByVariable(String filterVariable, String filterValue, String variable, String value,
 			String collectionName);
 
+	public Optional<Map<String, Object>> findTeamsByVariableForIsPersonal(String fieldName, String value,
+			String collectionName);
+
+	public Optional<Map<String, Object>> findBySortingField(String fieldName, String collectionName);
+
 }

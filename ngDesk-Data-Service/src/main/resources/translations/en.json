@@ -96,12 +96,13 @@
 	"INVALID_MODULE_PERMISSIONS" : "The modulePermission you are trying to access may have been deleted, please try again",
 	"RESTRICTED_FIELD": "${1} is read only, Access Restricted",
 	"RESTRICTED_FIELD_WRITE_ONLY": "${1} is write only, Access Restricted",
-	"RESTRICTED_FIELD_NOT_EDITIBLE": "${1} is not editible, Access Restricted",
+	"RESTRICTED_FIELD_NOT_EDITIBLE": "${1} is not editable, Access Restricted",
 	"RESTRICTED_FIELD_WRITE_BY_TEAM": "${1} is write by team, Access Restricted",
 	"FROM_CURRENCY_NOT_EMPTY": "From currency cannot be empty, please try again",
 	"TO_CURRENCY_NOT_EMPTY": "To Currency cannot be empty, please try again",
 	"BASE_VALUE_NOT_NULL": "Base value cannot be null, please try again",
 	"INVALID_DATE_FORMAT": "The date format you have been selected is invalid, please select a valid format",
-	"INVALID_FORM" : "Selected Form doesnot exist or might have been deleted"
+	"INVALID_FORM" : "Selected Form does not exist or might have been deleted",
+	"INVALID_INPUT_FORMAT" : "The selected field ${1} input format is invalid, please select a valid format"
 
 }

@@ -17,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.aggregation.AccumulatorOperators;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
@@ -1435,6 +1436,27 @@ public class CustomModuleEntryRepositoryImpl implements CustomModuleEntryReposit
 		update.addToSet(variable, value);
 
 		mongoOperations.updateFirst(query, update, collectionName);
+	}
+
+	@Override
+	public Optional<Map<String, Object>> findTeamsByVariableForIsPersonal(String fieldName, String value,
+			String collectionName) {
+		Assert.notNull(value, "The given value must not be null!");
+		Assert.notNull(collectionName, "The given collectionName must not be null!");
+
+		Criteria criteria = new Criteria();
+		criteria.andOperator(Criteria.where("DELETED").is(true), Criteria.where("IS_PERSONAL").is(true),
+				Criteria.where(fieldName).is(value));
+
+		return Optional.ofNullable(mongoOperations.findOne(new Query(criteria), Map.class, collectionName));
+	}
+
+	@Override
+	public Optional<Map<String, Object>> findBySortingField(String fieldName, String collectionName) {
+		Assert.notNull(collectionName, "The given collectionName must not be null!");
+
+		return Optional.ofNullable(mongoOperations.findOne(new Query().with(Sort.by(Direction.DESC, fieldName)),
+				Map.class, collectionName));
 	}
 
 }
