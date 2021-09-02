@@ -12,7 +12,7 @@ export class ReportService {
 		private http: HttpClient,
 		private globals: AppGlobals,
 		private webSocketService: WebsocketService
-	) { }
+	) {}
 
 	public getAllReports(sortBy, orderBy, page, pageSize) {
 		return this.http.get(`${this.globals.baseRestUrl}/reports?
@@ -83,14 +83,15 @@ sort=${sortBy}&order=${orderBy}&page=${page}&page_size=${pageSize}`);
             orderBy:"${orderBy}"
           ) {
             ${this.buildQuerry(
-				module,
-				fieldsInTable,
-				allModules,
-				oneToManyFields,
-				customisationData
-			)}
+							module,
+							fieldsInTable,
+							allModules,
+							oneToManyFields,
+							customisationData
+						)}
         }
 			}`;
+			console.log(query);
 			let payload: any = {
 				query: query,
 				conditions: filtres,
@@ -137,12 +138,12 @@ sort=${sortBy}&order=${orderBy}&page=${page}&page_size=${pageSize}`);
 		let query = `{
         CSV:getCsvFor${moduleName}(moduleId:"${moduleId}") {
           ${this.buildQuerry(
-			module,
-			fieldsInTable,
-			allModules,
-			oneToManyFields,
-			customisation
-		)}
+						module,
+						fieldsInTable,
+						allModules,
+						oneToManyFields,
+						customisation
+					)}
         }
       }`;
 		let payload: any = {
@@ -219,7 +220,7 @@ sort=${sortBy}&order=${orderBy}&page=${page}&page_size=${pageSize}`);
 						reportQuery = reportQuery.replace(
 							moduleField.NAME,
 							moduleField.NAME +
-							`{
+								`{
 					          MESSAGE
 					    DATE_CREATED
 					          MESSAGE_ID
@@ -288,7 +289,7 @@ sort=${sortBy}&order=${orderBy}&page=${page}&page_size=${pageSize}`);
 		}
 		let moduleId = module.MODULE_ID;
 		let relationQuery = `
-		${key}(pageNumber:${pageNumber} pageSize: ${pageSize} moduleId: "${moduleId}" sortBy:"${sortBy}"
+		${key}(pageNumber:${pageNumber} pageSize: 2  moduleId: "${moduleId}" sortBy:"${sortBy}"
 		orderBy:"${orderBy}"){
 			${queryString}
 		}

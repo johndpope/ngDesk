@@ -78,7 +78,7 @@ export class ReportDetailComponent implements OnInit {
 	public displayedColumns: string[] = [];
 	public displayedColumnsObj = [];
 	public dataSource = new MatTableDataSource<any>();
-	public fieldsDataSource = new MatTableDataSource<any>();
+	// public fieldsDataSource = new MatTableDataSource<any>();
 	public relationshipFieldsSource = new MatTableDataSource<any>();
 	public fields: any;
 	private sortBy = 0;
@@ -123,7 +123,7 @@ export class ReportDetailComponent implements OnInit {
 	public aggregationTableHeaders: any[] = [];
 	public aggregationColumns = [];
 	public aggregationPagination: any = {
-		pageSize: 1,
+		pageSize: 2,
 		pageIndex: 0,
 		totalRecords: 0,
 	};
@@ -138,7 +138,9 @@ export class ReportDetailComponent implements OnInit {
 	/** ----  Newly added Fields ------ */
 
 	public dropList: any = [];
+	public relationDropList: any = [];
 	public fieldsInList: any[] = [];
+	public currentIndex = 0;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -162,6 +164,7 @@ export class ReportDetailComponent implements OnInit {
 	public ngOnInit() {
 		this.reportId = this.route.snapshot.params['reportId'];
 		this.dropList.push('field1');
+		this.relationDropList.push('field1');
 		this.menuItems.push(
 			{ NAME: 'SORT_ASCENDING', ICON: 'arrow_upward', ACTION: 'sort' },
 			{ NAME: 'SORT_DECENDING', ICON: 'arrow_downward', ACTION: 'sort' },
@@ -308,25 +311,17 @@ export class ReportDetailComponent implements OnInit {
 			)
 			.subscribe(
 				(reportDataResponse: any) => {
-					let parentFieldKeys: any[] = [];
 					this.source = [];
 					this.displayedColumns = [];
 					this.displayedColumnsObj = [];
 					this.fieldsInTable = [];
-					this.relatedModuleFields = [];
 					this.relationFieldsInTable = {};
+					this.relatedModuleFields = [];
+
 					let reportInfo = reportDataResponse[0]?.DATA;
 					let isParentFiedPresent: boolean = false;
-
 					if (reportInfo) {
 						this.reportInfo = reportInfo;
-						if (reportInfo[0]) {
-							// fetching Parent Keys
-							parentFieldKeys = Object.keys(reportInfo[0]);
-						} else {
-							parentFieldKeys = [];
-						}
-						// filtering Fields in table by IDs
 						this.allFields.forEach((field) => {
 							if (this.fieldsIds.includes(field.FIELD_ID)) {
 								let fieldData: any = {};
@@ -337,80 +332,80 @@ export class ReportDetailComponent implements OnInit {
 						});
 
 						// fiter relationship Fields
-						// this.oneToManyFields.forEach((field) => {
-						// 	if (this.relatedFields.hasOwnProperty(field.MODULE)) {
-						// 		let relatedFieds: any[] = this.relatedFields[field.MODULE];
-						// 		relatedFieds.forEach((relationField) => {
-						// 			if (
-						// 				this.relationFieldIds[field.MODULE] &&
-						// 				this.relationFieldIds[field.MODULE].length > 0 &&
-						// 				this.relationFieldIds[field.MODULE].includes(
-						// 					relationField.FIELD_ID
-						// 				)
-						// 			) {
-						// 				let fieldData: any = {};
-						// 				fieldData.data = [];
-						// 				(fieldData.DATA = []),
-						// 					(fieldData.parentFieldName = field.NAME);
-						// 				fieldData.parentModuleId = field.MODULE;
-						// 				fieldData.fieldId = relationField.FIELD_ID;
-						// 				(fieldData.DATA_TYPE = field.DATA_TYPE),
-						// 					(fieldData.NAME = relationField.NAME),
-						// 					(fieldData.isRelated = true);
-						// 				fieldData.paentFieldId = field.FIELD_ID;
-						// 				if (
-						// 					this.relationFieldsInTable.hasOwnProperty(field.MODULE)
-						// 				) {
-						// 					this.relationFieldsInTable[field.MODULE].push(fieldData);
-						// 				} else {
-						// 					this.relationFieldsInTable[field.MODULE] = [fieldData];
-						// 				}
-						// 				this.relatedModuleFields.push(relationField);
-						// 			}
-						// 		});
-						// 	}
-						// });
+						this.oneToManyFields.forEach((field) => {
+							if (this.relatedFields.hasOwnProperty(field.MODULE)) {
+								let relatedFieds: any[] = this.relatedFields[field.MODULE];
+								relatedFieds.forEach((relationField) => {
+									if (
+										this.relationFieldIds[field.MODULE] &&
+										this.relationFieldIds[field.MODULE].length > 0 &&
+										this.relationFieldIds[field.MODULE].includes(
+											relationField.FIELD_ID
+										)
+									) {
+										let fieldData: any = {};
+										fieldData.data = [];
+										(fieldData.DATA = []),
+											(fieldData.parentFieldName = field.NAME);
+										fieldData.parentModuleId = field.MODULE;
+										fieldData.fieldId = relationField.FIELD_ID;
+										(fieldData.DATA_TYPE = field.DATA_TYPE),
+											(fieldData.NAME = relationField.NAME),
+											(fieldData.isRelated = true);
+										fieldData.paentFieldId = field.FIELD_ID;
+										if (
+											this.relationFieldsInTable.hasOwnProperty(field.MODULE)
+										) {
+											this.relationFieldsInTable[field.MODULE].push(fieldData);
+										} else {
+											this.relationFieldsInTable[field.MODULE] = [fieldData];
+										}
+										this.relatedModuleFields.push(relationField);
+									}
+								});
+							}
+						});
 
-						// this.oneToManyFields.forEach((field) => {
-						// 	this.fieldsInTable.forEach((item) => {
-						// 		if (item.NAME == field.NAME) {
-						// 			isParentFiedPresent = true;
-						// 		}
-						// 	});
+						this.oneToManyFields.forEach((field) => {
+							this.fieldsInTable.forEach((item) => {
+								if (item.NAME == field.NAME) {
+									isParentFiedPresent = true;
+								}
+							});
 
-						// 	if (
-						// 		!isParentFiedPresent &&
-						// 		this.relationFieldIds.hasOwnProperty(field.MODULE) &&
-						// 		this.relationFieldIds[field.MODULE].length > 0
-						// 	) {
-						// 		let fieldData = {
-						// 			fieldId: field.FIELD_ID,
-						// 			DATA: [],
-						// 			DISPLAY_LABEL: field.DISPLAY_LABEL,
-						// 			DATA_TYPE: field.DATA_TYPE,
-						// 			NAME: field.NAME,
-						// 			isParentField: true,
-						// 			parentFieldName: field.NAME,
-						// 			data: [],
-						// 			moduleId: field.MODULE,
-						// 		};
-						// 		this.fieldsInTable.push(fieldData);
-						// 	}
-						// });
+							if (
+								!isParentFiedPresent &&
+								this.relationFieldIds.hasOwnProperty(field.MODULE) &&
+								this.relationFieldIds[field.MODULE].length > 0
+							) {
+								let fieldData = {
+									fieldId: field.FIELD_ID,
+									DATA: [],
+									DISPLAY_LABEL: field.DISPLAY_LABEL,
+									DATA_TYPE: field.DATA_TYPE,
+									NAME: field.NAME,
+									isParentField: true,
+									parentFieldName: field.NAME,
+									data: [],
+									moduleId: field.MODULE,
+								};
+								this.fieldsInTable.push(fieldData);
+							}
+						});
 
-						this.convertIdsToFields(parentFieldKeys, reportInfo);
+						this.convertIdsToFields();
 						// setting data to Fields
 						this.changeFormatForTableData(reportInfo);
-
-						this.totalRecords = reportDataResponse[1]?.COUNT;
 						this.createDataSource();
 						this.addEmptyDataToRows();
 						this.loadEmptyTable();
+						this.totalRecords = reportDataResponse[1]?.COUNT;
+						console.log(this.source);
 					}
 					this.isLoadingTable = false;
-					if (this.expandedElement && isSorted) {
-						this.onClickOfRow(this.expandedElementIndex, true);
-					}
+					// if (this.expandedElement && isSorted) {
+					// 	// this.onClickOfRow(this.expandedElementIndex, true);
+					// }
 				},
 				(error: any) => {
 					this.isLoadingTable = false;
@@ -439,13 +434,13 @@ export class ReportDetailComponent implements OnInit {
 		return isValid;
 	}
 	public onFieldDrop(field, isRelationField?) {
-		this.fieldsInList = [];
+		this.chaildFields = [];
+		this.currentIndex = 0;
 		if (isRelationField) {
 			let isParentFiedPresent: boolean = false;
 			let tempField = {
 				fieldId: field.FIELD_ID,
 				DATA: [],
-				// DISPLAY_LABEL: field.DISPLAY_LABEL,
 				DATA_TYPE: field.DATA_TYPE,
 				NAME: field.NAME,
 				isRelated: isRelationField,
@@ -456,7 +451,7 @@ export class ReportDetailComponent implements OnInit {
 			} else {
 				this.relationFieldIds[this.parentField.MODULE] = [field.fieldId];
 			}
-
+			// console.log(field);
 			field = this.getParentByChaildId(field);
 			if (this.relationFieldsInTable.hasOwnProperty(this.parentField.MODULE)) {
 				this.relationFieldsInTable[this.parentField.MODULE].push(field);
@@ -483,18 +478,19 @@ export class ReportDetailComponent implements OnInit {
 				this.fieldsInTable.push(fieldData);
 			}
 
-			if (!this.displayedColumns.includes(field.DISPLAY_LABEL)) {
-				this.displayedColumns.push(field.DISPLAY_LABEL);
-				this.displayedColumnsObj.push({
-					NAME: field.NAME,
-					DISPLAY: field.DISPLAY_LABEL,
-					DATA_TYPE: field.DATA_TYPE,
-				});
-			}
-			this.selectedColName = this.parentField.NAME;
-			this.expandedElementIndex = 0;
+			// if (!this.displayedColumns.includes(field.DISPLAY_LABEL)) {
+			// 	this.displayedColumns.push(field.DISPLAY_LABEL);
+			// 	this.displayedColumnsObj.push({
+			// 		NAME: field.NAME,
+			// 		DISPLAY: field.DISPLAY_LABEL,
+			// 		DATA_TYPE: field.DATA_TYPE,
+			// 	});
+			// }
+			// this.selectedColName = this.parentField.NAME;
+			// this.expandedElementIndex = 0;
 			this.postReportData(isRelationField);
 		} else {
+			this.fieldsInList = [];
 			this.removeDropHereData();
 			let insertedFieldIndex;
 			this.displayedColumns.push(field.DISPLAY_LABEL);
@@ -525,7 +521,6 @@ export class ReportDetailComponent implements OnInit {
 				}
 			});
 			this.postReportData(false);
-			// this.fieldsDataSource = new MatTableDataSource<any>(fieldsDataSource);
 		}
 	}
 
@@ -545,6 +540,11 @@ export class ReportDetailComponent implements OnInit {
 								this.source.push({ [field.NAME]: 'Download To View' });
 							}
 							flag = false;
+						} else if (
+							field?.DATA_TYPE?.DISPLAY === 'Relationship' &&
+							field.RELATIONSHIP_TYPE == 'One to Many'
+						) {
+							this.source[dIndex][field.NAME] = data;
 						}
 					} else {
 						this.source.push({ [field.NAME]: data });
@@ -557,13 +557,14 @@ export class ReportDetailComponent implements OnInit {
 							}
 							flag = false;
 						}
+					} else if (
+						field?.DATA_TYPE?.DISPLAY === 'Relationship' &&
+						field.RELATIONSHIP_TYPE == 'One to Many'
+					) {
+						this.source[dIndex][field.NAME] = data;
 					} else {
 						if (this.source[dIndex]) {
-							// if(!field.parentModuleId){
 							this.source[dIndex][field.NAME] = data;
-							// }else {
-							// 	this.source[dIndex][field.parentFieldName] = data
-							// }
 						}
 					}
 				}
@@ -647,9 +648,9 @@ export class ReportDetailComponent implements OnInit {
 			}
 		});
 		this.oneToManyFields = oneToManyFields;
-		// this.relationshipFieldsSource = new MatTableDataSource<any>(
-		// 	this.oneToManyFields
-		// );
+		this.relationshipFieldsSource = new MatTableDataSource<any>(
+			this.oneToManyFields
+		);
 	}
 
 	private removeColumn(colIndex, col) {
@@ -1074,7 +1075,7 @@ export class ReportDetailComponent implements OnInit {
 		this.editField = null;
 	}
 
-	private convertIdsToFields(parentFieldKeys, reportInfo) {
+	private convertIdsToFields() {
 		this.fieldsInTable.forEach((field, fIndex) => {
 			if (
 				field.parentFieldName &&
@@ -1089,14 +1090,6 @@ export class ReportDetailComponent implements OnInit {
 							this.relatedFields[field.parentModuleId][afldIndex].DATA_TYPE;
 						this.fieldsInTable[fIndex].DISPLAY_LABEL =
 							this.relatedFields[field.parentModuleId][afldIndex].DISPLAY_LABEL;
-						// if(!this.displayedColumns.includes(field.parentDisplayName)){
-						// 	this.displayedColumns.push(field.parentDisplayName);
-						// 	// this.displayedColumnsObj.push({
-						// 	// 	NAME: field.NAME,
-						// 	// 	DISPLAY: field.parentDisplayName,
-						// 	// 	DATA_TYPE: field.DATA_TYPE,
-						// 	// });
-						// }
 					}
 				});
 			} else {
@@ -1437,6 +1430,7 @@ export class ReportDetailComponent implements OnInit {
 	public onRelationFieldClick(relationshipField) {
 		this.parentField = relationshipField;
 		this.chaildFields = [];
+		console.log(relationshipField.MODULE);
 		if (this.relatedFields.hasOwnProperty(relationshipField.MODULE)) {
 			this.chaildFields = this.relatedFields[relationshipField.MODULE];
 		}
@@ -1471,26 +1465,26 @@ export class ReportDetailComponent implements OnInit {
 						const phone = this.setPhoneNumber(field, data);
 						field.data.push(phone);
 					} else {
-						// if (field.DATA_TYPE.DISPLAY !== 'Aggregate') {
 						field.data.push(data[field.NAME]);
-						// }
 					}
 				} else if (field.isParentField) {
 					if (
 						data[field.parentFieldName] &&
 						data[field.parentFieldName].length > 0
 					) {
-						field.data.push('View');
+						// data[field.parentFieldName].forEach((item) => {
+						field.data.push(data[field.parentFieldName]);
+						// });
 					} else if (
 						data[field.parentFieldName] &&
 						data[field.parentFieldName].length == 0
 					) {
-						field.data.push('NO DATA');
+						field.data = [];
 					} else if (
 						data.hasOwnProperty(field.parentFieldName) &&
 						data[field.parentFieldName] == null
 					) {
-						field.data.push('NO DATA');
+						field.data = [];
 					}
 				}
 			});
@@ -1515,7 +1509,6 @@ export class ReportDetailComponent implements OnInit {
 							field.DATA_TYPE = item.DATA_TYPE;
 							field.NAME = item.NAME;
 							field.DISPLAY_LABEL = relField.DISPLAY_LABEL;
-							// field.parentDisplayName = relField.DISPLAY_LABEL
 							return;
 						}
 					}
@@ -1528,6 +1521,7 @@ export class ReportDetailComponent implements OnInit {
 	// set the col Name to display expand row
 
 	public colSelected(value) {
+		console.log(value);
 		if (value.parentModuleId) {
 			this.selectedColName = value.NAME;
 		}
@@ -1536,108 +1530,108 @@ export class ReportDetailComponent implements OnInit {
 
 	// Expand and Display the Aggregation Entries
 
-	public onClickOfRow(index: any, sorted?) {
-		if (this.selectedColData.parentModuleId) {
-			this.expandedElementIndex = index;
-			this.aggregationData = [];
-			this.aggregationTableHeaders = [];
-			this.aggregationColumns = [];
-			let currentRecord = this.reportInfo[index];
-			let CurrentColData = [];
-			let isPresent: boolean = false;
-			let DATA_ID = currentRecord['DATA_ID'];
-			let currentFieldId = '';
+	// public onClickOfRow(index: any, sorted?) {
+	// 	if (this.selectedColData.parentModuleId) {
+	// 		this.expandedElementIndex = index;
+	// 		this.aggregationData = [];
+	// 		this.aggregationTableHeaders = [];
+	// 		this.aggregationColumns = [];
+	// 		let currentRecord = this.reportInfo[index];
+	// 		let CurrentColData = [];
+	// 		let isPresent: boolean = false;
+	// 		let DATA_ID = currentRecord['DATA_ID'];
+	// 		let currentFieldId = '';
 
-			if (this.oneToManyFields.length > 0) {
-				this.oneToManyFields.forEach((field) => {
-					if (field.NAME === this.selectedColName) {
-						currentFieldId = field.FIELD_ID;
-					}
-				});
+	// 		if (this.oneToManyFields.length > 0) {
+	// 			this.oneToManyFields.forEach((field) => {
+	// 				if (field.NAME === this.selectedColName) {
+	// 					currentFieldId = field.FIELD_ID;
+	// 				}
+	// 			});
 
-				this.reportService
-					.buildQuireyToGetAggregationCount(
-						this.reportForm.value['MODULE'],
-						DATA_ID,
-						currentFieldId
-					)
-					.subscribe((countData: any) => {
-						this.aggregationDataSource = new MatTableDataSource<any>(
-							this.aggregationData
-						);
-						if (currentRecord.hasOwnProperty(this.selectedColName)) {
-							currentRecord[this.selectedColName].forEach((element) => {
-								let keys = Object.keys(element);
-								keys.forEach((key) => {
-									if (!element[key]) {
-										element[key] = 'No Data';
-									}
-									if (this.aggregationTableHeaders.length > 0) {
-										this.aggregationTableHeaders.forEach((element) => {
-											if (element.NAME === key) {
-												isPresent = true;
-											}
-										});
-									}
-									if (!isPresent) {
-										let Id;
-										let relatedFields = [];
-										let dataType;
+	// 			this.reportService
+	// 				.buildQuireyToGetAggregationCount(
+	// 					this.reportForm.value['MODULE'],
+	// 					DATA_ID,
+	// 					currentFieldId
+	// 				)
+	// 				.subscribe((countData: any) => {
+	// 					this.aggregationDataSource = new MatTableDataSource<any>(
+	// 						this.aggregationData
+	// 					);
+	// 					if (currentRecord.hasOwnProperty(this.selectedColName)) {
+	// 						currentRecord[this.selectedColName].forEach((element) => {
+	// 							let keys = Object.keys(element);
+	// 							keys.forEach((key) => {
+	// 								if (!element[key]) {
+	// 									element[key] = 'No Data';
+	// 								}
+	// 								if (this.aggregationTableHeaders.length > 0) {
+	// 									this.aggregationTableHeaders.forEach((element) => {
+	// 										if (element.NAME === key) {
+	// 											isPresent = true;
+	// 										}
+	// 									});
+	// 								}
+	// 								if (!isPresent) {
+	// 									let Id;
+	// 									let relatedFields = [];
+	// 									let dataType;
 
-										this.oneToManyFields.find((field) => {
-											if (field.NAME === this.selectedColName) {
-												Id = field.MODULE;
-												return;
-											}
-										});
+	// 									this.oneToManyFields.find((field) => {
+	// 										if (field.NAME === this.selectedColName) {
+	// 											Id = field.MODULE;
+	// 											return;
+	// 										}
+	// 									});
 
-										if (Id) {
-											relatedFields = this.relatedFields[Id];
-											if (relatedFields.length > 0) {
-												relatedFields.find((field) => {
-													if (field.NAME == key) {
-														dataType = field.DATA_TYPE;
-													}
-												});
-											}
-										}
-										this.aggregationTableHeaders.push({
-											NAME: key,
-											DISPLAY: this.getFieldName(key),
-											DATA_TYPE: dataType,
-										});
-									}
+	// 									if (Id) {
+	// 										relatedFields = this.relatedFields[Id];
+	// 										if (relatedFields.length > 0) {
+	// 											relatedFields.find((field) => {
+	// 												if (field.NAME == key) {
+	// 													dataType = field.DATA_TYPE;
+	// 												}
+	// 											});
+	// 										}
+	// 									}
+	// 									this.aggregationTableHeaders.push({
+	// 										NAME: key,
+	// 										DISPLAY: this.getFieldName(key),
+	// 										DATA_TYPE: dataType,
+	// 									});
+	// 								}
 
-									if (
-										!this.aggregationColumns.includes(this.getFieldName(key))
-									) {
-										this.aggregationColumns.push(this.getFieldName(key));
-									}
-								});
-								CurrentColData.push(element);
-							});
-						}
+	// 								if (
+	// 									!this.aggregationColumns.includes(this.getFieldName(key))
+	// 								) {
+	// 									this.aggregationColumns.push(this.getFieldName(key));
+	// 								}
+	// 							});
+	// 							CurrentColData.push(element);
+	// 						});
+	// 					}
 
-						this.aggregationPagination.totalRecords = countData?.TOTAL_RECORDS;
-						if (this.aggregationSorting?.active == '') {
-							this.aggregationSorting.active =
-								this.aggregationTableHeaders[0]?.NAME;
-							this.aggregationSorting.direction = 'asc';
-						}
+	// 					this.aggregationPagination.totalRecords = countData?.TOTAL_RECORDS;
+	// 					if (this.aggregationSorting?.active == '') {
+	// 						this.aggregationSorting.active =
+	// 							this.aggregationTableHeaders[0]?.NAME;
+	// 						this.aggregationSorting.direction = 'asc';
+	// 					}
 
-						this.aggregationData = CurrentColData;
-						this.aggregationDataSource = new MatTableDataSource<any>(
-							this.aggregationData
-						);
-						if (sorted) {
-							this.expandedElement = this.source[index];
-						}
-					});
-			}
-		} else {
-			this.expandedElement = this.source[index];
-		}
-	}
+	// 					this.aggregationData = CurrentColData;
+	// 					this.aggregationDataSource = new MatTableDataSource<any>(
+	// 						this.aggregationData
+	// 					);
+	// 					if (sorted) {
+	// 						this.expandedElement = this.source[index];
+	// 					}
+	// 				});
+	// 		}
+	// 	} else {
+	// 		this.expandedElement = this.source[index];
+	// 	}
+	// }
 
 	// To get Field Dissplay lable from NAME
 
@@ -1726,13 +1720,13 @@ export class ReportDetailComponent implements OnInit {
 		this.postReportData(true);
 	}
 
-	public validateViewExpandRow(col, element) {
-		if (element[col.NAME] && element[col.NAME] == 'View') {
-			return true;
-		} else if (element[col.NAME] && element[col.NAME] == 'NO DATA') {
-			return false;
-		}
-	}
+	// public validateViewExpandRow(col, element) {
+	// 	if (element[col.NAME] && element[col.NAME] == 'View') {
+	// 		return true;
+	// 	} else if (element[col.NAME] && element[col.NAME] == 'NO DATA') {
+	// 		return false;
+	// 	}
+	// }
 
 	public getReatedFieldsOfAllmodules(moduleId?) {
 		let fieldsSet = [];
@@ -1788,27 +1782,33 @@ export class ReportDetailComponent implements OnInit {
 		};
 		this.displayedColumnsObj.push(field1);
 		this.displayedColumns.push('Drop Here');
-		// this.source.push({ Drop_Here: 'No Data' });
 		this.dataSource = new MatTableDataSource<any>(this.source);
 	}
 
 	public dropField(event: CdkDragDrop<string[]>) {
-		console.log(event.item.element.nativeElement);
 		let currentField: any = this.getFieldByFieldId(
 			event.item.element.nativeElement.id
 		);
-		let currentModule = currentField.MODULE_ID;
-		this.onFieldDrop(currentField);
+		if (this.currentIndex == 0) {
+			this.onFieldDrop(currentField);
+		} else {
+			this.onFieldDrop(currentField, true);
+		}
 	}
 
 	public getFieldByFieldId(id) {
-		return this.allFields.find((field) => field.FIELD_ID === id);
+		let field;
+		field = this.allFields.find((field) => field.FIELD_ID === id);
+		if (!field) {
+			field = this.chaildFields.find((field) => field.FIELD_ID === id);
+		}
+		return field;
 	}
 
 	public removeDropHereData() {
 		let colNameLastindx = this.displayedColumns.length - 1;
 		let colObjLastindx = this.displayedColumnsObj.length - 1;
-		let sourceLastIndex = this.source.length - 1;
+		// let sourceLastIndex = this.source.length - 1;
 
 		this.displayedColumns.splice(colNameLastindx, 1);
 		this.displayedColumnsObj.splice(colObjLastindx, 1);
@@ -1826,6 +1826,64 @@ export class ReportDetailComponent implements OnInit {
 			for (let i = 0; i < columnElts.length; i++) {
 				const currentEl = columnElts[i] as HTMLDivElement;
 				currentEl.style.width = cssValue;
+			}
+		}
+	}
+
+	public setDropList(event) {
+		this.chaildFields = [];
+		if (event && event.index == 1) {
+			this.currentIndex = 1;
+		} else if (event && event.index == 0) {
+			this.currentIndex = 0;
+		}
+	}
+
+	clearChaildList() {
+		this.chaildFields = [];
+	}
+
+	public createDynamicDataSource(source) {
+		if (source.length > 0) {
+			let datasource = new MatTableDataSource<any>(source);
+			return datasource;
+		}
+	}
+
+	public getChaildTableColNames(source) {
+		if (source.length > 0) {
+			let fieldKeys = Object.keys(source[0]);
+			let display = [];
+			if (fieldKeys?.length > 0) {
+				fieldKeys.forEach((key) => {
+					display.push(this.getFieldName(key));
+				});
+			}
+			return display;
+		}
+	}
+
+	public getChildTableColObj(source, col) {
+		if (source.length > 0) {
+			let fieldKeys = Object.keys(source[0]);
+			let colData = [];
+			let relatedFields = this.relatedFields[col.parentModuleId];
+			if (fieldKeys?.length > 0) {
+				fieldKeys.forEach((name) => {
+					let fieldData: any = {};
+					if (relatedFields.length > 0) {
+						relatedFields.find((field) => {
+							if (field.NAME == name) {
+								fieldData.NAME = name;
+								fieldData.DISPLAY = this.getFieldName(name);
+								fieldData.DATA_TYPE = field.DATA_TYPE;
+								colData.push(fieldData);
+							}
+						});
+					}
+				});
+				// console.log(colData);
+				return colData;
 			}
 		}
 	}
