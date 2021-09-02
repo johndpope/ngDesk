@@ -28,11 +28,23 @@
 				</div>
 				<div fxFlex fxLayoutAlign="flex-start center">
 					<mat-form-field style="width: 40%;">
-						<mat-select multiple [(ngModel)]="selectedTeams">
-							<mat-option *ngFor="let team of teams" [value]="team">
-								{{team.name}}
+						<mat-chip-list #teams_who_can_chat_ChipList>
+							<mat-chip *ngFor="let selectedTeam of selectedTeams; let selectedTeamIndex = index"
+								[selectable]='true' [removable]=true (removed)="removeTeam(selectedTeamIndex)">
+								<span>{{selectedTeam.name}}</span>
+								<mat-icon matChipRemove>cancel</mat-icon>
+							</mat-chip>
+							<input matInput [matAutocomplete]="teams_auto" placeholder="Teams"
+								[matChipInputFor]="teams_who_can_chat_ChipList" [(ngModel)]="tempTeamInput"
+								[matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="resetInput($event)"
+								(ngModelChange)="searchTeam()">
+						</mat-chip-list>
+						<mat-autocomplete (appAutocompleteScroll)="onTeamsScroll()" #teams_auto="matAutocomplete"
+							(optionSelected)="addTeam($event);">
+							<mat-option *ngFor="let team of teams" [value]="team" [disabled]="disableSelectedTeams(team.id)">
+								<span>{{team.name}}</span>
 							</mat-option>
-						</mat-select>
+						</mat-autocomplete>
 					</mat-form-field>
 				</div>
 			</div>
@@ -53,7 +65,7 @@
 			</div>
 			<div fxLayout="column" fxLayoutAlign="start start">
 				<div fxFlex fxLayoutGap="10px" fxLayoutAlign="flex-start center">
-					<mat-checkbox  color="primary" [(ngModel)]="hasRestrictions"
+					<mat-checkbox color="primary" [(ngModel)]="hasRestrictions"
 						(ngModelChange)="toggleRestrictions($event,true)"> {{
 						'BUSINESS_HOURS' | translate}}</mat-checkbox>
 					<label class="mat-body-strong pointer" (click)="toggleRestrictions($event,true)"

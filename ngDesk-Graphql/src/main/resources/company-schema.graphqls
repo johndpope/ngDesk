@@ -767,7 +767,7 @@ type Company{
 	
 }
 type ChatSettings{
-	teamsWhoCanChat: [String]
+	teamsWhoCanChat: [Teams]
 	hasRestrictions: Boolean
 	chatBusinessRules: ChatBusinessRules
 }
