@@ -658,7 +658,19 @@ export class FieldCreatorComponent implements OnInit {
 									fieldresponse.FIELDS.forEach((field) => {
 										if (
 											field.DATA_TYPE.DISPLAY !== 'Relationship' &&
-											field.DATA_TYPE.DISPLAY !== 'Phone'
+											field.DATA_TYPE.DISPLAY !== 'Phone' &&
+											field.DATA_TYPE.DISPLAY !== 'Date' &&
+											field.DATA_TYPE.DISPLAY !== 'Date/Time' &&
+											field.DATA_TYPE.DISPLAY !== 'Time' &&
+											field.DATA_TYPE.DISPLAY !== 'Zoom' &&
+											field.DATA_TYPE.DISPLAY !== 'Button' &&
+											field.DATA_TYPE.DISPLAY !== 'Time Window' &&
+											field.DATA_TYPE.DISPLAY !== 'Approval' &&
+											field.DATA_TYPE.DISPLAY !== 'Zoom' &&
+											field.DATA_TYPE.DISPLAY !== 'File Upload' &&
+											field.DATA_TYPE.DISPLAY !== 'Password' &&
+											field.DATA_TYPE.DISPLAY !== 'Aggregate' &&
+											field.DATA_TYPE.DISPLAY !== 'File Preview'
 										) {
 											this.parentModuleFields.push(field);
 										}
@@ -786,7 +798,19 @@ export class FieldCreatorComponent implements OnInit {
 					response.FIELDS.forEach((field) => {
 						if (
 							field.DATA_TYPE.DISPLAY !== 'Relationship' &&
-							field.DATA_TYPE.DISPLAY !== 'Phone'
+							field.DATA_TYPE.DISPLAY !== 'Phone' &&
+							field.DATA_TYPE.DISPLAY !== 'Date' &&
+							field.DATA_TYPE.DISPLAY !== 'Date/Time' &&
+							field.DATA_TYPE.DISPLAY !== 'Time' &&
+							field.DATA_TYPE.DISPLAY !== 'Zoom' &&
+							field.DATA_TYPE.DISPLAY !== 'Button' &&
+							field.DATA_TYPE.DISPLAY !== 'Time Window' &&
+							field.DATA_TYPE.DISPLAY !== 'Approval' &&
+							field.DATA_TYPE.DISPLAY !== 'Zoom' &&
+							field.DATA_TYPE.DISPLAY !== 'File Upload' &&
+							field.DATA_TYPE.DISPLAY !== 'Password' &&
+							field.DATA_TYPE.DISPLAY !== 'Aggregate' &&
+							field.DATA_TYPE.DISPLAY !== 'File Preview'
 						) {
 							this.selectedModuleFields.push(field);
 						}

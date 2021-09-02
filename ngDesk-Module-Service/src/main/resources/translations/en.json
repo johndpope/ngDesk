@@ -380,6 +380,7 @@
   "NAME_NOT_NULL": "Name is missing",
   "TRIGGERS_NOT_NULL": "Triggers cant be null",
   "CHAT_PROMPT_ALREADY_EXIST":"A chat prompt with this name already exists, please try with valid name",
-  "INVALID_RUN_TRIGGER":"Invalid run trigger,please try with valid run trigger"
-
+  "INVALID_RUN_TRIGGER":"Invalid run trigger,please try with valid run trigger",
+  "INVALID_PRIMARY_DISPLAY_FIELD": "The type of ${1} primary display field selected isn't valid, please select a valid primary display field"
+ 
 }

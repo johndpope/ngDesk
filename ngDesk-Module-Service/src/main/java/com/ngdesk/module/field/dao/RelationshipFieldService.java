@@ -104,4 +104,22 @@ public class RelationshipFieldService {
 		}
 	}
 
+	public void validatePrimaryDisplayField(ModuleField field, Module relatedModule) {
+		String primaryDisplayField = field.getPrimaryField();
+		Optional<ModuleField> optionalField = relatedModule.getFields().stream()
+				.filter(moduleField -> moduleField.getFieldId().equals(primaryDisplayField)).findFirst();
+
+		List<String> notAllowedPrimaryTypes = List.of("Relationship", "Phone", "Date", "Date/Time", "Time", "Button",
+				"Time Window", "Approval", "Zoom", "Password", "File Upload", "Aggregate", "File Preview");
+		if (optionalField.isPresent()) {
+			ModuleField relatedField = optionalField.get();
+			System.out.println("relatedField.getGroupId()==" + relatedField.getGroupId());
+			if (notAllowedPrimaryTypes.contains(relatedField.getDataType().getDisplay())) {
+				String[] vars = { relatedField.getName() };
+				throw new BadRequestException("INVALID_PRIMARY_DISPLAY_FIELD", vars);
+			}
+		}
+
+	}
+
 }
