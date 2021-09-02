@@ -56,6 +56,9 @@ public class LayoutService {
 		}
 
 		for (String layoutFeild : fieldid) {
+			if (layoutFeild.contains(".")) {
+				continue;
+			}
 			if (!moduleFields.contains(layoutFeild)) {
 				throw new BadRequestException("FIELD_ID_INVALID", null);
 			}

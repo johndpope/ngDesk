@@ -264,7 +264,7 @@ type ModuleField {
 	relationshipType: String
 	primaryDisplayField: ModuleField
 	relationshipField: ModuleField
-	module: Module
+	module: String
 	dataType: DataType
 	visibility: Boolean
 	required: Boolean
