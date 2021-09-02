@@ -80,6 +80,7 @@ import { TaskDetailComponent } from './modules-detail/task/task-detail/task-deta
 import { FormsComponent } from './modules-detail/forms/forms.component';
 import { ServiceCatalogueComponent } from './modules-detail/forms/service-catalogue/service-catalogue.component';
 import { ServiceCatalogueDetailComponent } from './modules-detail/forms/service-catalogue-detail/service-catalogue-detail.component';
+import { OrderByPipe } from './modules-detail/layouts/list-layout/order-by.pipe';
 
 @NgModule({
 	declarations: [
@@ -135,6 +136,7 @@ import { ServiceCatalogueDetailComponent } from './modules-detail/forms/service-
 		FormsComponent,
 		ServiceCatalogueComponent,
 		ServiceCatalogueDetailComponent,
+  OrderByPipe,
 	],
 	imports: [
 		CommonModule,
