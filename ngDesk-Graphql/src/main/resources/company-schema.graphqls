@@ -88,6 +88,7 @@ type Query {
 	getEscalation(escalationId: String): Escalation
 	getEscalations(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [Escalation]
 	getEscalationsCount: Int
+	getAuthorizedUserForChat: AuthorizedUsersForChat 
 	MODULE_FUNCTIONS_REPLACE
 }
 
@@ -976,3 +977,6 @@ type EscalateTo{
   teamIds: [String]
 }
 
+type AuthorizedUsersForChat{
+   users: [Users]
+}

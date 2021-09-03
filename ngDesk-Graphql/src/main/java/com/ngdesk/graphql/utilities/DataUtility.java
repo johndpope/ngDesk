@@ -29,6 +29,7 @@ import com.ngdesk.graphql.chat.channel.dao.ChatChannelDataFetcher;
 import com.ngdesk.graphql.chat.channel.dao.ChatChannelsDataFetcher;
 import com.ngdesk.graphql.chat.channel.dao.ChatPromptDataFetcher;
 import com.ngdesk.graphql.chat.channel.dao.ChatPromptsDataFetcher;
+import com.ngdesk.graphql.company.dao.AuthorizedUsersForChatDataFetcher;
 import com.ngdesk.graphql.company.dao.Company;
 import com.ngdesk.graphql.company.dao.CompanyDataFetcher;
 import com.ngdesk.graphql.currency.dao.CurrenciesDataFetcher;
@@ -154,6 +155,7 @@ public class DataUtility {
 	@Value("classpath:schedules-schema.graphqls")
 	private Resource scheduleSchemaResource;
 
+	
 	@Autowired
 	ModulesRepository modulesRepository;
 
@@ -505,6 +507,9 @@ public class DataUtility {
 
 	@Autowired
 	EscalationsCountDataFetcher escalationCountDataFetcher;
+	
+	@Autowired
+	AuthorizedUsersForChatDataFetcher authorizedUsersForChatFetcher;
 
 	public GraphQL createGraphQlObject(Company company) throws IOException {
 		try {
@@ -952,6 +957,12 @@ public class DataUtility {
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getEscalations", escalationsDataFetcher));
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getEscalationsCount", escalationCountDataFetcher));
 
+		
+		//CHAT
+		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getAuthorizedUserForChat", authorizedUsersForChatFetcher));
+		builder.type("AuthorizedUsersForChat", typeWiring -> typeWiring.dataFetcher("users", relationshipDataFetcher));
+		
+		
 		for (Module module : modules) {
 			String name = "get" + module.getName().replaceAll("\\s+", "_");
 			builder.type("Query", typeWiring -> typeWiring.dataFetcher(name, allEntriesFetcher));

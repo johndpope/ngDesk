@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ngdesk.commons.managers.AuthManager;
 import com.ngdesk.graphql.catalogue.dao.Catalogue;
 import com.ngdesk.graphql.categories.dao.Category;
+import com.ngdesk.graphql.company.dao.AuthorizedUsersForChat;
 import com.ngdesk.graphql.company.dao.ChatSettings;
 import com.ngdesk.graphql.form.dao.Form;
 import com.ngdesk.graphql.knowledgebase.section.dao.Section;
@@ -72,7 +73,13 @@ public class RelationshipDataFetcher implements DataFetcher<List<Map<String, Obj
 									entryIds = chatSettings.getTeamsWhoCanChat();
 
 								} catch (Exception e6) {
-									return null;
+									try {
+										AuthorizedUsersForChat authorizedUserForChat = environment.getSource();
+										entryIds = authorizedUserForChat.getUsers();
+
+									} catch (Exception e7) {
+										return null;
+									}
 								}
 							}
 						}
@@ -81,7 +88,9 @@ public class RelationshipDataFetcher implements DataFetcher<List<Map<String, Obj
 				}
 			}
 		}
-		if (entryIds == null || entryIds.size() == 0) {
+		if (entryIds == null || entryIds.size() == 0)
+
+		{
 			return new ArrayList<Map<String, Object>>();
 		}
 
