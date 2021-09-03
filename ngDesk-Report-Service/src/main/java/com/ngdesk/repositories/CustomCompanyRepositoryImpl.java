@@ -1,7 +1,6 @@
 package com.ngdesk.repositories;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -14,8 +13,10 @@ public class CustomCompanyRepositoryImpl implements CustomCompanyRepository {
 	MongoOperations mongoOperations;
 
 	@Override
-	public Optional<List<Company>> findAllCompanies(String collectionName) {
-		return Optional.ofNullable(mongoOperations.find(new Query(), Company.class, collectionName));
+	public List<Company> findAllCompanies(String collectionName) {
+		Query query = new Query();
+		query.fields().include("COMPANY_SUBDOMAIN");
+		return mongoOperations.find(new Query(), Company.class, collectionName);
 	}
 
 }
