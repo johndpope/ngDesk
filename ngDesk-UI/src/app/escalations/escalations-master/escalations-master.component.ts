@@ -113,7 +113,6 @@ export class EscalationsMasterComponent implements OnInit {
 			)
 			.subscribe(
 				(data: any) => {
-					console.log(data);
 					this.customTableService.setTableDataSource(
 						data.content,
 						data.totalElements
