@@ -17,7 +17,7 @@
 						<mat-error>{{'REQUIRED_FIELD' | translate}}</mat-error>
 					</mat-form-field>
 					<mat-form-field>
-						<input matInput placeholder="System label" formControlName="systemLabel" (blur)="overrideSysLabel = false" required  (keypress)="restrictSpaceBar($event)">
+						<input matInput placeholder="System label" formControlName="systemLabel" (blur)="overrideSysLabel = false" required>
 						<mat-error *ngIf="fieldNameFormGroup.controls.systemLabel.errors?.required">
 							{{'REQUIRED_FIELD' | translate}}</mat-error>
 						<mat-error *ngIf="fieldNameFormGroup.controls.systemLabel.errors?.pattern">
@@ -195,7 +195,7 @@
 							<mat-error>{{'REQUIRED_FIELD' | translate}}</mat-error>
 						</mat-form-field>
 						<mat-form-field>
-							<input matInput placeholder="System label" formControlName="systemLabel" required (keypress)="restrictSpaceBar($event)">
+							<input matInput placeholder="System label" formControlName="systemLabel" required >
 							<mat-error *ngIf="fieldFilePreviewNameFormGroup.controls.systemLabel.errors?.required">
 								{{'REQUIRED_FIELD' | translate}}</mat-error>
 							<mat-error *ngIf="fieldFilePreviewNameFormGroup.controls.systemLabel.errors?.pattern">
@@ -459,7 +459,7 @@
 						<input disabled matInput placeholder="Display label" [(ngModel)]=field.DISPLAY_LABEL>
 					</mat-form-field>
 					<mat-form-field>
-						<input disabled matInput  placeholder="System label" [(ngModel)]=field.NAME (keypress)="restrictSpaceBar($event)">
+						<input disabled matInput  placeholder="System label" [(ngModel)]=field.NAME >
 					</mat-form-field>
 					<mat-form-field
 						*ngIf="field.relationshipType==='One to One' || field.relationshipType==='Many to Many' || field.relationshipType==='One to Many'"
@@ -506,7 +506,7 @@
 							(keyup)="updateRelationFieldName()">
 					</mat-form-field>
 					<mat-form-field style="width: 100%;">
-						<input matInput type="text" placeholder="System label" [(ngModel)]="relationshipObj.NAME" (keypress)="restrictSpaceBar($event)">
+						<input matInput type="text" placeholder="System label" [(ngModel)]="relationshipObj.NAME">
 					</mat-form-field>
 					<mat-form-field
 						*ngIf="field.relationshipType==='One to One'|| field.relationshipType==='Many to Many'|| field.relationshipType==='One to Many'"
