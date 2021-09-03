@@ -27,6 +27,8 @@ import javax.crypto.spec.SecretKeySpec;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.text.translate.UnicodeUnescaper;
 import org.apache.http.util.Asserts;
+import org.bson.BsonDocument;
+import org.bson.BsonMaximumSizeExceededException;
 import org.bson.types.ObjectId;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
@@ -833,6 +835,11 @@ public class DataService {
 			payload.put(discussionField.getName(), existingMessages);
 			return payload;
 
+		} catch (BsonMaximumSizeExceededException e) {
+			String[] var = { module.getName() };
+
+			throw new BadRequestException("SIZE_EXCEEDED", var);
+
 		} catch (JsonMappingException e) {
 			throw new BadRequestException("BASE_TYPE_DISCUSSION_FORMAT_INVALID", vars);
 		} catch (JsonProcessingException e) {
@@ -941,9 +948,18 @@ public class DataService {
 					}
 
 					Attachment newAttachment = new Attachment(null, hash, file, attachment.getAttachmentUuid());
-					attachmentsRepository.save(newAttachment,
-							"attachments_" + authManager.getUserDetails().getCompanyId());
-					attachment.setHash(hash);
+					try {
+						attachmentsRepository.save(newAttachment,
+								"attachments_" + authManager.getUserDetails().getCompanyId());
+
+						attachment.setHash(hash);
+					} catch (BsonMaximumSizeExceededException e) {
+						String[] var = { module.getName() };
+
+						throw new BadRequestException("ATTACHMENT_SIZE_EXCEEDED", var);
+
+					}
+
 				} else {
 
 					attachment.setHash(optionalAttachment.get().getHash());
@@ -988,7 +1004,7 @@ public class DataService {
 		}
 	}
 
-	public void isEditableTeam(String dataId,String name) {
+	public void isEditableTeam(String dataId, String name) {
 		Page<Role> roles = rolesRepository.findAll(PageRequest.of(0, 999),
 				"roles_" + authManager.getUserDetails().getCompanyId());
 		List<String> values = new ArrayList<String>();
@@ -1004,13 +1020,13 @@ public class DataService {
 				.filter(team -> team.get("_id").toString().equals(dataId)).findAny();
 
 		if (optionalTeam.isPresent()) {
-			 if(optionalTeam.get().get("NAME").equals("Global")||optionalTeam.get().get("NAME").equals("Public")) {
-				 throw new ForbiddenException("FORBIDDEN");
-			 }
-			
-			 else if(!values.contains(name)) {
+			if (optionalTeam.get().get("NAME").equals("Global") || optionalTeam.get().get("NAME").equals("Public")) {
+				throw new ForbiddenException("FORBIDDEN");
+			}
 
-			throw new ForbiddenException("FORBIDDEN");
+			else if (!values.contains(name)) {
+
+				throw new ForbiddenException("FORBIDDEN");
 			}
 
 		}

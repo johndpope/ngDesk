@@ -102,6 +102,8 @@
 	"TO_CURRENCY_NOT_EMPTY": "To Currency cannot be empty, please try again",
 	"BASE_VALUE_NOT_NULL": "Base value cannot be null, please try again",
 	"INVALID_DATE_FORMAT": "The date format you have been selected is invalid, please select a valid format",
-	"INVALID_FORM" : "Selected Form doesnot exist or might have been deleted"
+	"INVALID_FORM" : "Selected Form doesnot exist or might have been deleted",
+	"SIZE_EXCEEDED": " ${1} content size is Exceeded MAX_SIZE 16MB, Please create new ${1} ",
+	"ATTACHMENT_SIZE_EXCEEDED":"${1} attachment size Exceeded MAX_SIZE of 16MB, Please create new ${1}"
 
 }
