@@ -82,6 +82,7 @@ type Query {
 	getKbArticle(articleId:String):Article
 	getAllKbArticles(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String, search: String):[Article]
 	getAllKbArticlesCount(search: String): Int
+	getArticlesBySectionId(sectionId: String, pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String):[Article]
 	getKbCategory(categoryId: String): Category
 	getKbCategories(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [Category]
 	getKbCountCategories: Int
@@ -910,6 +911,7 @@ type Section{
    sectionId: String
    name:String
    description:String
+   language:String
    sortBy:String
    category:Category
    dateCreated:DateTime

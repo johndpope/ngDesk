@@ -34,4 +34,12 @@ public interface CustomArticleRepository {
 
 	public int findArticleCountBySearch(List<ObjectId> ids, String collectionName);
 
+	public List<Article> findAllWithPageableBySectionId(String sectionId, Pageable pageable, String collectionName);
+
+	public List<Article> findAllWithPageableAndTeamBySectionId(String sectionId, List<String> teams, Pageable pageable,
+			String collectionName);
+
+	public List<Article> findAllWithPageableAndTeamBySectionId(String sectionId, String publicTeamId, Pageable pageable,
+			String collectionName);
+
 }

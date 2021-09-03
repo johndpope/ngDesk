@@ -11,6 +11,7 @@ import com.ngdesk.graphql.categories.dao.CategoriesNoAuthDataFetcher;
 import com.ngdesk.graphql.categories.dao.CategoryNoAuthDataFetcher;
 import com.ngdesk.graphql.datatypes.DateTime;
 import com.ngdesk.graphql.knowledgebase.article.dao.ArticleNoAuthDataFetcher;
+import com.ngdesk.graphql.knowledgebase.article.dao.ArticlesBySectionIdNoAuthDataFetcher;
 import com.ngdesk.graphql.knowledgebase.article.dao.ArticlesNoAuthCountFetcher;
 import com.ngdesk.graphql.knowledgebase.article.dao.ArticlesNoAuthDataFetcher;
 import com.ngdesk.graphql.knowledgebase.section.dao.SectionNoAuthCategoryDataFetcher;
@@ -74,6 +75,9 @@ public class DataUtilityForNoAuthCalls {
 	@Autowired
 	ArticlesNoAuthCountFetcher articlesNoAuthCountFetcher;
 
+	@Autowired
+	ArticlesBySectionIdNoAuthDataFetcher articlesBySectionIdNoAuthDataFetcher;
+
 	public GraphQL createGraphQlObject() throws IOException {
 
 		try {
@@ -110,6 +114,8 @@ public class DataUtilityForNoAuthCalls {
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getAllKbArticles", articlesNoAuthDataFetcher));
 		builder.type("Query",
 				typeWiring -> typeWiring.dataFetcher("getAllKbArticlesCount", articlesNoAuthCountFetcher));
+		builder.type("Query",
+				typeWiring -> typeWiring.dataFetcher("getArticlesBySectionId", articlesBySectionIdNoAuthDataFetcher));
 
 		// builder.type("Category", typeWiring -> typeWiring.dataFetcher("createdBy",
 		// entryDataFetcher));

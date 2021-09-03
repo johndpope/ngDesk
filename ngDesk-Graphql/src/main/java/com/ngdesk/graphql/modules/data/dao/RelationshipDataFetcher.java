@@ -12,6 +12,7 @@ import com.ngdesk.commons.managers.AuthManager;
 import com.ngdesk.graphql.catalogue.dao.Catalogue;
 import com.ngdesk.graphql.categories.dao.Category;
 import com.ngdesk.graphql.form.dao.Form;
+import com.ngdesk.graphql.knowledgebase.article.dao.Article;
 import com.ngdesk.graphql.knowledgebase.section.dao.Section;
 import com.ngdesk.graphql.schedules.dao.Layer;
 import com.ngdesk.repositories.modules.data.ModuleEntryRepository;
@@ -66,7 +67,18 @@ public class RelationshipDataFetcher implements DataFetcher<List<Map<String, Obj
 
 							} catch (Exception e5) {
 
-								return null;
+								try {
+									Article article = environment.getSource();
+									String fieldName = environment.getField().getName();
+									if (fieldName.equalsIgnoreCase("visibleTo")) {
+										entryIds = article.getVisibleTo();
+									}
+
+								} catch (Exception e6) {
+
+									return null;
+
+								}
 
 							}
 						}
@@ -75,6 +87,7 @@ public class RelationshipDataFetcher implements DataFetcher<List<Map<String, Obj
 				}
 			}
 		}
+
 		if (entryIds == null || entryIds.size() == 0) {
 			return new ArrayList<Map<String, Object>>();
 		}

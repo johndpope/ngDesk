@@ -23,7 +23,7 @@ import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;
 
 @Component
-public class ArticlesNoAuthDataFetcher implements DataFetcher<List<Article>> {
+public class ArticlesBySectionIdNoAuthDataFetcher implements DataFetcher<List<Article>> {
 
 	@Autowired
 	ArticleRepository articleRepository;
@@ -54,7 +54,7 @@ public class ArticlesNoAuthDataFetcher implements DataFetcher<List<Article>> {
 		Integer pageSize = environment.getArgument("pageSize");
 		String sortBy = environment.getArgument("sortBy");
 		String orderBy = environment.getArgument("orderBy");
-		String search = environment.getArgument("search");
+		String sectionId = environment.getArgument("sectionId");
 		if (page == null || page < 0) {
 			page = 0;
 		}
@@ -85,13 +85,9 @@ public class ArticlesNoAuthDataFetcher implements DataFetcher<List<Article>> {
 		}
 		List<String> teams = new ArrayList<String>();
 		teams.add(publicTeamId);
-		if (search != null) {
-			List<ObjectId> ids = articleService.getIdsFromElastic(companyId, search, teams, false);
-			return articleRepository.findAllArticlesWithSearch(pageable, ids, collectionName);
-		} else {
-			return articleRepository.findAllArticlesByTeam(publicTeamId, pageable, collectionName);
-		}
 
+		return articleRepository.findAllWithPageableAndTeamBySectionId(sectionId, publicTeamId, pageable,
+				collectionName);
 	}
 
 }

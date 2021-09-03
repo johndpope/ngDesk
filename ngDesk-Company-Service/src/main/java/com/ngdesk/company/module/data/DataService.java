@@ -337,8 +337,8 @@ public class DataService {
 			categoriesJson = categoriesJson.replaceAll("PUBLIC_TEAM_ID_REPLACE", publicTeamId);
 			categoriesJson = categoriesJson.replaceAll("USER_ID_REPLACE", systemUserId);
 			Map<String, Object> category = mapper.readValue(categoriesJson, Map.class);
-			category.put("DATE_CREATED", new Date());
-			category.put("DATE_UPDATED", new Date());
+			category.put("dateCreated", new Date());
+			category.put("dateUpdated", new Date());
 			entryRepository.save(category, "categories_" + companyId);
 
 			String categoryId = category.get("_id").toString();
@@ -363,11 +363,11 @@ public class DataService {
 			String faqSectionId = null;
 
 			for (Map<String, Object> section : sections) {
-				section.put("DATE_CREATED", new Date());
-				section.put("DATE_UPDATED", new Date());
+				section.put("dateCreated", new Date());
+				section.put("dateUpdated", new Date());
 				entryRepository.save(section, "sections_" + companyId);
 
-				if (section.get("NAME").equals("Announcements")) {
+				if (section.get("name").equals("Announcements")) {
 					announcementSectionId = section.get("_id").toString();
 				} else {
 					faqSectionId = section.get("_id").toString();
@@ -381,8 +381,8 @@ public class DataService {
 			List<Map<String, Object>> articles = (List<Map<String, Object>>) articlesObj.get("ARTICLES");
 
 			for (Map<String, Object> article : articles) {
-				article.put("DATE_CREATED", new Date());
-				article.put("DATE_UPDATED", new Date());
+				article.put("dateCreated", new Date());
+				article.put("dateUpdated", new Date());
 				entryRepository.save(article, "articles_" + companyId);
 			}
 

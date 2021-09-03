@@ -1,46 +1,47 @@
 {
   "SECTIONS": [
     {
-      "SOURCE_LANGUAGE": "en",
-      "NAME": "Announcements",
-      "DESCRIPTION": "Any news about ngDesk!",
-      "SORT_BY": "Manually",
-      "CATEGORY": "CATEOGRY_ID_REPLACE",
-      "DATE_CREATED": "DATE_CREATED_REPLACED",
-      "DATE_UPDATED": "DATE_CREATED_REPLACED",
-      "LAST_UPDATED_BY": "USER_ID_REPLACE",
-      "CREATED_BY": "USER_ID_REPLACE",
-      "ORDER": 2,
-      "IS_DRAFT": false,
-      "VISIBLE_TO": [
+      "language": "en",
+      "name": "Announcements",
+      "description": "Any news about ngDesk!",
+      "sortBy": "Manually",
+      "category": "CATEOGRY_ID_REPLACE",
+      "dateCreated": "DATE_CREATED_REPLACED",
+      "dateUpdated": "DATE_CREATED_REPLACED",
+      "lastUpdatedBy": "USER_ID_REPLACE",
+      "createdBy": "USER_ID_REPLACE",
+      "order": 2,
+      "isDraft": false,
+      "visibleTo": [
         "PUBLIC_TEAM_ID_REPLACE",
         "GLOBAL_TEAM_ID_REPLACE"
   	  ],
-  	  "MANAGED_BY": [
+  	  "managedBy": [
         "ADMIN_TEAM",
         "AGENT_TEAM"
       ]
     },
     {
-      "SOURCE_LANGUAGE": "en",
-      "NAME": "FAQ",
-      "DESCRIPTION": "Frequently asked questions about ngDesk!",
-      "SORT_BY": "Manually",
-      "CATEGORY": "CATEOGRY_ID_REPLACE",
-      "DATE_CREATED": "DATE_CREATED_REPLACED",
-      "DATE_UPDATED": "DATE_CREATED_REPLACED",
-      "LAST_UPDATED_BY": "USER_ID_REPLACE",
-      "CREATED_BY": "USER_ID_REPLACE",
-      "ORDER": 1,
-      "IS_DRAFT": false,
-      "VISIBLE_TO": [
+      "language": "en",
+      "name": "FAQ",
+      "description": "Frequently asked questions about ngDesk!",
+      "sortBy": "Manually",
+      "category": "CATEOGRY_ID_REPLACE",
+      "dateCreated": "DATE_CREATED_REPLACED",
+      "dateUpdated": "DATE_CREATED_REPLACED",
+      "lastUpdatedBy": "USER_ID_REPLACE",
+      "createdBy": "USER_ID_REPLACE",
+      "order": 1,
+      "isDraft": false,
+      "visibleTo": [
         "PUBLIC_TEAM_ID_REPLACE",
         "GLOBAL_TEAM_ID_REPLACE"
   	  ],
-      "MANAGED_BY": [
+      "managedBy": [
         "ADMIN_TEAM",
         "AGENT_TEAM"
       ]
     }
   ]
 }
+

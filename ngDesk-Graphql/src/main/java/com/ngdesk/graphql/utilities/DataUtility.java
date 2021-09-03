@@ -56,6 +56,7 @@ import com.ngdesk.graphql.form.dao.FormCountDataFetcher;
 import com.ngdesk.graphql.form.dao.FormDataFetcher;
 import com.ngdesk.graphql.form.dao.FormsDataFetcher;
 import com.ngdesk.graphql.knowledgebase.article.dao.ArticleDataFetcher;
+import com.ngdesk.graphql.knowledgebase.article.dao.ArticlesBySectionIdDataFetcher;
 import com.ngdesk.graphql.knowledgebase.article.dao.ArticlesCountDataFetcher;
 import com.ngdesk.graphql.knowledgebase.article.dao.ArticlesDataFetcher;
 import com.ngdesk.graphql.knowledgebase.section.dao.SectionCategoryDataFetcher;
@@ -506,6 +507,9 @@ public class DataUtility {
 	@Autowired
 	EscalationsCountDataFetcher escalationCountDataFetcher;
 
+	@Autowired
+	ArticlesBySectionIdDataFetcher articlesBySectionIdDataFetcher;
+
 	public GraphQL createGraphQlObject(Company company) throws IOException {
 		try {
 			String schemaString = IOUtils.toString(modulesSchemaResource.getInputStream());
@@ -817,7 +821,6 @@ public class DataUtility {
 		builder.type("Section", typeWiring -> typeWiring.dataFetcher("createdBy", entryDataFetcher));
 		builder.type("Section", typeWiring -> typeWiring.dataFetcher("lastUpdatedBy", entryDataFetcher));
 
-		
 		// ARTICLE
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getKbArticle", articleDataFetcher));
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getAllKbArticles", articlesDataFetcher));
@@ -825,7 +828,10 @@ public class DataUtility {
 		builder.type("Article", typeWiring -> typeWiring.dataFetcher("createdBy", entryDataFetcher));
 		builder.type("Article", typeWiring -> typeWiring.dataFetcher("lastUpdatedBy", entryDataFetcher));
 		builder.type("Article", typeWiring -> typeWiring.dataFetcher("author", entryDataFetcher));
-		
+		builder.type("Article", typeWiring -> typeWiring.dataFetcher("visibleTo", relationshipDataFetcher));
+		builder.type("Query",
+				typeWiring -> typeWiring.dataFetcher("getArticlesBySectionId", articlesBySectionIdDataFetcher));
+
 		// Notification
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getNotification", notificationDataFetcher));
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getNotifications", notificationsDataFetcher));
@@ -1018,7 +1024,7 @@ public class DataUtility {
 			});
 
 		}
-	
+
 		return builder.build();
 	}
 

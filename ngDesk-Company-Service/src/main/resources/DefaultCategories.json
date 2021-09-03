@@ -1,15 +1,16 @@
 {
-	"CREATED_BY": "USER_ID_REPLACE",
-	"DATE_CREATED": "DATE_REPLACE",
-	"LAST_UPDATED_BY": "USER_ID_REPLACE",
-	"DATE_UPDATED": "DATE_REPLACE",
-	"DESCRIPTION": "Default category",
-	"IS_DRAFT": false,
-	"SOURCE_LANGUAGE": "en",
-	"NAME": "General",
-	"ORDER": 1,
-	"VISIBLE_TO": [
+	"createdBy": "USER_ID_REPLACE",
+	"dateCreated": "DATE_REPLACE",
+	"lastUpdatedBy": "USER_ID_REPLACE",
+	"dateUpdated": "DATE_REPLACE",
+	"description": "Default category",
+	"isDraft": false,
+	"sourceLanguage": "en",
+	"name": "General",
+	"order": 1,
+	"visibleTo": [
         "GLOBAL_TEAM_ID_REPLACE",
 		"PUBLIC_TEAM_ID_REPLACE"
   	]
+
 }

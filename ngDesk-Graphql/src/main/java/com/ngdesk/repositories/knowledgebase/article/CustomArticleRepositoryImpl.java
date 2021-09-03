@@ -137,4 +137,42 @@ public class CustomArticleRepositoryImpl implements CustomArticleRepository {
 		Query query = new Query(criteria);
 		return (int) mongoOperations.count(query, collectionName);
 	}
+
+	@Override
+	public List<Article> findAllWithPageableBySectionId(String sectionId, Pageable pageable, String collectionName) {
+		Query query = new Query();
+		query.addCriteria(Criteria.where("section").is(sectionId));
+		query.with(pageable);
+		return mongoOperations.find(query, Article.class, collectionName);
+	}
+
+	@Override
+	public List<Article> findAllWithPageableAndTeamBySectionId(String sectionId, List<String> teams, Pageable pageable,
+			String collectionName) {
+		Criteria criteria = new Criteria();
+		List<Criteria> orCriterias = new ArrayList<Criteria>();
+		for (String team : teams) {
+			orCriterias.add(Criteria.where("visibleTo").is(team));
+		}
+		Criteria[] criteriasArray = new Criteria[orCriterias.size()];
+		criteriasArray = orCriterias.toArray(criteriasArray);
+		criteria.orOperator(criteriasArray);
+		criteria.where("section").is(sectionId);
+		Query query = new Query();
+		query.addCriteria(criteria).with(pageable);
+
+		return mongoOperations.find(query, Article.class, collectionName);
+	}
+
+	@Override
+	public List<Article> findAllWithPageableAndTeamBySectionId(String sectionId, String publicTeamId, Pageable pageable,
+			String collectionName) {
+		Criteria criteria = new Criteria();
+		criteria.andOperator(Criteria.where("visibleTo").is(publicTeamId), Criteria.where("publish").is(true));
+		criteria.where("section").is(sectionId);
+		Query query = new Query(criteria);
+
+		query.with(pageable);
+		return mongoOperations.find(query, Article.class, collectionName);
+	}
 }
