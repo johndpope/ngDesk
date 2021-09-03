@@ -23,6 +23,9 @@ import { UsersService } from '../users/users.service';
 import { WebsocketService } from '../websocket.service';
 import { NotificationApiService } from '@ngdesk/notification-api';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { HttpClient } from '@angular/common/http';
+import { AppGlobals } from '@src/app/app.globals';
+
 import {
 	debounceTime,
 	distinctUntilChanged,
@@ -86,6 +89,7 @@ export class ToolbarComponent implements OnDestroy, OnInit {
 	public notificationScrollSubject = new Subject<any>();
 	public notificationLength;
 	public filteredUnreadNotifications = [];
+	public authorizedUsersForChat = [];
 	public pageNumber = 0;
 	public panelWidth = '300px';
 	@ViewChild(MatAutocompleteTrigger, { read: MatAutocompleteTrigger })
@@ -105,7 +109,9 @@ export class ToolbarComponent implements OnDestroy, OnInit {
 		private websocketService: WebsocketService,
 		private cacheService: CacheService,
 		private modulesService: ModulesService,
-		public notificationApiService: NotificationApiService
+		public notificationApiService: NotificationApiService,
+		private http: HttpClient,
+		private globals: AppGlobals,
 	) {
 		this.authToken = this.usersService.getAuthenticationToken();
 		this.showAcceptChat = true;
@@ -117,98 +123,102 @@ export class ToolbarComponent implements OnDestroy, OnInit {
 		this.companyDataUpTodate = this.cacheService.companyInfoSubject.subscribe(
 			(dataStored) => {
 				console.log('loading data');
-				if (dataStored) {
-					this.logo =
-						this.cacheService.companyData['COMPANY_THEME']['SIDEBAR']['FILE'];
-					const ticketsModule = this.cacheService.companyData['MODULES'].find(
-						(module) => module['NAME'] === 'Tickets'
-					);
-					// const chatModule = this.cacheService.companyData['MODULES'].find(
-					// 	(module) => module['NAME'] === 'Chat'
-					// );
+				this.getAuthorizedUsersForChat().subscribe((usersResponse: any) => {
+					usersResponse['DATA']['USERS'].forEach(user => {
+						this.authorizedUsersForChat.push(user.EMAIL_ADDRESS);
+					});
+					if (dataStored) {
+						this.logo =
+							this.cacheService.companyData['COMPANY_THEME']['SIDEBAR']['FILE'];
+						const ticketsModule = this.cacheService.companyData['MODULES'].find(
+							(module) => module['NAME'] === 'Tickets'
+						);
+						// const chatModule = this.cacheService.companyData['MODULES'].find(
+						// 	(module) => module['NAME'] === 'Chat'
+						// );
 
-					if (!this.authToken) {
-						this.enableSignup =
-							this.cacheService.companyData['COMPANY_ENROLLMENT'][
+						if (!this.authToken) {
+							this.enableSignup =
+								this.cacheService.companyData['COMPANY_ENROLLMENT'][
 								'ENABLE_SIGNUPS'
-							];
-					} else {
-						if (
-							this.rolesService.role.NAME !== 'SystemAdmin' &&
-							this.rolesService.role.NAME !== 'Agent'
-						) {
-							this.showAcceptChat = false;
-						}
-						// if loggedin subscribe to notifications
-						this.notificationSubscription();
-						// this.getNotifications();
-						// this.getAcceptingChats();
-						this.initializeNotificationScrollSubject();
-						this.reloadNotificationOnPublish();
-					}
-					if (this.authToken) {
-						this.getModuleDetails();
-						if (this.rolesService.role.NAME === 'SystemAdmin') {
-							this.showGettingStarted = true;
-							if (document.getElementById('chat-widget') !== null) {
-								document.getElementById('chat-widget').style.display = 'block';
-							}
-							let questionCount =
-								this.cacheService.companyData['COMPANY_QUESTION_COUNT'].COUNT;
-							if (questionCount < 4) {
-								this.companiesService.setAdminSignup(false);
-								this.openQuestionsDialog(questionCount);
-							} else {
-								this.companiesService.setAdminSignup(true);
-							}
-						}
-						if (this.rolesService.role.NAME !== 'Customers') {
-							// FIREBASE REQUEST AND RECEIVE
-							this.messagingService.requestPermission(
-								this.userService.user.EMAIL_ADDRESS
-							);
-							this.messagingService.receiveMessage();
-						}
-
-						if (!this.cacheService.companyData['GETTING_STARTED']) {
-							// if (
-							// 	(this.cacheService.companyData['USAGE_TYPE'].TICKETS ||
-							// 		this.cacheService.companyData['USAGE_TYPE'].PAGER) &&
-							// 	!this.cacheService.companyData['USAGE_TYPE'].CHAT
-							// ) {
-							this.moduleId = ticketsModule.MODULE_ID;
-							this.displayGettingStarted = true;
-							let i = 0;
-							this.cacheService.companyData['ALL_GETTING_STARTED'].forEach(
-								(element) => {
-									this.complete[i] = element.COMPLETED;
-									i++;
-								}
-							);
-
-							this.calculateProgress();
-							this.publishProgress();
-							this.publishEmailStatus();
-							this.publishProgressChatIntegration();
-							// } else {
-							// this.moduleId = chatModule.MODULE_ID;
-							// this.displayGettingStarted = true;
-							// let i = 0;
-							// this.cacheService.companyData['ALL_GETTING_STARTED'].forEach(
-							// 	(element) => {
-							// 		this.complete[i] = element.COMPLETED;
-							// 		i++;
-							// 	}
-							// );
-							// this.calculateProgress();
-							// this.publishProgress();
-							// this.publishProgressChatIntegration();
-							// }
+								];
 						} else {
-							this.gettingStarted = true;
+							if (
+								!this.authorizedUsersForChat.includes(this.usersService.user.EMAIL_ADDRESS)
+							) {
+								this.showAcceptChat = false;
+							}
+							// if loggedin subscribe to notifications
+							this.notificationSubscription();
+							// this.getNotifications();
+							// this.getAcceptingChats();
+							this.initializeNotificationScrollSubject();
+							this.reloadNotificationOnPublish();
+						}
+						if (this.authToken) {
+							this.getModuleDetails();
+							if (this.rolesService.role.NAME === 'SystemAdmin') {
+								this.showGettingStarted = true;
+								if (document.getElementById('chat-widget') !== null) {
+									document.getElementById('chat-widget').style.display = 'block';
+								}
+								let questionCount =
+									this.cacheService.companyData['COMPANY_QUESTION_COUNT'].COUNT;
+								if (questionCount < 4) {
+									this.companiesService.setAdminSignup(false);
+									this.openQuestionsDialog(questionCount);
+								} else {
+									this.companiesService.setAdminSignup(true);
+								}
+							}
+							if (this.rolesService.role.NAME !== 'Customers') {
+								// FIREBASE REQUEST AND RECEIVE
+								this.messagingService.requestPermission(
+									this.userService.user.EMAIL_ADDRESS
+								);
+								this.messagingService.receiveMessage();
+							}
+
+							if (!this.cacheService.companyData['GETTING_STARTED']) {
+								// if (
+								// 	(this.cacheService.companyData['USAGE_TYPE'].TICKETS ||
+								// 		this.cacheService.companyData['USAGE_TYPE'].PAGER) &&
+								// 	!this.cacheService.companyData['USAGE_TYPE'].CHAT
+								// ) {
+								this.moduleId = ticketsModule.MODULE_ID;
+								this.displayGettingStarted = true;
+								let i = 0;
+								this.cacheService.companyData['ALL_GETTING_STARTED'].forEach(
+									(element) => {
+										this.complete[i] = element.COMPLETED;
+										i++;
+									}
+								);
+
+								this.calculateProgress();
+								this.publishProgress();
+								this.publishEmailStatus();
+								this.publishProgressChatIntegration();
+								// } else {
+								// this.moduleId = chatModule.MODULE_ID;
+								// this.displayGettingStarted = true;
+								// let i = 0;
+								// this.cacheService.companyData['ALL_GETTING_STARTED'].forEach(
+								// 	(element) => {
+								// 		this.complete[i] = element.COMPLETED;
+								// 		i++;
+								// 	}
+								// );
+								// this.calculateProgress();
+								// this.publishProgress();
+								// this.publishProgressChatIntegration();
+								// }
+							} else {
+								this.gettingStarted = true;
+							}
 						}
 					}
-				}
+				});
 			}
 		);
 		// });
@@ -666,5 +676,20 @@ export class ToolbarComponent implements OnDestroy, OnInit {
 
 	public navigateToCatalogue() {
 		this.router.navigate([`render/catalogue`]);
+	}
+
+	public getAuthorizedUsersForChat() {
+
+		let query = `{
+		DATA:getAuthorizedUserForChat {
+			USERS: users {
+			ID:	_id
+			    EMAIL_ADDRESS
+			  }
+			}
+		  }
+		  `;
+		return this.http.post(`${this.globals.graphqlUrl}`, query);
+
 	}
 }
