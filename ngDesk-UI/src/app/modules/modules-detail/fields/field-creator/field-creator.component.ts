@@ -826,6 +826,17 @@ export class FieldCreatorComponent implements OnInit {
 			this.relationshipObj.DISPLAY_LABEL.toUpperCase().replace(/ /g, '_');
 	}
 
+	/** restricting the space  */
+
+	public restrictSpaceBar(event):boolean{
+		const charCode = event.which ? event.which : event.keyCode;
+		 if (charCode == 32 ) {
+		 	return false;
+		 }
+		 return true;
+	}
+	
+
 	public save() {
 		this.errorMessage = '';
 		if (
