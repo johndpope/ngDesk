@@ -1391,6 +1391,15 @@ export class FieldCreatorComponent implements OnInit {
 			return false;
 		}
 	}
+	/** restricting the space  */
+
+	public restrictSpaceBar(event):boolean{
+		const charCode = event.which ? event.which : event.keyCode;
+		 if (charCode == 32 ) {
+		 	return false;
+		 }
+		 return true;
+	}
 
 	/** To set related module fields*/
 
