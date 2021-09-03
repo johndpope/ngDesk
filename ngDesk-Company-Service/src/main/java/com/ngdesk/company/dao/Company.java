@@ -1,6 +1,5 @@
 package com.ngdesk.company.dao;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -19,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ngdesk.commons.annotations.CustomNotEmpty;
 import com.ngdesk.commons.annotations.CustomNotNull;
 import com.ngdesk.commons.annotations.CustomTimeZoneValidation;
+import com.ngdesk.company.settings.dao.ChatSettings;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
@@ -190,11 +190,6 @@ public class Company {
 	@Field("ENABLE_DOCS")
 	private boolean enableDocs = true;
 
-	// TODO: REMOVE IF NOT REQURIED
-	@JsonProperty("MAX_CHATS_PER_AGENT")
-	@Field("MAX_CHATS_PER_AGENT")
-	private int maxChatPerAgent = 5;
-
 	@Schema(required = false, hidden = true)
 	@JsonProperty("THEMES")
 	@Field("THEMES")
@@ -240,15 +235,21 @@ public class Company {
 	@Field("ACCOUNT_LEVEL_ACCESS")
 	private boolean accountLevelAccess;
 
-	@Schema(required = false, description = "Roles with chat access")
-	@JsonProperty("ROLES_WITH_CHAT")
-	@Field("ROLES_WITH_CHAT")
-	private ArrayList<String> rolesWithChat;
+	@Schema(description = "Max agents per chat", required = false, example = "1")
+	@JsonProperty("MAX_CHATS_PER_AGENT")
+	@Field("MAX_CHATS_PER_AGENT")
+	private int maxChatsPerAgent = 5;
 
 	@Schema(required = false, description = "usage type of ngdesk application")
 	@JsonProperty("USAGE_TYPE")
 	@Field("USAGE_TYPE")
 	private UsageType usageType;
+
+	@Schema(required = false, description = "chat settings")
+	@JsonProperty("CHAT_SETTINGS")
+	@Field("CHAT_SETTINGS")
+	@Valid
+	private ChatSettings chatSettings;
 
 	public Company() {
 		super();
@@ -267,10 +268,9 @@ public class Company {
 			boolean gettingStarted, boolean firstSiginIn, String companyUuid,
 			@Size(min = 1, message = "PLUGINS_REQUIRED") List<String> plugins, SocialSignIn socialSignIn,
 			boolean wildcardEmails, String industry, String department, String size, String version, Tracking tracking,
-			boolean enableDocs, int maxChatPerAgent, Themes theme, Referral referal, String landingPage,
-			SignUpMessage signupMessage, InviteMessage inviteMessage, ForgotPasswordMessage forgotPasswordMessage,
-			String domain, int numberOfUsers, boolean accountLevelAccess, ArrayList<String> rolesWithChat,
-			UsageType usageType) {
+			boolean enableDocs, Themes theme, Referral referal, String landingPage, SignUpMessage signupMessage,
+			InviteMessage inviteMessage, ForgotPasswordMessage forgotPasswordMessage, String domain, int numberOfUsers,
+			boolean accountLevelAccess, int maxChatsPerAgent, UsageType usageType, @Valid ChatSettings chatSettings) {
 		super();
 		this.companyId = companyId;
 		this.companyName = companyName;
@@ -300,7 +300,6 @@ public class Company {
 		this.version = version;
 		this.tracking = tracking;
 		this.enableDocs = enableDocs;
-		this.maxChatPerAgent = maxChatPerAgent;
 		this.theme = theme;
 		this.referal = referal;
 		this.landingPage = landingPage;
@@ -310,8 +309,9 @@ public class Company {
 		this.domain = domain;
 		this.numberOfUsers = numberOfUsers;
 		this.accountLevelAccess = accountLevelAccess;
-		this.rolesWithChat = rolesWithChat;
+		this.maxChatsPerAgent = maxChatsPerAgent;
 		this.usageType = usageType;
+		this.chatSettings = chatSettings;
 	}
 
 	public String getCompanyId() {
@@ -530,20 +530,20 @@ public class Company {
 		this.tracking = tracking;
 	}
 
+	public int getMaxChatsPerAgent() {
+		return maxChatsPerAgent;
+	}
+
+	public void setMaxChatsPerAgent(int maxChatsPerAgent) {
+		this.maxChatsPerAgent = maxChatsPerAgent;
+	}
+
 	public boolean isEnableDocs() {
 		return enableDocs;
 	}
 
 	public void setEnableDocs(boolean enableDocs) {
 		this.enableDocs = enableDocs;
-	}
-
-	public int getMaxChatPerAgent() {
-		return maxChatPerAgent;
-	}
-
-	public void setMaxChatPerAgent(int maxChatPerAgent) {
-		this.maxChatPerAgent = maxChatPerAgent;
 	}
 
 	public Themes getTheme() {
@@ -618,20 +618,20 @@ public class Company {
 		this.accountLevelAccess = accountLevelAccess;
 	}
 
-	public ArrayList<String> isRolesWithChat() {
-		return rolesWithChat;
-	}
-
-	public void setRolesWithChat(ArrayList<String> rolesWithChat) {
-		this.rolesWithChat = rolesWithChat;
-	}
-
 	public UsageType isUsageType() {
 		return usageType;
 	}
 
 	public void setUsageType(UsageType usageType) {
 		this.usageType = usageType;
+	}
+
+	public ChatSettings getChatSettings() {
+		return chatSettings;
+	}
+
+	public void setChatSettings(ChatSettings chatSettings) {
+		this.chatSettings = chatSettings;
 	}
 
 }

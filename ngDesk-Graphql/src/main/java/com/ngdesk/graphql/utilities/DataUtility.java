@@ -713,6 +713,7 @@ public class DataUtility {
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getCsvForReports", reportGenerateDataFetcher));
 
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getCompanyDetails", companyDataFetcher));
+		builder.type("ChatSettings", typeWiring -> typeWiring.dataFetcher("teamsWhoCanChat", relationshipDataFetcher));
 
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("countSchedules", schedulesCountFetcher));
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getSchedules", schedulesDataFetcher));
@@ -817,7 +818,6 @@ public class DataUtility {
 		builder.type("Section", typeWiring -> typeWiring.dataFetcher("createdBy", entryDataFetcher));
 		builder.type("Section", typeWiring -> typeWiring.dataFetcher("lastUpdatedBy", entryDataFetcher));
 
-		
 		// ARTICLE
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getKbArticle", articleDataFetcher));
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getAllKbArticles", articlesDataFetcher));
@@ -825,7 +825,7 @@ public class DataUtility {
 		builder.type("Article", typeWiring -> typeWiring.dataFetcher("createdBy", entryDataFetcher));
 		builder.type("Article", typeWiring -> typeWiring.dataFetcher("lastUpdatedBy", entryDataFetcher));
 		builder.type("Article", typeWiring -> typeWiring.dataFetcher("author", entryDataFetcher));
-		
+
 		// Notification
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getNotification", notificationDataFetcher));
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getNotifications", notificationsDataFetcher));
@@ -1018,7 +1018,7 @@ public class DataUtility {
 			});
 
 		}
-	
+
 		return builder.build();
 	}
 

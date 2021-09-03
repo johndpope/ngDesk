@@ -148,6 +148,7 @@ import { DashboardEntriesComponent } from './dashboard-entries/dashboard-entries
 import { ApprovalRejectDialogComponent  } from './dialogs/approval-reject-dialog/approval-reject-dialog.component';
 import { ApprovalRejectInformationDialogComponent } from './dialogs/approval-reject-information-dialog/approval-reject-information-dialog.component';
 import { OneToManyDialogComponent } from './dialogs/one-to-many-dialog/one-to-many-dialog.component';
+import { ChatBusinessRulesComponent } from './company-settings/chat-settings/chat-general-settings/chat-business-rules/chat-business-rules.component';
 
 export function createJitCompiler() {
 	return new JitCompilerFactory().createCompiler();
@@ -218,7 +219,8 @@ const appConfig = (config: ConfigService) => {
 		DashboardEntriesComponent,
 		ApprovalRejectDialogComponent,
 		ApprovalRejectInformationDialogComponent,
-  OneToManyDialogComponent
+  		OneToManyDialogComponent,
+		ChatBusinessRulesComponent
 	],
 	imports: [
 		NbCardModule,

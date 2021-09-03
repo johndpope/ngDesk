@@ -1,6 +1,5 @@
 package com.ngdesk.repositories;
 
-import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +30,10 @@ public class CustomCompanyRepositoryImpl implements CustomCompanyRepository {
 		query.addCriteria(Criteria.where("_id").is(entry.getCompanyId().toString()));
 		return mongoOperations.findAndReplace(query, entry, collectionName);
 	}
-	
+
 	@Override
 	public UIFailLog saveUIFailLog(UIFailLog entry, String collectionName) {
-		
+
 		return mongoOperations.save(entry, collectionName);
 	}
 

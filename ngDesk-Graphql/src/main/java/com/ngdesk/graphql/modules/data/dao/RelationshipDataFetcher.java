@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ngdesk.commons.managers.AuthManager;
 import com.ngdesk.graphql.catalogue.dao.Catalogue;
 import com.ngdesk.graphql.categories.dao.Category;
+import com.ngdesk.graphql.company.dao.ChatSettings;
 import com.ngdesk.graphql.form.dao.Form;
 import com.ngdesk.graphql.knowledgebase.section.dao.Section;
 import com.ngdesk.graphql.schedules.dao.Layer;
@@ -66,8 +67,13 @@ public class RelationshipDataFetcher implements DataFetcher<List<Map<String, Obj
 
 							} catch (Exception e5) {
 
-								return null;
+								try {
+									ChatSettings chatSettings = environment.getSource();
+									entryIds = chatSettings.getTeamsWhoCanChat();
 
+								} catch (Exception e6) {
+									return null;
+								}
 							}
 						}
 

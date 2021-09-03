@@ -15,6 +15,13 @@ import {
 import { UsersService } from './../../../users/users.service';
 import { LoaderService } from '@src/app/custom-components/loader/loader.service';
 import { Router } from '@angular/router';
+import { ModulesService } from '@src/app/modules/modules.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ChatGeneralSettingsService } from './chat-general-settings.service';
+import { ChatBusinessRulesComponent } from './chat-business-rules/chat-business-rules.component';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap, map, mergeMap } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-chat-general-settings',
@@ -23,13 +30,30 @@ import { Router } from '@angular/router';
 })
 export class ChatGeneralSettingsComponent implements OnInit {
 	public maxChatOptions = [1, 2, 3, 4, 5];
-	public roles: Role[] = [];
-	public generalSettingsForm: FormGroup;
+	public teams = [];
 	public subdomain: string;
 	public params = {
 		max_chats_per_agent: {},
 	};
-	public companySettings: CompanySettings = {};
+	public companySettings: CompanySettings = {
+		COMPANY_SUBDOMAIN: '',
+		MAX_CHATS_PER_AGENT: 0,
+		TIMEZONE: '',
+		CHAT_SETTINGS: {},
+
+	};
+	public teamsModule;
+	public isRestricted = false;
+	public timezone = '';
+	public chatBusinessRules = {};
+	public timezones;
+	public maxChatsPerAgent = 0;
+	public selectedTeamIds = [];
+	public selectedTeams = [];
+	public hasRestrictions = false;
+	public tempTeamInput = '';
+	public chatDataScrollSubject = new Subject<any>();
+
 
 	constructor(
 		private translateService: TranslateService,
@@ -43,6 +67,10 @@ export class ChatGeneralSettingsComponent implements OnInit {
 		private usersService: UsersService,
 		private router: Router,
 		private loaderService: LoaderService,
+		private modulesService: ModulesService,
+		public dialog: MatDialog,
+		public chatGeneralSettingsService: ChatGeneralSettingsService,
+
 	) {
 		// needs to subscribe here to get the translation once the actual file is loaded
 		// if using instant outside it wont get the trasnlation.
@@ -54,94 +82,246 @@ export class ChatGeneralSettingsComponent implements OnInit {
 	}
 
 	public ngOnInit() {
-		this.generalSettingsForm = this.formBuilder.group({
-			MAX_CHATS_PER_AGENT: [''],
-			ROLES_WITH_CHAT: [''],
-		});
-		this.rolesService.getRoles().subscribe((rolesResponse: any) => {
-			this.roles = rolesResponse.ROLES.filter(
-				(role) => role.NAME !== 'SystemAdmin' && role.NAME !== 'Customers'
-			);
-			const query = ` {
+		this.timezones = this.chatGeneralSettingsService.timeZones;
+		this.modulesService.getModuleByName('Teams').subscribe((response: any) => {
+			this.teamsModule = response;
+			this.getTeamsData(0, '', this.teamsModule)
+				.subscribe((teamResponse) => {
+					this.teams = teamResponse['DATA'];
+					this.initializeScheduleDataScrollSubject();
+					const query = `{
+						COMPANY: getCompanyDetails {
+							MAX_CHATS_PER_AGENT: maxChatsPerAgent
+						  CHAT_SETTINGS: chatSettings {
+							TEAMS_WHO_CAN_CHAT: teamsWhoCanChat{
+								id: _id
+								name: NAME
+							}
+							HAS_RESTRICTIONS: hasRestrictions
+							CHAT_BUSINESS_RULES: chatBusinessRules {
+							  RESTRICTION_TYPE: restrictionType
+							  CHAT_RESTRICTIONS: chatRestrictions {
+								START_TIME: startTime
+								END_TIME: endTime
+								START_DAY: startDay
+								END_DAY: endDay
+							  }
+							}
+						  }
+					  
+						  TIMEZONE: timezone
+						}
+					  }
+					  `;
+					this.makeGraphQLCall(query).subscribe(
+						(response: any) => {
+							this.timezone = response.COMPANY.TIMEZONE;
+							this.maxChatsPerAgent
+								= response.COMPANY.MAX_CHATS_PER_AGENT;
+							if (response.COMPANY.CHAT_SETTINGS !== undefined && response.COMPANY.CHAT_SETTINGS !== null) {
+								if (response.COMPANY.CHAT_SETTINGS.TEAMS_WHO_CAN_CHAT !== null) {
+									let currentTeams = [];
+									this.selectedTeams = response.COMPANY.CHAT_SETTINGS.TEAMS_WHO_CAN_CHAT;
+									this.filterTeams(this.selectedTeamIds);
 
-      COMPANY: getCompanyDetails{
-        ROLES_WITH_CHAT: rolesWithChat
-        MAX_CHATS_PER_AGENT: maxChatsPerAgent
-      }
-           }`;
-			this.makeGraphQLCall(query).subscribe(
-				(response: any) => {
-					this.generalSettingsForm.controls['MAX_CHATS_PER_AGENT'].setValue(
-						response.COMPANY.MAX_CHATS_PER_AGENT
+									response.COMPANY.CHAT_SETTINGS.TEAMS_WHO_CAN_CHAT.forEach((teamsWhoCanChat) => {
+
+										currentTeams.push(teamsWhoCanChat.id);
+
+									});
+									this.selectedTeamIds = currentTeams;
+
+								}
+								this.hasRestrictions = response.COMPANY.CHAT_SETTINGS.HAS_RESTRICTIONS;
+								if (this.hasRestrictions) {
+									let businessRules = response.COMPANY.CHAT_SETTINGS.CHAT_BUSINESS_RULES;
+									this.chatBusinessRules = businessRules;
+								}
+							}
+
+						},
+						(error: any) => {
+							this.bannerMessageService.errorNotifications.push({
+								message: error.error.ERROR,
+							});
+						}
 					);
-					let roles = [];
-					if (response.COMPANY.ROLES_WITH_CHAT !== null) {
-						response.COMPANY.ROLES_WITH_CHAT.forEach((rolesWithChat) => {
-							let currentRole = this.roles.find(
-								(role) => role.ROLE_ID === rolesWithChat
-							);
-							roles.push(currentRole);
-						});
-					} 
-					this.generalSettingsForm.controls['ROLES_WITH_CHAT'].setValue(roles);
-				},
-				(error: any) => {
-					this.bannerMessageService.errorNotifications.push({
-						message: error.error.ERROR,
-					});
-				}
-			);
+				});
 		});
 	}
 
 	public saveGeneralSettings() {
 		this.companySettings.COMPANY_SUBDOMAIN = this.usersService.getSubdomain();
-		this.companySettings.MAX_CHATS_PER_AGENT =
-			this.generalSettingsForm.value.MAX_CHATS_PER_AGENT;
-		let roles = [];
-		this.generalSettingsForm.value.ROLES_WITH_CHAT.forEach((role) => {
-			roles.push(role.ROLE_ID);
+		this.companySettings.TIMEZONE = this.timezone;
+		this.companySettings.MAX_CHATS_PER_AGENT = this.maxChatsPerAgent;
+		let teams = [];
+		this.selectedTeams.forEach((team) => {
+			teams.push(team.id);
 		});
-		this.companySettings.ROLES_WITH_CHAT = roles;
-		console.log('@here', this.companySettings.MAX_CHATS_PER_AGENT);
-		if(this.companySettings.ROLES_WITH_CHAT.length !==0 && this.companySettings.MAX_CHATS_PER_AGENT !== 0){
-		this.companySettingsApiService
-			.putChatSettings(this.companySettings)
-			.subscribe(
-				(putSettingsResponse: any) => {
+		this.companySettings.CHAT_SETTINGS.TEAMS_WHO_CAN_CHAT = teams;
+		this.companySettings.CHAT_SETTINGS.HAS_RESTRICTIONS = this.hasRestrictions;
+		this.companySettings.CHAT_SETTINGS.CHAT_BUSINESS_RULES = this.chatBusinessRules;
+		if (this.companySettings.CHAT_SETTINGS.TEAMS_WHO_CAN_CHAT.length !== 0 && this.companySettings.MAX_CHATS_PER_AGENT !== 0) {
+			this.companySettingsApiService
+				.putChatSettings(this.companySettings)
+				.subscribe(
+					(putSettingsResponse: any) => {
 						this.router.navigate(['/company-settings']);
 						this.bannerMessageService.successNotifications.push({
 							message: this.translateService.instant(
 								'Settings has been updated successfully!'
 							),
 						});
-				},
-				(error: any) => {
-					this.bannerMessageService.errorNotifications.push({
-						message: error.error.ERROR,
-					});
-				}
-			);
-	} else {
-		if(this.companySettings.ROLES_WITH_CHAT.length === 0){
-		this.loaderService.isLoading = false;
-		this.bannerMessageService.errorNotifications.push({
-			message: this.translateService.instant(
-				'ATLEAST_ONE_ROLE'
-			),
-		});
-	  } else if(this.companySettings.MAX_CHATS_PER_AGENT === 0){
-		this.loaderService.isLoading = false;
-		this.bannerMessageService.errorNotifications.push({
-			message: this.translateService.instant(
-				'SELECT_MAX_CHATS'
-			),
-		});
-	  } 
+					},
+					(error: any) => {
+						this.bannerMessageService.errorNotifications.push({
+							message: error.error.ERROR,
+						});
+					}
+				);
+		} else {
+			if (this.companySettings.CHAT_SETTINGS.TEAMS_WHO_CAN_CHAT.length === 0) {
+				this.loaderService.isLoading = false;
+				this.bannerMessageService.errorNotifications.push({
+					message: this.translateService.instant(
+						'ATLEAST_ONE_TEAM'
+					),
+				});
+			} else if (this.companySettings.MAX_CHATS_PER_AGENT === 0) {
+				this.loaderService.isLoading = false;
+				this.bannerMessageService.errorNotifications.push({
+					message: this.translateService.instant(
+						'SELECT_MAX_CHATS'
+					),
+				});
+			}
+		}
 	}
-}
 
 	public makeGraphQLCall(query: string) {
 		return this.httpClient.post(`${this.appGlobals.graphqlUrl}`, query);
 	}
+
+	public getTeamsData(pageNumber, searchValue, teamsModule) {
+		let query = '';
+		query = `{
+					DATA: getTeams(moduleId: "${teamsModule.MODULE_ID}", pageNumber: ${pageNumber}, pageSize: 10, sortBy: "NAME", orderBy: "Asc", search: "${searchValue}") {
+						id: _id
+						name: NAME
+					}
+				}`;
+		return this.httpClient.post(`${this.appGlobals.graphqlUrl}`, query);
+	}
+	public toggleRestrictions(event, editModal: boolean) {
+		if (this.hasRestrictions) {
+			if (this.chatBusinessRules['RESTRICTION_TYPE'] !== 'Week') {
+				this.chatBusinessRules['RESTRICTION_TYPE'] = 'Day';
+			}
+			const dialogRef = this.dialog.open(ChatBusinessRulesComponent, {
+				width: '600px',
+				data: {
+					businessRuleValue: this.chatBusinessRules,
+					isRestrictedValue: this.hasRestrictions,
+				},
+				disableClose: true,
+			});
+
+			dialogRef.afterClosed().subscribe((result) => {
+				if (result) {
+					this.chatBusinessRules = result.data.businessRuleValue;
+					this.hasRestrictions = result.data.isRestrictedValue;
+				} else {
+					this.hasRestrictions = false;
+					this.chatBusinessRules['RESTRICTION_TYPE'] = null;
+				}
+			});
+		} else {
+			this.chatBusinessRules['CHAT_RESTRICTIONS'] = [];
+			this.chatBusinessRules['RESTRICTION_TYPE'] = null;
+		}
+	}
+
+
+	public initializeScheduleDataScrollSubject() {
+		this.chatDataScrollSubject
+			.pipe(
+				debounceTime(400),
+				distinctUntilChanged(),
+				switchMap(([value, search]) => {
+					let searchValue = '';
+					if (value !== '') {
+						searchValue = 'NAME' + '=' + value;
+					}
+					let page = 0;
+
+					if (this.teams && !search) {
+						page = Math.ceil(this.teams.length / 10);
+					}
+					return this
+						.getTeamsData(page, searchValue, this.teamsModule)
+						.pipe(
+							mergeMap((results: any) => {
+								if (search) {
+									this.teams = results['DATA'];
+								} else {
+									this.teams = this.teams.concat(results['DATA']);
+								}
+								return results['DATA'];
+							})
+						);
+				})
+			)
+			.subscribe();
+	}
+
+	public filterTeams(selectedTeamIds: any) {
+		selectedTeamIds.forEach(element => {
+			this.teams.forEach((team) => {
+			});
+		});
+
+
+	}
+
+	public removeTeam(index) {
+		this.selectedTeams.splice(index, 1);
+		let teamIds = [];
+		this.selectedTeams.forEach((selectedTeam: any) => {
+			teamIds.push(selectedTeam.id);
+		});
+		this.selectedTeamIds = teamIds;
+		this.searchTeam();
+	}
+
+	public resetInput(event: MatChipInputEvent): void {
+		const input = event.input;
+		if (input) {
+			input.value = '';
+		}
+	}
+
+	public onTeamsScroll() {
+		this.chatDataScrollSubject.next([this.tempTeamInput, false]);
+	}
+	public searchTeam() {
+		this.chatDataScrollSubject.next([this.tempTeamInput, true]);
+	}
+
+	public addTeam(event) {
+		this.selectedTeams.push(event.option.value);
+		this.selectedTeamIds.push(event.option.value.id);
+		this.tempTeamInput = '';
+		this.searchTeam();
+	}
+
+	public disableSelectedTeams(teamId) {
+		if (this.selectedTeamIds.length > 0) {
+			if (this.selectedTeamIds.includes(teamId)) {
+				return true;
+			}
+			return false;
+		}
+		return false;
+	}
+
 }
