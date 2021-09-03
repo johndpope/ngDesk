@@ -13,13 +13,13 @@ import { UsersService } from '@src/app/users/users.service';
 @Component({
 	selector: 'app-escalations-master',
 	templateUrl: './escalations-master.component.html',
-	styleUrls: ['./escalations-master.component.scss'],
+	styleUrls: ['./escalations-master.component.scss']
 })
 export class EscalationsMasterComponent implements OnInit {
 	public escalations: Escalation[] = [];
 	public dialogRef: MatDialogRef<ConfirmDialogComponent>;
 	public escalationsActions = {
-		actions: [{ NAME: '', ICON: 'delete', PERMISSION_NAME: 'DELETE' }],
+		actions: [{ NAME: '', ICON: 'delete', PERMISSION_NAME: 'DELETE' }]
 	};
 	public buttonDisabled = false;
 	public editAccess = false;
@@ -39,7 +39,7 @@ export class EscalationsMasterComponent implements OnInit {
 
 		this.translateService.get('DELETE').subscribe((value: string) => {
 			// create a function on this.escalationsActions with the name of the translated word
-			this.escalationsActions[value] = (row) => {
+			this.escalationsActions[value] = row => {
 				this.deleteEscalation(row);
 			};
 			this.escalationsActions.actions[0].NAME = value;
@@ -56,12 +56,11 @@ export class EscalationsMasterComponent implements OnInit {
 					'EDIT'
 				);
 				// enable or disable actions depending on role permission
-				this.escalationsActions.actions =
-					this.customTableService.checkPermissionsForActions(
-						roleResponse,
-						this.escalationsActions,
-						'Escalations'
-					);
+				this.escalationsActions.actions = this.customTableService.checkPermissionsForActions(
+					roleResponse,
+					this.escalationsActions,
+					'Escalations'
+				);
 
 				this.customTableService.isLoading = true;
 				const columnsHeaders: string[] = [];
@@ -70,13 +69,13 @@ export class EscalationsMasterComponent implements OnInit {
 				// only if there are actions to be shown. Actions are based on permissions
 				columnsHeadersObj.push({
 					DISPLAY: this.translateService.instant('NAME'),
-					NAME: 'NAME',
+					NAME: 'NAME'
 				});
 				columnsHeaders.push(this.translateService.instant('NAME'));
 				if (this.escalationsActions.actions.length > 0) {
 					columnsHeadersObj.push({
 						DISPLAY: this.translateService.instant('ACTION'),
-						NAME: 'ACTION',
+						NAME: 'ACTION'
 					});
 					columnsHeaders.push(this.translateService.instant('ACTION'));
 				}
@@ -91,7 +90,7 @@ export class EscalationsMasterComponent implements OnInit {
 				this.customTableService.activeSort = {
 					ORDER_BY: 'asc',
 					SORT_BY: this.translateService.instant('NAME'),
-					NAME: 'NAME',
+					NAME: 'NAME'
 				};
 				this.getEscalations();
 			},
@@ -103,7 +102,7 @@ export class EscalationsMasterComponent implements OnInit {
 
 	private getEscalations() {
 		const sort = [
-			this.customTableService.sortBy + ',' + this.customTableService.sortOrder,
+			this.customTableService.sortBy + ',' + this.customTableService.sortOrder
 		];
 		this.escalationApiService
 			.getEscalations(
@@ -120,7 +119,7 @@ export class EscalationsMasterComponent implements OnInit {
 				},
 				(error: any) => {
 					this.bannerMessageService.errorNotifications.push({
-						message: error.error.ERROR,
+						message: error.error.ERROR
 					});
 				}
 			);
@@ -138,25 +137,25 @@ export class EscalationsMasterComponent implements OnInit {
 				buttonText: this.translateService.instant('DELETE'),
 				closeDialog: this.translateService.instant('CANCEL'),
 				action: this.translateService.instant('DELETE'),
-				executebuttonColor: 'warn',
-			},
+				executebuttonColor: 'warn'
+			}
 		});
 
 		// EVENT AFTER MODAL DIALOG IS CLOSED
-		dialogRef.afterClosed().subscribe((result) => {
+		dialogRef.afterClosed().subscribe(result => {
 			if (result === this.translateService.instant('DELETE')) {
 				this.escalationApiService
 					.deleteEscalation(escalation.ESCALATION_ID)
 					.subscribe(
 						(escalationResponse: any) => {
 							this.companiesService.trackEvent(`Deleted Escalation`, {
-								ESCALATION_ID: escalation.ESCALATION_ID,
+								ESCALATION_ID: escalation.ESCALATION_ID
 							});
 							this.getEscalations();
 						},
 						(error: any) => {
 							this.bannerMessageService.errorNotifications.push({
-								message: error.error.ERROR,
+								message: error.error.ERROR
 							});
 						}
 					);
