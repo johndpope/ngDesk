@@ -408,6 +408,12 @@ export class SearchBarComponent implements OnChanges {
 								DATA_ID: entry['DATA_ID'],
 							});
 						}
+					} else if (previousField.DATA_TYPE.DISPLAY === 'Text') {
+						this.fieldOptions.push({
+							VALUE: entry['NAME'],
+							TYPE: 'entry',
+							NAME: previousField['NAME'],
+						});
 					} else {
 						this.fieldOptions.push({
 							VALUE: entry,
@@ -635,8 +641,10 @@ export class SearchBarComponent implements OnChanges {
 						false,
 						this.searchString
 					);
-				} else if (selectedField['DATA_TYPE']['DISPLAY'] === 'Text') {
-					debugger;
+				} else if (
+					selectedField['DATA_TYPE']['DISPLAY'] === 'Text' &&
+					selectedField['NAME'] === 'CHANNEL'
+				) {
 					this.channelsService
 						.getAllChannels(this.moduleId)
 						.subscribe((response: any) => {
