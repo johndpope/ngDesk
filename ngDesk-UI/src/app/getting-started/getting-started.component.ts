@@ -415,19 +415,15 @@ export class GettingStartedComponent implements OnInit, OnDestroy {
 
 		this.rolesService.getRoles().subscribe(
 			(rolesResponse: any) => {
-				rolesResponse['ROLES'].filter(
-					(role) => {
-						if (role.NAME === 'Customers')
-						{
-						  role['NAME'] = 'Customer'; 
-						} 
-					});
+				rolesResponse['ROLES'].filter((role) => {
+					if (role.NAME === 'Customers') {
+						role['NAME'] = 'Customer';
+					}
+				});
 				this.roles = rolesResponse.ROLES.filter(
 					(role) => role.NAME !== 'Public'
 				);
-				this.roles = this.roles.sort((a, b) =>
-					a.NAME.localeCompare(b.NAME)
-				);
+				this.roles = this.roles.sort((a, b) => a.NAME.localeCompare(b.NAME));
 			},
 			(error: any) => {
 				console.log(error);
@@ -557,6 +553,29 @@ export class GettingStartedComponent implements OnInit, OnDestroy {
 					let verificationCounter = 0;
 					// reset timer
 					clearInterval(this.verificationTimer);
+					this.gettingStarted.forEach((step) => {
+						if (
+							step.STEP_NAME == 'Set-Up Support Email' &&
+							!step.COMPLETED &&
+							this.gettingStarted.length == 4
+						) {
+							step.COMPLETED = true;
+							this.complete[2] = true;
+							this.completedSteps += 1;
+							this.stepIcon[2] = 'check_circle_outline';
+							this.value += 25;
+							for (
+								let i = this.currentStep + 1;
+								i < this.gettingStarted.length;
+								i++
+							) {
+								if (!this.gettingStarted[i].COMPLETED) {
+									this.currentStep = i;
+									break;
+								}
+							}
+						}
+					});
 					// timer is set for function to be called every 5 seconds
 					// will check if email returns email channel verification status of true or false
 					this.verificationTimer = setInterval(() => {
@@ -733,6 +752,29 @@ export class GettingStartedComponent implements OnInit, OnDestroy {
 					.subscribe(
 						(put: any) => {
 							this.loadExisting('0');
+							this.gettingStarted.forEach((step) => {
+								if (
+									step.STEP_NAME == 'Set-Up Support Email' &&
+									!step.COMPLETED &&
+									this.gettingStarted.length == 4
+								) {
+									step.COMPLETED = true;
+									this.complete[2] = true;
+									this.completedSteps += 1;
+									this.stepIcon[2] = 'check_circle_outline';
+									this.value += 25;
+									for (
+										let i = this.currentStep + 1;
+										i < this.gettingStarted.length;
+										i++
+									) {
+										if (!this.gettingStarted[i].COMPLETED) {
+											this.currentStep = i;
+											break;
+										}
+									}
+								}
+							});
 						},
 						(errorResponse: any) => {
 							console.log(errorResponse);
@@ -1064,6 +1106,32 @@ export class GettingStartedComponent implements OnInit, OnDestroy {
 		}
 	}
 
+	public clickedSave() {
+		this.gettingStarted.forEach((step) => {
+			if (
+				step.STEP_NAME == 'Personalize your ngDesk' &&
+				!step.COMPLETED &&
+				this.gettingStarted.length == 4
+			) {
+				step.COMPLETED = true;
+				this.complete[this.currentStep] = true;
+				this.completedSteps += 1;
+				this.stepIcon[this.currentStep] = 'check_circle_outline';
+				this.value += 25;
+				for (
+					let i = this.currentStep + 1;
+					i < this.gettingStarted.length;
+					i++
+				) {
+					if (!this.gettingStarted[i].COMPLETED) {
+						this.currentStep = i;
+						break;
+					}
+				}
+			}
+		});
+	}
+
 	public panelClicked(index) {
 		this.resourceSelected = 'none';
 		this.showResources = false;
@@ -1100,6 +1168,26 @@ export class GettingStartedComponent implements OnInit, OnDestroy {
 				this.bannerMessageService.successNotifications.push({
 					message: 'Successfully resent Activation Email',
 				});
+				const activateEmail = this.gettingStarted.filter((step) => {
+					step.STEP_NAME == 'Activate Email' && step.COMPLETED == false;
+				});
+				if (activateEmail) {
+					activateEmail['COMPLETED'] = true;
+					this.stepIcon[this.currentStep] = 'check_circle_outline';
+					this.complete[this.currentStep] = true;
+					this.completedSteps += 1;
+					this.value += 25;
+					for (
+						let i = this.currentStep + 1;
+						i < this.gettingStarted.length;
+						i++
+					) {
+						if (!this.gettingStarted[i].COMPLETED) {
+							this.currentStep = i;
+							break;
+						}
+					}
+				}
 			});
 	}
 	public tabClicked(tab) {
@@ -1165,6 +1253,21 @@ export class GettingStartedComponent implements OnInit, OnDestroy {
 																	),
 																}
 															);
+															this.gettingStarted.forEach((step) => {
+																if (
+																	step.STEP_NAME == 'Invite Team Members' &&
+																	!step.COMPLETED &&
+																	this.gettingStarted.length == 4
+																) {
+																	step.COMPLETED = true;
+																	this.complete[this.currentStep] = true;
+																	this.completedSteps += 1;
+																	this.stepIcon[this.currentStep] =
+																		'check_circle_outline';
+																	this.value += 25;
+																	this.currentStep = this.currentStep + 1;
+																}
+															});
 															this.loadExisting('0');
 															this.inviting = false;
 														},
