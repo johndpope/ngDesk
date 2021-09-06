@@ -49,6 +49,7 @@
     "@ngdesk/data-api": "file:ngdesk-swagger/data-api/dist/ngdesk-data-api-1.0.0.tgz",
     "@ngdesk/escalation-api": "file:ngdesk-swagger/escalation-api/dist/ngdesk-escalation-api-1.0.0.tgz",
     "@ngdesk/integration-api": "file:ngdesk-swagger/integration-api/dist/ngdesk-integration-api-1.0.0.tgz",
+    "@ngdesk/knowledgebase-api": "file:ngdesk-swagger/knowledgebase-api/dist/ngdesk-knowledgebase-api-1.0.0.tgz",
     "@ngdesk/module-api": "file:ngdesk-swagger/module-api/dist/ngdesk-module-api-1.0.0.tgz",
     "@ngdesk/notification-api": "file:ngdesk-swagger/notification-api/dist/ngdesk-notification-api-1.0.0.tgz",
     "@ngdesk/payment-api": "file:ngdesk-swagger/payment-api/dist/ngdesk-payment-api-1.0.0.tgz",

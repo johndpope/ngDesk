@@ -29,7 +29,7 @@ import { ConfirmDialogComponent } from '../../../dialogs/confirm-dialog/confirm-
 import { ModulesService } from '../../../modules/modules.service';
 import { GuideService } from '../../guide.service';
 import { CacheService } from '@src/app/cache.service';
-
+import { CategoryApiService } from '@ngdesk/knowledgebase-api';
 @Component({
 	selector: 'app-create-category',
 	templateUrl: './create-category.component.html',
@@ -40,6 +40,7 @@ export class CreateCategoryComponent implements OnInit, OnDestroy {
 	public matAutocomplete: MatAutocomplete;
 	@ViewChild('teamInput') public teamInput: ElementRef<HTMLInputElement>;
 	@ViewChild('teamChipList') public teamChipList;
+
 	public categoryForm: FormGroup;
 	public categoryId: string;
 	public languages = [];
@@ -51,6 +52,7 @@ export class CreateCategoryComponent implements OnInit, OnDestroy {
 	};
 	public title = '';
 	public teams = [];
+
 	public teamsInitial = [];
 	public isLoading = true;
 	public teamCtrl = new FormControl();
@@ -67,7 +69,8 @@ export class CreateCategoryComponent implements OnInit, OnDestroy {
 		private loaderService: LoaderService,
 		private modulesService: ModulesService,
 		private companiesService: CompaniesService,
-		private cacheService: CacheService
+		private cacheService: CacheService,
+		private categoryApiService: CategoryApiService
 	) {
 		this.translateService.get('NAME').subscribe((val) => {
 			this.errorParams.name = { field: val };
@@ -91,89 +94,105 @@ export class CreateCategoryComponent implements OnInit, OnDestroy {
 
 	public ngOnInit() {
 		// get teams
-		this.companyInfoSubscription = this.cacheService.companyInfoSubject.subscribe(
-			(dataStored) => {
-				if (dataStored) {
-					const modules: any[] = this.cacheService.companyData['MODULES'];
+		this.companyInfoSubscription =
+			this.cacheService.companyInfoSubject.subscribe(
+				(dataStored) => {
+					if (dataStored) {
+						const modules: any[] = this.cacheService.companyData['MODULES'];
 
-					// Get teams module from the list of modules.
-					const teamsModule = modules.find((module) => module.NAME === 'Teams');
-					this.modulesService.getEntries(teamsModule.MODULE_ID).subscribe(
-						(teams: any) => {
-							this.teams = teams.DATA.sort((a, b) =>
-								a.NAME.localeCompare(b.NAME)
-						  	);
-							this.teamsInitial = teams.DATA.sort((a, b) =>
-								a.NAME.localeCompare(b.NAME)
-						  	);
-
-							this.categoryForm = this.formBuilder.group({
-								NAME: ['', Validators.required],
-								SOURCE_LANGUAGE: ['', Validators.required],
-								IS_DRAFT: [false, Validators.required],
-								VISIBLE_TO: [[], Validators.required],
-								DESCRIPTION: '',
-								CATEGORY_ID: '',
-							});
-
-							// make get call if not new
-							if (this.categoryId !== 'new') {
-								this.guideService.getCategoryById(this.categoryId).subscribe(
-									(categoryResponse: any) => {
-										this.categoryForm
-											.get('NAME')
-											.setValue(categoryResponse.NAME);
-										this.categoryForm
-											.get('SOURCE_LANGUAGE')
-											.setValue(categoryResponse.SOURCE_LANGUAGE);
-										this.categoryForm
-											.get('IS_DRAFT')
-											.setValue(categoryResponse.IS_DRAFT);
-										this.categoryForm
-											.get('DESCRIPTION')
-											.setValue(categoryResponse.DESCRIPTION);
-										this.categoryForm
-											.get('CATEGORY_ID')
-											.setValue(categoryResponse.CATEGORY_ID);
-										this.categoryForm
-											.get('VISIBLE_TO')
-											.setValue(
-												this.transformObjects(
-													categoryResponse.VISIBLE_TO,
-													this.teamsInitial,
-													'DATA_ID'
-												)
-											);
-										this.onVisibleToChange();
-										this.isLoading = false;
-									},
-									(categoryError: any) => {
-										console.log(categoryError);
-									}
+						// Get teams module from the list of modules.
+						const teamsModule = modules.find(
+							(module) => module.NAME === 'Teams'
+						);
+						this.modulesService.getEntries(teamsModule.MODULE_ID).subscribe(
+							(teams: any) => {
+								this.teams = teams.DATA.sort((a, b) =>
+									a.NAME.localeCompare(b.NAME)
 								);
-							} else {
-								this.onVisibleToChange();
+								this.teamsInitial = teams.DATA.sort((a, b) =>
+									a.NAME.localeCompare(b.NAME)
+								);
+
+								this.categoryForm = this.formBuilder.group({
+									name: ['', Validators.required],
+									sourceLanguage: ['', Validators.required],
+									isDraft: [false, Validators.required],
+									visibleTo: [[], Validators.required],
+									description: '',
+									categoryId: null,
+								});
+
+								// make get call if not new
+								if (this.categoryId !== 'new') {
+									this.guideService
+										.getKbCategoryById(this.categoryId)
+										.subscribe(
+											(categoryResponse: any) => {
+												this.categoryForm
+													.get('name')
+													.setValue(categoryResponse['DATA'].name);
+												this.categoryForm
+													.get('sourceLanguage')
+													.setValue(categoryResponse['DATA'].sourceLanguage);
+												this.categoryForm
+													.get('isDraft')
+													.setValue(categoryResponse['DATA'].isDraft);
+												this.categoryForm
+													.get('description')
+													.setValue(categoryResponse['DATA'].description);
+												this.categoryForm
+													.get('categoryId')
+													.setValue(categoryResponse['DATA'].categoryId);
+												this.categoryForm
+													.get('visibleTo')
+													.setValue(
+														this.transformObjects(
+															this.convertToArr(
+																categoryResponse['DATA'].visibleTo,
+																'_id'
+															),
+															this.teamsInitial,
+															'DATA_ID'
+														)
+													);
+												this.onVisibleToChange();
+												this.isLoading = false;
+											},
+											(categoryError: any) => {
+												console.log(categoryError);
+											}
+										);
+								} else {
+									this.onVisibleToChange();
+									this.isLoading = false;
+								}
+							},
+							(error: any) => {
+								this.errorMessage = error.error.ERROR;
 								this.isLoading = false;
 							}
-						},
-						(error: any) => {
-							this.errorMessage = error.error.ERROR;
-							this.isLoading = false;
-						}
-					);
+						);
+					}
+				},
+				(error: any) => {
+					this.errorMessage = error.error.ERROR;
+					this.isLoading = false;
 				}
-			},
-			(error: any) => {
-				this.errorMessage = error.error.ERROR;
-				this.isLoading = false;
-			}
-		);
+			);
+	}
+
+	private convertToArr(input, key) {
+		let output = [];
+		for (var i = 0; i < input.length; ++i) {
+			output.push(input[i][key]);
+		}
+		return output;
 	}
 
 	private onVisibleToChange() {
-		this.categoryForm.get('VISIBLE_TO').valueChanges.subscribe((val) => {
+		this.categoryForm.get('visibleTo').valueChanges.subscribe((val) => {
 			this.teamChipList.errorState = false;
-			if (this.categoryForm.get('VISIBLE_TO').value.length === 0) {
+			if (this.categoryForm.get('visibleTo').value.length === 0) {
 				this.teamChipList.errorState = true;
 			}
 		});
@@ -217,9 +236,9 @@ export class CreateCategoryComponent implements OnInit, OnDestroy {
 	}
 
 	public selected(event: MatAutocompleteSelectedEvent): void {
-		const teams = this.categoryForm.value.VISIBLE_TO;
+		const teams = this.categoryForm.value.visibleTo;
 		teams.push(event.option.value);
-		this.categoryForm.get('VISIBLE_TO').setValue(teams);
+		this.categoryForm.get('visibleTo').setValue(teams);
 		this.teamInput.nativeElement.value = '';
 	}
 
@@ -284,13 +303,13 @@ export class CreateCategoryComponent implements OnInit, OnDestroy {
 		this.teamChipList.errorState = false;
 		if (this.categoryForm.valid) {
 			const category = JSON.parse(JSON.stringify(this.categoryForm.value));
-			category.VISIBLE_TO = this.transformIds(category.VISIBLE_TO, 'DATA_ID');
+			category.visibleTo = this.transformIds(category.visibleTo, 'DATA_ID');
 			if (this.categoryId !== 'new') {
 				// call put
-				this.guideService.putCategory(category).subscribe(
+				this.categoryApiService.putCategory(category).subscribe(
 					(putCategoryResponse: any) => {
 						this.router.navigate([
-							`guide/categories/${putCategoryResponse.CATEGORY_ID}/detail`,
+							`guide/categories/${putCategoryResponse.categoryId}/detail`,
 						]);
 					},
 					(putCategoryError: any) => {
@@ -299,13 +318,13 @@ export class CreateCategoryComponent implements OnInit, OnDestroy {
 				);
 			} else {
 				// call post
-				this.guideService.postCategory(category).subscribe(
+				this.categoryApiService.postCategory(category).subscribe(
 					(postCategoryResponse: any) => {
 						this.companiesService.trackEvent(
-							`Added a new category ${category.NAME}`
+							`Added a new category ${category.name}`
 						);
 						this.router.navigate([
-							`guide/categories/${postCategoryResponse.CATEGORY_ID}/detail`,
+							`guide/categories/${postCategoryResponse.categoryId}/detail`,
 						]);
 					},
 					(postCategoryError: any) => {
@@ -315,7 +334,7 @@ export class CreateCategoryComponent implements OnInit, OnDestroy {
 			}
 		} else {
 			this.loaderService.isLoading = false;
-			if (this.categoryForm.get('VISIBLE_TO').value.length === 0) {
+			if (this.categoryForm.get('visibleTo').value.length === 0) {
 				this.teamChipList.errorState = true;
 			}
 		}

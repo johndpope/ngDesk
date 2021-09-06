@@ -9,6 +9,7 @@ import { ModulesService } from '../../../modules/modules.service';
 import { UsersService } from '../../../users/users.service';
 import { GuideService } from '../../guide.service';
 import { RolesService } from 'src/app/roles/roles.service';
+import { ArticleApiService } from '@ngdesk/knowledgebase-api';
 
 @Component({
 	selector: 'app-render-articles',
@@ -21,6 +22,7 @@ export class RenderArticlesComponent implements OnInit {
 	public sectionArticles = [];
 	public sectionId: string;
 	public comment = {};
+	public CommentMessage;
 	public users = [];
 	public hasEditAccess = false;
 	public hasCommentAccess = false;
@@ -39,7 +41,8 @@ export class RenderArticlesComponent implements OnInit {
 		private globals: AppGlobals,
 		private companiesService: CompaniesService,
 		private translateService: TranslateService,
-		private roleService: RolesService
+		private roleService: RolesService,
+		private articleApiService: ArticleApiService
 	) {
 		if (!this.authToken) {
 			this.companiesService
@@ -55,7 +58,7 @@ export class RenderArticlesComponent implements OnInit {
 	public ngOnInit() {
 		this.route.params.subscribe((params) => {
 			this.loading = true;
-			this.article['TITLE'] = this.route.snapshot.params['articleName'];
+			this.article['TITLE'] = this.route.snapshot.params['ARTICLENAME'];
 			this.sectionId = this.route.snapshot.params['sectionId'];
 			this.getArticle();
 			this.hasCommentAccess = this.usersService.getAuthenticationToken()
@@ -67,22 +70,32 @@ export class RenderArticlesComponent implements OnInit {
 
 	private getArticle() {
 		// get article sections
-		this.guideService.getArticlesBySection(this.sectionId, true).subscribe(
+		this.guideService.getArticlesBySectionId(this.sectionId).subscribe(
 			(articlesResponse: any) => {
-				this.sectionArticles = articlesResponse.DATA.filter(
-					(article) => article.PUBLISH && article.SECTION === this.sectionId
-				).sort((a: { ORDER: number }, b: { ORDER: number }) => {
-					return a.ORDER - b.ORDER;
-				});
+				console.log('articlesResponse>>>>>>>>>>>>>>>>', articlesResponse);
+				//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< need to Handle  >>>>>>>>>>>>>>>>>>>>>
+				console.log('respons------------>', this.sectionId);
+				this.sectionArticles = articlesResponse.getArticlesBySectionId
+					.filter(
+						(article) => article.PUBLISH && article.SECTION === this.sectionId
+					)
+					.sort((a: { ORDER: number }, b: { ORDER: number }) => {
+						return a.ORDER - b.ORDER;
+					});
+				console.log('articles', this.article);
+				console.log('sectionarticles', this.sectionArticles);
+
 				// find article in section articles
 				const articleMatchedByTitle = this.sectionArticles.find(
-					(art) => art.TITLE === this.article['TITLE']
+					(art) => art.title === this.article['TITLE']
 				);
+				console.log('articleMatchedByTitle', articleMatchedByTitle);
 				// need to make get individual article call for returning attachments with uuid
 				this.guideService
-					.getArticle(articleMatchedByTitle.ARTICLE_ID)
+					.getKbArticleById(articleMatchedByTitle.ARTICLE_ID)
 					.subscribe(
 						(articleResponse: any) => {
+							console.log('articleResponse====', articleResponse);
 							this.article = articleResponse;
 							const userRole = this.usersService.user['ROLE'];
 							//if user is logged in
@@ -128,9 +141,12 @@ export class RenderArticlesComponent implements OnInit {
 	public checkEditAccess() {
 		if (this.usersService.getAuthenticationToken()) {
 			this.usersService.user['TEAMS'].forEach((team, index) => {
-				if (this.section['MANAGED_BY'].indexOf(team) !== -1) {
-					this.hasEditAccess = true;
-				}
+				this.hasEditAccess = true;
+				this.section['managedBy'].forEach((managedBy) => {
+					if (managedBy['_id'] === team) {
+						this.hasEditAccess = false;
+					}
+				});
 			});
 			this.roleService
 				.getRole(this.usersService.user.ROLE)
@@ -147,11 +163,17 @@ export class RenderArticlesComponent implements OnInit {
 	}
 
 	private getAuthorName(): void {
-		this.article['AUTHOR'] = JSON.parse(this.article['AUTHOR']);
-		let user = this.article['AUTHOR'];
+		console.log('articles============>', this.article);
+		console.log('user', this.article['DATA'].AUTHOR);
+
+		this.article['DATA'].AUTHOR = JSON.parse(this.article['DATA'].AUTHOR);
+
+		let user = this.article['DATA'].AUTHOR;
+		//console.log('user', user);
 		this.article['AUTHOR'] = `${user.FIRST_NAME} ${user.LAST_NAME}`;
 		this.article['COMMENTS'].forEach((comment) => {
 			comment.SENDER = JSON.parse(comment.SENDER);
+			//console.log('articles============>', this.article);
 			user = comment.SENDER;
 			// if user exists set the name else set anonymous
 			comment.SENDER = user
@@ -162,19 +184,20 @@ export class RenderArticlesComponent implements OnInit {
 	}
 
 	private getSection() {
-		this.guideService.getSectionById(this.sectionId).subscribe(
+		this.guideService.getkbSections(this.sectionId).subscribe(
 			(sectionResponse: any) => {
-				this.section = sectionResponse;
+				this.section = sectionResponse.DATA;
 				// check if user has access to edit this article and display edit button
 				this.checkEditAccess();
-				this.guideService.getCategoryById(sectionResponse.CATEGORY).subscribe(
+
+				this.guideService.getKbCategoryById(sectionResponse.category).subscribe(
 					(categoryResponse: any) => {
 						this.navArray.push({
-							NAME: categoryResponse.NAME,
-							PATH: ['guide', 'categories', sectionResponse.CATEGORY, 'detail'],
+							NAME: categoryResponse.name,
+							PATH: ['guide', 'categories', sectionResponse.category, 'detail'],
 						});
 						this.navArray.push({
-							NAME: sectionResponse.NAME,
+							NAME: sectionResponse.name,
 							PATH: ['guide', 'sections', this.sectionId, 'detail'],
 						});
 					},
@@ -194,8 +217,8 @@ export class RenderArticlesComponent implements OnInit {
 	public addComment(): void {
 		if (this.comment['MESSAGE'] !== undefined) {
 			this.loading = true;
-			this.guideService
-				.postComment(this.article['ARTICLE_ID'], this.comment)
+			this.articleApiService
+				.postComments(this.article['articleId'], this.CommentMessage)
 				.subscribe(
 					(response: any) => {
 						this.comment['MESSAGE'] = '';
@@ -222,7 +245,7 @@ export class RenderArticlesComponent implements OnInit {
 			'guide',
 			'articles',
 			'detail',
-			this.article['ARTICLE_ID'],
+			this.article['articleId'],
 		]);
 	}
 

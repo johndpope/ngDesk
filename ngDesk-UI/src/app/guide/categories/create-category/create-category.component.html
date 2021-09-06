@@ -7,7 +7,7 @@
 <form [formGroup]="categoryForm" fxLayout="row" style="min-height: calc(100vh - 55px);overflow:auto" *ngIf="!isLoading">
 	<div fxLayout="column" fxFlex="20" fxFlex.lt-md="50" fxFlexGap="15" [ngStyle]="{'background': '#F8F9F9', 'padding': '20px'}">
 		<mat-form-field>
-			<mat-select placeholder="{{'SOURCE_LANGUAGE' | translate}}" formControlName="SOURCE_LANGUAGE" required>
+			<mat-select placeholder="{{'SOURCE_LANGUAGE' | translate}}" formControlName="sourceLanguage" required>
 				<mat-option *ngFor="let language of languages" [value]="language.CODE">{{language.NAME}}</mat-option>
 			</mat-select>
 			<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:errorParams.sourceLanguage"></mat-error>
@@ -15,8 +15,8 @@
 		<mat-form-field>
 			<mat-label>{{'VISIBLE_TO' | translate}}</mat-label>
 			<mat-chip-list #teamChipList required>
-				<mat-chip *ngFor="let team of categoryForm.value.VISIBLE_TO" [selectable]="true" [removable]="true"
-					(removed)="remove(team, 'VISIBLE_TO')">
+				<mat-chip *ngFor="let team of categoryForm.value.visibleTo" [selectable]="true" [removable]="true"
+					(removed)="remove(team, 'visibleTo')">
 					{{team.NAME}}
 					<mat-icon matChipRemove>cancel</mat-icon>
 				</mat-chip>
@@ -25,14 +25,14 @@
 					(ngModelChange)="filterInputValues($event, 'teams', teamsInitial)">
 			</mat-chip-list>
 			<mat-autocomplete #autoTeam="matAutocomplete" (optionSelected)="selected($event, ind, 'teamInput')" (closed)="teams = teamsInitial">
-				<mat-option *ngFor="let team of teams" [value]="team" [disabled]="categoryForm.value.VISIBLE_TO.indexOf(team) != -1">
+				<mat-option *ngFor="let team of teams" [value]="team" [disabled]="categoryForm.value.visibleTo.indexOf(team) != -1">
 					{{team.NAME}}
 				</mat-option>
 			</mat-autocomplete>
 			<mat-error *ngIf="teamChipList.errorState" [innerHTML]="'FIELD_REQUIRED' | translate:errorParams.visibleTo"></mat-error>
 		</mat-form-field>
 		<div *ngIf="categoryId !=='new'">
-			<mat-checkbox formControlName="IS_DRAFT">{{'MARK_AS_DRAFT' | translate}}</mat-checkbox>
+			<mat-checkbox formControlName="isDraft">{{'MARK_AS_DRAFT' | translate}}</mat-checkbox>
 			<div [ngStyle]="{'margin-top': '20px'}">
 				<mat-divider></mat-divider>
 			</div>
@@ -49,12 +49,12 @@
 		<app-title-bar title="{{title | translate}}" buttonText="{{'SAVE'|translate}}" (buttonRightOnClick)="save()"></app-title-bar>
 		<mat-form-field>
 			<mat-label>{{'NAME' | translate}}</mat-label>
-			<input matInput formControlName="NAME" required>
+			<input matInput formControlName="name" required>
 			<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:errorParams.name"></mat-error>
 		</mat-form-field>
 		<mat-form-field>
 			<mat-label>{{'DESCRIPTION' | translate}}</mat-label>
-			<textarea matInput matTextareaAutosize="true" matAutosizeMaxRows="7" matAutosizeMinRows="7" formControlName="DESCRIPTION"></textarea>
+			<textarea matInput matTextareaAutosize="true" matAutosizeMaxRows="7" matAutosizeMinRows="7" formControlName="description"></textarea>
 		</mat-form-field>
 	</div>
 </form>

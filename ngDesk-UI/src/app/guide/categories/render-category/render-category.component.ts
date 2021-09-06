@@ -55,7 +55,7 @@ export class RenderCategoryComponent implements OnInit {
 		}
 
 		const categoryId = this.route.snapshot.params['categoryId'];
-		this.guideService.getCategoryById(categoryId).subscribe(
+		this.guideService.getKbCategoryById(categoryId).subscribe(
 			(categoryResponse: any) => {
 				this.category = this.convertCategory(categoryResponse);
 				this.guideService.getSections(this.category.categoryId).subscribe(
@@ -115,12 +115,12 @@ export class RenderCategoryComponent implements OnInit {
 
 	public convertCategory(categoryData): Category {
 		const category = new Category(
-			categoryData.NAME,
-			categoryData.SOURCE_LANGUAGE,
-			categoryData.IS_DRAFT,
-			categoryData.ORDER,
-			categoryData.DESCRIPTION,
-			categoryData.CATEGORY_ID
+			categoryData['DATA'].name,
+			categoryData['DATA'].sourceLanguage,
+			categoryData['DATA'].isDraft,
+			categoryData['DATA'].order,
+			categoryData['DATA'].description,
+			categoryData['DATA'].categoryId
 		);
 		return category;
 	}

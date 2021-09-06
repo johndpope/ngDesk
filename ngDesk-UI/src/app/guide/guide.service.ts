@@ -187,4 +187,240 @@ export class GuideService {
 			params: httpParams,
 		});
 	}
+	public getkbSections(sectionId) {
+		let query = '';
+		query = `{
+				DATA: getKbSection(sectionId: "${sectionId}") {
+					name
+					sectionId
+					description
+					sortBy
+					language
+					visibleTo {
+						_id
+						PRIMARY_DISPLAY_FIELD: NAME
+					}
+					managedBy {
+_id
+						PRIMARY_DISPLAY_FIELD: NAME
+					}
+					category {
+					categoryId
+				}
+				isDraft
+				}
+			}`;
+		return this.http.post(`${this.globals.graphqlUrl}`, query);
+	}
+	public getKbCategoryById(categoryId) {
+		let query = '';
+		query = `{
+				DATA: getKbCategory(categoryId: "${categoryId}") {
+					name
+					categoryId
+	description
+	sourceLanguage
+	dateCreated
+	dateUpdated
+	isDraft
+	order
+   visibleTo {
+		_id
+						PRIMARY_DISPLAY_FIELD: NAME
+					}
+				}
+			}`;
+		return this.http.post(`${this.globals.graphqlUrl}`, query);
+	}
+	public getKbCategories() {
+		let query = '';
+		query = `{
+				DATA:  getKbCategories(pageNumber: 0, pageSize: 10, sortBy: "name",orderBy: "Asc") {
+					name
+					categoryId
+					visibleTo {
+						_id
+						PRIMARY_DISPLAY_FIELD: NAME
+					}
+				}
+			}`;
+		return this.http.post(`${this.globals.graphqlUrl}`, query);
+	}
+
+	public getKbArticleById(articleId) {
+		let query = '';
+		query = `{
+				DATA:	getKbArticle(articleId: "${articleId}") {
+					ARTICLE_ID: articleId
+					TITLE: title
+					BODY: body
+				 VISIBLE_TO: visibleTo
+				 {
+							 _id
+				 }
+					AUTHOR: author
+						{
+								_id
+						}
+						OPEN_FOR_COMMENTS: openForComments
+						SOURCE_LANGUAGE: sourceLanguage
+						LABELS: labels
+						ORDER: order
+						SECTION: section
+						PUBLISH: publish
+						COMMENTS: comments
+						{
+							MESSAGE_ID:messageId
+							DATE_CREATED:dateCreated
+							SENDER: sender
+							MESSAGE : message
+						}
+						DATE_CREATED: dateCreated
+						DATE_UPDATED:	dateUpdated
+						LAST_UPDATED_BY:lastUpdatedBy {
+							_id
+						}
+						CREATED_BY: createdBy {
+							_id
+						}
+				}
+
+			}`;
+		return this.http.post(`${this.globals.graphqlUrl}`, query);
+	}
+
+	public getKbSectionByCategoryId(categoryId) {
+		let query = '';
+		query = `{
+			DATA:	getKbSections(
+				category: "${categoryId}",
+				pageNumber: 0,
+				pageSize: 10,
+				sortBy: "name",
+				orderBy: "Asc"
+			) {
+				sectionId
+				name
+				language
+				description
+				sortBy
+				category
+				{
+						categoryId
+				}
+				order
+				isDraft
+				visibleTo {
+					_id
+				}
+				managedBy {
+					_id
+				}
+			}
+			}`;
+		return this.http.post(`${this.globals.graphqlUrl}`, query);
+	}
+
+	// waiting for BE teams for this query
+
+	public getArticlesBySectionId(sectionId) {
+		let query = '';
+		query = `{
+			getArticlesBySectionId(
+			  sectionId: "${sectionId}"
+			  pageNumber: 0
+			  pageSize: 10
+			  sortBy: null
+			  orderBy: null
+			) {
+				ARTICLE_ID: articleId
+				TITLE: title
+				BODY: body
+			 VISIBLE_TO: visibleTo
+			 {
+						 _id
+			 }
+				AUTHOR: author
+					{
+							_id
+
+							
+					}
+					OPEN_FOR_COMMENTS: openForComments
+					SOURCE_LANGUAGE: sourceLanguage
+					LABELS: labels
+					ORDER: order
+					SECTION: section
+					PUBLISH: publish
+					COMMENTS: comments
+					{
+							MESSAGE_ID:messageId
+							DATE_CREATED:dateCreated
+							SENDER: sender
+							MESSAGE : message
+
+					}
+					DATE_CREATED: dateCreated
+					DATE_UPDATED:	dateUpdated
+					LAST_UPDATED_BY:lastUpdatedBy {
+						_id
+					}
+					CREATED_BY: createdBy {
+						_id
+					}
+			}
+		  }
+		  `;
+		return this.http.post(`${this.globals.graphqlUrl}`, query);
+	}
+
+	public getKbAricles(pageNumber, pageSize, sortBy, orderBy) {
+		let query = '';
+		query = `{
+			DATA:	getAllKbArticles(
+				pageNumber: ${pageNumber}, pageSize: ${pageSize}, sortBy: "${sortBy}", orderBy: "${orderBy}",search: null
+			) {
+			ARTICLE_ID: articleId
+			TITLE: title
+			BODY: body
+		 VISIBLE_TO: visibleTo
+		 {
+					 _id
+		 }
+			AUTHOR: author
+				{
+						_id
+				}
+				OPEN_FOR_COMMENTS: openForComments
+				SOURCE_LANGUAGE: sourceLanguage
+				LABELS: labels
+				ORDER: order
+				SECTION: section
+				PUBLISH: publish
+				COMMENTS: comments
+				{
+						messageId
+				}
+				DATE_CREATED: dateCreated
+				DATE_UPDATED:	dateUpdated
+				LAST_UPDATED_BY:lastUpdatedBy {
+					_id
+				}
+				CREATED_BY: createdBy {
+					_id
+				}
+			}
+			}`;
+		return this.http.post(`${this.globals.graphqlUrl}`, query);
+	}
+
+	public getAllKbArticlesCount() {
+		let query = '';
+		query = `{
+			DATA:	getAllKbArticlesCount(
+				search: null
+			)
+			}`;
+		return this.http.post(`${this.globals.graphqlUrl}`, query);
+	}
 }

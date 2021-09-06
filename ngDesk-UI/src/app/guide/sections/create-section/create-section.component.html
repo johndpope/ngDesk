@@ -8,22 +8,22 @@
 	<div fxLayout="column" fxFlex="20" fxFlex.lt-md="50" fxFlexGap="15" class="pad10"
 		[ngStyle]="{'background': '#F8F9F9', 'padding': '20px'}">
 		<mat-form-field>
-			<mat-select placeholder="{{'SOURCE_LANGUAGE' | translate}}" formControlName="SOURCE_LANGUAGE" required>
+			<mat-select placeholder="{{'LANGUAGE' | translate}}" formControlName="language" required>
 				<mat-option *ngFor="let language of languages" [value]="language.CODE">{{language.NAME}}</mat-option>
 			</mat-select>
 			<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:errorParams.sourceLanguage"></mat-error>
 		</mat-form-field>
 		<mat-form-field>
-			<mat-select placeholder="{{'CATEGORY' | translate}}" formControlName="CATEGORY" required>
-				<mat-option *ngFor="let category of categories" [value]="category.CATEGORY_ID">{{category.NAME}}</mat-option>
+			<mat-select placeholder="{{'CATEGORY' | translate}}" formControlName="category" required>
+				<mat-option *ngFor="let category of categories" [value]="category.categoryId">{{category.name}}</mat-option>
 			</mat-select>
 			<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:errorParams.category"></mat-error>
 		</mat-form-field>
 		<mat-form-field>
 			<mat-label>{{'VISIBLE_TO' | translate}}</mat-label>
 			<mat-chip-list #visibleToChipList required>
-				<mat-chip *ngFor="let team of sectionForm.value.VISIBLE_TO" [selectable]="true" [removable]="true"
-					(removed)="remove(team, 'VISIBLE_TO')">
+				<mat-chip *ngFor="let team of sectionForm.value.visibleTo" [selectable]="true" [removable]="true"
+					(removed)="remove(team, 'visibleTo')">
 					{{team.NAME}}
 					<mat-icon matChipRemove>cancel</mat-icon>
 				</mat-chip>
@@ -33,7 +33,7 @@
 			</mat-chip-list>
 			<mat-autocomplete #autoVisibleTo="matAutocomplete" (optionSelected)="selected($event, 'visibleTo')"
 				(closed)="visibleTo = visibleToInitial">
-				<mat-option *ngFor="let team of visibleTo" [value]="team" [disabled]="sectionForm.value.VISIBLE_TO.indexOf(team) != -1">
+				<mat-option *ngFor="let team of visibleTo" [value]="team" [disabled]="sectionForm.value.visibleTo.indexOf(team) != -1">
 					{{team.NAME}}
 				</mat-option>
 			</mat-autocomplete>
@@ -42,8 +42,8 @@
 		<mat-form-field>
 			<mat-label>{{'MANAGED_BY' | translate}}</mat-label>
 			<mat-chip-list #managedByChipList required>
-				<mat-chip *ngFor="let team of sectionForm.value.MANAGED_BY" [selectable]="true" [removable]="true"
-					(removed)="remove(team, 'MANAGED_BY')">
+				<mat-chip *ngFor="let team of sectionForm.value.managedBy" [selectable]="true" [removable]="true"
+					(removed)="remove(team, 'managedBy')">
 					{{team.NAME}}
 					<mat-icon matChipRemove>cancel</mat-icon>
 				</mat-chip>
@@ -53,20 +53,20 @@
 			</mat-chip-list>
 			<mat-autocomplete #autoManagedBy="matAutocomplete" (optionSelected)="selected($event, 'managedBy')"
 				(closed)="managedBy = managedByInitial">
-				<mat-option *ngFor="let team of managedBy" [value]="team" [disabled]="sectionForm.value.MANAGED_BY.indexOf(team) != -1">
+				<mat-option *ngFor="let team of managedBy" [value]="team" [disabled]="sectionForm.value.managedBy.indexOf(team) != -1">
 					{{team.NAME}}
 				</mat-option>
 			</mat-autocomplete>
 			<mat-error *ngIf="managedByChipList.errorState" [innerHTML]="'FIELD_REQUIRED' | translate:errorParams.managedBy"></mat-error>
 		</mat-form-field>
 		<mat-form-field>
-			<mat-select placeholder="{{'SORT_BY' | translate}}" formControlName="SORT_BY" required>
+			<mat-select placeholder="{{'SORT_BY' | translate}}" formControlName="sortBy" required>
 				<mat-option *ngFor="let field of fields" [value]="field">{{field}}</mat-option>
 			</mat-select>
 			<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:errorParams.sortBy"></mat-error>
 		</mat-form-field>
 		<div *ngIf="sectionId !=='new'">
-			<mat-checkbox formControlName="IS_DRAFT">{{'MARK_AS_DRAFT' | translate}}</mat-checkbox>
+			<mat-checkbox formControlName="isDraft">{{'MARK_AS_DRAFT' | translate}}</mat-checkbox>
 			<div [ngStyle]="{'margin-top': '20px'}">
 				<mat-divider></mat-divider>
 			</div>
@@ -83,12 +83,12 @@
 		<app-title-bar title="{{title | translate}}" buttonText="{{'SAVE'|translate}}" (buttonRightOnClick)="save()"></app-title-bar>
 		<mat-form-field>
 			<mat-label>{{'NAME' | translate}}</mat-label>
-			<input matInput formControlName="NAME" required>
+			<input matInput formControlName="name" required>
 			<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:errorParams.name"></mat-error>
 		</mat-form-field>
 		<mat-form-field>
 			<mat-label>{{'DESCRIPTION' | translate}}</mat-label>
-			<textarea matInput matTextareaAutosize="true" matAutosizeMaxRows="7" matAutosizeMinRows="7" formControlName="DESCRIPTION"></textarea>
+			<textarea matInput matTextareaAutosize="true" matAutosizeMaxRows="7" matAutosizeMinRows="7" formControlName="description"></textarea>
 		</mat-form-field>
 	</div>
 </form>

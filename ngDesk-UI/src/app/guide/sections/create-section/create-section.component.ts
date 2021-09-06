@@ -28,6 +28,7 @@ import { ModulesService } from '@src/app/modules/modules.service';
 import { Subscription } from 'rxjs';
 import { CompaniesService } from 'src/app/companies/companies.service';
 import { LoaderService } from 'src/app/custom-components/loader/loader.service';
+import { SectionApiService } from '@ngdesk/knowledgebase-api';
 
 @Component({
 	selector: 'app-create-section',
@@ -83,7 +84,8 @@ export class CreateSectionComponent implements OnInit, OnDestroy {
 		private cacheService: CacheService,
 		private modulesService: ModulesService,
 		private companiesService: CompaniesService,
-		private loaderService: LoaderService
+		private loaderService: LoaderService,
+		private sectionApiService: SectionApiService
 	) {
 		this.translateService.get('NAME').subscribe((val) => {
 			this.errorParams.name = { field: val };
@@ -120,7 +122,7 @@ export class CreateSectionComponent implements OnInit, OnDestroy {
 		this.languages = this.guideService.languageObject;
 
 		// get list of categories
-		this.guideService.getCategories().subscribe(
+		this.guideService.getKbCategories().subscribe(
 			(categoriesResponse: any) => {
 				this.categories = categoriesResponse.DATA;
 			},
@@ -132,8 +134,8 @@ export class CreateSectionComponent implements OnInit, OnDestroy {
 
 	public ngOnInit() {
 		// get teams
-		this.companyInfoSubscription = this.cacheService.companyInfoSubject.subscribe(
-			(dataStored) => {
+		this.companyInfoSubscription =
+			this.cacheService.companyInfoSubject.subscribe((dataStored) => {
 				if (dataStored) {
 					const teamsModule = this.cacheService.companyData['MODULES'].find(
 						(module) => module['NAME'] === 'Teams'
@@ -142,7 +144,7 @@ export class CreateSectionComponent implements OnInit, OnDestroy {
 						(teams: any) => {
 							const sortedTeams = teams.DATA.sort((a, b) =>
 								a.NAME.localeCompare(b.NAME)
-						  	);
+							);
 							this.visibleTo = sortedTeams;
 							this.visibleToInitial = sortedTeams;
 							this.managedBy = sortedTeams;
@@ -150,73 +152,82 @@ export class CreateSectionComponent implements OnInit, OnDestroy {
 							this.allTeams = sortedTeams;
 
 							this.sectionForm = this.formBuilder.group({
-								NAME: ['', Validators.required],
-								SOURCE_LANGUAGE: ['', Validators.required],
-								CATEGORY: ['', Validators.required],
-								DESCRIPTION: '',
-								SORT_BY: ['', Validators.required],
-								VISIBLE_TO: [[], Validators.required],
-								MANAGED_BY: [[], Validators.required],
-								IS_DRAFT: [false, Validators.required],
-								SECTION_ID: '',
+								name: ['', Validators.required],
+								language: ['', Validators.required],
+								category: ['', Validators.required],
+								description: '',
+								sortBy: ['', Validators.required],
+								visibleTo: [[], Validators.required],
+								managedBy: [[], Validators.required],
+								isDraft: [false, Validators.required],
+								sectionId: null,
 							});
 							// make get call if not new
 							if (this.sectionId !== 'new') {
-								this.guideService.getSectionById(this.sectionId).subscribe(
+								this.guideService.getkbSections(this.sectionId).subscribe(
 									(sectionResponse: any) => {
 										// get changed category
 										const category = this.categories.find(
 											(categoryMatched) =>
-												categoryMatched.CATEGORY_ID === sectionResponse.CATEGORY
+												categoryMatched.categoryId ===
+												sectionResponse.DATA['category']['categoryId']
 										);
+
 										this.visibleTo = this.transformObjects(
-											category['VISIBLE_TO'],
+											this.convertToArr(category['visibleTo'], '_id'),
 											this.allTeams,
 											'DATA_ID'
 										);
 										this.visibleToInitial = this.transformObjects(
-											category['VISIBLE_TO'],
+											this.convertToArr(category['visibleTo'], '_id'),
 											this.allTeams,
 											'DATA_ID'
 										);
 										this.section = sectionResponse;
-										this.sectionForm.get('NAME').setValue(sectionResponse.NAME);
 										this.sectionForm
-											.get('SOURCE_LANGUAGE')
-											.setValue(sectionResponse.SOURCE_LANGUAGE);
+											.get('name')
+											.setValue(sectionResponse['DATA'].name);
 										this.sectionForm
-											.get('CATEGORY')
-											.setValue(sectionResponse.CATEGORY);
+											.get('language')
+											.setValue(sectionResponse['DATA'].language);
 										this.sectionForm
-											.get('DESCRIPTION')
-											.setValue(sectionResponse.DESCRIPTION);
+											.get('category')
+											.setValue(sectionResponse['DATA'].category['categoryId']);
 										this.sectionForm
-											.get('SORT_BY')
-											.setValue(sectionResponse.SORT_BY);
+											.get('description')
+											.setValue(sectionResponse['DATA'].description);
 										this.sectionForm
-											.get('SECTION_ID')
-											.setValue(sectionResponse.SECTION_ID);
+											.get('sortBy')
+											.setValue(sectionResponse['DATA'].sortBy);
 										this.sectionForm
-											.get('IS_DRAFT')
-											.setValue(sectionResponse.IS_DRAFT);
+											.get('sectionId')
+											.setValue(sectionResponse['DATA'].sectionId);
 										this.sectionForm
-											.get('VISIBLE_TO')
-											.setValue(
-												this.transformObjects(
-													sectionResponse.VISIBLE_TO,
-													this.allTeams,
-													'DATA_ID'
-												)
-											);
-										this.sectionForm
-											.get('MANAGED_BY')
-											.setValue(
-												this.transformObjects(
-													sectionResponse.MANAGED_BY,
-													this.allTeams,
-													'DATA_ID'
-												)
-											);
+											.get('isDraft')
+											.setValue(sectionResponse['DATA'].isDraft);
+										this.sectionForm.get('visibleTo').setValue(
+											this.transformObjects(
+												this.convertToArr(
+													sectionResponse['DATA'].visibleTo,
+													'_id'
+												),
+												// sectionResponse['DATA'].visibleTo,
+												this.allTeams,
+												'DATA_ID'
+											)
+										);
+										this.sectionForm.get('managedBy').setValue(
+											this.transformObjects(
+												this.convertToArr(
+													sectionResponse['DATA'].managedBy,
+													'_id'
+												),
+												//	sectionResponse['DATA'].managedBy,
+												this.allTeams,
+												'DATA_ID'
+											)
+										);
+
 										this.onCategoryChange();
 										this.onPermissionsChange();
 										this.isLoading = false;
@@ -232,7 +243,7 @@ export class CreateSectionComponent implements OnInit, OnDestroy {
 								if (this.guideService.categoryId) {
 									// pre filling the category
 									this.sectionForm
-										.get('CATEGORY')
+										.get('category')
 										.setValue(this.guideService.categoryId);
 								}
 							}
@@ -243,48 +254,56 @@ export class CreateSectionComponent implements OnInit, OnDestroy {
 						}
 					);
 				}
-			}
-		);
+			});
 	}
 
 	private onCategoryChange() {
-		this.sectionForm.get('CATEGORY').valueChanges.subscribe((val) => {
+		this.sectionForm.get('category').valueChanges.subscribe((val) => {
 			// clear visible to
-			this.sectionForm.get('VISIBLE_TO').setValue([]);
+			this.sectionForm.get('visibleTo').setValue([]);
 			// get changed category
+
 			const category = this.categories.find(
-				(categoryMatched) => categoryMatched.CATEGORY_ID === val
+				(categoryMatched) => categoryMatched.categoryId === val
 			);
+
 			this.visibleTo = this.transformObjects(
-				category['VISIBLE_TO'],
+				this.convertToArr(category['visibleTo'], '_id'),
 				this.allTeams,
 				'DATA_ID'
 			);
 			this.visibleToInitial = this.transformObjects(
-				category['VISIBLE_TO'],
+				this.convertToArr(category['visibleTo'], '_id'),
 				this.allTeams,
 				'DATA_ID'
 			);
 			// pre filling teams
-			this.sectionForm.get('VISIBLE_TO').setValue(this.visibleTo);
+			this.sectionForm.get('visibleTo').setValue(this.visibleTo);
 		});
+	}
+	private convertToArr(input, key) {
+		let output = [];
+		for (var i = 0; i < input.length; ++i) {
+			output.push(input[i][key]);
+		}
+		return output;
 	}
 
 	private onPermissionsChange() {
-		this.sectionForm.get('VISIBLE_TO').valueChanges.subscribe((val) => {
+		this.sectionForm.get('visibleTo').valueChanges.subscribe((val) => {
 			if (
-				this.sectionForm.get('VISIBLE_TO').value.length === 0 &&
-				this.sectionForm.get('VISIBLE_TO').dirty
+				this.sectionForm.get('visibleTo').value.length === 0 &&
+				this.sectionForm.get('visibleTo').dirty
 			) {
 				this.visibleToChipList.errorState = true;
 			}
 		});
 
-		this.sectionForm.get('MANAGED_BY').valueChanges.subscribe((val) => {
+		this.sectionForm.get('managedBy').valueChanges.subscribe((val) => {
 			this.managedByChipList.errorState = false;
 			if (
-				this.sectionForm.get('MANAGED_BY').value.length === 0 &&
-				this.sectionForm.get('MANAGED_BY').dirty
+				this.sectionForm.get('managedBy').value.length === 0 &&
+				this.sectionForm.get('managedBy').dirty
 			) {
 				this.managedByChipList.errorState = true;
 			}
@@ -333,16 +352,16 @@ export class CreateSectionComponent implements OnInit, OnDestroy {
 	public selected(event: MatAutocompleteSelectedEvent, type: string): void {
 		switch (type) {
 			case 'visibleTo': {
-				const teams = this.sectionForm.value.VISIBLE_TO;
+				const teams = this.sectionForm.value.visibleTo;
 				teams.push(event.option.value);
-				this.sectionForm.get('VISIBLE_TO').setValue(teams);
+				this.sectionForm.get('visibleTo').setValue(teams);
 				this.visibleToInput.nativeElement.value = '';
 				break;
 			}
 			case 'managedBy': {
-				const teams = this.sectionForm.value.MANAGED_BY;
+				const teams = this.sectionForm.value.managedBy;
 				teams.push(event.option.value);
-				this.sectionForm.get('MANAGED_BY').setValue(teams);
+				this.sectionForm.get('managedBy').setValue(teams);
 				this.managedByInput.nativeElement.value = '';
 				break;
 			}
@@ -394,10 +413,10 @@ export class CreateSectionComponent implements OnInit, OnDestroy {
 		// EVENT AFTER MODAL DIALOG IS CLOSED
 		dialogRef.afterClosed().subscribe((result) => {
 			if (result === this.translateService.instant('DELETE')) {
-				this.guideService.deleteSection(this.sectionId).subscribe(
+				this.sectionApiService.deleteSection(this.sectionId).subscribe(
 					(deleteResponse: any) => {
 						this.router.navigate([
-							`guide/categories/${this.section.CATEGORY}/detail`,
+							`guide/categories/${this.section['DATA'].category['categoryId']}/detail`,
 						]);
 					},
 					(error: any) => {
@@ -413,15 +432,18 @@ export class CreateSectionComponent implements OnInit, OnDestroy {
 		this.managedByChipList.errorState = false;
 		if (this.sectionForm.valid) {
 			const section = JSON.parse(JSON.stringify(this.sectionForm.value));
-			section.VISIBLE_TO = this.transformIds(section.VISIBLE_TO, 'DATA_ID');
-			section.MANAGED_BY = this.transformIds(section.MANAGED_BY, 'DATA_ID');
+
+			section.visibleTo = this.transformIds(section.visibleTo, 'DATA_ID');
+			section.managedBy = this.transformIds(section.managedBy, 'DATA_ID');
+
 			if (this.sectionId !== 'new') {
-				// call put
-				this.guideService.putSection(section).subscribe(
+				//	call put
+
+				this.sectionApiService.updateSection(section).subscribe(
 					(putSectionResponse: any) => {
 						// need success message
 						this.router.navigate([
-							`guide/sections/${putSectionResponse.SECTION_ID}/detail`,
+							`guide/sections/${putSectionResponse.sectionId}/detail`,
 						]);
 					},
 					(putSectionError: any) => {
@@ -429,15 +451,21 @@ export class CreateSectionComponent implements OnInit, OnDestroy {
 					}
 				);
 			} else {
-				// call post
-				this.guideService.postSection(section).subscribe(
+				// delete section['sectionId'];
+
+				this.sectionApiService.postSection(section).subscribe(
 					(postSectionResponse: any) => {
+						console.log(
+							'postSectionResponse---------------->',
+							postSectionResponse
+						);
 						this.companiesService.trackEvent(
-							`Added a new Section ${section.NAME}`
+							`Added a new Section ${section.name}`
 						);
 						// need success message
+						console.log(postSectionResponse);
 						this.router.navigate([
-							`guide/sections/${postSectionResponse.SECTION_ID}/detail`,
+							`guide/sections/${postSectionResponse.sectionId}/detail`,
 						]);
 					},
 					(postSectionError: any) => {
@@ -448,11 +476,11 @@ export class CreateSectionComponent implements OnInit, OnDestroy {
 			}
 		} else {
 			this.loaderService.isLoading = false;
-			if (this.sectionForm.get('VISIBLE_TO').value.length === 0) {
+			if (this.sectionForm.get('visibleTo').value.length === 0) {
 				this.visibleToChipList.errorState = true;
 			}
 
-			if (this.sectionForm.get('MANAGED_BY').value.length === 0) {
+			if (this.sectionForm.get('managedBy').value.length === 0) {
 				this.managedByChipList.errorState = true;
 			}
 		}

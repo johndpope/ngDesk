@@ -32,7 +32,7 @@ import { CompaniesService } from 'src/app/companies/companies.service';
 import { CacheService } from '@src/app/cache.service';
 import { Subscription } from 'rxjs';
 import { ArticlesDataService } from '../articles-data.service';
-
+import { ArticleApiService } from '@ngdesk/knowledgebase-api';
 @Component({
 	selector: 'app-create-articles',
 	templateUrl: './create-articles.component.html',
@@ -76,7 +76,7 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 		{ NAME: this.translateService.instant('RUSSION'), CODE: 'ru' },
 		{ NAME: this.translateService.instant('SPANISH'), CODE: 'es' },
 	];
-	public pageSize :number = 10;
+	public pageSize: number = 10;
 	private articleId: string;
 	public errorMessage: string;
 	public successMessage: string;
@@ -85,8 +85,8 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 	private fileSize = 0;
 	private filesArray = [];
 	private companyInfoSubscription: Subscription;
-	public tempAuthorInput
-	public tempTeamInput = ""
+	public tempAuthorInput;
+	public tempTeamInput = '';
 
 	constructor(
 		private route: ActivatedRoute,
@@ -101,7 +101,8 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 		private cd: ChangeDetectorRef,
 		private companiesService: CompaniesService,
 		private cacheService: CacheService,
-		private articlesData:ArticlesDataService,
+		private articlesData: ArticlesDataService,
+		private articleApiService: ArticleApiService
 	) {
 		this.config['height'] = 550;
 
@@ -138,14 +139,15 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 		});
 	}
 
-	public  ngOnInit() {
+	public ngOnInit() {
 		this.route.params.subscribe((params) => {
 			this.isFormCreate = false;
 			this.articleId = this.route.snapshot.params['articleId'];
 			// get users
-			this.companyInfoSubscription = this.cacheService.companyInfoSubject.subscribe(
-				(dataStored) => {
-					if (dataStored) {
+			this.companyInfoSubscription =
+				this.cacheService.companyInfoSubject.subscribe(
+					(dataStored) => {
+						if (dataStored) {
 							// get teams
 							const modules: any[] = this.cacheService.companyData['MODULES'];
 							const teamsModule = modules.find(
@@ -155,100 +157,113 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 								(teams: any) => {
 									this.teams = teams.DATA;
 									this.teamsInitial = teams.DATA.slice();
-									this.allTeams = teams.DATA.slice();	
+									this.allTeams = teams.DATA.slice();
 									if (this.articleId !== 'new') {
-										this.guideService.getArticle(this.articleId).subscribe(
-											(articleResponse: any) => {
-												this.guideService
-													.getSectionById(articleResponse.SECTION)
-													.subscribe(
-														(sectionResponse: any) => {
-															this.teams = this.transformObjects(
-																sectionResponse.VISIBLE_TO,
-																this.allTeams,
-																'DATA_ID'
-															);
-															this.teamsInitial = this.transformObjects(
-																sectionResponse.VISIBLE_TO,
-																this.allTeams,
-																'DATA_ID'
-															);
-															this.articleForm = this.formBuilder.group({
-																ARTICLE_ID: [articleResponse.ARTICLE_ID],
-																TITLE: [
-																	articleResponse.TITLE,
-																	Validators.required,
-																],
-																BODY: [
-																	articleResponse.BODY,
-																	Validators.required,
-																],
-																PUBLISH: [
-																	articleResponse.PUBLISH,
-																	Validators.required,
-																],
-																SOURCE_LANGUAGE: [
-																	articleResponse.SOURCE_LANGUAGE,
-																	Validators.required,
-																],
-																VISIBLE_TO: [
-																	this.transformObjects(
-																		articleResponse.VISIBLE_TO,
-																		this.teamsInitial,
-																		'DATA_ID'
+										this.guideService
+											.getKbArticleById(this.articleId)
+											.subscribe(
+												(articleResponse: any) => {
+													this.guideService
+														.getSectionById(articleResponse.SECTION)
+														.subscribe(
+															(sectionResponse: any) => {
+																this.teams = this.transformObjects(
+																	this.convertToArr(
+																		sectionResponse['DATA'].visibleTo,
+																		'_id'
 																	),
-																	Validators.required,
-																],
-																SECTION: [
-																	articleResponse.SECTION,
-																	Validators.required,
-																],
-																OPEN_FOR_COMMENTS: [
-																	articleResponse.OPEN_FOR_COMMENTS,
-																	Validators.required,
-																],
-																AUTHOR: [
-																	JSON.parse(articleResponse.AUTHOR),
-																	Validators.required,
-																],
-																LABELS: [articleResponse.LABELS],
-																COMMENTS: [articleResponse.COMMENTS],
-																CREATED_BY: [articleResponse.CREATED_BY],
-																DATE_CREATED: [articleResponse.DATE_CREATED],
-																DATE_UPDATED: [articleResponse.DATE_UPDATED],
-																LAST_UPDATED_BY: [
-																	articleResponse.LAST_UPDATED_BY,
-																],
-																ORDER: [articleResponse.ORDER],
-																ATTACHMENTS: [
-																	articleResponse.ATTACHMENTS || [],
-																],
-															});
-															this.onChangeOfSection();
-															this.isFormCreate = true;
-														},
-														(sectionError: any) => {
-															this.errorMessage = sectionError.error.ERROR;
-														}
-													);
-											},
-											(error: any) => {
-												this.errorMessage = error.error.ERROR;
-											}
-										);
+																	this.allTeams,
+																	'DATA_ID'
+																);
+																this.teamsInitial = this.transformObjects(
+																	this.convertToArr(
+																		sectionResponse['DATA'].visibleTo,
+																		'_id'
+																	),
+																	this.allTeams,
+																	'DATA_ID'
+																);
+																this.articleForm = this.formBuilder.group({
+																	articalId: [
+																		articleResponse['DATA'].articalId,
+																	],
+																	title: [
+																		articleResponse['DATA'].TITLE,
+																		Validators.required,
+																	],
+																	body: [
+																		articleResponse['DATA'].BODY,
+																		Validators.required,
+																	],
+																	publish: [
+																		articleResponse['DATA'].PUBLISH,
+																		Validators.required,
+																	],
+																	sourceLanguage: [
+																		articleResponse['DATA'].SOURCE_LANGUAGE,
+																		Validators.required,
+																	],
+																	visibleTo: [
+																		this.transformObjects(
+																			this.convertToArr(
+																				articleResponse['DATA'].VISIBLE_TO,
+																				'_id'
+																			),
+																			this.teamsInitial,
+																			'DATA_ID'
+																		),
+																		Validators.required,
+																	],
+																	section: [
+																		articleResponse['DATA'].SECTION,
+																		Validators.required,
+																	],
+																	openForComments: [
+																		articleResponse['DATA'].OPEN_FOR_COMMENTS,
+																		Validators.required,
+																	],
+																	author: [
+																		JSON.parse(articleResponse['DATA'].AUTHOR),
+																		Validators.required,
+																	],
+																	labels: [articleResponse.LABELS],
+																	comments: [articleResponse.COMMENTS],
+																	createdBy: [articleResponse.CREATED_BY],
+																	dateCreated: [articleResponse.DATE_CREATED],
+																	dateUpdated: [articleResponse.DATE_UPDATED],
+																	lastUpdatedBy: [
+																		articleResponse.LAST_UPDATED_BY,
+																	],
+																	order: [articleResponse['DATA'].ORDER],
+																	attachments: [
+																		articleResponse['DATA'].ATTACHMENTS || [],
+																	],
+																});
+																this.onChangeOfSection();
+																this.isFormCreate = true;
+															},
+															(sectionError: any) => {
+																this.errorMessage = sectionError.error.ERROR;
+															}
+														);
+												},
+												(error: any) => {
+													this.errorMessage = error.error.ERROR;
+												}
+											);
 									} else {
 										this.articleForm = this.formBuilder.group({
-											TITLE: ['', Validators.required],
-											BODY: ['', Validators.required],
-											PUBLISH: [true, Validators.required],
-											SOURCE_LANGUAGE: ['en', Validators.required],
-											VISIBLE_TO: [[], Validators.required],
-											SECTION: ['', Validators.required],
-											OPEN_FOR_COMMENTS: [false, Validators.required],
-											AUTHOR: [this.usersService.user, Validators.required],
-											LABELS: [[]],
-											COMMENTS: [[]],
-											ATTACHMENTS: [[]],
+											title: ['', Validators.required],
+											body: ['', Validators.required],
+											publish: [true, Validators.required],
+											sourceLanguage: ['en', Validators.required],
+											visibleTo: [[], Validators.required],
+											section: ['', Validators.required],
+											openForComments: [false, Validators.required],
+											author: [this.usersService.user, Validators.required],
+											labels: [[]],
+											comments: [[]],
+											attachments: [[]],
 										});
 										this.isFormCreate = true;
 										this.onChangeOfSection();
@@ -264,26 +279,28 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 									this.errorMessage = error.error.ERROR;
 								}
 							);
+						}
+					},
+					(error: any) => {
+						this.errorMessage = error.error.ERROR;
 					}
-				},
-				(error: any) => {
-					this.errorMessage = error.error.ERROR;
-				}
-			);
+				);
 
 			// get sections with categoreis
-			this.guideService.getCategories().subscribe(
+			this.guideService.getKbCategories().subscribe(
 				(categoriesResponse: any) => {
 					this.categories = categoriesResponse.DATA;
 					this.categories.forEach((category) => {
-						this.guideService.getSections(category.CATEGORY_ID).subscribe(
-							(sectionsResponse: any) => {
-								category.SECTIONS = sectionsResponse.DATA;
-							},
-							(error: any) => {
-								this.errorMessage = error.error.ERROR;
-							}
-						);
+						this.guideService
+							.getKbSectionByCategoryId(category['categoryId'])
+							.subscribe(
+								(sectionsResponse: any) => {
+									category.SECTIONS = sectionsResponse.DATA;
+								},
+								(error: any) => {
+									this.errorMessage = error.error.ERROR;
+								}
+							);
 					});
 				},
 				(error: any) => {
@@ -292,34 +309,35 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 			);
 		});
 
-			//to intialize subscptions for authors and teams 
-			this.articlesData.initializeAuthors();
-			this.articlesData.intitalizeVisibleTo();
+		//to intialize subscptions for authors and teams
+		this.articlesData.initializeAuthors();
+		this.articlesData.intitalizeVisibleTo();
 	}
 
 	private onChangeOfSection() {
 		// re-populate visible to team options
 		// only display list of teams that have visibility in section
-		this.articleForm.get('SECTION').valueChanges.subscribe((val) => {
+		this.articleForm.get('section').valueChanges.subscribe((val) => {
 			// must clear list of visible to teams selected if section changes
 			// in case team was available in the previous section, but not new section
-			this.articleForm.get('VISIBLE_TO').setValue([]);
+			this.articleForm.get('visibleTo').setValue([]);
 			// get section
-			this.guideService.getSectionById(val).subscribe(
+			this.guideService.getkbSections(val).subscribe(
 				(sectionResponse: any) => {
 					this.teams = this.transformObjects(
-						sectionResponse.VISIBLE_TO,
+						this.convertToArr(sectionResponse['DATA'].visibleTo, '_id'),
+
 						this.allTeams,
 						'DATA_ID'
 					);
 					this.teamsInitial = this.transformObjects(
-						sectionResponse.VISIBLE_TO,
+						this.convertToArr(sectionResponse['DATA'].visibleTo, '_id'),
 						this.allTeams,
 						'DATA_ID'
 					);
 
 					// pre filling the first team
-					this.articleForm.get('VISIBLE_TO').setValue(this.teams);
+					this.articleForm.get('visibleTo').setValue(this.teams);
 				},
 				(sectionError: any) => {
 					this.errorMessage = sectionError.error.ERROR;
@@ -332,24 +350,25 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 	public filterInputValues(event) {
 		this.tempAuthorInput = event;
 
-		this.articlesData.authorSubjects.next([
-			this.tempAuthorInput,
-			true,
-		]);
+		this.articlesData.authorSubjects.next([this.tempAuthorInput, true]);
 	}
+	private convertToArr(input, key) {
+		let output = [];
 
+		for (var i = 0; i < input.length; ++i) {
+			output.push(input[i][key]);
+		}
+		return output;
+	}
 	public filterTeams() {
-		this.articlesData.teamsSubject.next([
-			this.tempTeamInput,
-			true,
-		]);
+		this.articlesData.teamsSubject.next([this.tempTeamInput, true]);
 	}
 
 	public displayConditionFn(field: any): string | undefined {
-		if(field && field.FIRST_NAME){
+		if (field && field.FIRST_NAME) {
 			return field ? field.FIRST_NAME + ' ' + field.LAST_NAME : undefined;
-		}else if(field && field?.CONTACT?.PRIMARY_DISPLAY_FIELD){
-			return field.CONTACT.PRIMARY_DISPLAY_FIELD
+		} else if (field && field?.CONTACT?.PRIMARY_DISPLAY_FIELD) {
+			return field.CONTACT.PRIMARY_DISPLAY_FIELD;
 		}
 	}
 
@@ -359,9 +378,9 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 
 		// Add our fruit
 		if ((value || '').trim()) {
-			const labels = this.articleForm.value.LABELS;
+			const labels = this.articleForm.value.labels;
 			labels.push(value.trim());
-			this.articleForm.get('LABELS').setValue(labels);
+			this.articleForm.get('labels').setValue(labels);
 		}
 
 		// Reset the input value
@@ -393,21 +412,21 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 	}
 
 	public selected(event: MatAutocompleteSelectedEvent): void {
-		let isContains:boolean = false
-		const teams = this.articleForm.value.VISIBLE_TO;
-		if(teams && teams.length>0){
-			teams.map((item)=>{
-				if(item.NAME ==  event.option.value.NAME){
-				isContains = true;
+		let isContains: boolean = false;
+		const teams = this.articleForm.value.visibleTo;
+		if (teams && teams.length > 0) {
+			teams.map((item) => {
+				if (item.NAME == event.option.value.NAME) {
+					isContains = true;
 				}
-			})
+			});
 		}
-		if(isContains ==false){
+		if (isContains == false) {
 			teams.push(event.option.value);
 		}
-		this.articleForm.get('VISIBLE_TO').setValue(teams);
+		this.articleForm.get('visibleTo').setValue(teams);
 		this.teamInput.nativeElement.value = '';
-		this.tempTeamInput = "";
+		this.tempTeamInput = '';
 	}
 
 	// replace Ids -> Objects
@@ -468,15 +487,17 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 		this.teamChipList.errorState = false;
 		if (this.articleForm.valid) {
 			const articleObj = JSON.parse(JSON.stringify(this.articleForm.value));
-			articleObj['AUTHOR'] = articleObj['AUTHOR'].DATA_ID;
-			articleObj['VISIBLE_TO'] = this.transformIds(
-				articleObj['VISIBLE_TO'],
+
+			articleObj['author'] = articleObj['author'].DATA_ID;
+			articleObj['visibleTo'] = this.transformIds(
+				articleObj['visibleTo'],
 				'DATA_ID'
 			);
 			if (this.articleId === 'new') {
-				this.guideService.postArticle(articleObj).subscribe(
+				this.articleApiService.postArticle(articleObj).subscribe(
 					(article: any) => {
-						this.companiesService.trackEvent('Added a new article');
+						console.log('post response  for article==', article);
+						//	this.companiesService.trackEvent('Added a new article');
 						this.navigateTo(article, 'post');
 					},
 					(error: any) => {
@@ -484,7 +505,7 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 					}
 				);
 			} else {
-				this.guideService.putArticle(articleObj).subscribe(
+				this.articleApiService.putArticle(articleObj).subscribe(
 					(article: any) => {
 						this.navigateTo(article, 'put');
 					},
@@ -493,7 +514,7 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 					}
 				);
 			}
-		} else if (this.articleForm.get('VISIBLE_TO').value.length === 0) {
+		} else if (this.articleForm.get('visibleTo').value.length === 0) {
 			this.teamChipList.errorState = true;
 		}
 	}
@@ -533,16 +554,16 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 	}
 
 	private navigateTo(article, requestType) {
-		if (article.PUBLISH) {
+		if (article.publish) {
 			this.router.navigate([
 				'guide',
 				'articles',
-				article.SECTION,
-				article.TITLE,
+				article.section,
+				article.title,
 			]);
 		} else {
 			if (requestType === 'post') {
-				this.router.navigate([`guide/articles/detail/${article.ARTICLE_ID}`]);
+				this.router.navigate([`guide/articles/detail/${article.articleId}`]);
 			}
 			this.successMessage = this.translateService.instant('SAVED_SUCCESSFULLY');
 		}
@@ -556,20 +577,12 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 		}
 	}
 
-		// to call API  on scroll of Author list 
+	// to call API  on scroll of Author list
 	public onUsersScroll() {
-		this.articlesData.authorSubjects.next([
-			this.tempAuthorInput,
-			false,
-		])	
+		this.articlesData.authorSubjects.next([this.tempAuthorInput, false]);
 	}
-		// to call API  on scroll of Team list 
+	// to call API  on scroll of Team list
 	public onTeamScroll() {
-		this.articlesData.teamsSubject.next([
-			this.tempTeamInput,
-			false,
-		])	
-	
+		this.articlesData.teamsSubject.next([this.tempTeamInput, false]);
 	}
-	
 }

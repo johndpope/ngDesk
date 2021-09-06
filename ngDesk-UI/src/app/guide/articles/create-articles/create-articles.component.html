@@ -15,18 +15,18 @@
 				<div fxLayoutAlign="center" fxFlexOffset="10px">
 					<mat-form-field fxFlex="80" appearance="outline">
 						<mat-label>{{'TITLE' | translate}}</mat-label>
-						<input matInput formControlName="TITLE" required>
+						<input matInput formControlName="title" required>
 						<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:errorParams.title"></mat-error>
 					</mat-form-field>
 				</div>
 				<div fxLayout="row" fxLayoutAlign="center">
 					<div fxLayoutAlign="center" class="text-no-bottom-padding no-hover-effect" fxLayout="column" fxFlex="80">
-						<tinymce placeholder="" #editor formControlName="BODY" [config]="config"></tinymce>
+						<tinymce placeholder="" #editor formControlName="body" [config]="config"></tinymce>
 						<div fxLayout="row" fxLayoutAlign="space-between center" [ngStyle]="{'border': '1px solid #ccc','border-top':'0px'}">
 							<div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px" [ngStyle]="{'font-size': '20px', 'padding': '10px'}">
 								<mat-icon inline class="pointer" (click)="fileInput.click()">attach_file</mat-icon>
 								<span class="mat-body-strong">(10mb max)</span><input hidden type="file" #fileInput (change)="onFileChange($event)">
-								<ng-container *ngFor="let attachment of articleForm.get('ATTACHMENTS').value; index as i">
+								<ng-container *ngFor="let attachment of articleForm.get('attachments').value; index as i">
 									<label class="mat-body-strong">{{attachment.FILE_NAME}}</label>
 									<mat-icon class="pointer" (click)="removeFile(i)">close</mat-icon>
 								</ng-container>
@@ -34,8 +34,8 @@
 						</div>
 					</div>
 				</div>
-				<div fxLayoutAlign="center" *ngIf="articleForm.controls.BODY.dirty || articleForm.dirty">
-					<mat-error fxFlex="77" *ngIf="articleForm.controls.BODY.errors?.required" class="mat-small"
+				<div fxLayoutAlign="center" *ngIf="articleForm.controls.body.dirty || articleForm.dirty">
+					<mat-error fxFlex="77" *ngIf="articleForm.controls.body.errors?.required" class="mat-small"
 						[innerHTML]="'FIELD_REQUIRED' | translate:errorParams.body"></mat-error>
 				</div>
 			</div>
@@ -44,20 +44,20 @@
 		<div fxLayout="column" fxFlex="20" class="pad10" [ngStyle]="{'background': '#F8F9F9'}" fxLayoutGap="20px"><button mat-raised-button
 				type="submit" color="primary">{{'SAVE' | translate}}</button>
 			<section>
-				<mat-slide-toggle color="primary" formControlName="PUBLISH"> <span>{{'PUBLISH' | translate}}</span></mat-slide-toggle>
+				<mat-slide-toggle color="primary" formControlName="publish"> <span>{{'PUBLISH' | translate}}</span></mat-slide-toggle>
 			</section>
 			<mat-form-field>
 				<mat-label>{{'SOURCE_LANGUAGE' | translate}}</mat-label>
-				<mat-select formControlName="SOURCE_LANGUAGE" required>
+				<mat-select formControlName="sourceLanguage" required>
 					<mat-option *ngFor="let lang of languages" [value]="lang.CODE">{{lang.NAME}}</mat-option>
 				</mat-select>
 				<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:errorParams.sourceLanguage"></mat-error>
 			</mat-form-field>
 			<mat-form-field>
 				<mat-label>{{'PUBLISH_IN_SECTION' | translate}}</mat-label>
-				<mat-select formControlName="SECTION" required>
+				<mat-select formControlName="section" required>
 					<mat-optgroup *ngFor="let category of categories" [label]="category.NAME" [disabled]="category.disabled">
-						<mat-option *ngFor="let section of category.SECTIONS" [value]="section.SECTION_ID">{{section.NAME}}</mat-option>
+						<mat-option *ngFor="let section of category.SECTIONS" [value]="section.sectionId">{{section.name}}</mat-option>
 					</mat-optgroup>
 				</mat-select>
 				<mat-hint>{{'CHANGES_AFFECT_ALL_TRANSLATION' | translate}}</mat-hint>
@@ -66,27 +66,30 @@
 			<mat-form-field>
 				<mat-label>{{'VISIBLE_TO' | translate}}</mat-label>
 				<mat-chip-list #teamChipList required>
-					<mat-chip *ngFor="let team of articleForm.value.VISIBLE_TO" [selectable]="true" [removable]="true"
-						(removed)="remove(team, 'VISIBLE_TO')">
+					<mat-chip *ngFor="let team of articleForm.value.visibleTo" [selectable]="true" [removable]="true"
+						(removed)="remove(team, 'visibleTo')">
 						{{team.NAME}}
 						<mat-icon matChipRemove>cancel</mat-icon>
 					</mat-chip>
 					<input #teamInput [matAutocomplete]="autoTeam" [matChipInputFor]="teamChipList"
-						[matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="resetInput($event)" [(ngModel)]="tempTeamInput"
-						[formControl]="teamCtrl" (ngModelChange)="filterTeams()">
+						[matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="resetInput($event)"
+						[(ngModel)]="tempTeamInput" [formControl]="teamCtrl" (ngModelChange)="filterTeams()">
 				</mat-chip-list>
-				<mat-autocomplete #autoTeam="matAutocomplete" (optionSelected)="selected($event, ind, 'teamInput')" (closed)="teams = teamsInitial"(appAutocompleteScroll)="onTeamScroll()">
-					<mat-option *ngFor="let team of articlesData.teamStore" [value]="team" [disabled]="articleForm.value.VISIBLE_TO.indexOf(articlesData.teamStore) != -1">
+				<mat-autocomplete #autoTeam="matAutocomplete" (optionSelected)="selected($event, ind, 'teamInput')" (closed)="teams = teamsInitial"
+					(appAutocompleteScroll)="onTeamScroll()">
+					<mat-option *ngFor="let team of articlesData.teamStore" [value]="team"
+						[disabled]="articleForm.value.visibleTo.indexOf(articlesData.teamStore) != -1">
 						{{team.NAME}}
 					</mat-option>
 				</mat-autocomplete>
 				<mat-hint>{{'VISIBLE_CONTROL' | translate}}</mat-hint>
 				<mat-error *ngIf="teamChipList.errorState" [innerHTML]="'FIELD_REQUIRED' | translate:errorParams.visibleTo"></mat-error>
 			</mat-form-field>
-			<mat-checkbox formControlName="OPEN_FOR_COMMENTS">{{'OPEN_FOR_COMMENTS' | translate}}</mat-checkbox>
+			<mat-checkbox formControlName="openForComments">{{'OPEN_FOR_COMMENTS' | translate}}</mat-checkbox>
 			<mat-form-field>
 				<mat-label>{{'AUTHOR' | translate}}</mat-label>
-				<input type="text" aria-label="Number" matInput  [matAutocomplete]="auto"  formControlName="AUTHOR" (ngModelChange)="filterInputValues($event)" >
+				<input type="text" aria-label="Number" matInput [matAutocomplete]="auto" formControlName="author"
+					(ngModelChange)="filterInputValues($event)">
 				<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayConditionFn" (appAutocompleteScroll)="onUsersScroll()">
 					<mat-option *ngFor="let author of articlesData.authorStore" [value]="author">
 						{{author.CONTACT.PRIMARY_DISPLAY_FIELD }}
@@ -96,7 +99,7 @@
 			</mat-form-field>
 			<mat-form-field>
 				<mat-chip-list #chipList>
-					<mat-chip *ngFor="let label of articleForm.value.LABELS" [selectable]="true" [removable]="true"
+					<mat-chip *ngFor="let label of articleForm.value.labels" [selectable]="true" [removable]="true"
 						(removed)="remove(label, 'LABELS')">{{label}}
 						<mat-icon matChipRemove>cancel</mat-icon>
 					</mat-chip> <input placeholder="{{'LABELS' | translate}}" [matChipInputFor]="chipList"

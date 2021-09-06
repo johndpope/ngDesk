@@ -52,9 +52,10 @@ import { BASE_PATH as SIDEBAR_BASE_PATH } from '@ngdesk/sidebar-api';
 import { BASE_PATH as WORKFLOW_BASE_PATH } from '@ngdesk/workflow-api';
 import { BASE_PATH as AUTH_BASE_PATH } from '@ngdesk/auth-api';
 import { BASE_PATH as ZOOM_BASE_PATH } from '@ngdesk/integration-api';
-import { BASE_PATH as REPORT_BASE_PATH } from '@ngdesk/report-api'
-import { BASE_PATH as NOTIFICATION_BASE_PATH } from '@ngdesk/notification-api'
-import { BASE_PATH as COMPANY_BASE_PATH } from '@ngdesk/company-api'
+import { BASE_PATH as REPORT_BASE_PATH } from '@ngdesk/report-api';
+import { BASE_PATH as NOTIFICATION_BASE_PATH } from '@ngdesk/notification-api';
+import { BASE_PATH as COMPANY_BASE_PATH } from '@ngdesk/company-api';
+import { BASE_PATH as KNOWLEDGEBASE_BASE_PATH } from '@ngdesk/knowledgebase-api';
 import {
 	MissingTranslationHandler,
 	TranslateLoader,
@@ -145,7 +146,7 @@ import { ConditionsDialogComponent } from './dialogs/conditions-dialog/condition
 import { DocumentViewerComponent } from './document-viewer/document-viewer.component';
 import { SignaturePadComponent } from './dialogs/signature-pad/signature-pad.component';
 import { DashboardEntriesComponent } from './dashboard-entries/dashboard-entries.component';
-import { ApprovalRejectDialogComponent  } from './dialogs/approval-reject-dialog/approval-reject-dialog.component';
+import { ApprovalRejectDialogComponent } from './dialogs/approval-reject-dialog/approval-reject-dialog.component';
 import { ApprovalRejectInformationDialogComponent } from './dialogs/approval-reject-information-dialog/approval-reject-information-dialog.component';
 import { OneToManyDialogComponent } from './dialogs/one-to-many-dialog/one-to-many-dialog.component';
 
@@ -218,7 +219,7 @@ const appConfig = (config: ConfigService) => {
 		DashboardEntriesComponent,
 		ApprovalRejectDialogComponent,
 		ApprovalRejectInformationDialogComponent,
-  OneToManyDialogComponent
+		OneToManyDialogComponent,
 	],
 	imports: [
 		NbCardModule,
@@ -387,7 +388,11 @@ const appConfig = (config: ConfigService) => {
 		{
 			provide: COMPANY_BASE_PATH,
 			useValue: '/api/ngdesk-company-service-v1',
-		}
+		},
+		{
+			provide: KNOWLEDGEBASE_BASE_PATH,
+			useValue: '/api/ngdesk-knowledgebase-service-v1',
+		},
 	],
 	bootstrap: [AppComponent],
 	// entryComponents: [

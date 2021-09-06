@@ -7,11 +7,12 @@ import { BannerMessageService } from '../../../custom-components/banner-message/
 import { CustomTableService } from '../../../custom-table/custom-table.service';
 import { ConfirmDialogComponent } from '../../../dialogs/confirm-dialog/confirm-dialog.component';
 import { GuideService } from '../../guide.service';
+import { ArticleApiService } from '@ngdesk/knowledgebase-api';
 
 @Component({
 	selector: 'app-manage-articles',
 	templateUrl: './manage-articles.component.html',
-	styleUrls: ['./manage-articles.component.scss']
+	styleUrls: ['./manage-articles.component.scss'],
 })
 export class ManageArticlesComponent implements OnInit {
 	public dialogRef: MatDialogRef<ConfirmDialogComponent>;
@@ -19,8 +20,8 @@ export class ManageArticlesComponent implements OnInit {
 		actions: [
 			{ NAME: '', ICON: 'delete', PERMISSION_NAME: 'DELETE' },
 			{ NAME: '', ICON: 'layers', PERMISSION_NAME: 'PUBLISH' },
-			{ NAME: '', ICON: 'layers_clear', PERMISSION_NAME: 'UNPUBLISH' }
-		]
+			{ NAME: '', ICON: 'layers_clear', PERMISSION_NAME: 'UNPUBLISH' },
+		],
 	};
 	constructor(
 		private router: Router,
@@ -28,23 +29,24 @@ export class ManageArticlesComponent implements OnInit {
 		public customTableService: CustomTableService,
 		private guideService: GuideService,
 		private translateService: TranslateService,
-		private dialog: MatDialog
+		private dialog: MatDialog,
+		private articleApiService: ArticleApiService
 	) {
 		this.translateService.get('DELETE').subscribe((value: string) => {
-			this.articleActions[value] = article => {
+			this.articleActions[value] = (article) => {
 				this.deleteArticle(article);
 			};
 			this.articleActions.actions[0].NAME = value;
 		});
 		this.translateService.get('PUBLISH').subscribe((enableValue: string) => {
-			this.articleActions[enableValue] = article => {
+			this.articleActions[enableValue] = (article) => {
 				this.updateArticle(article, true);
 			};
 			this.articleActions.actions[1].NAME = enableValue;
 		});
 
 		this.translateService.get('UNPUBLISH').subscribe((disableValue: string) => {
-			this.articleActions[disableValue] = article => {
+			this.articleActions[disableValue] = (article) => {
 				this.updateArticle(article, false);
 			};
 			this.articleActions.actions[2].NAME = disableValue;
@@ -59,16 +61,17 @@ export class ManageArticlesComponent implements OnInit {
 			{ DISPLAY: this.translateService.instant('TITLE'), NAME: 'TITLE' },
 			{
 				DISPLAY: this.translateService.instant('DATE_CREATED'),
-				NAME: 'DATE_CREATED'
+				NAME: 'DATE_CREATED',
 			},
 			{ DISPLAY: this.translateService.instant('PUBLISH'), NAME: 'PUBLISH' }
 		);
+
 		columnsHeaders.push(this.translateService.instant('TITLE'));
 		columnsHeaders.push(this.translateService.instant('DATE_CREATED'));
 		columnsHeaders.push(this.translateService.instant('PUBLISH'));
 		columnsHeadersObj.push({
 			DISPLAY: this.translateService.instant('ACTION'),
-			NAME: 'ACTION'
+			NAME: 'ACTION',
 		});
 		columnsHeaders.push(this.translateService.instant('ACTION'));
 		this.customTableService.columnsHeaders = columnsHeaders;
@@ -80,7 +83,7 @@ export class ManageArticlesComponent implements OnInit {
 		this.customTableService.activeSort = {
 			ORDER_BY: 'asc',
 			SORT_BY: this.translateService.instant('TITLE'),
-			NAME: 'TITLE'
+			NAME: 'TITLE',
 		};
 		this.getArticles();
 	}
@@ -90,30 +93,32 @@ export class ManageArticlesComponent implements OnInit {
 		const orderBy = this.customTableService.sortOrder;
 		const page = this.customTableService.pageIndex;
 		const pageSize = this.customTableService.pageSize;
-		this.guideService
-			.getSortedArticles(sortBy, orderBy, page + 1, pageSize)
-			.subscribe(
-				(response: any) => {
-					this.customTableService.setTableDataSource(
-						response.DATA,
-						response.TOTAL_RECORDS
-					);
-				},
-				(error: any) => {
-					this.bannerMessageService.errorNotifications.push({
-						message: error.error.ERROR
+		this.guideService.getKbAricles(page, pageSize, sortBy, orderBy).subscribe(
+			(response: any) => {
+				this.guideService
+					.getAllKbArticlesCount()
+					.subscribe((responseCount: any) => {
+						this.customTableService.setTableDataSource(
+							response.DATA,
+							responseCount.DATA
+						);
 					});
-				}
-			);
+			},
+			(error: any) => {
+				this.bannerMessageService.errorNotifications.push({
+					message: error.error.ERROR,
+				});
+			}
+		);
 	}
 
 	private deleteArticle(article) {
 		let dialogMessage = '';
 		this.translateService
 			.get('ARE_YOU_SURE_YOU_WANT_TO_DELETE_THIS', {
-				value: this.translateService.instant('ARTICLE').toLowerCase()
+				value: this.translateService.instant('ARTICLE').toLowerCase(),
 			})
-			.subscribe(res => {
+			.subscribe((res) => {
 				dialogMessage = res;
 			});
 		const dialogRef = this.dialog.open(ConfirmDialogComponent, {
@@ -122,20 +127,20 @@ export class ManageArticlesComponent implements OnInit {
 				buttonText: this.translateService.instant('DELETE'),
 				closeDialog: this.translateService.instant('CANCEL'),
 				action: this.translateService.instant('DELETE'),
-				executebuttonColor: 'warn'
-			}
+				executebuttonColor: 'warn',
+			},
 		});
 
 		// EVENT AFTER MODAL DIALOG IS CLOSED
-		dialogRef.afterClosed().subscribe(result => {
+		dialogRef.afterClosed().subscribe((result) => {
 			if (result === this.translateService.instant('DELETE')) {
-				this.guideService.deleteArticle(article.ARTICLE_ID).subscribe(
+				this.articleApiService.deleteArticle(article.ARTICLE_ID).subscribe(
 					(response: any) => {
 						this.getArticles();
 					},
 					(error: any) => {
 						this.bannerMessageService.errorNotifications.push({
-							message: error.error.ERROR
+							message: error.error.ERROR,
 						});
 					}
 				);
@@ -145,13 +150,14 @@ export class ManageArticlesComponent implements OnInit {
 
 	private updateArticle(article, publish) {
 		article.PUBLISH = publish;
-		this.guideService.putArticle(article).subscribe(
+		this.articleApiService.putArticle(article).subscribe(
 			(response: any) => {
+				console.log('response-------------------->>>..', response);
 				this.getArticles();
 			},
 			(error: any) => {
 				this.bannerMessageService.errorNotifications.push({
-					message: error.error.ERROR
+					message: error.error.ERROR,
 				});
 			}
 		);
@@ -170,12 +176,12 @@ export class ManageArticlesComponent implements OnInit {
 	}
 
 	public rowClicked(rowData): void {
-		if (rowData.PUBLISH) {
+		if (rowData.publish) {
 			this.router.navigate([
 				'guide',
 				'articles',
 				rowData.SECTION,
-				rowData.TITLE
+				rowData.TITLE,
 			]);
 		} else {
 			this.router.navigate([`guide/articles/detail/${rowData.ARTICLE_ID}`]);

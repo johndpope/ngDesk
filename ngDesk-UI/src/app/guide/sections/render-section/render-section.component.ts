@@ -56,21 +56,25 @@ export class RenderSectionComponent implements OnInit {
 		}
 
 		const sectionId = this.route.snapshot.params['sectionId'];
-		this.guideService.getSectionById(sectionId).subscribe(
+		this.guideService.getkbSections(sectionId).subscribe(
 			(sectionResponse: any) => {
 				this.section = this.convertSection(sectionResponse);
-				this.guideService.getCategoryById(this.section.category).subscribe(
+				console.log('	this.section=====', this.section);
+				console.log('	this.section[CATEGORY]=====', this.section['CATEGORY']);
+				this.guideService.getKbCategoryById(this.section['CATEGORY']).subscribe(
 					(categoryResponse: any) => {
 						this.category = this.convertCategory(categoryResponse);
+
 						this.guideService
-							.getArticlesBySection(this.section.sectionId, true)
+
+							.getArticlesBySection(this.section['SECTION_ID'], true)
 							.subscribe(
 								(articlesResponse: any) => {
 									this.articles = this.sortByOrder(
 										articlesResponse.DATA.filter(
 											(article) =>
 												article.PUBLISH === true &&
-												article.SECTION === this.section.sectionId
+												article.SECTION === this.section['sectionId']
 										)
 									);
 									this.isLoading = false;
@@ -108,26 +112,28 @@ export class RenderSectionComponent implements OnInit {
 
 	public convertSection(sectionData): Section {
 		const section = new Section(
-			sectionData.NAME,
-			sectionData.SOURCE_LANGUAGE,
-			sectionData.CATEGORY,
-			sectionData.SORT_BY,
-			sectionData.ORDER,
-			sectionData.DESCRIPTION,
-			sectionData.SECTION_ID
+			sectionData['DATA'].name,
+			sectionData['DATA'].sourceLanguage,
+			sectionData['DATA'].category['categoryId'],
+			sectionData['DATA'].sortBy,
+			sectionData['DATA'].order,
+			sectionData['DATA'].description,
+			sectionData['DATA'].sectionId
 		);
+
 		return section;
 	}
 
 	public convertCategory(categoryData): Category {
 		const category = new Category(
-			categoryData.NAME,
-			categoryData.SOURCE_LANGUAGE,
-			categoryData.IS_DRAFT,
-			categoryData.ORDER,
-			categoryData.DESCRIPTION,
-			categoryData.CATEGORY_ID
+			categoryData['DATA'].name,
+			categoryData['DATA'].sourceLanguage,
+			categoryData['DATA'].isDraft,
+			categoryData['DATA'].order,
+			categoryData['DATA'].description,
+			categoryData['DATA'].categoryId
 		);
+
 		return category;
 	}
 

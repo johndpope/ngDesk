@@ -31,8 +31,10 @@
 		<div fxLayout="column" fxFlex="50">
 			<div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxFlex="100" fxLayoutAlign="start center">
 				<label class="mat-body" fxFlex> <a class="link pointer" style="color: #3f51b5;"
-						(click)="navigate(['guide'])">{{'GUIDE_HOME' | translate}}</a>
-					&nbsp;&gt;&nbsp;<span>{{category.name}}</span> </label>
+						(click)="navigate(['guide'])">{{'GUIDE_HOME' | translate}}</a>&nbsp;&gt;&nbsp;
+					<a class="link pointer" style="color: #3f51b5;"
+						(click)="navigate(['guide', 'categories', category.categoryId, 'detail'])">{{category.name}}</a>
+					&nbsp;&gt;&nbsp;<span>{{ category.name }}</span></label>
 				<!-- <mat-form-field>
           <input matInput placeholder="{{'SEARCH' | translate}}">
           <mat-icon matSuffix>search</mat-icon>

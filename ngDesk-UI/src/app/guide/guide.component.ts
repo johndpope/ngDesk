@@ -65,7 +65,7 @@ export class GuideComponent implements OnInit {
 			);
 		}
 
-		this.guideService.getCategories().subscribe(
+		this.guideService.getKbCategories().subscribe(
 			(categoriesResponse: any) => {
 				if (
 					this.roleName &&
@@ -74,12 +74,12 @@ export class GuideComponent implements OnInit {
 				) {
 					this.categories = this.sortByOrder(
 						categoriesResponse.DATA.filter(
-							(category) => category.IS_DRAFT === false
+							(category) => category.isDraft === false
 						)
 					);
 					this.filteredCategories = this.sortByOrder(
 						categoriesResponse.DATA.filter(
-							(category) => category.IS_DRAFT === false
+							(category) => category.isDraft === false
 						)
 					);
 				} else {
@@ -158,7 +158,7 @@ export class GuideComponent implements OnInit {
 					this.router.navigate([
 						'guide',
 						'categories',
-						object.CATEGORY_ID,
+						object.categoryId,
 						'detail',
 					]);
 					break;
