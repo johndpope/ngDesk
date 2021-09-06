@@ -91,7 +91,6 @@ sort=${sortBy}&order=${orderBy}&page=${page}&page_size=${pageSize}`);
 						)}
         }
 			}`;
-			console.log(query);
 			let payload: any = {
 				query: query,
 				conditions: filtres,
@@ -279,7 +278,7 @@ sort=${sortBy}&order=${orderBy}&page=${page}&page_size=${pageSize}`);
 	public buildRelatedFieldQuery(queryString, key, module, customizationData) {
 		let sortBy = 'DATE_CREATED';
 		let orderBy = 'dsc';
-		let pageSize = 1;
+		let pageSize = 5;
 		let pageNumber = 0;
 		if (customizationData && customizationData.customizeFor == key) {
 			sortBy = customizationData.sortBy;

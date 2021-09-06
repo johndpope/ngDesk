@@ -1350,7 +1350,10 @@ export class ReportDetailComponent implements OnInit {
 
 		this.setTableFields();
 		this.removeFieldsFromList();
-		if (this.fieldsInTable.length > 0 || this.relationFieldIds.length > 0) {
+		if (
+			this.fieldsInTable.length > 0 ||
+			Object.keys(this.relationFieldIds)?.length > 0
+		) {
 			this.postReportData();
 		}
 	}
@@ -1411,6 +1414,11 @@ export class ReportDetailComponent implements OnInit {
 		this.chaildFields = [];
 		if (this.relatedFields.hasOwnProperty(relationshipField.MODULE)) {
 			this.chaildFields = this.relatedFields[relationshipField.MODULE];
+			this.chaildFields.sort(function (a, b) {
+				const textA = a.NAME.toUpperCase();
+				const textB = b.NAME.toUpperCase();
+				return textA < textB ? -1 : textA > textB ? 1 : 0;
+			});
 		}
 	}
 
@@ -1452,12 +1460,16 @@ export class ReportDetailComponent implements OnInit {
 						data[field.parentFieldName] &&
 						data[field.parentFieldName].length == 0
 					) {
-						field.data = [];
+						if (field?.data?.length == 0) {
+							field.data = [];
+						}
 					} else if (
 						data.hasOwnProperty(field.parentFieldName) &&
 						data[field.parentFieldName] == null
 					) {
-						field.data = [];
+						if (field?.data?.length == 0) {
+							field.data = [];
+						}
 					}
 				}
 			});
@@ -1724,14 +1736,14 @@ export class ReportDetailComponent implements OnInit {
 	// }
 
 	public createDynamicDataSource(source) {
-		if (source.length > 0) {
+		if (source && source.length > 0 && source !== 'No Data') {
 			let datasource = new MatTableDataSource<any>(source);
 			return datasource;
 		}
 	}
 
 	public getChaildTableColNames(source) {
-		if (source.length > 0) {
+		if (source.length > 0 && source !== 'No Data') {
 			let fieldKeys = Object.keys(source[0]);
 			let display = [];
 			if (fieldKeys?.length > 0) {
@@ -1744,7 +1756,7 @@ export class ReportDetailComponent implements OnInit {
 	}
 
 	public getChildTableColObj(source, col) {
-		if (source.length > 0) {
+		if (source.length > 0 && source !== 'No Data') {
 			let fieldKeys = Object.keys(source[0]);
 			let colData = [];
 			let relatedFields = this.relatedFields[col.parentModuleId];
@@ -1858,14 +1870,14 @@ export class ReportDetailComponent implements OnInit {
 		this.sortByFieldsList = this.relationFieldsInTable[col.parentModuleId];
 		this.customization.customizeFor = col.NAME;
 		this.customization.pageIndex = 0;
-		this.customization.pageSize = 1;
+		this.customization.pageSize = 5;
 		this.customization.orederBy = 'dsc';
 		this.customization.sortBy =
 			this.relationFieldsInTable[col.parentModuleId][0].NAME;
 
 		this.dialog.open(this.customizeDialog, {
 			width: '500px',
-			height: '400px',
+			height: '300px',
 		});
 	}
 

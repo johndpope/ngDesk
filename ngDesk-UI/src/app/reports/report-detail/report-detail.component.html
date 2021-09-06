@@ -67,7 +67,7 @@
 										<p style="margin: 10px;">{{parentField.DISPLAY_LABEL}}</p>
 										<div style="width: 18vw; max-width: 100%; min-height: 60px; overflow: hidden;" cdkDropList
 											[cdkDropListConnectedTo]="relationDropList">
-											<div class="pad10 pointer" *ngFor="let field of chaildFields" fxLayout="row" fxLayoutAlign=" center"
+											<div class="pad10 pointer" *ngFor="let field of chaildFields" fxLayout="row" fxLayoutAlign=" center center"
 												[ngStyle]="{'border-bottom': '1px solid #9e9e9e'}" cdkDrag id="{{field.FIELD_ID}}"
 												style="padding: 12px 10px; box-sizing: border-box; cursor: move;">
 												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -144,42 +144,42 @@
 				<ng-container matColumnDef="{{col.DISPLAY}}" *ngFor="let col of displayedColumnsObj; let j = index">
 					<th mat-header-cell *matHeaderCellDef mwlResizable [enableGhostResize]="true" (resizeEnd)="onResizeEnd($event, col)"
 						[resizeEdges]="{bottom: false, right: true, top: false, left: true}">
-						<div fxLayout="row" fxLayoutAlign="start center">
-							<div fxLayout="row" fxLayoutGap="20px">
-								<div fxLayout="column" fxLayoutAlign="center center">
-									<div fxLayout="row" fxLayoutAlign="center center" class="col-resSize-{{col.NAME}}">
-										<div *ngIf="col?.DATA_TYPE?.DISPLAY !== 'DROP_HERE'" class="custom-theme-icon-color" fxLayoutAlign="center center">
-											{{col.DISPLAY}} </div>
-										<div *ngIf="col?.DATA_TYPE?.DISPLAY === 'DROP_HERE'" cdkDropList (cdkDropListDropped)="dropField($event)" id='field1'
-											[ngStyle]="{'border': '1px dashed #ccc','border-radius': '5px'}">
-											<div class="mat-caption" style="color:#888;padding:10px;">
-												<span class="custom-theme-icon-color" fxLayoutAlign="center center">Drop Here</span>
-											</div>
+						<div fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap="20px">
+							<!-- <div fxLayout="row" fxLayoutGap="20px"> -->
+							<div fxLayout="column" fxLayoutAlign="center center">
+								<div fxLayout="row" fxLayoutAlign="center center" class="col-resSize-{{col.NAME}}">
+									<div *ngIf="col?.DATA_TYPE?.DISPLAY !== 'DROP_HERE'" class="custom-theme-icon-color" fxLayoutAlign="center center">
+										{{col.DISPLAY}} </div>
+									<div *ngIf="col?.DATA_TYPE?.DISPLAY === 'DROP_HERE'" cdkDropList (cdkDropListDropped)="dropField($event)" id='field1'
+										[ngStyle]="{'border': '1px dashed #ccc','border-radius': '5px'}">
+										<div class="mat-caption" style="color:#888;padding:10px;">
+											<span class="custom-theme-icon-color" fxLayoutAlign="center center">Drop Here</span>
 										</div>
 									</div>
 								</div>
-								<div *ngIf="col?.DATA_TYPE?.DISPLAY !== 'DROP_HERE'" fxLayout="column" fxLayoutAlign="end end">
-									<button mat-icon-button [matMenuTriggerFor]="menu" (click)="getOperators(col)">
-										<mat-icon class="custom-theme-icon-color">more_vert</mat-icon>
+							</div>
+							<div *ngIf="col?.DATA_TYPE?.DISPLAY !== 'DROP_HERE'" fxLayout="column" style="padding-bottom: 5px;">
+								<button mat-icon-button [matMenuTriggerFor]="menu" (click)="getOperators(col)">
+									<mat-icon class="custom-theme-icon-color">more_vert</mat-icon>
+								</button>
+							</div>
+							<!-- </div> -->
+						</div>
+						<mat-menu #menu="matMenu">
+							<div fxLayout="column">
+								<div fxLayout="row" *ngFor="let item of menuItems">
+									<button mat-menu-item fxLayout="column" (click)="actioncFunctions[item.ACTION](j, item.NAME, col)"
+										*ngIf="item.NAME != 'FILTER' && (displayedColumnsObj.length != 1 ||(item.NAME != 'MOVE_LEFT' &&  item.NAME != 'MOVE_RIGHT')) && (i != 0 || item.NAME != 'MOVE_LEFT') && (i != displayedColumnsObj.length -1  || item.NAME != 'MOVE_RIGHT')">
+										<div fxLayout="row">
+											<div>
+												<mat-icon>{{item.ICON}}</mat-icon>
+											</div>
+											<div [ngStyle]="{'min-width': '120px'}">{{item.NAME| translate}}</div>
+										</div>
 									</button>
 								</div>
 							</div>
-							<mat-menu #menu="matMenu">
-								<div fxLayout="column">
-									<div fxLayout="row" *ngFor="let item of menuItems">
-										<button mat-menu-item fxLayout="column" (click)="actioncFunctions[item.ACTION](j, item.NAME, col)"
-											*ngIf="item.NAME != 'FILTER' && (displayedColumnsObj.length != 1 ||(item.NAME != 'MOVE_LEFT' &&  item.NAME != 'MOVE_RIGHT')) && (i != 0 || item.NAME != 'MOVE_LEFT') && (i != displayedColumnsObj.length -1  || item.NAME != 'MOVE_RIGHT')">
-											<div fxLayout="row">
-												<div>
-													<mat-icon>{{item.ICON}}</mat-icon>
-												</div>
-												<div [ngStyle]="{'min-width': '120px'}">{{item.NAME| translate}}</div>
-											</div>
-										</button>
-									</div>
-								</div>
-							</mat-menu>
-						</div>
+						</mat-menu>
 					</th>
 					<td mat-cell *matCellDef="let element;let k = dataIndex">
 						<ng-container [ngSwitch]="col.DATA_TYPE.DISPLAY">
@@ -192,19 +192,20 @@
 								<span *ngIf="!col?.isParentField">
 									{{element[col.NAME]}}
 								</span>
-								<table *ngIf="col?.isParentField && element[col.NAME]" style="margin-top: 10px;margin-bottom: 10px; margin-right: 10px;"
-									class="mat-elevation-z8" mat-table [dataSource]="createDynamicDataSource(element[col.NAME])" [id]="k +'_'+j"
-									[ngStyle]="{'width':'100%'}">
+								<table *ngIf="col?.isParentField && element[col.NAME] && createDynamicDataSource(element[col.NAME]) " style="padding: 10px;"
+									mat-table [dataSource]="createDynamicDataSource(element[col.NAME])" [id]="k +'_'+j" [ngStyle]="{'width':'100%'}">
 									<ng-container matColumnDef="{{childcol?.DISPLAY}}"
 										*ngFor="let childcol of getChildTableColObj(element[col.NAME],col); let i = index">
 										<th mat-header-cell *matHeaderCellDef style="height: 50px;">
-											<div class="custom-theme-icon-color" fxLayoutAlign="center center">
+											<div class="custom-theme-icon-color" style=" white-space: nowrap; text-align: center;">
 												{{childcol.DISPLAY}} </div>
 										</th>
 										<td mat-cell *matCellDef="let childelement">
 											<ng-container [ngSwitch]="childcol?.DATA_TYPE.DISPLAY">
-												<span *ngSwitchCase="'Date/Time'"
-													fxLayoutAlign="center center">{{childelement[childcol.NAME] | dateFormat: 'medium'}}</span>
+												<span *ngSwitchCase="'Date/Time'" fxLayoutAlign="center center">
+													<span *ngIf="childelement[childcol.NAME]"> {{childelement[childcol.NAME] | dateFormat: 'medium'}} </span>
+													<span *ngIf="!childelement[childcol.NAME]"> No Data </span>
+												</span>
 												<span *ngSwitchDefault fxLayoutAlign="center center">{{childelement[childcol.NAME] || 'No Data'}}</span>
 											</ng-container>
 										</td>
@@ -213,6 +214,10 @@
 									<tr matRipple id="row-{{index}}" mat-row
 										*matRowDef="let row; columns:getChaildTableColNames(element[col.NAME]) ; let index = dataIndex"></tr>
 								</table>
+
+								<span
+									*ngIf=" col?.isParentField && !createDynamicDataSource(element[col.NAME]) && col?.DATA_TYPE?.DISPLAY !== 'DROP_HERE'">No
+									Data</span>
 
 								<!-- <mat-paginator *ngIf="col?.isParentField" (page)="onPageChange($event,k,j,col.NAME,col.parentModuleId)"
 									[length]="displayTableLength(k,col.NAME)" [pageSize]="getPageDetails(k,j,'pageSize')" [pageSizeOptions]="[1, 5, 10, 20]"
@@ -334,10 +339,10 @@
 
 <!-- dialog for Relationship Customization -->
 
-<ng-template #customizeDialog>
+<ng-template #customizeDialog fxLayoutAlign="center center">
 
-	<mat-label fxLayoutGap="20px" class="mat-h2"> Customize Aggregation Data</mat-label>
-	<div fxLayout='row' fxLayoutAlign="space-between center" fxLayoutGap="20px" style="margin-top: 50px;">
+	<mat-label fxLayoutGap="20px" class="mat-h2"> Customize {{getFieldName(customization?.customizeFor)}} </mat-label>
+	<!-- <div fxLayout='row' fxLayoutAlign="space-between center" fxLayoutGap="20px" style="margin-top: 50px;">
 		<mat-form-field [floatLabel]="'always'">
 			<input matInput type="number" placeholder="Page Size" [(ngModel)]="customization.pageSize">
 		</mat-form-field>
@@ -345,9 +350,9 @@
 		<mat-form-field [floatLabel]="'always'">
 			<input matInput type="number" placeholder="Page Number" [(ngModel)]="customization.pageIndex">
 		</mat-form-field>
-	</div>
+	</div> -->
 
-	<div fxLayout='row' fxLayoutAlign="space-between center" fxLayoutGap="20px">
+	<div fxLayout='row' fxLayoutAlign="space-between center" fxLayoutGap="20px" style="margin-top: 50px;">
 		<mat-form-field [floatLabel]="'always'">
 			<mat-select placeholder="Sort By" [(ngModel)]="customization.sortBy">
 				<mat-option *ngFor="let field of sortByFieldsList" [value]="field.NAME">{{field.DISPLAY_LABEL}}</mat-option>
@@ -361,7 +366,7 @@
 		</mat-radio-group>
 	</div>
 
-	<div fxLayout='row' fxLayoutAlign="end end" fxLayoutGap="20px" style="margin-top: 50px;">
+	<div fxLayout='row' fxLayoutAlign="end end" fxLayoutGap="20px" style="margin-top: 20px;">
 		<button mat-raised-button matDialogClose>{{'CLOSE' | translate}}</button>
 		<button mat-raised-button color="primary" (click)="applyCustomizaton()" matDialogClose>{{'APPLY' | translate}}</button>
 	</div>
