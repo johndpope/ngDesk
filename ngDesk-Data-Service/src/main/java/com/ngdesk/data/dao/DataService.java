@@ -188,7 +188,16 @@ public class DataService {
 											"\\{\\{CURRENT_CONTACT\\}\\}",
 											authManager.getUserDetails().getAttributes().get("CONTACT").toString()));
 								}
+								
 							}
+							if (field.getDataType().getDisplay().equalsIgnoreCase("Chronometer")
+									&& field.getDefaultValue() != null) {
+								String defaultvalue = chronometerFormatTransform(
+										Integer.parseInt(field.getDefaultValue()), "");
+
+								field.setDefaultValue(defaultvalue.toString());
+							}
+
 							entry.put(field.getName(), field.getDefaultValue());
 						}
 					}
@@ -200,6 +209,82 @@ public class DataService {
 
 		return entry;
 	}
+	public String chronometerFormatTransform(Integer value, String formattedTime) {
+		int remainder = 0;
+		if (value >= 9600) {
+			// 1 Month = 9600 minutes
+			remainder = value % 9600;
+			if (remainder == 0) {
+				return value / 9600 + "mo";
+			} else {
+
+				formattedTime = (int) Math.floor(value / 9600) + "mo";
+				return this.chronometerFormatTransform(remainder, formattedTime);
+			}
+		} else if (value >= 2400) {
+			// 1 Week = 2400 minutes
+			remainder = value % 2400;
+			if (remainder == 0) {
+				if (formattedTime.length() > 0) {
+					return formattedTime + ' ' + value / 2400 + "w";
+				} else {
+					return value / 2400 + "w";
+				}
+			} else {
+				if (formattedTime.length() > 0) {
+
+					formattedTime = formattedTime + ' ' + (int) Math.floor(value / 2400) + "w";
+				} else {
+
+					formattedTime = (int) Math.floor(value / 2400) + "w";
+				}
+				return this.chronometerFormatTransform(remainder, formattedTime);
+			}
+		} else if (value >= 480) {
+			// 1 Day = 480 minutes
+			remainder = value % 480;
+			if (remainder == 0) {
+				if (formattedTime.length() > 0) {
+					return formattedTime + ' ' + value / 480 + "d";
+				} else {
+					return value / 480 + "d";
+				}
+			} else {
+				if (formattedTime.length() > 0) {
+
+					formattedTime = formattedTime + ' ' + (int) Math.floor(value / 480) + "d";
+				} else {
+					formattedTime = (int) Math.floor(value / 480) + "d";
+				}
+				return this.chronometerFormatTransform(remainder, formattedTime);
+			}
+		} else if (value >= 60) {
+			// 1 Hour = 60 minutes
+			remainder = value % 60;
+			if (remainder == 0) {
+				if (formattedTime.length() > 0) {
+					return formattedTime + ' ' + value / 60 + "h";
+				} else {
+					return value / 60 + "h";
+				}
+			} else {
+				if (formattedTime.length() > 0) {
+					formattedTime = formattedTime + ' ' + (int) Math.floor(value / 60) + "h";
+
+				} else {
+					formattedTime = (int) Math.floor(value / 60) + "h";
+				}
+				return this.chronometerFormatTransform(remainder, formattedTime);
+			}
+		} else {
+			if (formattedTime.length() > 0) {
+				return formattedTime + ' ' + value + "m";
+			} else {
+				return formattedTime + value + "m";
+			}
+		}
+	}
+
 
 	public String getFormulaFieldValue(Module module, Map<String, Object> entry, ModuleField formulaField) {
 		String value = formulaField.getFormula();
