@@ -144,21 +144,21 @@
 				<ng-container matColumnDef="{{col.DISPLAY}}" *ngFor="let col of displayedColumnsObj; let j = index">
 					<th mat-header-cell *matHeaderCellDef mwlResizable [enableGhostResize]="true" (resizeEnd)="onResizeEnd($event, col)"
 						[resizeEdges]="{bottom: false, right: true, top: false, left: true}">
-						<div fxLayout="row" fxFlexAlign="start">
+						<div fxLayout="row" fxLayoutAlign="start center">
 							<div fxLayout="row" fxLayoutGap="20px">
-								<div fxLayout="column" fxFlexAlign="center">
-									<div fxLayout="row" fxFlexAlign="center" class="col-resSize-{{col.NAME}}">
-										<div *ngIf="col?.DATA_TYPE?.DISPLAY !== 'DROP_HERE'" class="custom-theme-icon-color" fxFlexAlign="center">
+								<div fxLayout="column" fxLayoutAlign="center center">
+									<div fxLayout="row" fxLayoutAlign="center center" class="col-resSize-{{col.NAME}}">
+										<div *ngIf="col?.DATA_TYPE?.DISPLAY !== 'DROP_HERE'" class="custom-theme-icon-color" fxLayoutAlign="center center">
 											{{col.DISPLAY}} </div>
 										<div *ngIf="col?.DATA_TYPE?.DISPLAY === 'DROP_HERE'" cdkDropList (cdkDropListDropped)="dropField($event)" id='field1'
 											[ngStyle]="{'border': '1px dashed #ccc','border-radius': '5px'}">
 											<div class="mat-caption" style="color:#888;padding:10px;">
-												<span class="custom-theme-icon-color" fxFlexAlign="center">Drop Here</span>
+												<span class="custom-theme-icon-color" fxLayoutAlign="center center">Drop Here</span>
 											</div>
 										</div>
 									</div>
 								</div>
-								<div *ngIf="col?.DATA_TYPE?.DISPLAY !== 'DROP_HERE'" fxLayout="column" fxFlexAlign="center" fxLayoutAlign="end">
+								<div *ngIf="col?.DATA_TYPE?.DISPLAY !== 'DROP_HERE'" fxLayout="column" fxLayoutAlign="end end">
 									<button mat-icon-button [matMenuTriggerFor]="menu" (click)="getOperators(col)">
 										<mat-icon class="custom-theme-icon-color">more_vert</mat-icon>
 									</button>
@@ -193,13 +193,12 @@
 									{{element[col.NAME]}}
 								</span>
 								<table *ngIf="col?.isParentField && element[col.NAME]" style="margin-top: 10px;margin-bottom: 10px; margin-right: 10px;"
-									class="mat-elevation-z8" mat-table matSort (matSortChange)="sortData($event,k,j,col.NAME,col.parentModuleId)"
-									[dataSource]="createDynamicDataSource(element[col.NAME])" [matSortActive]="getSortDetails(k,j,'active')"
-									[matSortDirection]="getSortDetails(k,j,'direction')" [id]="k +'_'+j" [ngStyle]="{'width':'100%'}">
+									class="mat-elevation-z8" mat-table [dataSource]="createDynamicDataSource(element[col.NAME])" [id]="k +'_'+j"
+									[ngStyle]="{'width':'100%'}">
 									<ng-container matColumnDef="{{childcol?.DISPLAY}}"
 										*ngFor="let childcol of getChildTableColObj(element[col.NAME],col); let i = index">
 										<th mat-header-cell *matHeaderCellDef style="height: 50px;">
-											<div class="custom-theme-icon-color" fxLayoutAlign="center center" [mat-sort-header]="childcol?.NAME">
+											<div class="custom-theme-icon-color" fxLayoutAlign="center center">
 												{{childcol.DISPLAY}} </div>
 										</th>
 										<td mat-cell *matCellDef="let childelement">
@@ -215,10 +214,10 @@
 										*matRowDef="let row; columns:getChaildTableColNames(element[col.NAME]) ; let index = dataIndex"></tr>
 								</table>
 
-								<mat-paginator *ngIf="col?.isParentField" (page)="onPageChange($event,k,j,col.NAME,col.parentModuleId)"
+								<!-- <mat-paginator *ngIf="col?.isParentField" (page)="onPageChange($event,k,j,col.NAME,col.parentModuleId)"
 									[length]="displayTableLength(k,col.NAME)" [pageSize]="getPageDetails(k,j,'pageSize')" [pageSizeOptions]="[1, 5, 10, 20]"
 									[pageIndex]="getPageDetails(k,j,'pageIndex')" showFirstLastButtons>
-								</mat-paginator>
+								</mat-paginator> -->
 							</span>
 						</ng-container>
 					</td>
@@ -235,10 +234,10 @@
 			</mat-paginator>
 		</div>
 		<div fxLayoutAlign="center" fxFlexFill *ngIf="displayedColumns.length === 0" [ngStyle]="{'margin-top':'20%'}" class="mat-h1">
-			<div fxFlexAlign="center">
+			<div fxLayoutAlign="center center">
 				<mat-icon style="margin:10px">poll</mat-icon>
 			</div>
-			<div fxFlexAlign="center">
+			<div fxLayoutAlign="center center">
 				{{'SELECT_FIELD_TO_VIEW_REPORT'| translate}}
 			</div>
 		</div>
@@ -331,4 +330,40 @@
 	<div fxLayoutAlign="flex-end flex-end">
 		<button mat-raised-button color="primary" (click)="applyFilter()">{{'APPLY' | translate}}</button>
 	</div>
+</ng-template>
+
+<!-- dialog for Relationship Customization -->
+
+<ng-template #customizeDialog>
+
+	<mat-label fxLayoutGap="20px" class="mat-h2"> Customize Aggregation Data</mat-label>
+	<div fxLayout='row' fxLayoutAlign="space-between center" fxLayoutGap="20px" style="margin-top: 50px;">
+		<mat-form-field [floatLabel]="'always'">
+			<input matInput type="number" placeholder="Page Size" [(ngModel)]="customization.pageSize">
+		</mat-form-field>
+
+		<mat-form-field [floatLabel]="'always'">
+			<input matInput type="number" placeholder="Page Number" [(ngModel)]="customization.pageIndex">
+		</mat-form-field>
+	</div>
+
+	<div fxLayout='row' fxLayoutAlign="space-between center" fxLayoutGap="20px">
+		<mat-form-field [floatLabel]="'always'">
+			<mat-select placeholder="Sort By" [(ngModel)]="customization.sortBy">
+				<mat-option *ngFor="let field of sortByFieldsList" [value]="field.NAME">{{field.DISPLAY_LABEL}}</mat-option>
+			</mat-select>
+		</mat-form-field>
+
+		<mat-label>{{'ORDER_BY' | translate}}</mat-label>
+		<mat-radio-group fxLayoutGap="10px" [(ngModel)]="customization.orederBy">
+			<mat-radio-button value="asc"> Asc </mat-radio-button>
+			<mat-radio-button value="dsc" style="margin-left: 10px;"> Desc </mat-radio-button>
+		</mat-radio-group>
+	</div>
+
+	<div fxLayout='row' fxLayoutAlign="end end" fxLayoutGap="20px" style="margin-top: 50px;">
+		<button mat-raised-button matDialogClose>{{'CLOSE' | translate}}</button>
+		<button mat-raised-button color="primary" (click)="applyCustomizaton()" matDialogClose>{{'APPLY' | translate}}</button>
+	</div>
+
 </ng-template>

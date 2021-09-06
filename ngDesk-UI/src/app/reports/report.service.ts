@@ -68,7 +68,7 @@ sort=${sortBy}&order=${orderBy}&page=${page}&page_size=${pageSize}`);
 		sortBy,
 		orderBy,
 		oneToManyFields,
-		customisationData
+		customizationData
 	) {
 		if (fieldsInTable && fieldsInTable.length > 0) {
 			let moduleName = module.NAME.replace(/\s+/g, '_');
@@ -87,10 +87,11 @@ sort=${sortBy}&order=${orderBy}&page=${page}&page_size=${pageSize}`);
 							fieldsInTable,
 							allModules,
 							oneToManyFields,
-							customisationData
+							customizationData
 						)}
         }
 			}`;
+			console.log(query);
 			let payload: any = {
 				query: query,
 				conditions: filtres,
@@ -129,7 +130,7 @@ sort=${sortBy}&order=${orderBy}&page=${page}&page_size=${pageSize}`);
 		fileName,
 		oneToManyFields,
 		fieldNames,
-		customisation
+		customization
 	) {
 		let moduleName = module.NAME.replace(/\s+/g, '_');
 		let moduleId = module.MODULE_ID;
@@ -141,7 +142,7 @@ sort=${sortBy}&order=${orderBy}&page=${page}&page_size=${pageSize}`);
 						fieldsInTable,
 						allModules,
 						oneToManyFields,
-						customisation
+						customization
 					)}
         }
       }`;
@@ -162,7 +163,7 @@ sort=${sortBy}&order=${orderBy}&page=${page}&page_size=${pageSize}`);
 		fieldsInTable,
 		allModules,
 		oneToManyFields?,
-		customisationData?
+		customizationData?
 	) {
 		let aggregateQuery: any = {};
 		let reportQuery = 'DATA_ID: _id' + '\n';
@@ -265,7 +266,7 @@ sort=${sortBy}&order=${orderBy}&page=${page}&page_size=${pageSize}`);
 					queryString,
 					field.NAME,
 					module,
-					customisationData
+					customizationData
 				);
 			}
 		});
@@ -275,16 +276,16 @@ sort=${sortBy}&order=${orderBy}&page=${page}&page_size=${pageSize}`);
 
 	/** ---------- Build Query for One To Many  fields -------------  */
 
-	public buildRelatedFieldQuery(queryString, key, module, customisationData) {
+	public buildRelatedFieldQuery(queryString, key, module, customizationData) {
 		let sortBy = 'DATE_CREATED';
 		let orderBy = 'dsc';
 		let pageSize = 1;
 		let pageNumber = 0;
-		if (customisationData && customisationData.customizeFor == key) {
-			sortBy = customisationData.sortBy;
-			orderBy = customisationData.orederBy;
-			pageSize = customisationData.pageSize;
-			pageNumber = customisationData.pageIndex;
+		if (customizationData && customizationData.customizeFor == key) {
+			sortBy = customizationData.sortBy;
+			orderBy = customizationData.orederBy;
+			pageSize = customizationData.pageSize;
+			pageNumber = customizationData.pageIndex;
 		}
 		let moduleId = module.MODULE_ID;
 		let relationQuery = `
