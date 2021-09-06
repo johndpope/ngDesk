@@ -828,14 +828,16 @@ export class FieldCreatorComponent implements OnInit {
 
 	/** restricting the space  */
 
-	public restrictSpaceBar(event):boolean{
+	public restrictSpaceAndSpecialChar(event): boolean {
 		const charCode = event.which ? event.which : event.keyCode;
-		 if (charCode == 32 ) {
-		 	return false;
-		 }
-		 return true;
+		return (
+			((charCode > 64 && charCode < 91) ||
+			(charCode > 96 && charCode < 123) ||
+			charCode == 8 ||
+			charCode == 32 ||
+			(charCode >= 48 && charCode <= 57)) && (charCode != 32)
+		);
 	}
-	
 
 	public save() {
 		this.errorMessage = '';
