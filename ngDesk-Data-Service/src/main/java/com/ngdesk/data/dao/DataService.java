@@ -290,10 +290,13 @@ public class DataService {
 			Matcher matcher = pattern.matcher(formula);
 			while (matcher.find()) {
 				String path = matcher.group(1).split("(?i)inputMessage\\.")[1];
+				
 				String[] fields = path.split("\\.");
+				
 				ModuleField moduleField = moduleFields.stream().filter(field -> field.getName().equals(fields[0]))
 						.findFirst().orElse(null);
-				if (moduleField.getDataType().getDisplay().equals("Formula")) {
+				
+				if ( moduleField!= null && moduleField.getDataType().getDisplay().equals("Formula")) {
 					String updatedFormula = getFormulaRecursively(moduleField, moduleFields);
 					formula = formula.replaceAll("\\{\\{" + matcher.group(1) + "\\}\\}", "(" + updatedFormula + ")");
 				}
