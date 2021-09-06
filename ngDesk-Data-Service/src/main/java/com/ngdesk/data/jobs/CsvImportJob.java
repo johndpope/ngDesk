@@ -5,6 +5,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
@@ -25,12 +27,13 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ngdesk.commons.mail.SendMail;
 import com.ngdesk.data.company.dao.Company;
 import com.ngdesk.data.csvimport.dao.CsvImport;
 import com.ngdesk.data.csvimport.dao.CsvImportData;
@@ -79,6 +82,12 @@ public class CsvImportJob {
 
 	@Autowired
 	CsvImportService csvImportService;
+
+	@Autowired
+	SendMail sendMail;
+
+	@Value("${env}")
+	private String environment;
 
 	@Scheduled(fixedRate = 30000)
 	public void importCsv() {
@@ -298,7 +307,7 @@ public class CsvImportJob {
 										inputMessage.put("DEFAULT_CONTACT_METHOD", "Email");
 									}
 
-									inputMessage.put("ROLE", customerRole);
+									inputMessage.put("ROLE", customerRoleId);
 									inputMessage.put("IS_LOGIN_ALLOWED", false);
 									inputMessage.put("INVITE_ACCEPTED", false);
 
@@ -547,10 +556,9 @@ public class CsvImportJob {
 												team.put("DATE_CREATED", new Date());
 												team.put("DATE_UPDATED", new Date());
 												team.put("IS_PERSONAL", true);
-												String personalTeam = csvImportService.createModuleData(companyId,
-														"Teams", team);
-												String personalTeamId = Document.parse(personalTeam)
-														.getString("DATA_ID");
+												Map<String, Object> personalTeam = csvImportService
+														.createModuleData(companyId, "Teams", team);
+												String personalTeamId = personalTeam.get("DATA_ID").toString();
 
 												List<String> teams = new ArrayList<String>();
 												teams.add(personalTeamId);
@@ -603,10 +611,30 @@ public class CsvImportJob {
 							csvImportRepository.updateEntry(csvDocument.getCsvImportId(), "STATUS", "COMPLETED",
 									"csv_import");
 						}
+					} else {
+						csvImportRepository.updateEntry(csvDocument.getCsvImportId(), "STATUS", "FAILED", "csv_import");
 					}
 
 				} catch (Exception e) {
 
+					e.printStackTrace();
+
+					StringWriter sw = new StringWriter();
+					PrintWriter pw = new PrintWriter(sw);
+					e.printStackTrace(pw);
+					String sStackTrace = sw.toString();
+					String info = "<br>Subdomain: " + companySubdomain + "<br>File Name: " + csvDocument.getName();
+
+					if (environment.equals("prd")) {
+						sendMail.send("spencer@allbluesolutions.com", "support@ngdesk.com",
+								"Internal Error: Stack Trace", sStackTrace + info);
+
+						sendMail.send("shashank.shankaranand@allbluesolutions.com", "support@ngdesk.com",
+								"Internal Error: Stack Trace", sStackTrace);
+
+					}
+
+					csvImportRepository.updateEntry(csvDocument.getCsvImportId(), "STATUS", "FAILED", "csv_import");
 				}
 			}
 

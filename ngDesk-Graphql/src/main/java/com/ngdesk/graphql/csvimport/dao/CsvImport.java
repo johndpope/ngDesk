@@ -1,51 +1,33 @@
-package com.ngdesk.data.csvimport.dao;
+package com.ngdesk.graphql.csvimport.dao;
 
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Field;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class CsvImport {
 
 	@Id
 	private String csvImportId;
 
-	@Field("STATUS")
-	@JsonProperty("STATUS")
 	private String status;
 
-	@Field("CSV_IMPORT_DATA")
-	@JsonProperty("CSV_IMPORT_DATA")
 	private CsvImportData csvImportData;
 
-	@Field("MODULE_ID")
-	@JsonProperty("MODULE_ID")
 	private String moduleId;
 
-	@Field("LOGS")
-	@JsonProperty("LOGS")
 	private List<String> logs;
 
-	@Field("COMPANY_ID")
-	@JsonProperty("COMPANY_ID")
 	private String companyId;
 
-	@Field("NAME")
-	@JsonProperty("NAME")
 	private String name;
 
-	@Field("DATE_CREATED")
-	@JsonProperty("DATE_CREATED")
 	private Date dateCreated;
 
-	@Field("CREATED_BY")
-	@JsonProperty("CREATED_BY")
 	private String createdBy;
 
 	public CsvImport() {
+
 	}
 
 	public CsvImport(String csvImportId, String status, CsvImportData csvImportData, String moduleId, List<String> logs,

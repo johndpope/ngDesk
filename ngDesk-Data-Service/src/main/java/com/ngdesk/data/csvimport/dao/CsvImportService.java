@@ -9,10 +9,14 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.bson.Document;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
 import com.ngdesk.commons.exceptions.BadRequestException;
 import com.ngdesk.commons.exceptions.InternalErrorException;
 import com.ngdesk.data.dao.DataService;
@@ -21,8 +25,10 @@ import com.ngdesk.data.elastic.Wrapper;
 import com.ngdesk.data.modules.dao.DataType;
 import com.ngdesk.data.modules.dao.Module;
 import com.ngdesk.data.modules.dao.ModuleField;
+import com.ngdesk.data.roles.dao.Role;
 import com.ngdesk.repositories.module.entry.ModuleEntryRepository;
 import com.ngdesk.repositories.module.entry.ModulesRepository;
+import com.ngdesk.repositories.roles.RolesRepository;
 
 @Service
 public class CsvImportService {
@@ -38,6 +44,9 @@ public class CsvImportService {
 
 	@Autowired
 	DataService dataService;
+	
+	@Autowired
+	RolesRepository rolesRepository;
 
 	public boolean accountExists(String accountName, String companyId) {
 
@@ -140,7 +149,7 @@ public class CsvImportService {
 		return contact;
 	}
 
-	public String createModuleData(String companyId, String moduleName, Map<String, Object> body) {
+	public Map<String, Object> createModuleData(String companyId, String moduleName, Map<String, Object> body) {
 		Map<String, Object> data = new HashMap<String, Object>();
 		ObjectMapper mapper = new ObjectMapper();
 
@@ -223,7 +232,7 @@ public class CsvImportService {
 						}
 					}
 				}
-				return data.toString();
+				return data;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

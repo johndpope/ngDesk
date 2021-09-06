@@ -45,20 +45,21 @@ public class CustomCsvImportRepositoryImpl implements CustomCsvImportRepository 
 		Assert.notNull(collectionName, "The given collectionName must not be null!");
 		Query query = new Query(Criteria.where(variable).is(value));
 
-		return Optional.ofNullable(mongoOperations.findOne(query, CsvImport	.class, collectionName));
+		return Optional.ofNullable(mongoOperations.findOne(query, CsvImport.class, collectionName));
 	}
-	
+
 	@Override
-	public void updateEntry(String dataId, String variable, String value , String collectionName) {
+	public void updateEntry(String dataId, String variable, String value, String collectionName) {
 		Update update = new Update();
 		update.set(variable, value);
 		mongoOperations.updateFirst(new Query(Criteria.where("_id").is(dataId)), update, collectionName);
 	}
-	
+
 	@Override
-	public void addToEntrySet(String dataId, String variable, Object value , String collectionName) {
+	public void addToEntrySet(String dataId, String variable, Object value, String collectionName) {
 		Update update = new Update();
 		update.addToSet(variable, value);
 		mongoOperations.updateFirst(new Query(Criteria.where("_id").is(dataId)), update, collectionName);
 	}
+
 }
