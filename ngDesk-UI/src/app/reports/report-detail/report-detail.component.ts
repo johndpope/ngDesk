@@ -82,7 +82,6 @@ export class ReportDetailComponent implements OnInit {
 	public displayedColumns: string[] = [];
 	public displayedColumnsObj = [];
 	public dataSource = new MatTableDataSource<any>();
-	// public fieldsDataSource = new MatTableDataSource<any>();
 	public relationshipFieldsSource = new MatTableDataSource<any>();
 	public fields: any;
 	private sortBy = 0;
@@ -117,17 +116,6 @@ export class ReportDetailComponent implements OnInit {
 	public oneToManyFields: any[] = []; // one to many fields displayed in aggregation section
 	public relatedModuleFields: any[] = []; // validated other module fields
 	public reportInfo: any = {}; // save API Report info
-	// public aggregationData;
-	// public expandedElement;
-	// public expandedElementIndex;
-	// public sortByFieldsList: any[] = [];
-	// public selectedColName: any = ' ';
-	// public selectedColData: any = {};
-	// public aggregationDataSource = new MatTableDataSource<any>();
-	// public aggregationTableHeaders: any[] = [];
-	// public aggregationColumns = [];
-	// public childPagination: any = {};
-	// public childTableSorting: any = {};
 	public customization: any = {};
 	public duplicateTableFields = [];
 
@@ -295,6 +283,7 @@ export class ReportDetailComponent implements OnInit {
 		this.setOrderForFieldsInTable();
 		let allTableFields = [];
 		allTableFields = this.fieldsInTable.concat(this.getRelatedFieldsInTable());
+		console.log(allTableFields);
 		this.reportService
 			.postReportForField(
 				this.reportForm.value['MODULE'],
@@ -348,7 +337,7 @@ export class ReportDetailComponent implements OnInit {
 											(fieldData.parentFieldName = field.NAME);
 										fieldData.parentModuleId = field.MODULE;
 										fieldData.fieldId = relationField.FIELD_ID;
-										(fieldData.DATA_TYPE = field.DATA_TYPE),
+										(fieldData.DATA_TYPE = relationField.DATA_TYPE),
 											(fieldData.NAME = relationField.NAME),
 											(fieldData.isRelated = true);
 										fieldData.paentFieldId = field.FIELD_ID;
@@ -394,16 +383,10 @@ export class ReportDetailComponent implements OnInit {
 						});
 
 						this.convertIdsToFields();
-						// this.getTotalRecordsLength();
-						// setting data to Fields
 						this.changeFormatForTableData(reportInfo);
 						this.createDataSource();
 						this.addEmptyDataToRows();
 						this.loadEmptyTable();
-						// if (!isSorted) {
-						// 	this.setPaginationForChild();
-						// }
-
 						this.totalRecords = reportDataResponse[1]?.COUNT;
 					}
 					this.isLoadingTable = false;
@@ -452,7 +435,6 @@ export class ReportDetailComponent implements OnInit {
 			} else {
 				this.relationFieldIds[this.parentField.MODULE] = [field.fieldId];
 			}
-			// console.log(field);
 			field = this.getParentByChaildId(field);
 			if (this.relationFieldsInTable.hasOwnProperty(this.parentField.MODULE)) {
 				this.relationFieldsInTable[this.parentField.MODULE].push(field);
@@ -579,25 +561,36 @@ export class ReportDetailComponent implements OnInit {
 			filters.push(newFilter);
 		});
 
-		if (this.oneToManyFields.length > 0) {
-			this.oneToManyFields.forEach((item) => {
-				if (
-					this.relationFieldIds.hasOwnProperty(item.MODULE) &&
-					this.relationFieldIds[item.MODULE].length > 0
-				) {
-					relatedIdsList = relatedIdsList.concat(
-						this.relationFieldIds[item.MODULE]
-					);
-				}
-			});
-			this.fieldsIds = this.fieldsIds.concat(relatedIdsList);
-		}
-
 		this.fieldsIds.forEach((Id) => {
 			if (this.getFieldNamesByIDs(Id)) {
 				fieldNames.push(this.getFieldNamesByIDs(Id));
 			}
 		});
+
+		if (this.oneToManyFields.length > 0) {
+			let childNames = [];
+			this.oneToManyFields.forEach((item) => {
+				if (
+					this.relationFieldIds.hasOwnProperty(item.MODULE) &&
+					this.relationFieldIds[item.MODULE].length > 0 &&
+					this.relatedFields.hasOwnProperty(item.MODULE) &&
+					this.relatedFields[item.MODULE].length > 0
+				) {
+					childNames.push(
+						this.getChildName(
+							item.NAME,
+							this.relationFieldIds[item.MODULE],
+							this.relatedFields[item.MODULE]
+						)
+					);
+				}
+			});
+			childNames.forEach((names) => {
+				names.forEach((item) => {
+					fieldNames.push(item);
+				});
+			});
+		}
 		let allTableFields = [];
 		allTableFields = this.fieldsInTable.concat(this.getRelatedFieldsInTable());
 		allTableFields = allTableFields.filter((item) => !item.isParentField);
@@ -1373,7 +1366,6 @@ export class ReportDetailComponent implements OnInit {
 				}
 			}
 		});
-		// this.fieldsDataSource = new MatTableDataSource<any>(fieldsDataSource);
 		this.fieldsInList = fieldsDataSource;
 	}
 
@@ -1529,97 +1521,44 @@ export class ReportDetailComponent implements OnInit {
 
 	// to Create Parent.Chaild Names For Generate API call
 	public getFieldNamesByIDs(fieldId: string) {
-		let chaildName;
-		let parentName;
+		let childName;
 		this.fields.find((field) => {
 			if (field.FIELD_ID === fieldId) {
-				chaildName = field.NAME;
+				childName = field.NAME;
 				return;
 			}
 		});
 
-		if (!chaildName) {
-			this.oneToManyFields.forEach((field) => {
-				this.relatedFields[field.MODULE]?.forEach((relField) => {
-					if (relField.FIELD_ID === fieldId) {
-						parentName = field.NAME;
-						chaildName = relField.NAME;
-					}
-				});
-			});
-		}
+		// if (!chaildName) {
+		// 	this.oneToManyFields.forEach((field) => {
+		// 		this.relatedFields[field.MODULE]?.forEach((relField) => {
+		// 			if (relField.FIELD_ID === fieldId) {
+		// 				parentName = field.NAME;
+		// 				chaildName = relField.NAME;parentField
+		// 			}
+		// 		});
+		// 	});
+		// }
 
-		if (chaildName && !parentName) {
-			return chaildName;
-		} else if (chaildName && parentName) {
-			return parentName + '.' + chaildName;
+		if (childName) {
+			return childName;
 		}
+		// else if (chaildName && parentName) {
+		// 	return parentName + '.' + chaildName;
+		// }
 	}
 
-	// public onPageChange(event, rowIndex, colIndex, colName, moduleId) {
-	// 	if (this.childPagination['table_' + rowIndex + '_' + colIndex]) {
-	// 		this.childPagination['table_' + rowIndex + '_' + colIndex].pageSize =
-	// 			event.pageSize;
-	// 		this.childPagination['table_' + rowIndex + '_' + colIndex].pageIndex =
-	// 			event.pageIndex;
-
-	// 		if (
-	// 			this.childTableSorting['table_' + rowIndex + '_' + colIndex].active ==
-	// 			''
-	// 		) {
-	// 			this.childTableSorting['table_' + rowIndex + '_' + colIndex]['active'] =
-	// 				this.relationFieldsInTable[moduleId][0].NAME;
-	// 		}
-	// 		this.customisation = {
-	// 			customizeFor: colName,
-	// 			sortBy:
-	// 				this.childTableSorting['table_' + rowIndex + '_' + colIndex].active,
-	// 			orederBy:
-	// 				this.childTableSorting['table_' + rowIndex + '_' + colIndex]
-	// 					.direction,
-	// 			pageSize:
-	// 				this.childPagination['table_' + rowIndex + '_' + colIndex].pageSize,
-	// 			pageIndex: (this.childPagination[
-	// 				'table_' + rowIndex + '_' + colIndex
-	// 			].pageIndex = event.pageIndex),
-	// 		};
-	// 		this.postReportData(true);
-	// 	}
-	// }
-
-	// public sortData(event, rowIndex, colIndex, colName, moduleId) {
-	// 	if (event.direction == '') {
-	// 		this.childTableSorting['table_' + rowIndex + '_' + colIndex].direction =
-	// 			this.childTableSorting['table_' + rowIndex + '_' + colIndex]
-	// 				.direction === 'asc'
-	// 				? 'dsc'
-	// 				: 'asc';
-	// 	} else {
-	// 		this.childTableSorting['table_' + rowIndex + '_' + colIndex].direction =
-	// 			event.direction;
-	// 	}
-
-	// 	if (event.active == '') {
-	// 		this.childTableSorting['table_' + rowIndex + '_' + colIndex]['active'] =
-	// 			this.relationFieldsInTable[moduleId][0].NAME;
-	// 	} else {
-	// 		this.childTableSorting['table_' + rowIndex + '_' + colIndex].active =
-	// 			event.active;
-	// 	}
-
-	// 	this.customisation = {
-	// 		customizeFor: colName,
-	// 		sortBy:
-	// 			this.childTableSorting['table_' + rowIndex + '_' + colIndex].active,
-	// 		orederBy:
-	// 			this.childTableSorting['table_' + rowIndex + '_' + colIndex].direction,
-	// 		pageSize:
-	// 			this.childPagination['table_' + rowIndex + '_' + colIndex].pageSize,
-	// 		pageIndex:
-	// 			this.childPagination['table_' + rowIndex + '_' + colIndex].pageIndex,
-	// 	};
-	// 	this.postReportData(true);
-	// }
+	public getChildName(parentName: any, childFields: any, totalFields) {
+		let fieldNames: any = [];
+		totalFields.forEach((parentField) => {
+			childFields.forEach((child) => {
+				if (child == parentField.FIELD_ID) {
+					fieldNames.push(parentName + '.' + parentField.NAME);
+				}
+			});
+		});
+		return fieldNames;
+	}
 
 	public getReatedFieldsOfAllmodules(moduleId?) {
 		let fieldsSet = [];
@@ -1700,12 +1639,8 @@ export class ReportDetailComponent implements OnInit {
 	public removeDropHereData() {
 		let colNameLastindx = this.displayedColumns.length - 1;
 		let colObjLastindx = this.displayedColumnsObj.length - 1;
-		// let sourceLastIndex = this.source.length - 1;
-
 		this.displayedColumns.splice(colNameLastindx, 1);
 		this.displayedColumnsObj.splice(colObjLastindx, 1);
-		// this.source.splice(sourceLastIndex, 1);
-
 		this.dataSource = new MatTableDataSource<any>(this.source);
 	}
 
@@ -1730,10 +1665,6 @@ export class ReportDetailComponent implements OnInit {
 			this.currentIndex = 0;
 		}
 	}
-
-	// clearChaildList() {
-	// 	this.chaildFields = [];
-	// }
 
 	public createDynamicDataSource(source) {
 		if (source && source.length > 0 && source !== 'No Data') {
@@ -1778,89 +1709,6 @@ export class ReportDetailComponent implements OnInit {
 			}
 		}
 	}
-
-	// to get total records length for every child table
-	// public getTotalRecordsLength() {
-	// 	let totatalCounts = {};
-	// 	this.displayedColumnsObj.forEach((colObj) => {
-	// 		if (colObj.isParentField == true) {
-	// 			this.reportInfo.forEach((data, index) => {
-	// 				let dataId = data['DATA_ID'];
-	// 				let fieldId = colObj.parentFieldId;
-	// 				this.reportService
-	// 					.buildQuireyToGetAggregationCount(
-	// 						this.reportForm.value['MODULE'],
-	// 						dataId,
-	// 						fieldId
-	// 					)
-	// 					.subscribe((totalCount: any) => {
-	// 						if (totatalCounts.hasOwnProperty('row' + index)) {
-	// 							totatalCounts['row' + index].push({
-	// 								NAME: colObj.NAME,
-	// 								length: totalCount.TOTAL_RECORDS,
-	// 							});
-	// 						} else {
-	// 							totatalCounts['row' + index] = [
-	// 								{
-	// 									NAME: colObj.NAME,
-	// 									length: totalCount.TOTAL_RECORDS,
-	// 								},
-	// 							];
-	// 						}
-
-	// 						this.childTableLength = totatalCounts;
-	// 					});
-	// 			});
-	// 		}
-	// 	});
-	// }
-
-	// public displayTableLength(rowIndex, colName) {
-	// 	let currentEntry: any = {};
-	// 	let length;
-	// 	currentEntry = this.childTableLength['row' + rowIndex];
-	// 	if (currentEntry) {
-	// 		currentEntry.forEach((element) => {
-	// 			if (element?.NAME && element?.NAME == colName) {
-	// 				length = element?.length;
-	// 			}
-	// 		});
-	// 	}
-	// 	return length ? length : 0;
-	// }
-
-	// public setPaginationForChild() {
-	// 	this.displayedColumnsObj.forEach((col, colIndex) => {
-	// 		if (col.isParentField == true) {
-	// 			this.reportInfo.forEach((row, rowIndex) => {
-	// 				this.childPagination['table_' + rowIndex + '_' + colIndex] = {
-	// 					pageSize: 1,
-	// 					pageIndex: 0,
-	// 					totalRecords: 0,
-	// 				};
-
-	// 				this.childTableSorting['table_' + rowIndex + '_' + colIndex] = {
-	// 					direction: 'asc',
-	// 					active: '',
-	// 				};
-	// 			});
-	// 		}
-	// 	});
-	// }
-
-	// public getPageDetails(rowIndex, colIndex, param) {
-	// 	if (this.childPagination['table_' + rowIndex + '_' + colIndex]) {
-	// 		return this.childPagination['table_' + rowIndex + '_' + colIndex][param];
-	// 	}
-	// }
-
-	// public getSortDetails(rowIndex, colIndex, param) {
-	// 	if (this.childTableSorting['table_' + rowIndex + '_' + colIndex]) {
-	// 		return this.childTableSorting['table_' + rowIndex + '_' + colIndex][
-	// 			param
-	// 		];
-	// 	}
-	// }
 
 	public customizeRelationFields(colIndex, col) {
 		this.openCustomDialog(col);
