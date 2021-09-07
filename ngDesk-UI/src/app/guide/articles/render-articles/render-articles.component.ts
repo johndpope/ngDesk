@@ -96,7 +96,7 @@ export class RenderArticlesComponent implements OnInit {
 					.subscribe(
 						(articleResponse: any) => {
 							console.log('articleResponse====', articleResponse);
-							this.article = articleResponse;
+							this.article = articleResponse.DATA;
 							const userRole = this.usersService.user['ROLE'];
 							//if user is logged in
 							if (userRole !== undefined) {
@@ -163,21 +163,19 @@ export class RenderArticlesComponent implements OnInit {
 	}
 
 	private getAuthorName(): void {
-		console.log('articles============>', this.article);
-		console.log('user', this.article['DATA'].AUTHOR);
-
-		this.article['DATA'].AUTHOR = JSON.parse(this.article['DATA'].AUTHOR);
-
-		let user = this.article['DATA'].AUTHOR;
+		let user = this.article;
 		//console.log('user', user);
-		this.article['AUTHOR'] = `${user.FIRST_NAME} ${user.LAST_NAME}`;
+
+		this.article[
+			'AUTHOR'
+		] = `${user['AUTHOR'].CONTACT.FIRST_NAME} ${user['AUTHOR'].CONTACT.LAST_NAME}`;
 		this.article['COMMENTS'].forEach((comment) => {
-			comment.SENDER = JSON.parse(comment.SENDER);
-			//console.log('articles============>', this.article);
-			user = comment.SENDER;
+			comment.sender = JSON.parse(comment.sender);
+
+			user = comment.sender;
 			// if user exists set the name else set anonymous
-			comment.SENDER = user
-				? `${user.FIRST_NAME} ${user.LAST_NAME}`
+			comment.sender = user
+				? `${user['CONTACT'].FIRST_NAME} ${user['CONTACT'].LAST_NAME}`
 				: this.translateService.instant('ANONYMOUS_USER');
 		});
 		this.loading = false;
@@ -245,7 +243,7 @@ export class RenderArticlesComponent implements OnInit {
 			'guide',
 			'articles',
 			'detail',
-			this.article['articleId'],
+			this.article['ARTICLE_ID'],
 		]);
 	}
 

@@ -261,6 +261,11 @@ _id
 					AUTHOR: author
 						{
 								_id
+
+								CONTACT{
+									FIRST_NAME
+									LAST_NAME
+										 }
 						}
 						OPEN_FOR_COMMENTS: openForComments
 						SOURCE_LANGUAGE: sourceLanguage
@@ -343,6 +348,10 @@ _id
 				AUTHOR: author
 					{
 							_id
+                         CONTACT{
+							 FIRST_NAME
+							 LAST_NAME
+						          }
 
 							
 					}
@@ -390,6 +399,11 @@ _id
 			AUTHOR: author
 				{
 						_id
+
+						CONTACT{
+							FIRST_NAME
+							LAST_NAME
+								 }
 				}
 				OPEN_FOR_COMMENTS: openForComments
 				SOURCE_LANGUAGE: sourceLanguage
