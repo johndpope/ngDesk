@@ -196,9 +196,33 @@
 									mat-table [dataSource]="createDynamicDataSource(element[col.NAME])" [id]="k +'_'+j" [ngStyle]="{'width':'100%'}">
 									<ng-container matColumnDef="{{childcol?.DISPLAY}}"
 										*ngFor="let childcol of getChildTableColObj(element[col.NAME],col); let i = index">
+										<div></div>
 										<th mat-header-cell *matHeaderCellDef style="height: 50px;">
-											<div class="custom-theme-icon-color" style=" white-space: nowrap; text-align: center;">
-												{{childcol.DISPLAY}} </div>
+											<div fxLayout="row" fxLayoutAlign="space-between center">
+												<div fxLayout="column" class="custom-theme-icon-color" style=" white-space: nowrap; text-align: center;">
+													{{childcol.DISPLAY}}
+												</div>
+												<div fxLayout="column" style="padding-bottom: 5px;">
+													<button mat-icon-button [matMenuTriggerFor]="childMenu">
+														<mat-icon class="custom-theme-icon-color">more_vert</mat-icon>
+													</button>
+												</div>
+											</div>
+											<mat-menu #childMenu="matMenu">
+												<div fxLayout="column">
+													<div fxLayout="row" *ngFor="let item of childMenuItems">
+														<button mat-menu-item fxLayout="column"
+															(click)="childActionFunctions[item.ACTION](i, item.NAME,childcol,col,j )">
+															<div fxLayout="row">
+																<div>
+																	<mat-icon>{{item.ICON}}</mat-icon>
+																</div>
+																<div [ngStyle]="{'min-width': '120px'}">{{item.NAME| translate}}</div>
+															</div>
+														</button>
+													</div>
+												</div>
+											</mat-menu>
 										</th>
 										<td mat-cell *matCellDef="let childelement">
 											<ng-container [ngSwitch]="childcol?.DATA_TYPE.DISPLAY">
@@ -368,7 +392,7 @@
 
 	<div fxLayout='row' fxLayoutAlign="end end" fxLayoutGap="20px" style="margin-top: 20px;">
 		<button mat-raised-button matDialogClose>{{'CLOSE' | translate}}</button>
-		<button mat-raised-button color="primary" (click)="applyCustomizaton()" matDialogClose>{{'APPLY' | translate}}</button>
+		<button mat-raised-button color="primary" (click)="postReportData()" matDialogClose>{{'APPLY' | translate}}</button>
 	</div>
 
 </ng-template>

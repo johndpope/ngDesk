@@ -73,11 +73,18 @@ export class ReportDetailComponent implements OnInit {
 			this.customizeRelationFields(colIndex, col);
 		},
 	};
+
+	public childActionFunctions = {
+		delete: (colIndex, action, col, parentCol, parentIndex) => {
+			this.removeChildCol(colIndex, col, parentCol, parentIndex);
+		},
+	};
 	public moduleId: string;
 	private reportId: string;
 	public fieldsInTable = [];
 	public relationFieldsInTable: any = {};
 	public menuItems = [];
+	public childMenuItems = [];
 	public reportForm: FormGroup;
 	public displayedColumns: string[] = [];
 	public displayedColumnsObj = [];
@@ -159,6 +166,11 @@ export class ReportDetailComponent implements OnInit {
 			{ NAME: 'MOVE_LEFT', ICON: 'arrow_backward', ACTION: 'move' },
 			{ NAME: 'REMOVE_COLUMN', ICON: 'delete', ACTION: 'delete' }
 		);
+		this.childMenuItems.push({
+			NAME: 'REMOVE_COLUMN',
+			ICON: 'delete',
+			ACTION: 'delete',
+		});
 		this.reportForm = this.formBuilder.group({
 			NAME: ['', Validators.required],
 			DESCRIPTION: [''],
@@ -283,7 +295,6 @@ export class ReportDetailComponent implements OnInit {
 		this.setOrderForFieldsInTable();
 		let allTableFields = [];
 		allTableFields = this.fieldsInTable.concat(this.getRelatedFieldsInTable());
-		console.log(allTableFields);
 		this.reportService
 			.postReportForField(
 				this.reportForm.value['MODULE'],
@@ -1279,7 +1290,7 @@ export class ReportDetailComponent implements OnInit {
 						if (apiCallCount === relationshipFields.length && reportData) {
 							this.getTableFieldbyID(reportData);
 						}
-						console.log(relatedFieldsError);
+						// console.log(relatedFieldsError);
 					}
 				);
 			}
@@ -1406,6 +1417,13 @@ export class ReportDetailComponent implements OnInit {
 		this.chaildFields = [];
 		if (this.relatedFields.hasOwnProperty(relationshipField.MODULE)) {
 			this.chaildFields = this.relatedFields[relationshipField.MODULE];
+			// to remove selected fields
+			this.chaildFields = this.chaildFields.filter(
+				(field) =>
+					!this.relationFieldIds[relationshipField.MODULE]?.includes(
+						field.FIELD_ID
+					)
+			);
 			this.chaildFields.sort(function (a, b) {
 				const textA = a.NAME.toUpperCase();
 				const textB = b.NAME.toUpperCase();
@@ -1529,23 +1547,9 @@ export class ReportDetailComponent implements OnInit {
 			}
 		});
 
-		// if (!chaildName) {
-		// 	this.oneToManyFields.forEach((field) => {
-		// 		this.relatedFields[field.MODULE]?.forEach((relField) => {
-		// 			if (relField.FIELD_ID === fieldId) {
-		// 				parentName = field.NAME;
-		// 				chaildName = relField.NAME;parentField
-		// 			}
-		// 		});
-		// 	});
-		// }
-
 		if (childName) {
 			return childName;
 		}
-		// else if (chaildName && parentName) {
-		// 	return parentName + '.' + chaildName;
-		// }
 	}
 
 	public getChildName(parentName: any, childFields: any, totalFields) {
@@ -1700,6 +1704,7 @@ export class ReportDetailComponent implements OnInit {
 								fieldData.NAME = name;
 								fieldData.DISPLAY = this.getFieldName(name);
 								fieldData.DATA_TYPE = field.DATA_TYPE;
+								fieldData.FIELD_ID = field.FIELD_ID;
 								colData.push(fieldData);
 							}
 						});
@@ -1728,8 +1733,18 @@ export class ReportDetailComponent implements OnInit {
 			height: '300px',
 		});
 	}
-
-	applyCustomizaton() {
-		this.postReportData();
+	public removeChildCol(colIndex, col, parentCol, parentIndex) {
+		this.relationFieldIds[parentCol.parentModuleId]?.splice(colIndex, 1);
+		this.relationFieldsInTable[parentCol.parentModuleId]?.splice(colIndex, 1);
+		this.source.forEach((data) => {
+			if (data[parentCol.NAME]) {
+				let entry: any[] = data[parentCol.NAME];
+				entry.forEach((item) => {
+					delete item[col.NAME];
+				});
+				data[parentCol.NAME] = entry;
+			}
+		});
+		this.dataSource = new MatTableDataSource<any>(this.source);
 	}
 }
