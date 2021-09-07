@@ -88,6 +88,9 @@ type Query {
 	getEscalation(escalationId: String): Escalation
 	getEscalations(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [Escalation]
 	getEscalationsCount: Int
+	getCsvImport(csvImportId: String): CsvImport
+	getCsvImports(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [CsvImport]
+	getCsvImportsCount: Int
 	MODULE_FUNCTIONS_REPLACE
 }
 
@@ -964,5 +967,29 @@ type EscalateTo{
   scheduleIds: [String]
   userIds: [String]
   teamIds: [String]
+}
+
+type CsvImport{
+   csvImportId: String
+   status: String
+   csvImportData: CsvImportData
+   moduleId: String
+   logs: [String]
+   companyId: String
+   name: String
+   dateCreated: DateTime
+   createdBy:Users
+}
+
+type CsvImportData{
+   file: String
+   fileType: String
+   fileName: String
+   headers: CsvHeaders
+}
+
+type CsvHeaders{
+   fieldId: String
+   headerName: String
 }
 

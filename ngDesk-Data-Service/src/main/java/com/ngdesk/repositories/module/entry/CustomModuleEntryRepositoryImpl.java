@@ -1454,8 +1454,14 @@ public class CustomModuleEntryRepositoryImpl implements CustomModuleEntryReposit
 	@Override
 	public Optional<Map<String, Object>> findBySortingField(String fieldName, String collectionName) {
 		Assert.notNull(collectionName, "The given collectionName must not be null!");
-
-		return Optional.ofNullable(mongoOperations.findOne(new Query().with(Sort.by(Direction.DESC, fieldName)),
+		
+		Criteria criteria = new Criteria();
+		criteria.andOperator(Criteria.where("DELETED").is(false),
+				Criteria.where("EFFECTIVE_TO").is(null));
+		Query query = new Query();
+		query.addCriteria(criteria);
+		
+		return Optional.ofNullable(mongoOperations.findOne(query.with(Sort.by(Direction.DESC, fieldName)),
 				Map.class, collectionName));
 	}
 

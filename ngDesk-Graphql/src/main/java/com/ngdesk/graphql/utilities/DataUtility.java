@@ -31,6 +31,9 @@ import com.ngdesk.graphql.chat.channel.dao.ChatPromptDataFetcher;
 import com.ngdesk.graphql.chat.channel.dao.ChatPromptsDataFetcher;
 import com.ngdesk.graphql.company.dao.Company;
 import com.ngdesk.graphql.company.dao.CompanyDataFetcher;
+import com.ngdesk.graphql.csvimport.dao.CsvImportCountFetcher;
+import com.ngdesk.graphql.csvimport.dao.CsvImportDataFetcher;
+import com.ngdesk.graphql.csvimport.dao.CsvImportsDataFetcher;
 import com.ngdesk.graphql.currency.dao.CurrenciesDataFetcher;
 import com.ngdesk.graphql.currency.dao.CurrencyDataFetcher;
 import com.ngdesk.graphql.dashboards.dao.AdvancedPieChartValueFetcher;
@@ -467,7 +470,6 @@ public class DataUtility {
 	ChatPromptsDataFetcher chatPromptsDataFetcher;
 
 	@Autowired
-
 	ArticleDataFetcher articleDataFetcher;
 
 	@Autowired
@@ -505,6 +507,15 @@ public class DataUtility {
 
 	@Autowired
 	EscalationsCountDataFetcher escalationCountDataFetcher;
+	
+	@Autowired
+	CsvImportCountFetcher csvImportCountFetcher;
+	
+	@Autowired
+	CsvImportDataFetcher csvImportDataFetcher;
+	
+	@Autowired
+	CsvImportsDataFetcher csvImportsDataFetcher;
 
 	public GraphQL createGraphQlObject(Company company) throws IOException {
 		try {
@@ -951,6 +962,11 @@ public class DataUtility {
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getEscalation", escalationDataFetcher));
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getEscalations", escalationsDataFetcher));
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getEscalationsCount", escalationCountDataFetcher));
+		
+		// CSV IMPORT
+		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getCsvImport", csvImportDataFetcher));
+		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getCsvImports", csvImportsDataFetcher));
+		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getCsvImportsCount", csvImportCountFetcher));
 
 		for (Module module : modules) {
 			String name = "get" + module.getName().replaceAll("\\s+", "_");

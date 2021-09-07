@@ -1,5 +1,6 @@
 package com.ngdesk.graphql.csvimport.dao;
 
+import java.util.List;
 import java.util.Map;
 
 public class CsvImportData {
@@ -10,13 +11,13 @@ public class CsvImportData {
 
 	private String fileName;
 
-	private Map<String, String> headers;
+	private List<CsvHeaders> headers;
 
 	public CsvImportData() {
 
 	}
 
-	public CsvImportData(String file, String fileType, String fileName, Map<String, String> headers) {
+	public CsvImportData(String file, String fileType, String fileName, List<CsvHeaders> headers) {
 		super();
 		this.file = file;
 		this.fileType = fileType;
@@ -48,11 +49,11 @@ public class CsvImportData {
 		this.fileName = fileName;
 	}
 
-	public Map<String, String> getHeaders() {
+	public List<CsvHeaders> getHeaders() {
 		return headers;
 	}
 
-	public void setHeaders(Map<String, String> headers) {
+	public void setHeaders(List<CsvHeaders> headers) {
 		this.headers = headers;
 	}
 

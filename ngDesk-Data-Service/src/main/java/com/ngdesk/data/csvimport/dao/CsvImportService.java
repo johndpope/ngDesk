@@ -44,7 +44,7 @@ public class CsvImportService {
 
 	@Autowired
 	DataService dataService;
-	
+
 	@Autowired
 	RolesRepository rolesRepository;
 
@@ -157,7 +157,7 @@ public class CsvImportService {
 			Optional<Module> optionalModule = modulesRepository.findIdbyModuleName(moduleName, "modules_" + companyId);
 			if (optionalModule.isPresent()) {
 				Module module = optionalModule.get();
-				
+
 				// INSERT RECORD
 				data = wrapper.postData(companyId, module, body);
 
@@ -238,5 +238,10 @@ public class CsvImportService {
 			e.printStackTrace();
 		}
 		throw new InternalErrorException("INTERNAL_ERROR");
+	}
+
+	public String generateCollectionName(String name, String companyId) {
+		String collectionName = name.replaceAll("\\s+", "_") + "_" + companyId;
+		return collectionName;
 	}
 }
