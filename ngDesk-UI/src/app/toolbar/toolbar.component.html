@@ -93,14 +93,14 @@
 
 				<!-- Code reated to the chat actions in login menu Uncomment the code if need chat related UI -->
 
-				<button *ngIf="showAcceptChat" mat-menu-item (click)="chatStatus(true);$event.stopPropagation();" fxLayoutAlign="normal center">
+				<button *ngIf="toolbarService.showAcceptChat" mat-menu-item (click)="chatStatus(true);$event.stopPropagation();" fxLayoutAlign="normal center">
 						<mat-icon>
 							<mat-spinner [diameter]="20" *ngIf="!accept && !isAcceptingChats"></mat-spinner>
 							<span *ngIf="isAcceptingChats">done</span>
 						</mat-icon>
 						<span>{{'ACCEPT_CHATS' | translate}}</span>
 					</button>
-					<button *ngIf="showAcceptChat" mat-menu-item (click)="chatStatus(false);$event.stopPropagation();">
+					<button *ngIf="toolbarService.showAcceptChat" mat-menu-item (click)="chatStatus(false);$event.stopPropagation();">
 						<mat-icon>
 							<mat-spinner [diameter]="20" *ngIf="!accept && isAcceptingChats"></mat-spinner>
 							<span *ngIf="!isAcceptingChats">block</span>

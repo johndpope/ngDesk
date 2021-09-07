@@ -1,25 +1,19 @@
 package com.ngdesk.company.settings.dao;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ngdesk.commons.exceptions.BadRequestException;
 import com.ngdesk.company.dao.Company;
 import com.ngdesk.repositories.CompanyRepository;
-import com.ngdesk.repositories.ModuleEntryRepository;
 import com.ngdesk.repositories.RoleRepository;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -36,6 +30,9 @@ public class CompanySettingsApi {
 
 	@Autowired
 	CompanySettingsService companySettingsService;
+
+	@Autowired
+	RedisTemplate<String, ChatSettingsMessage> redisTemplate;
 
 	@PutMapping("company/settings/account/access")
 	@Operation(summary = "Put company's account level access", description = "Put company's account level access settings for entries")
@@ -73,11 +70,18 @@ public class CompanySettingsApi {
 					companySettingsService.validRestrictions(chatSettings);
 					company.setChatSettings(chatSettings);
 				}
+				ChatSettingsMessage message = new ChatSettingsMessage(company.getCompanyId(),"CHAT_SETTINGS_UPDATED",
+						company.getChatSettings());
+				addToQueue(message);
 				return companyRepository.updateEntry(company, "companies");
 			}
 			throw new BadRequestException("SUBDOMAIN_DOESNOT_EXISTS", null);
 
 		}
 		throw new BadRequestException("SUBDOMAIN_NOT_NULL", null);
+	}
+
+	public void addToQueue(ChatSettingsMessage message) {
+		redisTemplate.convertAndSend("chat_settings_update", message);
 	}
 }

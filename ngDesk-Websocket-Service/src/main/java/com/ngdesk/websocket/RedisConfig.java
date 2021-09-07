@@ -15,6 +15,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import com.ngdesk.data.dao.WorkflowPayload;
 import com.ngdesk.websocket.channels.chat.PageLoad;
+import com.ngdesk.websocket.subscribers.ChatSettingsUpdateSubscriber;
 import com.ngdesk.websocket.subscribers.ModuleNotificationSubscriber;
 import com.ngdesk.websocket.subscribers.NotificationSubscriber;
 
@@ -36,6 +37,9 @@ public class RedisConfig {
 	@Autowired
 	NotificationSubscriber notificationSubscriber;
 
+	@Autowired
+	ChatSettingsUpdateSubscriber chatSettingsUpdateSubscriber;
+
 	@Bean
 	public RedisTemplate<String, WorkflowPayload> redisTemplate(LettuceConnectionFactory redisConnectionFactory) {
 		RedisTemplate<String, WorkflowPayload> redisTemplate = new RedisTemplate<String, WorkflowPayload>();
@@ -53,6 +57,7 @@ public class RedisConfig {
 		redisPageLoadTemplate.setKeySerializer(new StringRedisSerializer());
 		return redisPageLoadTemplate;
 	}
+
 	@Bean
 	public LettuceConnectionFactory redisConnectionFactory() {
 		RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration(redisHost, redisPort);
@@ -71,12 +76,18 @@ public class RedisConfig {
 	}
 
 	@Bean
+	MessageListenerAdapter chatSettingsUpdateListner() {
+		return new MessageListenerAdapter(chatSettingsUpdateSubscriber);
+	}
+
+	@Bean
 	public RedisMessageListenerContainer redisMessageListenerContainer(
 			LettuceConnectionFactory redisConnectionFactory) {
 		RedisMessageListenerContainer container = new RedisMessageListenerContainer();
 		container.setConnectionFactory(redisConnectionFactory);
 		container.addMessageListener(notificationListener(), new PatternTopic("notification"));
 		container.addMessageListener(moduleNotificationListener(), new PatternTopic("module_notification"));
+		container.addMessageListener(chatSettingsUpdateListner(), new PatternTopic("chat_settings_update"));
 		return container;
 	}
 

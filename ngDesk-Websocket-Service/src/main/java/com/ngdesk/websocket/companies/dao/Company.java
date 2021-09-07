@@ -24,22 +24,21 @@ public class Company {
 	@Field("MAX_CHATS_PER_AGENT")
 	private int maxChatPerAgent = 5;
 
-	@JsonProperty("ROLES_WITH_CHAT")
-	@Field("ROLES_WITH_CHAT")
-	private ArrayList<String> rolesWithChat;
+	@JsonProperty("CHAT_SETTINGS")
+	@Field("CHAT_SETTINGS")
+	private ChatSettings chatSettings;
 
 	public Company() {
 
 	}
 
-	public Company(String id, String companySubdomain, Phone phone, int maxChatPerAgent,
-			ArrayList<String> rolesWithChat) {
+	public Company(String id, String companySubdomain, Phone phone, int maxChatPerAgent, ChatSettings chatSettings) {
 		super();
 		this.id = id;
 		this.companySubdomain = companySubdomain;
 		this.phone = phone;
 		this.maxChatPerAgent = maxChatPerAgent;
-		this.rolesWithChat = rolesWithChat;
+		this.chatSettings = chatSettings;
 	}
 
 	public String getId() {
@@ -74,12 +73,12 @@ public class Company {
 		this.maxChatPerAgent = maxChatPerAgent;
 	}
 
-	public ArrayList<String> getRolesWithChat() {
-		return rolesWithChat;
+	public ChatSettings getChatSettings() {
+		return chatSettings;
 	}
 
-	public void setRolesWithChat(ArrayList<String> rolesWithChat) {
-		this.rolesWithChat = rolesWithChat;
+	public void setChatSettings(ChatSettings chatSettings) {
+		this.chatSettings = chatSettings;
 	}
 
 }

@@ -149,6 +149,7 @@ import { ApprovalRejectDialogComponent  } from './dialogs/approval-reject-dialog
 import { ApprovalRejectInformationDialogComponent } from './dialogs/approval-reject-information-dialog/approval-reject-information-dialog.component';
 import { OneToManyDialogComponent } from './dialogs/one-to-many-dialog/one-to-many-dialog.component';
 import { ChatBusinessRulesComponent } from './company-settings/chat-settings/chat-general-settings/chat-business-rules/chat-business-rules.component';
+import { ToolbarService } from './toolbar/toolbar.service';
 
 export function createJitCompiler() {
 	return new JitCompilerFactory().createCompiler();
@@ -306,6 +307,7 @@ const appConfig = (config: ConfigService) => {
 		AppGlobals,
 		CookieService,
 		CacheService,
+		ToolbarService,
 		GraphqlListLayoutService,
 		RenderListLayoutService,
 		CompaniesService,

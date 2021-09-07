@@ -6,6 +6,9 @@ import { AppGlobals } from './app.globals';
 import { ConfigService } from '@src/app/config.service';
 import { ApplicationSettings } from './ns-local-storage/app-settings-helper';
 import { BehaviorSubject } from 'rxjs';
+import { ToolbarComponent } from './toolbar/toolbar.component';
+import { I } from '@angular/cdk/keycodes';
+import { ToolbarService } from './toolbar/toolbar.service';
 
 @Injectable({
 	providedIn: 'root',
@@ -22,7 +25,8 @@ export class WebsocketService {
 		private cacheService: CacheService,
 		private modulesService: ModulesService,
 		private configService: ConfigService,
-		private applicationSetting: ApplicationSettings
+		private applicationSetting: ApplicationSettings,
+		private toolbarService: ToolbarService,
 	) {
 		if (!this.applicationSetting.isMobile()) {
 			this.webSocketUrl =
@@ -39,8 +43,7 @@ export class WebsocketService {
 
 	public initialize() {
 		this.websocket = new WebSocket(
-			`${
-				this.webSocketUrl
+			`${this.webSocketUrl
 			}?authentication_token=${this.usersService.getAuthenticationToken()}`
 		);
 		this.websocket.onopen = (event) => {
@@ -72,6 +75,8 @@ export class WebsocketService {
 			let message = JSON.parse(event.data);
 			if (message.TYPE === 'PROBE_LOG') {
 				this.addLogsToApplication(message);
+			} else if (message.TYPE === 'CHAT_SETTINGS_UPDATED') {
+				this.toolbarService.updateShowAcceptChat();
 			} else {
 				this.updateData(message);
 			}
