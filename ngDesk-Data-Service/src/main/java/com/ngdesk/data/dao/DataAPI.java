@@ -195,6 +195,7 @@ public class DataAPI {
 			payload = dataService.formatPayload(module, payload);
 			payload = dataService.setInheritanceValue(module, payload);
 			payload = dataService.formatDiscussion(module, entry, payload);
+			payload = dataService.formatNumberValues(module, payload);
 			payload = dataService.encryptPassword(module, payload);
 
 			moduleEntryMap.put(module.getModuleId(), payload.get("_id").toString());
@@ -363,11 +364,11 @@ public class DataAPI {
 		payload = dataService.formatDateAndTimeField(entry, module);
 
 		payload = dataService.buildPutEntryPayload(module, entry, existingEntry);
-
 		payload = dataService.updateInternalFields(module, payload);
 		payload = dataService.formatDiscussion(module, entry, payload);
 		payload = dataService.setInheritanceValue(module, payload);
 		payload = dataService.encryptPassword(module, payload);
+		payload = dataService.formatNumberValues(module, payload);
 
 		if (dataService.requiredFieldsCheckRequired(payload)) {
 			validator.requiredFieldsPresent(module, payload);
