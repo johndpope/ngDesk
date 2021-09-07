@@ -66,6 +66,8 @@ export class SchedulesDetailComponent implements OnInit, OnDestroy {
 	public companyInfoSubscription: Subscription;
 	public tempUserInput = '';
 	public separatorKeysCodes: number[] = [ENTER, COMMA];
+	public escalationId: string;
+	public paramValue: string;
 	@ViewChild('search') public searchTextBox: ElementRef;
 	public scheduleDataScrollSubject = new Subject<any>();
 	get userFilter(): string {
@@ -99,6 +101,10 @@ export class SchedulesDetailComponent implements OnInit, OnDestroy {
 	public ngOnInit() {
 		this.scheduleForm = this.formBuilder.group({});
 		const scheduleId = this.route.snapshot.params['scheduleId'];
+		if (this.route.snapshot.queryParams['value']) {
+			this.paramValue = this.route.snapshot.queryParams['value'];
+		}
+		this.escalationId = this.route.snapshot.queryParams['id'];
 		const scheduleName = this.route.snapshot.queryParams['scheduleName'];
 		this.dayInView = new Date();
 		this.dayInViewEnd = new Date();
@@ -837,7 +843,16 @@ export class SchedulesDetailComponent implements OnInit, OnDestroy {
 						this.companiesService.trackEvent(`Created Schedule`, {
 							SCHEDULE_ID: response.SCHEDULE_ID,
 						});
-						this.router.navigate(['schedules']);
+						if (this.paramValue == 'escNew') {
+							this.router.navigate(['escalations/new']);
+						} else if (
+							this.escalationId != '' &&
+							this.escalationId != undefined
+						) {
+							this.router.navigate([`escalations` + '/' + this.escalationId]);
+						} else {
+							this.router.navigate(['schedules']);
+						}
 					},
 					(error) => {
 						this.bannerMessageService.errorNotifications.push({

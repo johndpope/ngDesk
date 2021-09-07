@@ -269,6 +269,18 @@ export class EscalationsDetailComponent implements OnInit {
 		}
 	}
 
+	public createSchedules() {
+		if (this.escalationId === 'new') {
+			this.router.navigate([`schedules/new`], {
+				queryParams: { value: 'escNew' },
+			});
+		} else {
+			this.router.navigate([`schedules/new`], {
+				queryParams: { id: this.escalationId },
+			});
+		}
+	}
+
 	public save() {
 		this.escalationForm.get('NAME').markAsTouched();
 		if (this.escalationForm.valid) {
