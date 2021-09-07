@@ -25,4 +25,13 @@ public class CustomWorkflowRepositoryImpl implements CustomWorkflowRepository {
 		return Optional.ofNullable(mongoOperations.find(query, Workflow.class, collectionName));
 	}
 
+	@Override
+	public Optional<List<Workflow>> findAllWorkflowsInCompany(String companyId, String moduleId,
+			String collectionName) {
+		Criteria criteria = new Criteria();
+		criteria.andOperator(Criteria.where("COMPANY_ID").is(companyId), Criteria.where("MODULE_ID").is(moduleId));
+		Query query = new Query(criteria);
+		return Optional.ofNullable(mongoOperations.find(query, Workflow.class, collectionName));
+	}
+
 }

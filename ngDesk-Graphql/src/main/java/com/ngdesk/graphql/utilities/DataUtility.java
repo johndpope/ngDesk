@@ -128,6 +128,7 @@ import com.ngdesk.graphql.userplugin.dao.UserPluginsByStatusDataFetcher;
 import com.ngdesk.graphql.workflow.NodeDataFetcher;
 import com.ngdesk.graphql.workflow.NodesExecutedDataFetcher;
 import com.ngdesk.graphql.workflow.StageDataFetcher;
+import com.ngdesk.graphql.workflow.WorkflowEntriesDataFetcher;
 import com.ngdesk.graphql.workflow.WorkflowEntryDataFetcher;
 import com.ngdesk.graphql.workflow.WorkflowInstanceDataFetcher;
 import com.ngdesk.graphql.workflow.WorkflowInstanceFetcher;
@@ -486,6 +487,9 @@ public class DataUtility {
 	SectionsCountFetcher sectionsCountFetcher;
 
 	@Autowired
+	WorkflowEntriesDataFetcher workflowEntriesDataFetcher;
+
+	@Autowired
 	SectionCategoryDataFetcher sectionCategoryDataFetcher;
 
 	@Autowired
@@ -817,7 +821,6 @@ public class DataUtility {
 		builder.type("Section", typeWiring -> typeWiring.dataFetcher("createdBy", entryDataFetcher));
 		builder.type("Section", typeWiring -> typeWiring.dataFetcher("lastUpdatedBy", entryDataFetcher));
 
-		
 		// ARTICLE
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getKbArticle", articleDataFetcher));
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getAllKbArticles", articlesDataFetcher));
@@ -825,7 +828,7 @@ public class DataUtility {
 		builder.type("Article", typeWiring -> typeWiring.dataFetcher("createdBy", entryDataFetcher));
 		builder.type("Article", typeWiring -> typeWiring.dataFetcher("lastUpdatedBy", entryDataFetcher));
 		builder.type("Article", typeWiring -> typeWiring.dataFetcher("author", entryDataFetcher));
-		
+
 		// Notification
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getNotification", notificationDataFetcher));
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getNotifications", notificationsDataFetcher));
@@ -917,8 +920,9 @@ public class DataUtility {
 		builder.type("Sender", typeWiring -> typeWiring.dataFetcher("ROLE", roleDataFetcher));
 
 		// WORKFLOW
-		builder.type("Workflow", typeWiring -> typeWiring.dataFetcher("getWorkflow", workflowEntryDataFetcher));
-		builder.type("Workflow", typeWiring -> typeWiring.dataFetcher("module", moduleDataFetcher));
+		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getWorkflow", workflowEntryDataFetcher));
+		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getWorkflows", workflowEntriesDataFetcher));
+		builder.type("Workflow", typeWiring -> typeWiring.dataFetcher("module", roleLayoutModuleDataFetcher));
 		builder.type("Workflow", typeWiring -> typeWiring.dataFetcher("createdBy", entryDataFetcher));
 		builder.type("Workflow", typeWiring -> typeWiring.dataFetcher("lastUpdated", entryDataFetcher));
 
@@ -1018,7 +1022,7 @@ public class DataUtility {
 			});
 
 		}
-	
+
 		return builder.build();
 	}
 
