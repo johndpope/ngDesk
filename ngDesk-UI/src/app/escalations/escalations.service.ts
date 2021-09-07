@@ -94,4 +94,45 @@ export class EscalationsService {
 
 		return this.http.post(`${this.globals.graphqlUrl}`, query);
 	}
+
+	// Calling graphql call to fetch list of schedules
+	public getAllEscalations(query) {
+		return this.http.post(`${this.globals.graphqlUrl}`, query);
+	}
+
+	// Calling graphql call to fetch an escalation
+	public getEscalation(escalationId) {
+		const query = `{
+			escalation: getEscalation(escalationId: "${escalationId}") {
+				NAME: name
+				DESCRIPTION: description
+				RULES: rules {
+					MINS_AFTER: minsAfter
+					ORDER: order
+					ESCALATE_TO: escalateTo {
+						SCHEDULE_IDS: scheduleIds
+						USER_IDS: userIds
+						TEAM_IDS: teamIds
+					}
+				}
+				dateCreated
+				dateUpdated
+				createdBy {
+					DATA_ID: _id
+					CONTACT {
+						PRIMARY_DISPLAY_FIELD: FULL_NAME
+						DATA_ID: _id
+					}
+				}
+				lastUpdatedBy {
+					DATA_ID: _id
+					CONTACT {
+						FULL_NAME
+					}
+				}
+			}
+		}`;
+		
+		return this.http.post(`${this.globals.graphqlUrl}`, query);
+	}
 }
