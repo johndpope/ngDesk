@@ -119,7 +119,7 @@ export class ReportDetailComponent implements OnInit {
 	public relationFieldIds: any = {};
 	public relatedFields = {}; // contains all the related fields
 	public parentField: any = {}; // currently clicked aggregation field
-	public chaildFields: any[] = []; //displayed  in aggregation field dropdown
+	public childFields: any[] = []; //displayed  in aggregation field dropdown
 	public oneToManyFields: any[] = []; // one to many fields displayed in aggregation section
 	public relatedModuleFields: any[] = []; // validated other module fields
 	public reportInfo: any = {}; // save API Report info
@@ -429,7 +429,7 @@ export class ReportDetailComponent implements OnInit {
 		return isValid;
 	}
 	public onFieldDrop(field, isRelationField?) {
-		this.chaildFields = [];
+		this.childFields = [];
 		this.currentIndex = 0;
 		if (isRelationField) {
 			let isParentFiedPresent: boolean = false;
@@ -1414,17 +1414,17 @@ export class ReportDetailComponent implements OnInit {
 
 	public onRelationFieldClick(relationshipField) {
 		this.parentField = relationshipField;
-		this.chaildFields = [];
+		this.childFields = [];
 		if (this.relatedFields.hasOwnProperty(relationshipField.MODULE)) {
-			this.chaildFields = this.relatedFields[relationshipField.MODULE];
+			this.childFields = this.relatedFields[relationshipField.MODULE];
 			// to remove selected fields
-			this.chaildFields = this.chaildFields.filter(
+			this.childFields = this.childFields.filter(
 				(field) =>
 					!this.relationFieldIds[relationshipField.MODULE]?.includes(
 						field.FIELD_ID
 					)
 			);
-			this.chaildFields.sort(function (a, b) {
+			this.childFields.sort(function (a, b) {
 				const textA = a.NAME.toUpperCase();
 				const textB = b.NAME.toUpperCase();
 				return textA < textB ? -1 : textA > textB ? 1 : 0;
@@ -1635,7 +1635,7 @@ export class ReportDetailComponent implements OnInit {
 		let field;
 		field = this.allFields.find((field) => field.FIELD_ID === id);
 		if (!field) {
-			field = this.chaildFields.find((field) => field.FIELD_ID === id);
+			field = this.childFields.find((field) => field.FIELD_ID === id);
 		}
 		return field;
 	}
@@ -1662,7 +1662,7 @@ export class ReportDetailComponent implements OnInit {
 	}
 
 	public setDropList(event) {
-		this.chaildFields = [];
+		this.childFields = [];
 		if (event && event.index == 1) {
 			this.currentIndex = 1;
 		} else if (event && event.index == 0) {
@@ -1734,6 +1734,7 @@ export class ReportDetailComponent implements OnInit {
 		});
 	}
 	public removeChildCol(colIndex, col, parentCol, parentIndex) {
+		this.childFields = [];
 		this.relationFieldIds[parentCol.parentModuleId]?.splice(colIndex, 1);
 		this.relationFieldsInTable[parentCol.parentModuleId]?.splice(colIndex, 1);
 		this.source.forEach((data) => {
