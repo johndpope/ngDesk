@@ -155,7 +155,8 @@ public class ListLayoutService {
 
 		List<ModuleField> allFields = module.getFields();
 		List<ModuleField> relationshipField = allFields.stream()
-				.filter(field -> field.getDataType().getDisplay().equals("Relationship")).collect(Collectors.toList());
+				.filter(field -> field.getDataType().getDisplay().equalsIgnoreCase("RelationShip"))
+				.collect(Collectors.toList());
 
 		if (relationshipField != null) {
 
@@ -187,7 +188,8 @@ public class ListLayoutService {
 			String firstField = parseField.remove(0);
 			String joinParseFields = String.join(".", parseField);
 			ModuleField moduleField = validateAndGetModuleField(firstField, moduleId);
-			if (moduleField.getDataType().getDisplay().equals("Relationship")) {
+			
+			if (moduleField.getDataType().getDisplay().equalsIgnoreCase("RelationShip")) {
 				throw new BadRequestException("RELATIONSHIP_FIELD_NESTED_ERROR", null);
 			}
 			return validateFields(joinParseFields, moduleField.getModule());
