@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,11 +25,14 @@ public class CompanyOnPremiseApi {
 
 	@Autowired
 	private CompanyOnPremiseAuditRepository onPremiseAuditRepository;
+	
+	@Value("${ngdesk.onpremise.secret}")
+	private String ngdeskOnpremiseSecret;
 
 	@PostMapping("/company/onpremise")
 	public CompanyOnPremise postCompany(@RequestBody @Valid CompanyOnPremise companyOnPremise,
 			@RequestParam("secret") String secret) {
-		if (secret == null || !secret.equals("177134b2-fd36-4b54-a1b3-0fe9272ab17f")) {
+		if (secret == null || !secret.equals(ngdeskOnpremiseSecret)) {
 			throw new ForbiddenException("FORBIDDEN");
 		}
 		companyOnPremise.setDateCreated(new Date());
@@ -39,7 +43,7 @@ public class CompanyOnPremiseApi {
 	@PostMapping("/company/onpremise/users")
 	public SubscriptionStatus updateUsers(@RequestBody @Valid CompanyOnPremiseAudit onPremiseAudit,
 			@RequestParam("secret") String secret) {
-		if (secret == null || !secret.equals("177134b2-fd36-4b54-a1b3-0fe9272ab17f")) {
+		if (secret == null || !secret.equals(ngdeskOnpremiseSecret)) {
 			throw new ForbiddenException("FORBIDDEN");
 		}
 		if (onPremiseAudit.getNoOfUsers() <= 0) {

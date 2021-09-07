@@ -1,6 +1,7 @@
 package com.ngdesk.auth.jobs;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -31,6 +32,9 @@ public class LicenseKeyValidateJob {
 	@Autowired
 	AuthService authService;
 
+	@Value("${ngdesk.onpremise.secret}")
+	private String ngdeskOnpremiseSecret;
+
 	@Scheduled(fixedRate = 60 * 60 * 1000)
 	public void postToCloudToGetSubscriptionStatus() {
 		String environmentVariable = getEnvironmentVariable("NGDESK_PREMISE");
@@ -47,10 +51,10 @@ public class LicenseKeyValidateJob {
 			headers.setContentType(MediaType.APPLICATION_JSON);
 			HttpEntity<LicenseInformation> request = new HttpEntity<>(licenseInformation, headers);
 
-			SubscriptionStatus subscriptionStatus = restTemplate.postForObject(
-					"https://prod.ngdesk.com/ngdesk-company-service-v1/company/onpremise/users?secret=177134b2-fd36-4b54-a1b3-0fe9272ab17f",
-					request, SubscriptionStatus.class);
-			
+			SubscriptionStatus subscriptionStatus = restTemplate
+					.postForObject("https://prod.ngdesk.com/ngdesk-company-service-v1/company/onpremise/users?secret="
+							+ ngdeskOnpremiseSecret, request, SubscriptionStatus.class);
+
 //			if (subscriptionStatus.getSubscription().equals("invalid")) {
 //				authService.subscriptionActive = false;
 //			}
