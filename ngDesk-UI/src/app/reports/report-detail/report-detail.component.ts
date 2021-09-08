@@ -661,14 +661,21 @@ export class ReportDetailComponent implements OnInit {
 						this.displayedColumns.splice(colIndex, 1);
 						this.fieldsInTable.splice(index, 1);
 					}
+					let isSourceEmpty: boolean = false;
 					this.source.forEach((record) => {
 						delete record[col.NAME];
+						if (Object.keys(record).length > 0) {
+							isSourceEmpty = true;
+						}
 					});
+					if (isSourceEmpty == false) {
+						this.source = [];
+						this.totalRecords = 0;
+					}
+
 					this.dataSource = new MatTableDataSource<any>(this.source);
 					this.duplicateTableFields.splice(index, 1);
-
 					this.sortFieldsAlphabetically();
-
 					this.allFields.forEach((field) => {
 						let isPresent = false;
 						this.fieldsIds.forEach((ids) => {
@@ -692,6 +699,7 @@ export class ReportDetailComponent implements OnInit {
 		}
 
 		this.fieldsInTable = this.duplicateTableFields;
+		console.log(this.source);
 	}
 
 	private addEmptyDataToRows() {
