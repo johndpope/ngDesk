@@ -38,6 +38,8 @@ import com.ngdesk.repositories.RolesRepository;
 import com.ngdesk.websocket.approval.dao.Approval;
 import com.ngdesk.websocket.approval.dao.ApprovalService;
 import com.ngdesk.websocket.channels.chat.ChatChannelService;
+import com.ngdesk.websocket.channels.chat.ChatService;
+import com.ngdesk.websocket.channels.chat.ChatWidgetPayload;
 import com.ngdesk.websocket.channels.chat.PageLoad;
 import com.ngdesk.websocket.dao.WebSocketService;
 import com.ngdesk.websocket.graphql.dao.GraphqlProxy;
@@ -98,6 +100,9 @@ public class SocketHandler extends TextWebSocketHandler {
 
 	@Autowired
 	RolesRepository rolesRepository;
+	
+	@Autowired	
+	ChatService chatService;
 
 	private static ReentrantLock lock = new ReentrantLock();
 
@@ -355,10 +360,17 @@ public class SocketHandler extends TextWebSocketHandler {
 				}
 			} else if (queryParamMap.containsKey("sessionUUID") && queryParamMap.containsKey("subdomain")) {
 				try {
-					PageLoad pageLoad = mapper.readValue(textMessage.getPayload(), PageLoad.class);
+				    PageLoad pageLoad = mapper.readValue(textMessage.getPayload(), PageLoad.class);
 					chatChannelService.publishPageLoad(pageLoad);
-
+				
 				} catch (Exception e) {
+					try {
+						ChatWidgetPayload pageLoad = mapper.readValue(textMessage.getPayload(), ChatWidgetPayload.class);
+						chatService.publishPageLoad(pageLoad);
+				
+					}catch (Exception e1) {
+							
+					}
 				}
 
 			}
