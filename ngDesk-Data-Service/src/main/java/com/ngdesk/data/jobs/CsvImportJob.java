@@ -38,14 +38,15 @@ import com.ngdesk.data.company.dao.Company;
 import com.ngdesk.data.csvimport.dao.CsvHeaders;
 import com.ngdesk.data.csvimport.dao.CsvImport;
 import com.ngdesk.data.csvimport.dao.CsvImportData;
+import com.ngdesk.data.csvimport.dao.CsvImportLog;
 import com.ngdesk.data.csvimport.dao.CsvImportService;
 import com.ngdesk.data.dao.DataService;
 import com.ngdesk.data.dao.Phone;
-import com.ngdesk.data.elastic.Wrapper;
 import com.ngdesk.data.modules.dao.DataType;
 import com.ngdesk.data.modules.dao.Module;
 import com.ngdesk.data.modules.dao.ModuleField;
 import com.ngdesk.data.roles.dao.Role;
+import com.ngdesk.data.sam.dao.DataProxy;
 import com.ngdesk.data.validator.Validator;
 import com.ngdesk.repositories.companies.CompanyRepository;
 import com.ngdesk.repositories.csvimport.CsvImportRepository;
@@ -79,7 +80,7 @@ public class CsvImportJob {
 	Validator validator;
 
 	@Autowired
-	Wrapper wrapper;
+	DataProxy dataAPI;
 
 	@Autowired
 	CsvImportService csvImportService;
@@ -90,14 +91,13 @@ public class CsvImportJob {
 	@Value("${env}")
 	private String environment;
 
-	@Scheduled(fixedRate = 30000)
+	@Scheduled(fixedRate = 1000)
 	public void importCsv() {
 		BufferedReader br = null;
 		InputStream is = null;
 		ObjectMapper mapper = new ObjectMapper();
-
 		try {
-			List<CsvImport> csvImports = csvImportRepository.findEntriesByVariable("STATUS", "QUEUED", "csv_import");
+			List<CsvImport> csvImports = csvImportRepository.findEntriesByVariable("status", "QUEUED", "csv_import");
 
 			for (CsvImport csvDocument : csvImports) {
 
@@ -116,7 +116,8 @@ public class CsvImportJob {
 					Optional<Map<String, Object>> optionalGlobalTeam = moduleEntryRepository.findEntryByFieldName(
 							"NAME", "Global", csvImportService.generateCollectionName("Teams", companyId));
 
-					Map<String, Object> globalTeam = optionalGlobalTeam.get();
+					HashMap<String, Object> globalTeam = new HashMap<String, Object>();
+					globalTeam.putAll(optionalGlobalTeam.get());
 					String globalTeamId = globalTeam.get("_id").toString();
 
 					Optional<Role> optionalCustomerRole = rolesRepository.findRoleName("Customers",
@@ -124,7 +125,7 @@ public class CsvImportJob {
 					Role customerRole = optionalCustomerRole.get();
 					String customerRoleId = customerRole.getId();
 
-					csvImportRepository.updateEntry(csvDocument.getCsvImportId(), "STATUS", "PROCESSING", "csv_import");
+					csvImportRepository.updateEntry(csvDocument.getCsvImportId(), "status", "PROCESSING", "csv_import");
 
 					CsvImportData body = csvDocument.getCsvImportData();
 					String moduleId = csvDocument.getModuleId();
@@ -172,7 +173,7 @@ public class CsvImportJob {
 									for (ModuleField field : fields) {
 										String fieldId = field.getFieldId();
 										for (CsvHeaders csvHeader : headersList) {
-											if(csvHeader.getFieldId().equals(fieldId)) {
+											if (csvHeader.getFieldId().equals(fieldId)) {
 												colMap.put(field.getName(),
 														fieldValues.get(headers.indexOf(csvHeader.getHeaderName())));
 											}
@@ -224,7 +225,7 @@ public class CsvImportJob {
 										for (ModuleField field : fields) {
 											String fieldId = field.getFieldId();
 											for (CsvHeaders csvHeader : headersList) {
-												if(csvHeader.getFieldId().equals(fieldId)) {
+												if (csvHeader.getFieldId().equals(fieldId)) {
 													colMap.put(field.getName(),
 															values.get(headers.indexOf(csvHeader.getHeaderName())));
 												}
@@ -238,7 +239,7 @@ public class CsvImportJob {
 							workbook.close();
 						}
 						if (isEmpty) {
-							csvImportRepository.updateEntry(csvDocument.getCsvImportId(), "STATUS", "FAILED",
+							csvImportRepository.updateEntry(csvDocument.getCsvImportId(), "status", "FAILED",
 									"csv_import");
 							continue;
 						} else {
@@ -331,14 +332,13 @@ public class CsvImportJob {
 										if (dataType.getDisplay().equalsIgnoreCase("Picklist")) {
 											List<String> picklistValues = field.getPicklistValues();
 											String value = inputMessage.get(fieldName).toString();
-											
-											if(!picklistValues.contains(value)) {
-												Map<String, Object> log = new HashMap<String, Object>();
-												log.put("LINE_NUMBER", i);
-												log.put("ERROR_MESSAGE", "Picklist values are incorrect");
-												String logString = new ObjectMapper().writeValueAsString(log);
-												csvImportRepository.addToEntrySet(csvDocument.getCsvImportId(), "LOGS",
-														logString, "csv_import");
+
+											if (!picklistValues.contains(value)) {
+												CsvImportLog log = new CsvImportLog();
+												log.setLineNumber(i);
+												log.setErrorMessage("Picklist values are incorrect");
+												csvImportRepository.addToEntrySet(csvDocument.getCsvImportId(), "logs",
+														log, "csv_import");
 												error = true;
 												break;
 											}
@@ -360,7 +360,7 @@ public class CsvImportJob {
 									}
 
 									boolean checkRequired = true;
-									//check
+									// check
 									if (moduleName.equals("Tickets")) {
 										if (dataType.getDisplay().equalsIgnoreCase("Discussion")
 												|| dataType.getDisplay().equalsIgnoreCase("Relationship")) {
@@ -450,29 +450,28 @@ public class CsvImportJob {
 									continue;
 								}
 
-								try {
-									validator.validateBaseTypes(module, inputMessage, companyId);
-								} catch (Exception e) {
-									Map<String, Object> log = new HashMap<String, Object>();
-									log.put("LINE_NUMBER", i);
-									log.put("ERROR_MESSAGE", e.getMessage());
-									String logString = new ObjectMapper().writeValueAsString(log);
-									csvImportRepository.addToEntrySet(csvDocument.getCsvImportId(), "LOGS", logString,
-											"csv_import");
-									continue;
-								}
+//								try {
+//									validator.validateBaseTypes(module, inputMessage, companyId);
+//								} catch (Exception e) {
+//									CsvImportLog log = new CsvImportLog();
+//									log.setLineNumber(i);
+//									log.setErrorMessage(e.getMessage());
+//									csvImportRepository.addToEntrySet(csvDocument.getCsvImportId(), "logs", log,
+//											"csv_import");
+//									continue;
+//								}
 
 								if (moduleName.equalsIgnoreCase("Users")) {
 									Optional<Map<String, Object>> optionalUser = moduleEntryRepository
 											.findEntryByFieldName("EMAIL_ADDRESS", inputMessage.get("EMAIL_ADDRESS"),
 													csvImportService.generateCollectionName("Users", companyId));
 
-									Map<String, Object> userEntry = new HashMap<String, Object>();
+									HashMap<String, Object> userEntry = new HashMap<String, Object>();
 									boolean isDeleted = false;
 
 									if (optionalUser.isPresent()) {
 										isDeleted = Boolean.valueOf(optionalUser.get().get("DELETED").toString());
-										userEntry = optionalUser.get();
+										userEntry.putAll(optionalUser.get());
 									}
 
 									if (optionalUser.isEmpty() || isDeleted) {
@@ -486,7 +485,8 @@ public class CsvImportJob {
 											Optional<Map<String, Object>> optionalTeamsEntry = moduleEntryRepository
 													.findEntryByFieldName("NAME", existingRoleName, csvImportService
 															.generateCollectionName("Teams", companyId));
-											Map<String, Object> roleTeam = optionalTeamsEntry.get();
+											HashMap<String, Object> roleTeam = new HashMap<String, Object>();
+											roleTeam.putAll(optionalTeamsEntry.get());
 											String roleTeamId = roleTeam.get("_id").toString();
 
 											Optional<Module> optionalTeamsModule = modulesRepository.findIdbyModuleName(
@@ -503,13 +503,14 @@ public class CsvImportJob {
 														.findTeamsByVariableForIsPersonal("NAME", teamName,
 																csvImportService.generateCollectionName("Teams",
 																		companyId));
-												Map<String, Object> personalTeam = optionalPersonalTeam.get();
+												HashMap<String, Object> personalTeam = new HashMap<String, Object>();
+												personalTeam.putAll(optionalPersonalTeam.get());
 												List<String> users = new ArrayList<String>();
 												users.add(userEntry.get("_id").toString());
 												personalTeam.put("DELETED", false);
 												personalTeam.put("USERS", users);
-												wrapper.putData(companyId, teamsModule, personalTeam,
-														personalTeam.get("_id").toString());
+												dataAPI.putModuleEntry(personalTeam, teamsModuleId, true, companyId, "",
+														false);
 
 												userEntry.put("DELETED", false);
 												List<String> existingTeams = mapper.readValue(
@@ -520,8 +521,8 @@ public class CsvImportJob {
 													existingTeams.add(personalTeam.get("_id").toString());
 												}
 												userEntry.put("TEAMS", existingTeams);
-												wrapper.putData(companyId, module, userEntry,
-														userEntry.get("_id").toString());
+												dataAPI.putModuleEntry(userEntry, module.getModuleId(), true, companyId,
+														"", false);
 											} else {
 
 												userEntry = csvImportService.createUser(
@@ -547,7 +548,7 @@ public class CsvImportJob {
 												String teamJson = "{\"NAME\":\"Global\",\"DESCRIPTION\":\"Default Team\",\"USERS\":[\"USER_ID_REPLACE\"],\"DELETED\":false,\"IS_PERSONAL\":false}";
 												teamJson = teamJson.replaceAll("USER_ID_REPLACE", userId);
 
-												Map<String, Object> team = new HashMap<String, Object>();
+												HashMap<String, Object> team = new HashMap<String, Object>();
 												team.putAll(mapper.readValue(teamJson, Map.class));
 												team.put("NAME", inputMessage.get("FIRST_NAME") + " "
 														+ inputMessage.get("LAST_NAME"));
@@ -570,8 +571,8 @@ public class CsvImportJob {
 												userEntry.put("IS_LOGIN_ALLOWED", false);
 												userEntry.put("CONTACT", contactEntry.get("_id").toString());
 
-												wrapper.putData(companyId, module, userEntry,
-														userEntry.get("_id").toString());
+												dataAPI.putModuleEntry(userEntry, module.getModuleId(), true, companyId,
+														"", false);
 											}
 											List<String> globalUsers = mapper.readValue(
 													mapper.writeValueAsString(globalTeam.get("USERS")),
@@ -580,7 +581,8 @@ public class CsvImportJob {
 
 											globalUsers.add(userEntry.get("_id").toString());
 											globalTeam.put("USERS", globalUsers);
-											wrapper.putData(companyId, teamsModule, globalTeam, globalTeamId);
+											dataAPI.putModuleEntry(globalTeam, teamsModuleId, true, companyId, "",
+													false);
 
 											List<String> roleTeamUsers = mapper.readValue(
 													mapper.writeValueAsString(roleTeam.get("USERS")),
@@ -588,8 +590,7 @@ public class CsvImportJob {
 															String.class));
 											roleTeamUsers.add(userEntry.get("_id").toString());
 											roleTeam.put("USERS", roleTeamUsers);
-											wrapper.putData(companyId, teamsModule, roleTeam, roleTeamId);
-
+											dataAPI.putModuleEntry(roleTeam, teamsModuleId, true, companyId, "", false);
 										} catch (Exception e) {
 											continue;
 										}
@@ -609,11 +610,11 @@ public class CsvImportJob {
 									}
 								}
 							}
-							csvImportRepository.updateEntry(csvDocument.getCsvImportId(), "STATUS", "COMPLETED",
+							csvImportRepository.updateEntry(csvDocument.getCsvImportId(), "status", "COMPLETED",
 									"csv_import");
 						}
 					} else {
-						csvImportRepository.updateEntry(csvDocument.getCsvImportId(), "STATUS", "FAILED", "csv_import");
+						csvImportRepository.updateEntry(csvDocument.getCsvImportId(), "status", "FAILED", "csv_import");
 					}
 
 				} catch (Exception e) {
@@ -635,7 +636,7 @@ public class CsvImportJob {
 
 					}
 
-					csvImportRepository.updateEntry(csvDocument.getCsvImportId(), "STATUS", "FAILED", "csv_import");
+					csvImportRepository.updateEntry(csvDocument.getCsvImportId(), "status", "FAILED", "csv_import");
 				}
 			}
 

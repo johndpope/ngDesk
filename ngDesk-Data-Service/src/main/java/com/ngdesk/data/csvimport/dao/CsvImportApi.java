@@ -84,7 +84,7 @@ public class CsvImportApi {
 			throw new BadRequestException("INVALID_MODULE", null);
 		}
 
-		List<String> logs = new ArrayList<String>();
+		List<CsvImportLog> logs = new ArrayList<CsvImportLog>();
 		CsvImport entry = new CsvImport(null, "QUEUED", csvImportData, moduleId, logs, companyId,
 				csvImportData.getFileName(), new Date(), createdById);
 
