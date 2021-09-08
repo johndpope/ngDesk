@@ -38,6 +38,7 @@ import com.ngdesk.repositories.RolesRepository;
 import com.ngdesk.websocket.approval.dao.Approval;
 import com.ngdesk.websocket.approval.dao.ApprovalService;
 import com.ngdesk.websocket.channels.chat.ChatChannelService;
+import com.ngdesk.websocket.channels.chat.ChatUser;
 import com.ngdesk.websocket.channels.chat.PageLoad;
 import com.ngdesk.websocket.dao.WebSocketService;
 import com.ngdesk.websocket.graphql.dao.GraphqlProxy;
@@ -359,6 +360,12 @@ public class SocketHandler extends TextWebSocketHandler {
 					chatChannelService.publishPageLoad(pageLoad);
 
 				} catch (Exception e) {
+					try {
+						ChatUser chatUser = mapper.readValue(textMessage.getPayload(), ChatUser.class);
+
+					} catch (Exception e1) {
+
+					}
 				}
 
 			}
