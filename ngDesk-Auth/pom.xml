@@ -9,7 +9,7 @@
 		<version>2.3.3.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.ngdesk.auth.auth</groupId>
+	<groupId>com.ngdesk.auth.auth</groupId> 
 	<artifactId>ngDesk-Auth</artifactId> 
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ngDesk-Auth</name>
