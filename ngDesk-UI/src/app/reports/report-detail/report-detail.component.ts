@@ -1470,26 +1470,24 @@ export class ReportDetailComponent implements OnInit {
 						field.data.push(data[field.NAME]);
 					}
 				} else if (field.isParentField) {
-					if (
-						data[field.parentFieldName] &&
-						data[field.parentFieldName].length > 0
-					) {
-						field.data.push(data[field.parentFieldName]);
-					} else if (
-						data[field.parentFieldName] &&
-						data[field.parentFieldName].length == 0
-					) {
-						if (field?.data?.length == 0) {
-							field.data = [];
-						}
-					} else if (
-						data.hasOwnProperty(field.parentFieldName) &&
-						data[field.parentFieldName] == null
-					) {
-						if (field?.data?.length == 0) {
-							field.data = [];
-						}
-					}
+					field.data.push(data[field.parentFieldName]);
+					// if (
+					// 	data[field.parentFieldName] &&
+					// 	data[field.parentFieldName].length > 0
+					// ) {
+					// 	field.data.push(data[field.parentFieldName]);
+					// } else if (
+					// 	data[field.parentFieldName] &&
+					// 	data[field.parentFieldName].length == 0
+					// ) {
+					// 	field.data.push([]);
+					// }
+					// else if (
+					// 	data.hasOwnProperty(field.parentFieldName) &&
+					// 	data[field.parentFieldName] == null
+					// ) {
+					// 	field.data.push([]);
+					// }
 				}
 			});
 		});
@@ -1676,6 +1674,9 @@ export class ReportDetailComponent implements OnInit {
 		this.childFields = [];
 		if (event && event.index == 1) {
 			this.currentIndex = 1;
+			if (this.oneToManyFields.length > 0) {
+				this.onRelationFieldClick(this.oneToManyFields[0]);
+			}
 		} else if (event && event.index == 0) {
 			this.currentIndex = 0;
 		}
