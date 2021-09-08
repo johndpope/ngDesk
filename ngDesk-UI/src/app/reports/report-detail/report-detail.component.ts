@@ -121,18 +121,14 @@ export class ReportDetailComponent implements OnInit {
 	public parentField: any = {}; // currently clicked aggregation field
 	public childFields: any[] = []; //displayed  in aggregation field dropdown
 	public oneToManyFields: any[] = []; // one to many fields displayed in aggregation section
-	public relatedModuleFields: any[] = []; // validated other module fields
 	public reportInfo: any = {}; // save API Report info
 	public customization: any = {};
 	public duplicateTableFields = [];
-
 	/** ----  Newly added Fields ------ */
-
 	public dropList: any = [];
 	public relationDropList: any = [];
 	public fieldsInList: any[] = [];
 	public currentIndex = 0;
-	// public childTableLength = {};
 	@ViewChild('customizeDialog') customizeDialog: TemplateRef<any>;
 	public sortByFieldsList = [];
 
@@ -315,8 +311,6 @@ export class ReportDetailComponent implements OnInit {
 					this.displayedColumnsObj = [];
 					this.fieldsInTable = [];
 					this.relationFieldsInTable = {};
-					this.relatedModuleFields = [];
-
 					let reportInfo = reportDataResponse[0]?.DATA;
 					let isParentFiedPresent: boolean = false;
 					if (reportInfo) {
@@ -332,13 +326,13 @@ export class ReportDetailComponent implements OnInit {
 
 						// fiter relationship Fields
 						this.oneToManyFields.forEach((field) => {
-							if (this.relatedFields.hasOwnProperty(field.MODULE)) {
-								let relatedFieds: any[] = this.relatedFields[field.MODULE];
+							if (this.relatedFields.hasOwnProperty(field.FIELD_ID)) {
+								let relatedFieds: any[] = this.relatedFields[field.FIELD_ID];
 								relatedFieds.forEach((relationField) => {
 									if (
-										this.relationFieldIds[field.MODULE] &&
-										this.relationFieldIds[field.MODULE].length > 0 &&
-										this.relationFieldIds[field.MODULE].includes(
+										this.relationFieldIds[field.FIELD_ID] &&
+										this.relationFieldIds[field.FIELD_ID].length > 0 &&
+										this.relationFieldIds[field.FIELD_ID].includes(
 											relationField.FIELD_ID
 										)
 									) {
@@ -354,13 +348,14 @@ export class ReportDetailComponent implements OnInit {
 										fieldData.paentFieldId = field.FIELD_ID;
 										fieldData.DISPLAY_LABEL = relationField.DISPLAY_LABEL;
 										if (
-											this.relationFieldsInTable.hasOwnProperty(field.MODULE)
+											this.relationFieldsInTable.hasOwnProperty(field.FIELD_ID)
 										) {
-											this.relationFieldsInTable[field.MODULE].push(fieldData);
+											this.relationFieldsInTable[field.FIELD_ID].push(
+												fieldData
+											);
 										} else {
-											this.relationFieldsInTable[field.MODULE] = [fieldData];
+											this.relationFieldsInTable[field.FIELD_ID] = [fieldData];
 										}
-										this.relatedModuleFields.push(relationField);
 									}
 								});
 							}
@@ -375,8 +370,8 @@ export class ReportDetailComponent implements OnInit {
 
 							if (
 								!isParentFiedPresent &&
-								this.relationFieldIds.hasOwnProperty(field.MODULE) &&
-								this.relationFieldIds[field.MODULE].length > 0
+								this.relationFieldIds.hasOwnProperty(field.FIELD_ID) &&
+								this.relationFieldIds[field.FIELD_ID].length > 0
 							) {
 								let fieldData = {
 									fieldId: field.FIELD_ID,
@@ -411,23 +406,23 @@ export class ReportDetailComponent implements OnInit {
 			);
 	}
 
-	public validateTableFields(FieldID) {
-		let isValid;
-		let allTableFields = [];
-		allTableFields = this.fieldsInTable.concat(this.getRelatedFieldsInTable());
-		if (allTableFields.length == 0) {
-			isValid = true;
-		} else {
-			allTableFields.forEach((field) => {
-				if (field.fieldId === FieldID) {
-					isValid = false;
-				} else {
-					isValid = true;
-				}
-			});
-		}
-		return isValid;
-	}
+	// public validateTableFields(FieldID) {
+	// 	let isValid;
+	// 	let allTableFields = [];
+	// 	allTableFields = this.fieldsInTable.concat(this.getRelatedFieldsInTable());
+	// 	if (allTableFields.length == 0) {
+	// 		isValid = true;
+	// 	} else {
+	// 		allTableFields.forEach((field) => {
+	// 			if (field.fieldId === FieldID) {
+	// 				isValid = false;
+	// 			} else {
+	// 				isValid = true;
+	// 			}
+	// 		});
+	// 	}
+	// 	return isValid;
+	// }
 	public onFieldDrop(field, isRelationField?) {
 		this.childFields = [];
 		this.currentIndex = 0;
@@ -441,16 +436,18 @@ export class ReportDetailComponent implements OnInit {
 				isRelated: isRelationField,
 			};
 			field = tempField;
-			if (this.relationFieldIds.hasOwnProperty(this.parentField.MODULE)) {
-				this.relationFieldIds[this.parentField.MODULE].push(field.fieldId);
+			if (this.relationFieldIds.hasOwnProperty(this.parentField.FIELD_ID)) {
+				this.relationFieldIds[this.parentField.FIELD_ID].push(field.fieldId);
 			} else {
-				this.relationFieldIds[this.parentField.MODULE] = [field.fieldId];
+				this.relationFieldIds[this.parentField.FIELD_ID] = [field.fieldId];
 			}
 			field = this.getParentByChaildId(field);
-			if (this.relationFieldsInTable.hasOwnProperty(this.parentField.MODULE)) {
-				this.relationFieldsInTable[this.parentField.MODULE].push(field);
+			if (
+				this.relationFieldsInTable.hasOwnProperty(this.parentField.FIELD_ID)
+			) {
+				this.relationFieldsInTable[this.parentField.FIELD_ID].push(field);
 			} else {
-				this.relationFieldsInTable[this.parentField.MODULE] = [field];
+				this.relationFieldsInTable[this.parentField.FIELD_ID] = [field];
 			}
 
 			this.fieldsInTable.forEach((item) => {
@@ -582,16 +579,16 @@ export class ReportDetailComponent implements OnInit {
 			let childNames = [];
 			this.oneToManyFields.forEach((item) => {
 				if (
-					this.relationFieldIds.hasOwnProperty(item.MODULE) &&
-					this.relationFieldIds[item.MODULE].length > 0 &&
-					this.relatedFields.hasOwnProperty(item.MODULE) &&
-					this.relatedFields[item.MODULE].length > 0
+					this.relationFieldIds.hasOwnProperty(item.FIELD_ID) &&
+					this.relationFieldIds[item.FIELD_ID].length > 0 &&
+					this.relatedFields.hasOwnProperty(item.FIELD_ID) &&
+					this.relatedFields[item.FIELD_ID].length > 0
 				) {
 					childNames.push(
 						this.getChildName(
 							item.NAME,
-							this.relationFieldIds[item.MODULE],
-							this.relatedFields[item.MODULE]
+							this.relationFieldIds[item.FIELD_ID],
+							this.relatedFields[item.FIELD_ID]
 						)
 					);
 				}
@@ -651,8 +648,8 @@ export class ReportDetailComponent implements OnInit {
 			this.fieldsInTable.map((field, index) => {
 				if (field.NAME === col.NAME) {
 					if (field.isParentField) {
-						this.relationFieldsInTable[field.moduleId] = [];
-						this.relationFieldIds[field.moduleId] = [];
+						this.relationFieldsInTable[field.fieldId] = [];
+						this.relationFieldIds[field.fieldId] = [];
 						this.displayedColumnsObj.splice(colIndex, 1);
 						this.displayedColumns.splice(colIndex, 1);
 					} else {
@@ -691,10 +688,10 @@ export class ReportDetailComponent implements OnInit {
 			});
 		} else {
 			if (
-				this.relationFieldsInTable.hasOwnProperty(col.parentModuleId) &&
-				this.relationFieldsInTable[col.parentModuleId].length > 0
+				this.relationFieldsInTable.hasOwnProperty(col.parentFieldId) &&
+				this.relationFieldsInTable[col.parentFieldId].length > 0
 			) {
-				this.relationFieldsInTable[col.parentModuleId] = [];
+				this.relationFieldsInTable[col.parentFieldId] = [];
 			}
 		}
 		this.fieldsInTable = this.duplicateTableFields;
@@ -967,6 +964,12 @@ export class ReportDetailComponent implements OnInit {
 			const textB = b.NAME.toUpperCase();
 			return textA < textB ? -1 : textA > textB ? 1 : 0;
 		});
+
+		this.allFieldsForFilter.sort(function (a, b) {
+			const textA = a.NAME.toUpperCase();
+			const textB = b.NAME.toUpperCase();
+			return textA < textB ? -1 : textA > textB ? 1 : 0;
+		});
 	}
 
 	public checkModuleExist(control: AbstractControl) {
@@ -1067,52 +1070,52 @@ export class ReportDetailComponent implements OnInit {
 
 	private convertIdsToFields() {
 		this.fieldsInTable.forEach((field, fIndex) => {
-			if (
-				field.parentFieldName &&
-				field.parentModuleId &&
-				this.relatedFields.hasOwnProperty(field.parentModuleId)
-			) {
-				this.relatedFields[field.parentModuleId].forEach((afld, afldIndex) => {
-					if (field.fieldId === afld.FIELD_ID) {
-						this.fieldsInTable[fIndex].NAME =
-							this.relatedFields[field.parentModuleId][afldIndex].NAME;
-						this.fieldsInTable[fIndex].DATA_TYPE =
-							this.relatedFields[field.parentModuleId][afldIndex].DATA_TYPE;
-						this.fieldsInTable[fIndex].DISPLAY_LABEL =
-							this.relatedFields[field.parentModuleId][afldIndex].DISPLAY_LABEL;
-					}
-				});
-			} else {
-				this.allFields.forEach((afld, afldIndex) => {
-					if (field.fieldId === afld.FIELD_ID) {
-						this.fieldsInTable[fIndex].NAME = this.allFields[afldIndex].NAME;
-						this.fieldsInTable[fIndex].DATA_TYPE =
-							this.allFields[afldIndex].DATA_TYPE;
-						this.fieldsInTable[fIndex].DISPLAY_LABEL =
-							this.allFields[afldIndex].DISPLAY_LABEL;
-						if (!this.displayedColumns.includes(field.DISPLAY_LABEL)) {
-							this.displayedColumns.push(field.DISPLAY_LABEL);
-							if (field.isParentField) {
-								this.displayedColumnsObj.push({
-									NAME: field.NAME,
-									DISPLAY: field.DISPLAY_LABEL,
-									DATA_TYPE: field.DATA_TYPE,
-									parentDataType: field.DATA_TYPE,
-									parentModuleId: field.moduleId,
-									isParentField: true,
-									parentFieldId: field.fieldId,
-								});
-							} else {
-								this.displayedColumnsObj.push({
-									NAME: field.NAME,
-									DISPLAY: field.DISPLAY_LABEL,
-									DATA_TYPE: field.DATA_TYPE,
-								});
-							}
+			// if (
+			// 	field.parentFieldName &&
+			// 	field.parentModuleId &&
+			// 	this.relatedFields.hasOwnProperty(field.parentModuleId)
+			// ) {
+			// 	this.relatedFields[field.parentModuleId].forEach((afld, afldIndex) => {
+			// 		if (field.fieldId === afld.FIELD_ID) {
+			// 			this.fieldsInTable[fIndex].NAME =
+			// 				this.relatedFields[field.parentModuleId][afldIndex].NAME;
+			// 			this.fieldsInTable[fIndex].DATA_TYPE =
+			// 				this.relatedFields[field.parentModuleId][afldIndex].DATA_TYPE;
+			// 			this.fieldsInTable[fIndex].DISPLAY_LABEL =
+			// 				this.relatedFields[field.parentModuleId][afldIndex].DISPLAY_LABEL;
+			// 		}
+			// 	});
+			// } else {
+			this.allFields.forEach((afld, afldIndex) => {
+				if (field.fieldId === afld.FIELD_ID) {
+					this.fieldsInTable[fIndex].NAME = this.allFields[afldIndex].NAME;
+					this.fieldsInTable[fIndex].DATA_TYPE =
+						this.allFields[afldIndex].DATA_TYPE;
+					this.fieldsInTable[fIndex].DISPLAY_LABEL =
+						this.allFields[afldIndex].DISPLAY_LABEL;
+					if (!this.displayedColumns.includes(field.DISPLAY_LABEL)) {
+						this.displayedColumns.push(field.DISPLAY_LABEL);
+						if (field.isParentField) {
+							this.displayedColumnsObj.push({
+								NAME: field.NAME,
+								DISPLAY: field.DISPLAY_LABEL,
+								DATA_TYPE: field.DATA_TYPE,
+								parentDataType: field.DATA_TYPE,
+								parentModuleId: field.moduleId,
+								isParentField: true,
+								parentFieldId: field.fieldId,
+							});
+						} else {
+							this.displayedColumnsObj.push({
+								NAME: field.NAME,
+								DISPLAY: field.DISPLAY_LABEL,
+								DATA_TYPE: field.DATA_TYPE,
+							});
 						}
 					}
-				});
-			}
+				}
+			});
+			// }
 		});
 
 		this.filters.forEach((field, fIndex) => {
@@ -1213,7 +1216,7 @@ export class ReportDetailComponent implements OnInit {
 					}
 				});
 			} else {
-				this.relationFieldIds[field.parentModuleId].forEach((Id) => {
+				this.relationFieldIds[field.fieldId].forEach((Id) => {
 					if (Id === field.fieldId) {
 						entryFields.push(field);
 					}
@@ -1277,14 +1280,14 @@ export class ReportDetailComponent implements OnInit {
 	public loadRelationDropdownFields(relationshipFields, reportData?) {
 		let apiCallCount: number = 0;
 		for (const relationshipField of relationshipFields) {
-			if (!this.relatedFields.hasOwnProperty(relationshipField.MODULE)) {
+			if (!this.relatedFields.hasOwnProperty(relationshipField.FIELD_ID)) {
 				this.modulesService.getFields(relationshipField.MODULE).subscribe(
 					(relatedFieldsResponse: any) => {
 						apiCallCount = apiCallCount + 1;
-						this.relatedFields[relationshipField.MODULE] = [];
+						this.relatedFields[relationshipField.FIELD_ID] = [];
 						relatedFieldsResponse.FIELDS.forEach((field) => {
 							if (this.validateFieldForRelationship(field)) {
-								this.relatedFields[relationshipField.MODULE].push(field);
+								this.relatedFields[relationshipField.FIELD_ID].push(field);
 							}
 						});
 						if (apiCallCount === relationshipFields.length && reportData) {
@@ -1321,19 +1324,19 @@ export class ReportDetailComponent implements OnInit {
 				if (this.oneToManyFields && this.oneToManyFields.length > 0) {
 					this.oneToManyFields.forEach((relatedField) => {
 						if (ids[0] === relatedField.FIELD_ID) {
-							if (this.relationFieldIds.hasOwnProperty(relatedField.MODULE)) {
-								this.relationFieldIds[relatedField.MODULE].push(ids[1]);
+							if (this.relationFieldIds.hasOwnProperty(relatedField.FIELD_ID)) {
+								this.relationFieldIds[relatedField.FIELD_ID].push(ids[1]);
 							} else {
-								this.relationFieldIds[relatedField.MODULE] = [ids[1]];
+								this.relationFieldIds[relatedField.FIELD_ID] = [ids[1]];
 							}
 							if (
-								this.relationFieldsInTable.hasOwnProperty(relatedField.MODULE)
+								this.relationFieldsInTable.hasOwnProperty(relatedField.FIELD_ID)
 							) {
-								this.relationFieldsInTable[relatedField.MODULE].push(
+								this.relationFieldsInTable[relatedField.FIELD_ID].push(
 									this.getParentByChaildId(field)
 								);
 							} else {
-								this.relationFieldsInTable[relatedField.MODULE] = [
+								this.relationFieldsInTable[relatedField.FIELD_ID] = [
 									this.getParentByChaildId(field),
 								];
 							}
@@ -1421,12 +1424,12 @@ export class ReportDetailComponent implements OnInit {
 	public onRelationFieldClick(relationshipField) {
 		this.parentField = relationshipField;
 		this.childFields = [];
-		if (this.relatedFields.hasOwnProperty(relationshipField.MODULE)) {
-			this.childFields = this.relatedFields[relationshipField.MODULE];
+		if (this.relatedFields.hasOwnProperty(relationshipField.FIELD_ID)) {
+			this.childFields = this.relatedFields[relationshipField.FIELD_ID];
 			// to remove selected fields
 			this.childFields = this.childFields.filter(
 				(field) =>
-					!this.relationFieldIds[relationshipField.MODULE]?.includes(
+					!this.relationFieldIds[relationshipField.FIELD_ID]?.includes(
 						field.FIELD_ID
 					)
 			);
@@ -1495,13 +1498,15 @@ export class ReportDetailComponent implements OnInit {
 
 	public getParentByChaildId(field) {
 		this.oneToManyFields.forEach((relField) => {
-			let fieldsList = this.relatedFields[relField.MODULE];
+			let fieldsList = this.relatedFields[relField.FIELD_ID];
 			if (fieldsList && fieldsList.length > 0) {
 				fieldsList.forEach((item) => {
 					if (field.fieldId === item.FIELD_ID) {
 						if (
-							this.relationFieldIds[relField.MODULE] &&
-							this.relationFieldIds[relField.MODULE].includes(field.fieldId) &&
+							this.relationFieldIds[relField.FIELD_ID] &&
+							this.relationFieldIds[relField.FIELD_ID].includes(
+								field.fieldId
+							) &&
 							field.isRelated == true
 						) {
 							field.paentFieldId = relField.FIELD_ID;
@@ -1524,7 +1529,7 @@ export class ReportDetailComponent implements OnInit {
 		let field_name = raw_field;
 
 		this.oneToManyFields.forEach((field) => {
-			this.relatedFields[field.MODULE]?.find((item) => {
+			this.relatedFields[field.FIELD_ID]?.find((item) => {
 				if (item.NAME === raw_field) {
 					field_name = item.DISPLAY_LABEL;
 					return;
@@ -1570,46 +1575,46 @@ export class ReportDetailComponent implements OnInit {
 		return fieldNames;
 	}
 
-	public getReatedFieldsOfAllmodules(moduleId?) {
-		let fieldsSet = [];
-		if (moduleId) {
-			if (
-				this.relatedFields.hasOwnProperty(moduleId) &&
-				this.relatedFields[moduleId] > 0
-			) {
-				fieldsSet = this.relatedFields[moduleId];
-			}
-		} else {
-			this.oneToManyFields.forEach((field) => {
-				if (this.relatedFields.hasOwnProperty(field.MODULE)) {
-					this.relatedFields[field.MODULE].forEach((element) => {
-						fieldsSet.push(element);
-					});
-				}
-			});
-		}
+	// public getReatedFieldsOfAllmodules(moduleId?) {
+	// 	let fieldsSet = [];
+	// 	if (moduleId) {
+	// 		if (
+	// 			this.relatedFields.hasOwnProperty(moduleId) &&
+	// 			this.relatedFields[moduleId] > 0
+	// 		) {
+	// 			fieldsSet = this.relatedFields[moduleId];
+	// 		}
+	// 	} else {
+	// 		this.oneToManyFields.forEach((field) => {
+	// 			if (this.relatedFields.hasOwnProperty(field.MODULE)) {
+	// 				this.relatedFields[field.MODULE].forEach((element) => {
+	// 					fieldsSet.push(element);
+	// 				});
+	// 			}
+	// 		});
+	// 	}
 
-		return fieldsSet;
-	}
+	// 	return fieldsSet;
+	// }
 
 	public getRelatedFieldsInTable(moduleId?) {
 		let fieldsSet = [];
-		if (moduleId) {
-			if (
-				this.relationFieldsInTable.hasOwnProperty(moduleId) &&
-				this.relationFieldsInTable[moduleId] > 0
-			) {
-				fieldsSet = this.relationFieldsInTable[moduleId];
+		// if (moduleId) {
+		// 	if (
+		// 		this.relationFieldsInTable.hasOwnProperty(moduleId) &&
+		// 		this.relationFieldsInTable[moduleId] > 0
+		// 	) {
+		// 		fieldsSet = this.relationFieldsInTable[moduleId];
+		// 	}
+		// } else {
+		this.oneToManyFields.forEach((field) => {
+			if (this.relationFieldsInTable.hasOwnProperty(field.FIELD_ID)) {
+				this.relationFieldsInTable[field.FIELD_ID].forEach((element) => {
+					fieldsSet.push(element);
+				});
 			}
-		} else {
-			this.oneToManyFields.forEach((field) => {
-				if (this.relationFieldsInTable.hasOwnProperty(field.MODULE)) {
-					this.relationFieldsInTable[field.MODULE].forEach((element) => {
-						fieldsSet.push(element);
-					});
-				}
-			});
-		}
+		});
+		// }/
 
 		return fieldsSet;
 	}
@@ -1700,7 +1705,7 @@ export class ReportDetailComponent implements OnInit {
 		if (source.length > 0 && source !== 'No Data') {
 			let fieldKeys = Object.keys(source[0]);
 			let colData = [];
-			let relatedFields = this.relatedFields[col.parentModuleId];
+			let relatedFields = this.relatedFields[col.parentFieldId];
 			if (fieldKeys?.length > 0) {
 				fieldKeys.forEach((name) => {
 					let fieldData: any = {};
@@ -1726,13 +1731,13 @@ export class ReportDetailComponent implements OnInit {
 	}
 
 	public openCustomDialog(col) {
-		this.sortByFieldsList = this.relationFieldsInTable[col.parentModuleId];
+		this.sortByFieldsList = this.relationFieldsInTable[col.parentFieldId];
 		this.customization.customizeFor = col.NAME;
 		this.customization.pageIndex = 0;
 		this.customization.pageSize = 1;
 		this.customization.orederBy = 'dsc';
 		this.customization.sortBy =
-			this.relationFieldsInTable[col.parentModuleId][0].NAME;
+			this.relationFieldsInTable[col.parentFieldId][0].NAME;
 
 		this.dialog.open(this.customizeDialog, {
 			width: '500px',
@@ -1741,8 +1746,8 @@ export class ReportDetailComponent implements OnInit {
 	}
 	public removeChildCol(colIndex, col, parentCol, parentIndex) {
 		this.childFields = [];
-		this.relationFieldIds[parentCol.parentModuleId]?.splice(colIndex, 1);
-		this.relationFieldsInTable[parentCol.parentModuleId]?.splice(colIndex, 1);
+		this.relationFieldIds[parentCol.parentFieldId]?.splice(colIndex, 1);
+		this.relationFieldsInTable[parentCol.parentFieldId]?.splice(colIndex, 1);
 		this.source.forEach((data) => {
 			if (data[parentCol.NAME]) {
 				let entry: any[] = data[parentCol.NAME];

@@ -91,6 +91,7 @@ sort=${sortBy}&order=${orderBy}&page=${page}&page_size=${pageSize}`);
 						)}
         }
 			}`;
+			console.log(query);
 			let payload: any = {
 				query: query,
 				conditions: filtres,
