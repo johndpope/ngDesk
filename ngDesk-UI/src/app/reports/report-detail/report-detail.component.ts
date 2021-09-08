@@ -697,9 +697,7 @@ export class ReportDetailComponent implements OnInit {
 				this.relationFieldsInTable[col.parentModuleId] = [];
 			}
 		}
-
 		this.fieldsInTable = this.duplicateTableFields;
-		console.log(this.source);
 	}
 
 	private addEmptyDataToRows() {

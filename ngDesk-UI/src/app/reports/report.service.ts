@@ -82,7 +82,7 @@ sort=${sortBy}&order=${orderBy}&page=${page}&page_size=${pageSize}`);
             sortBy:"${sortBy}"
             orderBy:"${orderBy}"
           ) {
-            ${this.buildQuerry(
+            ${this.buildQuery(
 							module,
 							fieldsInTable,
 							allModules,
@@ -97,7 +97,7 @@ sort=${sortBy}&order=${orderBy}&page=${page}&page_size=${pageSize}`);
 			};
 
 			const url = this.globals.graphqlReportsUrl;
-			const reportData = this.makeGraphQLCall(url, payload);
+			const reportData = this.makeGraphQlCall(url, payload);
 			const reportCount = this.buildQueryToGetReportCount(module, filtres);
 			return forkJoin([reportData, reportCount]);
 		}
@@ -116,7 +116,7 @@ sort=${sortBy}&order=${orderBy}&page=${page}&page_size=${pageSize}`);
 			conditions: filtres,
 		};
 		const url = this.globals.graphqlReportsUrl;
-		return this.makeGraphQLCall(url, payload);
+		return this.makeGraphQlCall(url, payload);
 	}
 
 	/** -------  GraphQl Call to generate report (Download)  -------------  */
@@ -136,7 +136,7 @@ sort=${sortBy}&order=${orderBy}&page=${page}&page_size=${pageSize}`);
 
 		let query = `{
         CSV:getCsvFor${moduleName}(moduleId:"${moduleId}") {
-          ${this.buildQuerry(
+          ${this.buildQuery(
 						module,
 						fieldsInTable,
 						allModules,
@@ -152,12 +152,9 @@ sort=${sortBy}&order=${orderBy}&page=${page}&page_size=${pageSize}`);
 			fieldNames: fieldNames,
 		};
 		this.webSocketService.publishDownloadStatus(payload);
-
-		// const url = this.globals.graphqlReportsgenerateurl;
-		// return this.makeGraphQLCall(url, payload);
 	}
 
-	public buildQuerry(
+	public buildQuery(
 		module,
 		fieldsInTable,
 		allModules,
@@ -296,14 +293,14 @@ sort=${sortBy}&order=${orderBy}&page=${page}&page_size=${pageSize}`);
 		return relationQuery;
 	}
 
-	public buildQuireyToGetAggregationCount(moduleID, dataId, currentFieldId) {
-		let query = `{
-			TOTAL_RECORDS: getOneToManyCountDataFetcher(moduleId: "${moduleID.MODULE_ID}", fieldId: "${currentFieldId}", dataId: "${dataId}")
-		}`;
-		const url = this.globals.graphqlUrl;
-		return this.makeGraphQLCall(url, query);
-	}
-	public makeGraphQLCall(url, query: string) {
+	// public buildQueryToGetAggregationCount(moduleID, dataId, currentFieldId) {
+	// 	let query = `{
+	// 		TOTAL_RECORDS: getOneToManyCountDataFetcher(moduleId: "${moduleID.MODULE_ID}", fieldId: "${currentFieldId}", dataId: "${dataId}")
+	// 	}`;
+	// 	const url = this.globals.graphqlUrl;
+	// 	return this.makeGraphQlCall(url, query);
+	// }
+	public makeGraphQlCall(url, query: string) {
 		return this.http.post(`${url}`, query);
 	}
 }
