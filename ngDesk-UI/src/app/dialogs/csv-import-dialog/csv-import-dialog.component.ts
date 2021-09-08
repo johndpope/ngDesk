@@ -1,14 +1,17 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import {
+	CsvHeaders,
+	CsvImportApiService,
+	CsvImportData,
+} from '@ngdesk/data-api';
 import { TranslateService } from '@ngx-translate/core';
-import { delay } from 'rxjs/operators';
 import { BannerMessageService } from 'src/app/custom-components/banner-message/banner-message.service';
 import { ModulesService } from 'src/app/modules/modules.service';
-
 @Component({
 	selector: 'app-csv-import-dialog',
 	templateUrl: './csv-import-dialog.component.html',
-	styleUrls: ['./csv-import-dialog.component.scss']
+	styleUrls: ['./csv-import-dialog.component.scss'],
 })
 export class CsvImportDialogComponent implements OnInit {
 	public headers = [];
@@ -16,18 +19,23 @@ export class CsvImportDialogComponent implements OnInit {
 	public selectedFields = [];
 	public headerMap = {};
 	public rowObject = [];
-	public csvImportData = {
-		FILE: '',
-		FILE_TYPE: '',
-		FILE_NAME: '',
-		HEADERS: {}
+	public csvheaders: CsvHeaders = {
+		fieldId: '',
+		headerName: '',
+	};
+	public csvImportData: CsvImportData = {
+		file: '',
+		fileType: '',
+		fileName: '',
+		headers: [],
 	};
 	constructor(
 		@Inject(MAT_DIALOG_DATA) public data: any,
 		public dialogRef: MatDialogRef<CsvImportDialogComponent>,
 		public modulesService: ModulesService,
 		public bannerMessageService: BannerMessageService,
-		public translateService: TranslateService
+		public translateService: TranslateService,
+		private csvImportApiService: CsvImportApiService
 	) {}
 
 	public ngOnInit() {
@@ -35,7 +43,7 @@ export class CsvImportDialogComponent implements OnInit {
 		this.csvImportData = this.data.csvData.CSV_IMPORT_DATA;
 		let i = 0;
 		const selectedFieldsDropdown = [];
-		this.data.csvData.MODULE.FIELDS.forEach(field => {
+		this.data.csvData.MODULE.FIELDS.forEach((field) => {
 			if (
 				!field.NOT_EDITABLE &&
 				field.DATA_TYPE.DISPLAY !== 'Discussion' &&
@@ -57,26 +65,58 @@ export class CsvImportDialogComponent implements OnInit {
 	public onImportCsv(): void {
 		if (Object.keys(this.headerMap).length === 0) {
 			this.bannerMessageService.errorNotifications.push({
-				message: this.translateService.instant('EMPTY_MAPPING')
+				message: this.translateService.instant('EMPTY_MAPPING'),
 			});
 		} else {
+			const fieldsMap: Map<string, any> = new Map(
+				Object.entries(this.headerMap)
+			);
+			const keysList = Array.from(fieldsMap.keys());
+			keysList.forEach((key) => {
+				this.fields.forEach((element) => {
+					if (element.FIELD_ID === key) {
+						this.csvheaders = {
+							fieldId: key,
+							headerName: element.DISPLAY_LABEL,
+						};
+						this.csvImportData.headers.push(this.csvheaders);
+					}
+				});
+			});
 			const moduleId = this.data.csvData.MODULE.MODULE_ID;
 			this.csvImportData = this.data.csvData.CSV_IMPORT_DATA;
-			this.csvImportData.HEADERS = this.headerMap;
-			this.modulesService.ImportCSV(moduleId, this.csvImportData).subscribe(
-				(response: any) => {
-					this.bannerMessageService.successNotifications.push({
-						message: this.translateService.instant('IMPORTED_SUCCESSFULLY')
-					});
-					this.dialogRef.close({ data: this.data });
-				},
-				error => {
-					console.error(error);
-					this.bannerMessageService.errorNotifications.push({
-						message: error.error.ERROR
-					});
-				}
-			);
+			this.csvImportApiService
+				.importFromCsv(moduleId, this.csvImportData)
+				.subscribe(
+					(response: any) => {
+						console.log('response', response);
+						this.bannerMessageService.successNotifications.push({
+							message: this.translateService.instant('IMPORTED_SUCCESSFULLY'),
+						});
+						this.dialogRef.close({ data: this.data });
+					},
+					(error) => {
+						console.error(error);
+						this.bannerMessageService.errorNotifications.push({
+							message: error.error.ERROR,
+						});
+					}
+				);
+			// this.modulesService.ImportCSV(moduleId, this.csvImportData).subscribe(
+			// 	(response: any) => {
+			// 		console.log('payload', response);
+			// 		this.bannerMessageService.successNotifications.push({
+			// 			message: this.translateService.instant('IMPORTED_SUCCESSFULLY'),
+			// 		});
+			// 		this.dialogRef.close({ data: this.data });
+			// 	},
+			// 	(error) => {
+			// 		console.error(error);
+			// 		this.bannerMessageService.errorNotifications.push({
+			// 			message: error.error.ERROR,
+			// 		});
+			// 	}
+			// );
 		}
 	}
 }

@@ -2,14 +2,16 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { BannerMessageService } from '@src/app/custom-components/banner-message/banner-message.service';
 import { CustomTableService } from 'src/app/custom-table/custom-table.service';
 import { ModulesService } from 'src/app/modules/modules.service';
 import { FileUploadComponent } from './../file-upload.component';
+import { CsvLogsService } from './csv-logs-detail/csv-logs-detail.service';
 
 @Component({
 	selector: 'app-csv-logs',
 	templateUrl: './csv-logs.component.html',
-	styleUrls: ['./csv-logs.component.scss']
+	styleUrls: ['./csv-logs.component.scss'],
 })
 export class CsvLogsComponent implements OnInit, OnDestroy {
 	constructor(
@@ -17,31 +19,33 @@ export class CsvLogsComponent implements OnInit, OnDestroy {
 		private dialog: MatDialog,
 		private translateService: TranslateService,
 		public customTableService: CustomTableService,
-		private router: Router
+		private router: Router,
+		private csvLogsService: CsvLogsService,
+		private bannerMessageService: BannerMessageService
 	) {}
 	public dialogRef: MatDialogRef<FileUploadComponent>;
 	public ngOnInit() {
 		const columnsHeaders: string[] = [
 			this.translateService.instant('NAME'),
 			this.translateService.instant('STATUS'),
-			this.translateService.instant('DATE_CREATED')
+			this.translateService.instant('DATE_CREATED'),
 		];
 		const columnsHeadersObj = [
 			{
 				DISPLAY: this.translateService.instant('NAME'),
-				NAME: 'NAME'
+				NAME: 'name',
 			},
 			{
 				DISPLAY: this.translateService.instant('STATUS'),
-				NAME: 'STATUS'
+				NAME: 'status',
 			},
 			{
 				DISPLAY: this.translateService.instant('DATE_CREATED'),
-				NAME: 'DATE_CREATED'
-			}
+				NAME: 'dateCreated',
+			},
 		];
 		if (!this.customTableService.sortBy) {
-			this.customTableService.sortBy = 'NAME';
+			this.customTableService.sortBy = 'name';
 		}
 		if (!this.customTableService.sortOrder) {
 			this.customTableService.sortOrder = 'asc';
@@ -55,7 +59,7 @@ export class CsvLogsComponent implements OnInit, OnDestroy {
 		this.customTableService.activeSort = {
 			ORDER_BY: 'asc',
 			SORT_BY: this.translateService.instant('NAME'),
-			NAME: 'NAME'
+			NAME: 'name',
 		};
 
 		this.customTableService.columnsHeaders = columnsHeaders;
@@ -69,20 +73,25 @@ export class CsvLogsComponent implements OnInit, OnDestroy {
 		const orderBy = this.customTableService.sortOrder;
 		const page = this.customTableService.pageIndex + 1;
 		const pageSize = this.customTableService.pageSize;
-		this.modulesService.getCsvLogs(sortBy, orderBy, page, pageSize).subscribe(
-			(response: any) => {
-				this.customTableService.setTableDataSource(
-					response.DATA,
-					response.TOTAL_SIZE
-				);
-				if (response.TOTAL_SIZE === 0) {
-					this.import();
+		this.csvLogsService
+			.getAllCsvImports(page, pageSize, sortBy, orderBy)
+			.subscribe(
+				(csvImportResponse: any) => {
+					console.log('csvImportResponse', csvImportResponse);
+					this.customTableService.setTableDataSource(
+						csvImportResponse.DATA,
+						csvImportResponse.TOTAL_RECORDS
+					);
+					if (csvImportResponse.TOTAL_RECORDS === 0) {
+						this.import();
+					}
+				},
+				(error: any) => {
+					this.bannerMessageService.errorNotifications.push({
+						message: error.error.ERROR,
+					});
 				}
-			},
-			error => {
-				console.error(error);
-			}
-		);
+			);
 	}
 
 	public rowClicked(event) {
@@ -101,9 +110,9 @@ export class CsvLogsComponent implements OnInit, OnDestroy {
 		this.dialogRef = this.dialog.open(FileUploadComponent, {
 			data: {},
 			height: '320',
-			width: '520px'
+			width: '520px',
 		});
-		this.dialogRef.afterClosed().subscribe(result => {
+		this.dialogRef.afterClosed().subscribe((result) => {
 			if (result && result.data !== 'Cancel') {
 				this.ngOnInit();
 			}
