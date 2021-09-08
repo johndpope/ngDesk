@@ -366,22 +366,27 @@
 <ng-template #customizeDialog fxLayoutAlign="center center">
 
 	<mat-label fxLayoutGap="20px" class="mat-h2"> Customize {{getFieldName(customization?.customizeFor)}} </mat-label>
-	<!-- <div fxLayout='row' fxLayoutAlign="space-between center" fxLayoutGap="20px" style="margin-top: 50px;">
-		<mat-form-field [floatLabel]="'always'">
-			<input matInput type="number" placeholder="Page Size" [(ngModel)]="customization.pageSize">
-		</mat-form-field>
-
-		<mat-form-field [floatLabel]="'always'">
-			<input matInput type="number" placeholder="Page Number" [(ngModel)]="customization.pageIndex">
-		</mat-form-field>
-	</div> -->
-
 	<div fxLayout='row' fxLayoutAlign="space-between center" fxLayoutGap="20px" style="margin-top: 50px;">
-		<mat-form-field [floatLabel]="'always'">
+		<mat-form-field appearance="fill">
+			<mat-label>Show</mat-label>
+			<input matInput type="text" placeholder="Page Size" (input)="onPageSizeChange($event)" [(ngModel)]="customization.pageSize">
+			<span matSuffix>rows</span>
+		</mat-form-field>
+
+		<mat-form-field appearance="fill">
+			<mat-label> Sort By</mat-label>
 			<mat-select placeholder="Sort By" [(ngModel)]="customization.sortBy">
 				<mat-option *ngFor="let field of sortByFieldsList" [value]="field.NAME">{{field.DISPLAY_LABEL}}</mat-option>
 			</mat-select>
 		</mat-form-field>
+
+		<!-- <mat-form-field appearance="fill">
+			<mat-label>Page Number</mat-label>
+			<input matInput type="number" placeholder="Page Number" readonly [(ngModel)]="customization.pageIndex">
+		</mat-form-field> -->
+	</div>
+
+	<div fxLayout='row' fxLayoutAlign="start center" fxLayoutGap="20px" style="margin-top: 50px;">
 
 		<mat-label>{{'ORDER_BY' | translate}}</mat-label>
 		<mat-radio-group fxLayoutGap="10px" [(ngModel)]="customization.orederBy">

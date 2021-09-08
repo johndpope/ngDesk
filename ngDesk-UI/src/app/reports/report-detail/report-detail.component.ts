@@ -1723,14 +1723,14 @@ export class ReportDetailComponent implements OnInit {
 		this.sortByFieldsList = this.relationFieldsInTable[col.parentModuleId];
 		this.customization.customizeFor = col.NAME;
 		this.customization.pageIndex = 0;
-		this.customization.pageSize = 5;
+		this.customization.pageSize = 1;
 		this.customization.orederBy = 'dsc';
 		this.customization.sortBy =
 			this.relationFieldsInTable[col.parentModuleId][0].NAME;
 
 		this.dialog.open(this.customizeDialog, {
 			width: '500px',
-			height: '300px',
+			height: '350px',
 		});
 	}
 	public removeChildCol(colIndex, col, parentCol, parentIndex) {
@@ -1747,5 +1747,13 @@ export class ReportDetailComponent implements OnInit {
 			}
 		});
 		this.dataSource = new MatTableDataSource<any>(this.source);
+	}
+
+	public onPageSizeChange(event) {
+		const pattern = /^[a-zA-Z1-9]*$/;
+		if (!pattern.test(event.target.value)) {
+			event.target.value = event.target.value.replace(/[^a-zA-Z1-9]/g, 1);
+			this.customization.pageSize = 1;
+		}
 	}
 }

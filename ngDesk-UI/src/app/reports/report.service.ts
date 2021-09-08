@@ -278,7 +278,7 @@ sort=${sortBy}&order=${orderBy}&page=${page}&page_size=${pageSize}`);
 	public buildRelatedFieldQuery(queryString, key, module, customizationData) {
 		let sortBy = 'DATE_CREATED';
 		let orderBy = 'dsc';
-		let pageSize = 5;
+		let pageSize = 1;
 		let pageNumber = 0;
 		if (customizationData && customizationData.customizeFor == key) {
 			sortBy = customizationData.sortBy;
