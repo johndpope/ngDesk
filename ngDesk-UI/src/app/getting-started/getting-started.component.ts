@@ -150,6 +150,8 @@ export class GettingStartedComponent implements OnInit, OnDestroy {
 		'chevron_right',
 		'chevron_right',
 	];
+	@ViewChild(ToolbarComponent)
+	private toolbarComponent: ToolbarComponent;
 
 	@ViewChild('chatSettingsTabs')
 	public chatSettingsTabs: MatTabGroup;
@@ -1135,6 +1137,7 @@ export class GettingStartedComponent implements OnInit, OnDestroy {
 				if (this.complete.indexOf(false) == -1) {
 					this.finish = true;
 				}
+				this.toolbarComponent.value = this.value;
 			}
 		});
 	}
