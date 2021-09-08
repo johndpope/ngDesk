@@ -1750,9 +1750,9 @@ export class ReportDetailComponent implements OnInit {
 	}
 
 	public onPageSizeChange(event) {
-		const pattern = /^[a-zA-Z1-9]*$/;
+		const pattern = /^[1-9]*$/;
 		if (!pattern.test(event.target.value)) {
-			event.target.value = event.target.value.replace(/[^a-zA-Z1-9]/g, 1);
+			event.target.value = 1;
 			this.customization.pageSize = 1;
 		}
 	}
