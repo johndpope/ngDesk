@@ -1563,7 +1563,7 @@ export class RenderLayoutService {
 			if (formattedTime.length > 0) {
 				return formattedTime + ' ' + value + 'm';
 			} else {
-				return formattedTime + value;
+				return formattedTime + value + 'm';
 			}
 		}
 	}

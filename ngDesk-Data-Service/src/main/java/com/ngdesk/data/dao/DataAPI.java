@@ -192,7 +192,7 @@ public class DataAPI {
 
 			payload = dataService.addAutoNumberFields(module, payload);
 			payload = dataService.setInheritanceValue(module, payload);
-			payload = dataService.formatPayload(module, payload);
+//			payload = dataService.formatPayload(module, payload);
 			payload = dataService.setInheritanceValue(module, payload);
 			payload = dataService.formatDiscussion(module, entry, payload);
 			payload = dataService.encryptPassword(module, payload);
@@ -211,7 +211,8 @@ public class DataAPI {
 			validator.validateUniqueField(module, entry, collectionName, "POST", companyId);
 
 			validator.validateBaseTypes(module, payload, companyId);
-			payload = dataService.formatChronometerInCreateLayout(module, payload);
+//			payload = dataService.formatChronometerInCreateLayout(module, payload);
+			payload = dataService.formatPayload(module, payload);
 			validator.validateModuleValidations(module, payload, "POST", authManager.getUserDetails().getRole(),
 					companyId);
 

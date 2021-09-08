@@ -1851,29 +1851,29 @@ public class DataService {
 		return optionalModule.get();
 	}
 
-	public Map<String, Object> formatChronometerInCreateLayout(Module module, Map<String, Object> payload) {
-
-		List<ModuleField> fields = module.getFields().stream()
-				.filter(field -> field.getDataType().getDisplay().equalsIgnoreCase("Chronometer")
-						&& payload.containsKey(field.getName()))
-				.collect(Collectors.toList());
-		fields.forEach(field -> {
-			String value = null;
-
-			if (payload.containsKey(field.getName()) && payload.get(field.getName()) != null) {
-				value = payload.get(field.getName()).toString();
-				value = value.replaceAll("\\s+", "");
-				if (value.isBlank()) {
-					value = "0";
-				}
-				payload.put(field.getName(), getChronometerValueInMinutes(value));
-
-			}
-
-		});
-		return payload;
-
-	}
+//	public Map<String, Object> formatChronometerInCreateLayout(Module module, Map<String, Object> payload) {
+//
+//		List<ModuleField> fields = module.getFields().stream()
+//				.filter(field -> field.getDataType().getDisplay().equalsIgnoreCase("Chronometer")
+//						&& payload.containsKey(field.getName()))
+//				.collect(Collectors.toList());
+//		fields.forEach(field -> {
+//			String value = null;
+//
+//			if (payload.containsKey(field.getName()) && payload.get(field.getName()) != null) {
+//				value = payload.get(field.getName()).toString();
+//				value = value.replaceAll("\\s+", "");
+//				if (value.isBlank()) {
+//					value = "0";
+//				}
+//				payload.put(field.getName(), getChronometerValueInMinutes(value));
+//
+//			}
+//
+//		});
+//		return payload;
+//
+//	}
 
 	public Map<String, Object> formatReceiptCapture(Module module, Map<String, Object> entry,
 			ModuleField receiptcapturedField) {

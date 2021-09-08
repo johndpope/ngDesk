@@ -227,6 +227,11 @@ public class SignatureDocumentNode extends Node {
 						Matcher matcherBody = pattern.matcher(message);
 						while (matcherBody.find()) {
 							String path = matcherBody.group(1).split("(?i)inputMessage\\.")[1];
+							if (path.equals("DISCUSSION")) {
+
+								message = message.replaceAll("<p>\\{\\{" + matcherBody.group(1) + "\\}\\}</p>",
+										"\\{\\{" + matcherBody.group(1) + "\\}\\}");
+							}
 							String value = nodeOperations.getValue(instance, instance.getModule(), entry, path);
 							if (value != null) {
 								message = message.replaceAll("\\{\\{" + matcherBody.group(1) + "\\}\\}",

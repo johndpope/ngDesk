@@ -665,7 +665,7 @@ export class RenderListLayoutNewComponent implements OnInit, OnDestroy {
 	}
 	// Set the role name to the list layout
 	public getRoleName(entriesReponse) {
-		this.formatChronometerFields(entriesReponse);
+		// this.formatChronometerFields(entriesReponse);
 		const entry = entriesReponse;
 		for (let i = 0; i < entriesReponse.DATA.length; i++) {
 			if (entriesReponse.DATA[i].ROLE !== undefined) {

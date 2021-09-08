@@ -48,7 +48,7 @@ export class RenderDetailDataService {
 					if (!entry[fieldName] || entry[fieldName] === null) {
 						entry[fieldName] = this.getValueForField(moduleField);
 					} else {
-						if (moduleField.DATA_TYPE.DISPLAY === 'Chronometer') {
+						if (moduleField.DATA_TYPE.DISPLAY === 'Chronometer' && layoutType !== 'edit') {
 							this.customModulesService.chronometerValues[fieldName] =
 								this.renderLayoutService.chronometerFormatTransform(
 									entry[fieldName],
@@ -104,10 +104,10 @@ export class RenderDetailDataService {
 		chronometerFields.forEach((field) => {
 			if (entry[field.NAME] !== undefined && entry[field.NAME] !== null) {
 				this.customModulesService.chronometerValues[field.NAME] =
-					this.renderLayoutService.chronometerFormatTransform(
+					// this.renderLayoutService.chronometerFormatTransform(
 						entry[field.NAME],
-						''
-					);
+					// 	''
+					// );
 				entry[field.NAME] = '';
 			}
 		});
@@ -300,6 +300,12 @@ export class RenderDetailDataService {
 						this.getValueForFieldOnCreateLayout(moduleField).subscribe(
 							(response: any) => {
 								entry[moduleField.NAME] = response;
+								if (moduleField.DATA_TYPE.DISPLAY === 'Chronometer' && moduleField.DEFAULT_VALUE !== undefined && moduleField.DEFAULT_VALUE !== null) {
+									entry[moduleField.NAME] = this.renderLayoutService.chronometerFormatTransform(
+										entry[moduleField.NAME],
+										''
+									);
+								}
 							}
 						);
 					} else {
@@ -327,6 +333,12 @@ export class RenderDetailDataService {
 							this.getValueForFieldOnCreateLayout(moduleField).subscribe(
 								(response: any) => {
 									entry[moduleField.NAME] = response;
+									if (moduleField.DATA_TYPE.DISPLAY === 'Chronometer' && moduleField.DEFAULT_VALUE !== undefined && moduleField.DEFAULT_VALUE !== null) {
+										entry[moduleField.NAME] = this.renderLayoutService.chronometerFormatTransform(
+											entry[moduleField.NAME],
+											''
+										);
+									}
 								}
 							);
 						}
