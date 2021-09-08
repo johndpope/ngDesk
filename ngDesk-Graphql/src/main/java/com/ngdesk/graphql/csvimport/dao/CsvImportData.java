@@ -1,7 +1,6 @@
 package com.ngdesk.graphql.csvimport.dao;
 
 import java.util.List;
-import java.util.Map;
 
 public class CsvImportData {
 

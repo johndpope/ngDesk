@@ -11,7 +11,6 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 import com.ngdesk.graphql.csvimport.dao.CsvImport;
-import com.ngdesk.graphql.signaturedocument.dao.SignatureDocument;
 
 @Repository
 public class CustomCsvImportRepositoryImpl implements CustomCsvImportRepository {

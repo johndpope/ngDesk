@@ -985,7 +985,7 @@ type CsvImportData{
    file: String
    fileType: String
    fileName: String
-   headers: CsvHeaders
+   headers: [CsvHeaders]
 }
 
 type CsvHeaders{

@@ -34,7 +34,6 @@ import com.ngdesk.data.modules.dao.Module;
 import com.ngdesk.data.roles.dao.RolesService;
 import com.ngdesk.data.validator.Validator;
 import com.ngdesk.repositories.csvimport.CsvImportRepository;
-import com.ngdesk.repositories.module.entry.ModuleEntryRepository;
 import com.ngdesk.repositories.module.entry.ModulesRepository;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -45,12 +44,6 @@ public class CsvImportApi {
 
 	@Autowired
 	AuthManager authManager;
-
-	@Autowired
-	ModuleEntryRepository moduleEntryRepository;
-
-	@Autowired
-	CsvImportService csvImportService;
 
 	@Autowired
 	CsvImportRepository csvImportRepository;
@@ -66,11 +59,10 @@ public class CsvImportApi {
 
 	@PostMapping(value = "/modules/{module_id}/csv")
 	@Operation(summary = "Post imported csv data", description = "Post imported csv data")
-	public CsvImport importFromCSV(
+	public CsvImport importFromCsv(
 			@Parameter(description = "Company ID", required = false) @RequestParam(value = "company_id", required = false) String companyId,
 			@Parameter(description = "Module ID", required = true) @PathVariable("module_id") String moduleId,
 			@RequestBody CsvImportData csvImportData) {
-
 		String role = authManager.getUserDetails().getRole();
 		companyId = authManager.getUserDetails().getCompanyId();
 		String createdById = authManager.getUserDetails().getUserId();
@@ -102,14 +94,13 @@ public class CsvImportApi {
 
 	@PostMapping(value = "/modules/{module_id}/csvheaders")
 	@Operation(summary = "Post csvheaders", description = "Post csvheaders")
-	public List<String> getCSVHeaders(
+	public List<String> generateCsvHeaders(
 			@Parameter(description = "Module ID", required = true) @PathVariable("module_id") String moduleId,
 			@RequestBody CsvImportData csvImportData) {
 		InputStream is = null;
 		BufferedReader br = null;
 		try {
 			String file = csvImportData.getFile();
-
 			Base64.Decoder dec = Base64.getDecoder();
 			byte[] decbytes = dec.decode(file);
 			is = new ByteArrayInputStream(decbytes);

@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ngdesk.commons.exceptions.InternalErrorException;
@@ -19,6 +20,7 @@ import com.ngdesk.repositories.module.entry.ModuleEntryRepository;
 import com.ngdesk.repositories.module.entry.ModulesRepository;
 import com.ngdesk.repositories.roles.RolesRepository;
 
+@Component
 public class Wrapper {
 
 	@Autowired

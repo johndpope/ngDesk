@@ -32,6 +32,7 @@ import org.springframework.data.mongodb.core.aggregation.SkipOperation;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
 import com.ngdesk.commons.exceptions.BadRequestException;
@@ -44,6 +45,7 @@ import com.ngdesk.data.modules.dao.ModuleField;
 import com.ngdesk.data.modules.dao.ModuleService;
 import com.ngdesk.data.roles.dao.RolesService;
 
+@Repository
 public class CustomModuleEntryRepositoryImpl implements CustomModuleEntryRepository {
 
 	@Autowired

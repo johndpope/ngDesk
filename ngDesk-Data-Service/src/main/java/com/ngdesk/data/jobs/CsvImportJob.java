@@ -35,6 +35,7 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ngdesk.commons.mail.SendMail;
 import com.ngdesk.data.company.dao.Company;
+import com.ngdesk.data.csvimport.dao.CsvHeaders;
 import com.ngdesk.data.csvimport.dao.CsvImport;
 import com.ngdesk.data.csvimport.dao.CsvImportData;
 import com.ngdesk.data.csvimport.dao.CsvImportService;
@@ -143,7 +144,7 @@ public class CsvImportJob {
 						Base64.Decoder dec = Base64.getDecoder();
 						byte[] decbytes = dec.decode(body.getFile());
 						is = new ByteArrayInputStream(decbytes);
-						Map<String, String> headerMap = body.getHeaders();
+						List<CsvHeaders> headersList = body.getHeaders();
 						boolean isEmpty = true;
 
 						if (body.getFileType().equals("csv")) {
@@ -170,10 +171,11 @@ public class CsvImportJob {
 									Map colMap = new HashMap<String, Object>();
 									for (ModuleField field : fields) {
 										String fieldId = field.getFieldId();
-										if (headerMap.containsKey(fieldId)) {
-											String csvDisplayLabel = headerMap.get(fieldId).toString();
-											colMap.put(field.getName(),
-													fieldValues.get(headers.indexOf(csvDisplayLabel)));
+										for (CsvHeaders csvHeader : headersList) {
+											if(csvHeader.getFieldId().equals(fieldId)) {
+												colMap.put(field.getName(),
+														fieldValues.get(headers.indexOf(csvHeader.getHeaderName())));
+											}
 										}
 									}
 									rowMap.put(i, colMap);
@@ -221,10 +223,11 @@ public class CsvImportJob {
 									if (!isEmpty) {
 										for (ModuleField field : fields) {
 											String fieldId = field.getFieldId();
-											if (headerMap.containsKey(fieldId)) {
-												String csvDisplayLabel = headerMap.get(fieldId).toString();
-												colMap.put(field.getName(),
-														values.get(headers.indexOf(csvDisplayLabel)));
+											for (CsvHeaders csvHeader : headersList) {
+												if(csvHeader.getFieldId().equals(fieldId)) {
+													colMap.put(field.getName(),
+															values.get(headers.indexOf(csvHeader.getHeaderName())));
+												}
 											}
 										}
 										rowMap.put(z, colMap);
@@ -343,7 +346,6 @@ public class CsvImportJob {
 									}
 									if (inputMessage.containsKey(fieldName)) {
 										if (dataType.getDisplay().equalsIgnoreCase("Chronometer")) {
-											long chronometerValueInSecond = 0;
 											if (inputMessage.get(fieldName) != null) {
 												String value = inputMessage.get(fieldName).toString();
 												String valueWithoutSpace = value.replaceAll("\\s+", "");
@@ -351,9 +353,7 @@ public class CsvImportJob {
 														|| valueWithoutSpace.charAt(0) == '-') {
 													inputMessage.put(fieldName, 0);
 												} else if (valueWithoutSpace.length() != 0) {
-													chronometerValueInSecond = dataService
-															.getChronometerValueInMinutes(valueWithoutSpace);
-													inputMessage.put(fieldName, chronometerValueInSecond);
+													inputMessage.put(fieldName, valueWithoutSpace);
 												}
 											}
 										}

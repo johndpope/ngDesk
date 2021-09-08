@@ -1,34 +1,22 @@
 package com.ngdesk.data.csvimport.dao;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.springframework.data.mongodb.core.mapping.Field;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.List;
 
 public class CsvImportData {
 
-	@Field("FILE")
-	@JsonProperty("FILE")
 	private String file;
 
-	@Field("FILE_TYPE")
-	@JsonProperty("FILE_TYPE")
 	private String fileType;
 
-	@Field("FILE_NAME")
-	@JsonProperty("FILE_NAME")
 	private String fileName;
 
-	@Field("HEADERS")
-	@JsonProperty("HEADERS")
-	private Map<String, String> headers = new HashMap<String, String>();
+	private List<CsvHeaders> headers;
 
 	public CsvImportData() {
+
 	}
 
-	public CsvImportData(String file, String fileType, String fileName, Map<String, String> headers) {
+	public CsvImportData(String file, String fileType, String fileName, List<CsvHeaders> headers) {
 		super();
 		this.file = file;
 		this.fileType = fileType;
@@ -60,11 +48,11 @@ public class CsvImportData {
 		this.fileName = fileName;
 	}
 
-	public Map<String, String> getHeaders() {
+	public List<CsvHeaders> getHeaders() {
 		return headers;
 	}
 
-	public void setHeaders(Map<String, String> headers) {
+	public void setHeaders(List<CsvHeaders> headers) {
 		this.headers = headers;
 	}
 
