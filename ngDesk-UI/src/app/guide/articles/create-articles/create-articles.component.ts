@@ -143,6 +143,7 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 		this.route.params.subscribe((params) => {
 			this.isFormCreate = false;
 			this.articleId = this.route.snapshot.params['articleId'];
+			console.log('articleId------->', this.articleId);
 			// get users
 			this.companyInfoSubscription =
 				this.cacheService.companyInfoSubject.subscribe(
@@ -163,6 +164,10 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 											.getKbArticleById(this.articleId)
 											.subscribe(
 												(articleResponse: any) => {
+													console.log(
+														'articleResponse----------->',
+														articleResponse
+													);
 													this.guideService
 														.getSectionById(articleResponse.SECTION)
 														.subscribe(
@@ -185,7 +190,7 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 																);
 																this.articleForm = this.formBuilder.group({
 																	articalId: [
-																		articleResponse['DATA'].articalId,
+																		articleResponse['DATA'].ARTICLE_ID,
 																	],
 																	title: [
 																		articleResponse['DATA'].TITLE,
@@ -239,6 +244,7 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 																		articleResponse['DATA'].ATTACHMENTS || [],
 																	],
 																});
+
 																this.onChangeOfSection();
 																this.isFormCreate = true;
 															},
@@ -467,7 +473,7 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 				reader.onload = () => {
 					const data: any = reader.result;
 					this.filesArray.push({ fileSize: file.size });
-					this.articleForm.get('ATTACHMENTS').value.push({
+					this.articleForm.get('attachments').value.push({
 						FILE_NAME: file.name,
 						FILE: data.split('base64,')[1],
 					});
@@ -479,13 +485,15 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 	}
 
 	public removeFile(index: number): void {
-		this.articleForm.get('ATTACHMENTS').value.splice(index, 1);
+		this.articleForm.get('attachments').value.splice(index, 1);
 		this.fileSize -= this.filesArray[index].fileSize;
 	}
 
 	public save() {
+		console.log('articleForm', this.articleForm.value);
 		this.teamChipList.errorState = false;
 		if (this.articleForm.valid) {
+			console.log('articleForm', this.articleForm.value);
 			const articleObj = JSON.parse(JSON.stringify(this.articleForm.value));
 
 			articleObj['author'] = articleObj['author'].DATA_ID;
@@ -505,9 +513,13 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 					}
 				);
 			} else {
+				console.log('articleObj', articleObj);
 				this.articleApiService.putArticle(articleObj).subscribe(
 					(article: any) => {
-						this.navigateTo(article, 'put');
+						console.log('put article------------------->>>>>>>>>.', article);
+						this.router.navigate([
+							`guide/articles/${article.articleId}/detail`,
+						]);
 					},
 					(error: any) => {
 						this.errorMessage = error.error.ERROR;
@@ -541,7 +553,7 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 		// EVENT AFTER MODAL DIALOG IS CLOSED
 		dialogRef.afterClosed().subscribe((result) => {
 			if (result === this.translateService.instant('DELETE')) {
-				this.guideService.deleteArticle(this.articleId).subscribe(
+				this.articleApiService.deleteArticle(this.articleId).subscribe(
 					(response: any) => {
 						this.router.navigate([`guide`]);
 					},

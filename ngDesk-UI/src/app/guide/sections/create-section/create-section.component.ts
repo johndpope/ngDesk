@@ -455,10 +455,6 @@ export class CreateSectionComponent implements OnInit, OnDestroy {
 
 				this.sectionApiService.postSection(section).subscribe(
 					(postSectionResponse: any) => {
-						console.log(
-							'postSectionResponse---------------->',
-							postSectionResponse
-						);
 						this.companiesService.trackEvent(
 							`Added a new Section ${section.name}`
 						);
@@ -469,7 +465,6 @@ export class CreateSectionComponent implements OnInit, OnDestroy {
 						]);
 					},
 					(postSectionError: any) => {
-						console.log(postSectionError);
 						this.errorMessage = postSectionError.error.ERROR;
 					}
 				);

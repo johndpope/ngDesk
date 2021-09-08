@@ -152,7 +152,6 @@ export class ManageArticlesComponent implements OnInit {
 		article.PUBLISH = publish;
 		this.articleApiService.putArticle(article).subscribe(
 			(response: any) => {
-				console.log('response-------------------->>>..', response);
 				this.getArticles();
 			},
 			(error: any) => {
@@ -184,7 +183,7 @@ export class ManageArticlesComponent implements OnInit {
 				rowData.TITLE,
 			]);
 		} else {
-			this.router.navigate([`guide/articles/detail/${rowData.ARTICLE_ID}`]);
+			this.router.navigate([`guide/articles/detail/${rowData.articleId}`]);
 		}
 	}
 }

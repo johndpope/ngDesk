@@ -22,7 +22,6 @@ export class RenderArticlesComponent implements OnInit {
 	public sectionArticles = [];
 	public sectionId: string;
 	public comment = {};
-	public CommentMessage;
 	public users = [];
 	public hasEditAccess = false;
 	public hasCommentAccess = false;
@@ -31,6 +30,7 @@ export class RenderArticlesComponent implements OnInit {
 	public isPublicArticle = true;
 	public authToken = this.usersService.getAuthenticationToken();
 	public roleName: string;
+	public commentMessages;
 	constructor(
 		private route: ActivatedRoute,
 		private modulesService: ModulesService,
@@ -72,9 +72,6 @@ export class RenderArticlesComponent implements OnInit {
 		// get article sections
 		this.guideService.getArticlesBySectionId(this.sectionId).subscribe(
 			(articlesResponse: any) => {
-				console.log('articlesResponse>>>>>>>>>>>>>>>>', articlesResponse);
-				//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< need to Handle  >>>>>>>>>>>>>>>>>>>>>
-				console.log('respons------------>', this.sectionId);
 				this.sectionArticles = articlesResponse.getArticlesBySectionId
 					.filter(
 						(article) => article.PUBLISH && article.SECTION === this.sectionId
@@ -82,20 +79,16 @@ export class RenderArticlesComponent implements OnInit {
 					.sort((a: { ORDER: number }, b: { ORDER: number }) => {
 						return a.ORDER - b.ORDER;
 					});
-				console.log('articles', this.article);
-				console.log('sectionarticles', this.sectionArticles);
 
 				// find article in section articles
 				const articleMatchedByTitle = this.sectionArticles.find(
 					(art) => art.title === this.article['TITLE']
 				);
-				console.log('articleMatchedByTitle', articleMatchedByTitle);
 				// need to make get individual article call for returning attachments with uuid
 				this.guideService
 					.getKbArticleById(articleMatchedByTitle.ARTICLE_ID)
 					.subscribe(
 						(articleResponse: any) => {
-							console.log('articleResponse====', articleResponse);
 							this.article = articleResponse.DATA;
 							const userRole = this.usersService.user['ROLE'];
 							//if user is logged in
@@ -213,13 +206,13 @@ export class RenderArticlesComponent implements OnInit {
 	}
 
 	public addComment(): void {
-		if (this.comment['MESSAGE'] !== undefined) {
+		if (this.comment['message'] !== undefined) {
 			this.loading = true;
 			this.articleApiService
-				.postComments(this.article['articleId'], this.CommentMessage)
+				.postComments(this.article['articleId'], this.commentMessages)
 				.subscribe(
 					(response: any) => {
-						this.comment['MESSAGE'] = '';
+						this.comment['message'] = '';
 						this.getArticle();
 					},
 					(error: any) => {
