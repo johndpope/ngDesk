@@ -13,7 +13,6 @@ pipeline {
                     sh 'mvn --version'
                     
                     echo "Update PROD"
-
                                             
 
                         // backend services
