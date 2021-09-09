@@ -36,7 +36,6 @@ pipeline {
 
 				        // frontend services
 				        def uiChanged = ''
-				       
 				    
 				    
 				     dir('/var/jenkins_home/projects/ngdesk-project/ngDesk') {
