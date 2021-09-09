@@ -18,7 +18,7 @@ pipeline {
 				        // backend services
 				        def authChanged = ''
 				        def integrationChanged = ''
-				        def paymentChanged = ''
+
 				        def dataChanged = ''
 				        def websocketChanged = ''
 				        def escalationChanged = ''
@@ -28,7 +28,6 @@ pipeline {
 				        def roleChanged = ''
 				        def companyChanged = ''
 				        def moduleChanged = ''
-				        def pluginChanged = ''
 				        def graphqlChanged = ''
 				        def reportsChanged = ''
 				        def tesseractChanged = ''
@@ -44,7 +43,6 @@ pipeline {
 
 				                authChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Auth ''').trim()
 				                integrationChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Integration-Service ''').trim()
-				                paymentChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Payment-Service ''').trim()
 				                dataChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Data-Service''').trim()
 				                websocketChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Websocket-Service''').trim()
 				                escalationChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Escalation-Service''').trim()
@@ -54,7 +52,6 @@ pipeline {
 				                roleChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Role-Service''').trim()
 				                companyChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Company-Service''').trim()
 				                moduleChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Module-Service''').trim()
-				                pluginChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Plugin-Service''').trim()
 				                graphqlChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Graphql ''').trim()
 				                reportsChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Report-Service ''').trim()
 				                tesseractChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Tesseract-Service ''').trim()
@@ -65,59 +62,55 @@ pipeline {
 				            }
 
 					if (authChanged.length() > 0) {
-                            			echo 'Auth Changed'
+                            			buildMicroservice('auth', 'ngDesk-Auth')
                         		}
 
 				        if (integrationChanged.length() > 0) {
-				            echo 'Integration changed'
+                           			 buildMicroservice('integration', 'ngDesk-Integration-Service')
 				        }
 
 				        if (graphqlChanged.length() > 0) {
-				            echo 'graphql changed'
+				            buildMicroservice('graphql', 'ngDesk-Graphql')
 				        }
 
 				        if (reportsChanged.length() > 0) {
-				           echo 'Report changed'
+				           buildMicroservice('report', 'ngDesk-Report-Service')
 				        }
 
 				        if (notificationsChanged.length() > 0) {
-				            echo 'notifications changed'
+				            buildMicroservice('notification', 'ngDesk-Notification-Service')
 				        }
 				
 				        if (companyChanged.length() > 0) {
-				            echo 'company changed'
+				            buildMicroservice('company', 'ngDesk-Company-Service')
 				        }
 
 				        if (moduleChanged.length() > 0) {
-				            echo 'module changed'
-				        }
-
-				        if (pluginChanged.length() > 0) {
-				            echo 'plugin changed'
+				            buildMicroservice('module', 'ngDesk-Module-Service')
 				        }
 
 				        if (dataChanged.length() > 0) {
-				            echo 'data changed'
+				            buildMicroservice('data', 'ngDesk-Data-Service')
 				        }
 
 				        if (websocketChanged.length() > 0) {
-				            echo 'websocket changed'
+				            buildMicroservice('websocket', 'ngDesk-Websocket-Service')
 				        }
 
 				        if (escalationChanged.length() > 0) {
-				            echo 'Escalation changed'
+				            buildMicroservice('escalation', 'ngDesk-Escalation-Service')
 				        }
 
 				        if (sidebarChanged.length() > 0) {
-				            echo 'Sidebar changed'
+				            buildMicroservice('sidebar', 'ngDesk-Sidebar-Service')
 				        }
 
 				        if (workflowChanged.length() > 0) {
-				            echo'ngDesk-Workflow-Service'
+				            buildMicroservice('workflow', 'ngDesk-Workflow-Service')
 				        }
 
 				        if (roleChanged.length() > 0) {
-				            echo 'ngDesk-Role-Service'
+				            buildMicroservice('role', 'ngDesk-Role-Service')
 				        }
 
 				
@@ -127,8 +120,27 @@ pipeline {
 			}
 		}
 }
+def buildMicroservice(serviceName, path) {
+ dir('/root/projects/ngdesk-project/ngDesk/' + path) {
 
+        sh 'mvn install -f pom-packaging.xml'
 
+        // Generate package
+        sh 'mvn package -f pom-packaging.xml'
+
+        // Generate swagger
+        sh 'mvn verify -f pom-packaging.xml'
+
+        // Run unit test
+        sh 'mvn test -f pom-packaging.xml'
+        //junit '**/surefire-reports/*.xml'
+        
+        //create docker image
+        // push to docker hub
+        // post to prod
+        
+    }
+}
 
 
 
