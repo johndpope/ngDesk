@@ -974,11 +974,11 @@ type CsvImport{
    status: String
    csvImportData: CsvImportData
    moduleId: String
-   logs: [String]
+   logs: [CsvImportLog]
    companyId: String
    name: String
    dateCreated: DateTime
-   createdBy:Users
+   createdBy: Users
 }
 
 type CsvImportData{
@@ -991,5 +991,10 @@ type CsvImportData{
 type CsvHeaders{
    fieldId: String
    headerName: String
+}
+
+type CsvImportLog{
+   lineNumber: Int
+   errorMessage: String
 }
 

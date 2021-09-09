@@ -16,7 +16,7 @@ public class CsvImport {
 
 	private String moduleId;
 
-	private List<String> logs;
+	private List<CsvImportLog> logs;
 
 	private String companyId;
 
@@ -27,10 +27,11 @@ public class CsvImport {
 	private String createdBy;
 
 	public CsvImport() {
+
 	}
 
-	public CsvImport(String csvImportId, String status, CsvImportData csvImportData, String moduleId, List<String> logs,
-			String companyId, String name, Date dateCreated, String createdBy) {
+	public CsvImport(String csvImportId, String status, CsvImportData csvImportData, String moduleId,
+			List<CsvImportLog> logs, String companyId, String name, Date dateCreated, String createdBy) {
 		super();
 		this.csvImportId = csvImportId;
 		this.status = status;
@@ -75,11 +76,11 @@ public class CsvImport {
 		this.moduleId = moduleId;
 	}
 
-	public List<String> getLogs() {
+	public List<CsvImportLog> getLogs() {
 		return logs;
 	}
 
-	public void setLogs(List<String> logs) {
+	public void setLogs(List<CsvImportLog> logs) {
 		this.logs = logs;
 	}
 

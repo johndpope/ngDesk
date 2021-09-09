@@ -9,29 +9,28 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
-import org.bson.Document;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.model.Filters;
 import com.ngdesk.commons.exceptions.BadRequestException;
 import com.ngdesk.commons.exceptions.InternalErrorException;
+import com.ngdesk.commons.managers.AuthManager;
 import com.ngdesk.data.dao.DataService;
 import com.ngdesk.data.dao.Phone;
-import com.ngdesk.data.elastic.Wrapper;
 import com.ngdesk.data.modules.dao.DataType;
 import com.ngdesk.data.modules.dao.Module;
 import com.ngdesk.data.modules.dao.ModuleField;
-import com.ngdesk.data.roles.dao.Role;
+import com.ngdesk.data.sam.dao.DataProxy;
 import com.ngdesk.repositories.module.entry.ModuleEntryRepository;
 import com.ngdesk.repositories.module.entry.ModulesRepository;
 import com.ngdesk.repositories.roles.RolesRepository;
 
 @Service
 public class CsvImportService {
+	
+	@Autowired
+	AuthManager authManager;
 
 	@Autowired
 	ModuleEntryRepository moduleEntryRepository;
@@ -40,7 +39,7 @@ public class CsvImportService {
 	ModulesRepository modulesRepository;
 
 	@Autowired
-	Wrapper wrapper;
+	DataProxy dataAPI;
 
 	@Autowired
 	DataService dataService;
@@ -69,13 +68,13 @@ public class CsvImportService {
 					"modules_" + companyId);
 			Module accountModule = optionalAccountModule.get();
 
-			Map<String, Object> account = new HashMap<String, Object>();
+			HashMap<String, Object> account = new HashMap<String, Object>();
 			account.put("ACCOUNT_NAME", accountName);
 			account.put("DATE_CREATED", new Date());
 			account.put("TEAMS", Arrays.asList(globalTeamId));
 			account.put("DELETED", false);
 
-			accountEntry = wrapper.postData(companyId, accountModule, account);
+			accountEntry = dataAPI.postModuleEntry(account, accountModule.getModuleId(), true, companyId, "");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -84,16 +83,16 @@ public class CsvImportService {
 		return accountEntry;
 	}
 
-	public Map<String, Object> createUser(String email, String companyId, String password, boolean inviteAccepted,
+	public HashMap<String, Object> createUser(String email, String companyId, String password, boolean inviteAccepted,
 			String subdomain, String notification, int loginAttempts, String language, String role, boolean disabled,
 			String globalTeamId) {
 
-		Map<String, Object> userEntry = new HashMap<String, Object>();
+		HashMap<String, Object> userEntry = new HashMap<String, Object>();
 		try {
 			Optional<Module> optionalUserModule = modulesRepository.findIdbyModuleName("Users", "modules_" + companyId);
 			Module userModule = optionalUserModule.get();
 
-			Map<String, Object> user = new HashMap<String, Object>();
+			HashMap<String, Object> user = new HashMap<String, Object>();
 			user.put("USER_UUID", UUID.randomUUID().toString());
 			user.put("EMAIL_ADDRESS", email.toLowerCase());
 			if (!password.contains("V1_PASSWORD")) {
@@ -114,7 +113,7 @@ public class CsvImportService {
 			user.put("DELETED", false);
 			user.put("TEAMS", Arrays.asList(globalTeamId));
 
-			userEntry = wrapper.postData(companyId, userModule, user);
+			userEntry.putAll(dataAPI.postModuleEntry(user, userModule.getModuleId(), true, companyId, ""));
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -126,7 +125,7 @@ public class CsvImportService {
 	public Map<String, Object> createContact(String firstName, String lastName, String accountId, Phone phone,
 			Module contactModule, String companyId, String globalTeamId, String userId) {
 
-		Map<String, Object> contact = new HashMap<String, Object>();
+		HashMap<String, Object> contact = new HashMap<String, Object>();
 		contact.put("FIRST_NAME", firstName);
 		contact.put("LAST_NAME", lastName);
 		contact.put("ACCOUNT", accountId);
@@ -145,8 +144,8 @@ public class CsvImportService {
 
 		contact.put("FULL_NAME", fullName);
 
-		contact = wrapper.postData(companyId, contactModule, contact);
-		return contact;
+		return dataAPI.postModuleEntry(contact, contactModule.getModuleId(), true, companyId, "");
+
 	}
 
 	public Map<String, Object> createModuleData(String companyId, String moduleName, Map<String, Object> body) {
@@ -159,7 +158,9 @@ public class CsvImportService {
 				Module module = optionalModule.get();
 
 				// INSERT RECORD
-				data = wrapper.postData(companyId, module, body);
+				HashMap<String, Object> bodyHashMap = new HashMap<String, Object>();
+				bodyHashMap.putAll(body);
+				data = dataAPI.postModuleEntry(bodyHashMap, module.getModuleId(), true, companyId, "");
 
 				String dataId = data.get("_id").toString();
 				data.remove("_id");
@@ -199,9 +200,11 @@ public class CsvImportService {
 										String value = data.get(name).toString();
 										Optional<Map<String, Object>> optionalEntry = moduleEntryRepository
 												.findById(value, relationModuleName + "_" + companyId);
-										Map<String, Object> entry = optionalEntry.get();
+										HashMap<String, Object> entry = new HashMap<String, Object>();
+										entry.putAll(optionalEntry.get());
 										entry.put(relationFieldName, dataId);
-										wrapper.putData(companyId, relationModule, entry, value);
+										dataAPI.putModuleEntry(entry, relationModule.getModuleId(), true, companyId, "",
+												false);
 									}
 								} else if (relationshipType.equals("Many to Many")) {
 									if (!data.get(name).getClass().getSimpleName().toString().equals("ArrayList")) {
@@ -214,7 +217,8 @@ public class CsvImportService {
 										if (relationFieldName != null) {
 											Optional<Map<String, Object>> optionalEntry = moduleEntryRepository
 													.findById(value, relationModuleName + "_" + companyId);
-											Map<String, Object> entry = optionalEntry.get();
+											HashMap<String, Object> entry = new HashMap<String, Object>();
+											entry.putAll(optionalEntry.get());
 											List<String> relationFieldValues = new ArrayList<String>();
 											if (entry.get(relationFieldName) != null) {
 												relationFieldValues = mapper.readValue(
@@ -224,7 +228,8 @@ public class CsvImportService {
 											}
 											relationFieldValues.add(dataId);
 											entry.put(relationFieldName, relationFieldValues);
-											wrapper.putData(companyId, relationModule, entry, value);
+											dataAPI.putModuleEntry(entry, relationModule.getModuleId(), true, companyId,
+													"", false);
 										}
 									}
 								}

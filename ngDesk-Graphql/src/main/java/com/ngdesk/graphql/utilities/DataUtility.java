@@ -967,6 +967,7 @@ public class DataUtility {
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getCsvImport", csvImportDataFetcher));
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getCsvImports", csvImportsDataFetcher));
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getCsvImportsCount", csvImportCountFetcher));
+		builder.type("CsvImport", typeWiring -> typeWiring.dataFetcher("createdBy", entryDataFetcher));
 
 		for (Module module : modules) {
 			String name = "get" + module.getName().replaceAll("\\s+", "_");
