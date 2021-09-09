@@ -113,6 +113,13 @@ public class CsvImportJob {
 				String language = company.getLanguage();
 
 				try {
+
+					Optional<Map<String, Object>> optionalUserEntry = moduleEntryRepository.findEntryById(
+							csvDocument.getCreatedBy(), csvImportService.generateCollectionName("Users", companyId));
+					Map<String, Object> user = optionalUserEntry.get();
+					String userUuid = user.get("USER_UUID").toString();
+					System.out.println(userUuid);
+
 					Optional<Map<String, Object>> optionalGlobalTeam = moduleEntryRepository.findEntryByFieldName(
 							"NAME", "Global", csvImportService.generateCollectionName("Teams", companyId));
 
@@ -291,7 +298,7 @@ public class CsvImportJob {
 
 										if (!csvImportService.accountExists(accountName, companyId)) {
 											Map<String, Object> accountEntry = csvImportService
-													.createAccount(accountName, companyId, globalTeamId);
+													.createAccount(accountName, companyId, globalTeamId, userUuid);
 											accountId = accountEntry.get("_id").toString();
 											inputMessage.put("ACCOUNT", accountId);
 										} else {
@@ -509,7 +516,7 @@ public class CsvImportJob {
 												users.add(userEntry.get("_id").toString());
 												personalTeam.put("DELETED", false);
 												personalTeam.put("USERS", users);
-												dataAPI.putModuleEntry(personalTeam, teamsModuleId, true, companyId, "",
+												dataAPI.putModuleEntry(personalTeam, teamsModuleId, true, companyId, userUuid,
 														false);
 
 												userEntry.put("DELETED", false);
@@ -522,14 +529,14 @@ public class CsvImportJob {
 												}
 												userEntry.put("TEAMS", existingTeams);
 												dataAPI.putModuleEntry(userEntry, module.getModuleId(), true, companyId,
-														"", false);
+														userUuid, false);
 											} else {
 
 												userEntry = csvImportService.createUser(
 														inputMessage.get("EMAIL_ADDRESS").toString(), companyId, "",
 														false, company.getCompanySubdomain(), "alarm_classic", 0,
 														language, inputMessage.get("ROLE").toString(), false,
-														globalTeamId);
+														globalTeamId, userUuid);
 
 												String userId = userEntry.get("_id").toString();
 
@@ -543,7 +550,7 @@ public class CsvImportJob {
 														inputMessage.get("LAST_NAME").toString(),
 														inputMessage.get("ACCOUNT").toString(),
 														new Phone("us", "+1", phoneNumber, "us.svg"), contactModule,
-														companyId, globalTeamId, userId);
+														companyId, globalTeamId, userId, userUuid);
 
 												String teamJson = "{\"NAME\":\"Global\",\"DESCRIPTION\":\"Default Team\",\"USERS\":[\"USER_ID_REPLACE\"],\"DELETED\":false,\"IS_PERSONAL\":false}";
 												teamJson = teamJson.replaceAll("USER_ID_REPLACE", userId);
@@ -559,7 +566,7 @@ public class CsvImportJob {
 												team.put("DATE_UPDATED", new Date());
 												team.put("IS_PERSONAL", true);
 												Map<String, Object> personalTeam = csvImportService
-														.createModuleData(companyId, "Teams", team);
+														.createModuleData(companyId, "Teams", team, userUuid);
 												String personalTeamId = personalTeam.get("DATA_ID").toString();
 
 												List<String> teams = new ArrayList<String>();
@@ -572,7 +579,7 @@ public class CsvImportJob {
 												userEntry.put("CONTACT", contactEntry.get("_id").toString());
 
 												dataAPI.putModuleEntry(userEntry, module.getModuleId(), true, companyId,
-														"", false);
+														userUuid, false);
 											}
 											List<String> globalUsers = mapper.readValue(
 													mapper.writeValueAsString(globalTeam.get("USERS")),
@@ -581,7 +588,7 @@ public class CsvImportJob {
 
 											globalUsers.add(userEntry.get("_id").toString());
 											globalTeam.put("USERS", globalUsers);
-											dataAPI.putModuleEntry(globalTeam, teamsModuleId, true, companyId, "",
+											dataAPI.putModuleEntry(globalTeam, teamsModuleId, true, companyId, userUuid,
 													false);
 
 											List<String> roleTeamUsers = mapper.readValue(
@@ -590,7 +597,7 @@ public class CsvImportJob {
 															String.class));
 											roleTeamUsers.add(userEntry.get("_id").toString());
 											roleTeam.put("USERS", roleTeamUsers);
-											dataAPI.putModuleEntry(roleTeam, teamsModuleId, true, companyId, "", false);
+											dataAPI.putModuleEntry(roleTeam, teamsModuleId, true, companyId, userUuid, false);
 										} catch (Exception e) {
 											continue;
 										}
@@ -600,10 +607,10 @@ public class CsvImportJob {
 										if (moduleName.equals("Accounts")) {
 											if (!csvImportService.accountExists(
 													inputMessage.get("ACCOUNT_NAME").toString(), companyId)) {
-												csvImportService.createModuleData(companyId, moduleName, inputMessage);
+												csvImportService.createModuleData(companyId, moduleName, inputMessage, userUuid);
 											}
 										} else {
-											csvImportService.createModuleData(companyId, moduleName, inputMessage);
+											csvImportService.createModuleData(companyId, moduleName, inputMessage, userUuid);
 										}
 									} catch (Exception e) {
 										continue;
