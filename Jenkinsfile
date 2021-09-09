@@ -64,26 +64,61 @@ pipeline {
 				              checkout([$class: 'GitSCM', branches: [[name: 'origin/main']], userRemoteConfigs: [[url: 'https://github.com/SubscribeIT/ngDesk.git']]])
 				            }
 
-					echo "${authChanged}"
-				        echo "${integrationChanged}"
-				        echo "${paymentChanged}"
-				        echo "${dataChanged}"
-				        echo "${websocketChanged}"
-				        echo "${escalationChanged}"
-				        echo "${samChanged}"
-				        echo "${sidebarChanged}"
-				        echo "${workflowChanged}"
-				        echo "${roleChanged}"
-				        echo "${companyChanged}"
-				        echo "${moduleChanged}"
-				        echo "${pluginChanged}"
-				        echo "${graphqlChanged}"
-				        echo "${reportsChanged}"
-				        echo "${tesseractChanged}"
-				        echo "${notificationsChanged}"
+					if (authChanged.length() > 0) {
+                            			echo 'Auth Changed'
+                        		}
 
-				        // frontend services
-				        echo "${uiChanged}"
+				        if (integrationChanged.length() > 0) {
+				            echo 'Integration changed'
+				        }
+
+				        if (graphqlChanged.length() > 0) {
+				            echo 'graphql changed'
+				        }
+
+				        if (reportsChanged.length() > 0) {
+				           echo 'Report changed'
+				        }
+
+				        if (notificationsChanged.length() > 0) {
+				            echo 'notifications changed'
+				        }
+				
+				        if (companyChanged.length() > 0) {
+				            echo 'company changed'
+				        }
+
+				        if (moduleChanged.length() > 0) {
+				            echo 'module changed'
+				        }
+
+				        if (pluginChanged.length() > 0) {
+				            echo 'plugin changed'
+				        }
+
+				        if (dataChanged.length() > 0) {
+				            echo 'data changed'
+				        }
+
+				        if (websocketChanged.length() > 0) {
+				            echo 'websocket changed'
+				        }
+
+				        if (escalationChanged.length() > 0) {
+				            echo 'Escalation changed'
+				        }
+
+				        if (sidebarChanged.length() > 0) {
+				            echo 'Sidebar changed'
+				        }
+
+				        if (workflowChanged.length() > 0) {
+				            echo'ngDesk-Workflow-Service'
+				        }
+
+				        if (roleChanged.length() > 0) {
+				            echo 'ngDesk-Role-Service'
+				        }
 
 				
 
