@@ -1684,8 +1684,20 @@ export class ReportDetailComponent implements OnInit {
 
 	public createDynamicDataSource(source) {
 		if (source && source.length > 0 && source !== 'No Data') {
-			let datasource = new MatTableDataSource<any>(source);
-			return datasource;
+			let fieldKeys = Object.keys(source[0]);
+			let hasData: boolean = false;
+			source.forEach((record) => {
+				fieldKeys.forEach((key) => {
+					if (record[key] !== null) {
+						hasData = true;
+						return;
+					}
+				});
+			});
+			if (hasData) {
+				let datasource = new MatTableDataSource<any>(source);
+				return datasource;
+			}
 		}
 	}
 
