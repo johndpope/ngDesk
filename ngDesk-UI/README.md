@@ -2,7 +2,6 @@
 
 Angular CLI: 12.0.4 
 
-
 Node: 14.17.1 or higher
 
 ## Getting started
