@@ -11,6 +11,8 @@ pipeline {
                     sh 'pwd'
                     sh 'env'
                     sh 'mvn --version'
+                    
+                    echo $payload
 
                     def gitlabBranch = env.gitlabBranch.toLowerCase()
                     def gitSlug = env.gitlabSourceRepoName.toLowerCase()
