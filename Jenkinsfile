@@ -36,16 +36,7 @@ pipeline {
 
 				        // frontend services
 				        def uiChanged = ''
-				        def landingPageChanged = ''
-				        def outlookPluginChanged = ''
-				        def microsoftPluginChanged = ''
-				        def formsWidgetChanged = ''
-
-				        // probes
-				        def softwareProbeChanged = ''
-				        def assetProbeChanged = ''
-				        def patchProbeChanged = ''
-				        def controllerChanged = ''
+				       
 				    
 				    
 				     dir('/var/jenkins_home/projects/ngdesk-project/ngDesk') {
