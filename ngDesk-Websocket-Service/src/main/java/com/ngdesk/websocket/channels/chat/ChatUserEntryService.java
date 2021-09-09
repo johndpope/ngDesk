@@ -60,25 +60,22 @@ public class ChatUserEntryService {
 	}
 
 	public Map<String, Object> createOrGetUser(Company company, ChatUser message) {
-
 		String companyId = company.getId();
+		Map<String, Object> customer = new HashMap<String, Object>();
 
 		Optional<Module> optionalTeamsModule = modulesRepository.findModuleByName("Teams", "modules_" + companyId);
 		Module teamsModule = optionalTeamsModule.get();
-
 		Optional<Map<String, Object>> optionalGlobalTeam = entryRepository.findTeamByName("Global",
 				"Teams_" + companyId);
 
 		Optional<Map<String, Object>> optionalCustomersTeam = entryRepository.findTeamByName("Customers",
 				"Teams_" + companyId);
-
-		Optional<Map<String, Object>> optionalCustomer = entryRepository
-				.findUserByEmailAddressIncludingDeleted(message.getEmailAddress().toLowerCase(), "Users_" + companyId);
-
+		customer = entryRepository
+				.findUserByEmailAddressIncludingDeleted(message.getEmailAddress().toLowerCase(), "Users_" + companyId)
+				.orElse(null);
 		Optional<Role> optionalCustomerRole = rolesRepository.findRoleName("Customers", "roles_" + companyId);
 
-		Map<String, Object> customer = optionalCustomer.get();
-		if (optionalCustomer.isEmpty()) {
+		if (customer == null) {
 			if (optionalGlobalTeam.isPresent()) {
 				Map<String, Object> globalTeam = optionalGlobalTeam.get();
 				Map<String, Object> account = getAccountPayload(message.getEmailAddress().toLowerCase(),
