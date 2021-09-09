@@ -10,6 +10,7 @@ pipeline {
                     sh 'ls'
                     sh 'pwd'
                     sh 'env'
+                    sh 'apt install maven -y'
                     
                     echo "Update PROD"
 
@@ -48,7 +49,7 @@ pipeline {
                         def controllerChanged = ''
                     
                     
-                     dir('/root/projects/ngdesk-project') {
+                     dir('/opt/build/projects/ngdesk-project') {
 
                                 sh "git fetch https://github.com/SubscribeIT/ngDesk.git +refs/heads/*:refs/remotes/origin/*"
 
