@@ -10,8 +10,8 @@ pipeline {
                     sh 'ls'
                     sh 'pwd'
                     sh 'env'
-                    echo $payload
                     sh 'mvn --version'
+                    echo $payload
                     
 
                     def gitlabBranch = env.gitlabBranch.toLowerCase()
