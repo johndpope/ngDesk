@@ -20,10 +20,11 @@ export class CsvLogsService {
 	public getAllCsvImports(page, pageSize, sortBy, orderBy): Observable<any> {
 		const query = `{
 			DATA: getCsvImports(pageNumber: ${page}, pageSize: ${pageSize}, sortBy: "${sortBy}", orderBy: "${orderBy}") {
-				name
 				status
+				csvImportId
+				name
 				dateCreated
-			}
+			  }
 			TOTAL_RECORDS: getCsvImportsCount
 		}`;
 		return this.http.post(`${this.globals.graphqlUrl}`, query);
@@ -32,7 +33,7 @@ export class CsvLogsService {
 	// Get individual entry based on id.
 	public getCsvImport(id): Observable<any> {
 		const query = ` {
-			csvImportData: getCsvImport(csvImportId: "${id}") {
+			DATA: getCsvImport(csvImportId: "${id}") {
                 status
                 csvImportData{
                     file
@@ -44,10 +45,20 @@ export class CsvLogsService {
                     }
                 }
                 moduleId
-                logs
+				logs {
+					lineNumber
+					errorMessage
+				}
                 companyId
                 name
                 dateCreated
+				createdBy {
+					DATA_ID: _id
+					CONTACT {
+					  PRIMARY_DISPLAY_FIELD: FULL_NAME
+					  DATA_ID: _id
+					}
+				  }
 				}
    			}`;
 		return this.http.post(`${this.globals.graphqlUrl}`, query);

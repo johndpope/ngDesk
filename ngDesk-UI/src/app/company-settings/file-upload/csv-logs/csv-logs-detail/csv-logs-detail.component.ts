@@ -14,7 +14,6 @@ export class CsvLogsDetailComponent implements OnInit {
 	public fileName = '';
 
 	constructor(
-		private modulesService: ModulesService,
 		private route: ActivatedRoute,
 		private csvLogsService: CsvLogsService,
 		private bannerMessageService: BannerMessageService
@@ -23,10 +22,9 @@ export class CsvLogsDetailComponent implements OnInit {
 	public ngOnInit() {
 		const logId = this.route.snapshot.params['dataId'];
 		this.csvLogsService.getCsvImport(logId).subscribe(
-			(csvImportDataResponse: any) => {
-				console.log('logs', csvImportDataResponse);
-				// this.logs = csvImportDataResponse.logs;
-				// this.fileName = csvImportDataResponse.fileName;
+			(response: any) => {
+				this.logs = response.DATA.logs;
+				this.fileName = response.DATA.csvImportData.fileName;
 			},
 			(error: any) => {
 				this.bannerMessageService.errorNotifications.push({
@@ -34,15 +32,5 @@ export class CsvLogsDetailComponent implements OnInit {
 				});
 			}
 		);
-		// this.modulesService.getCsvLog(logId).subscribe(
-		// 	(response: any) => {
-		// 		console.log('logs', response);
-		// 		this.logs = response.LOGS;
-		// 		this.fileName = response.NAME;
-		// 	},
-		// 	(error) => {
-		// 		console.error(error);
-		// 	}
-		// );
 	}
 }

@@ -102,21 +102,6 @@ export class CsvImportDialogComponent implements OnInit {
 						});
 					}
 				);
-			// this.modulesService.ImportCSV(moduleId, this.csvImportData).subscribe(
-			// 	(response: any) => {
-			// 		console.log('payload', response);
-			// 		this.bannerMessageService.successNotifications.push({
-			// 			message: this.translateService.instant('IMPORTED_SUCCESSFULLY'),
-			// 		});
-			// 		this.dialogRef.close({ data: this.data });
-			// 	},
-			// 	(error) => {
-			// 		console.error(error);
-			// 		this.bannerMessageService.errorNotifications.push({
-			// 			message: error.error.ERROR,
-			// 		});
-			// 	}
-			// );
 		}
 	}
 }

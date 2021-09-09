@@ -71,7 +71,7 @@ export class CsvLogsComponent implements OnInit, OnDestroy {
 	public getCsvLogs() {
 		const sortBy = this.customTableService.sortBy;
 		const orderBy = this.customTableService.sortOrder;
-		const page = this.customTableService.pageIndex + 1;
+		const page = this.customTableService.pageIndex;
 		const pageSize = this.customTableService.pageSize;
 		this.csvLogsService
 			.getAllCsvImports(page, pageSize, sortBy, orderBy)
@@ -95,15 +95,11 @@ export class CsvLogsComponent implements OnInit, OnDestroy {
 	}
 
 	public rowClicked(event) {
-		// if (event.STATUS === 'Completed') {
-		// 	this.router.navigate([
-		// 		{
-		// 			outlets: {
-		// 				main: `company-settings/file-upload/csv-logs/${event.DATA_ID}`
-		// 			}
-		// 		}
-		// 	]);
-		// }
+		if (event.status === 'COMPLETED') {
+			this.router.navigate([
+				`company-settings/file-upload/csv-logs/${event.csvImportId}`,
+			]);
+		}
 	}
 
 	public import() {
