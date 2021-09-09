@@ -112,6 +112,33 @@ pipeline {
 				        if (roleChanged.length() > 0) {
 				            buildMicroservice('role', 'ngDesk-Role-Service')
 				        }
+				        
+				        if (uiChanged.length() > 0) {	
+				            generateSwagger('ngDesk-UI', '../ngDesk-Workflow-Service/target/openapi.json', 'workflow-api')
+				            generateSwagger('ngDesk-UI', '../ngDesk-Auth/target/openapi.json', 'auth-api')
+				            generateSwagger('ngDesk-UI', '../ngDesk-Integration-Service/target/openapi.json', 'integration-api')
+				            generateSwagger('ngDesk-UI', '../ngDesk-Module-Service/target/openapi.json', 'module-api')
+				            generateSwagger('ngDesk-UI', '../ngDesk-Role-Service/target/openapi.json', 'role-api')
+				            generateSwagger('ngDesk-UI', '../ngDesk-Escalation-Service/target/openapi.json', 'escalation-api')
+				            generateSwagger('ngDesk-UI', '../ngDesk-Sam-Service/target/openapi.json', 'sam-api')
+				            generateSwagger('ngDesk-UI', '../ngDesk-Sidebar-Service/target/openapi.json', 'sidebar-api')
+				            generateSwagger('ngDesk-UI', '../ngDesk-Data-Service/target/openapi.json', 'data-api')
+				            generateSwagger('ngDesk-UI', '../ngDesk-Report-Service/target/openapi.json', 'report-api')
+				            generateSwagger('ngDesk-UI', '../ngDesk-Notification-Service/target/openapi.json', 'notification-api')
+				            generateSwagger('ngDesk-UI', '../ngDesk-Company-Service/target/openapi.json', 'company-api')
+
+				            dir('/var/jenkins_home/projects/ngdesk-project/ngDesk/ngDesk-UI') {
+				                sh 'rm -f package-lock.json'
+				                // sh 'rm -rf node_modules'
+				                sh 'rm -rf node_modules/@ngdesk'
+				                sh 'npm install --unsafe-perm --ignore-scripts'
+				                // sh '/opt/sonar-scanner-4.3.0.2102-linux/bin/sonar-scanner'
+				                sh 'ng build -c=prd'
+				                sh 'npm run post-build'
+				                sh 'cp -r dist/ngDesk-Angular/. /var/jenkins_home/projects/ngdesk-web-project/src/main/resources/static/'
+				            }
+
+				        }
 
 				
 
@@ -134,6 +161,8 @@ def buildMicroservice(serviceName, path) {
         // Run unit test
         sh 'mvn test -f pom-packaging.xml'
         //junit '**/surefire-reports/*.xml'
+        
+        // add sonar
         
         //create docker image
         // push to docker hub
