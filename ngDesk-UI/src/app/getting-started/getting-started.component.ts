@@ -1118,26 +1118,42 @@ export class GettingStartedComponent implements OnInit, OnDestroy {
 				!step.COMPLETED &&
 				this.gettingStarted.length == 4
 			) {
-				step.COMPLETED = true;
-				this.complete[this.gettingStarted.indexOf(step)] = true;
-				this.completedSteps += 1;
-				this.stepIcon[this.gettingStarted.indexOf(step)] =
-					'check_circle_outline';
-				this.value += 25;
-				for (
-					let i = this.gettingStarted.indexOf(step) + 1;
-					i < this.gettingStarted.length;
-					i++
-				) {
-					if (!this.gettingStarted[i].COMPLETED) {
-						this.currentStep = i;
-						break;
+				if (stepName == 'Activate Email') {
+					for (
+						let i = this.gettingStarted.indexOf(step) + 1;
+						i < this.gettingStarted.length;
+						i++
+					) {
+						if (!this.gettingStarted[i].COMPLETED) {
+							this.currentStep = i;
+							break;
+						}
 					}
+					if (this.complete.indexOf(false) == -1) {
+						this.finish = true;
+					}
+				} else {
+					step.COMPLETED = true;
+					this.complete[this.gettingStarted.indexOf(step)] = true;
+					this.completedSteps += 1;
+					this.stepIcon[this.gettingStarted.indexOf(step)] =
+						'check_circle_outline';
+					this.value += 25;
+					for (
+						let i = this.gettingStarted.indexOf(step) + 1;
+						i < this.gettingStarted.length;
+						i++
+					) {
+						if (!this.gettingStarted[i].COMPLETED) {
+							this.currentStep = i;
+							break;
+						}
+					}
+					if (this.complete.indexOf(false) == -1) {
+						this.finish = true;
+					}
+					this.toolbarComponent.value = this.value;
 				}
-				if (this.complete.indexOf(false) == -1) {
-					this.finish = true;
-				}
-				this.toolbarComponent.value = this.value;
 			}
 		});
 	}
