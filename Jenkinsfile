@@ -48,7 +48,7 @@ pipeline {
                         def controllerChanged = ''
                     
                     
-                     dir('/var/jenkins_home/projects/ngdesk-project') {
+                     dir('/var/jenkins_home/projects/ngdesk-project/ngDesk') {
 
                                 sh "git fetch https://github.com/SubscribeIT/ngDesk.git +refs/heads/*:refs/remotes/origin/*"
 
