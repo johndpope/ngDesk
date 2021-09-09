@@ -121,7 +121,7 @@ pipeline {
 		}
 }
 def buildMicroservice(serviceName, path) {
- dir('/root/projects/ngdesk-project/ngDesk/' + path) {
+ dir('/var/jenkins_home/projects/ngdesk-project/ngDesk' + path) {
 
         sh 'mvn install -f pom-packaging.xml'
 
@@ -140,6 +140,22 @@ def buildMicroservice(serviceName, path) {
         // post to prod
         
     }
+}
+
+def generateSwagger(frontendProject, serviceJsonPath, name) {
+
+    dir('/var/jenkins_home/projects/ngdesk-project/ngDesk' + frontendProject) {
+
+        sh "openapi-generator generate -g typescript-angular -i ${serviceJsonPath} -o ngdesk-swagger/${name} --additional-properties npmName=@ngdesk/${name},ngVersion=11.0.0,npmVersion=1.0.0"
+        dir('ngdesk-swagger/' + name) {
+            sh 'npm install'
+            sh 'npm run build'
+            dir('dist') {
+                sh 'npm pack'
+            }
+        }
+    }
+
 }
 
 
