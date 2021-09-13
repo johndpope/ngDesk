@@ -104,7 +104,7 @@ export class FieldPermissionComponent implements OnInit {
 							DATA: this.fieldPermissions,
 							TOTAL_RECORDS: this.fieldPermissions.length,
 						};
-						this.customTableService.showPaginator = false;
+						this.customTableService.showPaginator = true;
 						this.customTableService.setTableDataSource(
 							this.fieldPermissions,
 							this.fieldPermissions.length
