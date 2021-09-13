@@ -68,21 +68,13 @@ export class CsvImportDialogComponent implements OnInit {
 				message: this.translateService.instant('EMPTY_MAPPING'),
 			});
 		} else {
-			const fieldsMap: Map<string, any> = new Map(
-				Object.entries(this.headerMap)
-			);
-			const keysList = Array.from(fieldsMap.keys());
-			keysList.forEach((key) => {
-				this.fields.forEach((element) => {
-					if (element.FIELD_ID === key) {
-						this.csvheaders = {
-							fieldId: key,
-							headerName: element.DISPLAY_LABEL,
-						};
-						this.csvImportData.headers.push(this.csvheaders);
-					}
-				});
-			});
+			for (let [key, value] of Object.entries(this.headerMap)) {
+				this.csvheaders = {
+					fieldId: `${key}`,
+					headerName: `${value}`,
+				};
+				this.csvImportData.headers.push(this.csvheaders);
+			}
 			const moduleId = this.data.csvData.MODULE.MODULE_ID;
 			this.csvImportData = this.data.csvData.CSV_IMPORT_DATA;
 			this.csvImportApiService
