@@ -13,8 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ngdesk.commons.Global;
 import com.ngdesk.commons.exceptions.BadRequestException;
 import com.ngdesk.commons.exceptions.InternalErrorException;
+import com.ngdesk.data.dao.BasePhone;
 import com.ngdesk.data.dao.DataService;
 import com.ngdesk.data.dao.Phone;
 import com.ngdesk.data.modules.dao.DataType;
@@ -43,6 +45,9 @@ public class CsvImportService {
 	@Autowired
 	RolesRepository rolesRepository;
 
+	@Autowired
+	Global global;
+
 	public boolean accountExists(String accountName, String companyId) {
 
 		String collectionName = "Accounts_" + companyId;
@@ -56,7 +61,8 @@ public class CsvImportService {
 		}
 	}
 
-	public Map<String, Object> createAccount(String accountName, String companyId, String globalTeamId, String userUuid) {
+	public Map<String, Object> createAccount(String accountName, String companyId, String globalTeamId,
+			String userUuid) {
 		Map<String, Object> accountEntry = new HashMap<String, Object>();
 		try {
 
@@ -144,7 +150,8 @@ public class CsvImportService {
 
 	}
 
-	public Map<String, Object> createModuleData(String companyId, String moduleName, Map<String, Object> body, String userUuid) {
+	public Map<String, Object> createModuleData(String companyId, String moduleName, Map<String, Object> body,
+			String userUuid) {
 		Map<String, Object> data = new HashMap<String, Object>();
 		ObjectMapper mapper = new ObjectMapper();
 
@@ -199,8 +206,8 @@ public class CsvImportService {
 										HashMap<String, Object> entry = new HashMap<String, Object>();
 										entry.putAll(optionalEntry.get());
 										entry.put(relationFieldName, dataId);
-										dataAPI.putModuleEntry(entry, relationModule.getModuleId(), true, companyId, userUuid,
-												false);
+										dataAPI.putModuleEntry(entry, relationModule.getModuleId(), true, companyId,
+												userUuid, false);
 									}
 								} else if (relationshipType.equals("Many to Many")) {
 									if (!data.get(name).getClass().getSimpleName().toString().equals("ArrayList")) {
@@ -245,4 +252,31 @@ public class CsvImportService {
 		String collectionName = name.replaceAll("\\s+", "_") + "_" + companyId;
 		return collectionName;
 	}
+
+	public BasePhone getPhoneObj(String countryDialCode, String phoneNumber, BasePhone phone) {
+
+		try {
+
+			String countriesJson = global.getFile("countriesWithDialCode.json");
+			ObjectMapper mapper = new ObjectMapper();
+			List<BasePhone> countries = mapper.readValue(countriesJson,
+					mapper.getTypeFactory().constructCollectionType(List.class, BasePhone.class));
+
+			BasePhone country = countries.stream()
+					.filter(countryList -> countryList.getDialCode().equals(countryDialCode)).findFirst().orElse(null);
+
+			if (!country.equals(null)) {
+				phone.setCountryCode(country.getCountryCode().toString());
+				phone.setPhoneNumber(phoneNumber);
+				phone.setCountryFlag(country.getCountryFlag().toString());
+				phone.setDialCode(country.getDialCode().toString());
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return phone;
+
+	}
+
 }

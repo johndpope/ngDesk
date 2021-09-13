@@ -7,6 +7,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
@@ -40,6 +42,7 @@ import com.ngdesk.data.csvimport.dao.CsvImport;
 import com.ngdesk.data.csvimport.dao.CsvImportData;
 import com.ngdesk.data.csvimport.dao.CsvImportLog;
 import com.ngdesk.data.csvimport.dao.CsvImportService;
+import com.ngdesk.data.dao.BasePhone;
 import com.ngdesk.data.dao.DataService;
 import com.ngdesk.data.dao.Phone;
 import com.ngdesk.data.modules.dao.DataType;
@@ -351,6 +354,110 @@ public class CsvImportJob {
 											}
 										}
 									}
+
+									// VALIDATE IF THE MULTI PICKLIST VALUES ARE MATCHING WITH EXISTING PICKLISTS OR
+									// ELSE
+									if (inputMessage.containsKey(fieldName)) {
+										if (dataType.getDisplay().equalsIgnoreCase("Picklist (Multi-Select)")) {
+											List<String> picklistValues = field.getPicklistValues();
+											List<String> values = mapper.readValue(
+													mapper.writeValueAsString(inputMessage.get(fieldName)),
+													mapper.getTypeFactory().constructCollectionType(List.class,
+															String.class));
+											List<String> selectedtValues = new ArrayList<String>();
+											for (String value : values) {
+												if (!picklistValues.contains(value)) {
+													Map<String, Object> log = new HashMap<String, Object>();
+													log.put("LINE_NUMBER", i);
+													log.put("ERROR_MESSAGE", "Picklist values are incorrect");
+													String logString = new ObjectMapper().writeValueAsString(log);
+													csvImportRepository.addToEntrySet(csvDocument.getCsvImportId(),
+															"LOGS", logString, "csv_import");
+													error = true;
+													break;
+												} else {
+													selectedtValues.add(value);
+												}
+
+											}
+											if (!selectedtValues.isEmpty()) {
+												inputMessage.put(fieldName, selectedtValues);
+											}
+
+										}
+									}
+									// LIST TEXT DATA TYPE HANDLED
+									if (inputMessage.containsKey(fieldName)) {
+										if (dataType.getDisplay().equalsIgnoreCase("LIST_TEXT")) {
+
+											List<String> values = mapper.readValue(
+													mapper.writeValueAsString(inputMessage.get(fieldName)),
+													mapper.getTypeFactory().constructCollectionType(List.class,
+															String.class));
+											if (values.size() != 0) {
+												inputMessage.put(fieldName, values);
+											}
+										}
+									}
+									// date, date/time ,time data type handled
+									if (inputMessage.containsKey(fieldName)) {
+
+										if (dataType.getDisplay().equalsIgnoreCase("Date/Time")
+												|| dataType.getDisplay().equalsIgnoreCase("Date")
+												|| dataType.getDisplay().equalsIgnoreCase("Time")) {
+
+											String value = inputMessage.get(fieldName).toString();
+											try {
+												Date date = new Date();
+												SimpleDateFormat df = new SimpleDateFormat(
+														"yyyy-MM-dd'T'hh:mm:ss.SSSX");
+												date = df.parse(value);
+												inputMessage.put(fieldName, date);
+											} catch (ParseException e) {
+
+												try {
+													Date parsedDate = new Date(Long.valueOf(value));
+
+													inputMessage.put(fieldName,
+															new SimpleDateFormat("HH:mm a").format(parsedDate));
+												} catch (NumberFormatException e1) {
+													Map<String, Object> log = new HashMap<String, Object>();
+													log.put("LINE_NUMBER", i);
+													log.put("ERROR_MESSAGE", fieldName + " values are invalid");
+													String logString = new ObjectMapper().writeValueAsString(log);
+													csvImportRepository.addToEntrySet(csvDocument.getCsvImportId(),
+															"LOGS", logString, "csv_import");
+													error = true;
+													break;
+												}
+
+											}
+										}
+									}
+
+									// Phone Data TYPE HANDLED
+									if (inputMessage.containsKey(fieldName)) {
+										BasePhone phone = new BasePhone();
+										if (dataType.getDisplay().equalsIgnoreCase("Phone")) {
+											String value = inputMessage.get(fieldName).toString();
+											if (value != null) {
+												if (value.contains("-")) {
+
+													String[] split = value.split("-");
+
+													phone = csvImportService.getPhoneObj(split[0], split[1], phone);
+
+												} else if (value.contains(" ")) {
+													String[] split = value.split(" ");
+
+													phone = csvImportService.getPhoneObj(split[0], split[1], phone);
+
+												}
+											}
+										}
+										inputMessage.put(fieldName, phone);
+									}
+
 									if (inputMessage.containsKey(fieldName)) {
 										if (dataType.getDisplay().equalsIgnoreCase("Chronometer")) {
 											if (inputMessage.get(fieldName) != null) {
@@ -516,8 +623,8 @@ public class CsvImportJob {
 												users.add(userEntry.get("_id").toString());
 												personalTeam.put("DELETED", false);
 												personalTeam.put("USERS", users);
-												dataAPI.putModuleEntry(personalTeam, teamsModuleId, true, companyId, userUuid,
-														false);
+												dataAPI.putModuleEntry(personalTeam, teamsModuleId, true, companyId,
+														userUuid, false);
 
 												userEntry.put("DELETED", false);
 												List<String> existingTeams = mapper.readValue(
@@ -597,7 +704,8 @@ public class CsvImportJob {
 															String.class));
 											roleTeamUsers.add(userEntry.get("_id").toString());
 											roleTeam.put("USERS", roleTeamUsers);
-											dataAPI.putModuleEntry(roleTeam, teamsModuleId, true, companyId, userUuid, false);
+											dataAPI.putModuleEntry(roleTeam, teamsModuleId, true, companyId, userUuid,
+													false);
 										} catch (Exception e) {
 											continue;
 										}
@@ -607,10 +715,12 @@ public class CsvImportJob {
 										if (moduleName.equals("Accounts")) {
 											if (!csvImportService.accountExists(
 													inputMessage.get("ACCOUNT_NAME").toString(), companyId)) {
-												csvImportService.createModuleData(companyId, moduleName, inputMessage, userUuid);
+												csvImportService.createModuleData(companyId, moduleName, inputMessage,
+														userUuid);
 											}
 										} else {
-											csvImportService.createModuleData(companyId, moduleName, inputMessage, userUuid);
+											csvImportService.createModuleData(companyId, moduleName, inputMessage,
+													userUuid);
 										}
 									} catch (Exception e) {
 										continue;
