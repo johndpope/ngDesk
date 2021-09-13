@@ -183,7 +183,7 @@ export class ManageArticlesComponent implements OnInit {
 				rowData.TITLE,
 			]);
 		} else {
-			this.router.navigate([`guide/articles/detail/${rowData.articleId}`]);
+			this.router.navigate([`guide/articles/detail/${rowData.ARTICLE_ID}`]);
 		}
 	}
 }

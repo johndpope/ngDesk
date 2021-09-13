@@ -162,15 +162,18 @@ export class RenderArticlesComponent implements OnInit {
 		this.article[
 			'AUTHOR'
 		] = `${user['AUTHOR'].CONTACT.FIRST_NAME} ${user['AUTHOR'].CONTACT.LAST_NAME}`;
-		this.article['COMMENTS'].forEach((comment) => {
-			comment.sender = JSON.parse(comment.sender);
 
-			user = comment.sender;
-			// if user exists set the name else set anonymous
-			comment.sender = user
-				? `${user['CONTACT'].FIRST_NAME} ${user['CONTACT'].LAST_NAME}`
-				: this.translateService.instant('ANONYMOUS_USER');
-		});
+		if (this.article['COMMENTS'] !== null) {
+			this.article['COMMENTS'].forEach((comment) => {
+				// comment.sender = JSON.parse(comment.sender);
+
+				user = comment.sender;
+				// if user exists set the name else set anonymous
+				comment.sender = user
+					? `${user['CONTACT'].FIRST_NAME} ${user['CONTACT'].LAST_NAME}`
+					: this.translateService.instant('ANONYMOUS_USER');
+			});
+		}
 		this.loading = false;
 	}
 

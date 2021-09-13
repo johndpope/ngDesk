@@ -33,6 +33,7 @@ import { CacheService } from '@src/app/cache.service';
 import { Subscription } from 'rxjs';
 import { ArticlesDataService } from '../articles-data.service';
 import { ArticleApiService } from '@ngdesk/knowledgebase-api';
+import { Console } from 'console';
 @Component({
 	selector: 'app-create-articles',
 	templateUrl: './create-articles.component.html',
@@ -142,8 +143,10 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 	public ngOnInit() {
 		this.route.params.subscribe((params) => {
 			this.isFormCreate = false;
+			console.log('this.route', this.route);
 			this.articleId = this.route.snapshot.params['articleId'];
 			console.log('articleId------->', this.articleId);
+
 			// get users
 			this.companyInfoSubscription =
 				this.cacheService.companyInfoSubject.subscribe(
@@ -159,17 +162,14 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 									this.teams = teams.DATA;
 									this.teamsInitial = teams.DATA.slice();
 									this.allTeams = teams.DATA.slice();
+
 									if (this.articleId !== 'new') {
 										this.guideService
 											.getKbArticleById(this.articleId)
 											.subscribe(
 												(articleResponse: any) => {
-													console.log(
-														'articleResponse----------->',
-														articleResponse
-													);
 													this.guideService
-														.getSectionById(articleResponse.SECTION)
+														.getkbSections(articleResponse['DATA'].SECTION)
 														.subscribe(
 															(sectionResponse: any) => {
 																this.teams = this.transformObjects(
@@ -189,7 +189,7 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 																	'DATA_ID'
 																);
 																this.articleForm = this.formBuilder.group({
-																	articalId: [
+																	articleId: [
 																		articleResponse['DATA'].ARTICLE_ID,
 																	],
 																	title: [
@@ -228,7 +228,7 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 																		Validators.required,
 																	],
 																	author: [
-																		JSON.parse(articleResponse['DATA'].AUTHOR),
+																		articleResponse['DATA'].AUTHOR,
 																		Validators.required,
 																	],
 																	labels: [articleResponse.LABELS],
@@ -270,6 +270,7 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 											labels: [[]],
 											comments: [[]],
 											attachments: [[]],
+											articleId: null,
 										});
 										this.isFormCreate = true;
 										this.onChangeOfSection();
@@ -490,10 +491,11 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 	}
 
 	public save() {
-		console.log('articleForm', this.articleForm.value);
+		// console.log('articleForm', this.articleForm.value);
+		console.log('response for put');
 		this.teamChipList.errorState = false;
 		if (this.articleForm.valid) {
-			console.log('articleForm', this.articleForm.value);
+			// console.log('articleForm', this.articleForm.value);
 			const articleObj = JSON.parse(JSON.stringify(this.articleForm.value));
 
 			articleObj['author'] = articleObj['author'].DATA_ID;
@@ -502,9 +504,9 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 				'DATA_ID'
 			);
 			if (this.articleId === 'new') {
+				console.log('articleObj', articleObj);
 				this.articleApiService.postArticle(articleObj).subscribe(
 					(article: any) => {
-						console.log('post response  for article==', article);
 						//	this.companiesService.trackEvent('Added a new article');
 						this.navigateTo(article, 'post');
 					},
@@ -513,13 +515,9 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 					}
 				);
 			} else {
-				console.log('articleObj', articleObj);
 				this.articleApiService.putArticle(articleObj).subscribe(
 					(article: any) => {
-						console.log('put article------------------->>>>>>>>>.', article);
-						this.router.navigate([
-							`guide/articles/${article.articleId}/detail`,
-						]);
+						this.navigateTo(article, 'PUT');
 					},
 					(error: any) => {
 						this.errorMessage = error.error.ERROR;
