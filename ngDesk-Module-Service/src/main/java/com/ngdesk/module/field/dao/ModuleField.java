@@ -104,12 +104,12 @@ public class ModuleField {
 	@Field("MAX_SIZE")
 	@JsonProperty("MAX_SIZE")
 	private Integer maxSize;
-	
+
 	@Schema(description = "Maximum size for a field", required = false)
 	@Field("LENGTH")
 	@JsonProperty("LENGTH")
 	private Integer length;
-	
+
 	@Schema(description = "Auto number generation for previous entries", required = false)
 	@Field("AUTO_NUMBER_GENERATION")
 	@JsonProperty("AUTO_NUMBER_GENERATION")
@@ -139,6 +139,11 @@ public class ModuleField {
 	@Field("FORMULA")
 	@JsonProperty("FORMULA")
 	private String formula;
+
+	@Schema(description = "List of Formula to calculate value of the field", required = false)
+	@Field("LIST_FORMULA")
+	@JsonProperty("LIST_FORMULA")
+	private List<ListFormulaField> listFormula;
 
 	@Field("MESSAGES")
 	@JsonProperty("MESSAGES")
@@ -258,19 +263,18 @@ public class ModuleField {
 			String defaultValue,
 			@Pattern(regexp = "One to One|One to Many|Many to Many|Many to One", message = "NOT_VALID_RELATIONSHIP_TYPE") String relationshipType,
 			String primaryField, String relationshipField, String module, @Valid DataType dataType, Boolean visibility,
-			Boolean required, Boolean internal, Boolean notEditable, Integer maxSize, Integer lenght,Boolean autonumberGeneration,
-			Integer autonumberStartingNumber, Boolean picklistDisplay, Boolean picklistFirstValue,
-			List<String> picklistValues, String formula, List<DiscussionMessage> messages, String groupId,
-			@Valid DataFilter dataFilter,
+			Boolean required, Boolean internal, Boolean notEditable, Integer maxSize, Integer length,
+			Boolean autonumberGeneration, Integer autonumberStartingNumber, Boolean picklistDisplay,
+			Boolean picklistFirstValue, List<String> picklistValues, String formula, List<ListFormulaField> listFormula,
+			List<DiscussionMessage> messages, String groupId, @Valid DataFilter dataFilter,
 			@Pattern(regexp = "sum", message = "NOT_VALID_AGGREGATION_TYPE") String aggregationType,
 			String aggregationField, String aggregationRelatedField, Map<String, String> inheritanceMapping,
 			Map<String, String> fieldsMapping, Date dateCreated, Date dateUpdated, String createdBy,
 			String lastUpdatedBy, String workflow,
 			@Length(max = 3, message = "Prefix value can't be more than three characters long") String prefix,
 			@Length(max = 3, message = "Suffix value can't be more than three characters long") String suffix,
-
-			String numericFormat, String toCurrency, String fromCurrency, String dateIncurred,
-			@Valid List<Condition> conditions, Boolean listTextUnique) {
+			String numericFormat, Boolean listTextUnique, String toCurrency, String fromCurrency, String dateIncurred,
+			@Valid List<Condition> conditions) {
 		super();
 		this.fieldId = fieldId;
 		this.name = name;
@@ -287,13 +291,14 @@ public class ModuleField {
 		this.internal = internal;
 		this.notEditable = notEditable;
 		this.maxSize = maxSize;
-		this.length=length;
+		this.length = length;
 		this.autonumberGeneration = autonumberGeneration;
 		this.autonumberStartingNumber = autonumberStartingNumber;
 		this.picklistDisplay = picklistDisplay;
 		this.picklistFirstValue = picklistFirstValue;
 		this.picklistValues = picklistValues;
 		this.formula = formula;
+		this.listFormula = listFormula;
 		this.messages = messages;
 		this.groupId = groupId;
 		this.dataFilter = dataFilter;
@@ -440,11 +445,11 @@ public class ModuleField {
 	public Integer getLenght() {
 		return length;
 	}
-	
+
 	public void setLenght(Integer length) {
-		this.length=length;
+		this.length = length;
 	}
-	
+
 	public Boolean getAutonumberGeneration() {
 		return autonumberGeneration;
 	}
@@ -491,6 +496,14 @@ public class ModuleField {
 
 	public void setFormula(String formula) {
 		this.formula = formula;
+	}
+
+	public List<ListFormulaField> getListFormula() {
+		return listFormula;
+	}
+
+	public void setListFormula(List<ListFormulaField> listFormula) {
+		this.listFormula = listFormula;
 	}
 
 	public List<DiscussionMessage> getMessages() {

@@ -27,6 +27,7 @@ import { PdfsService } from '../data-types/pdfs.service';
 import { WorkflowStagesService } from './../data-types/workflowStages.service';
 import { ZoomService } from '@src/app/render-layout/data-types/zoom.service';
 import { ConditionService } from '../data-types/condition.service';
+import { ListFormulaService } from '../data-types/list-formula.service';
 
 @Injectable({
 	providedIn: 'root',
@@ -59,7 +60,8 @@ export class CommonLayoutService {
 		private timeService: TimeService,
 		private workflowStagesService: WorkflowStagesService,
 		private zoomService: ZoomService,
-		private conditionService: ConditionService
+		private conditionService: ConditionService,
+		private listFormulaService: ListFormulaService
 	) {}
 
 	public getLayoutStyle(layout) {
