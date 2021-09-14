@@ -171,6 +171,7 @@ export class GettingStartedComponent implements OnInit, OnDestroy {
 	private currentStep = 0;
 	public resourceSelected = 'none';
 	public showTicketsGuide = false;
+	public browser;
 	constructor(
 		private toolbarComp: ToolbarComponent,
 		private rolesService: RolesService,
@@ -227,7 +228,7 @@ export class GettingStartedComponent implements OnInit, OnDestroy {
 		this.moduleId = this.route.snapshot.params['moduleId'];
 		const channelName = 'Chat';
 		this.timeZones = this.schedulesDetailService.timeZones;
-
+		this.browser = this.companiesService.eventMetaData.BROWSER;
 		// this.chatChannelSubscription = this.chatChannelChanges$.subscribe(
 		// 	(val: any) => {
 		// 		this.chatChannel = val;

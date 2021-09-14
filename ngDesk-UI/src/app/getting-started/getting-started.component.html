@@ -5,7 +5,8 @@
 		<div fxLayoutAlign="center center" fxLayout="row" fxFlex="10" fxLayoutGap="30px">
 			<!--Progress spinner start-->
 			<div fxLayout="column" fxFlex="20" fxLayoutAlign="start start">
-				<div class="spinner spinner-color" style="position: relative;left: 50%;top: -12px;">
+				<div class="spinner spinner-color" style="position: relative;left: 50%;"
+					[ngStyle]="{'top': browser === 'Chrome' ? '-12px' : '3px'}">
 					<mat-progress-spinner diameter="60" strokeWidth="8" style="stroke-opacity: 0.2;" [mode]="mode" [value]="100">
 					</mat-progress-spinner>
 					<mat-progress-spinner diameter="60" strokeWidth="8" [mode]="mode" [value]="value">
