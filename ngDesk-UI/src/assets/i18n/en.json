@@ -2196,5 +2196,9 @@
 	"ROLES_WITH_CHAT": "Roles that have chat",
 	"ATLEAST_ONE_ROLE": "Select atleast one role",
 	"SELECT_MAX_CHATS": "Select maximum number if chats per agents",
-	"SCHEDULES_USER_SEARCH": "Search is based on email address"
+	"FORMULA_LABEL": "Formula Display Label",
+	"FORMULA_NAME": " Formula System Label",
+	"ADD_FORMULA": "Add Formula",
+	"SCHEDULES_USER_SEARCH": "Search is based on email address",
+	"LIST_FORMULA_CANNOT_BE_DROPPED": "List formula field cannot be dropped to sidebar"
 }
