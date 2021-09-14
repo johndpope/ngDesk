@@ -222,7 +222,7 @@ export class TriggersDetailService {
 			);
 
 		const templatesResponse = this.htmlTemplateApiService
-			.getTemplates(this.moduleId)
+			.getTemplates(moduleId)
 			.pipe(
 				map((response) => {
 					return response['content'];
@@ -572,7 +572,7 @@ export class TriggersDetailService {
 				cell.VALUE.FROM = node['FROM'];
 				cell.VALUE.SUBJECT = node['SUBJECT'];
 				cell.VALUE.PDF_TEMPLATE_ID = node['PDF_TEMPLATE_ID'];
-				cell.value.FIELD_ID = node['FIELD_ID'];
+				cell.VALUE.FIELD_ID = node['FIELD_ID'];
 			}
 			cellData.push(cell);
 		});
