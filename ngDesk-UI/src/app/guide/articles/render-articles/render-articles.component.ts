@@ -184,23 +184,30 @@ export class RenderArticlesComponent implements OnInit {
 				// check if user has access to edit this article and display edit button
 				this.checkEditAccess();
 
-				this.guideService.getKbCategoryById(sectionResponse.category).subscribe(
-					(categoryResponse: any) => {
-						this.navArray.push({
-							NAME: categoryResponse.name,
-							PATH: ['guide', 'categories', sectionResponse.category, 'detail'],
-						});
-						this.navArray.push({
-							NAME: sectionResponse.name,
-							PATH: ['guide', 'sections', this.sectionId, 'detail'],
-						});
-					},
-					(error: any) => {
-						this.bannerMessageService.errorNotifications.push(
-							error.error.ERROR
-						);
-					}
-				);
+				this.guideService
+					.getKbCategoryById(sectionResponse.DATA.category.categoryId)
+					.subscribe(
+						(categoryResponse: any) => {
+							this.navArray.push({
+								NAME: categoryResponse.DATA.name,
+								PATH: [
+									'guide',
+									'categories',
+									sectionResponse.CATEGORY,
+									'detail',
+								],
+							});
+							this.navArray.push({
+								NAME: sectionResponse.DATA.name,
+								PATH: ['guide', 'sections', this.sectionId, 'detail'],
+							});
+						},
+						(error: any) => {
+							this.bannerMessageService.errorNotifications.push(
+								error.error.ERROR
+							);
+						}
+					);
 			},
 			(error: any) => {
 				this.bannerMessageService.errorNotifications.push(error.error.ERROR);
@@ -209,13 +216,16 @@ export class RenderArticlesComponent implements OnInit {
 	}
 
 	public addComment(): void {
-		if (this.comment['message'] !== undefined) {
+		console.log("this.comment['MESSAGE'] ", this.comment['MESSAGE']);
+
+		if (this.comment['MESSAGE'] !== undefined) {
 			this.loading = true;
 			this.articleApiService
-				.postComments(this.article['articleId'], this.commentMessages)
+				.postComments(this.article['ARTICLE_ID'], this.commentMessages)
 				.subscribe(
 					(response: any) => {
-						this.comment['message'] = '';
+						console.log('message.............', response);
+						this.comment['MESSAGE'] = '';
 						this.getArticle();
 					},
 					(error: any) => {
@@ -234,6 +244,7 @@ export class RenderArticlesComponent implements OnInit {
 	}
 
 	public goToEditArticle(): void {
+		console.log('...............', this.article);
 		// go to edit article page
 		this.router.navigate([
 			'guide',
