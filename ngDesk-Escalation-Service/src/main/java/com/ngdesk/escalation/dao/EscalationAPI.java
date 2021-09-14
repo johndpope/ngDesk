@@ -36,27 +36,31 @@ public class EscalationAPI {
 	@Autowired
 	private AuthManager authManager;
 
-	@GetMapping("/escalations")
-	@Operation(summary = "Get all", description = "Gets all the escalations with pagination and search")
-	@PageableAsQueryParam
-	public Page<Escalation> getEscalations(
-			@Parameter(description = "Pageable object to control pagination", required = true, hidden = true) Pageable pageable)
-			throws JsonProcessingException {
-		return escalationRepository.findAll(pageable, "escalations_" + authManager.getUserDetails().getCompanyId());
-	}
-
-	@GetMapping("/escalations/{id}")
-	@Operation(summary = "Get by ID", description = "Gets the escalation based on ID")
-	public Escalation getEscalationById(
-			@Parameter(description = "Escalation ID", required = true) @PathVariable("id") String id) {
-		Optional<Escalation> optional = escalationRepository.findById(id,
-				"escalations_" + authManager.getUserDetails().getCompanyId());
-		if (optional.isEmpty()) {
-			String vars[] = { "ESCALATION" };
-			throw new NotFoundException("DAO_NOT_FOUND", vars);
-		}
-		return optional.get();
-	}
+	/*
+	 * @GetMapping("/escalations")
+	 * 
+	 * @Operation(summary = "Get all", description =
+	 * "Gets all the escalations with pagination and search")
+	 * 
+	 * @PageableAsQueryParam public Page<Escalation> getEscalations(
+	 * 
+	 * @Parameter(description = "Pageable object to control pagination", required =
+	 * true, hidden = true) Pageable pageable) throws JsonProcessingException {
+	 * return escalationRepository.findAll(pageable, "escalations_" +
+	 * authManager.getUserDetails().getCompanyId()); }
+	 * 
+	 * @GetMapping("/escalations/{id}")
+	 * 
+	 * @Operation(summary = "Get by ID", description =
+	 * "Gets the escalation based on ID") public Escalation getEscalationById(
+	 * 
+	 * @Parameter(description = "Escalation ID", required =
+	 * true) @PathVariable("id") String id) { Optional<Escalation> optional =
+	 * escalationRepository.findById(id, "escalations_" +
+	 * authManager.getUserDetails().getCompanyId()); if (optional.isEmpty()) {
+	 * String vars[] = { "ESCALATION" }; throw new
+	 * NotFoundException("DAO_NOT_FOUND", vars); } return optional.get(); }
+	 */
 
 	@PostMapping("/escalation")
 	@Operation(summary = "Post Escalation", description = "Post a single escalation")

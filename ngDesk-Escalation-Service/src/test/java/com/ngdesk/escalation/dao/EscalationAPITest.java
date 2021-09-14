@@ -71,25 +71,26 @@ public class EscalationAPITest {
 		Escalation response = mapper.readValue(escalationString, Escalation.class);
 	}
 
-	@Test
-	public void testEscalationGetSuccess() throws Exception {
-
-		List<String> ids = new ArrayList<String>();
-		List<EscalationRule> rules = new ArrayList<EscalationRule>();
-		rules.add(new EscalationRule(1, 1, new EscalateTo(ids, ids, ids)));
-
-		Escalation escalation = new Escalation(null, "Test Escalation", "Test Description", rules, null, null, null,
-				null);
-
-		// PREPARE STUB
-		given(escalationAPI.getEscalationById(any(String.class))).willReturn(escalation);
-
-		// PERFORM MOCK TEST
-		String escalationString = mockMvc.perform(get("/escalations/testId").contentType(APPLICATION_JSON))
-				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-
-		Escalation response = mapper.readValue(escalationString, Escalation.class);
-	}	
+	/*
+	 * @Test public void testEscalationGetSuccess() throws Exception {
+	 * 
+	 * List<String> ids = new ArrayList<String>(); List<EscalationRule> rules = new
+	 * ArrayList<EscalationRule>(); rules.add(new EscalationRule(1, 1, new
+	 * EscalateTo(ids, ids, ids)));
+	 * 
+	 * Escalation escalation = new Escalation(null, "Test Escalation",
+	 * "Test Description", rules, null, null, null, null);
+	 * 
+	 * // PREPARE STUB
+	 * given(escalationAPI.getEscalationById(any(String.class))).willReturn(
+	 * escalation);
+	 * 
+	 * // PERFORM MOCK TEST String escalationString =
+	 * mockMvc.perform(get("/escalations/testId").contentType(APPLICATION_JSON))
+	 * .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+	 * 
+	 * Escalation response = mapper.readValue(escalationString, Escalation.class); }
+	 */	
 
 	@Test
 	public void testEscalationPostNameNotEmpty() throws Exception {
