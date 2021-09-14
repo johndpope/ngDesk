@@ -12,7 +12,7 @@
 	<groupId>com.ngdesk.auth.auth</groupId>   
 	<artifactId>ngDesk-Auth</artifactId> 
 	<version>0.0.1-SNAPSHOT</version>
-	<name>ngDesk-Auth</name> 
+	<name>ngDesk-Auth</name>  
 	<description>ngDesk Microservice for Auth</description>
  
 
