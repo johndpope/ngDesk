@@ -23,4 +23,13 @@ public class CustomChatChannelRepositoryImpl implements CustomChatChannelReposit
 		return Optional.ofNullable(mongoOperations.findOne(query, ChatChannel.class, collectionName));
 	}
 
+	@Override
+	public Optional<ChatChannel> findChannelByName(String name, String collectionName) {
+
+		Criteria criteria = new Criteria();
+		Query query = new Query(criteria.where("NAME").is(name));
+
+		return Optional.ofNullable(mongoOperations.findOne(query, ChatChannel.class, collectionName));
+	}
+
 }

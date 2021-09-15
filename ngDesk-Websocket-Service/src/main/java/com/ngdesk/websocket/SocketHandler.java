@@ -1,11 +1,13 @@
 package com.ngdesk.websocket;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -14,7 +16,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
 
 import org.bson.types.ObjectId;
-import org.redisson.api.RMap;
 import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -100,8 +101,8 @@ public class SocketHandler extends TextWebSocketHandler {
 
 	@Autowired
 	RolesRepository rolesRepository;
-	
-	@Autowired	
+
+	@Autowired
 	ChatService chatService;
 
 	private static ReentrantLock lock = new ReentrantLock();
@@ -360,16 +361,17 @@ public class SocketHandler extends TextWebSocketHandler {
 				}
 			} else if (queryParamMap.containsKey("sessionUUID") && queryParamMap.containsKey("subdomain")) {
 				try {
-				    PageLoad pageLoad = mapper.readValue(textMessage.getPayload(), PageLoad.class);
+					PageLoad pageLoad = mapper.readValue(textMessage.getPayload(), PageLoad.class);
 					chatChannelService.publishPageLoad(pageLoad);
-				
+
 				} catch (Exception e) {
 					try {
-						ChatWidgetPayload pageLoad = mapper.readValue(textMessage.getPayload(), ChatWidgetPayload.class);
+						ChatWidgetPayload pageLoad = mapper.readValue(textMessage.getPayload(),
+								ChatWidgetPayload.class);
 						chatService.publishPageLoad(pageLoad);
-				
-					}catch (Exception e1) {
-							
+
+					} catch (Exception e1) {
+
 					}
 				}
 

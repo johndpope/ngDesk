@@ -13,11 +13,11 @@ public class ChatWidgetPayload {
 	@JsonProperty("USER_AGENT")
 	@Field("USER_AGENT")
 	private String userAgent;
-	
+
 	@JsonProperty("BROWSER")
 	@Field("BROWSER")
 	private String browser;
-	
+
 	@JsonProperty("LOCATION")
 	@Field("LOCATION")
 	private String location;
@@ -30,9 +30,9 @@ public class ChatWidgetPayload {
 	@Field("PLATFORM")
 	private String platform;
 
-	@JsonProperty("DEVICE_TYPE")
-	@Field("DEVICE_TYPE")
-	private String deviceType;
+	@JsonProperty("DEVICE")
+	@Field("DEVICE")
+	private String device;
 
 	@JsonProperty("HOSTNAME")
 	@Field("HOSTNAME")
@@ -45,26 +45,26 @@ public class ChatWidgetPayload {
 	@JsonProperty("REFERRER")
 	@Field("REFERRER")
 	private String referrer;
-	
+
 	@JsonProperty("COUNTRY")
 	@Field("COUNTRY")
 	private String country;
 
-	@JsonProperty("COMPANY_SUBDOMAIN")
-	@Field("COMPANY_SUBDOMAIN")
-	private String companySubdomain;
-
 	@JsonProperty("MESSAGE_TYPE")
 	@Field("MESSAGE_TYPE")
 	private String messageType;
-	
+
+	@JsonProperty("SUBDOMAIN")
+	@Field("SUBDOMAIN")
+	private String subdomain;
+
 	public ChatWidgetPayload() {
-			
+
 	}
-		
+
 	public ChatWidgetPayload(String ipAddress, String userAgent, String browser, String location, String pageTitle,
-			String platform, String deviceType, String hostName, String sessionUUID, String referrer, String country,
-			String companySubdomain, String messageType) {
+			String platform, String device, String hostName, String sessionUUID, String referrer, String country,
+			String messageType, String subdomain) {
 		super();
 		this.ipAddress = ipAddress;
 		this.userAgent = userAgent;
@@ -72,13 +72,13 @@ public class ChatWidgetPayload {
 		this.location = location;
 		this.pageTitle = pageTitle;
 		this.platform = platform;
-		this.deviceType = deviceType;
+		this.device = device;
 		this.hostName = hostName;
 		this.sessionUUID = sessionUUID;
 		this.referrer = referrer;
 		this.country = country;
-		this.companySubdomain = companySubdomain;
 		this.messageType = messageType;
+		this.subdomain = subdomain;
 	}
 
 	public String getIpAddress() {
@@ -129,12 +129,12 @@ public class ChatWidgetPayload {
 		this.platform = platform;
 	}
 
-	public String getDeviceType() {
-		return deviceType;
+	public String getDevice() {
+		return device;
 	}
 
-	public void setDeviceType(String deviceType) {
-		this.deviceType = deviceType;
+	public void setDevice(String device) {
+		this.device = device;
 	}
 
 	public String getHostName() {
@@ -169,14 +169,6 @@ public class ChatWidgetPayload {
 		this.country = country;
 	}
 
-	public String getCompanySubdomain() {
-		return companySubdomain;
-	}
-
-	public void setCompanySubdomain(String companySubdomain) {
-		this.companySubdomain = companySubdomain;
-	}
-
 	public String getMessageType() {
 		return messageType;
 	}
@@ -184,11 +176,13 @@ public class ChatWidgetPayload {
 	public void setMessageType(String messageType) {
 		this.messageType = messageType;
 	}
-	
-	
-	
 
-	
+	public String getSubdomain() {
+		return subdomain;
+	}
 
-	
+	public void setSubdomain(String subdomain) {
+		this.subdomain = subdomain;
+	}
+
 }
