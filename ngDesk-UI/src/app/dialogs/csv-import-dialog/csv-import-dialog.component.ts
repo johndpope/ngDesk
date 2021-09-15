@@ -29,6 +29,9 @@ export class CsvImportDialogComponent implements OnInit {
 		fileName: '',
 		headers: [],
 	};
+	public separator;
+	public separators = ['/', '-'];
+	public phonefield: boolean;
 	constructor(
 		@Inject(MAT_DIALOG_DATA) public data: any,
 		public dialogRef: MatDialogRef<CsvImportDialogComponent>,
@@ -61,6 +64,33 @@ export class CsvImportDialogComponent implements OnInit {
 		});
 		this.selectedFields = selectedFieldsDropdown;
 	}
+	// public test(event) {
+	// 	console.log(event.value, this.fields);
+	// 	const selectedField = this.headers.find(
+	// 		(f) => f.name === event.value
+	// 	);
+
+	// 	const variable  = this.headers.forEach(element => {
+
+	// 	});
+	// 	this.fields.forEach((element) => {
+	// 		console.log(
+	// 			'hit 1',
+	// 			element.DISPLAY_LABEL,
+	// 			event.value,
+	// 			element.DISPLAY_LABEL === event.value
+	// 		);
+
+	// 		if (event.value === element.DISPLAY_LABEL) {
+	// 			console.log('hit 2');
+
+	// 			if (element.DATA_TYPE.DISPLAY === 'Phone') {
+	// 				console.log('hit 3');
+	// 				this.phonefield = true;
+	// 			}
+	// 		}
+	// 	});
+	// }
 
 	public onImportCsv(): void {
 		if (Object.keys(this.headerMap).length === 0) {
@@ -69,11 +99,13 @@ export class CsvImportDialogComponent implements OnInit {
 			});
 		} else {
 			for (let [key, value] of Object.entries(this.headerMap)) {
-				this.csvheaders = {
-					fieldId: `${key}`,
-					headerName: `${value}`,
-				};
-				this.csvImportData.headers.push(this.csvheaders);
+				if (`${value}` != undefined) {
+					this.csvheaders = {
+						fieldId: `${key}`,
+						headerName: `${value}`,
+					};
+					this.csvImportData.headers.push(this.csvheaders);
+				}
 			}
 			const moduleId = this.data.csvData.MODULE.MODULE_ID;
 			this.csvImportData = this.data.csvData.CSV_IMPORT_DATA;
