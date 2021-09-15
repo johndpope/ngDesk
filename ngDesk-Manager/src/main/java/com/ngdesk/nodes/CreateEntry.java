@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,6 +13,7 @@ import org.apache.commons.text.StringEscapeUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -21,6 +23,7 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
 import com.ngdesk.Global;
 import com.ngdesk.SendMail;
 import com.ngdesk.flowmanager.Attachment;
@@ -166,6 +169,45 @@ public class CreateEntry extends Node {
 							value = obj;
 						}
 					}
+				} else {
+					Document dataType = (Document) fieldDocument.get("DATA_TYPE");
+					if (dataType.getString("DISPLAY").equals("Relationship")) {
+						String relationshipType = fieldDocument.getString("RELATIONSHIP_TYPE");
+						if (relationshipType.equalsIgnoreCase("Many to Many")) {
+							List<String> listOfValues = val;
+							List<Document> relationshipValues = new ArrayList<Document>();
+							for (String dataId : listOfValues) {
+
+								String primaryDisplayField = fieldDocument.getString("PRIMARY_DISPLAY_FIELD");
+								String relationshipModuleId = fieldDocument.getString("MODULE");
+								MongoCollection<Document> modulesCollection = mongoTemplate
+										.getCollection("modules_" + companyId);
+								Document relatedModule = modulesCollection
+										.find(Filters.eq("_id", new ObjectId(relationshipModuleId))).first();
+								List<Document> relatedFields = (List<Document>) relatedModule.get("FIELDS");
+								Optional<Document> primaryDisplayFieldObject = relatedFields.stream().filter(
+										related_Field -> related_Field.get("FIELD_ID").equals(primaryDisplayField))
+										.findFirst();
+								String primaryDisplayFieldName = primaryDisplayFieldObject.get().getString("NAME");
+								String relatedModuleName = relatedModule.getString("NAME");
+								MongoCollection<Document> collection = mongoTemplate
+										.getCollection(relatedModuleName + "_" + companyId);
+								Document entry = collection.find(Filters.eq("_id", new ObjectId(dataId))).first();
+
+								Document relatedDisplayField = new Document();
+								relatedDisplayField.put("DATA_ID", dataId);
+								relatedDisplayField.put("PRIMARY_DISPLAY_FIELD",
+										entry.get(primaryDisplayFieldName).toString());
+								relationshipValues.add(relatedDisplayField);
+							}
+							value = relationshipValues;
+						} else {
+							value = valuePattern;
+						}
+					} else {
+						value = valuePattern;
+					}
+
 				}
 
 				// CHECK FOR DISCUSSION FIELD
