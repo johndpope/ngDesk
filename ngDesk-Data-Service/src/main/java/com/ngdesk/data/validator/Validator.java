@@ -380,13 +380,15 @@ public class Validator {
 						if (relationshipType.equals("One to One")) {
 
 							List<Map<String, Object>> allEntries = moduleEntryRepository
-									.findAllEntries(module.getName() + "_" + companyId).get();
+									.findAllEntries(moduleService.getCollectionName(module.getName(), companyId)).get();
+
 							List<Map<String, Object>> existingEntries = allEntries.stream()
 									.filter(data -> !data.get("_id").equals(entry.get("_id"))
 											&& data.get("DELETED").equals(false) && !data.get(fieldName).equals(null)
 											&& data.get(fieldName).equals(entry.get(fieldName))
 											&& !data.containsKey("EFFECTIVE_TO"))
 									.collect(Collectors.toList());
+
 							if (!existingEntries.isEmpty()) {
 								throw new BadRequestException("RELATIONSHIP_FIELD_ALREADY_EXIST_IN_OTHER_ENTRY", vars);
 							}
