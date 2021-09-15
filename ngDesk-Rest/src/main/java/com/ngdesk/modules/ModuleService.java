@@ -783,18 +783,22 @@ public class ModuleService {
 				if (module == null) {
 					throw new ForbiddenException("MODULE_INVALID");
 				}
-
 				List<Document> channel = collection.find().into(new ArrayList<>());
-				for (Document doc : channel) {
-					String Name = doc.getString("NAME");
-					String Id = doc.getObjectId("_id").toString();
-					JSONObject channeldetails = new JSONObject();
-					channeldetails.put("NAME", Name);
-					channeldetails.put("ID", Id);
-					channellist.put(channeldetails);
-				}
-				channelObject.put("CHANNELS", channellist);
-			}
+	                if(channel!=null&&!channel.isEmpty()) {
+	                   
+	                for (Document doc : channel) {
+	                    if(doc.getString("MODULE").equals(moduleId)) {
+	                    String Name = doc.getString("NAME");
+	                    String Id = doc.getObjectId("_id").toString();
+	                    JSONObject channeldetails = new JSONObject();
+	                    channeldetails.put("NAME", Name);
+	                    channeldetails.put("ID", Id);
+	                    channellist.put(channeldetails);
+	                }
+	                }
+	            }
+	                channelObject.put("CHANNELS", channellist);
+	            }
 			log.trace("Exit ModuleService.getAllChannels() at: " + new Timestamp(new Date().getTime()));
 			return new ResponseEntity<Object>(channelObject.toString(), HttpStatus.OK);
 		} catch (JSONException e) {
