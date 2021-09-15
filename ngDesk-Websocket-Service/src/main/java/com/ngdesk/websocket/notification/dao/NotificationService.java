@@ -17,6 +17,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ngdesk.commons.exceptions.BadRequestException;
 import com.ngdesk.repositories.ModuleEntryRepository;
 import com.ngdesk.repositories.NotificationRepository;
+import com.ngdesk.websocket.UserSessions;
 import com.ngdesk.websocket.SessionService;
 import com.ngdesk.websocket.companies.dao.Company;
 import com.ngdesk.websocket.modules.dao.Module;
@@ -74,14 +75,14 @@ public class NotificationService {
 		ObjectMapper mapper = new ObjectMapper();
 
 		if (sessionService.sessions.containsKey(company.getCompanySubdomain())) {
-			ConcurrentHashMap<String, ConcurrentLinkedQueue<WebSocketSession>> sessions = sessionService.sessions
+			ConcurrentHashMap<String, UserSessions> sessions = sessionService.sessions
 					.get(company.getCompanySubdomain());
 
 			String userId = notification.getRecipientId();
 			Optional<Map<String, Object>> optionalUser = entryRepository.findEntryById(userId, "Users_" + companyId);
 
 			if (optionalUser.isPresent()) {
-				ConcurrentLinkedQueue<WebSocketSession> userSessions = sessions.get(userId);
+				ConcurrentLinkedQueue<WebSocketSession> userSessions = sessions.get(userId).getSessions();
 				userSessions.forEach(session -> {
 					try {
 						String payload = mapper.writeValueAsString(notification);

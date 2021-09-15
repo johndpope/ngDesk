@@ -29,6 +29,7 @@ import com.ngdesk.repositories.CompaniesRepository;
 import com.ngdesk.repositories.DnsRepository;
 import com.ngdesk.repositories.ModuleEntryRepository;
 import com.ngdesk.repositories.ModulesRepository;
+import com.ngdesk.websocket.UserSessions;
 import com.ngdesk.websocket.SessionService;
 import com.ngdesk.websocket.companies.dao.ChatSettingsMessage;
 import com.ngdesk.websocket.companies.dao.Company;
@@ -194,7 +195,7 @@ public class WebSocketService {
 		message.setType("NOTIFICATION");
 
 		if (sessionService.sessions.containsKey(company.getCompanySubdomain())) {
-			ConcurrentHashMap<String, ConcurrentLinkedQueue<WebSocketSession>> sessions = sessionService.sessions
+			ConcurrentHashMap<String, UserSessions> sessions = sessionService.sessions
 					.get(company.getCompanySubdomain());
 			for (String userId : sessions.keySet()) {
 
@@ -205,7 +206,7 @@ public class WebSocketService {
 					Map<String, Object> user = optionalUser.get();
 					if (rolesService.isAuthorizedForRecord(user.get("ROLE").toString(), "GET", message.getModuleId(),
 							company.getId())) {
-						ConcurrentLinkedQueue<WebSocketSession> userSessions = sessions.get(userId);
+						ConcurrentLinkedQueue<WebSocketSession> userSessions = sessions.get(userId).getSessions();
 						userSessions.forEach(session -> {
 							try {
 								String payload = mapper.writeValueAsString(message);
@@ -248,8 +249,7 @@ public class WebSocketService {
 			return;
 		}
 
-		ConcurrentHashMap<String, ConcurrentLinkedQueue<WebSocketSession>> sessions = sessionService.sessions
-				.get(company.getCompanySubdomain());
+		ConcurrentHashMap<String, UserSessions> sessions = sessionService.sessions.get(company.getCompanySubdomain());
 
 		for (String userId : sessions.keySet()) {
 
@@ -264,7 +264,7 @@ public class WebSocketService {
 						continue;
 					}
 
-					ConcurrentLinkedQueue<WebSocketSession> userSessions = sessions.get(userId);
+					ConcurrentLinkedQueue<WebSocketSession> userSessions = sessions.get(userId).getSessions();
 					userSessions.forEach(session -> {
 						try {
 							String payload = mapper.writeValueAsString(message);
@@ -292,12 +292,7 @@ public class WebSocketService {
 			return;
 		}
 
-		ConcurrentHashMap<String, ConcurrentLinkedQueue<WebSocketSession>> sessions = sessionService.sessions
-				.get(company.getCompanySubdomain());
-
-		System.out.println("company id " + companyId);
-		System.out.println("company sessions" + sessions);
-		System.out.println(sessions);
+		ConcurrentHashMap<String, UserSessions> sessions = sessionService.sessions.get(company.getCompanySubdomain());
 
 		for (String userId : sessions.keySet()) {
 			Optional<Map<String, Object>> optionalUser = entryRepository.findEntryById(userId, "Users_" + companyId);
@@ -307,7 +302,7 @@ public class WebSocketService {
 				if (!rolesService.isSystemAdmin(company.getId(), user.get("ROLE").toString())) {
 					continue;
 				}
-				ConcurrentLinkedQueue<WebSocketSession> userSessions = sessions.get(userId);
+				ConcurrentLinkedQueue<WebSocketSession> userSessions = sessions.get(userId).getSessions();
 				userSessions.forEach(session -> {
 					try {
 						String payload = mapper.writeValueAsString(message);

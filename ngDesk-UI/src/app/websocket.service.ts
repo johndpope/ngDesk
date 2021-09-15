@@ -143,4 +143,9 @@ export class WebsocketService {
 	public publishDownloadStatus(payload) {
 		this.websocket.send(JSON.stringify(payload));
 	}
+
+	public publishChatStatus(payload) {
+		this.websocket.send(JSON.stringify(payload));
+
+	}
 }

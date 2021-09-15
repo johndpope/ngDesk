@@ -372,38 +372,41 @@ export class ToolbarComponent implements OnDestroy, OnInit {
 	//Code reated to the chat actions in login menu
 	//Uncomment the code if need chat related API calls
 
-	// public chatStatus(status) {
-	// 	if (status) {
-	// 		this.companiesService.trackEvent('Clicked set Chat Stats Online');
-	// 		if (this.cacheService.companyData['USAGE_TYPE'].CHAT === true) {
-	// 			if (
-	// 				this.cacheService.companyData['ALL_GETTING_STARTED'][2].COMPLETED ===
-	// 				false
-	// 			) {
-	// 				this.companiesService
-	// 					.putGettingStarted(
-	// 						this.cacheService.companyData['ALL_GETTING_STARTED'][2]
-	// 					)
-	// 					.subscribe((put: any) => {});
-	// 			}
-	// 		}
-	// 	} else {
-	// 		this.companiesService.trackEvent('Clicked set Chat Stats Offline');
-	// 	}
+	public chatStatus(status) {
+		console.log('status',status);
+		if (status) {
+			this.companiesService.trackEvent('Clicked set Chat Stats Online');
+			if (this.cacheService.companyData['USAGE_TYPE'].CHAT === true) {
+				if (
+					this.cacheService.companyData['ALL_GETTING_STARTED'][2].COMPLETED ===
+					false
+				) {
+					this.companiesService
+						.putGettingStarted(
+							this.cacheService.companyData['ALL_GETTING_STARTED'][2]
+						)
+						.subscribe((put: any) => {});
+				}
+			}
+		} else {
+			this.companiesService.trackEvent('Clicked set Chat Stats Offline');
+		}
 
-	// 	if (this.isAcceptingChats !== status) {
-	// 		this.accept = false;
-	// 		const receiptId = require('uuid').v4();
-	// 		const chatStatus = {
-	// 			USER_ID: this.usersService.user.DATA_ID,
-	// 			COMPANY_SUBDOMAIN: this.usersService.getSubdomain(),
-	// 			ACCEPTING_CHATS: status,
-	// 		};
-	// 		//donot uncomment this
-	// 		// this._stompService.watchForReceipt(receiptId, (frame) => {
-	// 		//   console.log('Receipt: ', frame);
-	// 		//   this.getAcceptingChats();
-	// 		// });
+		if (this.isAcceptingChats !== status) {
+			console.log('here at publish');
+			this.accept = false;
+			const receiptId = require('uuid').v4();
+			const chatStatus = {
+				USER_ID: this.usersService.user.DATA_ID,
+				COMPANY_SUBDOMAIN: this.usersService.getSubdomain(),
+				ACCEPTING_CHATS: status,
+			};
+			this.websocketService.publishChatStatus(chatStatus);
+			//donot uncomment this
+			// this._stompService.watchForReceipt(receiptId, (frame) => {
+			//   console.log('Receipt: ', frame);
+			//   this.getAcceptingChats();
+			// });
 
 	// 		// this._stompService._stompManagerService.publish({
 	// 		// 	destination: 'ngdesk/chat-status',
@@ -413,11 +416,11 @@ export class ToolbarComponent implements OnDestroy, OnInit {
 	// 		// 	}
 	// 		// });
 
-	// 		// setTimeout(() => {
-	// 		// 	this.getAcceptingChats();
-	// 		// }, 2000);
-	// 	}
-	// }
+			// setTimeout(() => {
+			// 	this.getAcceptingChats();
+			// }, 2000);
+		}
+	}
 
 	public notificationSubscription() {
 		this.notificationsService

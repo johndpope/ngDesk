@@ -3,7 +3,10 @@ package com.ngdesk.websocket;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.sql.Timestamp;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +41,8 @@ import com.ngdesk.repositories.RolesRepository;
 import com.ngdesk.websocket.approval.dao.Approval;
 import com.ngdesk.websocket.approval.dao.ApprovalService;
 import com.ngdesk.websocket.channels.chat.ChatChannelService;
+import com.ngdesk.websocket.channels.chat.ChatStatus;
+import com.ngdesk.websocket.channels.chat.ChatStatusService;
 import com.ngdesk.websocket.channels.chat.PageLoad;
 import com.ngdesk.websocket.dao.WebSocketService;
 import com.ngdesk.websocket.graphql.dao.GraphqlProxy;
@@ -86,6 +91,9 @@ public class SocketHandler extends TextWebSocketHandler {
 
 	@Autowired
 	ChatChannelService chatChannelService;
+
+	@Autowired
+	ChatStatusService chatStatusService;
 
 	@Autowired
 	private AuthProxy authProxy;
@@ -142,12 +150,18 @@ public class SocketHandler extends TextWebSocketHandler {
 					if (role.isPresent()) {
 						if (!role.get().getName().equalsIgnoreCase("Customer")) {
 
-							ConcurrentHashMap<String, ConcurrentLinkedQueue<WebSocketSession>> userSessions = sessionService.sessions
+							ConcurrentHashMap<String, UserSessions> companySessions = sessionService.sessions
 									.computeIfAbsent(subdomain,
-											newSession -> new ConcurrentHashMap<String, ConcurrentLinkedQueue<WebSocketSession>>());
-							ConcurrentLinkedQueue<WebSocketSession> sessions = userSessions.computeIfAbsent(
-									user.getUserId(), newSession -> new ConcurrentLinkedQueue<WebSocketSession>());
-							sessions.add(session);
+											newSession -> new ConcurrentHashMap<String, UserSessions>());
+							UserSessions userSessions = companySessions.computeIfAbsent(user.getUserId(),
+									newSession -> new UserSessions());
+							if (userSessions.getSessions() != null) {
+								userSessions.getSessions().add(session);
+							} else {
+								ConcurrentLinkedQueue<WebSocketSession> sessions = new ConcurrentLinkedQueue<WebSocketSession>();
+								sessions.add(session);
+								userSessions.setSessions(sessions);
+							}
 						}
 					}
 				} catch (Exception e) {
@@ -193,13 +207,17 @@ public class SocketHandler extends TextWebSocketHandler {
 			} else if (queryParamMap.containsKey("sessionUUID") && queryParamMap.containsKey("subdomain")) {
 				String sessionUUID = queryParamMap.get("sessionUUID");
 				subdomain = queryParamMap.get("subdomain");
-				ConcurrentHashMap<String, ConcurrentLinkedQueue<WebSocketSession>> sessionUUIDSessions = sessionService.sessions
-						.computeIfAbsent(sessionUUID,
-								newSession -> new ConcurrentHashMap<String, ConcurrentLinkedQueue<WebSocketSession>>());
-
-				ConcurrentLinkedQueue<WebSocketSession> sessions = sessionUUIDSessions.computeIfAbsent(subdomain,
-						newSession -> new ConcurrentLinkedQueue<WebSocketSession>());
-				sessions.add(session);
+				ConcurrentHashMap<String, UserSessions> sessionUUIDSessions = sessionService.sessions
+						.computeIfAbsent(sessionUUID, newSession -> new ConcurrentHashMap<String, UserSessions>());
+				UserSessions userSessions = sessionUUIDSessions.computeIfAbsent(subdomain,
+						newSession -> new UserSessions());
+				if (userSessions.getSessions() != null) {
+					userSessions.getSessions().add(session);
+				} else {
+					ConcurrentLinkedQueue<WebSocketSession> sessions = new ConcurrentLinkedQueue<WebSocketSession>();
+					sessions.add(session);
+					userSessions.setSessions(sessions);
+				}
 			} else {
 				session.close();
 			}
@@ -233,11 +251,19 @@ public class SocketHandler extends TextWebSocketHandler {
 				User user = authProxy.getUserDetails(authToken);
 
 				if (user != null) {
-					ConcurrentHashMap<String, ConcurrentLinkedQueue<WebSocketSession>> userSessions = sessionService.sessions
-							.get(subdomain);
-					userSessions.get(user.getUserId()).remove(session);
+					ConcurrentHashMap<String, UserSessions> userSessions = sessionService.sessions.get(subdomain);
+					userSessions.get(user.getUserId()).getSessions().remove(session);
 
-					if (sessionService.sessions.get(subdomain).get(user.getUserId()).size() == 0) {
+					RMap<Timestamp, Map<String, Object>> usersMap = redisson.getMap("disconnectedUsers");
+					Map<String, Object> userMap = new HashMap<String, Object>();
+					userMap.put("USER_ID", user.getUserId());
+					userMap.put("SUBDOMAIN", subdomain);
+					Calendar cal = Calendar.getInstance();
+					cal.setTimeInMillis(new Date().getTime());
+					cal.add(Calendar.MILLISECOND, 1);
+					usersMap.put(new Timestamp(cal.getTime().getTime()), userMap);
+
+					if (sessionService.sessions.get(subdomain).get(user.getUserId()).getSessions().size() == 0) {
 						sessionService.sessions.get(subdomain).remove(user.getUserId());
 					}
 					if (sessionService.sessions.get(subdomain).size() == 0) {
@@ -335,6 +361,15 @@ public class SocketHandler extends TextWebSocketHandler {
 													user.getUserUuid());
 
 										} catch (Exception e5) {
+
+											try {
+												ChatStatus chatStatus = mapper.readValue(textMessage.getPayload(),
+														ChatStatus.class);
+												chatStatusService.updateChatStatus(chatStatus);
+
+											} catch (Exception e6) {
+
+											}
 
 										}
 									}

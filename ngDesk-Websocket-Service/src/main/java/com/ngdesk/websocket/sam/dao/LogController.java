@@ -15,6 +15,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ngdesk.repositories.CompaniesRepository;
 import com.ngdesk.repositories.LogsRepository;
+import com.ngdesk.websocket.UserSessions;
 import com.ngdesk.websocket.SessionService;
 import com.ngdesk.websocket.companies.dao.Company;
 
@@ -52,10 +53,9 @@ public class LogController {
 		if (!sessionService.sessions.containsKey(company.getCompanySubdomain())) {
 			return;
 		}
-		ConcurrentHashMap<String, ConcurrentLinkedQueue<WebSocketSession>> sessions = sessionService.sessions
-				.get(company.getCompanySubdomain());
+		ConcurrentHashMap<String, UserSessions> sessions = sessionService.sessions.get(company.getCompanySubdomain());
 		for (String userId : sessions.keySet()) {
-			ConcurrentLinkedQueue<WebSocketSession> userSessions = sessions.get(userId);
+			ConcurrentLinkedQueue<WebSocketSession> userSessions = sessions.get(userId).getSessions();
 			userSessions.forEach(session -> {
 				try {
 					String payload = mapper.writeValueAsString(log);

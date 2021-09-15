@@ -6,18 +6,18 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @JsonInclude(Include.NON_NULL)
 public class ChatStatus {
-	
+
 	@JsonProperty("USER_ID")
 	String userId;
-	
+
 	@JsonProperty("COMPANY_SUBDOMAIN")
 	String subdomain;
-	
+
 	@JsonProperty("ACCEPTING_CHATS")
 	boolean accepting;
-	
+
 	public ChatStatus() {
-		
+
 	}
 
 	public ChatStatus(String userId, String subdomain, boolean accepting) {
@@ -49,6 +49,11 @@ public class ChatStatus {
 
 	public void setAccepting(boolean accepting) {
 		this.accepting = accepting;
+	}
+
+	@Override
+	public String toString() {
+		return "ChatStatus [userId=" + userId + ", subdomain=" + subdomain + ", accepting=" + accepting + "]";
 	}
 
 }
