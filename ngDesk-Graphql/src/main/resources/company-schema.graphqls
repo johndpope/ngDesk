@@ -941,7 +941,7 @@ type Category{
 
 type Escalation{
 
-   esclalationId: String
+   escalationId: String
    name: String
    description: String
    rules: [EscalationRule]
