@@ -9,7 +9,7 @@ import { ModulesService } from '../../../modules/modules.service';
 import { UsersService } from '../../../users/users.service';
 import { GuideService } from '../../guide.service';
 import { RolesService } from 'src/app/roles/roles.service';
-import { ArticleApiService } from '@ngdesk/knowledgebase-api';
+import { ArticleApiService, CommentMessage } from '@ngdesk/knowledgebase-api';
 
 @Component({
 	selector: 'app-render-articles',
@@ -30,7 +30,7 @@ export class RenderArticlesComponent implements OnInit {
 	public isPublicArticle = true;
 	public authToken = this.usersService.getAuthenticationToken();
 	public roleName: string;
-	public commentMessages;
+	public commentMessage = [];
 	constructor(
 		private route: ActivatedRoute,
 		private modulesService: ModulesService,
@@ -58,7 +58,7 @@ export class RenderArticlesComponent implements OnInit {
 	public ngOnInit() {
 		this.route.params.subscribe((params) => {
 			this.loading = true;
-			this.article['TITLE'] = this.route.snapshot.params['ARTICLENAME'];
+			this.article['TITLE'] = this.route.snapshot.params['articleName'];
 			this.sectionId = this.route.snapshot.params['sectionId'];
 			this.getArticle();
 			this.hasCommentAccess = this.usersService.getAuthenticationToken()
@@ -82,8 +82,9 @@ export class RenderArticlesComponent implements OnInit {
 
 				// find article in section articles
 				const articleMatchedByTitle = this.sectionArticles.find(
-					(art) => art.title === this.article['TITLE']
+					(art) => art.TITLE === this.article['TITLE']
 				);
+
 				// need to make get individual article call for returning attachments with uuid
 				this.guideService
 					.getKbArticleById(articleMatchedByTitle.ARTICLE_ID)
@@ -157,8 +158,6 @@ export class RenderArticlesComponent implements OnInit {
 
 	private getAuthorName(): void {
 		let user = this.article;
-		//console.log('user', user);
-
 		this.article[
 			'AUTHOR'
 		] = `${user['AUTHOR'].CONTACT.FIRST_NAME} ${user['AUTHOR'].CONTACT.LAST_NAME}`;
@@ -220,8 +219,9 @@ export class RenderArticlesComponent implements OnInit {
 
 		if (this.comment['MESSAGE'] !== undefined) {
 			this.loading = true;
+			console.log('this.commentMessage.........', this.commentMessage);
 			this.articleApiService
-				.postComments(this.article['ARTICLE_ID'], this.commentMessages)
+				.postComments(this.article['ARTICLE_ID'], this.commentMessage)
 				.subscribe(
 					(response: any) => {
 						console.log('message.............', response);
@@ -244,7 +244,6 @@ export class RenderArticlesComponent implements OnInit {
 	}
 
 	public goToEditArticle(): void {
-		console.log('...............', this.article);
 		// go to edit article page
 		this.router.navigate([
 			'guide',

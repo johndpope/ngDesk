@@ -143,10 +143,7 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 	public ngOnInit() {
 		this.route.params.subscribe((params) => {
 			this.isFormCreate = false;
-			console.log('this.route', this.route);
 			this.articleId = this.route.snapshot.params['articleId'];
-			console.log('articleId------->', this.articleId);
-
 			// get users
 			this.companyInfoSubscription =
 				this.cacheService.companyInfoSubject.subscribe(
@@ -277,7 +274,7 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 										if (this.guideService.sectionId) {
 											// pre filling the section
 											this.articleForm
-												.get('SECTION')
+												.get('section')
 												.setValue(this.guideService.sectionId);
 										}
 									}
@@ -491,11 +488,8 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 	}
 
 	public save() {
-		// console.log('articleForm', this.articleForm.value);
-		console.log('response for put');
 		this.teamChipList.errorState = false;
 		if (this.articleForm.valid) {
-			// console.log('articleForm', this.articleForm.value);
 			const articleObj = JSON.parse(JSON.stringify(this.articleForm.value));
 
 			articleObj['author'] = articleObj['author'].DATA_ID;
@@ -504,7 +498,6 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 				'DATA_ID'
 			);
 			if (this.articleId === 'new') {
-				console.log('articleObj', articleObj);
 				this.articleApiService.postArticle(articleObj).subscribe(
 					(article: any) => {
 						//	this.companiesService.trackEvent('Added a new article');
