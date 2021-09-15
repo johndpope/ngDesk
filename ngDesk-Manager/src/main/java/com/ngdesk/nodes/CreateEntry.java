@@ -166,19 +166,6 @@ public class CreateEntry extends Node {
 							value = obj;
 						}
 					}
-				} else {
-
-					Document dataType = (Document) fieldDocument.get("DATA_TYPE");
-					if (dataType.getString("DISPLAY").equals("Relationship")) {
-						String relationshipType = fieldDocument.getString("RELATIONSHIP_TYPE");
-						if (relationshipType.equalsIgnoreCase("Many to Many")) {
-							value = val;
-						} else {
-							value = valuePattern;
-						}
-					} else {
-						value = valuePattern;
-					}
 				}
 
 				// CHECK FOR DISCUSSION FIELD

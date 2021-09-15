@@ -210,9 +210,6 @@ public class ParseEmail {
 					} else if (key.equals("body-html")) {
 						String htmlContent = inputMap.get(key);
 						email.put("BODY_HTML", htmlContent);
-					} else {
-//					    System.out.println("key: " + key);
-//					    System.out.println("value: " + inputMap.get(key));
 					}
 				}
 				email.put("CC_EMAILS", ccEmailsArr);
@@ -332,9 +329,6 @@ public class ParseEmail {
 							} else if (item.getFieldName().equalsIgnoreCase("body-html")) {
 								String htmlContent = decodeUTF8(item.getString().getBytes("ISO-8859-1"));
 								email.put("BODY_HTML", htmlContent);
-							} else {
-//        					    System.out.println("key: " + item.getFieldName());
-//        					    System.out.println("value: " + decodeUTF8(item.getString().getBytes("ISO-8859-1")));
 							}
 
 						} else {
@@ -472,8 +466,8 @@ public class ParseEmail {
 						if (ccEmail.endsWith(".ngdesk.com")) {
 							String companySubdomain = ccEmail.split("@")[1].split("\\.")[0];
 							log.trace("Subdomain: " + companySubdomain);
-							
-							// HARDCODED FIX FOR BLUEMSP-NEW 
+
+							// HARDCODED FIX FOR BLUEMSP-NEW
 							// TALK TO SHASHANK BEFORE MODIFYING
 							if (companySubdomain.equalsIgnoreCase("bluemsp-new")) {
 								companySubdomain = "subscribeit";
@@ -819,7 +813,6 @@ public class ParseEmail {
 			log.debug("Subdomain: " + subdomain);
 			log.debug("ChannelFound: " + channelFound);
 			log.debug("ChannelEmail: " + channelEmail);
-			
 
 			log.debug("Checking If: " + (channelFound && channelEmail != null & company != null
 					&& company.getString("VERSION").equals("v2")));

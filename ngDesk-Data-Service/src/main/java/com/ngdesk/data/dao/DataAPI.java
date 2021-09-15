@@ -163,7 +163,6 @@ public class DataAPI {
 			dataService.addToNotifyQueue(new NotificationMessage(module.getModuleId(),
 					authManager.getUserDetails().getCompanyId(), null, null));
 		});
-
 		return payload;
 	}
 

@@ -988,7 +988,7 @@ public class DataService {
 		}
 	}
 
-	public void isEditableTeam(String dataId,String name) {
+	public void isEditableTeam(String dataId, String name) {
 		Page<Role> roles = rolesRepository.findAll(PageRequest.of(0, 999),
 				"roles_" + authManager.getUserDetails().getCompanyId());
 		List<String> values = new ArrayList<String>();
@@ -1004,13 +1004,13 @@ public class DataService {
 				.filter(team -> team.get("_id").toString().equals(dataId)).findAny();
 
 		if (optionalTeam.isPresent()) {
-			 if(optionalTeam.get().get("NAME").equals("Global")||optionalTeam.get().get("NAME").equals("Public")) {
-				 throw new ForbiddenException("FORBIDDEN");
-			 }
-			
-			 else if(!values.contains(name)) {
+			if (optionalTeam.get().get("NAME").equals("Global") || optionalTeam.get().get("NAME").equals("Public")) {
+				throw new ForbiddenException("FORBIDDEN");
+			}
 
-			throw new ForbiddenException("FORBIDDEN");
+			else if (!values.contains(name)) {
+
+				throw new ForbiddenException("FORBIDDEN");
 			}
 
 		}
@@ -1659,6 +1659,7 @@ public class DataService {
 	}
 
 	public Map<String, Object> formatRelationship(Module module, Map<String, Object> payload) {
+
 		String[] ignored = { "LAST_UPDATED_BY", "CREATED_BY" };
 		List<String> ignoredFields = Arrays.asList(ignored);
 		List<ModuleField> relationshipFields = module.getFields().stream()

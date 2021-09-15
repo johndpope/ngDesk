@@ -223,8 +223,7 @@ public class RolesFieldPermissionsService {
 			}
 			if (entry.containsKey(fieldName) && displayType != null) {
 
-				if (field.getDefaultValue() != null) {
-
+				if (field.getDefaultValue() != null && !field.getDefaultValue().isEmpty()) {
 					if (displayType.equalsIgnoreCase("Phone")) {
 						BasePhone phone = mapper.readValue(mapper.writeValueAsString(entry.get(fieldName)),
 								BasePhone.class);
@@ -238,8 +237,9 @@ public class RolesFieldPermissionsService {
 						if (entry.get(fieldName) != null) {
 							String presentValue = entry.get(fieldName).toString();
 							String defaultValue = field.getDefaultValue().toString();
-							if ((field.getRelationshipType().equalsIgnoreCase("One To One")
-									|| field.getRelationshipType().equalsIgnoreCase("Many To One"))) {
+							if (displayType.equals("Relationship")
+									&& ((field.getRelationshipType().equalsIgnoreCase("One To One")
+											|| field.getRelationshipType().equalsIgnoreCase("Many To One")))) {
 								Map<String, Object> fieldValue = (Map<String, Object>) entry.get(fieldName);
 								presentValue = fieldValue.get("DATA_ID").toString();
 								if (!defaultValue.equalsIgnoreCase(presentValue)) {
@@ -253,6 +253,7 @@ public class RolesFieldPermissionsService {
 								for (Relationship value : values) {
 									presentValue = value.getDataId();
 									if (!defaultValue.equalsIgnoreCase(presentValue)) {
+
 										return true;
 									}
 								}
@@ -266,8 +267,8 @@ public class RolesFieldPermissionsService {
 				} else {
 					if (displayType.equalsIgnoreCase("List Text")
 							|| field.getDataType().getDisplay().equalsIgnoreCase("Picklist (Multi-Select)")
-							|| (field.getDataType().getDisplay().equals("Relationship")
-									&& field.getRelationshipType().equals("Many to Many"))) {
+							|| ((field.getDataType().getDisplay().equals("Relationship")
+									&& field.getRelationshipType().equals("Many to Many")))) {
 						List<String> fieldValues = (List<String>) entry.get(fieldName);
 						if (fieldValues.size() > 0) {
 							return true;
