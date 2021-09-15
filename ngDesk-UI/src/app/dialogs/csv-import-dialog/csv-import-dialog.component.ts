@@ -30,7 +30,7 @@ export class CsvImportDialogComponent implements OnInit {
 		headers: [],
 	};
 	public separator;
-	public separators = ['/', '-'];
+	public separators = ['-', 'space'];
 	public phonefield: boolean;
 	constructor(
 		@Inject(MAT_DIALOG_DATA) public data: any,
@@ -64,33 +64,6 @@ export class CsvImportDialogComponent implements OnInit {
 		});
 		this.selectedFields = selectedFieldsDropdown;
 	}
-	// public test(event) {
-	// 	console.log(event.value, this.fields);
-	// 	const selectedField = this.headers.find(
-	// 		(f) => f.name === event.value
-	// 	);
-
-	// 	const variable  = this.headers.forEach(element => {
-
-	// 	});
-	// 	this.fields.forEach((element) => {
-	// 		console.log(
-	// 			'hit 1',
-	// 			element.DISPLAY_LABEL,
-	// 			event.value,
-	// 			element.DISPLAY_LABEL === event.value
-	// 		);
-
-	// 		if (event.value === element.DISPLAY_LABEL) {
-	// 			console.log('hit 2');
-
-	// 			if (element.DATA_TYPE.DISPLAY === 'Phone') {
-	// 				console.log('hit 3');
-	// 				this.phonefield = true;
-	// 			}
-	// 		}
-	// 	});
-	// }
 
 	public onImportCsv(): void {
 		if (Object.keys(this.headerMap).length === 0) {
