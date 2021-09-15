@@ -136,7 +136,7 @@ export class EscalationsMasterComponent implements OnInit {
 		const query = `{
 			escalations: getEscalations(pageNumber: ${page}, pageSize: ${pageSize}, sortBy: "${sortBy}", orderBy: "${orderBy}") {
 				name
-				esclalationId
+				escalationId
 			}
 			totalCount: getEscalationsCount
 		}`;
@@ -176,11 +176,11 @@ export class EscalationsMasterComponent implements OnInit {
 		dialogRef.afterClosed().subscribe(result => {
 			if (result === this.translateService.instant('DELETE')) {
 				this.escalationApiService
-					.deleteEscalation(escalation.esclalationId)
+					.deleteEscalation(escalation.escalationId)
 					.subscribe(
 						(escalationsResponse: any) => {
 							this.companiesService.trackEvent(`Deleted Escalation`, {
-								ESCALATION_ID: escalation.esclalationId
+								ESCALATION_ID: escalation.escalationId
 							});
 							this.getEscalations();
 						},
@@ -196,7 +196,7 @@ export class EscalationsMasterComponent implements OnInit {
 
 	public rowClicked(rowData): void {
 		// clicking on table row will redirect to escalation detail
-		this.router.navigate([`escalations/${rowData.esclalationId}`]);
+		this.router.navigate([`escalations/${rowData.escalationId}`]);
 	}
 
 	public newEscalation(): void {

@@ -104,6 +104,7 @@ export class EscalationsService {
 	public getEscalation(escalationId) {
 		const query = `{
 			escalation: getEscalation(escalationId: "${escalationId}") {
+				ESCALATION_ID: escalationId
 				NAME: name
 				DESCRIPTION: description
 				RULES: rules {
