@@ -413,6 +413,7 @@ export class SearchBarComponent implements OnChanges {
 							VALUE: entry['NAME'],
 							TYPE: 'entry',
 							NAME: previousField['NAME'],
+							DATA_ID: entry['ID'],
 						});
 					} else {
 						this.fieldOptions.push({
