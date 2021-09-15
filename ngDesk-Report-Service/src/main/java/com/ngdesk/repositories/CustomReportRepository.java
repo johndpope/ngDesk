@@ -14,6 +14,6 @@ public interface CustomReportRepository {
 
 	public Optional<Map<String, Object>> findByCollectionNameAndUuid(String uuid, String collectionName);
 
-	public Optional<List<Report>> findByCollectionName(String collectionName);
+	public List<Report> findByCollectionName(String collectionName);
 
 }

@@ -865,4 +865,26 @@ export class ModulesService {
 	public getCsvLog(dataId) {
 		return this.http.get(`${this.globals.baseRestUrl}/import/csv/${dataId}`);
 	}
+
+	public getModulesFromGraphql() {
+		const query = `{
+			MODULES:getModules(pageNumber:0, pageSize:50) {
+				  MODULE_ID:moduleId
+				  NAME:name
+				  FIELDS:fields{
+					  FIELD_ID:fieldId
+					  NAME: name
+					  MODULE: module
+					  DISPLAY_LABEL:displayLabel
+						  DATA_TYPE:dataType{
+								  DISPLAY:display
+								  BACKEND:backend
+							  }
+							  RELATIONSHIP_TYPE:relationshipType
+				  }
+				
+			  }
+		  }`;
+		return this.http.post(`${this.globals.graphqlUrl}`, query);
+	}
 }

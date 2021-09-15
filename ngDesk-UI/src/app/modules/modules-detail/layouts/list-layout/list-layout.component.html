@@ -11,8 +11,8 @@
 	<div fxLayoutGap="10px" formGroupName="ORDER_BY">
 		<mat-form-field>
 			<mat-select placeholder="{{'ORDER_BY' | translate}}" formControlName="COLUMN" required>
-				<mat-option *ngFor="let column of shownColumns" [value]="column.FIELD_ID">
-					{{column.DISPLAY_LABEL}}
+				<mat-option *ngFor="let column of shownColumns | orderBy" [value]="column.FIELD_ID">
+					<span *ngIf="column.DISPLAY_LABEL.indexOf('.') === -1">{{column.DISPLAY_LABEL}}</span>
 				</mat-option>
 			</mat-select>
 			<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params.orderBy"></mat-error>
@@ -27,5 +27,61 @@
 			<mat-error [innerHTML]="'FIELD_REQUIRED' | translate:params.order"></mat-error>
 		</mat-form-field>
 	</div>
-	<app-drag-drop-fields [availableFields]="availableFields" [shownColumns]="shownColumns"></app-drag-drop-fields>
+	<!-- Drag and Drop -->
+	<div cdkDropListGroup>
+		<div fxLayout="row">
+			<!-- AVAILABLE List of fields -->
+			<div class="columns-container" fxLayout="column">
+				<h2 class="mat-body light-grey-color" style="font-size: 18px;">{{'AVAILABLE' | translate}}</h2>
+
+				<div cdk-scrollable cdkDropList #columnAvailableList="cdkDropList" [cdkDropListData]="availableFields" class="dragColumn-list"
+					(cdkDropListDropped)="drop($event)">
+					<div class="columns-box mat-body" *ngFor="let availableField of availableFields" cdkDrag>
+						<label *ngIf="availableField.RELATIONSHIP_TYPE===null">{{availableField.DISPLAY_LABEL}}</label>
+						<ng-container *ngTemplateOutlet="dynamicMenu; context: {field: availableField, index: i, item: action}"></ng-container>
+					</div>
+				</div>
+			</div>
+			<div fxFlex="5"></div>
+			<!-- SHOWN List of fields -->
+			<div class="columns-container" fxLayout="column">
+				<div fxLayout="column">
+					<h2 class="mat-body light-grey-color" style="font-size: 18px;">{{'SHOWN' | translate}}</h2>
+					<div fxLayout="column" cdk-scrollable cdkDropList #columnShowList="cdkDropList" [cdkDropListData]="shownColumns"
+						class="dropColumn-list" (cdkDropListDropped)="drop($event)">
+						<div class="columns-box mat-body" *ngFor="let shownColumn of shownColumns" cdkDrag>{{shownColumn.DISPLAY_LABEL}}
+						</div>
+					</div>
+				</div>
+				<!-- display message when Shown List is Empty -->
+				<div class="mat-body" cdkDropList #columnShowList="cdkDropList" [cdkDropListData]="shownColumns" (cdkDropListDropped)="drop($event)"
+					fxLayoutAlign="center center" fxFlex
+					style="background-color:#ececec;border: dashed;border-color:lightgrey;color:grey;border-radius: 4px;height:30px;">
+					{{'DRAG_COLUMN_HERE' | translate}}
+				</div>
+			</div>
+		</div>
+	</div>
 </form>
+
+<!-- Dynamic menu for relationship objects -->
+<ng-template #dynamicMenu let-field="field" let-index="j" let-item="item">
+	<div class="mat-body" *ngIf="field.RELATIONSHIP_TYPE !== null && field.RELATIONSHIP_TYPE !== 'Many to Many'" fxFlex
+		[matMenuTriggerFor]="relationshipVars" fxLayoutAlign="space-between center">{{field.DISPLAY_LABEL}} <mat-icon>chevron_right</mat-icon>
+	</div>
+	<mat-menu #relationshipVars="matMenu">
+		<ng-container *ngFor="let relField of allModules[field.MODULE]; index as j">
+			<button *ngIf="!allModules[relField.MODULE]" mat-menu-item
+				(click)="addToShowColumns(field, relField)">{{relField.DISPLAY_LABEL}}</button>
+			<button
+				*ngIf="relField.RELATIONSHIP_TYPE !== null && relField.RELATIONSHIP_TYPE !== 'Many to Many' && relField.RELATIONSHIP_TYPE !== 'One to Many' && allModules[relField.MODULE]"
+				[matMenuTriggerFor]="nestedRelationshipVars" mat-menu-item>{{relField.DISPLAY_LABEL}}</button>
+			<mat-menu #nestedRelationshipVars="matMenu">
+				<ng-container *ngFor="let nestedFields of allModules[relField.MODULE]; index as j">
+					<button *ngIf="nestedFields.DATA_TYPE && nestedFields.DATA_TYPE.DISPLAY !== 'Relationship'" mat-menu-item
+						(click)="addToShowColumns(field, relField, nestedFields)">{{nestedFields.DISPLAY_LABEL}}</button>
+				</ng-container>
+			</mat-menu>
+		</ng-container>
+	</mat-menu>
+</ng-template>
