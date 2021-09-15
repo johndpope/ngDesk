@@ -7,10 +7,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.bson.types.ObjectId;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import com.ngdesk.data.elastic.ElasticMessage;
@@ -18,9 +20,12 @@ import com.ngdesk.repositories.CompaniesRepository;
 import com.ngdesk.repositories.ModuleEntryRepository;
 import com.ngdesk.repositories.ModulesRepository;
 import com.ngdesk.repositories.RolesRepository;
+import com.ngdesk.websocket.SessionService;
+import com.ngdesk.websocket.UserSessions;
 import com.ngdesk.websocket.companies.dao.Company;
 import com.ngdesk.websocket.companies.dao.Phone;
 import com.ngdesk.websocket.modules.dao.Module;
+import com.ngdesk.websocket.notification.dao.Notification;
 import com.ngdesk.websocket.roles.dao.Role;
 
 @Component
@@ -42,16 +47,22 @@ public class ChatUserEntryService {
 	CompaniesRepository companiesRepository;
 
 	@Autowired
-	ModuleEntryRepository moduleEntryRepository;
+	RedisTemplate<String, Notification> redisTemplate;
 
-	public void ChatUserEntryCreation(ChatUser chatUserEntry) {
+	@Autowired
+	SessionService sessionService;
+
+	@Autowired
+	FindAgentAndAssign findAgentAndAssign;
+
+	public void ChatUserEntryCreation(ChatUser chatUser) {
 		try {
-			Optional<Company> optionalCompany = companiesRepository
-					.findCompanyBySubdomain(chatUserEntry.getSubDomain());
+			Optional<Company> optionalCompany = companiesRepository.findCompanyBySubdomain(chatUser.getSubDomain());
 			if (optionalCompany.isPresent()) {
 				Company company = optionalCompany.get();
-				if (chatUserEntry.getEmailAddress() != null) {
-					createOrGetUser(company, chatUserEntry);
+				if (chatUser.getEmailAddress() != null) {
+					Map<String, Object> user = createOrGetUser(company, chatUser);
+					findAgentAndAssign.AssignChat(company, chatUser, user);
 				}
 			}
 		} catch (Exception e) {
