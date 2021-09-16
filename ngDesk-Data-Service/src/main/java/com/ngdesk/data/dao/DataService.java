@@ -293,7 +293,7 @@ public class DataService {
 				String[] fields = path.split("\\.");
 				ModuleField moduleField = moduleFields.stream().filter(field -> field.getName().equals(fields[0]))
 						.findFirst().orElse(null);
-				if (moduleField.getDataType().getDisplay().equals("Formula")) {
+				if (moduleField != null && moduleField.getDataType().getDisplay().equals("Formula")) {
 					String updatedFormula = getFormulaRecursively(moduleField, moduleFields);
 					formula = formula.replaceAll("\\{\\{" + matcher.group(1) + "\\}\\}", "(" + updatedFormula + ")");
 				}
@@ -988,7 +988,7 @@ public class DataService {
 		}
 	}
 
-	public void isEditableTeam(String dataId,String name) {
+	public void isEditableTeam(String dataId, String name) {
 		Page<Role> roles = rolesRepository.findAll(PageRequest.of(0, 999),
 				"roles_" + authManager.getUserDetails().getCompanyId());
 		List<String> values = new ArrayList<String>();
@@ -1004,13 +1004,13 @@ public class DataService {
 				.filter(team -> team.get("_id").toString().equals(dataId)).findAny();
 
 		if (optionalTeam.isPresent()) {
-			 if(optionalTeam.get().get("NAME").equals("Global")||optionalTeam.get().get("NAME").equals("Public")) {
-				 throw new ForbiddenException("FORBIDDEN");
-			 }
-			
-			 else if(!values.contains(name)) {
+			if (optionalTeam.get().get("NAME").equals("Global") || optionalTeam.get().get("NAME").equals("Public")) {
+				throw new ForbiddenException("FORBIDDEN");
+			}
 
-			throw new ForbiddenException("FORBIDDEN");
+			else if (!values.contains(name)) {
+
+				throw new ForbiddenException("FORBIDDEN");
 			}
 
 		}

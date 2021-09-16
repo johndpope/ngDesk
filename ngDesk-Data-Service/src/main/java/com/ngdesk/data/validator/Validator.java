@@ -381,7 +381,6 @@ public class Validator {
 							List<String> relatedEntryIds = mapper.readValue(
 									mapper.writeValueAsString(entry.get(fieldName)),
 									mapper.getTypeFactory().constructCollectionType(List.class, String.class));
-
 							for (String entryId : relatedEntryIds) {
 								if (entryId.isBlank() || !ObjectId.isValid(entryId)) {
 									throw new BadRequestException("BASE_TYPE_RELATIONSHIP_ENTRIES_INVALID", vars);
