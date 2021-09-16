@@ -1072,6 +1072,7 @@
 									</mat-option>
 								</mat-select>
 							</mat-form-field>
+							<a style="top: 10px;" *ngIf="workflows.length == 0" mat-button (click)="createNew()">Create new workflow</a>
 						</div>
 					</div>
 					<!--File upload-->
