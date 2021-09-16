@@ -1,5 +1,6 @@
 package com.ngdesk.data.csvimport.dao;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -11,6 +12,8 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ngdesk.commons.exceptions.BadRequestException;
 import com.ngdesk.commons.exceptions.InternalErrorException;
@@ -185,7 +188,6 @@ public class CsvImportService {
 	public Map<String, Object> createModuleData(String companyId, String moduleName, Map<String, Object> body,
 			String userUuid) {
 		Map<String, Object> data = new HashMap<String, Object>();
-		ObjectMapper mapper = new ObjectMapper();
 
 		try {
 			Optional<Module> optionalModule = modulesRepository.findIdbyModuleName(moduleName,
@@ -328,6 +330,23 @@ public class CsvImportService {
 			relationshipList.add(relationship);
 		}
 		return relationshipList;
+	}
+
+	public void updateUsersInTeamsEntry(String value, String userId, Module teamsModule, String companyId,
+			HashMap<String, Object> entry, String userUuid) {
+		ObjectMapper mapper = new ObjectMapper();
+
+		try {
+			List<String> users = mapper.readValue(value,
+					mapper.getTypeFactory().constructCollectionType(List.class, String.class));
+			users.add(userId);
+
+			List<Relationship> usersRelationship = getListRelationshipValue("USERS", teamsModule, companyId, users);
+			entry.put("USERS", usersRelationship);
+			dataAPI.putModuleEntry(entry, teamsModule.getModuleId(), true, companyId, userUuid, false);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

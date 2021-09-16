@@ -525,7 +525,6 @@ public class CsvImportJob {
 											Optional<Module> optionalTeamsModule = modulesRepository.findIdbyModuleName(
 													"Teams", moduleService.getCollectionName("modules", companyId));
 											Module teamsModule = optionalTeamsModule.get();
-											String teamsModuleId = teamsModule.getModuleId();
 											String userId = "";
 
 											if (optionalUser.isPresent()) {
@@ -540,18 +539,8 @@ public class CsvImportJob {
 												personalTeam.putAll(optionalPersonalTeam.get());
 												personalTeam.put("DELETED", false);
 
-												List<Relationship> users = new ArrayList<Relationship>();
-												String primaryDisplayFieldValue = csvImportService
-														.getPrimaryDisplayFieldValue("USERS", teamsModule, companyId,
-																userId)
-														.toString();
-												Relationship userRelationship = new Relationship(userId,
-														primaryDisplayFieldValue);
-												users.add(userRelationship);
-												personalTeam.put("USERS", users);
-												System.out.println("csv hit 1");
-												dataAPI.putModuleEntry(personalTeam, teamsModuleId, true, companyId,
-														userUuid, false);
+												csvImportService.updateUsersInTeamsEntry(Arrays.asList().toString(),
+														userId, teamsModule, companyId, personalTeam, userUuid);
 
 												userEntry.put("DELETED", false);
 												List<String> existingTeams = mapper.readValue(
@@ -637,31 +626,13 @@ public class CsvImportJob {
 												dataAPI.putModuleEntry(userEntry, module.getModuleId(), true, companyId,
 														userUuid, false);
 											}
-											List<String> globalUsers = mapper.readValue(
-													globalTeam.get("USERS").toString(), mapper.getTypeFactory()
-															.constructCollectionType(List.class, String.class));
-											globalUsers.add(userId);
 
-											List<Relationship> globalUsersRelationship = csvImportService
-													.getListRelationshipValue("USERS", teamsModule, companyId,
-															globalUsers );
-											globalTeam.put("USERS", globalUsersRelationship);
-											System.out.println("csv hit 4");
-											dataAPI.putModuleEntry(globalTeam, teamsModuleId, true, companyId, userUuid,
-													false);
+											csvImportService.updateUsersInTeamsEntry(globalTeam.get("USERS").toString(),
+													userId, teamsModule, companyId, globalTeam, userUuid);
 
-											List<String> roleTeamUsers = mapper
-													.readValue(roleTeam.get("USERS").toString(), mapper.getTypeFactory()
-															.constructCollectionType(List.class, String.class));
-											roleTeamUsers.add(userId);
+											csvImportService.updateUsersInTeamsEntry(roleTeam.get("USERS").toString(),
+													userId, teamsModule, companyId, roleTeam, userUuid);
 
-											List<Relationship> roleUsersRelationship = csvImportService
-													.getListRelationshipValue("USERS", teamsModule, companyId,
-															roleTeamUsers);
-											roleTeam.put("USERS", roleUsersRelationship);
-											System.out.println("csv hit 5");
-											dataAPI.putModuleEntry(roleTeam, teamsModuleId, true, companyId, userUuid,
-													false);
 										} catch (Exception e) {
 											e.printStackTrace();
 											CsvImportLog log = new CsvImportLog();
