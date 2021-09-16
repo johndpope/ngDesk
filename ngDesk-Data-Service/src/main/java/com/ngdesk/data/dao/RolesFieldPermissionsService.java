@@ -234,7 +234,7 @@ public class RolesFieldPermissionsService {
 							}
 						}
 					} else {
-						if (entry.get(fieldName) != null) {
+						if (entry.get(fieldName) != null && entry.get(fieldName).toString().isEmpty() ) {
 							String presentValue = entry.get(fieldName).toString();
 							String defaultValue = field.getDefaultValue().toString();
 							if (displayType.equals("Relationship")
