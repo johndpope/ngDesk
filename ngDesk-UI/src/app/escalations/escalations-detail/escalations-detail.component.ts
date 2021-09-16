@@ -147,7 +147,6 @@ export class EscalationsDetailComponent implements OnInit {
 								this.escalationService
 									.getEscalation(this.escalationId).subscribe(
 										(escalationResponse: Escalation) => {
-											console.log("1", escalationResponse);
 											this.escalation = escalationResponse['escalation'];
 											this.escalationForm.controls.NAME.setValue(
 												this.escalation.NAME

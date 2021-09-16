@@ -118,19 +118,6 @@ export class EscalationsService {
 				}
 				DATE_CREATED: dateCreated
 				DATE_UPDATED: dateUpdated
-				CREATED_BY: createdBy {
-					DATA_ID: _id
-					CONTACT {
-						PRIMARY_DISPLAY_FIELD: FULL_NAME
-						DATA_ID: _id
-					}
-				}
-				LAST_UPDATED_BY: lastUpdatedBy {
-					DATA_ID: _id
-					CONTACT {
-						FULL_NAME
-					}
-				}
 			}
 		}`;
 		
