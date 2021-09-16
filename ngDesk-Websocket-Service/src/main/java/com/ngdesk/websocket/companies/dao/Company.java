@@ -20,10 +20,6 @@ public class Company {
 	@JsonProperty("PHONE")
 	private Phone phone;
 
-	@JsonProperty("MAX_CHATS_PER_AGENT")
-	@Field("MAX_CHATS_PER_AGENT")
-	private int maxChatPerAgent = 5;
-
 	@JsonProperty("CHAT_SETTINGS")
 	@Field("CHAT_SETTINGS")
 	private ChatSettings chatSettings;
@@ -32,12 +28,11 @@ public class Company {
 
 	}
 
-	public Company(String id, String companySubdomain, Phone phone, int maxChatPerAgent, ChatSettings chatSettings) {
+	public Company(String id, String companySubdomain, Phone phone, ChatSettings chatSettings) {
 		super();
 		this.id = id;
 		this.companySubdomain = companySubdomain;
 		this.phone = phone;
-		this.maxChatPerAgent = maxChatPerAgent;
 		this.chatSettings = chatSettings;
 	}
 
@@ -63,14 +58,6 @@ public class Company {
 
 	public void setPhone(Phone phone) {
 		this.phone = phone;
-	}
-
-	public int getMaxChatPerAgent() {
-		return maxChatPerAgent;
-	}
-
-	public void setMaxChatPerAgent(int maxChatPerAgent) {
-		this.maxChatPerAgent = maxChatPerAgent;
 	}
 
 	public ChatSettings getChatSettings() {

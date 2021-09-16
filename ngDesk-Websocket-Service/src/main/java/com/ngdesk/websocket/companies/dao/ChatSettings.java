@@ -10,6 +10,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ChatSettings {
 
+	@JsonProperty("MAX_CHATS_PER_AGENT")
+	@Field("MAX_CHATS_PER_AGENT")
+	private int maxChatPerAgent;
+
 	@Field("TEAMS_WHO_CAN_CHAT")
 	@JsonProperty("TEAMS_WHO_CAN_CHAT")
 	private List<String> teamsWhoCanChat;
@@ -20,19 +24,27 @@ public class ChatSettings {
 
 	@Field("CHAT_BUSINESS_RULES")
 	@JsonProperty("CHAT_BUSINESS_RULES")
-	@Valid
 	private ChatBusinessRules chatBusinessRules;
 
 	public ChatSettings() {
 
 	}
 
-	public ChatSettings(List<String> teamsWhoCanChat, Boolean hasRestrictions,
-			@Valid ChatBusinessRules chatBusinessRules) {
+	public ChatSettings(int maxChatPerAgent, List<String> teamsWhoCanChat, Boolean hasRestrictions,
+			ChatBusinessRules chatBusinessRules) {
 		super();
+		this.maxChatPerAgent = maxChatPerAgent;
 		this.teamsWhoCanChat = teamsWhoCanChat;
 		this.hasRestrictions = hasRestrictions;
 		this.chatBusinessRules = chatBusinessRules;
+	}
+
+	public int getMaxChatPerAgent() {
+		return maxChatPerAgent;
+	}
+
+	public void setMaxChatPerAgent(int maxChatPerAgent) {
+		this.maxChatPerAgent = maxChatPerAgent;
 	}
 
 	public List<String> getTeamsWhoCanChat() {

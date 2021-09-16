@@ -12,13 +12,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 public class ChatRestrictions {
 
-	@Schema(description = "Start time", required = false, example = "00:00")
+	@Schema(description = "Start time", required = true, example = "00:00")
 	@CustomNotNull(message = "START_TIME_CANNOT_BE_NULL", values = { "START_TIME" })
 	@Field("START_TIME")
 	@JsonProperty("START_TIME")
 	private String startTime;
 
-	@Schema(description = "End time", required = false, example = "00:00")
+	@Schema(description = "End time", required = true, example = "00:00")
 	@CustomNotNull(message = "END_TIME_CANNOT_BE_NULL", values = { "END_TIME" })
 	@Field("END_TIME")
 	@JsonProperty("END_TIME")

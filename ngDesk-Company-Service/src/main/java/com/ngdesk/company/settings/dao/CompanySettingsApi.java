@@ -58,19 +58,19 @@ public class CompanySettingsApi {
 					.findByCompanySubdomain(companySettings.getCompanySubdomain());
 			if (optionalCompany.isPresent()) {
 				Company company = optionalCompany.get();
-				if (companySettings.getMaxChatsPerAgent() <= 0 || companySettings.getMaxChatsPerAgent() > 5) {
-					throw new BadRequestException("MAX_NUMBER_OF_AGENTS_PER_CHAT", null);
-				}
-				company.setMaxChatsPerAgent(companySettings.getMaxChatsPerAgent());
+
 				companySettingsService.validTimezone(companySettings.getTimezone());
 				company.setTimezone(companySettings.getTimezone());
 				if (companySettings.getChatSettings() != null) {
 					ChatSettings chatSettings = companySettings.getChatSettings();
+					if (chatSettings.getMaxChatsPerAgent() <= 0 || chatSettings.getMaxChatsPerAgent() > 5) {
+						throw new BadRequestException("MAX_NUMBER_OF_CHATS_PER_AGENT", null);
+					}
 					companySettingsService.validateTeams(chatSettings, company);
 					companySettingsService.validRestrictions(chatSettings);
 					company.setChatSettings(chatSettings);
 				}
-				ChatSettingsMessage message = new ChatSettingsMessage(company.getCompanyId(),"CHAT_SETTINGS_UPDATED",
+				ChatSettingsMessage message = new ChatSettingsMessage(company.getCompanyId(), "CHAT_SETTINGS_UPDATED",
 						company.getChatSettings());
 				addToQueue(message);
 				return companyRepository.updateEntry(company, "companies");

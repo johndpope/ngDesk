@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 import com.ngdesk.commons.exceptions.BadRequestException;
 import com.ngdesk.commons.mail.SendMail;
+import com.ngdesk.company.settings.dao.ChatSettings;
 import com.ngdesk.repositories.CompanyRepository;
 import com.ngdesk.repositories.GalleryRepository;
 import com.ngdesk.repositories.LoginRepository;
@@ -287,6 +288,22 @@ public class CompanyService {
 		} catch (IOException e1) {
 
 			e1.printStackTrace();
+		}
+
+	}
+
+	public ChatSettings setChatSettings(Company company) {
+		if (company.getChatSettings() != null) {
+			ChatSettings chatSettings = company.getChatSettings();
+			if (chatSettings.getMaxChatsPerAgent() <= 0 || chatSettings.getMaxChatsPerAgent() > 5) {
+				throw new BadRequestException("MAX_NUMBER_OF_CHATS_PER_AGENT", null);
+			}
+			return chatSettings;
+		} else {
+			ChatSettings chatSettings = new ChatSettings();
+			chatSettings.setMaxChatsPerAgent(5);
+			return chatSettings;
+
 		}
 
 	}

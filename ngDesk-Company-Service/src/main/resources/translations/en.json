@@ -58,7 +58,7 @@
 	"INVALID_LICENSE_KEY": "This license key does not exist on our system please try again",
 	"COMPANY_TIMEZONE":"Company Timezone",
 	"TEAM_REQUIRED_CHAT_SETTINGS": "Atleast one team is required",
-	"MAX_NUMBER_OF_AGENTS_PER_CHAT": "Maximum number of agents must be between 1 - 5",
+	"MAX_NUMBER_OF_CHATS_PER_AGENT": "Maximum number of chats per agent must be between 1 - 5",
 	"INVALID_ROLE_SELECTED": "Invalid role selected",
 	"START_TIME_CANNOT_BE_NULL":"Start time cannot be null",
 	"END_TIME_CANNOT_BE_NULL":"End time cannot be null",
@@ -72,5 +72,6 @@
     "RESTRICTION_TYPE_REQUIRED" : "Please enter restriction type of Business and try again",
     "RESTRICTIONS_REQUIRED" : "Please enter restrictions of Business and try again",
     "START_TIME_AND_END_TIME_REQUIRED" : "Please enter Start Time and End Time and try again",
-    "START_DAY_AND_END_DAY_REQUIRED" : "Please enter Start Day and End Day and try again"
+    "START_DAY_AND_END_DAY_REQUIRED" : "Please enter Start Day and End Day and try again",
+    "MAX_CHATS_PER_AGENT_NOT_NULL":"Max chats per agent cannot be null"
 }

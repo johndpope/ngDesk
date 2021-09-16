@@ -763,11 +763,11 @@ type Company{
 	timezone: String
 	companyUuid: String	
 	accountLevelAccess: Boolean
-	maxChatsPerAgent: Int
 	chatSettings: ChatSettings
 	
 }
 type ChatSettings{
+	maxChatsPerAgent: Int
 	teamsWhoCanChat: [Teams]
 	hasRestrictions: Boolean
 	chatBusinessRules: ChatBusinessRules

@@ -33,15 +33,12 @@ public class Company {
 	@Field("CHAT_SETTINGS")
 	private ChatSettings chatSettings;
 
-	@Field("MAX_CHATS_PER_AGENT")
-	private int maxChatsPerAgent;
-
 	public Company() {
 
 	}
 
 	public Company(String companyId, String companySubdomain, String companyName, String companyUuid, String timezone,
-			String language, String accountLevelAccess, ChatSettings chatSettings, int maxChatsPerAgent) {
+			String language, String accountLevelAccess, ChatSettings chatSettings) {
 		super();
 		this.companyId = companyId;
 		this.companySubdomain = companySubdomain;
@@ -51,7 +48,6 @@ public class Company {
 		this.language = language;
 		this.accountLevelAccess = accountLevelAccess;
 		this.chatSettings = chatSettings;
-		this.maxChatsPerAgent = maxChatsPerAgent;
 	}
 
 	public String getCompanyId() {
@@ -116,14 +112,6 @@ public class Company {
 
 	public void setChatSettings(ChatSettings chatSettings) {
 		this.chatSettings = chatSettings;
-	}
-
-	public int getMaxChatsPerAgent() {
-		return maxChatsPerAgent;
-	}
-
-	public void setMaxChatsPerAgent(int maxChatsPerAgent) {
-		this.maxChatsPerAgent = maxChatsPerAgent;
 	}
 
 }

@@ -21,7 +21,7 @@ export class ToolbarService {
     public updateShowAcceptChat() {
         let authorizedUsers = [];
         this.getAuthorizedUsersForChat().subscribe((usersResponse: any) => {
-            if (usersResponse['DATA']['USERS'].length > 0) {
+            if (usersResponse['DATA'] !== null && usersResponse['DATA']['USERS'].length > 0) {
                 usersResponse['DATA']['USERS'].forEach(user => {
                     authorizedUsers.push(user.EMAIL_ADDRESS);
                 });

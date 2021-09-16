@@ -138,7 +138,7 @@ public class DataService {
 				}
 
 			} else {
-
+				
 				BoolQueryBuilder boolQueryBuilder1 = new BoolQueryBuilder();
 				boolQueryBuilder1.must().add(QueryBuilders.matchQuery("MODULE_ID", moduleId));
 				boolQueryBuilder1.must().add(QueryBuilders.matchQuery("COMPANY_ID", companyId));
@@ -149,11 +149,10 @@ public class DataService {
 				SearchRequest searchRequest1 = new SearchRequest();
 				searchRequest1.indices("field_lookup");
 				searchRequest1.source(sourceBuilder1);
-
 				SearchResponse searchResponse1 = elasticClient.search(searchRequest1, RequestOptions.DEFAULT);
-
 				SearchHits hits1 = searchResponse1.getHits();
 				SearchHit[] searchHits1 = hits1.getHits();
+
 
 				Map<String, String> fieldLookUpMap = new HashMap<String, String>();
 				for (SearchHit hit : searchHits1) {
@@ -178,7 +177,6 @@ public class DataService {
 				BoolQueryBuilder boolQueryBuilder = new BoolQueryBuilder();
 				for (String keyValue : keyValues) {
 					String key = keyValue.split("=")[0];
-
 					if (fieldLookUpMap.containsKey(key)) {
 						key = fieldLookUpMap.get(key).replaceAll("field", "value");
 					}
@@ -219,7 +217,6 @@ public class DataService {
 
 				sourceBuilder.query(boolQueryBuilder);
 
-				System.out.println(boolQueryBuilder);
 
 				SearchRequest searchRequest = new SearchRequest();
 				searchRequest.indices("field_search");

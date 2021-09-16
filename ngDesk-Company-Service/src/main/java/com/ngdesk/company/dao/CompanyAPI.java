@@ -34,6 +34,7 @@ import com.ngdesk.company.module.dao.ModuleService;
 import com.ngdesk.company.module.data.DataService;
 import com.ngdesk.company.role.dao.RoleService;
 import com.ngdesk.company.security.dao.CompanySecutiriesService;
+import com.ngdesk.company.settings.dao.ChatSettings;
 import com.ngdesk.company.sidebar.dao.SidebarService;
 import com.ngdesk.repositories.CompanyRepository;
 import com.ngdesk.repositories.ModuleEntryRepository;
@@ -92,7 +93,7 @@ public class CompanyAPI {
 
 	@Autowired
 	RabbitTemplate rabbitTemplate;
-	
+
 	@Autowired
 	private AuthManager authManager;
 
@@ -139,6 +140,7 @@ public class CompanyAPI {
 		company.setForgotPasswordMessage(companyService.getForgotPasswordMessage(company));
 		company.setCompanyId(companyService.getNewObjectId().toString());
 		company.setVersion("v2");
+		company.setChatSettings(companyService.setChatSettings(company));
 
 		companyRepository.save(company, "companies");
 		Map<String, String> rolesMap = roleService.postDefaultRoles(company);
@@ -190,7 +192,6 @@ public class CompanyAPI {
 		elasticService.loadModuleDataIntoFieldLookUp(company.getCompanyId());
 
 	}
-
 
 	public void publishToElastic(String companyId) {
 		try {

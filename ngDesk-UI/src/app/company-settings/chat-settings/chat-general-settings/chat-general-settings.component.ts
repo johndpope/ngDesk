@@ -37,9 +37,10 @@ export class ChatGeneralSettingsComponent implements OnInit {
 	};
 	public companySettings: CompanySettings = {
 		COMPANY_SUBDOMAIN: '',
-		MAX_CHATS_PER_AGENT: 0,
 		TIMEZONE: '',
-		CHAT_SETTINGS: {},
+		CHAT_SETTINGS: {
+			MAX_CHATS_PER_AGENT: 0
+		},
 
 	};
 	public teamsModule;
@@ -91,8 +92,8 @@ export class ChatGeneralSettingsComponent implements OnInit {
 					this.initializeScheduleDataScrollSubject();
 					const query = `{
 						COMPANY: getCompanyDetails {
-							MAX_CHATS_PER_AGENT: maxChatsPerAgent
 						  CHAT_SETTINGS: chatSettings {
+							MAX_CHATS_PER_AGENT: maxChatsPerAgent
 							TEAMS_WHO_CAN_CHAT: teamsWhoCanChat{
 								id: _id
 								name: NAME
@@ -116,9 +117,10 @@ export class ChatGeneralSettingsComponent implements OnInit {
 					this.makeGraphQLCall(query).subscribe(
 						(response: any) => {
 							this.timezone = response.COMPANY.TIMEZONE;
-							this.maxChatsPerAgent
-								= response.COMPANY.MAX_CHATS_PER_AGENT;
+
 							if (response.COMPANY.CHAT_SETTINGS !== undefined && response.COMPANY.CHAT_SETTINGS !== null) {
+								this.maxChatsPerAgent
+									= response.COMPANY.CHAT_SETTINGS.MAX_CHATS_PER_AGENT;
 								if (response.COMPANY.CHAT_SETTINGS.TEAMS_WHO_CAN_CHAT !== null) {
 									let currentTeams = [];
 									this.selectedTeams = response.COMPANY.CHAT_SETTINGS.TEAMS_WHO_CAN_CHAT;
@@ -153,7 +155,7 @@ export class ChatGeneralSettingsComponent implements OnInit {
 	public saveGeneralSettings() {
 		this.companySettings.COMPANY_SUBDOMAIN = this.usersService.getSubdomain();
 		this.companySettings.TIMEZONE = this.timezone;
-		this.companySettings.MAX_CHATS_PER_AGENT = this.maxChatsPerAgent;
+		this.companySettings.CHAT_SETTINGS.MAX_CHATS_PER_AGENT = this.maxChatsPerAgent;
 		let teams = [];
 		this.selectedTeams.forEach((team) => {
 			teams.push(team.id);
@@ -161,7 +163,7 @@ export class ChatGeneralSettingsComponent implements OnInit {
 		this.companySettings.CHAT_SETTINGS.TEAMS_WHO_CAN_CHAT = teams;
 		this.companySettings.CHAT_SETTINGS.HAS_RESTRICTIONS = this.hasRestrictions;
 		this.companySettings.CHAT_SETTINGS.CHAT_BUSINESS_RULES = this.chatBusinessRules;
-		if (this.companySettings.CHAT_SETTINGS.TEAMS_WHO_CAN_CHAT.length !== 0 && this.companySettings.MAX_CHATS_PER_AGENT !== 0) {
+		if (this.companySettings.CHAT_SETTINGS.TEAMS_WHO_CAN_CHAT.length !== 0 && this.companySettings.CHAT_SETTINGS.MAX_CHATS_PER_AGENT !== 0) {
 			this.companySettingsApiService
 				.putChatSettings(this.companySettings)
 				.subscribe(
@@ -187,7 +189,7 @@ export class ChatGeneralSettingsComponent implements OnInit {
 						'ATLEAST_ONE_TEAM'
 					),
 				});
-			} else if (this.companySettings.MAX_CHATS_PER_AGENT === 0) {
+			} else if (this.companySettings.CHAT_SETTINGS.MAX_CHATS_PER_AGENT === 0) {
 				this.loaderService.isLoading = false;
 				this.bannerMessageService.errorNotifications.push({
 					message: this.translateService.instant(
