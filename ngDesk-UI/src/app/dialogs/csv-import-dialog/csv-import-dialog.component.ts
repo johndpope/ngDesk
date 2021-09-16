@@ -29,6 +29,9 @@ export class CsvImportDialogComponent implements OnInit {
 		fileName: '',
 		headers: [],
 	};
+	public separator;
+	public separators = ['-', 'space'];
+	public phonefield: boolean;
 	constructor(
 		@Inject(MAT_DIALOG_DATA) public data: any,
 		public dialogRef: MatDialogRef<CsvImportDialogComponent>,
@@ -69,11 +72,13 @@ export class CsvImportDialogComponent implements OnInit {
 			});
 		} else {
 			for (let [key, value] of Object.entries(this.headerMap)) {
-				this.csvheaders = {
-					fieldId: `${key}`,
-					headerName: `${value}`,
-				};
-				this.csvImportData.headers.push(this.csvheaders);
+				if (`${value}` != undefined) {
+					this.csvheaders = {
+						fieldId: `${key}`,
+						headerName: `${value}`,
+					};
+					this.csvImportData.headers.push(this.csvheaders);
+				}
 			}
 			const moduleId = this.data.csvData.MODULE.MODULE_ID;
 			this.csvImportData = this.data.csvData.CSV_IMPORT_DATA;
