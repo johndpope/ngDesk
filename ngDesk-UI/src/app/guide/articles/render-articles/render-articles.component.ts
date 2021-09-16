@@ -215,16 +215,12 @@ export class RenderArticlesComponent implements OnInit {
 	}
 
 	public addComment(): void {
-		console.log("this.comment['MESSAGE'] ", this.comment['MESSAGE']);
-
 		if (this.comment['MESSAGE'] !== undefined) {
 			this.loading = true;
-			console.log('this.commentMessage.........', this.commentMessage);
 			this.articleApiService
 				.postComments(this.article['ARTICLE_ID'], this.commentMessage)
 				.subscribe(
 					(response: any) => {
-						console.log('message.............', response);
 						this.comment['MESSAGE'] = '';
 						this.getArticle();
 					},
