@@ -1,5 +1,7 @@
 {
 	"MODULE_NAME": "Module Name",
+	"SINGULAR_NAME": "Singular Name",
+	"PLURAL_NAME": "Plural Name",
 	"MODULE_DESCRIPTION": "Module Description",
 	"MODULE": "Module",
 	"FIELD_DISPLAY_LABEL": "Field display label",
