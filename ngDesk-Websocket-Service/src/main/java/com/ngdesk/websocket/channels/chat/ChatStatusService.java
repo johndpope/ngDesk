@@ -21,8 +21,6 @@ public class ChatStatusService {
 	CompaniesRepository companiesRepository;
 
 	public void updateChatStatus(ChatStatus chatStatus) {
-		System.out.println(chatStatus.toString());
-		System.out.println(sessionService.sessions);
 		if (chatStatus.getSubdomain() != null) {
 			Optional<Company> optionalComapny = companiesRepository.findCompanyBySubdomain(chatStatus.getSubdomain());
 			if (optionalComapny.isPresent()) {
@@ -38,7 +36,6 @@ public class ChatStatusService {
 				}
 				sessionMap.put(chatStatus.getUserId(), userSessions);
 				sessionService.sessions.put(chatStatus.getSubdomain(), sessionMap);
-				System.out.println(sessionService.sessions);
 			}
 		}
 

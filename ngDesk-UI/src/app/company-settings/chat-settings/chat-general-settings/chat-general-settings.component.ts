@@ -17,11 +17,11 @@ import { LoaderService } from '@src/app/custom-components/loader/loader.service'
 import { Router } from '@angular/router';
 import { ModulesService } from '@src/app/modules/modules.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ChatGeneralSettingsService } from './chat-general-settings.service';
 import { ChatBusinessRulesComponent } from './chat-business-rules/chat-business-rules.component';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap, map, mergeMap } from 'rxjs/operators';
+import { SchedulesDetailService } from '@src/app/schedules/schedules-detail/schedules-detail.service';
 
 @Component({
 	selector: 'app-chat-general-settings',
@@ -70,7 +70,7 @@ export class ChatGeneralSettingsComponent implements OnInit {
 		private loaderService: LoaderService,
 		private modulesService: ModulesService,
 		public dialog: MatDialog,
-		public chatGeneralSettingsService: ChatGeneralSettingsService,
+		public schedulesDetailService: SchedulesDetailService,
 
 	) {
 		// needs to subscribe here to get the translation once the actual file is loaded
@@ -83,7 +83,7 @@ export class ChatGeneralSettingsComponent implements OnInit {
 	}
 
 	public ngOnInit() {
-		this.timezones = this.chatGeneralSettingsService.timeZones;
+		this.timezones = this.schedulesDetailService.timeZones;
 		this.modulesService.getModuleByName('Teams').subscribe((response: any) => {
 			this.teamsModule = response;
 			this.getTeamsData(0, '', this.teamsModule)

@@ -51,9 +51,4 @@ public class ChatStatus {
 		this.accepting = accepting;
 	}
 
-	@Override
-	public String toString() {
-		return "ChatStatus [userId=" + userId + ", subdomain=" + subdomain + ", accepting=" + accepting + "]";
-	}
-
 }

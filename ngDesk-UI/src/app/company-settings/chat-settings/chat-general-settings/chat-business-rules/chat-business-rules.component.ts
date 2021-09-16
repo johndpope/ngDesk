@@ -3,7 +3,6 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { BannerMessageService } from "@src/app/custom-components/banner-message/banner-message.service";
 import { SchedulesDetailService } from "@src/app/schedules/schedules-detail/schedules-detail.service";
 import { ChatRestrictions } from "ngdesk-swagger/company-api";
-import { ChatGeneralSettingsService } from "../chat-general-settings.service";
 
 @Component({
     selector: 'app-chat-business-rules',
@@ -25,13 +24,13 @@ export class ChatBusinessRulesComponent implements OnInit {
     };
     constructor(
         public dialogRef: MatDialogRef<ChatBusinessRulesComponent>,
-        public chatGeneralSettingsService: ChatGeneralSettingsService,
+		public schedulesDetailService: SchedulesDetailService,
         public modalBannerMessageService: BannerMessageService,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) { }
     public ngOnInit() {
-        this.times = this.chatGeneralSettingsService.startTimes;
-        this.weekDays = this.chatGeneralSettingsService.weekDays;
+        this.times = this.schedulesDetailService.startTimes;
+        this.weekDays = this.schedulesDetailService.weekDays;
         if (this.data.businessRuleValue.RESTRICTION_TYPE === 'Day') {
             if (this.data.businessRuleValue.CHAT_RESTRICTIONS !== null && this.data.businessRuleValue.CHAT_RESTRICTIONS !== undefined && this.data.businessRuleValue.CHAT_RESTRICTIONS.length > 0) {
                 this.restrictionsDaily = this.data.businessRuleValue.CHAT_RESTRICTIONS;
