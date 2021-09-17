@@ -167,7 +167,7 @@ def buildMicroservice(serviceName, path) {
         
         sh './mvnw spring-boot:build-image'
         
-        docker.withRegistry('', '417134e9-efdf-4621-b2c2-c5f89c2b8310') {
+        docker.withRegistry('https://registry.hub.docker.com', '417134e9-efdf-4621-b2c2-c5f89c2b8310') {
             def newImage = docker.image('ngdesk/' + serviceName)
             newImage.push()
          }
