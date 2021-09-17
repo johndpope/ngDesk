@@ -157,7 +157,6 @@ export class SearchBarComponent implements OnChanges {
 				this.searchSubscription = this.searchCtrl.valueChanges.subscribe(
 					(value) => {
 						if (!value || value === '') {
-							this.searchFieldsEvent.emit([]);
 							this.searchString = '';
 							this.pageNuber = 0;
 						} else {
@@ -242,18 +241,13 @@ export class SearchBarComponent implements OnChanges {
 				// for field param with value, remove two items
 				this.savedFields.splice(index - 1, 2);
 			}
-			if (object['COMPONENT'] === 'controller') {
-				this.detectSearchValueChanges('controller');
-			} else {
-				this.detectSearchValueChanges('fields');
-			}
-
 			// if last search param has been removed, call removeall function
 			if (this.savedFields.length === 0) {
 				this.removeAll();
+			} else {
+				// emit changes to parent component
+				this.searchFieldsEvent.emit(this.savedFields);
 			}
-			// emit changes to parent component
-			this.searchFieldsEvent.emit(this.savedFields);
 		} else {
 			this.searchFieldsEvent.emit([]);
 		}
