@@ -171,7 +171,7 @@ def buildMicroservice(serviceName, path) {
             def newImage = docker.image('ngdesk/' + serviceName)
             newImage.push()
          }
-        docker.withServer('env.PROD_SERVER_URL') {
+        docker.withServer(env.PROD_SERVER_URL) {
                 sh "docker rename ngdesk-${serviceName} ngdesk-${serviceName}-old"
                 sh "docker stop ngdesk-${serviceName}-old"
                 sh "docker pull ngdesk/${serviceName}"
