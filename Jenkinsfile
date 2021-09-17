@@ -165,8 +165,12 @@ def buildMicroservice(serviceName, path) {
         
         sh "mvn sonar:sonar -Dsonar.projectKey=${path} -Dsonar.host.url=${env.SONAR_URL} -Dsonar.login=${env.SONAR_LOGIN}"
         
-        //create docker image
-        // push to docker hub
+        sh './mvnw spring-boot:build-image'
+        
+        docker.withRegistry('', '417134e9-efdf-4621-b2c2-c5f89c2b8310') {
+            def newImage = docker.image('ngdesk/' + serviceName)
+            newImage.push()
+         }
         // post to prod
         
     }
