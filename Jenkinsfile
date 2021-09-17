@@ -36,8 +36,8 @@ pipeline {
 				        // frontend services
 				        def uiChanged = ''
 				        
-				        def dockerHubUrl = $DOCKER_HUB_URL
-				 	def dockerHubKey = $DOCKER_HUB_KEY
+				        def dockerHubUrl = $env.DOCKER_HUB_URL
+				 	def dockerHubKey = $env.DOCKER_HUB_KEY
 				    
 				    
 				     dir('/var/jenkins_home/projects/ngdesk-project/ngDesk') {
