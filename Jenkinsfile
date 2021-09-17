@@ -167,8 +167,8 @@ def buildMicroservice(serviceName, path) {
         
         sh './mvnw spring-boot:build-image'
         
-        docker.withRegistry(env.DOCKER_REGISTRY_URL, env.DOCKER_REGISTRY_UUID) {
-            def newImage = docker.image(env.DOCKER_IMAGE_NAME + serviceName)
+        docker.withRegistry('https://registry.hub.docker.com', '417134e9-efdf-4621-b2c2-c5f89c2b8310') {
+            def newImage = docker.image('ngdesk/' + serviceName)
             newImage.push()
          }
         docker.withServer(env.PROD_SERVER_URL) {
@@ -198,12 +198,4 @@ def generateSwagger(frontendProject, serviceJsonPath, name) {
     }
 
 }
-
-
-
-
-
-
-
-
 
