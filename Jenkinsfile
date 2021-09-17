@@ -166,6 +166,8 @@ def buildMicroservice(serviceName, path) {
         sh "mvn sonar:sonar -Dsonar.projectKey=${path} -Dsonar.host.url=${env.SONAR_URL} -Dsonar.login=${env.SONAR_LOGIN}"
         
         sh './mvnw spring-boot:build-image'
+	 
+	 echo '$DOCKER_IMAGE_NAME'
         
         docker.withRegistry(env.DOCKER_REGISTRY_URL, env.DOCKER_REGISTRY_UUID) {
             def newImage = docker.build(env.DOCKER_IMAGE_NAME + serviceName)
