@@ -1,12 +1,9 @@
 package com.ngdesk.websocket.channels.chat;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -21,6 +18,13 @@ public interface DataProxy {
 			@PathVariable("module_id") String moduleId,
 			@RequestParam(value = "is_trigger", required = false) boolean isTrigger,
 			@RequestParam(value = "company_id", required = false) String companyId,
-			@RequestParam(value = "user_uuid", required = false) String userUuid);	
-	
+			@RequestParam(value = "user_uuid", required = false) String userUuid);
+
+	@PutMapping("/modules/{module_id}/data")
+	public Map<String, Object> putModuleEntry(@RequestBody HashMap<String, Object> entry,
+			@PathVariable("module_id") String moduleId,
+			@RequestParam(value = "is_trigger", required = false) boolean isTrigger,
+			@RequestParam(value = "company_id", required = false) String companyId,
+			@RequestParam(value = "user_uuid", required = false) String userUuid);
+
 }

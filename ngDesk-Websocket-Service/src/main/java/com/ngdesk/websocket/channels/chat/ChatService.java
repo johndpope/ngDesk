@@ -1,6 +1,5 @@
 package com.ngdesk.websocket.channels.chat;
 
-import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -47,23 +46,26 @@ public class ChatService {
 					if (optionalChatModule.isPresent()) {
 						Optional<Map<String, Object>> optionalChatEntry = moduleEntryRepository
 								.findBySessionUuid(pageLoad.getSessionUUID(), "Chat_" + companyId);
-						if (optionalChatEntry.isEmpty()) {
-							Optional<Map<String, Object>> optionalUserEntry = moduleEntryRepository
-									.findUserByEmailAddress("system@ngdesk.com", "Users_" + companyId);
-							if (optionalUserEntry.isPresent()) {
-								ObjectMapper mapper = new ObjectMapper();
-								pageLoad.setIpAddress((InetAddress.getLocalHost().getHostAddress()).trim());
-								pageLoad.setCountry(Locale.getDefault().getDisplayCountry());
-								Optional<ChatChannel> optionalChatChannel = chatChannelRepository
-										.findChannelByName("Chat", "channels_chat_" + companyId);
-								if (optionalChatChannel.isPresent()) {
-									HashMap<String, Object> entry = (HashMap<String, Object>) mapper
-											.readValue(mapper.writeValueAsString(pageLoad), Map.class);
-									entry.put("CHANNEL", optionalChatChannel.get().getChannelId());
-									entry.put("SOURCE_TYPE", "chat");
-									Map<String, Object> user = optionalUserEntry.get();
+						Optional<Map<String, Object>> optionalUserEntry = moduleEntryRepository
+								.findUserByEmailAddress("system@ngdesk.com", "Users_" + companyId);
+						if (optionalUserEntry.isPresent()) {
+							ObjectMapper mapper = new ObjectMapper();
+							pageLoad.setCountry(Locale.getDefault().getDisplayCountry());
+							Optional<ChatChannel> optionalChatChannel = chatChannelRepository.findChannelByName("Chat",
+									"channels_chat_" + companyId);
+							if (optionalChatChannel.isPresent()) {
+								HashMap<String, Object> entry = (HashMap<String, Object>) mapper
+										.readValue(mapper.writeValueAsString(pageLoad), Map.class);
+								entry.put("CHANNEL", optionalChatChannel.get().getChannelId());
+								entry.put("SOURCE_TYPE", "chat");
+								Map<String, Object> user = optionalUserEntry.get();
+								if (optionalChatEntry.isEmpty()) {
 									dataProxy.postModuleEntry(entry, optionalChatModule.get().getModuleId(), false,
-											companyId, user.get("USER_UUID").toString());	
+											companyId, user.get("USER_UUID").toString());
+								} else {
+									entry.put("DATA_ID", optionalChatEntry.get().get("_id").toString());
+									dataProxy.putModuleEntry(entry, optionalChatModule.get().getModuleId(), false,
+											companyId, user.get("USER_UUID").toString());
 								}
 							}
 						}
