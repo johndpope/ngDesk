@@ -39,7 +39,7 @@ pipeline {
 				        def dockerHubUrl = '$DOCKER_HUB_URL'
 				 	def dockerHubKey = '$DOCKER_HUB_KEY'
 				 	
-				 	echo '${env.DOCKER_HUB_URL}'
+				 	echo ${env.DOCKER_HUB_URL}
 				 	echo $dockerHubUrl
 				 	echo $dockerHubKey
 				    
