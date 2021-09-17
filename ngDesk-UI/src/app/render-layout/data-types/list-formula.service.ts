@@ -1,17 +1,27 @@
 import { Injectable } from '@angular/core';
-import { CommonLayoutService } from '../render-detail-new/common-layout.service';
-import { CustomModulesService } from '../render-detail-new/custom-modules.service';
 
 @Injectable({
 	providedIn: 'root',
 })
-export class ReceiptCaptureService {
-	constructor(
-		private customModulesService: CustomModulesService,
-		private commonLayoutService: CommonLayoutService
-	) {}
+export class ListFormulaService {
+	constructor() {}
 
-	public getLayoutForReceipt(
+	public getListFormulaField(field) {
+		return `<div fxLayout="column" fxFlex class="mat-form-field-wrapper mat-form-field-appearance-outline mat-form-field-wrapper"
+    style="border: 1px solid #ccc; border-radius: 5px;">
+    <span class="mat-caption pad10">${field.DISPLAY_LABEL}</span>
+    <mat-divider></mat-divider>
+    <mat-selection-list style="overflow:auto" #${field.NAME} (selectionChange)="context.onChangeSelectionList($event, context.fieldsMap['${field.FIELD_ID}'])" [compareWith]="context.compareFn" [(ngModel)]="context.entry['${field.NAME}']">
+    <mat-list-option [matTooltip]="formula.FORMULA_LABEL  + ' ('+ context.getFormulaListValue('${field.NAME}',formula.FORMULA_NAME) + ')'" checkboxPosition="before" *ngFor="let formula of context.fieldsMap['${field.FIELD_ID}'].LIST_FORMULA" [value]="{FORMULA_NAME:formula.FORMULA_NAME}">
+    <span fxLayoutAlign="space-between center"><span>{{formula.FORMULA_LABEL}}</span><span>{{context.getFormulaListValue('${field.NAME}',formula.FORMULA_NAME) | truncate : 10}}</span></span>
+   
+    </mat-list-option>    
+    </mat-selection-list>
+  </div>
+  `;
+	}
+
+	public getLayoutForListFormula(
 		panel,
 		xpossition,
 		ypossition,
@@ -22,7 +32,7 @@ export class ReceiptCaptureService {
 		layoutType
 	) {
 		const removeDivFrom = xpossition + 1;
-		const removeDivTo = panel['GRIDS'].length - 1;
+		const removeDivTo = removeDivFrom + 3;
 		let fieldWidth = size;
 
 		panel['TEMPLATE'] = panel['TEMPLATE'].replace(
@@ -57,14 +67,7 @@ export class ReceiptCaptureService {
 
 		panel['TEMPLATE'] = panel['TEMPLATE'].replace(
 			cellRegex,
-			this.loadReceiptUploaderView(
-				panel,
-				panel['NAME'],
-				xPos,
-				yPos,
-				panelIndex,
-				currentField
-			)
+			this.loadReceiptUploaderView(currentField)
 		);
 		return panel;
 	}
@@ -78,7 +81,7 @@ export class ReceiptCaptureService {
 		const yPos = ypossition;
 		const field = panel['GRIDS'][xPos][yPos]['FIELD_ID'];
 		if (fieldSize === 3) {
-			for (let x = xPos; x < panel['GRIDS'].length; x++) {
+			for (let x = xPos; x < xPos + 4; x++) {
 				for (let y = yPos; y < yPos + 3; y++) {
 					panel['GRIDS'][x][y] = {
 						IS_EMPTY: true,
@@ -100,7 +103,7 @@ export class ReceiptCaptureService {
 			flex = 25;
 		}
 
-		for (let x = xPos; x < panel['GRIDS'].length; x++) {
+		for (let x = xPos; x < xPos + 4; x++) {
 			for (let y = yPos; y < yPos + size; y++) {
 				panel['GRIDS'][x][y] = {
 					IS_EMPTY: panel['GRIDS'][xPos][yPos].IS_EMPTY,
@@ -113,7 +116,7 @@ export class ReceiptCaptureService {
 
 		let row1 = '';
 		let row2 = '';
-		for (let x = xPos; x < panel['GRIDS'].length; x++) {
+		for (let x = xPos; x < xPos + 4; x++) {
 			if (yPos === 1 && size === 2) {
 				row1 = row1 + this.buildRowForReceipt(panel, 3, x, yPos, panelIndex);
 				row2 = row2 + this.buildRowForReceipt(panel, 3, x, 0, panelIndex);
@@ -139,7 +142,7 @@ export class ReceiptCaptureService {
 			)
 		);
 
-		let mainTemplate = `<div class='RECEIPT_CAPTURE' fxLayoutGap=5px fxFlex fxLayout="row">`;
+		let mainTemplate = `<div class='LIST_FORMULA' fxLayoutGap=5px fxFlex fxLayout="row">`;
 		if (yPos === 0) {
 			mainTemplate = mainTemplate + columnWithreceipt + columnWithRows;
 		} else if (yPos === 1 && size === 2) {
@@ -158,7 +161,7 @@ export class ReceiptCaptureService {
 		} else {
 			mainTemplate = mainTemplate + columnWithRows + columnWithreceipt;
 		}
-		mainTemplate = mainTemplate + `</div><!--END_RECEIPT_CAPTURE-->`;
+		mainTemplate = mainTemplate + `</div><!--END_LIST_FORMULA-->`;
 		return mainTemplate;
 	}
 
@@ -208,37 +211,7 @@ export class ReceiptCaptureService {
 		}
 	}
 
-	loadReceiptUploaderView(panel, panelName, xPos, yPos, panelIndex, field) {
-		let width = panel['GRIDS'][xPos][yPos].WIDTH;
-
-		return `<div style ="padding-right:10px; padding-bottom:10px;padding-left:20px; padding-top:10px;"  fxLayoutGap="10px">
-
-
-    <div *ngIf = "context.receiptAttachments.length == 0"fxLayoutAlign="start  center">
-      <button mat-raised-button fxLayoutAlign="center center" (click)="${field.NAME}Input.click()" style="cursor: pointer; height:48px;border-radius: 5px;">
-        <div fxLayout="row" style="height:48px;">
-          <div fxLayoutAlign="center center">
-            <label class="mat-h4" style="margin: 0px;cursor: pointer; font-weight:500;">Attach Receipts</label>
-          </div>
-          <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px" [ngStyle]="{'font-size': '20px', 'font-weight':'500'}">
-            <mat-spinner *ngIf="context.attachmentLoading" [diameter]="30"></mat-spinner>
-            <mat-icon *ngIf="!context.attachmentLoading" inline class="pointer">
-              attach_file</mat-icon><input hidden type="file"  accept="image/*"   #${field.NAME}Input name= '${field.NAME}'(change)="context.onReceiptUpload($event)">
-          </div>
-        </div>
-      </button>
-    </div>
-
-	
- 	<div fxLayout="column" *ngIf = "context.receiptAttachments.length>0" fxLayoutAlign="start end" class="CELL_${panelName}_${xPos}_${yPos}" fxFlex="{{context.panels[${panelIndex}].GRIDS[${xPos}][${yPos}].WIDTH}}" [ngStyle]="{'border-radius': '5px'}">
-  			<img *ngIf = "context.receiptAttachments[0].ATTACHMENT_UUID" [src]=  "context.createURLForReceiptPreview(context.receiptAttachments[0].ATTACHMENT_UUID,'${field.FIELD_ID}')"  width="${width}%" height ="auto" style = "position: relative;">
-			<img *ngIf = "context.receiptAttachments[0].FILE" [src]=  "context.receiptAttachments[0].FILE"  width="${width}%" height ="auto" style = "position: relative;">	
-			<div fxLayout="row"style = "position: absolute;">
-			<button *ngIf = "context.receiptAttachments[0].ATTACHMENT_UUID" mat-icon-button   type = "button" (click)="context.SaveAttachnent(context.receiptAttachments[0].ATTACHMENT_UUID,'${field.FIELD_ID}')" title  = "Download" color = "primary"><mat-icon class="pointer">save_alt</mat-icon></button>
-			<button *ngIf = "context.receiptAttachments[0].ATTACHMENT_UUID || context.receiptAttachments[0].FILE "  mat-icon-button   type = "button" (click)="context.removeReceiptCaptured('${field.NAME}')" title  = "Delete"><mat-icon class="pointer">clear</mat-icon></button>
-   </div>
-  	</div>
-  </div>
-`;
+	loadReceiptUploaderView(field) {
+		return this.getListFormulaField(field);
 	}
 }
