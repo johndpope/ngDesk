@@ -168,7 +168,7 @@ def buildMicroservice(serviceName, path) {
         sh './mvnw spring-boot:build-image'
         
         docker.withRegistry(env.DOCKER_REGISTRY_URL, env.DOCKER_REGISTRY_UUID) {
-            def newImage = docker.build(env.DOCKER_IMAGE_NAME + serviceName)
+            def newImage = docker.image(env.DOCKER_IMAGE_NAME + serviceName)
             newImage.push()
          }
         docker.withServer(env.PROD_SERVER_URL) {
