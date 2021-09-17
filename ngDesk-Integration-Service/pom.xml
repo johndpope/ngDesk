@@ -147,7 +147,7 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
+				<configuration> 
 					<image> 
 						<name>registry.hub.docker.com/ngdesk/ngdesk/integration:latest</name>
 					</image>
