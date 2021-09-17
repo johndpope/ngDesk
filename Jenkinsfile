@@ -171,7 +171,14 @@ def buildMicroservice(serviceName, path) {
             def newImage = docker.image('ngdesk/' + serviceName)
             newImage.push()
          }
-        // post to prod
+        docker.withServer('${env.PROD_SERVER_URL}') {
+                sh "docker rename ngdesk-${serviceName} ngdesk-${serviceName}-old"
+                sh "docker stop ngdesk-${serviceName}-old"
+                sh "docker pull ngdesk/${serviceName}"
+                sh "docker run --mount type=bind,source=/opt/ngdesk,target=/opt/ngdesk --name ngdesk-${serviceName} -d -e SPRING_PROFILES_ACTIVE=dockernew --network=host ngdesk/${serviceName}"
+                sh "docker rm ngdesk-${serviceName}-old"
+                sh 'docker image prune -f'
+            }
         
     }
 }
