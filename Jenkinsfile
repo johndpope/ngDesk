@@ -35,6 +35,9 @@ pipeline {
 
 				        // frontend services
 				        def uiChanged = ''
+				        
+				        def dockerHubUrl = ${env.DOCKER_HUB_URL}
+				 	def dockerHubKey = ${env.DOCKER_HUB_KEY}
 				    
 				    
 				     dir('/var/jenkins_home/projects/ngdesk-project/ngDesk') {
@@ -167,7 +170,7 @@ def buildMicroservice(serviceName, path) {
         
         sh './mvnw spring-boot:build-image'
         
-        docker.withRegistry(${env.DOCKER_HUB_URL}, ${env.DOCKER_HUB_KEY}) {
+        docker.withRegistry(dockerHubUrl, dockerHubKey) {
             def newImage = docker.image('ngdesk/' + serviceName)
             newImage.push()
          }
