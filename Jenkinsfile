@@ -162,7 +162,8 @@ def buildMicroservice(serviceName, path) {
         sh 'mvn test -f pom-packaging.xml'
         //junit '**/surefire-reports/*.xml'
         
-        sh "mvn sonar:sonar -Dsonar.projectKey=${path} -Dsonar.host.url=env.SONAR_URL -Dsonar.login=env.SONAR_LOGIN"
+        
+        sh "mvn sonar:sonar -Dsonar.projectKey=${path} -Dsonar.host.url=${env.SONAR_URL} -Dsonar.login=${env.SONAR_LOGIN}"
         
         //create docker image
         // push to docker hub
