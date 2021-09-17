@@ -15,7 +15,7 @@
 	<name>ngDesk-Auth</name>  
 	<description>ngDesk Microservice for Auth</description>
  
-
+ 
 	<properties>
 		<java.version>11</java.version>
 		<spring-cloud.version>Hoxton.SR8</spring-cloud.version>
