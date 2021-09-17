@@ -127,7 +127,7 @@ public class RolesFieldPermissionsService {
 		} else if (requestType.equals("PUT")) {
 			isRestricted = isValueChanged(entry, fieldName, fieldId, field, module);
 		}
-		if (isRestricted) {
+		if (isRestricted && !requestType.equals("POST")) {
 			String[] vars = { displayLabel };
 			throw new BadRequestException("RESTRICTED_FIELD", vars);
 		}

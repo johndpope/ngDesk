@@ -27,7 +27,7 @@ public class FieldPermissionService {
 
 		for (FieldPermission fieldPermission : permission.getFieldPermissions()) {
 			if (fieldPermission.getPermission().toLowerCase().equals("read")) {
-				fieldPermissionsList.add(createEditablePermissionObject(fieldPermission.getFieldId(), true));
+				fieldPermissionsList.add(createEditablePermissionObject(fieldPermission.getFieldId(), false));
 			}
 		}
 		return fieldPermissionsList;
