@@ -149,7 +149,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<image>
-						<name>gitlab.bluemsp.com:5050/ngdesk/ngdesk/integration:latest</name>
+						<name>https://registry.hub.docker.com/ngdesk/ngdesk/integration:latest</name>
 					</image>
 					<layers>
 						<enabled>true</enabled>
