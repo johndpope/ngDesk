@@ -32,6 +32,9 @@ pipeline {
 				        def reportsChanged = ''
 				        def tesseractChanged = ''
 				        def notificationsChanged = ''
+						def restChanged = ''
+						def managerChanged = ''
+						def gatewayChanged = ''
 
 				        // frontend services
 				        def uiChanged = ''
@@ -58,14 +61,24 @@ pipeline {
 				                reportsChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Report-Service ''').trim()
 				                tesseractChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Tesseract-Service ''').trim()
 				                notificationsChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Notification-Service ''').trim()
+								restChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Rest ''').trim()
+								managerChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Manager ''').trim()
+								gatewayChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Gateway ''').trim()
+
 
 				                uiChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-UI''').trim()
 				              checkout([$class: 'GitSCM', branches: [[name: 'origin/main']], userRemoteConfigs: [[url: 'https://github.com/SubscribeIT/ngDesk.git']]])
 				            }
 
-					if (authChanged.length() > 0) {
-                            			buildMicroservice('auth', 'ngDesk-Auth')
-                        		}
+						if (authChanged.length() > 0) {
+							buildMicroservice('auth', 'ngDesk-Auth')
+						}
+						
+						if(uiChanged.length() > 0){
+								dir('/var/jenkins_home/projects/') {
+									checkout([$class: 'GitSCM', branches: [[name: '*/master']], userRemoteConfigs: [[credentialsId: "${env.GIT_CREDENTIAL_ID}", url: "${env.GIT_WEB_URL}"]]])
+								}
+						}
 
 				        if (integrationChanged.length() > 0) {
                            			 buildMicroservice('integration', 'ngDesk-Integration-Service')
@@ -114,6 +127,18 @@ pipeline {
 				        if (roleChanged.length() > 0) {
 				            buildMicroservice('role', 'ngDesk-Role-Service')
 				        }
+
+						if (restChanged.length() > 0) {
+				            buildMicroservice('ngdesk-rest', 'ngDesk-Rest')
+				        }
+
+						if (managerChanged.length() > 0) {
+				            buildMicroservice('ngdesk-manager', 'ngDesk-Manager')
+				        }
+
+						if (gatewayChanged.length() > 0) {
+				            buildMicroservice('ngdesk-gateway', 'ngDesk-Gateway')
+				        }
 				        
 				        if (uiChanged.length() > 0) {	
 				            generateSwagger('ngDesk-UI', '../ngDesk-Workflow-Service/target/openapi.json', 'workflow-api')
@@ -152,6 +177,10 @@ pipeline {
 def buildMicroservice(serviceName, path) {
  dir('/var/jenkins_home/projects/ngdesk-project/ngDesk/' + path) {
 
+
+	 if(serviceName == 'ngdesk-rest' || serviceName == 'ngdesk-manager'){
+		 sh 'mvn package -DskipTests'
+	 } else{
         sh 'mvn install -f pom-packaging.xml'
 
         // Generate package
@@ -168,7 +197,7 @@ def buildMicroservice(serviceName, path) {
         sh "mvn sonar:sonar -Dsonar.projectKey=${path} -Dsonar.host.url=${env.SONAR_URL} -Dsonar.login=${env.SONAR_LOGIN}"
         
         sh './mvnw spring-boot:build-image'
-        
+	 }
         docker.withRegistry("${env.DOCKER_HUB_URL}", "${env.DOCKER_HUB_KEY}") {
             def newImage = docker.image("${env.DOCKER_IMAGE_NAME}/" + serviceName + ":latest")
             newImage.push()
@@ -181,6 +210,7 @@ def buildMicroservice(serviceName, path) {
             //     sh 'docker image prune -f'
             // }
          }
+        
        
         
     }
