@@ -1877,7 +1877,7 @@ export class DetailLayoutComponent implements OnInit {
 		let rows = ``;
 		const ImageInitialSize = custom.imagePosition.size;
 		const field = custom.grids[xPos][yPos].FIELD_ID;
-		const settings = custom.grids[xPos][yPos].settings;
+		const settings = custom.settings;
 
 		if (ImageInitialSize === 3) {
 			for (let x = xPos; x < custom.grids.length; x++) {
@@ -1887,7 +1887,7 @@ export class DetailLayoutComponent implements OnInit {
 						HEIGHT: 10,
 						WIDTH: custom.grids.length,
 						FIELD_ID: '',
-						settings: null,
+						settings: settings,
 					};
 				}
 			}
@@ -1896,9 +1896,23 @@ export class DetailLayoutComponent implements OnInit {
 		if (size === 2) {
 			custom.imagePosition.size = 2;
 			flex = 50;
+			custom.grids[xPos][0] = {
+				IS_EMPTY: false,
+				HEIGHT: custom.grids.length,
+				WIDTH: 100,
+				FIELD_ID: field,
+				settings: settings,
+			};
 		} else if (size === 3) {
 			custom.imagePosition.size = 3;
 			flex = 75;
+			custom.grids[xPos][0] = {
+				IS_EMPTY: false,
+				HEIGHT: custom.grids.length,
+				WIDTH: 100,
+				FIELD_ID: field,
+				settings: settings,
+			};
 		} else if (size === 4) {
 			custom.imagePosition.size = 4;
 			flex = 100;
