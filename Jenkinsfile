@@ -180,9 +180,11 @@ def buildMicroservice(serviceName, path) {
 
 	 if(serviceName == 'ngdesk-rest' || serviceName == 'ngdesk-manager' || serviceName == 'ngdesk-gateway'){
 		 sh 'mvn package -DskipTests'
-		 
+
 		 if(serviceName == 'ngdesk-gateway'){
 			 sh './mvnw spring-boot:build-image'
+		 } else {
+			 docker.build("${env.DOCKER_IMAGE_NAME}/" + serviceName + ":latest")
 		 }
 	 } else{
         sh 'mvn install -f pom-packaging.xml'
