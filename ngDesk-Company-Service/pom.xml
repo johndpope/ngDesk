@@ -172,7 +172,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<image>
-						<name>gitlab.bluemsp.com:5050/ngdesk/ngdesk/company:latest</name>
+						<name>ngdesk/company:latest</name>
 					</image>
 					<layers>
 						<enabled>true</enabled>

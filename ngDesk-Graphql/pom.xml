@@ -184,7 +184,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<image>
-						<name>gitlab.bluemsp.com:5050/ngdesk/ngdesk/graphql:latest</name>
+						<name>ngdesk/graphql:latest</name>
 					</image>
 					<layers>
 						<enabled>true</enabled>

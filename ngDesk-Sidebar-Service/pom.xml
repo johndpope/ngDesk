@@ -147,7 +147,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<image>
-						<name>gitlab.bluemsp.com:5050/ngdesk/ngdesk/sidebar:latest</name>
+						<name>ngdesk/sidebar:latest</name>
 					</image>
 					<layers>
 						<enabled>true</enabled>

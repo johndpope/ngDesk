@@ -153,7 +153,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<image>
-						<name>gitlab.bluemsp.com:5050/ngdesk/ngdesk/websocket:latest</name>
+						<name>ngdesk/websocket:latest</name>
 					</image>
 					<layers>
 						<enabled>true</enabled>

@@ -195,7 +195,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<image>
-						<name>gitlab.bluemsp.com:5050/ngdesk/ngdesk/workflow:latest</name>
+						<name>ngdesk/workflow:latest</name>
 					</image>
 					<layers>
 						<enabled>true</enabled>

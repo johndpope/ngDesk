@@ -180,7 +180,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<image>
-						<name>gitlab.bluemsp.com:5050/ngdesk/ngdesk/report:latest</name>
+						<name>ngdesk/report:latest</name>
 					</image>
 					<layers>
 						<enabled>true</enabled>
