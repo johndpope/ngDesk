@@ -146,7 +146,7 @@ pipeline {
 				            generateSwagger('ngDesk-UI', '../ngDesk-Integration-Service/target/openapi.json', 'integration-api')
 				            generateSwagger('ngDesk-UI', '../ngDesk-Module-Service/target/openapi.json', 'module-api')
 				            generateSwagger('ngDesk-UI', '../ngDesk-Role-Service/target/openapi.json', 'role-api')
-				            generateSwagger('ngDesk-UI', '../ngDesk-Escalation-Service/target/openapi.json', 'escalation-api')
+				            // generateSwagger('ngDesk-UI', '../ngDesk-Escalation-Service/target/openapi.json', 'escalation-api')
 				            generateSwagger('ngDesk-UI', '../ngDesk-Sam-Service/target/openapi.json', 'sam-api')
 				            generateSwagger('ngDesk-UI', '../ngDesk-Sidebar-Service/target/openapi.json', 'sidebar-api')
 				            generateSwagger('ngDesk-UI', '../ngDesk-Data-Service/target/openapi.json', 'data-api')
