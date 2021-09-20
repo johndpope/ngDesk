@@ -178,8 +178,12 @@ def buildMicroservice(serviceName, path) {
  dir('/var/jenkins_home/projects/ngdesk-project/ngDesk/' + path) {
 
 
-	 if(serviceName == 'ngdesk-rest' || serviceName == 'ngdesk-manager'){
+	 if(serviceName == 'ngdesk-rest' || serviceName == 'ngdesk-manager' || serviceName == 'ngdesk-gateway'){
 		 sh 'mvn package -DskipTests'
+		 
+		 if(serviceName == 'ngdesk-gateway'){
+			 sh './mvnw spring-boot:build-image'
+		 }
 	 } else{
         sh 'mvn install -f pom-packaging.xml'
 
