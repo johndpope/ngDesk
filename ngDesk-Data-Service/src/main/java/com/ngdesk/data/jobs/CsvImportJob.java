@@ -434,9 +434,13 @@ public class CsvImportJob {
 													break;
 												}
 											} else if (field.getRelationshipType().equalsIgnoreCase("Many To Many")) {
-												List<String> values = mapper.readValue(
-														inputMessage.get(fieldName).toString(), mapper.getTypeFactory()
-																.constructCollectionType(List.class, String.class));
+//												List<String> values = mapper.readValue(
+//														inputMessage.get(fieldName).toString(), mapper.getTypeFactory()
+//																.constructCollectionType(List.class, String.class));
+
+												List<String> values = csvImportService
+														.parseString(inputMessage.get(fieldName).toString()); 
+												System.out.println("Values: "+values);
 												if (values != null) {
 													List<Relationship> relationshipList = new ArrayList<Relationship>();
 													for (String value : values) {
@@ -460,15 +464,15 @@ public class CsvImportJob {
 													if (error) {
 														break;
 													} else {
+														System.out.println(relationshipList);
 														inputMessage.put(fieldName, relationshipList);
 													}
 												} else {
 													CsvImportLog log = new CsvImportLog();
 													log.setLineNumber(i);
 													log.setErrorMessage("Relationship value is not valid");
-													csvImportRepository.addToEntrySet(
-															csvDocument.getCsvImportId(), "logs", log,
-															"csv_import");
+													csvImportRepository.addToEntrySet(csvDocument.getCsvImportId(),
+															"logs", log, "csv_import");
 													error = true;
 													break;
 												}
