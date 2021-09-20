@@ -75,7 +75,7 @@ pipeline {
 						}
 						
 						if(uiChanged.length() > 0){
-								dir('/var/jenkins_home/projects/') {
+								dir('/var/jenkins_home/projects/ngdesk-web-project') {
 									checkout([$class: 'GitSCM', branches: [[name: '*/master']], userRemoteConfigs: [[credentialsId: "${env.GIT_CREDENTIAL_ID}", url: "${env.GIT_WEB_URL}"]]])
 								}
 						}
