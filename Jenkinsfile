@@ -172,14 +172,14 @@ def buildMicroservice(serviceName, path) {
         docker.withRegistry("${env.DOCKER_HUB_URL}", "${env.DOCKER_HUB_KEY}") {
             def newImage = docker.image("${env.DOCKER_IMAGE_NAME}/" + serviceName + ":latest")
             newImage.push()
-            docker.withServer("${env.PROD_SERVER_URL}") {
-                sh "docker rename ngdesk-${serviceName} ngdesk-${serviceName}-old"
-                sh "docker stop ngdesk-${serviceName}-old"
-                sh "docker pull ngdesk/${serviceName}"
-                sh "docker run --mount type=bind,source=/opt/ngdesk,target=/opt/ngdesk --name ngdesk-${serviceName} -d -e SPRING_PROFILES_ACTIVE=dockernew --network=host ngdesk/${serviceName}"
-                sh "docker rm ngdesk-${serviceName}-old"
-                sh 'docker image prune -f'
-            }
+            // docker.withServer("${env.PROD_SERVER_URL}") {
+            //     sh "docker rename ngdesk-${serviceName} ngdesk-${serviceName}-old"
+            //     sh "docker stop ngdesk-${serviceName}-old"
+            //     sh "docker pull ngdesk/${serviceName}"
+            //     sh "docker run --mount type=bind,source=/opt/ngdesk,target=/opt/ngdesk --name ngdesk-${serviceName} -d -e SPRING_PROFILES_ACTIVE=dockernew --network=host ngdesk/${serviceName}"
+            //     sh "docker rm ngdesk-${serviceName}-old"
+            //     sh 'docker image prune -f'
+            // }
          }
        
         
