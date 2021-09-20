@@ -1,6 +1,5 @@
 package com.ngdesk.data.csvimport.dao;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -12,15 +11,11 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ngdesk.commons.exceptions.BadRequestException;
 import com.ngdesk.commons.exceptions.InternalErrorException;
 import com.ngdesk.data.dao.DataService;
 import com.ngdesk.data.dao.Phone;
 import com.ngdesk.data.dao.Relationship;
-import com.ngdesk.data.modules.dao.DataType;
 import com.ngdesk.data.modules.dao.Module;
 import com.ngdesk.data.modules.dao.ModuleField;
 import com.ngdesk.data.modules.dao.ModuleService;
@@ -337,9 +332,11 @@ public class CsvImportService {
 		ObjectMapper mapper = new ObjectMapper();
 
 		try {
-			List<String> users = mapper.readValue(value,
+			List<String> users = mapper.readValue(value, 
 					mapper.getTypeFactory().constructCollectionType(List.class, String.class));
-			users.add(userId);
+			users.add(userId); 
+			
+			System.out.println("hitt:   "+users);
 
 			List<Relationship> usersRelationship = getListRelationshipValue("USERS", teamsModule, companyId, users);
 			entry.put("USERS", usersRelationship);
@@ -347,6 +344,74 @@ public class CsvImportService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public String getRelationshipId(ModuleField field, String companyId, Object value) {
+
+		Optional<Module> optionalRelationshipModule = modulesRepository.findById(field.getModule(),
+				moduleService.getCollectionName("modules", companyId));
+		if (optionalRelationshipModule.isEmpty()) {
+			System.out.println("hit 1");
+			return null;
+		}
+
+		Module relationshipModule = optionalRelationshipModule.get();
+		String relationshipModuleName = relationshipModule.getName();
+		Optional<ModuleField> optionalRelationshipField = optionalRelationshipModule.get().getFields().stream()
+				.filter(moduleField -> moduleField.getFieldId().equals(field.getPrimaryDisplayField())).findFirst();
+		if (optionalRelationshipField.isEmpty()) {
+			System.out.println("hit 2");
+			return null;
+		}
+
+		ModuleField relationshipField = optionalRelationshipField.get();
+		String relationshipFieldName = relationshipField.getName();
+		System.out.println(relationshipFieldName+"    "+value); 
+		System.out.println( moduleService.getCollectionName(relationshipModuleName, companyId));
+		Optional<Map<String, Object>> optionalRelationshipEntry = moduleEntryRepository.findEntryByFieldName(
+				relationshipFieldName, value, moduleService.getCollectionName(relationshipModuleName, companyId));
+
+		if (optionalRelationshipEntry.isEmpty()) {
+			System.out.println("hit 3"); 
+			return null;
+		}
+
+		Map<String, Object> relationshipEntry = optionalRelationshipEntry.get();
+		System.out.println("hit: "+ relationshipEntry);
+		return relationshipEntry.get("_id").toString();
+	}
+
+	public boolean checkRelationshipStatus(ModuleField field, String dataId, String companyId) {
+		Optional<Module> optionalRelationshipModule = modulesRepository.findById(field.getModule(),
+				moduleService.getCollectionName("modules", companyId));
+		if (optionalRelationshipModule.isEmpty()) {
+			return false;
+		}
+
+		Module relationshipModule = optionalRelationshipModule.get();
+		String relationshipModuleName = relationshipModule.getName();
+
+		Optional<ModuleField> optionalRelationshipField = optionalRelationshipModule.get().getFields().stream()
+				.filter(moduleField -> moduleField.getFieldId().equals(field.getRelationshipField())).findFirst();
+		if (optionalRelationshipField.isEmpty()) {
+			return false;
+		}
+
+		ModuleField relationshipField = optionalRelationshipField.get();
+		String relationshipFieldName = relationshipField.getName();
+
+		Optional<Map<String, Object>> optionalRelationshipEntry = moduleEntryRepository.findById(dataId,
+				moduleService.getCollectionName(relationshipModuleName, companyId));
+
+		if (optionalRelationshipEntry.isEmpty()) {
+			return false;
+		}
+
+		Map<String, Object> relationshipEntry = optionalRelationshipEntry.get();
+		if (relationshipEntry.get(relationshipFieldName) == null) {
+			return true;
+		}
+		return false;
 	}
 
 }

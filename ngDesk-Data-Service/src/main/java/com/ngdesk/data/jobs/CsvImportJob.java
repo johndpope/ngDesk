@@ -266,6 +266,7 @@ public class CsvImportJob {
 								Map<String, Object> inputMessage = new HashMap<String, Object>();
 								try {
 									inputMessage = entry.getValue();
+									System.out.println(inputMessage);
 								} catch (Exception e) {
 									e.printStackTrace();
 									CsvImportLog log = new CsvImportLog();
@@ -387,6 +388,89 @@ public class CsvImportJob {
 													inputMessage.put(fieldName, 0);
 												} else if (valueWithoutSpace.length() != 0) {
 													inputMessage.put(fieldName, valueWithoutSpace);
+												}
+											}
+										}
+									}
+
+									if (inputMessage.containsKey(fieldName)) {
+										List<String> ignoredFields = List.of("CREATED_BY", "LAST_UPDATED_BY");
+										if (dataType.getDisplay().equalsIgnoreCase("Relationship")
+												&& !ignoredFields.contains(fieldName)) {
+											if (field.getRelationshipType().equalsIgnoreCase("One To One")) {
+												String relationshipId = csvImportService.getRelationshipId(field,
+														companyId, inputMessage.get(fieldName));
+
+												if (relationshipId != null && csvImportService
+														.checkRelationshipStatus(field, relationshipId, companyId)) {
+													Relationship relationship = new Relationship(relationshipId,
+															inputMessage.get(fieldName).toString());
+													inputMessage.put(fieldName, relationship);
+												} else {
+													CsvImportLog log = new CsvImportLog();
+													log.setLineNumber(i);
+													log.setErrorMessage(
+															(relationshipId == null) ? "Relationship value is not valid"
+																	: "Relationship already exist");
+													csvImportRepository.addToEntrySet(csvDocument.getCsvImportId(),
+															"logs", log, "csv_import");
+													error = true;
+													break;
+												}
+											} else if (field.getRelationshipType().equalsIgnoreCase("Many To One")) {
+												String relationshipId = csvImportService.getRelationshipId(field,
+														companyId, inputMessage.get(fieldName));
+												if (relationshipId != null) {
+													Relationship relationship = new Relationship(relationshipId,
+															inputMessage.get(fieldName).toString());
+													inputMessage.put(fieldName, relationship);
+												} else {
+													CsvImportLog log = new CsvImportLog();
+													log.setLineNumber(i);
+													log.setErrorMessage("Relationship value is not valid");
+													csvImportRepository.addToEntrySet(csvDocument.getCsvImportId(),
+															"logs", log, "csv_import");
+													error = true;
+													break;
+												}
+											} else if (field.getRelationshipType().equalsIgnoreCase("Many To Many")) {
+												List<String> values = mapper.readValue(
+														inputMessage.get(fieldName).toString(), mapper.getTypeFactory()
+																.constructCollectionType(List.class, String.class));
+												if (values != null) {
+													List<Relationship> relationshipList = new ArrayList<Relationship>();
+													for (String value : values) {
+														String relationshipId = csvImportService
+																.getRelationshipId(field, companyId, value);
+														if (relationshipId != null) {
+															Relationship relationship = new Relationship(relationshipId,
+																	inputMessage.get(fieldName).toString());
+															relationshipList.add(relationship);
+														} else {
+															CsvImportLog log = new CsvImportLog();
+															log.setLineNumber(i);
+															log.setErrorMessage("Relationship value is not valid");
+															csvImportRepository.addToEntrySet(
+																	csvDocument.getCsvImportId(), "logs", log,
+																	"csv_import");
+															error = true;
+															break;
+														}
+													}
+													if (error) {
+														break;
+													} else {
+														inputMessage.put(fieldName, relationshipList);
+													}
+												} else {
+													CsvImportLog log = new CsvImportLog();
+													log.setLineNumber(i);
+													log.setErrorMessage("Relationship value is not valid");
+													csvImportRepository.addToEntrySet(
+															csvDocument.getCsvImportId(), "logs", log,
+															"csv_import");
+													error = true;
+													break;
 												}
 											}
 										}
