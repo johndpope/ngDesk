@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,15 +58,10 @@ public class CsvImportService {
 		}
 	}
 
-	public Map<String, Object> createAccount(String accountName, String companyId, String globalTeamId,
-			String userUuid) {
+	public Map<String, Object> createAccount(String accountName, String companyId, String globalTeamId, String userUuid,
+			Module accountModule) {
 		Map<String, Object> accountEntry = new HashMap<String, Object>();
 		try {
-
-			Optional<Module> optionalAccountModule = modulesRepository.findIdbyModuleName("Accounts",
-					moduleService.getCollectionName("modules", companyId));
-			Module accountModule = optionalAccountModule.get();
-
 			HashMap<String, Object> account = new HashMap<String, Object>();
 			account.put("ACCOUNT_NAME", accountName);
 			account.put("DATE_CREATED", new Date());
@@ -91,14 +84,10 @@ public class CsvImportService {
 
 	public HashMap<String, Object> createUser(String email, String companyId, String password, boolean inviteAccepted,
 			String subdomain, String notification, int loginAttempts, String language, String role, boolean disabled,
-			String globalTeamId, String userUuid) {
+			String globalTeamId, String userUuid, Module userModule) {
 
 		HashMap<String, Object> userEntry = new HashMap<String, Object>();
 		try {
-			Optional<Module> optionalUserModule = modulesRepository.findIdbyModuleName("Users",
-					moduleService.getCollectionName("modules", companyId));
-			Module userModule = optionalUserModule.get();
-
 			HashMap<String, Object> user = new HashMap<String, Object>();
 			user.put("USER_UUID", UUID.randomUUID().toString());
 			user.put("EMAIL_ADDRESS", email.toLowerCase());
@@ -184,12 +173,12 @@ public class CsvImportService {
 	}
 
 	public Map<String, Object> createModuleData(String companyId, String moduleName, Map<String, Object> body,
-			String userUuid) {
+			String userUuid, List<Module> modules) {
 		Map<String, Object> data = new HashMap<String, Object>();
 
 		try {
-			Optional<Module> optionalModule = modulesRepository.findIdbyModuleName(moduleName,
-					moduleService.getCollectionName("modules", companyId));
+			Optional<Module> optionalModule = modules.stream().filter(mod -> mod.getName().equals(moduleName))
+					.findFirst();
 			if (optionalModule.isPresent()) {
 				Module module = optionalModule.get();
 
@@ -331,10 +320,12 @@ public class CsvImportService {
 	}
 
 	public void updateUsersInTeamsEntry(String value, String userId, Module teamsModule, String companyId,
-			HashMap<String, Object> entry, String userUuid) {
+			Map<String, Object> entry, String userUuid) {
 		ObjectMapper mapper = new ObjectMapper();
 
 		try {
+			HashMap<String, Object> mapEntry = new HashMap<String, Object>();
+			mapEntry.putAll(entry);
 //			List<String> users = mapper.readValue(value,
 //					mapper.getTypeFactory().constructCollectionType(List.class, String.class));
 //			users.add(userId);
@@ -344,7 +335,7 @@ public class CsvImportService {
 
 			List<Relationship> usersRelationship = getListRelationshipValue("USERS", teamsModule, companyId, users);
 			entry.put("USERS", usersRelationship);
-			dataAPI.putModuleEntry(entry, teamsModule.getModuleId(), true, companyId, userUuid, false);
+			dataAPI.putModuleEntry(mapEntry, teamsModule.getModuleId(), true, companyId, userUuid, false);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -416,7 +407,7 @@ public class CsvImportService {
 		List<String> list = new ArrayList<String>();
 
 		String str[] = string.replaceAll("[\\[\\]]", "").split(",");
-        list = Arrays.asList(str);
+		list = Arrays.asList(str);
 		return list;
 	}
 
