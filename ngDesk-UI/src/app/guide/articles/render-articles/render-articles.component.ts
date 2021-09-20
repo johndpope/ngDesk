@@ -72,10 +72,6 @@ export class RenderArticlesComponent implements OnInit {
 		// get article sections
 		this.guideService.getArticlesBySectionId(this.sectionId).subscribe(
 			(articlesResponse: any) => {
-				console.log(
-					'articlesResponse////////////////////////',
-					articlesResponse
-				);
 				this.sectionArticles = articlesResponse.getArticlesBySectionId
 					.filter(
 						(article) => article.PUBLISH && article.SECTION === this.sectionId
@@ -94,10 +90,6 @@ export class RenderArticlesComponent implements OnInit {
 					.getKbArticleById(articleMatchedByTitle.ARTICLE_ID)
 					.subscribe(
 						(articleResponse: any) => {
-							console.log(
-								'articleResponse........//////////////',
-								articleResponse
-							);
 							this.article = articleResponse.DATA;
 							const userRole = this.usersService.user['ROLE'];
 							//if user is logged in
@@ -200,7 +192,7 @@ export class RenderArticlesComponent implements OnInit {
 								PATH: [
 									'guide',
 									'categories',
-									sectionResponse.CATEGORY,
+									sectionResponse.DATA.category.categoryId,
 									'detail',
 								],
 							});
@@ -223,15 +215,15 @@ export class RenderArticlesComponent implements OnInit {
 	}
 
 	public addComment(): void {
-		if (this.comment['message'] !== undefined) {
-			console.log('this.comment...................>', this.comment['message']);
+		if (this.comment['MESSAGE'] !== undefined) {
+			console.log('this.comment...................>', this.comment['MESSAGE']);
 			this.loading = true;
 			this.articleApiService
 				.postComments(this.article['ARTICLE_ID'], [this.comment])
 				.subscribe(
 					(response: any) => {
 						console.log('response.....................', response);
-						this.comment['message'] = '';
+						this.comment['MESSAGE'] = '';
 						this.getArticle();
 					},
 					(error: any) => {
