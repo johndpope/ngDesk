@@ -21,7 +21,7 @@ export class RenderArticlesComponent implements OnInit {
 	public section = {};
 	public sectionArticles = [];
 	public sectionId: string;
-	public comment = {};
+	public comment: CommentMessage = {};
 	public users = [];
 	public hasEditAccess = false;
 	public hasCommentAccess = false;
@@ -30,7 +30,7 @@ export class RenderArticlesComponent implements OnInit {
 	public isPublicArticle = true;
 	public authToken = this.usersService.getAuthenticationToken();
 	public roleName: string;
-	public commentMessage = [];
+	//public CommentMessage = [];
 	constructor(
 		private route: ActivatedRoute,
 		private modulesService: ModulesService,
@@ -216,11 +216,13 @@ export class RenderArticlesComponent implements OnInit {
 
 	public addComment(): void {
 		if (this.comment['MESSAGE'] !== undefined) {
+			console.log('this.comment...................>', this.comment['MESSAGE']);
 			this.loading = true;
 			this.articleApiService
-				.postComments(this.article['ARTICLE_ID'], this.commentMessage)
+				.postComments(this.article['ARTICLE_ID'], [this.comment])
 				.subscribe(
 					(response: any) => {
+						console.log('response.....................', response);
 						this.comment['MESSAGE'] = '';
 						this.getArticle();
 					},
