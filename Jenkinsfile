@@ -146,7 +146,7 @@ pipeline {
 				            generateSwagger('ngDesk-UI', '../ngDesk-Workflow-Service/target/openapi.json', 'workflow-api')
 				            generateSwagger('ngDesk-UI', '../ngDesk-Module-Service/target/openapi.json', 'module-api')
 				            generateSwagger('ngDesk-UI', '../ngDesk-Role-Service/target/openapi.json', 'role-api')
-				            // generateSwagger('ngDesk-UI', '../ngDesk-Escalation-Service/target/openapi.json', 'escalation-api')
+				            generateSwagger('ngDesk-UI', '../ngDesk-Escalation-Service/target/openapi.json', 'escalation-api')
 				            generateSwagger('ngDesk-UI', '../ngDesk-Sam-Service/target/openapi.json', 'sam-api')
 				            generateSwagger('ngDesk-UI', '../ngDesk-Sidebar-Service/target/openapi.json', 'sidebar-api')
 				            generateSwagger('ngDesk-UI', '../ngDesk-Data-Service/target/openapi.json', 'data-api')
@@ -225,7 +225,7 @@ def buildMicroservice(serviceName, path) {
 def generateSwagger(frontendProject, serviceJsonPath, name) {
 
     dir('/var/jenkins_home/projects/ngdesk-project/ngDesk/' + frontendProject) {
-
+	sh "openapi-generator-cli version-manager set 5.1.0"
         sh "openapi-generator-cli generate -g typescript-angular -i ${serviceJsonPath} -o ngdesk-swagger/${name} --additional-properties npmName=@ngdesk/${name},ngVersion=11.0.0,npmVersion=1.0.0"
         dir('ngdesk-swagger/' + name) {
             sh 'npm install'
