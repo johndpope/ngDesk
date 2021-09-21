@@ -366,7 +366,7 @@ public class SocketHandler extends TextWebSocketHandler {
 				} catch (Exception e) {
 					try {
 						ChatUser chatUser = mapper.readValue(textMessage.getPayload(), ChatUser.class);
-						chatUserEntryService.ChatUserEntryCreation(chatUser);
+						chatUserEntryService.chatUserEntryCreation(chatUser);
 					} catch (Exception e1) {
 
 					}

@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.bson.types.ObjectId;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -15,13 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+import com.ngdesk.commons.exceptions.InternalErrorException;
 import com.ngdesk.data.elastic.ElasticMessage;
 import com.ngdesk.repositories.CompaniesRepository;
 import com.ngdesk.repositories.ModuleEntryRepository;
 import com.ngdesk.repositories.ModulesRepository;
 import com.ngdesk.repositories.RolesRepository;
 import com.ngdesk.websocket.SessionService;
-import com.ngdesk.websocket.UserSessions;
 import com.ngdesk.websocket.companies.dao.Company;
 import com.ngdesk.websocket.companies.dao.Phone;
 import com.ngdesk.websocket.modules.dao.Module;
@@ -55,14 +54,14 @@ public class ChatUserEntryService {
 	@Autowired
 	FindAgentAndAssign findAgentAndAssign;
 
-	public void ChatUserEntryCreation(ChatUser chatUser) {
+	public void chatUserEntryCreation(ChatUser chatUser) {
 		try {
 			Optional<Company> optionalCompany = companiesRepository.findCompanyBySubdomain(chatUser.getSubDomain());
 			if (optionalCompany.isPresent()) {
 				Company company = optionalCompany.get();
 				if (chatUser.getEmailAddress() != null) {
 					Map<String, Object> user = createOrGetUser(company, chatUser);
-					findAgentAndAssign.AssignChat(company, chatUser, user);
+					findAgentAndAssign.assignChatToAgent(company, chatUser, user);
 				}
 			}
 		} catch (Exception e) {
@@ -312,66 +311,71 @@ public class ChatUserEntryService {
 		return contact;
 	}
 
-	public Map<String, Object> putData(String companyId, String moduleId, String moduleName, Map<String, Object> entry,
+	public Map<String, Object> putData(String companyId, String moduleId, String moduleName, Map<String, Object> body,
 			String dataId) {
+		try {
 
-		String collectionName = moduleName.replaceAll("\\s+", "_") + "_" + companyId;
+			String collectionName = moduleName.replaceAll("\\s+", "_") + "_" + companyId;
 
-		if (moduleName.equals("Users")) {
-			Optional<Map<String, Object>> optionalExistingEntry = entryRepository.findById(dataId,
-					"Users_" + companyId);
-			Map<String, Object> existingEntry = optionalExistingEntry.get();
+			if (moduleName.equals("Users")) {
+				Map<String, Object> existingEntry = entryRepository.findById(dataId, "Users_" + companyId).orElse(null);
 
-			// CHECK IF ROLE CHANGED
-			if (!entry.get("ROLE").toString().equals(existingEntry.get("ROLE").toString())) {
-				// IF CHANGED UPDATE DEFAULT TEAMS
-				Optional<Role> optionalExistingRole = rolesRepository.findById(existingEntry.get("_id").toString(),
-						"roles_" + companyId);
-				Optional<Role> optionalNewRole = rolesRepository.findById(entry.get("_id").toString(),
-						"roles_" + companyId);
-				Role newRole = optionalNewRole.get();
-				if (optionalExistingRole.isPresent()) {
-					Role existingRole = optionalExistingRole.get();
-					String existingRoleName = existingRole.getName();
+				// CHECK IF ROLE CHANGED
+				if (!body.get("ROLE").toString().equals(existingEntry.get("ROLE").toString())) {
+					// IF CHANGED UPDATE DEFAULT TEAMS
 
-					if (newRole != null) {
-						String newRoleName = newRole.getName();
-						Map<String, Object> oldTeam = entryRepository
-								.findTeamByName(existingRoleName, "Teams_" + companyId).orElse(null);
+					Role existingRole = rolesRepository
+							.findById(existingEntry.get("_id").toString(), "roles_" + companyId).orElse(null);
+					Role newRole = rolesRepository.findById(body.get("_id").toString(), "roles_" + companyId)
+							.orElse(null);
+					if (existingRole != null) {
+						String existingRoleName = existingRole.getName();
 
-						Map<String, Object> newTeam = entryRepository.findTeamByName(newRoleName, "Teams_" + companyId)
-								.orElse(null);
+						if (newRole != null) {
+							String newRoleName = newRole.getName();
+							Map<String, Object> oldTeam = entryRepository
+									.findTeamByName(existingRoleName, "Teams_" + companyId).orElse(null);
 
-						String oldTeamId = oldTeam.get("_id").toString();
-						String newTeamId = newTeam.get("_id").toString();
-						List<String> teams = (List<String>) entry.get("TEAMS");
-						teams.remove(oldTeamId);
-						teams.add(newTeamId);
-						newTeam.put("TEAMS", teams);
-						entryRepository.updateTeamUser(dataId, existingRoleName, "Teams_" + companyId);
-						entryRepository.removeTeamUser(dataId, newRoleName, "Teams_" + companyId);
+							Map<String, Object> newTeam = entryRepository
+									.findTeamByName(newRoleName, "Teams_" + companyId).orElse(null);
+
+							String oldTeamId = oldTeam.get("_id").toString();
+							String newTeamId = newTeam.get("_id").toString();
+							List<String> teams = (List<String>) body.get("TEAMS");
+							teams.remove(oldTeamId);
+							teams.add(newTeamId);
+							newTeam.put("TEAMS", teams);
+							entryRepository.updateTeamUser(dataId, existingRoleName, "Teams_" + companyId);
+							entryRepository.removeTeamUser(dataId, newRoleName, "Teams_" + companyId);
+
+						}
 
 					}
 
 				}
+			}
+			// TEMPORAL DATA LOGIC
+
+			Map<String, Object> existingEntry = entryRepository.findById(dataId, collectionName).orElse(null);
+			if (existingEntry != null) {
+				existingEntry.put("DATA_ID", existingEntry.remove("_id").toString());
+				if (!moduleName.equalsIgnoreCase("teams")) {
+					existingEntry.put("EFFECTIVE_TO", new Date());
+					entryRepository.save(existingEntry, collectionName);
+				}
+				body.put("_id", new ObjectId(dataId));
+				entryRepository.findAndReplace(dataId, body, collectionName);
+				String id = body.get("_id").toString();
+				postDataIntoElastic(moduleId, companyId, body);
 
 			}
+
+			return body;
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-
-		Optional<Map<String, Object>> optionalExistingEntry = entryRepository.findById(dataId, collectionName);
-		if (optionalExistingEntry.isPresent()) {
-			Map<String, Object> existingEntry = optionalExistingEntry.get();
-			existingEntry.put("DATA_ID", existingEntry.remove("_id").toString());
-			if (!moduleName.equalsIgnoreCase("teams")) {
-				existingEntry.put("EFFECTIVE_TO", new Date());
-				entryRepository.save(existingEntry, collectionName);
-			}
-			entry.put("_id", new ObjectId(dataId));
-			postDataIntoElastic(moduleId, companyId, entry);
-		}
-
-		return entry;
-
+		throw new InternalErrorException("INTERNAL_ERROR");
 	}
 
 }
