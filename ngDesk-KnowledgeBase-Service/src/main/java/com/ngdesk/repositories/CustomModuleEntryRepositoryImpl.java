@@ -24,7 +24,6 @@ public class CustomModuleEntryRepositoryImpl implements CustomModuleEntryReposit
 	public Optional<Map<String, Object>> findEntryById(String entryId, String collectionName) {
 		Assert.notNull(entryId, "entryid must not be null");
 		Assert.notNull(collectionName, "collection name must not be null");
-
 		Criteria criteria = new Criteria();
 		criteria.andOperator(Criteria.where("DELETED").is(false), Criteria.where("EFFETIVE_TO").is(null),
 				Criteria.where("_id").is(entryId));

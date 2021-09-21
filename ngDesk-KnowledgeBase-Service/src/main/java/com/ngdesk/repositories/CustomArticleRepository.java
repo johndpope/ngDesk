@@ -15,6 +15,8 @@ public interface CustomArticleRepository {
 	public Attachment saveAttachment(Attachment newAttachment, String collectionName);
 
 	public Optional<Attachment> findHashById(String hash, String collectionName);
-	
+
 	public int getCount(String collectionName);
+
+	public void saveComments(String articleId, CommentMessage messages, String collectionName);
 }

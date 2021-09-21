@@ -79,7 +79,6 @@ public class ArticleAPI {
 	public void deleteArticle(
 			@Parameter(description = "Article ID", required = true) @PathVariable("articleId") String articleId) {
 		String collectionName = "articles_" + authManager.getUserDetails().getCompanyId();
-
 		// Check if article id exist
 		Optional<Article> articleOptional = articleRepository.findById(articleId, collectionName);
 		if (articleOptional.isEmpty()) {
@@ -91,7 +90,7 @@ public class ArticleAPI {
 	}
 
 	@PostMapping("/articles/{articleId}/comments")
-	public Article postComments(@RequestBody List<CommentMessage> commentMessages,
+	public CommentMessage postComments(@RequestBody CommentMessage commentMessages,
 			@PathVariable("articleId") String articleId) {
 		List<CommentMessage> messages = new ArrayList<CommentMessage>();
 		String collectionName = "articles_" + authManager.getUserDetails().getCompanyId();
@@ -101,14 +100,14 @@ public class ArticleAPI {
 			throw new NotFoundException("DAO_NOT_FOUND", vars);
 		}
 		Article article = articleOptional.get();
-		for (CommentMessage message : commentMessages) {
-			message.setMessageId(UUID.randomUUID().toString());
-			messages.add(message);
-		}
 
+		commentMessages.setMessageId(UUID.randomUUID().toString());
+		messages.add(commentMessages);
 		article.setComments(messages);
 		articleService.postCommentsToElastic(article, authManager.getUserDetails().getCompanyId());
-		return articleRepository.save(article, "articles_" + authManager.getUserDetails().getCompanyId());
+		articleRepository.saveComments(article.getArticleId(), commentMessages,
+				"articles_" + authManager.getUserDetails().getCompanyId());
 
+		return commentMessages;
 	}
 }

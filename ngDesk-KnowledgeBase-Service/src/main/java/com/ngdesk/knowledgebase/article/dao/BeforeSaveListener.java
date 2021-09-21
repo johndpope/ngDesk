@@ -27,15 +27,15 @@ public class BeforeSaveListener extends AbstractMongoEventListener<Article> {
 
 	@Autowired
 	ModuleEntryRepository moduleEntryRepository;
-	
+
 	@Autowired
 	SectionRepository sectionRepository;
-	
-	@Autowired 
+
+	@Autowired
 	ArticleRepository articleRepository;
-	
-	String[] languageCodes={ "ar", "de", "el", "en", "es", "fr", "hi", "it", "ms", "pt", "ru", "zh", "no" };
-	
+
+	String[] languageCodes = { "ar", "de", "el", "en", "es", "fr", "hi", "it", "ms", "pt", "ru", "zh", "no" };
+
 	@Override
 	public void onBeforeConvert(BeforeConvertEvent<Article> event) {
 		Article article = event.getSource();
@@ -46,17 +46,17 @@ public class BeforeSaveListener extends AbstractMongoEventListener<Article> {
 		ValidateSection(article);
 		ValidateLanguageSource(article);
 	}
-	
+
 	private void ValidateTitleDuplicate(Article article) {
-		String collectionName="articles_"+authManager.getUserDetails().getCompanyId();
-		Optional<Article>articleDuplicate=articleRepository.findArticleDuplicateTitle(article.getTitle(), article.getArticleId(), collectionName);
-		if(!articleDuplicate.isEmpty())
-		{
-			String[] vars= {"ARTICLE","TITLE"};
-			throw  new BadRequestException("DAO_VARIABLE_ALREADY_EXISTS",vars);
+		String collectionName = "articles_" + authManager.getUserDetails().getCompanyId();
+		Optional<Article> articleDuplicate = articleRepository.findArticleDuplicateTitle(article.getTitle(),
+				article.getArticleId(), collectionName);
+		if (!articleDuplicate.isEmpty()) {
+			String[] vars = { "ARTICLE", "TITLE" };
+			throw new BadRequestException("DAO_VARIABLE_ALREADY_EXISTS", vars);
 		}
 	}
-	
+
 	// Check if Author exist in mongoDB
 	private void ValidateAuthor(Article article) {
 		String collectionName = "Users_" + authManager.getUserDetails().getCompanyId();
@@ -88,26 +88,28 @@ public class BeforeSaveListener extends AbstractMongoEventListener<Article> {
 			if (article.getComments() != null) {
 				for (int i = 0; i < article.getComments().size(); i++) {
 					String senderId = article.getComments().get(i).getSender();
-					Optional<Map<String, Object>> userOptional = moduleEntryRepository.findEntryById(senderId,
-							collectionName);
-					if (userOptional.isEmpty()) {
-						String[] vars = { "USER" };
-						throw new NotFoundException("DAO_NOT_FOUND", vars);
+					if (senderId != null) {
+						Optional<Map<String, Object>> userOptional = moduleEntryRepository.findEntryById(senderId,
+								collectionName);
+						if (userOptional.isEmpty()) {
+							String[] vars = { "USER" };
+							throw new NotFoundException("DAO_NOT_FOUND", vars);
+						}
 					}
 				}
 			}
 		}
 	}
-	
+
 	private void ValidateSection(Article article) {
-		String collectionName="sections_"+authManager.getUserDetails().getCompanyId();
-		Optional<Section> sectionOptional=sectionRepository.findById(article.getSection(),collectionName);
+		String collectionName = "sections_" + authManager.getUserDetails().getCompanyId();
+		Optional<Section> sectionOptional = sectionRepository.findById(article.getSection(), collectionName);
 		if (sectionOptional.isEmpty()) {
 			String[] vars = { "SECTION" };
 			throw new NotFoundException("DAO_NOT_FOUND", vars);
 		}
 	}
-	
+
 	private void ValidateLanguageSource(Article article) {
 		List<String> languageCode = Arrays.asList(languageCodes);
 		if (!languageCode.contains(article.getSourceLanguage())) {

@@ -40,7 +40,6 @@ import com.ngdesk.email.SendEmail;
 import com.ngdesk.exceptions.BadRequestException;
 import com.ngdesk.exceptions.ForbiddenException;
 import com.ngdesk.exceptions.InternalErrorException;
-import com.ngdesk.knowledgebase.ArticleService;
 import com.ngdesk.modules.DataService;
 import com.ngdesk.modules.ModuleService;
 import com.ngdesk.roles.RoleService;
@@ -69,9 +68,6 @@ public class CompanyService {
 
 	@Autowired
 	private UserDAO userDAO;
-
-	@Autowired
-	private ArticleService articleService;
 
 	@Autowired
 	private ModuleService moduleObj;

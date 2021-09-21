@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
@@ -40,8 +41,9 @@ public class CustomArticleRepositoryImpl implements CustomArticleRepository {
 
 	@Override
 	public Optional<Attachment> findHashById(String hash, String collectionName) {
-		
-		return Optional.ofNullable(mongoOperations.findOne(new Query(Criteria.where("hash").is(hash)), Attachment.class, collectionName));
+
+		return Optional.ofNullable(
+				mongoOperations.findOne(new Query(Criteria.where("hash").is(hash)), Attachment.class, collectionName));
 	}
 
 	@Override
@@ -51,5 +53,12 @@ public class CustomArticleRepositoryImpl implements CustomArticleRepository {
 		return (int) mongoOperations.count(query, collectionName);
 	}
 
-	
+	@Override
+	public void saveComments(String articleId, CommentMessage message, String collectionName) {
+		Update update = new Update();
+		update.addToSet("comments", message);
+		mongoOperations.updateFirst(new Query(Criteria.where("_id").is(articleId)), update, collectionName);
+
+	}
+
 }

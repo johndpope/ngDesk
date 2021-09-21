@@ -52,7 +52,10 @@ public class ArticleService {
 		article = SetCommentsUUID(article);
 		if (oldArticle.getComments() != null && !oldArticle.getComments().isEmpty()) {
 			List<CommentMessage> allComment = oldArticle.getComments();
-			allComment.addAll(article.getComments());
+			if (article.getComments() != null) {
+				allComment.addAll(article.getComments());
+
+			}
 			article.setComments(allComment);
 		}
 		return article;
