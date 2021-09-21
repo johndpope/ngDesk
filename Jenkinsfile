@@ -174,7 +174,7 @@ pipeline {
                                 sh './mvnw spring-boot:build-image'
 
                                     docker.withRegistry("${env.DOCKER_HUB_URL}", "${env.DOCKER_HUB_KEY}") {
-										def newImage = docker.image("${env.DOCKER_IMAGE_NAME}/web:latest")
+										def newImage = docker.image("${env.DOCKER_IMAGE_NAME}/ngdesk-web:latest")
 										newImage.push()
 										// docker.withServer("${env.PROD_SERVER_URL}") {
 										//     sh "docker rename ngdesk-web ngdesk-web-old"
