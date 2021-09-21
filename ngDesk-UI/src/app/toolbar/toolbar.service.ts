@@ -10,6 +10,8 @@ import { UsersService } from '../users/users.service';
 export class ToolbarService {
     public showAcceptChat: boolean = true;
 
+    public chatStatus: boolean = false;
+
     public authorizedUsersForChat = [];
     constructor(
         private http: HttpClient,
@@ -54,6 +56,14 @@ export class ToolbarService {
 		  `;
         return this.http.post(`${this.globals.graphqlUrl}`, query);
 
+    }
+
+    public updateChatStatus(status: any) {
+        if (status ==='available') {
+            this.chatStatus = true;
+        } else {
+            this.chatStatus = false;
+        }
     }
 
 }

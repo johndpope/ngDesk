@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -37,15 +38,17 @@ import com.ngdesk.commons.managers.AuthProxy;
 import com.ngdesk.commons.models.User;
 import com.ngdesk.data.dao.DiscussionMessage;
 import com.ngdesk.data.dao.SingleWorkflowPayload;
+import com.ngdesk.repositories.CompaniesRepository;
 import com.ngdesk.repositories.RolesRepository;
 import com.ngdesk.websocket.approval.dao.Approval;
 import com.ngdesk.websocket.approval.dao.ApprovalService;
-import com.ngdesk.websocket.channels.chat.ChatChannelService;
-import com.ngdesk.websocket.channels.chat.ChatService;
-import com.ngdesk.websocket.channels.chat.ChatStatus;
-import com.ngdesk.websocket.channels.chat.ChatStatusService;
-import com.ngdesk.websocket.channels.chat.ChatWidgetPayload;
-import com.ngdesk.websocket.channels.chat.PageLoad;
+import com.ngdesk.websocket.channels.chat.dao.ChatChannelService;
+import com.ngdesk.websocket.channels.chat.dao.ChatService;
+import com.ngdesk.websocket.channels.chat.dao.ChatStatus;
+import com.ngdesk.websocket.channels.chat.dao.ChatStatusCheck;
+import com.ngdesk.websocket.channels.chat.dao.ChatStatusService;
+import com.ngdesk.websocket.channels.chat.dao.ChatWidgetPayload;
+import com.ngdesk.websocket.channels.chat.dao.PageLoad;
 import com.ngdesk.websocket.dao.WebSocketService;
 import com.ngdesk.websocket.graphql.dao.GraphqlProxy;
 import com.ngdesk.websocket.modules.dao.ButtonTypeService;
@@ -258,19 +261,23 @@ public class SocketHandler extends TextWebSocketHandler {
 				if (user != null) {
 					ConcurrentHashMap<String, UserSessions> userSessions = sessionService.sessions.get(subdomain);
 					userSessions.get(user.getUserId()).getSessions().remove(session);
-
-					RMap<Timestamp, Map<String, Object>> usersMap = redisson.getMap("disconnectedUsers");
+					RMap<Long, Map<String, Object>> usersMap = redisson.getMap("disconnectedUsers");
 					Map<String, Object> userMap = new HashMap<String, Object>();
 					userMap.put("USER_ID", user.getUserId());
 					userMap.put("SUBDOMAIN", subdomain);
-					Calendar cal = Calendar.getInstance();
-					cal.setTimeInMillis(new Date().getTime());
-					cal.add(Calendar.MILLISECOND, 1);
-					usersMap.put(new Timestamp(cal.getTime().getTime()), userMap);
+					String epochDate = "01/01/1970";
+					Date date = new SimpleDateFormat("dd/MM/yyyy").parse(epochDate);
+					Timestamp epoch = new Timestamp(date.getTime());
 
-					if (sessionService.sessions.get(subdomain).get(user.getUserId()).getSessions().size() == 0) {
-						sessionService.sessions.get(subdomain).remove(user.getUserId());
+					Timestamp today = new Timestamp(new Date().getTime());
+					long currentTimeDiff = today.getTime() - epoch.getTime();
+
+					if (usersMap.containsKey(currentTimeDiff)) {
+						currentTimeDiff += 1;
 					}
+
+					usersMap.put(currentTimeDiff, userMap);
+
 					if (sessionService.sessions.get(subdomain).size() == 0) {
 						sessionService.sessions.remove(subdomain);
 					}
@@ -297,7 +304,7 @@ public class SocketHandler extends TextWebSocketHandler {
 				}
 			}
 
-		} catch (URISyntaxException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			websocketConnections.decrementAndGet();
@@ -373,6 +380,13 @@ public class SocketHandler extends TextWebSocketHandler {
 												chatStatusService.updateChatStatus(chatStatus);
 
 											} catch (Exception e6) {
+												try {
+													ChatStatusCheck chatStatusCheck = mapper
+															.readValue(textMessage.getPayload(), ChatStatusCheck.class);
+													chatStatusService.publishOnChatStatusCheck(chatStatusCheck);
+
+												} catch (Exception e7) {
+												}
 
 											}
 

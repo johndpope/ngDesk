@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
-import com.ngdesk.websocket.channels.chat.ChatChannel;
+import com.ngdesk.websocket.channels.chat.dao.ChatChannel;
 
 public class CustomChatChannelRepositoryImpl implements CustomChatChannelRepository {
 

@@ -1,4 +1,4 @@
-package com.ngdesk.websocket.channels.chat;
+package com.ngdesk.websocket.channels.chat.dao;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

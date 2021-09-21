@@ -1,4 +1,4 @@
-package com.ngdesk.websocket.channels.chat;
+package com.ngdesk.websocket.channels.chat.dao;
 
 import java.io.IOException;
 import java.util.ArrayList;

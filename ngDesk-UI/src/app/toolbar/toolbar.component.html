@@ -74,7 +74,7 @@
 					</div>
 				</mat-autocomplete>
 			</button>
-			<button id="profile" mat-button [matMenuTriggerFor]="profileDropdown" style="padding: 0px; min-width: 40px;">
+			<button id="profile" mat-button [matMenuTriggerFor]="profileDropdown" style="padding: 0px; min-width: 40px;" (click)="checkChatStatus()">
 				<mat-icon class="light-grey-color" fontSet="material-icons-outlined">person</mat-icon>
 				<!-- <mat-icon [ngStyle]="{color:statusColor}">fiber_manual_record</mat-icon> -->
 			</button>
@@ -95,15 +95,15 @@
 
 				<button *ngIf="toolbarService.showAcceptChat" mat-menu-item (click)="chatStatus(true);$event.stopPropagation();" fxLayoutAlign="normal center">
 						<mat-icon>
-							<mat-spinner [diameter]="20" *ngIf="!accept && !isAcceptingChats"></mat-spinner>
-							<span *ngIf="isAcceptingChats">done</span>
+							<!-- <mat-spinner [diameter]="20" *ngIf="!accept && !isAcceptingChats"></mat-spinner> -->
+							<span *ngIf="toolbarService.chatStatus">done</span>
 						</mat-icon>
 						<span>{{'ACCEPT_CHATS' | translate}}</span>
 					</button>
 					<button *ngIf="toolbarService.showAcceptChat" mat-menu-item (click)="chatStatus(false);$event.stopPropagation();">
 						<mat-icon>
-							<mat-spinner [diameter]="20" *ngIf="!accept && isAcceptingChats"></mat-spinner>
-							<span *ngIf="!isAcceptingChats">block</span>
+							<!-- <mat-spinner [diameter]="20" *ngIf="!accept && isAcceptingChats"></mat-spinner> -->
+							<span *ngIf="!toolbarService.chatStatus">block</span>
 						</mat-icon>
 						<span>{{'DONT_ACCEPT_CHATS' | translate}}</span>
 					</button>

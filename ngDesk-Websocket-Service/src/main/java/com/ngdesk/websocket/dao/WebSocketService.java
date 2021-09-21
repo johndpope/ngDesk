@@ -30,6 +30,7 @@ import com.ngdesk.repositories.DnsRepository;
 import com.ngdesk.repositories.ModuleEntryRepository;
 import com.ngdesk.repositories.ModulesRepository;
 import com.ngdesk.websocket.UserSessions;
+import com.ngdesk.websocket.channels.chat.dao.ChatStatusMessage;
 import com.ngdesk.websocket.SessionService;
 import com.ngdesk.websocket.companies.dao.ChatSettingsMessage;
 import com.ngdesk.websocket.companies.dao.Company;
@@ -302,6 +303,41 @@ public class WebSocketService {
 				if (!rolesService.isSystemAdmin(company.getId(), user.get("ROLE").toString())) {
 					continue;
 				}
+				ConcurrentLinkedQueue<WebSocketSession> userSessions = sessions.get(userId).getSessions();
+				userSessions.forEach(session -> {
+					try {
+						String payload = mapper.writeValueAsString(message);
+						session.sendMessage(new TextMessage(payload));
+					} catch (JsonProcessingException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					} catch (IllegalStateException e) {
+						e.printStackTrace();
+						userSessions.remove(session);
+					}
+				});
+
+			}
+
+		}
+
+	}
+
+	public void publishChatStatus(Company company, ChatStatusMessage message) {
+
+		String companyId = company.getId();
+		ObjectMapper mapper = new ObjectMapper();
+
+		if (!sessionService.sessions.containsKey(company.getCompanySubdomain())) {
+			return;
+		}
+
+		ConcurrentHashMap<String, UserSessions> sessions = sessionService.sessions.get(company.getCompanySubdomain());
+		for (String userId : sessions.keySet()) {
+
+			Optional<Map<String, Object>> optionalUser = entryRepository.findEntryById(userId, "Users_" + companyId);
+			if (optionalUser.isPresent()) {
 				ConcurrentLinkedQueue<WebSocketSession> userSessions = sessions.get(userId).getSessions();
 				userSessions.forEach(session -> {
 					try {

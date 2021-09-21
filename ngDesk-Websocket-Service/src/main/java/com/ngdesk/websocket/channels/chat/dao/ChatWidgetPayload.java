@@ -1,4 +1,4 @@
-package com.ngdesk.websocket.channels.chat;
+package com.ngdesk.websocket.channels.chat.dao;
 
 import org.springframework.data.mongodb.core.mapping.Field;
 

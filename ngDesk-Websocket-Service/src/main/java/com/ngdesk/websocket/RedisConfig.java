@@ -14,8 +14,10 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import com.ngdesk.data.dao.WorkflowPayload;
-import com.ngdesk.websocket.channels.chat.PageLoad;
+import com.ngdesk.websocket.channels.chat.dao.ChatStatusMessage;
+import com.ngdesk.websocket.channels.chat.dao.PageLoad;
 import com.ngdesk.websocket.subscribers.ChatSettingsUpdateSubscriber;
+import com.ngdesk.websocket.subscribers.ChatStatusSubscriber;
 import com.ngdesk.websocket.subscribers.ModuleNotificationSubscriber;
 import com.ngdesk.websocket.subscribers.NotificationSubscriber;
 
@@ -40,6 +42,9 @@ public class RedisConfig {
 	@Autowired
 	ChatSettingsUpdateSubscriber chatSettingsUpdateSubscriber;
 
+	@Autowired
+	ChatStatusSubscriber chatStatusSubscriber;
+
 	@Bean
 	public RedisTemplate<String, WorkflowPayload> redisTemplate(LettuceConnectionFactory redisConnectionFactory) {
 		RedisTemplate<String, WorkflowPayload> redisTemplate = new RedisTemplate<String, WorkflowPayload>();
@@ -56,6 +61,17 @@ public class RedisConfig {
 		redisPageLoadTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<PageLoad>(PageLoad.class));
 		redisPageLoadTemplate.setKeySerializer(new StringRedisSerializer());
 		return redisPageLoadTemplate;
+	}
+
+	@Bean
+	public RedisTemplate<String, ChatStatusMessage> redisChatStatusTemplate(
+			LettuceConnectionFactory redisConnectionFactory) {
+		RedisTemplate<String, ChatStatusMessage> redisChatStatusTemplate = new RedisTemplate<String, ChatStatusMessage>();
+		redisChatStatusTemplate.setConnectionFactory(redisConnectionFactory);
+		redisChatStatusTemplate
+				.setValueSerializer(new Jackson2JsonRedisSerializer<ChatStatusMessage>(ChatStatusMessage.class));
+		redisChatStatusTemplate.setKeySerializer(new StringRedisSerializer());
+		return redisChatStatusTemplate;
 	}
 
 	@Bean
@@ -81,6 +97,11 @@ public class RedisConfig {
 	}
 
 	@Bean
+	MessageListenerAdapter chatStatusListner() {
+		return new MessageListenerAdapter(chatStatusSubscriber);
+	}
+
+	@Bean
 	public RedisMessageListenerContainer redisMessageListenerContainer(
 			LettuceConnectionFactory redisConnectionFactory) {
 		RedisMessageListenerContainer container = new RedisMessageListenerContainer();
@@ -88,6 +109,8 @@ public class RedisConfig {
 		container.addMessageListener(notificationListener(), new PatternTopic("notification"));
 		container.addMessageListener(moduleNotificationListener(), new PatternTopic("module_notification"));
 		container.addMessageListener(chatSettingsUpdateListner(), new PatternTopic("chat_settings_update"));
+		container.addMessageListener(chatStatusListner(), new PatternTopic("chat_status"));
+
 		return container;
 	}
 

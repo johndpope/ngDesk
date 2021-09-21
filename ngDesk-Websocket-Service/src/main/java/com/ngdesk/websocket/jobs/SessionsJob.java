@@ -1,6 +1,7 @@
 package com.ngdesk.websocket.jobs;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -25,26 +26,38 @@ public class SessionsJob {
 
 	@Scheduled(fixedRate = 60000)
 	public void run() {
-		RMap<Timestamp, Map<String, Object>> usersMap = redisson.getMap("disconnectedUsers");
-		for (Timestamp timestamp : usersMap.keySet()) {
-			if (new Timestamp(new Date().getTime()).after(timestamp)) {
-				Map<String, Object> userMap = usersMap.get(timestamp);
-				String userId = userMap.get("USER_ID").toString();
-				String subdomain = userMap.get("SUBDOMAIN").toString();
-				ConcurrentHashMap<String, UserSessions> userSessionsMap = sessionService.sessions.get(subdomain);
-				if (userSessionsMap != null && userSessionsMap.containsKey(userId)) {
-					if (userSessionsMap.get(userId).getSessions() != null
-							&& userSessionsMap.get(userId).getSessions().size() > 1) {
-						usersMap.remove(timestamp);
+		try {
+			RMap<Long, Map<String, Object>> usersMap = redisson.getMap("disconnectedUsers");
+			String epochDate = "01/01/1970";
+			Date date = new SimpleDateFormat("dd/MM/yyyy").parse(epochDate);
+			Timestamp epoch = new Timestamp(date.getTime());
 
-					} else {
-						usersMap.remove(timestamp);
-						userSessionsMap.get(userId).setChatStatus("not available");
+			Timestamp today = new Timestamp(new Date().getTime());
+			long currentTimeDiff = today.getTime() - epoch.getTime();
+			for (Long timeDiff : usersMap.keySet()) {
+
+				if (currentTimeDiff >= timeDiff) {
+					Map<String, Object> userMap = usersMap.get(timeDiff);
+					String userId = userMap.get("USER_ID").toString();
+					String subdomain = userMap.get("SUBDOMAIN").toString();
+					ConcurrentHashMap<String, UserSessions> userSessionsMap = sessionService.sessions.get(subdomain);
+					if (userSessionsMap != null && userSessionsMap.containsKey(userId)) {
+						if (userSessionsMap.get(userId).getSessions() != null) {
+							if (userSessionsMap.get(userId).getSessions().size() == 0) {
+								usersMap.remove(timeDiff);
+								sessionService.sessions.get(subdomain).remove(userId);
+							} else if (userSessionsMap.get(userId).getSessions().size() > 1) {
+								usersMap.remove(timeDiff);
+
+							}
+
+						}
 
 					}
-
 				}
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 	}

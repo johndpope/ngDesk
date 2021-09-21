@@ -2,7 +2,7 @@ package com.ngdesk.repositories;
 
 import java.util.Optional;
 
-import com.ngdesk.websocket.channels.chat.ChatChannel;
+import com.ngdesk.websocket.channels.chat.dao.ChatChannel;
 
 public interface CustomChatChannelRepository {
 

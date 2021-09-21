@@ -1,4 +1,4 @@
-package com.ngdesk.websocket.channels.chat;
+package com.ngdesk.websocket.channels.chat.dao;
 
 import java.net.InetAddress;
 import java.util.HashMap;

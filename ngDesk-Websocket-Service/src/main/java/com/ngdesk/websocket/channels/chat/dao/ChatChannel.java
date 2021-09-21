@@ -1,4 +1,4 @@
-package com.ngdesk.websocket.channels.chat;
+package com.ngdesk.websocket.channels.chat.dao;
 
 import java.util.ArrayList;
 import java.util.Date;
