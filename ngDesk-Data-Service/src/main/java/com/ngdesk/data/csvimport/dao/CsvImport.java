@@ -22,6 +22,8 @@ public class CsvImport {
 
 	private String name;
 
+	private String separator;
+
 	private Date dateCreated;
 
 	private String createdBy;
@@ -31,7 +33,8 @@ public class CsvImport {
 	}
 
 	public CsvImport(String csvImportId, String status, CsvImportData csvImportData, String moduleId,
-			List<CsvImportLog> logs, String companyId, String name, Date dateCreated, String createdBy) {
+			List<CsvImportLog> logs, String companyId, String name, String separator, Date dateCreated,
+			String createdBy) {
 		super();
 		this.csvImportId = csvImportId;
 		this.status = status;
@@ -40,6 +43,7 @@ public class CsvImport {
 		this.logs = logs;
 		this.companyId = companyId;
 		this.name = name;
+		this.separator = separator;
 		this.dateCreated = dateCreated;
 		this.createdBy = createdBy;
 	}
@@ -98,6 +102,14 @@ public class CsvImport {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getSeparator() {
+		return separator;
+	}
+
+	public void setSeparator(String separator) {
+		this.separator = separator;
 	}
 
 	public Date getDateCreated() {

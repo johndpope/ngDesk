@@ -62,7 +62,7 @@ public class CsvImportApi {
 	public CsvImport importFromCsv(
 			@Parameter(description = "Company ID", required = false) @RequestParam(value = "company_id", required = false) String companyId,
 			@Parameter(description = "Module ID", required = true) @PathVariable("module_id") String moduleId,
-			@RequestBody CsvImportData csvImportData) {
+			@RequestBody CsvImport csvImport) {
 		String role = authManager.getUserDetails().getRole();
 		companyId = authManager.getUserDetails().getCompanyId();
 		String createdById = authManager.getUserDetails().getUserId();
@@ -85,8 +85,9 @@ public class CsvImportApi {
 		}
 
 		List<CsvImportLog> logs = new ArrayList<CsvImportLog>();
+		CsvImportData csvImportData = csvImport.getCsvImportData();
 		CsvImport entry = new CsvImport(null, "QUEUED", csvImportData, moduleId, logs, companyId,
-				csvImportData.getFileName(), new Date(), createdById);
+				csvImportData.getFileName(), csvImport.getSeparator(), new Date(), createdById);
 
 		entry = csvImportRepository.save(entry, "csv_import");
 		return entry;

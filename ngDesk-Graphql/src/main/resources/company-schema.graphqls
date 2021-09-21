@@ -977,6 +977,7 @@ type CsvImport{
    logs: [CsvImportLog]
    companyId: String
    name: String
+   separator: String
    dateCreated: DateTime
    createdBy: Users
 }

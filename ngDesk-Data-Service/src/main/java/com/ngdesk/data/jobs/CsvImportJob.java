@@ -376,12 +376,17 @@ public class CsvImportJob {
 										if (dataType.getDisplay().equalsIgnoreCase("Phone")) {
 											String value = inputMessage.get(fieldName).toString();
 											if (value != null) {
-												if (value.contains("-")) {
-													String[] split = value.split("-");
-													phone = csvImportService.createPhoneObject(split[0], split[1], phone);
-												} else if (value.contains(" ")) {
-													String[] split = value.split(" ");
-													phone = csvImportService.createPhoneObject(split[0], split[1], phone);
+												if (csvDocument.getSeparator() != null) {
+													String separator = (csvDocument.getSeparator()
+															.equals("Blank space")) ? " " : "-";
+													String[] split = value.split(separator);
+													phone = csvImportService.createPhoneObject(split[0], split[1],
+															phone);
+												} else {
+													String separator = "-";
+													String[] split = value.split(separator);
+													phone = csvImportService.createPhoneObject(split[0], split[1],
+															phone);
 												}
 											}
 										}
