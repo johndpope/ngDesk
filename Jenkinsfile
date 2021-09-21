@@ -169,7 +169,7 @@ pipeline {
 				                sh 'cp -r dist/ngDesk-Angular/. /var/jenkins_home/projects/ngdesk-web-project/src/main/resources/static/'
 				            }
 
-							  dir('var/jenkins_home/projects/ngdesk-web-project') {
+							  dir('/var/jenkins_home/projects/ngdesk-web-project') {
                                 sh 'mvn package'
                                 sh './mvnw spring-boot:build-image'
 
