@@ -1285,12 +1285,23 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 
 	public disableOption(fieldName, option) {
 		if (this.entry[fieldName]) {
-			const item = this.entry[fieldName].find((val) => val === option);
+			let item;
+			if (option.hasOwnProperty('DATA_ID')) {
+				item = this.entry[fieldName].find(
+					(val) => val.DATA_ID === option.DATA_ID
+				);
+			} else {
+				item = this.entry[fieldName].find((val) => val === option);
+			}
+
 			if (item) {
-				return true;
+				if (item) {
+					return true;
+				} else {
+					return false;
+				}
 			}
 		}
-		return false;
 	}
 
 	// START RELATION FUNCTIONS
