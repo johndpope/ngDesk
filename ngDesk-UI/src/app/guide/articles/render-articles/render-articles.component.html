@@ -5,8 +5,12 @@
 			<div fxLayout="row" [ngStyle]="{'padding-left': '20px'}" fxFlexOffset="20px">
 				<label class="mat-body custom-theme-primary-font-color" *ngFor="let nav of navArray; let i = index;">
 					<a class="link mat-body pointer" (click)="navigate(nav.PATH)">{{nav.NAME | translate}}</a>
-					<span *ngIf="i < navArray.length -1 "> &gt; &nbsp;</span>
+					<span *ngIf="i < navArray.length -1 ">
+						&gt; &nbsp;
+					</span>
+
 				</label> </div>
+
 			<div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
 				<div fxLayout="column" fxFlex="20" fxLayoutGap="10px" [ngStyle]="{'padding': '20px'}">
 					<mat-label class="mat-h3" style="font-size: 15px; font-weight: 500;">{{'ARTICLES_IN_SECTION' | translate}}
@@ -65,7 +69,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="mat-body"><span [innerHtml]="comment.MESSAGE"></span></div>
+						<div class="mat-body"><span [innerHtml]="comment.message"></span></div>
 						<mat-divider></mat-divider>
 					</div><span *ngIf="!article.OPEN_FOR_COMMENTS" class="mat-body">{{'ARTICLE_CLOSED_FOR_COMMENTS' | translate}}</span>
 					<div fxLayout="column" *ngIf="article.OPEN_FOR_COMMENTS && hasCommentAccess">
@@ -73,7 +77,7 @@
 								<mat-icon>person</mat-icon>
 							</button>
 							<mat-form-field appearance="outline" fxFlex> <textarea matInput matTextareaAutosize="true" matAutosizeMaxRows="5"
-									matAutosizeMinRows="5" [(ngModel)]="comment.MESSAGE" placeholder="{{'COMMENTS' | translate}}"></textarea></mat-form-field>
+									matAutosizeMinRows="5" [(ngModel)]="comment.message" placeholder="{{'COMMENTS' | translate}}"></textarea></mat-form-field>
 						</div>
 						<div><span fxFlex="1 1 auto"></span><button mat-raised-button color="primary"
 								(click)="addComment()">{{'SUBMIT' | translate}}</button></div>
