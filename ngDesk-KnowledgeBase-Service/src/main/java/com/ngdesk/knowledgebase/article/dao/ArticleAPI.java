@@ -1,6 +1,7 @@
 package com.ngdesk.knowledgebase.article.dao;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -102,6 +103,7 @@ public class ArticleAPI {
 		Article article = articleOptional.get();
 
 		commentMessages.setMessageId(UUID.randomUUID().toString());
+		commentMessages.setDateCreated(new Date());
 		messages.add(commentMessages);
 		article.setComments(messages);
 		articleService.postCommentsToElastic(article, authManager.getUserDetails().getCompanyId());
