@@ -88,6 +88,10 @@ pipeline {
 				            buildMicroservice('graphql', 'ngDesk-Graphql')
 				        }
 
+						if (samChanged.length() > 0) {
+				            buildMicroservice('sam', 'ngDesk-Sam-Service')
+				        }
+
 				        if (reportsChanged.length() > 0) {
 				           buildMicroservice('report', 'ngDesk-Report-Service')
 				        }
