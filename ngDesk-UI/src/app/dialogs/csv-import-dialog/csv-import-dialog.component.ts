@@ -30,7 +30,7 @@ export class CsvImportDialogComponent implements OnInit {
 		headers: [],
 	};
 	public separator;
-	public separators = ['-', 'space'];
+	public separators = ['-', 'Blank space'];
 	public phonefield: boolean;
 	constructor(
 		@Inject(MAT_DIALOG_DATA) public data: any,
@@ -50,7 +50,6 @@ export class CsvImportDialogComponent implements OnInit {
 			if (
 				!field.NOT_EDITABLE &&
 				field.DATA_TYPE.DISPLAY !== 'Discussion' &&
-				//field.DATA_TYPE.DISPLAY !== 'Relationship' &&
 				field.DATA_TYPE.DISPLAY !== 'File Upload' &&
 				field.DATA_TYPE.DISPLAY !== 'Checkbox' &&
 				field.NAME !== 'ROLE'

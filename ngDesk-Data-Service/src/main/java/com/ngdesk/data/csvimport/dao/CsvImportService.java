@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ngdesk.commons.Global;
 import com.ngdesk.commons.exceptions.InternalErrorException;
+import com.ngdesk.data.dao.BasePhone;
 import com.ngdesk.data.dao.DataService;
 import com.ngdesk.data.dao.Phone;
 import com.ngdesk.data.dao.Relationship;
@@ -46,9 +48,12 @@ public class CsvImportService {
 
 	@Autowired
 	ModuleService moduleService;
-	
+
 	@Autowired
 	CsvImportRepository csvImportRepository;
+	
+	@Autowired
+	Global global;
 
 	public boolean accountExists(String accountName, String companyId) {
 
@@ -414,13 +419,35 @@ public class CsvImportService {
 		list = Arrays.asList(str);
 		return list;
 	}
-	
+
 	public void addToSet(int i, String message, String id) {
 		CsvImportLog log = new CsvImportLog();
 		log.setLineNumber(i);
 		log.setErrorMessage(message);
-		csvImportRepository.addToEntrySet(id, "logs", log,
-				"csv_import"); 
+		csvImportRepository.addToEntrySet(id, "logs", log, "csv_import");
+	}
+
+	public BasePhone createPhoneObject(String countryDialCode, String phoneNumber, BasePhone phone) {
+		try {
+
+			String countriesJson = global.getFile("countriesWithDialCode.json");
+			ObjectMapper mapper = new ObjectMapper();
+			List<BasePhone> countries = mapper.readValue(countriesJson,
+					mapper.getTypeFactory().constructCollectionType(List.class, BasePhone.class));
+
+			BasePhone country = countries.stream()
+					.filter(countryList -> countryList.getDialCode().equals(countryDialCode)).findFirst().orElse(null);
+
+			if (!country.equals(null)) {
+				phone.setCountryCode(country.getCountryCode().toString());
+				phone.setPhoneNumber(phoneNumber);
+				phone.setCountryFlag(country.getCountryFlag().toString());
+				phone.setDialCode(country.getDialCode().toString());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return phone;
 	}
 
 }

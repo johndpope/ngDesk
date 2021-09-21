@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
@@ -36,8 +37,8 @@ import com.ngdesk.data.company.dao.Company;
 import com.ngdesk.data.csvimport.dao.CsvHeaders;
 import com.ngdesk.data.csvimport.dao.CsvImport;
 import com.ngdesk.data.csvimport.dao.CsvImportData;
-import com.ngdesk.data.csvimport.dao.CsvImportLog;
 import com.ngdesk.data.csvimport.dao.CsvImportService;
+import com.ngdesk.data.dao.BasePhone;
 import com.ngdesk.data.dao.DataService;
 import com.ngdesk.data.dao.Phone;
 import com.ngdesk.data.dao.Relationship;
@@ -317,6 +318,99 @@ public class CsvImportJob {
 										}
 									}
 
+									if (dataType.getDisplay().equalsIgnoreCase("Auto Number")) {
+										int autoNumber = (int) field.getAutoNumberStartingNumber();
+										int count = (int) moduleEntryRepository.findCountOfEntries(
+												moduleService.getCollectionName(moduleName, companyId));
+										if (count == 0) {
+											inputMessage.put(fieldName, autoNumber);
+										} else {
+											Optional<Map<String, Object>> optionalEntry = moduleEntryRepository
+													.findBySortingField(fieldName,
+															moduleService.getCollectionName(moduleName, companyId));
+											Map<String, Object> sortedEntry = optionalEntry.get();
+											if (sortedEntry.get(fieldName) != null) {
+												autoNumber = Integer.parseInt(sortedEntry.get(fieldName).toString());
+												autoNumber++;
+											}
+											inputMessage.put(fieldName, autoNumber);
+										}
+									}
+
+									if (inputMessage.containsKey(fieldName)) {
+										if (dataType.getDisplay().equalsIgnoreCase("Picklist (Multi-Select)")) {
+											List<String> picklistValues = field.getPicklistValues();
+											List<String> values = csvImportService
+													.parseString(inputMessage.get(fieldName).toString());
+											List<String> selectedtValues = new ArrayList<String>();
+											for (String value : values) {
+												if (!picklistValues.contains(value)) {
+													csvImportService.addToSet(i, "Picklist values are incorrect",
+															csvDocument.getCsvImportId());
+													error = true;
+													break;
+												} else {
+													selectedtValues.add(value);
+												}
+											}
+											if (!selectedtValues.isEmpty()) {
+												inputMessage.put(fieldName, selectedtValues);
+											}
+										}
+									}
+
+									// LIST TEXT DATA TYPE HANDLED
+									if (inputMessage.containsKey(fieldName)) {
+										if (dataType.getDisplay().equalsIgnoreCase("LIST_TEXT")) {
+											List<String> values = csvImportService
+													.parseString(inputMessage.get(fieldName).toString());
+											if (values.size() != 0) {
+												inputMessage.put(fieldName, values);
+											}
+										}
+									}
+
+									// Phone Data TYPE HANDLED
+									if (inputMessage.containsKey(fieldName)) {
+										BasePhone phone = new BasePhone();
+										if (dataType.getDisplay().equalsIgnoreCase("Phone")) {
+											String value = inputMessage.get(fieldName).toString();
+											if (value != null) {
+												if (value.contains("-")) {
+													String[] split = value.split("-");
+													phone = csvImportService.createPhoneObject(split[0], split[1], phone);
+												} else if (value.contains(" ")) {
+													String[] split = value.split(" ");
+													phone = csvImportService.createPhoneObject(split[0], split[1], phone);
+												}
+											}
+										}
+										inputMessage.put(fieldName, phone);
+									}
+
+									// date, date/time ,time data type handled
+									if (inputMessage.containsKey(fieldName)) {
+										if (dataType.getDisplay().equalsIgnoreCase("Date/Time")
+												|| dataType.getDisplay().equalsIgnoreCase("Date")
+												|| dataType.getDisplay().equalsIgnoreCase("Time")) {
+
+											String value = inputMessage.get(fieldName).toString();
+											try {
+												Date date = new Date();
+												SimpleDateFormat df = new SimpleDateFormat(
+														"yyyy-MM-dd'T'hh:mm:ss.SSSX");
+												date = df.parse(value);
+												inputMessage.put(fieldName, date);
+											} catch (Exception e) {
+												csvImportService.addToSet(i, fieldName + " values are invalid",
+														csvDocument.getCsvImportId());
+												error = true;
+												break;
+
+											}
+										}
+									}
+
 									if (inputMessage.containsKey(fieldName)) {
 										List<String> ignoredFields = List.of("CREATED_BY", "LAST_UPDATED_BY");
 										if (dataType.getDisplay().equalsIgnoreCase("Relationship")
@@ -392,24 +486,6 @@ public class CsvImportJob {
 										}
 									}
 
-									if (dataType.getDisplay().equalsIgnoreCase("Auto Number")) {
-										int autoNumber = (int) field.getAutoNumberStartingNumber();
-										int count = (int) moduleEntryRepository.findCountOfEntries(
-												moduleService.getCollectionName(moduleName, companyId));
-										if (count == 0) {
-											inputMessage.put(fieldName, autoNumber);
-										} else {
-											Optional<Map<String, Object>> optionalEntry = moduleEntryRepository
-													.findBySortingField(fieldName,
-															moduleService.getCollectionName(moduleName, companyId));
-											Map<String, Object> sortedEntry = optionalEntry.get();
-											if (sortedEntry.get(fieldName) != null) {
-												autoNumber = Integer.parseInt(sortedEntry.get(fieldName).toString());
-												autoNumber++;
-											}
-											inputMessage.put(fieldName, autoNumber);
-										}
-									}
 									if (field.getRequired()) {
 										if (inputMessage.get(fieldName) == null) {
 											if (dataType.getDisplay().equalsIgnoreCase("ID")) {
@@ -485,7 +561,7 @@ public class CsvImportJob {
 										inputMessage.put("INVITE_ACCEPTED", false);
 									}
 								}
-								
+
 								if (error) {
 									continue;
 								}
