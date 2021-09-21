@@ -281,62 +281,6 @@ public class CsvImportJob {
 								String phoneNumber = "";
 								boolean error = false;
 
-								if (moduleName.equals("Users") || moduleName.equals("Contacts")) {
-									if (inputMessage.containsKey("EMAIL_ADDRESS")) {
-										String userEmailAddress = inputMessage.get("EMAIL_ADDRESS").toString();
-										String[] splitEmail = userEmailAddress.split("@");
-										String accountName = "";
-										if (splitEmail.length > 1) {
-											accountName = splitEmail[1];
-										}
-										String accountId = null;
-
-										if (!csvImportService.accountExists(accountName, companyId)) {
-											Module accountModule = modules.stream()
-													.filter(mod -> mod.getName().equals("Accounts")).findFirst()
-													.orElse(null);
-											Map<String, Object> accountEntry = csvImportService.createAccount(
-													accountName, companyId, globalTeamId, userUuid, accountModule);
-											accountId = accountEntry.get("DATA_ID").toString();
-											inputMessage.put("ACCOUNT", accountId);
-										} else {
-											Optional<Map<String, Object>> optionalAccount = moduleEntryRepository
-													.findEntryByFieldName("ACCOUNT_NAME", accountName,
-															moduleService.getCollectionName("Accounts", companyId));
-											Map<String, Object> accountEntry = optionalAccount.get();
-											accountId = accountEntry.get("_id").toString();
-											inputMessage.put("ACCOUNT", accountId);
-										}
-									} else {
-										CsvImportLog log = new CsvImportLog();
-										log.setLineNumber(i);
-										log.setErrorMessage("Email address is required");
-										csvImportRepository.addToEntrySet(csvDocument.getCsvImportId(), "logs", log,
-												"csv_import");
-										error = true;
-									}
-
-									if (moduleName.equals("Users")) {
-										if (inputMessage.containsKey("PHONE_NUMBER")) {
-											phoneNumber = inputMessage.get("PHONE_NUMBER").toString();
-											inputMessage.remove("PHONE_NUMBER");
-										}
-										if (inputMessage.containsKey("DEFAULT_CONTACT_METHOD")) {
-											if (inputMessage.get("DEFAULT_CONTACT_METHOD") == null || inputMessage
-													.get("DEFAULT_CONTACT_METHOD").toString().equals("")) {
-												inputMessage.put("DEFAULT_CONTACT_METHOD", "Email");
-											}
-										} else {
-											inputMessage.put("DEFAULT_CONTACT_METHOD", "Email");
-										}
-
-										inputMessage.put("ROLE", customerRoleId);
-										inputMessage.put("IS_LOGIN_ALLOWED", false);
-										inputMessage.put("INVITE_ACCEPTED", false);
-									}
-
-								}
-
 								for (ModuleField field : fields) {
 									String fieldName = field.getName();
 									String displayLabel = field.getDisplayLabel();
@@ -351,11 +295,8 @@ public class CsvImportJob {
 											String value = inputMessage.get(fieldName).toString();
 
 											if (!picklistValues.contains(value)) {
-												CsvImportLog log = new CsvImportLog();
-												log.setLineNumber(i);
-												log.setErrorMessage("Picklist values are incorrect");
-												csvImportRepository.addToEntrySet(csvDocument.getCsvImportId(), "logs",
-														log, "csv_import");
+												csvImportService.addToSet(i, "Picklist values are incorrect",
+														csvDocument.getCsvImportId());
 												error = true;
 												break;
 											}
@@ -390,13 +331,10 @@ public class CsvImportJob {
 															inputMessage.get(fieldName).toString());
 													inputMessage.put(fieldName, relationship);
 												} else {
-													CsvImportLog log = new CsvImportLog();
-													log.setLineNumber(i);
-													log.setErrorMessage(
-															(relationshipId == null) ? "Relationship value is not valid"
-																	: "Relationship already exist");
-													csvImportRepository.addToEntrySet(csvDocument.getCsvImportId(),
-															"logs", log, "csv_import");
+													String message = (relationshipId == null)
+															? "Relationship value is not valid"
+															: "Relationship already exist";
+													csvImportService.addToSet(i, message, csvDocument.getCsvImportId());
 													error = true;
 													break;
 												}
@@ -408,11 +346,8 @@ public class CsvImportJob {
 															inputMessage.get(fieldName).toString());
 													inputMessage.put(fieldName, relationship);
 												} else {
-													CsvImportLog log = new CsvImportLog();
-													log.setLineNumber(i);
-													log.setErrorMessage("Relationship value is not valid");
-													csvImportRepository.addToEntrySet(csvDocument.getCsvImportId(),
-															"logs", log, "csv_import");
+													csvImportService.addToSet(i, "Relationship value is not valid",
+															csvDocument.getCsvImportId());
 													error = true;
 													break;
 												}
@@ -434,12 +369,9 @@ public class CsvImportJob {
 																	inputMessage.get(fieldName).toString());
 															relationshipList.add(relationship);
 														} else {
-															CsvImportLog log = new CsvImportLog();
-															log.setLineNumber(i);
-															log.setErrorMessage("Relationship value is not valid");
-															csvImportRepository.addToEntrySet(
-																	csvDocument.getCsvImportId(), "logs", log,
-																	"csv_import");
+															csvImportService.addToSet(i,
+																	"Relationship value is not valid",
+																	csvDocument.getCsvImportId());
 															error = true;
 															break;
 														}
@@ -451,11 +383,8 @@ public class CsvImportJob {
 														inputMessage.put(fieldName, relationshipList);
 													}
 												} else {
-													CsvImportLog log = new CsvImportLog();
-													log.setLineNumber(i);
-													log.setErrorMessage("Relationship value is not valid");
-													csvImportRepository.addToEntrySet(csvDocument.getCsvImportId(),
-															"logs", log, "csv_import");
+													csvImportService.addToSet(i, "Relationship value is not valid",
+															csvDocument.getCsvImportId());
 													error = true;
 													break;
 												}
@@ -505,6 +434,58 @@ public class CsvImportJob {
 								inputMessage = dataService.addInternalFields(module, inputMessage,
 										csvDocument.getCreatedBy(), companyId);
 
+								if (moduleName.equals("Users") || moduleName.equals("Contacts")) {
+									if (inputMessage.containsKey("EMAIL_ADDRESS")) {
+										String userEmailAddress = inputMessage.get("EMAIL_ADDRESS").toString();
+										String[] splitEmail = userEmailAddress.split("@");
+										String accountName = "";
+										if (splitEmail.length > 1) {
+											accountName = splitEmail[1];
+										}
+										String accountId = null;
+
+										if (!csvImportService.accountExists(accountName, companyId)) {
+											Module accountModule = modules.stream()
+													.filter(mod -> mod.getName().equals("Accounts")).findFirst()
+													.orElse(null);
+											Map<String, Object> accountEntry = csvImportService.createAccount(
+													accountName, companyId, globalTeamId, userUuid, accountModule);
+											accountId = accountEntry.get("DATA_ID").toString();
+											inputMessage.put("ACCOUNT", accountId);
+										} else {
+											Optional<Map<String, Object>> optionalAccount = moduleEntryRepository
+													.findEntryByFieldName("ACCOUNT_NAME", accountName,
+															moduleService.getCollectionName("Accounts", companyId));
+											Map<String, Object> accountEntry = optionalAccount.get();
+											accountId = accountEntry.get("_id").toString();
+											inputMessage.put("ACCOUNT", accountId);
+										}
+									} else {
+										csvImportService.addToSet(i, "Email address is required",
+												csvDocument.getCsvImportId());
+										error = true;
+									}
+
+									if (moduleName.equals("Users")) {
+										if (inputMessage.containsKey("PHONE_NUMBER")) {
+											phoneNumber = inputMessage.get("PHONE_NUMBER").toString();
+											inputMessage.remove("PHONE_NUMBER");
+										}
+										if (inputMessage.containsKey("DEFAULT_CONTACT_METHOD")) {
+											if (inputMessage.get("DEFAULT_CONTACT_METHOD") == null || inputMessage
+													.get("DEFAULT_CONTACT_METHOD").toString().equals("")) {
+												inputMessage.put("DEFAULT_CONTACT_METHOD", "Email");
+											}
+										} else {
+											inputMessage.put("DEFAULT_CONTACT_METHOD", "Email");
+										}
+
+										inputMessage.put("ROLE", customerRoleId);
+										inputMessage.put("IS_LOGIN_ALLOWED", false);
+										inputMessage.put("INVITE_ACCEPTED", false);
+									}
+								}
+								
 								if (error) {
 									continue;
 								}
@@ -649,11 +630,7 @@ public class CsvImportJob {
 
 										} catch (Exception e) {
 											e.printStackTrace();
-											CsvImportLog log = new CsvImportLog();
-											log.setLineNumber(i);
-											log.setErrorMessage(e.getMessage());
-											csvImportRepository.addToEntrySet(csvDocument.getCsvImportId(), "logs", log,
-													"csv_import");
+											csvImportService.addToSet(i, e.getMessage(), csvDocument.getCsvImportId());
 											continue;
 										}
 									}
@@ -687,11 +664,7 @@ public class CsvImportJob {
 										}
 									} catch (Exception e) {
 										e.printStackTrace();
-										CsvImportLog log = new CsvImportLog();
-										log.setLineNumber(i);
-										log.setErrorMessage(e.getMessage());
-										csvImportRepository.addToEntrySet(csvDocument.getCsvImportId(), "logs", log,
-												"csv_import");
+										csvImportService.addToSet(i, e.getMessage(), csvDocument.getCsvImportId());
 										continue;
 									}
 								}
@@ -705,9 +678,7 @@ public class CsvImportJob {
 
 				} catch (Exception e) {
 					e.printStackTrace();
-					CsvImportLog log = new CsvImportLog();
-					log.setErrorMessage(e.getMessage());
-					csvImportRepository.addToEntrySet(csvDocument.getCsvImportId(), "logs", log, "csv_import");
+					csvImportService.addToSet(0, e.getMessage(), csvDocument.getCsvImportId());
 
 					StringWriter sw = new StringWriter();
 					PrintWriter pw = new PrintWriter(sw);

@@ -21,6 +21,7 @@ import com.ngdesk.data.modules.dao.Module;
 import com.ngdesk.data.modules.dao.ModuleField;
 import com.ngdesk.data.modules.dao.ModuleService;
 import com.ngdesk.data.sam.dao.DataProxy;
+import com.ngdesk.repositories.csvimport.CsvImportRepository;
 import com.ngdesk.repositories.module.entry.ModuleEntryRepository;
 import com.ngdesk.repositories.module.entry.ModulesRepository;
 import com.ngdesk.repositories.roles.RolesRepository;
@@ -45,6 +46,9 @@ public class CsvImportService {
 
 	@Autowired
 	ModuleService moduleService;
+	
+	@Autowired
+	CsvImportRepository csvImportRepository;
 
 	public boolean accountExists(String accountName, String companyId) {
 
@@ -409,6 +413,14 @@ public class CsvImportService {
 		String str[] = string.replaceAll("[\\[\\]]", "").split(",");
 		list = Arrays.asList(str);
 		return list;
+	}
+	
+	public void addToSet(int i, String message, String id) {
+		CsvImportLog log = new CsvImportLog();
+		log.setLineNumber(i);
+		log.setErrorMessage(message);
+		csvImportRepository.addToEntrySet(id, "logs", log,
+				"csv_import"); 
 	}
 
 }
