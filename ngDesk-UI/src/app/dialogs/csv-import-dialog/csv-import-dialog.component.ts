@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {
 	CsvHeaders,
+	CsvImport,
 	CsvImportApiService,
 	CsvImportData,
 } from '@ngdesk/data-api';
@@ -29,7 +30,12 @@ export class CsvImportDialogComponent implements OnInit {
 		fileName: '',
 		headers: [],
 	};
-	public separator;
+	public CsvImport: CsvImport = {
+		csvImportData: {},
+		separator: '',
+	};
+
+	public selectedSeparator;
 	public separators = ['-', 'Blank space'];
 	public phonefield: boolean;
 	constructor(
@@ -81,8 +87,10 @@ export class CsvImportDialogComponent implements OnInit {
 			}
 			const moduleId = this.data.csvData.MODULE.MODULE_ID;
 			this.csvImportData = this.data.csvData.CSV_IMPORT_DATA;
+			this.CsvImport.csvImportData = this.csvImportData;
+			this.CsvImport.separator = this.selectedSeparator;
 			this.csvImportApiService
-				.importFromCsv(moduleId, this.csvImportData)
+				.importFromCsv(moduleId, this.CsvImport)
 				.subscribe(
 					(response: any) => {
 						console.log('response', response);

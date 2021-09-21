@@ -35,7 +35,7 @@
 					</mat-select>
 				</mat-form-field>
 				<mat-form-field>
-					<mat-select placeholder="Select separator" [(ngModel)]="separator">
+					<mat-select placeholder="Select separator" [(ngModel)]="selectedSeparator">
 						<mat-option *ngFor="let separator of separators" [value]="separator">
 							{{separator}}
 						</mat-option>
