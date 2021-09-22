@@ -1,5 +1,6 @@
 package com.ngdesk.data.csvimport.dao;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -415,8 +416,10 @@ public class CsvImportService {
 	public List<String> parseString(String string) {
 		List<String> list = new ArrayList<String>();
 
-		String str[] = string.replaceAll("[\\[\\]]", "").split(",");
+		String str[] = Arrays.stream(string.replaceAll("[\\[\\]]", "").split(",")).map(String::trim)
+				.toArray(String[]::new);
 		list = Arrays.asList(str);
+		System.out.println(list);
 		return list;
 	}
 
@@ -450,8 +453,8 @@ public class CsvImportService {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		} 
-		return phone; 
+		}
+		return phone;
 	}
 
 }
