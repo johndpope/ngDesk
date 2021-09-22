@@ -1,0 +1,11 @@
+table{
+    width: 100%;
+}
+th, td {
+    overflow: hidden;
+    width:5% !important;
+   text-overflow: ellipsis;
+    white-space: nowrap;
+   
+  }
+
