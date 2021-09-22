@@ -176,14 +176,14 @@ pipeline {
                                     docker.withRegistry("${env.DOCKER_HUB_URL}", "${env.DOCKER_HUB_KEY}") {
 										def newImage = docker.image("${env.DOCKER_IMAGE_NAME}/ngdesk-web:latest")
 										newImage.push()
-										// docker.withServer("${env.PROD_SERVER_URL}") {
-										//     sh "docker rename ngdesk-web ngdesk-web-old"
-										//     sh "docker stop ngdesk-web-old"
-										//     sh "docker pull ngdesk/web"
-										//     sh "docker run --mount --name ngdesk-web -d -e SPRING_PROFILES_ACTIVE=dockernew --network=host ngdesk/web}"
-										//     sh "docker rm ngdesk-web-old"
-										//     sh 'docker image prune -f'
-										// }
+										docker.withServer("${env.PROD_SERVER_URL}") {
+										    sh "docker rename ngdesk-web ngdesk-web-old"
+										    sh "docker stop ngdesk-web-old"
+										    sh "docker pull ngdesk/web"
+										    sh "docker run --mount --name ngdesk-web -d -e SPRING_PROFILES_ACTIVE=dockernew --network=host ngdesk/ngdesk-web}"
+										    sh "docker rm ngdesk-web-old"
+										    sh 'docker image prune -f'
+										}
 									} 
                                 }
 
