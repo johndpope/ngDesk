@@ -1,7 +1,5 @@
 package com.ngdesk.websocket.companies.dao;
 
-import java.util.ArrayList;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -24,16 +22,21 @@ public class Company {
 	@Field("CHAT_SETTINGS")
 	private ChatSettings chatSettings;
 
+	@JsonProperty("COMPANY_UUID")
+	@Field("COMPANY_UUID")
+	private String companyUuid;
+
 	public Company() {
 
 	}
 
-	public Company(String id, String companySubdomain, Phone phone, ChatSettings chatSettings) {
+	public Company(String id, String companySubdomain, Phone phone, ChatSettings chatSettings, String companyUuid) {
 		super();
 		this.id = id;
 		this.companySubdomain = companySubdomain;
 		this.phone = phone;
 		this.chatSettings = chatSettings;
+		this.companyUuid = companyUuid;
 	}
 
 	public String getId() {
@@ -66,6 +69,14 @@ public class Company {
 
 	public void setChatSettings(ChatSettings chatSettings) {
 		this.chatSettings = chatSettings;
+	}
+
+	public String getCompanyUuid() {
+		return companyUuid;
+	}
+
+	public void setCompanyUuid(String companyUuid) {
+		this.companyUuid = companyUuid;
 	}
 
 }

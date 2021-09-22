@@ -99,7 +99,8 @@ public class CustomModuleEntryRepositoryImpl implements CustomModuleEntryReposit
 	public Optional<Map<String, Object>> findUserByEmailAddressIncludingDeleted(String emailAddress,
 			String collectionName) {
 		Criteria criteria = new Criteria();
-		criteria.andOperator(Criteria.where("EMAIL_ADDRESS").is(emailAddress), Criteria.where("EFFECTIVE_TO").is(null));
+		criteria.andOperator(Criteria.where("EMAIL_ADDRESS").is(emailAddress), Criteria.where("EFFECTIVE_TO").is(null),
+				Criteria.where("DELETED").is(false));
 		return Optional.ofNullable(mongoOperations.findOne(new Query(criteria), Map.class, collectionName));
 	}
 

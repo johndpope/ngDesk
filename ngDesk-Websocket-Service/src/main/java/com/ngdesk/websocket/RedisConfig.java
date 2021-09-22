@@ -16,6 +16,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import com.ngdesk.data.dao.WorkflowPayload;
 import com.ngdesk.websocket.channels.chat.dao.ChatStatusMessage;
 import com.ngdesk.websocket.channels.chat.dao.PageLoad;
+import com.ngdesk.websocket.notification.dao.Notification;
 import com.ngdesk.websocket.subscribers.ChatSettingsUpdateSubscriber;
 import com.ngdesk.websocket.subscribers.ChatStatusSubscriber;
 import com.ngdesk.websocket.subscribers.ModuleNotificationSubscriber;
@@ -112,6 +113,16 @@ public class RedisConfig {
 		container.addMessageListener(chatStatusListner(), new PatternTopic("chat_status"));
 
 		return container;
+	}
+
+	@Bean
+	public RedisTemplate<String, Notification> redisNotificationTemplate(
+			LettuceConnectionFactory redisConnectionFactory) {
+		RedisTemplate<String, Notification> redisTemplate = new RedisTemplate<String, Notification>();
+		redisTemplate.setConnectionFactory(redisConnectionFactory);
+		redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<Notification>(Notification.class));
+		redisTemplate.setKeySerializer(new StringRedisSerializer());
+		return redisTemplate;
 	}
 
 }

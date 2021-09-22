@@ -60,6 +60,7 @@ public class ChatService {
 								entry.put("SOURCE_TYPE", "chat");
 								Map<String, Object> user = optionalUserEntry.get();
 								if (optionalChatEntry.isEmpty()) {
+									entry.put("STATUS", "Browsing");
 									dataProxy.postModuleEntry(entry, optionalChatModule.get().getModuleId(), false,
 											companyId, user.get("USER_UUID").toString());
 								} else {

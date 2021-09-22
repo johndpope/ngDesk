@@ -6,7 +6,6 @@ import java.net.URISyntaxException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -38,7 +37,6 @@ import com.ngdesk.commons.managers.AuthProxy;
 import com.ngdesk.commons.models.User;
 import com.ngdesk.data.dao.DiscussionMessage;
 import com.ngdesk.data.dao.SingleWorkflowPayload;
-import com.ngdesk.repositories.CompaniesRepository;
 import com.ngdesk.repositories.RolesRepository;
 import com.ngdesk.websocket.approval.dao.Approval;
 import com.ngdesk.websocket.approval.dao.ApprovalService;
@@ -47,6 +45,8 @@ import com.ngdesk.websocket.channels.chat.dao.ChatService;
 import com.ngdesk.websocket.channels.chat.dao.ChatStatus;
 import com.ngdesk.websocket.channels.chat.dao.ChatStatusCheck;
 import com.ngdesk.websocket.channels.chat.dao.ChatStatusService;
+import com.ngdesk.websocket.channels.chat.dao.ChatUser;
+import com.ngdesk.websocket.channels.chat.dao.ChatUserEntryService;
 import com.ngdesk.websocket.channels.chat.dao.ChatWidgetPayload;
 import com.ngdesk.websocket.channels.chat.dao.PageLoad;
 import com.ngdesk.websocket.dao.WebSocketService;
@@ -114,6 +114,9 @@ public class SocketHandler extends TextWebSocketHandler {
 
 	@Autowired
 	ChatService chatService;
+
+	@Autowired
+	ChatUserEntryService chatUserEntryService;
 
 	private static ReentrantLock lock = new ReentrantLock();
 
@@ -419,7 +422,12 @@ public class SocketHandler extends TextWebSocketHandler {
 						chatService.publishPageLoad(pageLoad);
 
 					} catch (Exception e1) {
+						try {
+							ChatUser chatUser = mapper.readValue(textMessage.getPayload(), ChatUser.class);
+							chatUserEntryService.chatUserEntryCreation(chatUser);
+						} catch (Exception e2) {
 
+						}
 					}
 				}
 
