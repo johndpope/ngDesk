@@ -472,8 +472,8 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 					const data: any = reader.result;
 					this.filesArray.push({ fileSize: file.size });
 					this.articleForm.get('attachments').value.push({
-						FILE_NAME: file.name,
-						FILE: data.split('base64,')[1],
+						fileName: file.name,
+						file: data.split('base64,')[1],
 					});
 					// need to run CD since file load runs outside of zone
 					this.cd.markForCheck();

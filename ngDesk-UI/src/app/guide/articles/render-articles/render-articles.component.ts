@@ -166,9 +166,9 @@ export class RenderArticlesComponent implements OnInit {
 			this.article['COMMENTS'].forEach((comment) => {
 				// comment.sender = JSON.parse(comment.sender);
 
-				user = comment.sender;
+				user = comment.SENDER;
 				// if user exists set the name else set anonymous
-				comment.sender = user
+				comment.SENDER = user
 					? `${user['CONTACT'].FIRST_NAME} ${user['CONTACT'].LAST_NAME}`
 					: this.translateService.instant('ANONYMOUS_USER');
 			});
@@ -223,7 +223,7 @@ export class RenderArticlesComponent implements OnInit {
 				this.article['ARTICLE_ID']
 			);
 			this.articleApiService
-				.postComments(this.article['ARTICLE_ID'], [this.comment])
+				.postComments(this.article['ARTICLE_ID'], this.comment)
 				.subscribe(
 					(response: any) => {
 						console.log('response.....................', response);

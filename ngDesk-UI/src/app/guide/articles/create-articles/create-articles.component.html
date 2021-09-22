@@ -27,7 +27,7 @@
 								<mat-icon inline class="pointer" (click)="fileInput.click()">attach_file</mat-icon>
 								<span class="mat-body-strong">(10mb max)</span><input hidden type="file" #fileInput (change)="onFileChange($event)">
 								<ng-container *ngFor="let attachment of articleForm.get('attachments').value; index as i">
-									<label class="mat-body-strong">{{attachment.FILE_NAME}}</label>
+									<label class="mat-body-strong">{{attachment.fileName}}</label>
 									<mat-icon class="pointer" (click)="removeFile(i)">close</mat-icon>
 								</ng-container>
 							</div>
