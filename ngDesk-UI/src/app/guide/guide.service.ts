@@ -278,6 +278,14 @@ _id
 							MESSAGE_ID:messageId
 							DATE_CREATED:dateCreated
 							SENDER: sender
+							{
+								_id
+
+								CONTACT{
+									FIRST_NAME
+									LAST_NAME
+										 }
+						}
 							MESSAGE : message
 						}
 						DATE_CREATED: dateCreated
@@ -366,6 +374,14 @@ _id
 							MESSAGE_ID:messageId
 							DATE_CREATED:dateCreated
 							SENDER: sender
+							{
+								_id
+
+								CONTACT{
+									FIRST_NAME
+									LAST_NAME
+										 }
+						}
 							MESSAGE : message
 
 					}

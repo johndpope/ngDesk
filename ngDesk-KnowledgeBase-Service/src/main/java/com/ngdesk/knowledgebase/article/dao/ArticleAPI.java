@@ -101,7 +101,7 @@ public class ArticleAPI {
 			throw new NotFoundException("DAO_NOT_FOUND", vars);
 		}
 		Article article = articleOptional.get();
-
+		commentMessages.setSender(authManager.getUserDetails().getUserId());
 		commentMessages.setMessageId(UUID.randomUUID().toString());
 		commentMessages.setDateCreated(new Date());
 		messages.add(commentMessages);

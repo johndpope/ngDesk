@@ -876,7 +876,7 @@ type Message{
 type CommentMessage{
 	messageId:String
 	message:String
-	sender:String
+	sender:Users
 	dateCreated:DateTime
 }
 

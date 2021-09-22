@@ -828,6 +828,7 @@ public class DataUtility {
 		builder.type("Article", typeWiring -> typeWiring.dataFetcher("createdBy", entryDataFetcher));
 		builder.type("Article", typeWiring -> typeWiring.dataFetcher("lastUpdatedBy", entryDataFetcher));
 		builder.type("Article", typeWiring -> typeWiring.dataFetcher("author", entryDataFetcher));
+		builder.type("CommentMessage", typeWiring -> typeWiring.dataFetcher("sender", entryDataFetcher));
 		builder.type("Article", typeWiring -> typeWiring.dataFetcher("visibleTo", relationshipDataFetcher));
 		builder.type("Query",
 				typeWiring -> typeWiring.dataFetcher("getArticlesBySectionId", articlesBySectionIdDataFetcher));
