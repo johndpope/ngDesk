@@ -296,7 +296,8 @@ public class CsvImportJob {
 											String value = inputMessage.get(fieldName).toString();
 
 											if (!picklistValues.contains(value)) {
-												csvImportService.addToSet(i, "Picklist values are incorrect",
+												csvImportService.addToSet(i,
+														fieldName + " picklist values are incorrect",
 														csvDocument.getCsvImportId());
 												error = true;
 												break;
@@ -319,21 +320,24 @@ public class CsvImportJob {
 									}
 
 									if (dataType.getDisplay().equalsIgnoreCase("Auto Number")) {
-										int autoNumber = (int) field.getAutoNumberStartingNumber();
-										int count = (int) moduleEntryRepository.findCountOfEntries(
-												moduleService.getCollectionName(moduleName, companyId));
-										if (count == 0) {
-											inputMessage.put(fieldName, autoNumber);
-										} else {
-											Optional<Map<String, Object>> optionalEntry = moduleEntryRepository
-													.findBySortingField(fieldName,
-															moduleService.getCollectionName(moduleName, companyId));
-											Map<String, Object> sortedEntry = optionalEntry.get();
-											if (sortedEntry.get(fieldName) != null) {
-												autoNumber = Integer.parseInt(sortedEntry.get(fieldName).toString());
-												autoNumber++;
+										if (!inputMessage.containsKey(fieldName)) {
+											int autoNumber = (int) field.getAutoNumberStartingNumber();
+											int count = (int) moduleEntryRepository.findCountOfEntries(
+													moduleService.getCollectionName(moduleName, companyId));
+											if (count == 0) {
+												inputMessage.put(fieldName, autoNumber);
+											} else {
+												Optional<Map<String, Object>> optionalEntry = moduleEntryRepository
+														.findBySortingField(fieldName,
+																moduleService.getCollectionName(moduleName, companyId));
+												Map<String, Object> sortedEntry = optionalEntry.get();
+												if (sortedEntry.get(fieldName) != null) {
+													autoNumber = Integer
+															.parseInt(sortedEntry.get(fieldName).toString());
+													autoNumber++;
+												}
+												inputMessage.put(fieldName, autoNumber);
 											}
-											inputMessage.put(fieldName, autoNumber);
 										}
 									}
 
@@ -345,7 +349,8 @@ public class CsvImportJob {
 											List<String> selectedtValues = new ArrayList<String>();
 											for (String value : values) {
 												if (!picklistValues.contains(value)) {
-													csvImportService.addToSet(i, "Picklist values are incorrect",
+													csvImportService.addToSet(i,
+															fieldName + " picklist values are incorrect",
 															csvDocument.getCsvImportId());
 													error = true;
 													break;
@@ -389,8 +394,8 @@ public class CsvImportJob {
 															phone);
 												}
 											}
+											inputMessage.put(fieldName, phone);
 										}
-										inputMessage.put(fieldName, phone);
 									}
 
 									// date, date/time ,time data type handled
@@ -431,9 +436,10 @@ public class CsvImportJob {
 													inputMessage.put(fieldName, relationship);
 												} else {
 													String message = (relationshipId == null)
-															? "Relationship value is not valid"
-															: "Relationship already exist";
-													csvImportService.addToSet(i, message, csvDocument.getCsvImportId());
+															? " relationship value is not valid"
+															: " relationship already exist";
+													csvImportService.addToSet(i, fieldName + message,
+															csvDocument.getCsvImportId());
 													error = true;
 													break;
 												}
@@ -445,7 +451,8 @@ public class CsvImportJob {
 															inputMessage.get(fieldName).toString());
 													inputMessage.put(fieldName, relationship);
 												} else {
-													csvImportService.addToSet(i, "Relationship value is not valid",
+													csvImportService.addToSet(i,
+															fieldName + " relationship value is not valid",
 															csvDocument.getCsvImportId());
 													error = true;
 													break;
@@ -469,7 +476,7 @@ public class CsvImportJob {
 															relationshipList.add(relationship);
 														} else {
 															csvImportService.addToSet(i,
-																	"Relationship value is not valid",
+																	fieldName + " relationship value is not valid",
 																	csvDocument.getCsvImportId());
 															error = true;
 															break;
@@ -482,7 +489,8 @@ public class CsvImportJob {
 														inputMessage.put(fieldName, relationshipList);
 													}
 												} else {
-													csvImportService.addToSet(i, "Relationship value is not valid",
+													csvImportService.addToSet(i,
+															fieldName + " relationship value is not valid",
 															csvDocument.getCsvImportId());
 													error = true;
 													break;

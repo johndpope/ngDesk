@@ -51,7 +51,7 @@ public class CsvImportService {
 
 	@Autowired
 	CsvImportRepository csvImportRepository;
-	
+
 	@Autowired
 	Global global;
 
@@ -432,22 +432,26 @@ public class CsvImportService {
 
 			String countriesJson = global.getFile("countriesWithDialCode.json");
 			ObjectMapper mapper = new ObjectMapper();
-			List<BasePhone> countries = mapper.readValue(countriesJson,
-					mapper.getTypeFactory().constructCollectionType(List.class, BasePhone.class));
+			Map<String, Object> mapCountries = mapper.readValue(countriesJson, Map.class);
+			List<Map<String, Object>> countries = mapper.readValue(
+					mapper.writeValueAsString(mapCountries.get("COUNTRIES")),
+					mapper.getTypeFactory().constructCollectionType(List.class, Map.class));
 
-			BasePhone country = countries.stream()
-					.filter(countryList -> countryList.getDialCode().equals(countryDialCode)).findFirst().orElse(null);
+			String updatedCode = countryDialCode.replace("+", "");
+			Map<String, Object> country = countries.stream()
+					.filter(countryList -> countryList.get("DIAL_CODE").toString().equals(updatedCode)).findFirst()
+					.orElse(null);
 
 			if (!country.equals(null)) {
-				phone.setCountryCode(country.getCountryCode().toString());
+				phone.setCountryCode(country.get("COUNTRY_CODE").toString());
 				phone.setPhoneNumber(phoneNumber);
-				phone.setCountryFlag(country.getCountryFlag().toString());
-				phone.setDialCode(country.getDialCode().toString());
+				phone.setCountryFlag(country.get("COUNTRY_FLAG").toString());
+				phone.setDialCode(countryDialCode);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		return phone;
+		} 
+		return phone; 
 	}
 
 }
