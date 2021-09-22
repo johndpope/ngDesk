@@ -30,6 +30,7 @@ export class FieldPermissionComponent implements OnInit {
 	public fieldsMap = {};
 	public fieldPermissions = [];
 	public nonEditableFields = [];
+	public fieldsLength: number;
 	public accessOptions = [
 		'Read',
 		'Write Only Creator',
@@ -114,6 +115,7 @@ export class FieldPermissionComponent implements OnInit {
 							DATA: this.fieldPermissions,
 							TOTAL_RECORDS: this.fieldPermissions.length,
 						};
+						this.fieldsLength = this.data.TOTAL_RECORDS;
 						this.dataSource = new MatTableDataSource(this.data.DATA);
 						this.dataSource.paginator = this.paginator;
 						this.dataSource.sort = this.sort;
