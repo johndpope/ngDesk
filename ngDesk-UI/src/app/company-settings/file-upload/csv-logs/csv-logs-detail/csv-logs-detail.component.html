@@ -9,7 +9,7 @@
 			<mat-label class="mat-h2">{{fileName}}</mat-label>
 		</div>
 		<div class="mat-h3" *ngFor="let log of logs" fxLayoutAlign="center">
-			<div>
+			<div fxLayout="column">
 				{{'ON_LINE_NUMBER' | translate}}
 				{{log.lineNumber}} : {{log.errorMessage}}
 			</div>
