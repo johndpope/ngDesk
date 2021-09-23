@@ -86,6 +86,17 @@ export class PdfDetailComponent implements OnInit, OnDestroy {
 				.subscribe(
 					(response: any) => {
 						this.isLoading = false;
+						const template = response.HTML_TEMPLATE.match(
+							/\b[^<p>.][^a-z][A-Z_]*.[A-Z_]*\b/g
+						);
+						template.forEach((field, index) => {
+							if (index == template.indexOf(field)) {
+								response.HTML_TEMPLATE = response.HTML_TEMPLATE.replaceAll(
+									`{{inputMessage.${field}}}`,
+									field
+								);
+							}
+						});
 						this.pdfForm.setValue({
 							TITLE: response.TITLE,
 							HTML_TEMPLATE: response.HTML_TEMPLATE,
@@ -142,18 +153,25 @@ export class PdfDetailComponent implements OnInit, OnDestroy {
 		if (this.pdfForm.valid) {
 			this.isSubmitting = true;
 			const pdfObj = JSON.parse(JSON.stringify(this.pdfForm.value));
-			if (this.pdfId === 'new') {
-				const fields = pdfObj.HTML_TEMPLATE.match(
-					/\b[^<p>][^a-z][A-Z_]*.[A-Z_]*\b/g
-				);
-				fields.forEach((field, index) => {
-					if (index == fields.indexOf(field)) {
+			const fields = pdfObj.HTML_TEMPLATE.match(
+				/\b[^<p>][^a-z][A-Z_]*.[A-Z_]*\b/g
+			);
+			fields.forEach((field, index) => {
+				if (index == fields.indexOf(field)) {
+					if (field != 'SIGNATURE_REPLACE') {
 						pdfObj.HTML_TEMPLATE = pdfObj.HTML_TEMPLATE.replaceAll(
 							field,
 							`{{inputMessage.${field}}}`
 						);
+					} else {
+						pdfObj.HTML_TEMPLATE = pdfObj.HTML_TEMPLATE.replaceAll(
+							field,
+							`{{${field}}}`
+						);
 					}
-				});
+				}
+			});
+			if (this.pdfId === 'new') {
 				pdfObj.HTML_TEMPLATE = '<html><body>' + pdfObj.HTML_TEMPLATE;
 				if (!pdfObj.HTML_TEMPLATE.includes('</body></html>')) {
 					pdfObj.HTML_TEMPLATE = pdfObj.HTML_TEMPLATE + '</body></html>';
