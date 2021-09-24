@@ -51,7 +51,7 @@
 							<a [ngStyle]="{'color': '#1f73b7', 'text-decoration': 'none'}" class="mat-body" fxLayout="row" fxLayoutGap="10px"
 								fxLayoutAlign="center center" target="blank" download="attachment.FILE_NAME"
 								[attr.href]="downloadAttachment(attachment.ATTACHMENT_UUID)">
-								<mat-icon>attach_file</mat-icon>{{attachment.FILE_NAME}}
+								<mat-icon>attach_file</mat-icon>{{attachment.fileName}}
 							</a> </div>
 					</div>
 					<mat-divider></mat-divider><label class="mat-h2">{{'COMMENTS' | translate}}</label>

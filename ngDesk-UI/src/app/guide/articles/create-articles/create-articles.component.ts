@@ -228,7 +228,7 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 																		articleResponse['DATA'].AUTHOR,
 																		Validators.required,
 																	],
-																	labels: [articleResponse.LABELS],
+																	labels: [articleResponse['DATA'].LABELS],
 																	comments: [articleResponse.COMMENTS],
 																	createdBy: [articleResponse.CREATED_BY],
 																	dateCreated: [articleResponse.DATE_CREATED],

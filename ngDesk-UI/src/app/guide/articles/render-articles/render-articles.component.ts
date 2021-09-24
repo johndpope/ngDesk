@@ -165,7 +165,6 @@ export class RenderArticlesComponent implements OnInit {
 		if (this.article['COMMENTS'] !== null) {
 			this.article['COMMENTS'].forEach((comment) => {
 				// comment.sender = JSON.parse(comment.sender);
-
 				user = comment.SENDER;
 				// if user exists set the name else set anonymous
 				comment.SENDER = user
@@ -182,7 +181,6 @@ export class RenderArticlesComponent implements OnInit {
 				this.section = sectionResponse.DATA;
 				// check if user has access to edit this article and display edit button
 				this.checkEditAccess();
-
 				this.guideService
 					.getKbCategoryById(sectionResponse.DATA.category.categoryId)
 					.subscribe(
@@ -216,17 +214,11 @@ export class RenderArticlesComponent implements OnInit {
 
 	public addComment(): void {
 		if (this.comment['message'] !== undefined) {
-			console.log('this.comment...................>', this.comment['message']);
 			this.loading = true;
-			console.log(
-				'this.article..................>',
-				this.article['ARTICLE_ID']
-			);
 			this.articleApiService
 				.postComments(this.article['ARTICLE_ID'], this.comment)
 				.subscribe(
 					(response: any) => {
-						console.log('response.....................', response);
 						this.comment['message'] = '';
 						this.getArticle();
 					},
