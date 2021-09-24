@@ -88,7 +88,18 @@ export class ChatGeneralSettingsComponent implements OnInit {
 			this.teamsModule = response;
 			this.getTeamsData(0, '', this.teamsModule)
 				.subscribe((teamResponse) => {
-					this.teams = teamResponse['DATA'];
+					let response = [];
+					response = teamResponse['DATA'];
+					let filteredTeams = [];
+					if (response.length > 0) {
+						response.forEach(team => {
+							if (team.name !== 'Ghost Team' && team.name !== 'Public') {
+								filteredTeams.push(team);
+							}
+						});
+					}
+
+					this.teams = filteredTeams;
 					this.initializeScheduleDataScrollSubject();
 					const query = `{
 						COMPANY: getCompanyDetails {
@@ -124,7 +135,6 @@ export class ChatGeneralSettingsComponent implements OnInit {
 								if (response.COMPANY.CHAT_SETTINGS.TEAMS_WHO_CAN_CHAT !== null) {
 									let currentTeams = [];
 									this.selectedTeams = response.COMPANY.CHAT_SETTINGS.TEAMS_WHO_CAN_CHAT;
-									this.filterTeams(this.selectedTeamIds);
 
 									response.COMPANY.CHAT_SETTINGS.TEAMS_WHO_CAN_CHAT.forEach((teamsWhoCanChat) => {
 
@@ -263,26 +273,29 @@ export class ChatGeneralSettingsComponent implements OnInit {
 						.getTeamsData(page, searchValue, this.teamsModule)
 						.pipe(
 							mergeMap((results: any) => {
-								if (search) {
-									this.teams = results['DATA'];
-								} else {
-									this.teams = this.teams.concat(results['DATA']);
+								let response = [];
+								response = results['DATA'];
+								let filteredTeams = [];
+								if (response.length > 0) {
+									response.forEach(teamToAdd => {
+										if (teamToAdd.name !== 'Ghost Team' && teamToAdd.name !== 'Public') {
+											filteredTeams.push(teamToAdd);
+										}
+									});
+									if (search) {
+										this.teams = filteredTeams;
+									} else {
+										this.teams = this.teams.concat(filteredTeams);
+									}
+									this.teams = this.teams.filter((team, index) => this.teams.findIndex(item => item.id == team.id) === index);
+									return this.teams;
 								}
-								return results['DATA'];
+
 							})
 						);
 				})
 			)
 			.subscribe();
-	}
-
-	public filterTeams(selectedTeamIds: any) {
-		selectedTeamIds.forEach(element => {
-			this.teams.forEach((team) => {
-			});
-		});
-
-
 	}
 
 	public removeTeam(index) {
