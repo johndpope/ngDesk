@@ -86,7 +86,9 @@ export class PdfDetailComponent implements OnInit, OnDestroy {
 				.subscribe(
 					(response: any) => {
 						this.isLoading = false;
-						const template = response.HTML_TEMPLATE.match(/\b{{.*?}}/g);
+						const template = response.HTML_TEMPLATE.match(
+							/\b[^<p>.][^a-z][A-Z_]*.[A-Z_]*\b/g
+						);
 						template.forEach((field, index) => {
 							if (index == template.indexOf(field)) {
 								response.HTML_TEMPLATE = response.HTML_TEMPLATE.replaceAll(
