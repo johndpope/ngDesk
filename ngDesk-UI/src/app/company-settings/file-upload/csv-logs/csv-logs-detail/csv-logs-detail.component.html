@@ -3,13 +3,19 @@
 	<app-title-bar class="light-grey-color" title="{{'CSV_LOGS' | translate}}">
 	</app-title-bar>
 </ng-template>
-<div fxLayout="row" fxLayoutAlign="center">
-	<mat-card fxFlex="70" style="margin-top: 20px;">
+<div fxLayoutAlign="center" style="padding: 20px;">
+	<div fxlayout="column" class="mat-elevation-z2" fxFlex="70" style="padding-top: 20px;border-radius: 4px">
 		<div fxLayout="row" fxLayoutAlign="center">
 			<mat-label class="mat-h2">{{fileName}}</mat-label>
 		</div>
-		<div class="mat-h3" *ngFor="let log of logs" fxLayoutAlign="center">{{'ON_LINE_NUMBER' | translate}}
-			{{log.lineNumber}} : {{log.errorMessage}}</div>
+		<div class="mat-h3" *ngFor="let log of logs">
+			<div fxFlex="35" fxLayoutAlign="end start">
+				{{'ON_LINE_NUMBER' | translate}}
+			</div>
+			<div fxLayoutAlign="start start">
+				{{log.lineNumber}} : {{log.errorMessage}}
+			</div>
+		</div>
 		<div class="mat-h3" *ngIf="logs.length === 0" fxLayoutAlign="center">{{'NO_ERROR_LOGS_FOUND' | translate}}</div>
-	</mat-card>
+	</div>
 </div>
