@@ -280,11 +280,10 @@ public class MetaDataService {
 	}
 
 	private Map<String, Object> formatLongDateTypes(Map<String, Object> entry, Module module, String companyId) {
-		String[] fieldNames = { "DATE_CREATED", "DATE_UPDATED", "EFFECTIVE_FROM", "EFFECTIVE_TO" };
+		String[] fieldNames = { "DATE_CREATED", "DATE_UPDATED", "EFFECTIVE_FROM", "EFFECTIVE_TO", "DUE_DATE" };
 
 		List<String> fieldsToIgnore = new ArrayList<String>();
 		fieldsToIgnore.addAll(Arrays.asList(fieldNames));
-
 		List<ModuleField> payloadFields = module.getFields().stream()
 				.filter(field -> field.getDataType().getDisplay().equals("Date/Time")
 						|| field.getDataType().getDisplay().equals("Date")
