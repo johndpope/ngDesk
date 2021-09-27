@@ -23,7 +23,7 @@
 					</mat-select>
 				</mat-form-field>
 			</div>
-			<div fxLayout="row" *ngIf="fields.DATA_TYPE.DISPLAY == 'Phone'" fxLayoutGap="10px" fxFlex="50">
+			<div fxLayout="row" *ngIf="fields.DATA_TYPE.DISPLAY == 'Phone'" fxFlex="50">
 				<mat-form-field>
 					<mat-select name="test" placeholder="Select a field" [(ngModel)]="headerMap[fields.FIELD_ID]">
 						<mat-option>
@@ -34,7 +34,7 @@
 						</mat-option>
 					</mat-select>
 				</mat-form-field>
-				<mat-form-field>
+				<mat-form-field style="margin-left: 8px;" fxFlex="56">
 					<mat-select placeholder="Select separator" [(ngModel)]="selectedSeparator">
 						<mat-option *ngFor="let separator of separators" [value]="separator">
 							{{separator}}
