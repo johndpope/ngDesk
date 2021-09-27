@@ -1,6 +1,6 @@
 package com.ngdesk.data.csvimport.dao;
 
-import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -18,8 +18,10 @@ import com.ngdesk.commons.Global;
 import com.ngdesk.commons.exceptions.InternalErrorException;
 import com.ngdesk.data.dao.BasePhone;
 import com.ngdesk.data.dao.DataService;
+import com.ngdesk.data.dao.DiscussionMessage;
 import com.ngdesk.data.dao.Phone;
 import com.ngdesk.data.dao.Relationship;
+import com.ngdesk.data.dao.Sender;
 import com.ngdesk.data.modules.dao.DataType;
 import com.ngdesk.data.modules.dao.Module;
 import com.ngdesk.data.modules.dao.ModuleField;
@@ -83,7 +85,6 @@ public class CsvImportService {
 					getPrimaryDisplayFieldValue("TEAMS", accountModule, companyId, globalTeamId).toString());
 			teams.add(relationship);
 			account.put("TEAMS", teams);
-			System.out.println("hit 1");
 			accountEntry = dataAPI.postModuleEntry(account, accountModule.getModuleId(), true, companyId, userUuid);
 
 		} catch (Exception e) {
@@ -124,7 +125,6 @@ public class CsvImportService {
 					getPrimaryDisplayFieldValue("TEAMS", userModule, companyId, globalTeamId).toString());
 			teams.add(relationship);
 			user.put("TEAMS", teams);
-			System.out.println("hit 2");
 			userEntry.putAll(dataAPI.postModuleEntry(user, userModule.getModuleId(), true, companyId, userUuid));
 
 		} catch (Exception e) {
@@ -172,7 +172,6 @@ public class CsvImportService {
 			}
 
 			contact.put("FULL_NAME", fullName);
-			System.out.println("hit 3");
 			contactEntry
 					.putAll(dataAPI.postModuleEntry(contact, contactModule.getModuleId(), true, companyId, userUuid));
 		} catch (Exception e) {
@@ -196,11 +195,7 @@ public class CsvImportService {
 				// INSERT RECORD
 				HashMap<String, Object> bodyHashMap = new HashMap<String, Object>();
 				bodyHashMap.putAll(body);
-				System.out.println("hit 4");
-				System.out.println(body);
-				System.out.println(userUuid);
 				data = dataAPI.postModuleEntry(bodyHashMap, module.getModuleId(), true, companyId, userUuid);
-				System.out.println("hitttttttt:" + data);
 				String dataId = data.get("DATA_ID").toString();
 
 				List<ModuleField> fields = module.getFields();
@@ -289,17 +284,10 @@ public class CsvImportService {
 
 	public void updateUsersInTeamsEntry(String value, String userId, Module teamsModule, String companyId,
 			Map<String, Object> entry, String userUuid) {
-		ObjectMapper mapper = new ObjectMapper();
-
 		try {
 			HashMap<String, Object> mapEntry = new HashMap<String, Object>();
 			mapEntry.putAll(entry);
-//			List<String> users = mapper.readValue(value,
-//					mapper.getTypeFactory().constructCollectionType(List.class, String.class));
-//			users.add(userId);
-
 			List<String> users = parseString(value);
-			System.out.println("hitt:   " + users);
 
 			List<Relationship> usersRelationship = getListRelationshipValue("USERS", teamsModule, companyId, users);
 			entry.put("USERS", usersRelationship);
@@ -373,11 +361,9 @@ public class CsvImportService {
 
 	public List<String> parseString(String string) {
 		List<String> list = new ArrayList<String>();
-		System.out.println(string);
 		String str[] = Arrays.stream(string.replaceAll("\\[|\\]", "").split(",")).map(String::trim)
 				.toArray(String[]::new);
 		list = Arrays.asList(str);
-		System.out.println(list);
 		return list;
 	}
 
@@ -390,7 +376,6 @@ public class CsvImportService {
 
 	public BasePhone createPhoneObject(String countryDialCode, String phoneNumber, BasePhone phone) {
 		try {
-			System.out.println(countryDialCode + "       " + phoneNumber);
 			String countriesJson = global.getFile("countriesWithDialCode.json");
 			ObjectMapper mapper = new ObjectMapper();
 			Map<String, Object> mapCountries = mapper.readValue(countriesJson, Map.class);
@@ -399,7 +384,6 @@ public class CsvImportService {
 					mapper.getTypeFactory().constructCollectionType(List.class, Map.class));
 
 			String updatedCode = countryDialCode.replace("+", "").trim();
-			System.out.println(updatedCode);
 			Map<String, Object> country = countries.stream()
 					.filter(countryList -> countryList.get("DIAL_CODE").toString().equals(updatedCode)).findFirst()
 					.orElse(null);
@@ -408,7 +392,6 @@ public class CsvImportService {
 				phone.setPhoneNumber(phoneNumber);
 				phone.setCountryFlag(country.get("COUNTRY_FLAG").toString());
 				countryDialCode = (!countryDialCode.contains("+")) ? "+" + countryDialCode : countryDialCode;
-				System.out.println(countryDialCode);
 				phone.setDialCode(countryDialCode);
 			} else {
 				return null;
@@ -417,6 +400,234 @@ public class CsvImportService {
 			throw new InternalErrorException(e.getMessage());
 		}
 		return phone;
+	}
+
+	public Map<String, Object> formatDataTypes(List<ModuleField> fields, Map<String, Object> inputMessage,
+			CsvImport csvDocument, int i, String companyId, Map<String, Object> user, String globalTeamId,
+			Module module) {
+		Map<String, String> fieldIdNameMap = new HashMap<String, String>();
+		boolean error = false;
+		for (ModuleField field : fields) {
+			String fieldName = field.getName();
+			String displayLabel = field.getDisplayLabel();
+			fieldIdNameMap.put(field.getFieldId(), displayLabel);
+			DataType dataType = field.getDataType();
+
+			// VALIDATE IF THE PICKLIST VALUES ARE MATCHING WITH EXISTING PICKLISTS
+			if (inputMessage.containsKey(fieldName)) {
+
+				if (dataType.getDisplay().equalsIgnoreCase("Picklist")) {
+					List<String> picklistValues = field.getPicklistValues();
+					String value = inputMessage.get(fieldName).toString().trim();
+
+					String filteredValue = picklistValues.stream().filter(list -> list.equalsIgnoreCase(value))
+							.findFirst().orElse(null);
+
+					if (filteredValue != null) {
+						inputMessage.put(fieldName, filteredValue);
+					} else {
+						addToSet(i, fieldName + " picklist values are incorrect", csvDocument.getCsvImportId());
+						error = true;
+						break;
+					}
+				}
+
+				if (dataType.getDisplay().equalsIgnoreCase("Chronometer")) {
+					if (inputMessage.get(fieldName) != null) {
+						String value = inputMessage.get(fieldName).toString().toLowerCase();
+						String valueWithoutSpace = value.replaceAll("\\s+", "");
+						if (valueWithoutSpace.length() == 0 || valueWithoutSpace.charAt(0) == '-') {
+							inputMessage.put(fieldName, 0);
+						} else if (valueWithoutSpace.length() != 0) {
+							inputMessage.put(fieldName, valueWithoutSpace);
+						}
+					}
+				}
+
+				if (dataType.getDisplay().equalsIgnoreCase("Picklist (Multi-Select)")) {
+					List<String> picklistValues = field.getPicklistValues();
+					List<String> values = parseString(inputMessage.get(fieldName).toString());
+					List<String> selectedtValues = new ArrayList<String>();
+					for (String value : values) {
+						String filteredValue = picklistValues.stream().filter(list -> list.equalsIgnoreCase(value))
+								.findFirst().orElse(null);
+
+						if (filteredValue != null) {
+							selectedtValues.add(filteredValue);
+						} else {
+							addToSet(i, fieldName + " picklist values are incorrect", csvDocument.getCsvImportId());
+							error = true;
+							break;
+						}
+					}
+					if (error) {
+						break;
+					} else if (!selectedtValues.isEmpty()) {
+						inputMessage.put(fieldName, selectedtValues);
+					}
+				}
+
+				if (dataType.getDisplay().equalsIgnoreCase("Discussion")) {
+					String value = inputMessage.get(fieldName).toString().trim();
+					Optional<Map<String, Object>> optionalContact = moduleEntryRepository.findEntryById(
+							user.get("CONTACT").toString(), moduleService.getCollectionName("Contacts", companyId));
+					Map<String, Object> contactEntry = optionalContact.get();
+					String firstName = contactEntry.get("FIRST_NAME").toString();
+					String lastName = contactEntry.get("LAST_NAME").toString();
+
+					Sender sender = new Sender(firstName, lastName, user.get("USER_UUID").toString(),
+							user.get("ROLE").toString());
+
+					DiscussionMessage message = new DiscussionMessage(value, new Date(), UUID.randomUUID().toString(),
+							"MESSAGE", null, sender);
+
+					List<DiscussionMessage> messages = Arrays.asList(message);
+					inputMessage.put(fieldName, messages);
+				}
+
+				// LIST TEXT DATA TYPE HANDLED
+				if (dataType.getDisplay().equalsIgnoreCase("List Text")) {
+					List<String> values = parseString(inputMessage.get(fieldName).toString().trim());
+					if (values.size() != 0) {
+						inputMessage.put(fieldName, values);
+					}
+				}
+
+				// Phone Data TYPE HANDLED
+				if (dataType.getDisplay().equalsIgnoreCase("Phone")) {
+					BasePhone phone = new BasePhone();
+					try {
+						String value = inputMessage.get(fieldName).toString().trim();
+						if (value != null) {
+							if (csvDocument.getSeparator() != null) {
+								String separator = (csvDocument.getSeparator().equals("Blank space")) ? " " : "-";
+								String[] split = value.split(separator);
+								if (split.length == 2) {
+									phone = createPhoneObject(split[0].trim(), split[1].trim(), phone);
+								} else {
+									error = true;
+								}
+							} else {
+								String separator = "-";
+								String[] split = value.split(separator);
+								if (split.length == 2) {
+									phone = createPhoneObject(split[0].trim(), split[1].trim(), phone);
+								} else {
+									error = true;
+								}
+							}
+						}
+						if (error || phone == null) {
+							addToSet(i, fieldName + " values are incorrect", csvDocument.getCsvImportId());
+							break;
+						} else {
+							inputMessage.put(fieldName, phone);
+						}
+					} catch (Exception e) {
+						addToSet(i, e.getMessage(), csvDocument.getCsvImportId());
+						break;
+					}
+				}
+
+				// Date, date/time ,time data type handled
+				if (dataType.getDisplay().equalsIgnoreCase("Date/Time")
+						|| dataType.getDisplay().equalsIgnoreCase("Date")
+						|| dataType.getDisplay().equalsIgnoreCase("Time")) {
+
+					String value = inputMessage.get(fieldName).toString().trim();
+					try {
+						Date date = new Date();
+						SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSSX");
+						date = df.parse(value);
+						inputMessage.put(fieldName, date);
+					} catch (Exception e) {
+						addToSet(i, fieldName + " values are invalid", csvDocument.getCsvImportId());
+						error = true;
+						break;
+					}
+				}
+
+				List<String> ignoredFields = List.of("CREATED_BY", "LAST_UPDATED_BY");
+				if (dataType.getDisplay().equalsIgnoreCase("Relationship") && !ignoredFields.contains(fieldName)) {
+					if (field.getRelationshipType().equalsIgnoreCase("One To One")) {
+						String relationshipId = getRelationshipId(field, companyId, inputMessage.get(fieldName));
+
+						if (relationshipId != null && checkRelationshipStatus(field, relationshipId, companyId)) {
+							Relationship relationship = new Relationship(relationshipId,
+									inputMessage.get(fieldName).toString());
+							inputMessage.put(fieldName, relationship);
+						} else {
+							String message = (relationshipId == null) ? " relationship value is not valid"
+									: " relationship already exist";
+							addToSet(i, fieldName + message, csvDocument.getCsvImportId());
+							error = true;
+							break;
+						}
+					} else if (field.getRelationshipType().equalsIgnoreCase("Many To One")) {
+						String relationshipId = getRelationshipId(field, companyId, inputMessage.get(fieldName));
+						if (relationshipId != null) {
+							Relationship relationship = new Relationship(relationshipId,
+									inputMessage.get(fieldName).toString());
+							inputMessage.put(fieldName, relationship);
+						} else {
+							addToSet(i, fieldName + " relationship value is not valid", csvDocument.getCsvImportId());
+							error = true;
+							break;
+						}
+					} else if (field.getRelationshipType().equalsIgnoreCase("Many To Many")) {
+
+						List<String> values = parseString(inputMessage.get(fieldName).toString());
+						if (values != null) {
+							List<Relationship> relationshipList = new ArrayList<Relationship>();
+							for (String value : values) {
+								String relationshipId = getRelationshipId(field, companyId, value);
+								if (relationshipId != null) {
+									Relationship relationship = new Relationship(relationshipId,
+											inputMessage.get(fieldName).toString());
+									relationshipList.add(relationship);
+								} else {
+									addToSet(i, fieldName + " relationship value is not valid",
+											csvDocument.getCsvImportId());
+									error = true;
+									break;
+								}
+							}
+							if (error) {
+								break;
+							} else {
+								inputMessage.put(fieldName, relationshipList);
+							}
+						} else {
+							addToSet(i, fieldName + " relationship value is not valid", csvDocument.getCsvImportId());
+							error = true;
+							break;
+						}
+					}
+				}
+			}
+
+			if (field.getRequired()) {
+				if (inputMessage.get(fieldName) == null) {
+					if (dataType.getDisplay().equalsIgnoreCase("ID")) {
+						inputMessage.put(fieldName, UUID.randomUUID().toString());
+					}
+				}
+				if (field.getName().equals("TEAMS")) {
+					List<Relationship> teams = new ArrayList<Relationship>();
+					if (globalTeamId != null) {
+						Relationship relationship = new Relationship(globalTeamId,
+								getPrimaryDisplayFieldValue("TEAMS", module, companyId, globalTeamId).toString());
+						teams.add(relationship);
+					}
+					inputMessage.put("TEAMS", teams);
+				}
+			}
+		}
+		if (error) {
+			return null;
+		} else {
+			return inputMessage;
+		}
 	}
 
 }
