@@ -20,6 +20,7 @@ import com.ngdesk.data.dao.BasePhone;
 import com.ngdesk.data.dao.DataService;
 import com.ngdesk.data.dao.Phone;
 import com.ngdesk.data.dao.Relationship;
+import com.ngdesk.data.modules.dao.DataType;
 import com.ngdesk.data.modules.dao.Module;
 import com.ngdesk.data.modules.dao.ModuleField;
 import com.ngdesk.data.modules.dao.ModuleService;
@@ -197,84 +198,41 @@ public class CsvImportService {
 				bodyHashMap.putAll(body);
 				System.out.println("hit 4");
 				System.out.println(body);
+				System.out.println(userUuid);
 				data = dataAPI.postModuleEntry(bodyHashMap, module.getModuleId(), true, companyId, userUuid);
-
+				System.out.println("hitttttttt:" + data);
 				String dataId = data.get("DATA_ID").toString();
 
 				List<ModuleField> fields = module.getFields();
-//				for (ModuleField field : fields) {
-//					String name = field.getName();
-//					DataType dataType = field.getDataType();
-//					if (dataType.getDisplay().equalsIgnoreCase("Relationship")) {
-//						if (data.containsKey(name)) {
-//							Optional<Module> optionalRelatedModule = modulesRepository.findById(field.getModule(),
-//									moduleService.getCollectionName("modules", companyId));
-//
-//							if (optionalRelatedModule.isPresent()) {
-//								Module relationModule = optionalRelatedModule.get();
-//								String relationModuleName = relationModule.getName();
-//								List<ModuleField> relationFields = relationModule.getFields();
-//
-//								String relationFieldName = null;
-//								for (ModuleField relationField : relationFields) {
-//
-//									DataType datatype = relationField.getDataType();
-//									if (datatype.getDisplay().equals("Relationship")) {
-//										if (field.getRelationshipField() != null) {
-//											if (field.getRelationshipField().equals(relationField.getFieldId())) {
-//												relationFieldName = relationField.getName();
-//												break;
-//											}
-//										}
-//									}
-//								}
-//
-//								String relationshipType = field.getRelationshipType();
-//								if (relationshipType.equals("One to One")) {
-//									if (relationFieldName != null) {
-//										System.out.println(relationModuleName);
-//										System.out.println(field.getPrimaryDisplayField());
-//										String value = data.get(name).toString();
-//										Optional<Map<String, Object>> optionalEntry = moduleEntryRepository.findById(
-//												value, moduleService.getCollectionName(relationModuleName, companyId));
-//										HashMap<String, Object> entry = new HashMap<String, Object>();
-//										entry.putAll(optionalEntry.get());
-//										entry.put(relationFieldName, dataId);
-//										dataAPI.putModuleEntry(entry, relationModule.getModuleId(), true, companyId,
-//												userUuid, false);
-//									}
-//								} else if (relationshipType.equals("Many to Many")) {
-//									if (!data.get(name).getClass().getSimpleName().toString().equals("ArrayList")) {
-//										String[] vars = { name };
-//										throw new BadRequestException("INVALID_INPUT_FORMAT", vars);
-//									}
-//									List<String> values = mapper.readValue(mapper.writeValueAsString(data.get(name)),
-//											mapper.getTypeFactory().constructCollectionType(List.class, String.class));
-//									for (String value : values) {
-//										if (relationFieldName != null) {
-//											Optional<Map<String, Object>> optionalEntry = moduleEntryRepository
-//													.findById(value, moduleService.getCollectionName(relationModuleName,
-//															companyId));
-//											HashMap<String, Object> entry = new HashMap<String, Object>();
-//											entry.putAll(optionalEntry.get());
-//											List<String> relationFieldValues = new ArrayList<String>();
-//											if (entry.get(relationFieldName) != null) {
-//												relationFieldValues = mapper.readValue(
-//														mapper.writeValueAsString(entry.get(relationFieldName)),
-//														mapper.getTypeFactory().constructCollectionType(List.class,
-//																String.class));
-//											}
-//											relationFieldValues.add(dataId);
-//											entry.put(relationFieldName, relationFieldValues);
-//											dataAPI.putModuleEntry(entry, relationModule.getModuleId(), true, companyId,
-//													userUuid, false);
-//										}
-//									}
-//								}
-//							}
-//						}
-//					}
-//				}
+				for (ModuleField field : fields) {
+					String name = field.getName();
+					DataType dataType = field.getDataType();
+					if (dataType.getDisplay().equalsIgnoreCase("Relationship")
+							&& field.getRelationshipType().equalsIgnoreCase("One to One")) {
+						if (data.containsKey(name)) {
+							Optional<Module> optionalRelatedModule = modulesRepository.findById(field.getModule(),
+									moduleService.getCollectionName("modules", companyId));
+
+							if (optionalRelatedModule.isPresent()) {
+								Module relationModule = optionalRelatedModule.get();
+								List<ModuleField> relationFields = relationModule.getFields();
+								ModuleField relatedField = relationFields.stream().filter(relationField -> relationField
+										.getFieldId().equals(field.getRelationshipField())).findFirst().orElse(null);
+								if (relatedField != null) {
+									String value = getPrimaryDisplayFieldValue(relatedField.getName(), relationModule,
+											companyId, dataId).toString();
+									Relationship relationship = new Relationship(dataId, value);
+
+									HashMap<String, Object> entry = new HashMap<String, Object>();
+									entry.put("DATA_ID", data.get(name));
+									entry.put(relatedField.getName(), relationship);
+									dataAPI.putModuleEntry(entry, relationModule.getModuleId(), true, companyId,
+											userUuid, false);
+								}
+							}
+						}
+					}
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -369,7 +327,7 @@ public class CsvImportService {
 
 		ModuleField relationshipField = optionalRelationshipField.get();
 		String relationshipFieldName = relationshipField.getName();
-		Optional<Map<String, Object>> optionalRelationshipEntry = moduleEntryRepository.findEntryByFieldName(
+		Optional<Map<String, Object>> optionalRelationshipEntry = moduleEntryRepository.findEntryByVariable(
 				relationshipFieldName, value, moduleService.getCollectionName(relationshipModuleName, companyId));
 
 		if (optionalRelationshipEntry.isEmpty()) {
@@ -415,8 +373,8 @@ public class CsvImportService {
 
 	public List<String> parseString(String string) {
 		List<String> list = new ArrayList<String>();
-
-		String str[] = Arrays.stream(string.replaceAll("[\\[\\]]", "").split(",")).map(String::trim)
+		System.out.println(string);
+		String str[] = Arrays.stream(string.replaceAll("\\[|\\]", "").split(",")).map(String::trim)
 				.toArray(String[]::new);
 		list = Arrays.asList(str);
 		System.out.println(list);
@@ -432,7 +390,7 @@ public class CsvImportService {
 
 	public BasePhone createPhoneObject(String countryDialCode, String phoneNumber, BasePhone phone) {
 		try {
-
+			System.out.println(countryDialCode + "       " + phoneNumber);
 			String countriesJson = global.getFile("countriesWithDialCode.json");
 			ObjectMapper mapper = new ObjectMapper();
 			Map<String, Object> mapCountries = mapper.readValue(countriesJson, Map.class);
@@ -440,19 +398,23 @@ public class CsvImportService {
 					mapper.writeValueAsString(mapCountries.get("COUNTRIES")),
 					mapper.getTypeFactory().constructCollectionType(List.class, Map.class));
 
-			String updatedCode = countryDialCode.replace("+", "");
+			String updatedCode = countryDialCode.replace("+", "").trim();
+			System.out.println(updatedCode);
 			Map<String, Object> country = countries.stream()
 					.filter(countryList -> countryList.get("DIAL_CODE").toString().equals(updatedCode)).findFirst()
 					.orElse(null);
-
-			if (!country.equals(null)) {
+			if (country != null) {
 				phone.setCountryCode(country.get("COUNTRY_CODE").toString());
 				phone.setPhoneNumber(phoneNumber);
 				phone.setCountryFlag(country.get("COUNTRY_FLAG").toString());
+				countryDialCode = (!countryDialCode.contains("+")) ? "+" + countryDialCode : countryDialCode;
+				System.out.println(countryDialCode);
 				phone.setDialCode(countryDialCode);
+			} else {
+				return null;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new InternalErrorException(e.getMessage());
 		}
 		return phone;
 	}

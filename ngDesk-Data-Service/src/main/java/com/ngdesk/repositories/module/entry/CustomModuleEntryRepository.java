@@ -119,4 +119,6 @@ public interface CustomModuleEntryRepository {
 
 	public Optional<Map<String, Object>> findBySortingField(String fieldName, String collectionName);
 
+	public Optional<Map<String, Object>> findEntryByVariable(String fieldName, Object value, String collectionName);
+
 }

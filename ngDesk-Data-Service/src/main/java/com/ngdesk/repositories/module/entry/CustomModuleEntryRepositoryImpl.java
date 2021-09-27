@@ -1456,15 +1456,27 @@ public class CustomModuleEntryRepositoryImpl implements CustomModuleEntryReposit
 	@Override
 	public Optional<Map<String, Object>> findBySortingField(String fieldName, String collectionName) {
 		Assert.notNull(collectionName, "The given collectionName must not be null!");
-		
+
 		Criteria criteria = new Criteria();
-		criteria.andOperator(Criteria.where("DELETED").is(false),
-				Criteria.where("EFFECTIVE_TO").is(null));
+		criteria.andOperator(Criteria.where("DELETED").is(false), Criteria.where("EFFECTIVE_TO").is(null));
 		Query query = new Query();
 		query.addCriteria(criteria);
-		
-		return Optional.ofNullable(mongoOperations.findOne(query.with(Sort.by(Direction.DESC, fieldName)),
-				Map.class, collectionName));
+
+		return Optional.ofNullable(
+				mongoOperations.findOne(query.with(Sort.by(Direction.DESC, fieldName)), Map.class, collectionName));
+	}
+	
+	@Override
+	public Optional<Map<String, Object>> findEntryByVariable(String fieldName, Object value, String collectionName) {
+		Assert.notNull(value, "The given value must not be null!");
+		Assert.notNull(collectionName, "The given collectionName must not be null!");
+
+		Pattern pattern = Pattern.compile("^"+value.toString().trim()+"$", Pattern.CASE_INSENSITIVE);
+		Criteria criteria = new Criteria();				
+		criteria.andOperator(Criteria.where("DELETED").is(false), Criteria.where(fieldName).regex(pattern),
+				Criteria.where("EFFECTIVE_TO").is(null));
+
+		return Optional.ofNullable(mongoOperations.findOne(new Query(criteria), Map.class, collectionName));
 	}
 
 }

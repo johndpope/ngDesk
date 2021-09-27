@@ -55,7 +55,6 @@ export class CsvImportDialogComponent implements OnInit {
 		this.data.csvData.MODULE.FIELDS.forEach((field) => {
 			if (
 				!field.NOT_EDITABLE &&
-				field.DATA_TYPE.DISPLAY !== 'Discussion' &&
 				field.DATA_TYPE.DISPLAY !== 'File Upload' &&
 				field.DATA_TYPE.DISPLAY !== 'Checkbox' &&
 				field.NAME !== 'ROLE'

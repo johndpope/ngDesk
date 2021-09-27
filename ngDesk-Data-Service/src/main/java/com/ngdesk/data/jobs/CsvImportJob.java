@@ -276,9 +276,6 @@ public class CsvImportJob {
 									inputMessage.remove("CREATED_BY");
 								}
 
-								inputMessage.put("FIRST_NAME", "xxxx");
-								inputMessage.put("LAST_NAME", "yyyy" + i);
-
 								// GET THE ENTRY COLLECTION BASED ON SELECTED MODULE
 								Map<String, String> fieldIdNameMap = new HashMap<String, String>();
 								String phoneNumber = "";
@@ -295,9 +292,15 @@ public class CsvImportJob {
 									if (inputMessage.containsKey(fieldName)) {
 										if (dataType.getDisplay().equalsIgnoreCase("Picklist")) {
 											List<String> picklistValues = field.getPicklistValues();
-											String value = inputMessage.get(fieldName).toString();
+											String value = inputMessage.get(fieldName).toString().trim();
 
-											if (!picklistValues.contains(value)) {
+											String filteredValue = picklistValues.stream()
+													.filter(list -> list.equalsIgnoreCase(value)).findFirst()
+													.orElse(null);
+
+											if (filteredValue != null) {
+												inputMessage.put(fieldName, filteredValue);
+											} else {
 												csvImportService.addToSet(i,
 														fieldName + " picklist values are incorrect",
 														csvDocument.getCsvImportId());
@@ -309,7 +312,7 @@ public class CsvImportJob {
 									if (inputMessage.containsKey(fieldName)) {
 										if (dataType.getDisplay().equalsIgnoreCase("Chronometer")) {
 											if (inputMessage.get(fieldName) != null) {
-												String value = inputMessage.get(fieldName).toString();
+												String value = inputMessage.get(fieldName).toString().toLowerCase();
 												String valueWithoutSpace = value.replaceAll("\\s+", "");
 												if (valueWithoutSpace.length() == 0
 														|| valueWithoutSpace.charAt(0) == '-') {
@@ -321,28 +324,6 @@ public class CsvImportJob {
 										}
 									}
 
-									if (dataType.getDisplay().equalsIgnoreCase("Auto Number")) {
-										if (!inputMessage.containsKey(fieldName)) {
-											int autoNumber = (int) field.getAutoNumberStartingNumber();
-											int count = (int) moduleEntryRepository.findCountOfEntries(
-													moduleService.getCollectionName(moduleName, companyId));
-											if (count == 0) {
-												inputMessage.put(fieldName, autoNumber);
-											} else {
-												Optional<Map<String, Object>> optionalEntry = moduleEntryRepository
-														.findBySortingField(fieldName,
-																moduleService.getCollectionName(moduleName, companyId));
-												Map<String, Object> sortedEntry = optionalEntry.get();
-												if (sortedEntry.get(fieldName) != null) {
-													autoNumber = Integer
-															.parseInt(sortedEntry.get(fieldName).toString());
-													autoNumber++;
-												}
-												inputMessage.put(fieldName, autoNumber);
-											}
-										}
-									}
-
 									if (inputMessage.containsKey(fieldName)) {
 										if (dataType.getDisplay().equalsIgnoreCase("Picklist (Multi-Select)")) {
 											List<String> picklistValues = field.getPicklistValues();
@@ -350,27 +331,56 @@ public class CsvImportJob {
 													.parseString(inputMessage.get(fieldName).toString());
 											List<String> selectedtValues = new ArrayList<String>();
 											for (String value : values) {
-												if (!picklistValues.contains(value)) {
+
+												String filteredValue = picklistValues.stream()
+														.filter(list -> list.equalsIgnoreCase(value)).findFirst()
+														.orElse(null);
+
+												if (filteredValue != null) {
+													selectedtValues.add(filteredValue);
+												} else {
 													csvImportService.addToSet(i,
 															fieldName + " picklist values are incorrect",
 															csvDocument.getCsvImportId());
 													error = true;
 													break;
-												} else {
-													selectedtValues.add(value);
 												}
 											}
-											if (!selectedtValues.isEmpty()) {
+											if (error) {
+												break;
+											} else if (!selectedtValues.isEmpty()) {
 												inputMessage.put(fieldName, selectedtValues);
 											}
 										}
 									}
 
+									if (inputMessage.containsKey(fieldName)) {
+										if (dataType.getDisplay().equalsIgnoreCase("Discussion")) {
+											String value = inputMessage.get(fieldName).toString().trim();
+											Optional<Map<String, Object>> optionalContact = moduleEntryRepository
+													.findEntryById(user.get("CONTACT").toString(),
+															moduleService.getCollectionName("Contacts", companyId));
+											Map<String, Object> contactEntry = optionalContact.get();
+											String firstName = contactEntry.get("FIRST_NAME").toString();
+											String lastName = contactEntry.get("LAST_NAME").toString();
+
+											Sender sender = new Sender(firstName, lastName, userUuid,
+													user.get("ROLE").toString());
+
+											DiscussionMessage message = new DiscussionMessage(value, new Date(),
+													UUID.randomUUID().toString(), "MESSAGE", null, sender);
+
+											List<DiscussionMessage> messages = Arrays.asList(message);
+											inputMessage.put(fieldName, messages);
+										}
+									}
+
 									// LIST TEXT DATA TYPE HANDLED
 									if (inputMessage.containsKey(fieldName)) {
-										if (dataType.getDisplay().equalsIgnoreCase("LIST_TEXT")) {
+										if (dataType.getDisplay().equalsIgnoreCase("List Text")) {
 											List<String> values = csvImportService
-													.parseString(inputMessage.get(fieldName).toString());
+													.parseString(inputMessage.get(fieldName).toString().trim());
+											System.out.println(values);
 											if (values.size() != 0) {
 												inputMessage.put(fieldName, values);
 											}
@@ -381,22 +391,42 @@ public class CsvImportJob {
 									if (inputMessage.containsKey(fieldName)) {
 										BasePhone phone = new BasePhone();
 										if (dataType.getDisplay().equalsIgnoreCase("Phone")) {
-											String value = inputMessage.get(fieldName).toString();
-											if (value != null) {
-												if (csvDocument.getSeparator() != null) {
-													String separator = (csvDocument.getSeparator()
-															.equals("Blank space")) ? " " : "-";
-													String[] split = value.split(separator);
-													phone = csvImportService.createPhoneObject(split[0], split[1],
-															phone);
-												} else {
-													String separator = "-";
-													String[] split = value.split(separator);
-													phone = csvImportService.createPhoneObject(split[0], split[1],
-															phone);
+											try {
+												String value = inputMessage.get(fieldName).toString().trim();
+												if (value != null) {
+													if (csvDocument.getSeparator() != null) {
+														String separator = (csvDocument.getSeparator()
+																.equals("Blank space")) ? " " : "-";
+														String[] split = value.split(separator);
+														if (split.length == 2) {
+															phone = csvImportService.createPhoneObject(split[0].trim(),
+																	split[1].trim(), phone);
+														} else {
+															error = true;
+														}
+													} else {
+														String separator = "-";
+														String[] split = value.split(separator);
+														if (split.length == 2) {
+															phone = csvImportService.createPhoneObject(split[0].trim(),
+																	split[1].trim(), phone);
+														} else {
+															error = true;
+														}
+													}
 												}
+												if (error || phone == null) {
+													csvImportService.addToSet(i, fieldName + " values are incorrect",
+															csvDocument.getCsvImportId());
+													break;
+												} else {
+													inputMessage.put(fieldName, phone);
+												}
+											} catch (Exception e) {
+												csvImportService.addToSet(i, e.getMessage(),
+														csvDocument.getCsvImportId());
+												break;
 											}
-											inputMessage.put(fieldName, phone);
 										}
 									}
 
@@ -406,7 +436,7 @@ public class CsvImportJob {
 												|| dataType.getDisplay().equalsIgnoreCase("Date")
 												|| dataType.getDisplay().equalsIgnoreCase("Time")) {
 
-											String value = inputMessage.get(fieldName).toString();
+											String value = inputMessage.get(fieldName).toString().trim();
 											try {
 												Date date = new Date();
 												SimpleDateFormat df = new SimpleDateFormat(
@@ -466,7 +496,6 @@ public class CsvImportJob {
 
 												List<String> values = csvImportService
 														.parseString(inputMessage.get(fieldName).toString());
-												System.out.println("Values: " + values);
 												if (values != null) {
 													List<Relationship> relationshipList = new ArrayList<Relationship>();
 													for (String value : values) {
@@ -520,8 +549,6 @@ public class CsvImportJob {
 										}
 									}
 								}
-								inputMessage = dataService.addFieldsWithDefaultValue(
-										moduleService.getAllFields(module, companyId), inputMessage);
 								inputMessage = dataService.addInternalFields(module, inputMessage,
 										csvDocument.getCreatedBy(), companyId);
 
@@ -531,7 +558,7 @@ public class CsvImportJob {
 										String[] splitEmail = userEmailAddress.split("@");
 										String accountName = "";
 										if (splitEmail.length > 1) {
-											accountName = splitEmail[1];
+											accountName = splitEmail[1].trim();
 										}
 										String accountId = null;
 
@@ -574,6 +601,7 @@ public class CsvImportJob {
 										inputMessage.put("ROLE", customerRoleId);
 										inputMessage.put("IS_LOGIN_ALLOWED", false);
 										inputMessage.put("INVITE_ACCEPTED", false);
+
 									}
 								}
 
@@ -655,14 +683,21 @@ public class CsvImportJob {
 
 												userId = userEntry.get("DATA_ID").toString();
 
+												String userEmailAddress = inputMessage.get("EMAIL_ADDRESS").toString();
+												String[] splitEmail = userEmailAddress.split("@");
+												String[] names = splitEmail[0].split("\\.");
+												String firstName = names[0].trim();
+												String lastName = "";
+												if (names.length > 1) {
+													lastName = names[1].trim();
+												}
+
 												Module contactModule = modules.stream()
 														.filter(mod -> mod.getName().equals("Contacts")).findFirst()
 														.orElse(null);
 
 												Map<String, Object> contactEntry = csvImportService.createContact(
-														inputMessage.get("FIRST_NAME").toString(),
-														inputMessage.get("LAST_NAME").toString(),
-														inputMessage.get("ACCOUNT").toString(),
+														firstName, lastName, inputMessage.get("ACCOUNT").toString(),
 														new Phone("us", "+1", phoneNumber, "us.svg"), contactModule,
 														companyId, globalTeamId, userId, userUuid);
 
