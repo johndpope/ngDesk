@@ -59,92 +59,95 @@ public class FindAgentAndAssign {
 		List<String> teamsWhoCanChat = company.getChatSettings().getTeamsWhoCanChat();
 		ConcurrentHashMap<String, UserSessions> sessionMap = sessionService.sessions.get(company.getCompanySubdomain());
 		String userId = null;
+		Map<String, Object> userEntry = new HashMap<String, Object>();
 		for (String keySet : sessionMap.keySet()) {
 			userId = keySet;
-		}
-		UserSessions userSessions = sessionMap.get(userId);
-		String chatStatus = userSessions.getChatStatus();
-		Optional<Map<String, Object>> optionalUserEntry = entryRepository.findById(userId, "Users_" + companyId);
-		if (optionalUserEntry.isPresent()) {
-			Map<String, Object> userEntry = optionalUserEntry.get();
-			Optional<Map<String, Object>> optionalContactEntry = entryRepository
-					.findById(userEntry.get("CONTACT").toString(), "Contacts_" + companyId);
-			String fullName = null;
-			String contactId = null;
-			if (optionalContactEntry.isPresent()) {
-				fullName = optionalContactEntry.get().get("FULL_NAME").toString();
-				contactId = optionalContactEntry.get().get("_id").toString();
-			}
-			List<String> teams = (List<String>) userEntry.get("TEAMS");
-			Boolean isTeams = false;
-			for (String teamId : teams) {
-				if (teamsWhoCanChat.contains(teamId)) {
-					isTeams = true;
+			UserSessions userSessions = sessionMap.get(userId);
+			String chatStatus = userSessions.getChatStatus();
+			Optional<Map<String, Object>> optionalUserEntry = entryRepository.findById(userId, "Users_" + companyId);
+			if (optionalUserEntry.isPresent() && chatStatus != null) {
+				if (chatStatus.equalsIgnoreCase("available")) {
+					userEntry = optionalUserEntry.get();
 				}
 			}
+		}
+		Optional<Map<String, Object>> optionalContactEntry = entryRepository
+				.findById(userEntry.get("CONTACT").toString(), "Contacts_" + companyId);
+		String fullName = null;
+		String contactId = null;
+		if (optionalContactEntry.isPresent()) {
+			fullName = optionalContactEntry.get().get("FULL_NAME").toString();
+			contactId = optionalContactEntry.get().get("_id").toString();
+		}
+		List<String> teams = (List<String>) userEntry.get("TEAMS");
+		Boolean isTeams = false;
+		for (String teamId : teams) {
+			if (teamsWhoCanChat.contains(teamId)) {
+				isTeams = true;
+			}
+		}
 
-			// Check the status and teams
-			if (isTeams && chatStatus.equalsIgnoreCase("available")) {
-				Optional<Map<String, Object>> optionalChatEntry = entryRepository
-						.findBySessionUuid(chatUser.getSessionUUID(), "Chat_" + company.getId());
-				if (optionalChatEntry.isPresent()) {
-					Map<String, Object> existingChatEntry = optionalChatEntry.get();
+		// Check the status and teams
+		if (isTeams) {
+			Optional<Map<String, Object>> optionalChatEntry = entryRepository
+					.findBySessionUuid(chatUser.getSessionUUID(), "Chat_" + company.getId());
+			if (optionalChatEntry.isPresent()) {
+				Map<String, Object> existingChatEntry = optionalChatEntry.get();
 
-					// If customer status is not equals to chatting
-					String status = existingChatEntry.get("STATUS").toString();
-					if (!status.equals("Chatting")) {
+				// If customer status is not equals to chatting
+				String status = existingChatEntry.get("STATUS").toString();
+				if (!status.equals("Chatting")) {
 
-						// Add Discussion field to entry
-						String discussionFieldName = null;
-						if (optionalChatModule.isPresent()) {
-							Module chatModule = optionalChatModule.get();
-							List<ModuleField> fields = chatModule.getFields();
-							for (ModuleField field : fields) {
-								DataType dataType = field.getDataType();
-								if (dataType.getDisplay().equalsIgnoreCase("Discussion")) {
-									discussionFieldName = field.getName();
-								}
+					// Add Discussion field to entry
+					String discussionFieldName = null;
+					if (optionalChatModule.isPresent()) {
+						Module chatModule = optionalChatModule.get();
+						List<ModuleField> fields = chatModule.getFields();
+						for (ModuleField field : fields) {
+							DataType dataType = field.getDataType();
+							if (dataType.getDisplay().equalsIgnoreCase("Discussion")) {
+								discussionFieldName = field.getName();
 							}
-
-							String message = global.getFile("metadata_chat_agent_join.html");
-							Map<String, Object> metaDataMessage = new HashMap<String, Object>();
-
-							message = message.replace("NAME_REPLACE", fullName);
-							message = message.replace("DATE_TIME_REPLACE", new SimpleDateFormat("MMM d y h:mm:ss a")
-									.format(new Timestamp(new Date().getTime())));
-							String systemUserUUID = getSystemUser(companyId);
-							metaDataMessage.put("COMPANY_UUID", company.getCompanyUuid());
-							metaDataMessage.put("MESSAGE_ID", UUID.randomUUID().toString());
-							metaDataMessage.put("USER_UUID", systemUserUUID);
-							DiscussionMessage discussionMessage = buildMetaDataPayload(message, companyId,
-									chatModule.getModuleId(), existingChatEntry.get("_id").toString());
-							if (discussionFieldName != null) {
-								webSocketService.addDiscussionToEntry(discussionMessage, company.getCompanySubdomain(),
-										user.get("_id").toString(), false);
-							}
-
-							// Add agents and requestor to entry
-							List<Map<String, Object>> agents = new ArrayList<Map<String, Object>>();
-							Map<String, Object> agent = new HashMap<String, Object>();
-							agent.put("DATA_ID", userId);
-							agents.add(agent);
-							HashMap<String, Object> chatEntry = new HashMap<String, Object>();
-							Map<String, Object> requestor = new HashMap<String, Object>();
-							requestor.put("DATA_ID", contactId);
-
-							chatEntry.put("REQUESTOR", requestor);
-							chatEntry.put("AGENTS", agents);
-							chatEntry.put("DATA_ID", existingChatEntry.get("_id").toString());
-							chatEntry.put("STATUS", "Chatting");
-							dataProxy.putModuleEntry(chatEntry, optionalChatModule.get().getModuleId(), false,
-									companyId, user.get("USER_UUID").toString());
-
-							// Notify the agent that You have been assigned a new chat
-							Notification notifyAgent = new Notification(company.getId(), chatModule.getModuleId(),
-									user.get("_id").toString(), userId, new Date(), new Date(), false,
-									"You have been assigned a new chat");
-							redisTemplate.convertAndSend("notification", notifyAgent);
 						}
+
+						String message = global.getFile("metadata_chat_agent_join.html");
+						Map<String, Object> metaDataMessage = new HashMap<String, Object>();
+
+						message = message.replace("NAME_REPLACE", fullName);
+						message = message.replace("DATE_TIME_REPLACE",
+								new SimpleDateFormat("MMM d y h:mm:ss a").format(new Timestamp(new Date().getTime())));
+						String systemUserUUID = getSystemUser(companyId);
+						metaDataMessage.put("COMPANY_UUID", company.getCompanyUuid());
+						metaDataMessage.put("MESSAGE_ID", UUID.randomUUID().toString());
+						metaDataMessage.put("USER_UUID", systemUserUUID);
+						DiscussionMessage discussionMessage = buildMetaDataPayload(message, companyId,
+								chatModule.getModuleId(), existingChatEntry.get("_id").toString());
+						if (discussionFieldName != null) {
+							webSocketService.addDiscussionToEntry(discussionMessage, company.getCompanySubdomain(),
+									user.get("_id").toString(), false);
+						}
+
+						// Add agents and requestor to entry
+						List<Map<String, Object>> agents = new ArrayList<Map<String, Object>>();
+						Map<String, Object> agent = new HashMap<String, Object>();
+						agent.put("DATA_ID", userEntry.get("_id").toString());
+						agents.add(agent);
+						HashMap<String, Object> chatEntry = new HashMap<String, Object>();
+						Map<String, Object> requestor = new HashMap<String, Object>();
+						requestor.put("DATA_ID", contactId);
+
+						chatEntry.put("REQUESTOR", requestor);
+						chatEntry.put("AGENTS", agents);
+						chatEntry.put("DATA_ID", existingChatEntry.get("_id").toString());
+						chatEntry.put("STATUS", "Chatting");
+						dataProxy.putModuleEntry(chatEntry, optionalChatModule.get().getModuleId(), false, companyId,
+								user.get("USER_UUID").toString());
+
+						// Notify the agent that You have been assigned a new chat
+						Notification notifyAgent = new Notification(company.getId(), chatModule.getModuleId(),
+								user.get("_id").toString(), userEntry.get("_id").toString(), new Date(), new Date(),
+								false, "You have been assigned a new chat");
+						redisTemplate.convertAndSend("notification", notifyAgent);
 					}
 				}
 			}
