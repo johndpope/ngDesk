@@ -150,17 +150,17 @@ export class PdfDetailComponent implements OnInit, OnDestroy {
 				const response = fields.find(
 					(data) => data.FIELD_ID === field.PRIMARY_DISPLAY_FIELD
 				);
-				fieldVar = `${fieldVar}.${response.NAME}`;
+				fieldVar = `${fieldVar}.${response.NAME}`.italics();
 				const newBody = `${bodyEnd[0]} ${fieldVar}</body></html>`;
 				tinymce.activeEditor.setContent(newBody);
 				this.pdfForm.get('HTML_TEMPLATE').setValue(newBody);
 			} else {
-				const newBody = `${bodyEnd[0]} ${fieldVar}</body></html>`;
+				const newBody = `${bodyEnd[0]} ${fieldVar.italics()}</body></html>`;
 				tinymce.activeEditor.setContent(newBody);
 				this.pdfForm.get('HTML_TEMPLATE').setValue(newBody);
 			}
 		} else {
-			const newBody = `${bodyEnd[0]} ${fieldVar}</body></html>`;
+			const newBody = `${bodyEnd[0]} ${fieldVar.italics()}</body></html>`;
 			tinymce.activeEditor.setContent(newBody);
 			this.pdfForm.get('HTML_TEMPLATE').setValue(newBody);
 		}
