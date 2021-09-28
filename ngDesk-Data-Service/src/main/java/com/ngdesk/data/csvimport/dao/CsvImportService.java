@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ngdesk.commons.Global;
 import com.ngdesk.commons.exceptions.InternalErrorException;
+import com.ngdesk.data.company.dao.Company;
 import com.ngdesk.data.dao.BasePhone;
 import com.ngdesk.data.dao.DataService;
 import com.ngdesk.data.dao.DiscussionMessage;
@@ -26,6 +27,7 @@ import com.ngdesk.data.modules.dao.DataType;
 import com.ngdesk.data.modules.dao.Module;
 import com.ngdesk.data.modules.dao.ModuleField;
 import com.ngdesk.data.modules.dao.ModuleService;
+import com.ngdesk.data.roles.dao.Role;
 import com.ngdesk.data.sam.dao.DataProxy;
 import com.ngdesk.repositories.csvimport.CsvImportRepository;
 import com.ngdesk.repositories.module.entry.ModuleEntryRepository;
@@ -628,6 +630,135 @@ public class CsvImportService {
 		} else {
 			return inputMessage;
 		}
+	}
+
+	public void handleUserModule(Map<String, Object> inputMessage, String companyId, List<Module> modules,
+			String userUuid, String globalTeamId, Module module, Company company, CsvImport csvDocument, Map<String, Object> globalTeam, String language, String phoneNumber, int i) {
+		Optional<Map<String, Object>> optionalUser = moduleEntryRepository.findEntryByFieldName("EMAIL_ADDRESS",
+				inputMessage.get("EMAIL_ADDRESS"), moduleService.getCollectionName("Users", companyId));
+
+		HashMap<String, Object> userEntry = new HashMap<String, Object>();
+		boolean isDeleted = false;
+		ObjectMapper mapper = new ObjectMapper();
+
+		if (optionalUser.isPresent()) {
+			isDeleted = Boolean.valueOf(optionalUser.get().get("DELETED").toString());
+			userEntry.putAll(optionalUser.get());
+		}
+
+		if (optionalUser.isEmpty() || isDeleted) {
+			try {
+				Optional<Role> optionalRole = rolesRepository.findById(inputMessage.get("ROLE").toString(),
+						moduleService.getCollectionName("roles", companyId));
+				Role role = optionalRole.get();
+				String existingRoleName = role.getName();
+
+				Optional<Map<String, Object>> optionalTeamsEntry = moduleEntryRepository.findEntryByFieldName("NAME",
+						existingRoleName, moduleService.getCollectionName("Teams", companyId));
+				Map<String, Object> roleTeam = optionalTeamsEntry.get();
+				String roleTeamId = roleTeam.get("_id").toString();
+
+				Optional<Module> optionalTeamsModule = modules.stream().filter(mod -> mod.getName().equals("Teams"))
+						.findFirst();
+				Module teamsModule = optionalTeamsModule.get();
+				String userId = "";
+
+				if (optionalUser.isPresent()) {
+					userId = userEntry.get("_id").toString();
+					String teamName = userEntry.get("FIRST_NAME") + " " + userEntry.get("LAST_NAME");
+
+					Optional<Map<String, Object>> optionalPersonalTeam = moduleEntryRepository
+							.findTeamsByVariableForIsPersonal("NAME", teamName,
+									moduleService.getCollectionName("Teams", companyId));
+					Map<String, Object> personalTeam = optionalPersonalTeam.get();
+					personalTeam.put("DELETED", false);
+
+					updateUsersInTeamsEntry(Arrays.asList().toString(), userId, teamsModule, companyId, personalTeam,
+							userUuid);
+
+					userEntry.put("DELETED", false);
+					List<String> existingTeams = mapper.readValue(mapper.writeValueAsString(userEntry.get("TEAMS")),
+							mapper.getTypeFactory().constructCollectionType(List.class, String.class));
+					if (!existingTeams.contains(personalTeam.get("_id").toString())) {
+						existingTeams.add(personalTeam.get("_id").toString());
+					}
+
+					List<Relationship> teams = getListRelationshipValue("TEAMS", module, companyId, existingTeams);
+
+					userEntry.put("TEAMS", teams);
+					dataAPI.putModuleEntry(userEntry, module.getModuleId(), true, companyId, userUuid, false);
+				} else {
+					Module userModule = modules.stream().filter(mod -> mod.getName().equals("Users")).findFirst()
+							.orElse(null);
+					userEntry = createUser(inputMessage.get("EMAIL_ADDRESS").toString(), companyId, "", false,
+							company.getCompanySubdomain(), "alarm_classic", 0, language,
+							inputMessage.get("ROLE").toString(), false, globalTeamId, userUuid, userModule);
+
+					userId = userEntry.get("DATA_ID").toString();
+
+					String userEmailAddress = inputMessage.get("EMAIL_ADDRESS").toString();
+					String[] splitEmail = userEmailAddress.split("@");
+					String[] names = splitEmail[0].split("\\.");
+					String firstName = names[0].trim();
+					String lastName = "";
+					if (names.length > 1) {
+						lastName = names[1].trim();
+					}
+
+					Module contactModule = modules.stream().filter(mod -> mod.getName().equals("Contacts")).findFirst()
+							.orElse(null);
+
+					Map<String, Object> contactEntry = createContact(firstName, lastName,
+							inputMessage.get("ACCOUNT").toString(), new Phone("us", "+1", phoneNumber, "us.svg"),
+							contactModule, companyId, globalTeamId, userId, userUuid);
+
+					HashMap<String, Object> team = new HashMap<String, Object>();
+					team.put("NAME", inputMessage.get("FIRST_NAME") + " " + inputMessage.get("LAST_NAME"));
+					team.put("DESCRIPTION", "Personal team for " + inputMessage.get("FIRST_NAME") + " "
+							+ inputMessage.get("LAST_NAME"));
+
+					List<Relationship> users = new ArrayList<Relationship>();
+					String primaryDisplayFieldValue = getPrimaryDisplayFieldValue("USERS", teamsModule, companyId,
+							userId).toString();
+					Relationship userRelationship = new Relationship(userId, primaryDisplayFieldValue);
+					users.add(userRelationship);
+					team.put("USERS", users);
+					team.put("DELETED", false);
+					team.put("DATE_CREATED", new Date());
+					team.put("DATE_UPDATED", new Date());
+					team.put("IS_PERSONAL", true);
+					Map<String, Object> personalTeam = createModuleData(companyId, "Teams", team, userUuid, modules);
+					String personalTeamId = personalTeam.get("DATA_ID").toString();
+
+					List<String> teamsList = Arrays.asList(personalTeamId, globalTeamId, roleTeamId);
+
+					List<Relationship> teams = getListRelationshipValue("TEAMS", module, companyId, teamsList);
+
+					userEntry.put("TEAMS", teams);
+					userEntry.put("IS_LOGIN_ALLOWED", false);
+
+					Relationship contactRelationship = new Relationship(contactEntry.get("DATA_ID").toString(),
+							getPrimaryDisplayFieldValue("CONTACT", module, companyId,
+									contactEntry.get("DATA_ID").toString()).toString());
+					if (contactRelationship != null) {
+						userEntry.put("CONTACT", contactRelationship);
+					}
+					dataAPI.putModuleEntry(userEntry, module.getModuleId(), true, companyId, userUuid, false);
+				}
+
+				updateUsersInTeamsEntry(globalTeam.get("USERS").toString(), userId, teamsModule, companyId, globalTeam,
+						userUuid);
+
+				updateUsersInTeamsEntry(roleTeam.get("USERS").toString(), userId, teamsModule, companyId, roleTeam,
+						userUuid);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				addToSet(i, e.getMessage(), csvDocument.getCsvImportId());
+				continue;
+			}
+		}
+
 	}
 
 }
