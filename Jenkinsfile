@@ -189,9 +189,37 @@ pipeline {
 
 				        }
 					}
+					mailext (
+						subject: "PROD Deployment success!!!",
+						body: "Go check PROD",
+						to: "${EMPLOYEE_EMAIL_ADDRESSES}",
+						from: "${JENKINS_FROM_EMAIL_ADDRESS}"
+					)
 				}
 			}
 		}
+		post {
+    always {
+
+      echo 'stuff to do always'
+      sh 'env'
+
+    }
+    failure {
+      script {
+        echo 'pipeline failed, at least one step failed'
+
+          emailext(
+            subject: "PROD FAILED deployment!!!",
+            body: "Go check Jenkins and PROD",
+            to: "${EMPLOYEE_EMAIL_ADDRESSES}",
+			from: "${JENKINS_FROM_EMAIL_ADDRESS}"
+          )
+      }
+
+    }
+  }
+
 }
 def buildMicroservice(serviceName, path) {
  dir('/var/jenkins_home/projects/ngdesk-project/ngDesk/' + path) {
