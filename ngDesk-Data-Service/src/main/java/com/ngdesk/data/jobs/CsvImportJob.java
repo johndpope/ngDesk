@@ -335,7 +335,12 @@ public class CsvImportJob {
 								}
 
 								if (moduleName.equalsIgnoreCase("Users")) {
-
+									boolean flag = csvImportService.handleUserModule(inputMessage, companyId, modules, userUuid,
+											globalTeamId, module, company, csvDocument, globalTeam, language,
+											phoneNumber, i);
+									if(flag) {
+										continue;
+									}
 								} else {
 									try {
 										if (moduleName.equals("Accounts")) {

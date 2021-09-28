@@ -632,14 +632,17 @@ public class CsvImportService {
 		}
 	}
 
-	public void handleUserModule(Map<String, Object> inputMessage, String companyId, List<Module> modules,
-			String userUuid, String globalTeamId, Module module, Company company, CsvImport csvDocument, Map<String, Object> globalTeam, String language, String phoneNumber, int i) {
+	public boolean handleUserModule(Map<String, Object> inputMessage, String companyId, List<Module> modules,
+			String userUuid, String globalTeamId, Module module, Company company, CsvImport csvDocument,
+			Map<String, Object> globalTeam, String language, String phoneNumber, int i) {
+
 		Optional<Map<String, Object>> optionalUser = moduleEntryRepository.findEntryByFieldName("EMAIL_ADDRESS",
 				inputMessage.get("EMAIL_ADDRESS"), moduleService.getCollectionName("Users", companyId));
 
 		HashMap<String, Object> userEntry = new HashMap<String, Object>();
 		boolean isDeleted = false;
 		ObjectMapper mapper = new ObjectMapper();
+		boolean error = false;
 
 		if (optionalUser.isPresent()) {
 			isDeleted = Boolean.valueOf(optionalUser.get().get("DELETED").toString());
@@ -755,10 +758,11 @@ public class CsvImportService {
 			} catch (Exception e) {
 				e.printStackTrace();
 				addToSet(i, e.getMessage(), csvDocument.getCsvImportId());
-				continue;
+				error = true;
+				return error;
 			}
 		}
-
+		return error;
 	}
 
 }
