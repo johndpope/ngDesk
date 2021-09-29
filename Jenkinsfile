@@ -201,16 +201,8 @@ pipeline {
 		post {
     always {
 
-      echo 'stuff to do always'
-	   
+      echo 'stuff to do always'   
       sh 'env'
-	  emailext (
-            subject: "PROD deployment Success!!!",
-            body: "Go check Jenkins and PROD",
-            to: "${EMPLOYEE_EMAIL_ADDRESSES}",
-			from: "${JENKINS_FROM_EMAIL_ADDRESS}"
-          )
-		  
 
     }
     failure {
