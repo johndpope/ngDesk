@@ -11,7 +11,9 @@
 				<mat-label for="singleFile" style="margin-top:9%;font-family:Roboto, Helvetica Neue, sans-serif">
 					{{fields.DISPLAY_LABEL}}:</mat-label>
 			</div>
-			<div fxLayout="column" *ngIf="fields.DATA_TYPE.DISPLAY != 'Phone'" fxFlex="60">
+			<div fxLayout="column"
+				*ngIf="fields.DATA_TYPE.DISPLAY != 'Phone' && fields.DATA_TYPE.DISPLAY != 'Date/Time' && fields.DATA_TYPE.DISPLAY != 'Date' && fields.DATA_TYPE.DISPLAY != 'Time'"
+				fxFlex="60">
 				<mat-form-field>
 					<mat-select name="test" placeholder="Select a field" [(ngModel)]="headerMap[fields.FIELD_ID]">
 						<mat-option>
@@ -19,6 +21,63 @@
 						</mat-option>
 						<mat-option *ngFor="let field of headers" [value]="field">
 							{{field}}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</div>
+			<div fxLayout="row" *ngIf="fields.DATA_TYPE.DISPLAY == 'Date/Time'" fxFlex="50">
+				<mat-form-field>
+					<mat-select name="test" placeholder="Select a field" [(ngModel)]="headerMap[fields.FIELD_ID]">
+						<mat-option>
+							None
+						</mat-option>
+						<mat-option *ngFor="let field of headers" [value]="field">
+							{{field}}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+				<mat-form-field style="margin-left: 8px;" fxFlex="56">
+					<mat-select placeholder="Select date/time format" [(ngModel)]="selectedDateTimeFormat">
+						<mat-option *ngFor="let separator of dateTimeFormat" [value]="separator">
+							{{separator}}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</div>
+			<div fxLayout="row" *ngIf="fields.DATA_TYPE.DISPLAY == 'Date'" fxFlex="50">
+				<mat-form-field>
+					<mat-select name="test" placeholder="Select a field" [(ngModel)]="headerMap[fields.FIELD_ID]">
+						<mat-option>
+							None
+						</mat-option>
+						<mat-option *ngFor="let field of headers" [value]="field">
+							{{field}}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+				<mat-form-field style="margin-left: 8px;" fxFlex="56">
+					<mat-select placeholder="Select date format" [(ngModel)]="selectedDate">
+						<mat-option *ngFor="let separator of dateFormat" [value]="separator">
+							{{separator}}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</div>
+			<div fxLayout="row" *ngIf="fields.DATA_TYPE.DISPLAY == 'Time'" fxFlex="50">
+				<mat-form-field>
+					<mat-select name="test" placeholder="Select a field" [(ngModel)]="headerMap[fields.FIELD_ID]">
+						<mat-option>
+							None
+						</mat-option>
+						<mat-option *ngFor="let field of headers" [value]="field">
+							{{field}}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+				<mat-form-field style="margin-left: 8px;" fxFlex="56">
+					<mat-select placeholder="Select time format" [(ngModel)]="selectedTimeFormat">
+						<mat-option *ngFor="let separator of timeFormat" [value]="separator">
+							{{separator}}
 						</mat-option>
 					</mat-select>
 				</mat-form-field>

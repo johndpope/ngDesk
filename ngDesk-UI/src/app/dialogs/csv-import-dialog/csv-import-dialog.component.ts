@@ -37,7 +37,27 @@ export class CsvImportDialogComponent implements OnInit {
 
 	public selectedSeparator;
 	public separators = ['-', 'Blank space'];
-	public phonefield: boolean;
+	public selectedDateTimeFormat;
+	public dateTimeFormat = [
+		'dd/MM/yyyy hh:mm:ss',
+		'dd-MM-yyyy hh:mm:ss',
+		'MM/dd/yyyy hh:mm:ss',
+		'MM-dd-yyyy hh:mm:ss',
+	];
+	public selectedDate;
+	public dateFormat = [
+		'dd/MM/yyyy',
+		'MM/dd/yyyy',
+		'dd-MM-yyyy',
+		'MM-dd-yyyy',
+		'dd MMM yyyy',
+		'dd MMMM yyyy',
+		'MMM dd, yyyy',
+		'MMMM dd, yyyy',
+	];
+	public selectedTimeFormat;
+	public timeFormat = ['h:mm', 'h:mm:ss'];
+
 	constructor(
 		@Inject(MAT_DIALOG_DATA) public data: any,
 		public dialogRef: MatDialogRef<CsvImportDialogComponent>,
