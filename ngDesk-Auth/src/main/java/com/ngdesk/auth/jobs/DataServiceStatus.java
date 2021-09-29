@@ -63,6 +63,9 @@ public class DataServiceStatus {
 
 					sendMail.send("sandra@subscribeit.com", "error@ngdesk.com", "ngDesk - ngdesk-data container",
 							"Data Service not responding in ngdesk production, Restart required");
+					
+					sendMail.send("sharath.satish@subscribeit.com", "error@ngdesk.com", "ngDesk - ngdesk-data container",
+							"Data Service not responding in ngdesk production, Restart required");
 
 					sendMail.send("ashok.gajapathy@subscribeit.com", "error@ngdesk.com",
 							"ngDesk - ngdesk-data container",

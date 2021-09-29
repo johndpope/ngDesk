@@ -189,7 +189,7 @@ pipeline {
 
 				        }
 					}
-					mailext (
+					emailext (
 						subject: "PROD Deployment success!!!",
 						body: "Go check PROD",
 						to: "${EMPLOYEE_EMAIL_ADDRESSES}",
@@ -209,7 +209,7 @@ pipeline {
       script {
         echo 'pipeline failed, at least one step failed'
 
-          emailext(
+          emailext (
             subject: "PROD FAILED deployment!!!",
             body: "Go check Jenkins and PROD",
             to: "${EMPLOYEE_EMAIL_ADDRESSES}",
