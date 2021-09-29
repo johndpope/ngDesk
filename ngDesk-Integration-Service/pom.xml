@@ -16,7 +16,6 @@
 	<name>ngDesk-Integration-Service</name>
 	<description>Micro service for all ngDesk Integrations</description>
 
-
 	<properties>
 		<java.version>11</java.version>
 		<spring-cloud.version>Hoxton.SR8</spring-cloud.version>
