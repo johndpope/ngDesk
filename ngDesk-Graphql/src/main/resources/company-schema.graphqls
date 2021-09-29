@@ -977,7 +977,7 @@ type CsvImport{
    logs: [CsvImportLog]
    companyId: String
    name: String
-   separator: String
+   csvFormat: CsvFormat
    dateCreated: DateTime
    createdBy: Users
 }
@@ -997,5 +997,12 @@ type CsvHeaders{
 type CsvImportLog{
    lineNumber: Int
    errorMessage: String
+}
+
+type CsvFormat{
+   separator: String
+   dateFormat: String
+   timeFormat: String
+   dateTimeFormat: String
 }
 

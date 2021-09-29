@@ -94,7 +94,6 @@ public class CsvImportJob {
 				}
 
 				try {
-
 					List<Module> modules = modulesRepository
 							.getAllModules(moduleService.getCollectionName("modules", companyId));
 
@@ -138,76 +137,70 @@ public class CsvImportJob {
 									"csv_import");
 							continue;
 						} else {
-
 							i = 0;
 							for (Integer key : rowMap.keySet()) {
-								Map<String, Object> inputMessage = rowMap.get(key);
-								i++;
+								try {
+									Map<String, Object> inputMessage = rowMap.get(key);
+									i++;
 
-								if (inputMessage.containsKey("DATE_CREATED") || inputMessage.containsKey("DATE_UPDATED")
-										|| inputMessage.containsKey("LAST_UPDATED_BY")
-										|| inputMessage.containsKey("CREATED_BY")) {
-									inputMessage.remove("DATE_CREATED");
-									inputMessage.remove("DATE_UPDATED");
-									inputMessage.remove("LAST_UPDATED_BY");
-									inputMessage.remove("CREATED_BY");
-								}
+									if (inputMessage.containsKey("DATE_CREATED")
+											|| inputMessage.containsKey("DATE_UPDATED")
+											|| inputMessage.containsKey("LAST_UPDATED_BY")
+											|| inputMessage.containsKey("CREATED_BY")) {
+										inputMessage.remove("DATE_CREATED");
+										inputMessage.remove("DATE_UPDATED");
+										inputMessage.remove("LAST_UPDATED_BY");
+										inputMessage.remove("CREATED_BY");
+									}
 
-								String phoneNumber = "";
-								boolean error = false;
+									String phoneNumber = "";
+									boolean error = false;
 
-								inputMessage = csvImportService.formatDataTypes(fields, inputMessage, csvDocument, i,
-										companyId, user, globalTeamId, module);
-								error = (inputMessage == null) ? true : false;
-								
-								if (error) {
-									continue;
-								}
+									inputMessage = csvImportService.formatDataTypes(fields, inputMessage, csvDocument,
+											i, companyId, user, globalTeamId, module);
+									error = (inputMessage == null) ? true : false;
 
-								inputMessage = dataService.addInternalFields(module, inputMessage,
-										csvDocument.getCreatedBy(), companyId);
-
-								if (moduleName.equals("Users") || moduleName.equals("Contacts")) {
-
-									String accountId = csvImportService.getAccountId(inputMessage, companyId, modules,
-											globalTeamId, userUuid, csvDocument, i);
-									error = (accountId == null) ? true : false;
-									
 									if (error) {
 										continue;
 									}
 
-									inputMessage.put("ACCOUNT", accountId);
-									if (moduleName.equals("Users")) {
-										if (inputMessage.containsKey("PHONE_NUMBER")) {
-											phoneNumber = inputMessage.get("PHONE_NUMBER").toString();
-											inputMessage.remove("PHONE_NUMBER");
+									inputMessage = dataService.addInternalFields(module, inputMessage,
+											csvDocument.getCreatedBy(), companyId);
+
+									if (moduleName.equals("Users") || moduleName.equals("Contacts")) {
+
+										String accountId = csvImportService.getAccountId(inputMessage, companyId,
+												modules, globalTeamId, userUuid, csvDocument, i);
+										error = (accountId == null) ? true : false;
+
+										if (error) {
+											continue;
 										}
-										if (inputMessage.containsKey("DEFAULT_CONTACT_METHOD")) {
-											if (inputMessage.get("DEFAULT_CONTACT_METHOD") == null || inputMessage
-													.get("DEFAULT_CONTACT_METHOD").toString().equals("")) {
+
+										inputMessage.put("ACCOUNT", accountId);
+										if (moduleName.equals("Users")) {
+											if (inputMessage.containsKey("PHONE_NUMBER")) {
+												phoneNumber = inputMessage.get("PHONE_NUMBER").toString();
+												inputMessage.remove("PHONE_NUMBER");
+											}
+											if (inputMessage.containsKey("DEFAULT_CONTACT_METHOD")) {
+												if (inputMessage.get("DEFAULT_CONTACT_METHOD") == null || inputMessage
+														.get("DEFAULT_CONTACT_METHOD").toString().equals("")) {
+													inputMessage.put("DEFAULT_CONTACT_METHOD", "Email");
+												}
+											} else {
 												inputMessage.put("DEFAULT_CONTACT_METHOD", "Email");
 											}
-										} else {
-											inputMessage.put("DEFAULT_CONTACT_METHOD", "Email");
+											inputMessage.put("ROLE", customerRoleId);
+											inputMessage.put("IS_LOGIN_ALLOWED", false);
+											inputMessage.put("INVITE_ACCEPTED", false);
 										}
-										inputMessage.put("ROLE", customerRoleId);
-										inputMessage.put("IS_LOGIN_ALLOWED", false);
-										inputMessage.put("INVITE_ACCEPTED", false);
 									}
-								}
 
-								
-
-								if (moduleName.equalsIgnoreCase("Users")) {
-									boolean flag = csvImportService.handleUserModule(inputMessage, companyId, modules,
-											userUuid, globalTeamId, module, company, csvDocument, globalTeam, language,
-											phoneNumber, i);
-									if (flag) {
-										continue;
-									}
-								} else {
-									try {
+									if (moduleName.equalsIgnoreCase("Users")) {
+										csvImportService.handleUserModule(inputMessage, modules, userUuid, module,
+												company, globalTeam, language, phoneNumber);
+									} else {
 										if (moduleName.equals("Accounts")) {
 											if (!csvImportService.accountExists(
 													inputMessage.get("ACCOUNT_NAME").toString(), companyId)) {
@@ -228,14 +221,11 @@ public class CsvImportJob {
 											csvImportService.createModuleData(companyId, moduleName, inputMessage,
 													userUuid, modules);
 										}
-									} catch (Exception e) {
-										e.printStackTrace();
-
-										csvImportService.addToSet(i,
-												csvImportService.formatErrorMessage(e.getMessage()),
-												csvDocument.getCsvImportId());
-										continue;
 									}
+								} catch (Exception e) {
+									e.printStackTrace();
+									csvImportService.addToSet(i, e.getMessage(), csvDocument.getCsvImportId());
+									continue;
 								}
 							}
 							csvImportRepository.updateEntry(csvDocument.getCsvImportId(), "status", "COMPLETED",
@@ -262,6 +252,7 @@ public class CsvImportJob {
 								"Internal Error: Stack Trace", sStackTrace);
 					}
 					csvImportRepository.updateEntry(csvDocument.getCsvImportId(), "status", "FAILED", "csv_import");
+					continue;
 				}
 			}
 		} catch (Exception e) {

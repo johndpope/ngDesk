@@ -86,8 +86,9 @@ public class CsvImportApi {
 
 		List<CsvImportLog> logs = new ArrayList<CsvImportLog>();
 		CsvImportData csvImportData = csvImport.getCsvImportData();
+		CsvFormat csvFormat = csvImport.getCsvFormat();
 		CsvImport entry = new CsvImport(null, "QUEUED", csvImportData, moduleId, logs, companyId,
-				csvImportData.getFileName(), csvImport.getSeparator(), new Date(), createdById);
+				csvImportData.getFileName(), csvFormat, new Date(), createdById);
 
 		entry = csvImportRepository.save(entry, "csv_import");
 		return entry;
