@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs';
 import tinymce from 'tinymce/tinymce';
 import { BannerMessageService } from '../../../../custom-components/banner-message/banner-message.service';
 import { config } from '../../../../tiny-mce/tiny-mce-config';
+import { ModulesService } from '../../../modules.service';
 @Component({
 	selector: 'app-pdf-detail',
 	templateUrl: './pdf-detail.component.html',
@@ -40,7 +41,7 @@ export class PdfDetailComponent implements OnInit, OnDestroy {
 		private cd: ChangeDetectorRef,
 		private route: ActivatedRoute,
 		private router: Router,
-
+		private modulesService: ModulesService,
 		private bannerMessageService: BannerMessageService,
 		private htmlTemplatenApiService: HtmlTemplateApiService,
 		private cacheService: CacheService
@@ -72,63 +73,67 @@ export class PdfDetailComponent implements OnInit, OnDestroy {
 					this.fields.push(signature);
 					this.isLoading = false;
 				}
-
-				this.pdfForm = this.formBuilder.group({
-					TITLE: ['', Validators.required],
-					HTML_TEMPLATE: ['', Validators.required],
-					MODULE: [this.moduleId],
-				});
-				if (this.pdfId !== 'new') {
-					this.isLoading = true;
-					this.pdfForm.addControl('TEMPLATE_ID', new FormControl(''));
-					this.htmlTemplatenApiService
-						.getTemplateById(this.moduleId, this.pdfId)
-						.subscribe(
-							(response: any) => {
-								this.isLoading = false;
-								const template = response.HTML_TEMPLATE.match(
-									/\b[^<p>.][^a-z][A-Z_]*.[A-Z_]*\b/g
-								);
-								template.forEach((field, index) => {
-									if (index == template.indexOf(field)) {
-										this.fields.forEach((data) => {
-											if (field == data.NAME && field != 'SIGNATURE_REPLACE') {
-												response.HTML_TEMPLATE =
-													response.HTML_TEMPLATE.replaceAll(
-														`{{inputMessage.${field}}}`,
-														field
-													);
-											} else if (field == 'SIGNATURE_REPLACE') {
-												response.HTML_TEMPLATE =
-													response.HTML_TEMPLATE.replaceAll(
-														`{{${field}}}`,
-														'SIGNATURE'
-													);
-											} else if (field.indexOf('.') != -1) {
-												response.HTML_TEMPLATE =
-													response.HTML_TEMPLATE.replaceAll(
-														`{{inputMessage.${field}}}`,
-														field
-													);
-											}
-										});
-									}
-								});
-								this.pdfForm.setValue({
-									TITLE: response.TITLE,
-									HTML_TEMPLATE: response.HTML_TEMPLATE,
-									MODULE: response.MODULE,
-									TEMPLATE_ID: response.TEMPLATE_ID,
-								});
-							},
-							(error: any) => {
-								this.bannerMessageService.errorNotifications.push({
-									message: error.error.ERROR,
-								});
-							}
-						);
-				}
 			});
+
+		this.pdfForm = this.formBuilder.group({
+			TITLE: ['', Validators.required],
+			HTML_TEMPLATE: ['', Validators.required],
+			MODULE: [this.moduleId],
+		});
+
+		this.modulesService.getFields(this.moduleId).subscribe((fields) => {
+			fields['FIELDS'].push(signature);
+			if (this.pdfId !== 'new') {
+				this.isLoading = true;
+				this.pdfForm.addControl('TEMPLATE_ID', new FormControl(''));
+				this.htmlTemplatenApiService
+					.getTemplateById(this.moduleId, this.pdfId)
+					.subscribe(
+						(response: any) => {
+							this.isLoading = false;
+							const template = response.HTML_TEMPLATE.match(
+								/\b[^<p>.][^a-z][A-Z_]*.[A-Z_]*\b/g
+							);
+							template.forEach((field, index) => {
+								if (index == template.indexOf(field)) {
+									fields['FIELDS'].forEach((data) => {
+										if (field == data.NAME && field != 'SIGNATURE_REPLACE') {
+											response.HTML_TEMPLATE =
+												response.HTML_TEMPLATE.replaceAll(
+													`{{inputMessage.${field}}}`,
+													field
+												);
+										} else if (field == 'SIGNATURE_REPLACE') {
+											response.HTML_TEMPLATE =
+												response.HTML_TEMPLATE.replaceAll(
+													`{{${field}}}`,
+													'SIGNATURE'
+												);
+										} else if (field.indexOf('.') != -1) {
+											response.HTML_TEMPLATE =
+												response.HTML_TEMPLATE.replaceAll(
+													`{{inputMessage.${field}}}`,
+													field
+												);
+										}
+									});
+								}
+							});
+							this.pdfForm.setValue({
+								TITLE: response.TITLE,
+								HTML_TEMPLATE: response.HTML_TEMPLATE,
+								MODULE: response.MODULE,
+								TEMPLATE_ID: response.TEMPLATE_ID,
+							});
+						},
+						(error: any) => {
+							this.bannerMessageService.errorNotifications.push({
+								message: error.error.ERROR,
+							});
+						}
+					);
+			}
+		});
 	}
 
 	public ngOnDestroy() {
