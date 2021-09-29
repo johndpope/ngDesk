@@ -260,7 +260,7 @@ _id
 				 }
 					AUTHOR: author
 						{
-								_id
+							DATA_ID: _id
 
 								CONTACT{
 									FIRST_NAME
@@ -269,6 +269,13 @@ _id
 						}
 						OPEN_FOR_COMMENTS: openForComments
 						SOURCE_LANGUAGE: sourceLanguage
+						ATTACHMENTS:attachments{
+							
+	hash
+	attachmentUuid
+	fileName
+					
+						}
 						LABELS: labels
 						ORDER: order
 						SECTION: section
@@ -356,6 +363,7 @@ _id
 				AUTHOR: author
 					{
 							_id
+							
                          CONTACT{
 							 FIRST_NAME
 							 LAST_NAME

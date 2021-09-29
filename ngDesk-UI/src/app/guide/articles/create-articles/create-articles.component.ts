@@ -161,24 +161,14 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 									this.allTeams = teams.DATA.slice();
 
 									if (this.articleId !== 'new') {
-										//debugger;
 										this.guideService
 											.getKbArticleById(this.articleId)
 											.subscribe(
 												(articleResponse: any) => {
-													console.log(
-														'articleResponse.....................',
-														articleResponse
-													);
 													this.guideService
 														.getkbSections(articleResponse['DATA'].SECTION)
 														.subscribe(
 															(sectionResponse: any) => {
-																console.log(
-																	'sectionResponse/////////////',
-																	sectionResponse
-																);
-
 																this.filterInputValues(
 																	articleResponse['DATA'].AUTHOR
 																);
@@ -382,18 +372,13 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 	}
 
 	public displayConditionFn(field: any): string | undefined {
-		//debugger;
-		if (field && field.CONTACT.FIRST_NAME) {
-			return field
-				? field.CONTACT.FIRST_NAME + ' ' + field.CONTACT.LAST_NAME
-				: undefined;
+		if (field && field.FIRST_NAME) {
+			return field ? field.FIRST_NAME + ' ' + field.LAST_NAME : undefined;
 		} else if (field && field?.CONTACT?.PRIMARY_DISPLAY_FIELD) {
 			return field.CONTACT.PRIMARY_DISPLAY_FIELD;
+		} else if (this.articleId !== 'new') {
+			return field.CONTACT.FIRST_NAME + ' ' + field.CONTACT.LAST_NAME;
 		}
-		// else if (this.articleId !== 'new') {
-
-		// 	return field.CONTACT.FIRST_NAME + ' ' + field.CONTACT.LAST_NAME;
-		// }
 	}
 	// public displayConditionFn(field: any): string | undefined {
 	// 	debugger;
@@ -500,7 +485,6 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 				this.errorMessage = '';
 				reader.onload = () => {
 					const data: any = reader.result;
-					//debugger;
 					this.filesArray.push({ fileSize: file.size });
 					this.articleForm.get('attachments').value.push({
 						fileName: file.name,
@@ -521,15 +505,12 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 	public save() {
 		this.teamChipList.errorState = false;
 		if (this.articleForm.valid) {
-			//debugger;
 			const articleObj = JSON.parse(JSON.stringify(this.articleForm.value));
-			console.log('articleObj..........', articleObj);
-			//debugger;
-
 			articleObj['visibleTo'] = this.transformIds(
 				articleObj['visibleTo'],
 				'DATA_ID'
 			);
+
 			articleObj['author'] = articleObj['author'].DATA_ID;
 
 			if (this.articleId === 'new') {
@@ -544,7 +525,6 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 					}
 				);
 			} else {
-				//debugger;
 				//	articleObj['author'] = articleObj['author']._id;
 				this.articleApiService.putArticle(articleObj).subscribe(
 					(article: any) => {
