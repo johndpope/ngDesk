@@ -215,12 +215,12 @@ public class SocketHandler extends TextWebSocketHandler {
 
 				probeSessions.put(type, session);
 
-			} else if (queryParamMap.containsKey("sessionUUID") && queryParamMap.containsKey("subdomain")) {
+			} else if (queryParamMap.containsKey("subdomain") && queryParamMap.containsKey("sessionUUID")) {
 				String sessionUUID = queryParamMap.get("sessionUUID");
 				subdomain = queryParamMap.get("subdomain");
-				ConcurrentHashMap<String, UserSessions> sessionUUIDSessions = sessionService.sessions
-						.computeIfAbsent(sessionUUID, newSession -> new ConcurrentHashMap<String, UserSessions>());
-				UserSessions userSessions = sessionUUIDSessions.computeIfAbsent(subdomain,
+				ConcurrentHashMap<String, UserSessions> companySessions = sessionService.sessions
+						.computeIfAbsent(subdomain, newSession -> new ConcurrentHashMap<String, UserSessions>());
+				UserSessions userSessions = companySessions.computeIfAbsent(sessionUUID,
 						newSession -> new UserSessions());
 				if (userSessions.getSessions() != null) {
 					userSessions.getSessions().add(session);
@@ -304,6 +304,20 @@ public class SocketHandler extends TextWebSocketHandler {
 
 				if (sessionService.probeSessions.get(subdomain).size() == 0) {
 					sessionService.probeSessions.remove(subdomain);
+				}
+			} else if (queryParamMap.containsKey("subdomain") && queryParamMap.containsKey("sessionUUID")) {
+				String sessionUUID = queryParamMap.get("sessionUUID");
+				subdomain = queryParamMap.get("subdomain");
+				
+				ConcurrentHashMap<String, UserSessions> userSessions = sessionService.sessions.get(subdomain);
+				userSessions.get(sessionUUID).getSessions().remove(session);
+
+				if (sessionService.sessions.get(subdomain).get(sessionUUID).getSessions().size() == 0) {
+					sessionService.sessions.get(subdomain).remove(sessionUUID);
+				}
+
+				if (sessionService.sessions.get(subdomain).size() == 0) {
+					sessionService.sessions.remove(sessionUUID);
 				}
 			}
 

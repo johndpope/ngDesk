@@ -58,13 +58,17 @@ public class ChatWidgetPayload {
 	@Field("SUBDOMAIN")
 	private String subdomain;
 
+	@JsonProperty("CHANNEL_NAME")
+	@Field("CHANNEL_NAME")
+	private String channelName;
+
 	public ChatWidgetPayload() {
 
 	}
 
 	public ChatWidgetPayload(String ipAddress, String userAgent, String browser, String location, String pageTitle,
 			String platform, String device, String hostName, String sessionUUID, String referrer, String country,
-			String messageType, String subdomain) {
+			String messageType, String subdomain, String channelName) {
 		super();
 		this.ipAddress = ipAddress;
 		this.userAgent = userAgent;
@@ -79,6 +83,7 @@ public class ChatWidgetPayload {
 		this.country = country;
 		this.messageType = messageType;
 		this.subdomain = subdomain;
+		this.channelName = channelName;
 	}
 
 	public String getIpAddress() {
@@ -183,6 +188,14 @@ public class ChatWidgetPayload {
 
 	public void setSubdomain(String subdomain) {
 		this.subdomain = subdomain;
+	}
+
+	public String getChannelName() {
+		return channelName;
+	}
+
+	public void setChannelName(String channelName) {
+		this.channelName = channelName;
 	}
 
 }

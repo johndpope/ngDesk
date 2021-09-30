@@ -30,6 +30,7 @@ import com.ngdesk.repositories.DnsRepository;
 import com.ngdesk.repositories.ModuleEntryRepository;
 import com.ngdesk.repositories.ModulesRepository;
 import com.ngdesk.websocket.UserSessions;
+import com.ngdesk.websocket.channels.chat.dao.ChatChannelMessage;
 import com.ngdesk.websocket.channels.chat.dao.ChatStatusMessage;
 import com.ngdesk.websocket.SessionService;
 import com.ngdesk.websocket.companies.dao.ChatSettingsMessage;
@@ -354,6 +355,35 @@ public class WebSocketService {
 				});
 
 			}
+
+		}
+
+	}
+
+	public void publishChatChannel(Company company, ChatChannelMessage message) {
+
+		ObjectMapper mapper = new ObjectMapper();
+		if (!sessionService.sessions.containsKey(company.getCompanySubdomain())) {
+			return;
+		}
+
+		ConcurrentHashMap<String, UserSessions> sessions = sessionService.sessions.get(company.getCompanySubdomain());
+		for (String sessionUUID : sessions.keySet()) {
+
+			ConcurrentLinkedQueue<WebSocketSession> userSessions = sessions.get(sessionUUID).getSessions();
+			userSessions.forEach(session -> {
+				try {
+					String payload = mapper.writeValueAsString(message);
+					session.sendMessage(new TextMessage(payload));
+				} catch (JsonProcessingException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+					userSessions.remove(session);
+				}
+			});
 
 		}
 

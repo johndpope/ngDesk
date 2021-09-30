@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,6 +35,9 @@ public class ChatService {
 	@Autowired
 	ChatChannelRepository chatChannelRepository;
 
+	@Autowired
+	RedisTemplate<String, ChatChannelMessage> redisTemplate;
+
 	public void publishPageLoad(ChatWidgetPayload pageLoad) {
 		try {
 			if (pageLoad.getSubdomain() != null) {
@@ -51,9 +55,12 @@ public class ChatService {
 						if (optionalUserEntry.isPresent()) {
 							ObjectMapper mapper = new ObjectMapper();
 							pageLoad.setCountry(Locale.getDefault().getDisplayCountry());
-							Optional<ChatChannel> optionalChatChannel = chatChannelRepository.findChannelByName("Chat",
-									"channels_chat_" + companyId);
+							Optional<ChatChannel> optionalChatChannel = chatChannelRepository
+									.findChannelByName(pageLoad.getChannelName(), "channels_chat_" + companyId);
 							if (optionalChatChannel.isPresent()) {
+								ChatChannelMessage chatChannelMessage = new ChatChannelMessage(companyId,
+										pageLoad.getSessionUUID(), optionalChatChannel.get(), "CHAT_CHANNEL");
+								addToChatChannelQueue(chatChannelMessage);
 								HashMap<String, Object> entry = (HashMap<String, Object>) mapper
 										.readValue(mapper.writeValueAsString(pageLoad), Map.class);
 								entry.put("CHANNEL", optionalChatChannel.get().getChannelId());
@@ -76,6 +83,10 @@ public class ChatService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void addToChatChannelQueue(ChatChannelMessage chatChannelMessage) {
+		redisTemplate.convertAndSend("chat_channel", chatChannelMessage);
 	}
 
 }
