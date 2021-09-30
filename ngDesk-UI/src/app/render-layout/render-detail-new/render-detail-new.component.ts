@@ -2361,6 +2361,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 		const attachmentLists = entry[filePreviewField.NAME];
 		this.attachmentsList = [];
 		attachmentLists.forEach((attachment) => {
+			console.log('attachment', attachment);
 			this.attachmentsList.push({
 				FILE: {
 					url: `https://${this.userService.getSubdomain()}.ngdesk.com/api/ngdesk-data-service-v1/attachments?message_id&module_id=${

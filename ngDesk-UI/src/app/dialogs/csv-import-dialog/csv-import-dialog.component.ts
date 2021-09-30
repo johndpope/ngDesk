@@ -7,6 +7,7 @@ import {
 	CsvImportData,
 } from '@ngdesk/data-api';
 import { TranslateService } from '@ngx-translate/core';
+import { CsvFormat } from 'ngdesk-swagger/data-api';
 import { BannerMessageService } from 'src/app/custom-components/banner-message/banner-message.service';
 import { ModulesService } from 'src/app/modules/modules.service';
 @Component({
@@ -32,9 +33,15 @@ export class CsvImportDialogComponent implements OnInit {
 	};
 	public CsvImport: CsvImport = {
 		csvImportData: {},
-		separator: '',
+		csvFormat: {},
 	};
 
+	public csvFormat: CsvFormat = {
+		separator: '',
+		dateFormat: '',
+		timeFormat: '',
+		dateTimeFormat: '',
+	};
 	public selectedSeparator;
 	public separators = ['-', 'Blank space'];
 	public selectedDateTimeFormat;
@@ -116,7 +123,13 @@ export class CsvImportDialogComponent implements OnInit {
 			const moduleId = this.data.csvData.MODULE.MODULE_ID;
 			this.csvImportData = this.data.csvData.CSV_IMPORT_DATA;
 			this.CsvImport.csvImportData = this.csvImportData;
-			this.CsvImport.separator = this.selectedSeparator;
+			this.csvFormat = {
+				separator: this.selectedSeparator,
+				dateFormat: this.selectedDate,
+				timeFormat: this.selectedTimeFormat,
+				dateTimeFormat: this.selectedDateTimeFormat,
+			};
+			this.CsvImport.csvFormat = this.csvFormat;
 			this.csvImportApiService
 				.importFromCsv(moduleId, this.CsvImport)
 				.subscribe(
