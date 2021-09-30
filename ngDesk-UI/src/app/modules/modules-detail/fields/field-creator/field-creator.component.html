@@ -536,7 +536,7 @@
 					</button>
 				</div>
 				<form [formGroup]="inheritanceFormGroup">
-					<div style="max-height: 200px;">
+					<div style="max-height: 200px;" fxFlex>
 						<div formArrayName="inheritances" fxLayoutAlign="center center"
 							*ngFor=" let inheritance of inheritanceFormData.controls; let i = index">
 							<div [formGroupName]="i" style="height: 65px" fxLayoutAlign="space-between" fxFlex fxLayoutGap="20px" fxFlex fxLayout="row">
