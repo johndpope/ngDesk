@@ -17,8 +17,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ngdesk.commons.exceptions.BadRequestException;
 import com.ngdesk.repositories.ModuleEntryRepository;
 import com.ngdesk.repositories.NotificationRepository;
-import com.ngdesk.websocket.UserSessions;
 import com.ngdesk.websocket.SessionService;
+import com.ngdesk.websocket.UserSessions;
 import com.ngdesk.websocket.companies.dao.Company;
 import com.ngdesk.websocket.modules.dao.Module;
 import com.ngdesk.websocket.roles.dao.RolesService;
@@ -98,6 +98,31 @@ public class NotificationService {
 				});
 			}
 
+		}
+	}
+
+	public void publishAgentNotification(Company company, NotificationOfAgentDetails notifyAgentDetails) {
+		ObjectMapper mapper = new ObjectMapper();
+
+		if (sessionService.sessions.containsKey(company.getCompanySubdomain())) {
+			ConcurrentHashMap<String, UserSessions> sessions = sessionService.sessions
+					.get(company.getCompanySubdomain());
+
+			ConcurrentLinkedQueue<WebSocketSession> userSessions = sessions.get(notifyAgentDetails.getSessionUuid())
+					.getSessions();
+			userSessions.forEach(session -> {
+				try {
+					String payload = mapper.writeValueAsString(notifyAgentDetails);
+					session.sendMessage(new TextMessage(payload));
+				} catch (JsonProcessingException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+					userSessions.remove(session);
+				}
+			});
 		}
 	}
 }

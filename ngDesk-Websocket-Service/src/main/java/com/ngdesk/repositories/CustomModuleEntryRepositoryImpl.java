@@ -175,4 +175,13 @@ public class CustomModuleEntryRepositoryImpl implements CustomModuleEntryReposit
 		return Optional.ofNullable(mongoOperations.findOne(new Query(criteria), Map.class, collectionName));
 	}
 
+	@Override
+	public Integer findByAgentAndCollectionName(String agentId, String collectionName) {
+		Criteria criteria = new Criteria();
+		criteria.andOperator(Criteria.where("DELETED").is(false), Criteria.where("AGENTS").in(agentId),
+				Criteria.where("STATUS").in("Chatting"), Criteria.where("EFFECTIVE_TO").is(null));
+		Query query = new Query(criteria);
+		return (int) mongoOperations.count(query, collectionName);
+
+	}
 }

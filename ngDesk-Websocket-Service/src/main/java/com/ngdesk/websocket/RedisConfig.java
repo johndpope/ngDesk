@@ -17,6 +17,7 @@ import com.ngdesk.data.dao.WorkflowPayload;
 import com.ngdesk.websocket.channels.chat.dao.ChatChannelMessage;
 import com.ngdesk.websocket.channels.chat.dao.ChatStatusMessage;
 import com.ngdesk.websocket.notification.dao.Notification;
+import com.ngdesk.websocket.subscribers.NotificationOfAgentDetailsSubscriber;
 import com.ngdesk.websocket.subscribers.ChatChannelSubscriber;
 import com.ngdesk.websocket.subscribers.ChatSettingsUpdateSubscriber;
 import com.ngdesk.websocket.subscribers.ChatStatusSubscriber;
@@ -49,6 +50,9 @@ public class RedisConfig {
 
 	@Autowired
 	ChatChannelSubscriber chatChannelSubscriber;
+
+	@Autowired
+	NotificationOfAgentDetailsSubscriber agentAvailableSubscriber;
 
 	@Bean
 	public RedisTemplate<String, WorkflowPayload> redisTemplate(LettuceConnectionFactory redisConnectionFactory) {
@@ -114,6 +118,11 @@ public class RedisConfig {
 	}
 
 	@Bean
+	MessageListenerAdapter agentAvailableListener() {
+		return new MessageListenerAdapter(agentAvailableSubscriber);
+	}
+
+	@Bean
 	public RedisMessageListenerContainer redisMessageListenerContainer(
 			LettuceConnectionFactory redisConnectionFactory) {
 		RedisMessageListenerContainer container = new RedisMessageListenerContainer();
@@ -123,7 +132,8 @@ public class RedisConfig {
 		container.addMessageListener(chatSettingsUpdateListner(), new PatternTopic("chat_settings_update"));
 		container.addMessageListener(chatStatusListner(), new PatternTopic("chat_status"));
 		container.addMessageListener(chatChannelListner(), new PatternTopic("chat_channel"));
-		
+		container.addMessageListener(agentAvailableListener(), new PatternTopic("agents-available"));
+
 		return container;
 	}
 
