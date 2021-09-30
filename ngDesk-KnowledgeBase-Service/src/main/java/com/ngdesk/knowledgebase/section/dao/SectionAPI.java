@@ -85,6 +85,8 @@ public class SectionAPI {
 
 	public Section setDefaultValuesToPost(Section section) {
 
+		int totalCount = sectionRepository.getCount("sections_" + authManager.getUserDetails().getCompanyId());
+		section.setOrder(totalCount + 1);
 		section.setDateCreated(new Date());
 		section.setDateUpdated(new Date());
 		section.setCreatedBy(authManager.getUserDetails().getUserId());

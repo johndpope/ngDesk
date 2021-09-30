@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.Assert;
 
 @Repository
 public class CustomSectionRepositoryImpl implements CustomSectionRepository {
@@ -21,5 +22,10 @@ public class CustomSectionRepositoryImpl implements CustomSectionRepository {
 
 		return Optional.ofNullable(mongoOperations.findOne(query, Map.class, collectionName));
 	}
-
+	@Override
+	public int getCount(String collectionName) {
+		Assert.notNull(collectionName, "The given collectionName must not be null!");
+		Query query = new Query();
+		return (int) mongoOperations.count(query, collectionName);
+	}
 }
