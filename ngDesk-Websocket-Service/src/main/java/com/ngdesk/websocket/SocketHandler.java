@@ -40,7 +40,6 @@ import com.ngdesk.data.dao.SingleWorkflowPayload;
 import com.ngdesk.repositories.RolesRepository;
 import com.ngdesk.websocket.approval.dao.Approval;
 import com.ngdesk.websocket.approval.dao.ApprovalService;
-import com.ngdesk.websocket.channels.chat.dao.ChatChannelService;
 import com.ngdesk.websocket.channels.chat.dao.ChatService;
 import com.ngdesk.websocket.channels.chat.dao.ChatStatus;
 import com.ngdesk.websocket.channels.chat.dao.ChatStatusCheck;
@@ -48,7 +47,6 @@ import com.ngdesk.websocket.channels.chat.dao.ChatStatusService;
 import com.ngdesk.websocket.channels.chat.dao.ChatUser;
 import com.ngdesk.websocket.channels.chat.dao.ChatUserEntryService;
 import com.ngdesk.websocket.channels.chat.dao.ChatWidgetPayload;
-import com.ngdesk.websocket.channels.chat.dao.PageLoad;
 import com.ngdesk.websocket.dao.WebSocketService;
 import com.ngdesk.websocket.graphql.dao.GraphqlProxy;
 import com.ngdesk.websocket.modules.dao.ButtonTypeService;
@@ -93,9 +91,6 @@ public class SocketHandler extends TextWebSocketHandler {
 
 	@Autowired
 	ApprovalService approvalService;
-
-	@Autowired
-	ChatChannelService chatChannelService;
 
 	@Autowired
 	ChatStatusService chatStatusService;
@@ -226,7 +221,7 @@ public class SocketHandler extends TextWebSocketHandler {
 					userSessions.getSessions().add(session);
 				} else {
 					ConcurrentLinkedQueue<WebSocketSession> sessions = new ConcurrentLinkedQueue<WebSocketSession>();
-					sessions.add(session);
+							sessions.add(session);
 					userSessions.setSessions(sessions);
 				}
 			} else {
@@ -425,23 +420,17 @@ public class SocketHandler extends TextWebSocketHandler {
 					logController.addLogToApplication(newLog, subdomain, id);
 				}
 			} else if (queryParamMap.containsKey("sessionUUID") && queryParamMap.containsKey("subdomain")) {
+
 				try {
-					PageLoad pageLoad = mapper.readValue(textMessage.getPayload(), PageLoad.class);
-					chatChannelService.publishPageLoad(pageLoad);
+					ChatWidgetPayload pageLoad = mapper.readValue(textMessage.getPayload(), ChatWidgetPayload.class);
+					chatService.publishPageLoad(pageLoad);
 
 				} catch (Exception e) {
 					try {
-						ChatWidgetPayload pageLoad = mapper.readValue(textMessage.getPayload(),
-								ChatWidgetPayload.class);
-						chatService.publishPageLoad(pageLoad);
-
+						ChatUser chatUser = mapper.readValue(textMessage.getPayload(), ChatUser.class);
+						chatUserEntryService.chatUserEntryCreation(chatUser);
 					} catch (Exception e1) {
-						try {
-							ChatUser chatUser = mapper.readValue(textMessage.getPayload(), ChatUser.class);
-							chatUserEntryService.chatUserEntryCreation(chatUser);
-						} catch (Exception e2) {
 
-						}
 					}
 				}
 

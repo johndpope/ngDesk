@@ -49,7 +49,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 		@JsonSubTypes.Type(value = DeleteEntryNode.class, name = "DeleteEntry"),
 		@JsonSubTypes.Type(value = GeneratePdfNode.class, name = "GeneratePdf"),
 		@JsonSubTypes.Type(value = SignatureDocumentNode.class, name = "SignatureDocument"),
-		@JsonSubTypes.Type(value = FindAgentAndAssignNode.class, name = "FindAgentAndAssign"),
 		@JsonSubTypes.Type(value = MicrosoftTeamsNotificationNode.class, name = "MicrosoftTeamsNotification"),
 		@JsonSubTypes.Type(value = NotifyProbeNode.class, name = "NotifyProbe") })
 public abstract class Node {
@@ -80,7 +79,7 @@ public abstract class Node {
 	@Field("TYPE")
 	@CustomNotEmpty(message = "DAO_VARIABLE_REQUIRED", values = { "NODE_TYPE" })
 	@Pattern(regexp = "Route|CreateEntry|UpdateEntry|Javascript|HttpRequest|SendEmail|DeleteEntry|Start|StartEscalation|GeneratePdf|"
-			+ "StopEscalation|SignatureDocument|MakePhoneCall|SendSms|Approval|FindAgentAndAssign|ChatBot|End|NotifyProbe|MicrosoftTeamsNotification|FindAgentAndAssign", message = "INVALID_NODE_TYPE")
+			+ "StopEscalation|SignatureDocument|MakePhoneCall|SendSms|Approval|ChatBot|End|NotifyProbe|MicrosoftTeamsNotification", message = "INVALID_NODE_TYPE")
 	private String type;
 
 	@Schema(required = false, description = "connections from this node to another")
@@ -107,7 +106,7 @@ public abstract class Node {
 	}
 
 	public Node(String nodeId,
-			@Pattern(regexp = "Route|CreateEntry|SignatureDocument|UpdateEntry|Javascript|HttpRequest|SendEmail|DeleteEntry|Start|StartEscalation|GeneratePdf|StopEscalation|MakePhoneCall|SendSms|Approval|FindAgentAndAssign|ChatBot|End|NotifyProbe|MicrosoftTeamsNotification|FindAgentAndAssign", message = "INVALID_NODE_TYPE") String type,
+			@Pattern(regexp = "Route|CreateEntry|SignatureDocument|UpdateEntry|Javascript|HttpRequest|SendEmail|DeleteEntry|Start|StartEscalation|GeneratePdf|StopEscalation|MakePhoneCall|SendSms|Approval|ChatBot|End|NotifyProbe|MicrosoftTeamsNotification", message = "INVALID_NODE_TYPE") String type,
 			@Valid List<Connection> connections, String name, @Valid List<Condition> preConditions) {
 		super();
 		this.nodeId = nodeId;

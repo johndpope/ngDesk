@@ -16,7 +16,6 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import com.ngdesk.data.dao.WorkflowPayload;
 import com.ngdesk.websocket.channels.chat.dao.ChatChannelMessage;
 import com.ngdesk.websocket.channels.chat.dao.ChatStatusMessage;
-import com.ngdesk.websocket.channels.chat.dao.PageLoad;
 import com.ngdesk.websocket.notification.dao.Notification;
 import com.ngdesk.websocket.subscribers.ChatChannelSubscriber;
 import com.ngdesk.websocket.subscribers.ChatSettingsUpdateSubscriber;
@@ -58,15 +57,6 @@ public class RedisConfig {
 		redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<WorkflowPayload>(WorkflowPayload.class));
 		redisTemplate.setKeySerializer(new StringRedisSerializer());
 		return redisTemplate;
-	}
-
-	@Bean
-	public RedisTemplate<String, PageLoad> redisPageLoadTemplate(LettuceConnectionFactory redisConnectionFactory) {
-		RedisTemplate<String, PageLoad> redisPageLoadTemplate = new RedisTemplate<String, PageLoad>();
-		redisPageLoadTemplate.setConnectionFactory(redisConnectionFactory);
-		redisPageLoadTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<PageLoad>(PageLoad.class));
-		redisPageLoadTemplate.setKeySerializer(new StringRedisSerializer());
-		return redisPageLoadTemplate;
 	}
 
 	@Bean

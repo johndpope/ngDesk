@@ -54,7 +54,7 @@ public abstract class Node {
 	}
 
 	public Node(String nodeId,
-			@Pattern(regexp = "Route|CreateEntry|UpdateEntry|Javascript|HttpRequest|SendEmail|DeleteEntry|Start|StartEscalation|StopEscalation|MakePhoneCall|Approval|SendSms|FindAgentAndAssign|ChatBot|NotifyProbe", message = "INVALID_NODE_TYPE") String type,
+			@Pattern(regexp = "Route|CreateEntry|UpdateEntry|Javascript|HttpRequest|SendEmail|DeleteEntry|Start|StartEscalation|StopEscalation|MakePhoneCall|Approval|SendSms|ChatBot|NotifyProbe", message = "INVALID_NODE_TYPE") String type,
 			@Valid List<Connection> connections, String name, @Valid List<Condition> preConditions) {
 		super();
 		this.nodeId = nodeId;

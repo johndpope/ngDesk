@@ -28,7 +28,6 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 		@JsonSubTypes.Type(value = SignatureDocumentNode.class, name = "SignatureDocument"),
 		@JsonSubTypes.Type(value = MicrosoftTeamsNotificationNode.class, name = "MicrosoftTeamsNotification"),
 		@JsonSubTypes.Type(value = DeleteEntryNode.class, name = "DeleteEntry"),
-		@JsonSubTypes.Type(value = FindAgentAndAssignNode.class, name = "FindAgentAndAssign"),
 		@JsonSubTypes.Type(value = PromptNode.class, name = "ShowPopUpMessage") })
 
 public abstract class Node {
@@ -58,7 +57,7 @@ public abstract class Node {
 	}
 
 	public Node(String nodeId,
-			@Pattern(regexp = "Route|CreateEntry|UpdateEntry|Javascript|HttpRequest|SendEmail|DeleteEntry|Start|StartEscalation|StopEscalation|MakePhoneCall|Approval|SendSms|FindAgentAndAssign|ChatBot|ShowPopUpMessage", message = "INVALID_NODE_TYPE") String type,
+			@Pattern(regexp = "Route|CreateEntry|UpdateEntry|Javascript|HttpRequest|SendEmail|DeleteEntry|Start|StartEscalation|StopEscalation|MakePhoneCall|Approval|SendSms|ChatBot|ShowPopUpMessage", message = "INVALID_NODE_TYPE") String type,
 			@Valid List<Connection> connections, String name, @Valid List<Condition> preConditions) {
 		super();
 		this.nodeId = nodeId;
