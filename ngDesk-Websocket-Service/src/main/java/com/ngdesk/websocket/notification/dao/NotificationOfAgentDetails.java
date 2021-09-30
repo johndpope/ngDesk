@@ -6,7 +6,9 @@ public class NotificationOfAgentDetails {
 
 	private String companyId;
 
-	private String agentName;
+	private String agentFirstName;
+
+	private String agentLastName;
 
 	private String agentDataId;
 
@@ -20,21 +22,26 @@ public class NotificationOfAgentDetails {
 
 	private Date agentAssignedTime;
 
+	private String agentRole;
+
 	public NotificationOfAgentDetails() {
 
 	}
 
-	public NotificationOfAgentDetails(String companyId, String agentName, String agentDataId, String customerDataId,
-			Boolean agentsAvailable, String sessionUuid, String messageType, Date agentAssignedTime) {
+	public NotificationOfAgentDetails(String companyId, String agentFirstName, String agentLastName, String agentDataId,
+			String customerDataId, Boolean agentsAvailable, String sessionUuid, String messageType,
+			Date agentAssignedTime, String agentRole) {
 		super();
 		this.companyId = companyId;
-		this.agentName = agentName;
+		this.agentFirstName = agentFirstName;
+		this.agentLastName = agentLastName;
 		this.agentDataId = agentDataId;
 		this.customerDataId = customerDataId;
 		this.agentsAvailable = agentsAvailable;
 		this.sessionUuid = sessionUuid;
 		this.messageType = messageType;
 		this.agentAssignedTime = agentAssignedTime;
+		this.agentRole = agentRole;
 	}
 
 	public String getCompanyId() {
@@ -43,14 +50,6 @@ public class NotificationOfAgentDetails {
 
 	public void setCompanyId(String companyId) {
 		this.companyId = companyId;
-	}
-
-	public String getAgentName() {
-		return agentName;
-	}
-
-	public void setAgentName(String agentName) {
-		this.agentName = agentName;
 	}
 
 	public String getAgentDataId() {
@@ -99,6 +98,30 @@ public class NotificationOfAgentDetails {
 
 	public void setAgentAssignedTime(Date agentAssignedTime) {
 		this.agentAssignedTime = agentAssignedTime;
+	}
+
+	public String getAgentFirstName() {
+		return agentFirstName;
+	}
+
+	public void setAgentFirstName(String agentFirstName) {
+		this.agentFirstName = agentFirstName;
+	}
+
+	public String getAgentLastName() {
+		return agentLastName;
+	}
+
+	public void setAgentLastName(String agentLastName) {
+		this.agentLastName = agentLastName;
+	}
+
+	public String getAgentRole() {
+		return agentRole;
+	}
+
+	public void setAgentRole(String agentRole) {
+		this.agentRole = agentRole;
 	}
 
 }
