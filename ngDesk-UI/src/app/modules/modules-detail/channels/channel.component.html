@@ -18,7 +18,8 @@
 										{{ module.PLURAL_NAME | truncate : 15}} {{'MODULE' | translate}}
 									</div>
 									<div fxLayout="column" *ngIf="showSideNav" fxFlex="10">
-										<button mat-icon-button style="border: 1px solid white; border-radius: 3px;" (click)="showSideNav = !showSideNav">
+										<button mat-icon-button style="border: 1px solid white; border-radius: 3px;height: 30px;"
+											(click)="showSideNav = !showSideNav">
 											<mat-icon class="custom-theme-icon-color" style="margin-bottom: 15px;font-size: 20px;" *ngIf="showSideNav">
 												keyboard_arrow_left</mat-icon>
 										</button>
@@ -33,7 +34,8 @@
 						<tr mat-row *matRowDef="let row; columns: ['NAME'];" [routerLink]="row.PATH" [appHighlight]="{BACKGROUND: '#ececec'}"></tr>
 					</table>
 					<div *ngIf="!showSideNav">
-						<button mat-icon-button style="border: 1px solid #3f51b5; border-radius: 3px;" (click)="showSideNav = !showSideNav">
+						<button mat-icon-button style="border: 1px solid #3f51b5; border-radius: 3px;height: 30px;"
+							(click)="showSideNav = !showSideNav">
 							<mat-icon color="primary" style="margin-bottom: 15px;font-size: 20px;" *ngIf="!showSideNav">
 								keyboard_arrow_right</mat-icon>
 						</button>

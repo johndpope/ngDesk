@@ -21,7 +21,7 @@
 									{{ moduleName | truncate : 10 }} {{ 'MODULE' | translate}}</div>
 								<div fxLayout="column" *ngIf="showSideNav" fxFlex="10">
 									<button mat-icon-button [ngStyle]="{'border': (showSideNav) ? '1px solid white' : '1px solid #3f51b5'}"
-										(click)="showSideNav = !showSideNav" style="border-radius: 3px;">
+										(click)="showSideNav = !showSideNav" style="border-radius: 3px;height: 30px;">
 										<mat-icon class="custom-theme-icon-color" style="margin-bottom: 15px;font-size: 20px;">
 											keyboard_arrow_left</mat-icon>
 									</button>
@@ -37,55 +37,55 @@
 				<tr mat-row *matRowDef="let row; columns: ['NAME'];" [routerLink]="row.PATH" [appHighlight]="{BACKGROUND: '#ececec'}"></tr>
 			</table>
 		</div>
-			<div>
-				<button mat-icon-button *ngIf="!showSideNav"
-					[ngStyle]="{'border': (showSideNav) ? '1px solid white' : '1px solid #3f51b5', 'margin-left' : (showSideNav) ? '-48px' : '0px'}"
-					(click)="showSideNav = !showSideNav" style="border-radius: 3px;">
-					<mat-icon color="primary" style="margin-bottom: 15px;font-size: 20px;">
-						keyboard_arrow_right</mat-icon>
-				</button>
+		<div>
+			<button mat-icon-button *ngIf="!showSideNav"
+				[ngStyle]="{'border': (showSideNav) ? '1px solid white' : '1px solid #3f51b5', 'margin-left' : (showSideNav) ? '-48px' : '0px'}"
+				(click)="showSideNav = !showSideNav" style="border-radius: 3px;height: 30px;">
+				<mat-icon color="primary" style="margin-bottom: 15px;font-size: 20px;">
+					keyboard_arrow_right</mat-icon>
+			</button>
+		</div>
+		<div fxLayout="column" fxFlex="100" *ngIf="!isLoading">
+			<app-custom-table *ngIf="(this.channelType==='sms' && !isTwilioRequested && totalRecords>0)||this.channelType!=='sms'"
+				[templateRef]="columnTemplateRef" (rowClickedEvent)="rowClicked($event)" noRecordsMessage="No channels found"
+				[actions]="channelActions.actions" (menuItemTrigger)="channelActions[$event.ACTION.NAME]($event.ROW_DATA);"
+				(sortData)="sortData($event);customTableService.isLoading = true" fxFlex>
+				<ng-template #columnTemplateRef let-element="element" let-col="col">
+					<div fxLayout="row" fxLayoutAlign="start center">
+						<mat-icon style="cursor: pointer; transform: scale(0.8);" fxLayoutAlign="end end" fxFlexAlign="end"
+							*ngIf="(col.NAME==='NAME') && (notMapped.get(element[col.NAME]))" matTooltip="{{'SETUP_EMAIL_CHANNEL' | translate}} "
+							color="warn">
+							warning</mat-icon>
+						<span *ngIf="(col.NAME==='NAME') && !(notMapped.get(element[col.NAME]))"></span>
+						<span>{{element[col.NAME]}}</span>
+					</div>
+				</ng-template>
+			</app-custom-table>
+		</div>
+		<div *ngIf="this.channelType=='sms' && isLoading" style="padding-left:35vw">
+			<mat-spinner></mat-spinner>
+		</div>
+		<div fxLayout="column" class="pad10" *ngIf="this.channelType=='sms' && !isTwilioRequested && !isLoading && totalRecords === 0">
+			<div class="mat-h3" style="text-align: center; margin-bottom: 30px">
+				{{ 'TWILIO_INFO' | translate}}
 			</div>
-			<div fxLayout="column" fxFlex="100" *ngIf="!isLoading">
-				<app-custom-table *ngIf="(this.channelType==='sms' && !isTwilioRequested && totalRecords>0)||this.channelType!=='sms'"
-					[templateRef]="columnTemplateRef" (rowClickedEvent)="rowClicked($event)" noRecordsMessage="No channels found"
-					[actions]="channelActions.actions" (menuItemTrigger)="channelActions[$event.ACTION.NAME]($event.ROW_DATA);"
-					(sortData)="sortData($event);customTableService.isLoading = true" fxFlex>
-					<ng-template #columnTemplateRef let-element="element" let-col="col">
-						<div fxLayout="row" fxLayoutAlign="start center">
-							<mat-icon style="cursor: pointer; transform: scale(0.8);" fxLayoutAlign="end end" fxFlexAlign="end"
-								*ngIf="(col.NAME==='NAME') && (notMapped.get(element[col.NAME]))" matTooltip="{{'SETUP_EMAIL_CHANNEL' | translate}} "
-								color="warn">
-								warning</mat-icon>
-							<span *ngIf="(col.NAME==='NAME') && !(notMapped.get(element[col.NAME]))"></span>
-							<span>{{element[col.NAME]}}</span>
-						</div>
-					</ng-template>
-				</app-custom-table>
-			</div>
-			<div *ngIf="this.channelType=='sms' && isLoading" style="padding-left:35vw">
-				<mat-spinner></mat-spinner>
-			</div>
-			<div fxLayout="column" class="pad10" *ngIf="this.channelType=='sms' && !isTwilioRequested && !isLoading && totalRecords === 0">
-				<div class="mat-h3" style="text-align: center; margin-bottom: 30px">
-					{{ 'TWILIO_INFO' | translate}}
-				</div>
-				<div fxLayout="row wrap">
-					<div fxFlex="30" fxLayout="column" fxLayoutAlign="center center" *ngFor="let country of twilioCountries"
-						style="margin: 0 20px 20px 0; border-width: 1px; padding: 5px; word-break: break-all">
-						<img (click)="newChannel(country)" class="pointer" aria-hidden [src]="
+			<div fxLayout="row wrap">
+				<div fxFlex="30" fxLayout="column" fxLayoutAlign="center center" *ngFor="let country of twilioCountries"
+					style="margin: 0 20px 20px 0; border-width: 1px; padding: 5px; word-break: break-all">
+					<img (click)="newChannel(country)" class="pointer" aria-hidden [src]="
                         '../../assets/images/country-flags/' +
                         country.COUNTRY_FLAG
                       " height="55vh" width="55vw" />
-						<div (click)="newChannel(country)" class="mat-h3 pointer">{{ country.COUNTRY_NAME.toUpperCase() }}</div>
-					</div>
-				</div>
-			</div>
-			<div *ngIf="this.channelType=='sms' && isTwilioRequested">
-				<div fxLayout="row" fxLayoutGap="10px">
-					<div fxFlex="80" class="mat-h3" style="margin-bottom: 30px; padding: 20px;">
-						{{ 'TWILIO_REQUESTED' | translate}}
-					</div>
+					<div (click)="newChannel(country)" class="mat-h3 pointer">{{ country.COUNTRY_NAME.toUpperCase() }}</div>
 				</div>
 			</div>
 		</div>
+		<div *ngIf="this.channelType=='sms' && isTwilioRequested">
+			<div fxLayout="row" fxLayoutGap="10px">
+				<div fxFlex="80" class="mat-h3" style="margin-bottom: 30px; padding: 20px;">
+					{{ 'TWILIO_REQUESTED' | translate}}
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

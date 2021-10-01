@@ -20,7 +20,7 @@
 
 								<div fxLayout="column" *ngIf="showSideNav" fxFlex="10">
 									<button mat-icon-button [ngStyle]="{'border': (showSideNav) ? '1px solid white' : '1px solid #3f51b5'}"
-										(click)="showSideNav = !showSideNav" style="border-radius: 3px;">
+										(click)="showSideNav = !showSideNav" style="border-radius: 3px;height: 30px;">
 										<mat-icon class="custom-theme-icon-color" style="margin-bottom: 15px;font-size: 20px;">
 											keyboard_arrow_left</mat-icon>
 									</button>
@@ -35,23 +35,23 @@
 					<tr mat-row *matRowDef="let row; columns: ['NAME'];" [routerLink]="row.PATH" [appHighlight]="{BACKGROUND: '#ececec'}"></tr>
 				</table>
 			</div>
-				<div>
-					<button mat-icon-button *ngIf="!showSideNav"
-						[ngStyle]="{'border': (showSideNav) ? '1px solid white' : '1px solid #3f51b5', 'margin-left' : (showSideNav) ? '-48px' : '0px'}"
-						(click)="showSideNav = !showSideNav" style="border-radius: 3px;">
-						<mat-icon color="primary" style="margin-bottom: 15px;font-size: 20px;">
-							keyboard_arrow_right</mat-icon>
-					</button>
-				</div>
-				<app-custom-table [templateRef]="columnTemplateRef" (rowClickedEvent)="rowClicked($event)"
-					noRecordsMessage="{{'NO_LAYOUTS' | translate}}" [actions]="listLayoutsActions.actions"
-					(menuItemTrigger)="listLayoutsActions[$event.ACTION.NAME]($event.ROW_DATA);"
-					(sortData)="sortData();customTableService.isLoading = true"
-					(pageChangeEmit)="pageChangeEmit($event);customTableService.isLoading = true" fxFlex>
-					<ng-template #columnTemplateRef let-element="element" let-col="col">
-						{{element[col.NAME]}}
-					</ng-template>
-				</app-custom-table>
+			<div>
+				<button mat-icon-button *ngIf="!showSideNav"
+					[ngStyle]="{'border': (showSideNav) ? '1px solid white' : '1px solid #3f51b5', 'margin-left' : (showSideNav) ? '-48px' : '0px'}"
+					(click)="showSideNav = !showSideNav" style="border-radius: 3px;height: 30px;">
+					<mat-icon color="primary" style="margin-bottom: 15px;font-size: 20px;">
+						keyboard_arrow_right</mat-icon>
+				</button>
+			</div>
+			<app-custom-table [templateRef]="columnTemplateRef" (rowClickedEvent)="rowClicked($event)"
+				noRecordsMessage="{{'NO_LAYOUTS' | translate}}" [actions]="listLayoutsActions.actions"
+				(menuItemTrigger)="listLayoutsActions[$event.ACTION.NAME]($event.ROW_DATA);"
+				(sortData)="sortData();customTableService.isLoading = true"
+				(pageChangeEmit)="pageChangeEmit($event);customTableService.isLoading = true" fxFlex>
+				<ng-template #columnTemplateRef let-element="element" let-col="col">
+					{{element[col.NAME]}}
+				</ng-template>
+			</app-custom-table>
 		</div>
 
 	</ng-template>

@@ -20,7 +20,7 @@
 									{{'MODULE' | translate}}</div>
 								<div fxLayout="column" *ngIf="showSideNav" fxFlex="10">
 									<button mat-icon-button [ngStyle]="{'border': (showSideNav) ? '1px solid white' : '1px solid #3f51b5'}"
-										(click)="showSideNav = !showSideNav" style="border-radius: 3px;">
+										(click)="showSideNav = !showSideNav" style="border-radius: 3px;height: 30px;">
 										<mat-icon class="custom-theme-icon-color" style="margin-bottom: 15px;font-size: 20px;">
 											keyboard_arrow_left</mat-icon>
 									</button>
@@ -28,32 +28,32 @@
 							</div>
 						</th>
 						<td matRipple class="no-wrap" mat-cell *matCellDef="let element" class="pointer"
-						[ngClass]="{ 'module-page-active': element.NAME == 'PDFs'}">
+							[ngClass]="{ 'module-page-active': element.NAME == 'PDFs'}">
 							{{element.NAME | translate}} </td>
 					</ng-container>
 					<tr class="custom-theme-primary-color" mat-header-row *matHeaderRowDef="['NAME']"></tr>
 					<tr mat-row *matRowDef="let row; columns: ['NAME'];" [routerLink]="row.PATH" [appHighlight]="{BACKGROUND: '#ececec'}"></tr>
 				</table>
 			</div>
-				<div>
-					<button mat-icon-button *ngIf="!showSideNav"
-						[ngStyle]="{'border': (showSideNav) ? '1px solid white' : '1px solid #3f51b5', 'margin-left' : (showSideNav) ? '-48px' : '0px'}"
-						(click)="showSideNav = !showSideNav" style="border-radius: 3px;">
-						<mat-icon color="primary" style="margin-bottom: 15px;font-size: 20px;">
-							keyboard_arrow_right</mat-icon>
-					</button>
-				</div>
-				<!-- Module detail sidebar end-->
-				<!-- Custom table start-->
-				<app-custom-table [templateRef]="columnTemplateRef" noRecordsMessage="{{'NO_PDF_FOUND' | translate}}" [actions]="pdfActions.actions"
-					(menuItemTrigger)="pdfActions[$event.ACTION.NAME]($event.ROW_DATA);" (rowClickedEvent)="rowClicked($event)"
-					(sortData)="sortData();customTableService.isLoading = true"
-					(pageChangeEmit)="pageChangeEmit($event);;customTableService.isLoading = true" fxFlex>
-					<ng-template #columnTemplateRef let-element="element" let-col="col">
-						{{element[col.NAME] | disableToEnable}}
-					</ng-template>
-				</app-custom-table>
-				<!-- Custom table end-->
+			<div>
+				<button mat-icon-button *ngIf="!showSideNav"
+					[ngStyle]="{'border': (showSideNav) ? '1px solid white' : '1px solid #3f51b5', 'margin-left' : (showSideNav) ? '-48px' : '0px'}"
+					(click)="showSideNav = !showSideNav" style="border-radius: 3px;height: 30px;">
+					<mat-icon color="primary" style="margin-bottom: 15px;font-size: 20px;">
+						keyboard_arrow_right</mat-icon>
+				</button>
+			</div>
+			<!-- Module detail sidebar end-->
+			<!-- Custom table start-->
+			<app-custom-table [templateRef]="columnTemplateRef" noRecordsMessage="{{'NO_PDF_FOUND' | translate}}" [actions]="pdfActions.actions"
+				(menuItemTrigger)="pdfActions[$event.ACTION.NAME]($event.ROW_DATA);" (rowClickedEvent)="rowClicked($event)"
+				(sortData)="sortData();customTableService.isLoading = true"
+				(pageChangeEmit)="pageChangeEmit($event);;customTableService.isLoading = true" fxFlex>
+				<ng-template #columnTemplateRef let-element="element" let-col="col">
+					{{element[col.NAME] | disableToEnable}}
+				</ng-template>
+			</app-custom-table>
+			<!-- Custom table end-->
 		</div>
 	</ng-template>
 </div>
