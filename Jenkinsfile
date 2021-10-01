@@ -180,7 +180,7 @@ pipeline {
 										    sh "docker rename ngdesk-web ngdesk-web-old"
 										    sh "docker stop ngdesk-web-old"
 										    sh "docker pull ngdesk/ngdesk-web"
-										    sh "docker run --mount --name ngdesk-web -d -e SPRING_PROFILES_ACTIVE=dockernew --network=host ngdesk/ngdesk-web"
+										    sh "docker run --name ngdesk-web -d -e SPRING_PROFILES_ACTIVE=dockernew --network=host ngdesk/ngdesk-web"
 										    sh "docker rm ngdesk-web-old"
 										    sh 'docker image prune -f'
 										}
