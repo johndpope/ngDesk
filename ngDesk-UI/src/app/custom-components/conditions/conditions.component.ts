@@ -128,7 +128,7 @@ export class ConditionsComponent implements OnInit {
 				}
 			});
 		});
-
+	
 		this.rolesService.getRoles().subscribe(
 			(rolesResponse: any) => {
 				rolesResponse['ROLES'].filter((role) => {
@@ -241,7 +241,8 @@ export class ConditionsComponent implements OnInit {
 				field.DATA_TYPE.DISPLAY !== 'File Upload' &&
 				field.DATA_TYPE.DISPLAY !== 'PDF' &&
 				field.DATA_TYPE.DISPLAY !== 'Password' &&
-				field.RELATIONSHIP_TYPE !== 'One to Many'
+				field.RELATIONSHIP_TYPE !== 'One to Many' &&
+				field.DATA_TYPE.DISPLAY !== 'List Formula'
 		);
 		if (this.parentName === 'dashboardsComponent') {
 			fields = fields.filter(

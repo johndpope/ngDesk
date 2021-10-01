@@ -49,4 +49,4 @@ Thumbs.db
 # Generated Services
 /ngdesk-swagger
 package-lock.json
-
+openapitools.json

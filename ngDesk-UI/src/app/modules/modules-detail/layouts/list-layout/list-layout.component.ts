@@ -13,6 +13,12 @@ import { ModulesService } from '@src/app/modules/modules.service';
 import { ChannelsService } from 'src/app/channels/channels.service';
 import { ListLayoutApiService, ListLayout } from '@ngdesk/module-api';
 import { CacheService } from '@src/app/cache.service';
+import {
+	CdkDragDrop,
+	moveItemInArray,
+	transferArrayItem,
+} from '@angular/cdk/drag-drop';
+import { forkJoin } from 'rxjs';
 
 @Component({
 	selector: 'app-list-layout',
@@ -57,6 +63,7 @@ export class ListLayoutComponent implements OnInit {
 		order: {},
 		role: {},
 	};
+	public allModules: any = {};
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -115,6 +122,10 @@ export class ListLayoutComponent implements OnInit {
 
 		const moduleId = this.route.snapshot.params['moduleId'];
 		const listLayoutId = this.route.snapshot.params['listLayoutId'];
+		const moduleObservables = forkJoin([
+			this.modulesService.getModulesFromGraphql(),
+			this.modulesService.getModuleById(moduleId),
+		]);
 
 		this.listLayoutForm = this.formBuilder.group({
 			CONDITIONS: this.formBuilder.array([]),
@@ -165,8 +176,41 @@ export class ListLayoutComponent implements OnInit {
 						null
 					)
 				);
-				this.modulesService.getModuleById(moduleId).subscribe(
-					(moduleResponse: any) => {
+				moduleObservables.subscribe(
+					(allResponse: any) => {
+						if (allResponse[0] !== null) {
+							allResponse[0].MODULES.forEach((module) => {
+								module.FIELDS = module.FIELDS.filter(
+									(field) =>
+										field.RELATIONSHIP_TYPE !== 'Many to Many' &&
+										field.RELATIONSHIP_TYPE !== 'One to Many' &&
+										field.DATA_TYPE.DISPLAY !== 'Discussion' &&
+										field.DATA_TYPE.DISPLAY !== 'File Upload' &&
+										field.DATA_TYPE.DISPLAY !== 'Zoom' &&
+										field.DATA_TYPE.DISPLAY !== 'Button' &&
+										field.DATA_TYPE.DISPLAY !== 'List Text' &&
+										field.DATA_TYPE.DISPLAY !== 'Approval' &&
+										field.DATA_TYPE.DISPLAY !== 'Image' &&
+										field.DATA_TYPE.DISPLAY !== 'File Preview' &&
+										field.DATA_TYPE.DISPLAY !== 'PDF' &&
+										field.DATA_TYPE.DISPLAY !== 'Receipt Capture' &&
+										field.DATA_TYPE.DISPLAY !== 'Password' &&
+										field.DATA_TYPE.DISPLAY !== 'Date' &&
+										field.DATA_TYPE.DISPLAY !== 'Date/Time' &&
+										field.DATA_TYPE.DISPLAY !== 'Time' &&
+										field.DATA_TYPE.DISPLAY !== 'List Formula' &&
+										field.NAME !== 'DELETED' &&
+										field.NAME !== 'CHANNEL' &&
+										field.NAME !== 'TIME_WINDOW' &&
+										field.NAME !== 'DATA_ID' &&
+										field.DATA_TYPE.DISPLAY !== 'PHONE' &&
+										field.NAME !== 'PASSWORD'
+								);
+								this.allModules[module.MODULE_ID] = module.FIELDS;
+							});
+						}
+
+						const moduleResponse = allResponse[1];
 						this.fields = moduleResponse.FIELDS;
 						// Filtered fields to not show Many to Many or One to Many fields
 						moduleResponse.FIELDS = moduleResponse.FIELDS.filter(
@@ -183,9 +227,24 @@ export class ListLayoutComponent implements OnInit {
 								field.DATA_TYPE.DISPLAY !== 'File Preview' &&
 								field.DATA_TYPE.DISPLAY !== 'PDF' &&
 								field.DATA_TYPE.DISPLAY !== 'Receipt Capture' &&
-								field.DATA_TYPE.DISPLAY !== 'Password'
+								field.DATA_TYPE.DISPLAY !== 'Password' &&
+								field.DATA_TYPE.DISPLAY !== 'List Formula' 
 						);
+						let modulesList = [];
 
+						let relationshipFields = moduleResponse.FIELDS.filter((element) => {
+							return (
+								element.DATA_TYPE &&
+								element.DATA_TYPE.DISPLAY &&
+								element.DATA_TYPE.DISPLAY === 'Relationship'
+							);
+						});
+
+						relationshipFields.forEach((element) => {
+							if (modulesList.indexOf(element.MODULE) === -1) {
+								modulesList.push(element.MODULE);
+							}
+						});
 						if (listLayoutId !== 'new') {
 							// loops through all list layouts and matches on selected id
 							const selectedListLayout = moduleResponse.LIST_LAYOUTS.find(
@@ -195,6 +254,21 @@ export class ListLayoutComponent implements OnInit {
 							);
 							this.setValueToForm(selectedListLayout);
 							const listLayout = this.convertListLayout(selectedListLayout);
+
+							// TRANSFORM FIELD IDS WHICH CONTAINS DOT
+							listLayout.COLUMN_SHOW.FIELDS.forEach((field) => {
+								if (field.indexOf('.') !== -1) {
+									const displayLabel = this.getNestedFields(
+										field,
+										moduleId,
+										''
+									);
+									listLayout.COLUMN_SHOW.FIELDS[
+										listLayout.COLUMN_SHOW.FIELDS.indexOf(field)
+									] = { FIELD_ID: field, DISPLAY_LABEL: displayLabel };
+								}
+							});
+
 							// add field objects in each column category based on the field id
 							moduleResponse.FIELDS.forEach((field) => {
 								if (
@@ -343,6 +417,60 @@ export class ListLayoutComponent implements OnInit {
 						}
 					);
 			}
+		}
+	}
+
+	public drop(event: CdkDragDrop<any[]>) {
+		if (event.previousContainer === event.container) {
+			moveItemInArray(
+				event.container.data,
+				event.previousIndex,
+				event.currentIndex
+			);
+		} else {
+			transferArrayItem(
+				event.previousContainer.data,
+				event.container.data,
+				event.previousIndex,
+				event.currentIndex
+			);
+			this.availableFields = this.availableFields.filter(
+				(field) => field.FIELD_ID.indexOf('.') === -1
+			);
+		}
+	}
+
+	// ADDING TO THE DERIVED TO SHOW COLUMNS
+	public addToShowColumns(field, relField, nestedField?) {
+		let fieldId = field.FIELD_ID + '.' + relField.FIELD_ID;
+		let displayLabel = field.DISPLAY_LABEL + '.' + relField.DISPLAY_LABEL;
+		if (nestedField) {
+			fieldId = fieldId + '.' + nestedField.FIELD_ID;
+			displayLabel = displayLabel + '.' + nestedField.DISPLAY_LABEL;
+		}
+		this.shownColumns.push({ DISPLAY_LABEL: displayLabel, FIELD_ID: fieldId });
+	}
+
+	// USED TO GET DISPLAY LABEL TO DISPLAY IN EXISTING SHOW COLUMN
+	public getNestedFields(field, moduleId, name): string {
+		if (field === null) {
+			return name;
+		} else if (field.indexOf('.') === -1) {
+			// LAST FIELD
+			const foundField = this.allModules[moduleId].find(
+				(moduleField) => moduleField.FIELD_ID === field
+			);
+			name = name + foundField.DISPLAY_LABEL;
+			return this.getNestedFields(null, null, name);
+		} else {
+			// WHEN THERE ARE MORE FIELDS
+			const split = field.split('.');
+			const fieldId = split.shift();
+			const currentField = this.allModules[moduleId].find(
+				(fieldNested) => fieldId === fieldNested.FIELD_ID
+			);
+			name = name + currentField.DISPLAY_LABEL + '.';
+			return this.getNestedFields(split.join('.'), currentField.MODULE, name);
 		}
 	}
 }
