@@ -14,6 +14,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.math.NumberUtils;
 import org.bson.Document;
 import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
@@ -76,6 +77,9 @@ public class NodeOperations {
 	private EmailChannelRepository emailChannelRepository;
 
 	@Autowired
+	private AggregationService aggregationService;
+
+	@Autowired
 	Global global;
 
 	@Autowired
@@ -123,24 +127,15 @@ public class NodeOperations {
 							moduleField -> moduleField.getFieldId().equals(oneToManyField.getRelationshipField()))
 							.findFirst().orElse(null);
 
-					Criteria criteria = new Criteria();
-					criteria.andOperator(Criteria.where("DELETED").is(false), Criteria.where("EFFECTIVE_TO").is(null),
-							Criteria.where(relatedField.getName()).is(instance.getEntry().get("DATA_ID").toString()));
-					Query query = new Query(criteria);
-
-					List<Map<String, Object>> relatedEntries = entryRepository.findAll(query,
-							moduleService.getCollectionName(relatedModule.getName(), company.getCompanyId()));
-
-					// TODO: HARDCODED TO HANDLE ONLY SUM FOR AGGREGATE FIELDS
-					double totalCost = 0;
-					for (Map<String, Object> entry : relatedEntries) {
-						if (entry.get(aggregationRelationshipField.getName()) != null) {
-							totalCost += Double.valueOf(entry.get(aggregationRelationshipField.getName()).toString());
-						}
-					}
+					Float aggValue = aggregationService.getAggregationValue(instance, aggregateField.getConditions(),
+							aggregateField, relatedField.getName(), instance.getEntry().get("DATA_ID").toString(),
+							relatedModule, aggregationRelationshipField.getName());
 
 					DecimalFormat formatter = new DecimalFormat("#,###.00");
-					return formatter.format(totalCost);
+					if (aggValue == null) {
+						return formatter.format(0);
+					}
+					return formatter.format(aggValue);
 				}
 
 			} else if (isDataType(module, section, "Relationship")) {
@@ -232,20 +227,24 @@ public class NodeOperations {
 						ModuleField formulaField = module.getFields().stream()
 								.filter(field -> field.getName().equals(section)).findFirst().orElse(null);
 
-						if (formulaField.getDataType().getBackend().equals("String")) {
-							return inputMessage.get(section).toString();
-						}
+						if (NumberUtils.isParsable(inputMessage.get(section).toString())) {
+							Double value = Double.parseDouble(inputMessage.get(section).toString());
+							String format = formulaField.getNumericFormat();
+							if (format == null || format.isBlank() || format.equals("None")) {
+								DecimalFormat formatter = new DecimalFormat("#,###.00");
+								return formatter.format(value);
+							} else {
+								DecimalFormat formatter = new DecimalFormat(format + ".00");
+								return formatter.format(value);
+							}
 
-						Double value = Double.parseDouble(inputMessage.get(section).toString());
-						String format = formulaField.getNumericFormat();
-						if (format == null || format.isBlank() || format.equals("None")) {
-							DecimalFormat formatter = new DecimalFormat("#,###.00");
-							return formatter.format(value);
 						} else {
-							DecimalFormat formatter = new DecimalFormat(format + ".00");
-							return formatter.format(value);
+							return inputMessage.get(section).toString();
+
 						}
 					} else {
+						System.out.println(section);
+						System.out.println(inputMessage.get(section));
 						return inputMessage.get(section).toString();
 					}
 
@@ -484,9 +483,9 @@ public class NodeOperations {
 	 */
 	private String getFormattedDateTimeValue(String value) {
 		try {
-			Date parsedDate = parseFormat.parse(value);
-			return new SimpleDateFormat("MMMM dd, yyyy HH:mm a").format(parsedDate);
-		} catch (ParseException e) {
+			Date parsedDate = new Date(Long.parseLong(value));
+			return new SimpleDateFormat("MMM dd, yyyy HH:mm a").format(parsedDate);
+		} catch (NumberFormatException e) {
 //			e.printStackTrace();
 		}
 		return "";
@@ -497,15 +496,10 @@ public class NodeOperations {
 	 */
 	private String getFormattedDateValue(String value) {
 		try {
-			Date parsedDate = parseFormat.parse(value);
-			return new SimpleDateFormat("MMMM dd, yyyy").format(parsedDate);
-		} catch (ParseException e) {
-			try {
-				Date parsedDate = new Date(Long.valueOf(value));
-				return new SimpleDateFormat("MMMM dd, yyyy").format(parsedDate);
-			} catch (NumberFormatException e1) {
-				e1.printStackTrace();
-			}
+			Date parsedDate = new Date(Long.valueOf(value));
+			return new SimpleDateFormat("MMM dd, yyyy").format(parsedDate);
+		} catch (NumberFormatException e1) {
+//			e1.printStackTrace();
 		}
 		return "";
 	}
@@ -515,10 +509,10 @@ public class NodeOperations {
 	 */
 	private String getFormattedTimeValue(String value) {
 		try {
-			Date parsedDate = parseFormat.parse(value);
+			Date parsedDate = new Date(Long.valueOf(value));
 			return new SimpleDateFormat("HH:mm a").format(parsedDate);
-		} catch (ParseException e) {
-			e.printStackTrace();
+		} catch (NumberFormatException e) {
+//			e.printStackTrace();
 		}
 		return "";
 	}
