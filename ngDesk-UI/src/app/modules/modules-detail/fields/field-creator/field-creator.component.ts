@@ -838,6 +838,19 @@ export class FieldCreatorComponent implements OnInit {
 			this.relationshipObj.DISPLAY_LABEL.toUpperCase().replace(/ /g, '_');
 	}
 
+	/** restricting the space  */
+
+	public restrictSpaceAndSpecialChar(event): boolean {
+		const charCode = event.which ? event.which : event.keyCode;
+		return (
+			((charCode > 64 && charCode < 91) ||
+			(charCode > 96 && charCode < 123) ||
+			charCode == 8 ||
+			charCode == 32 ||
+			(charCode >= 48 && charCode <= 57)) && (charCode != 32)
+		);
+	}
+
 	public save() {
 		this.errorMessage = '';
 		if (
