@@ -17,7 +17,7 @@
 						<mat-error>{{'REQUIRED_FIELD' | translate}}</mat-error>
 					</mat-form-field>
 					<mat-form-field>
-						<input matInput placeholder="System label" formControlName="systemLabel" (blur)="overrideSysLabel = false" required>
+						<input matInput placeholder="System label" formControlName="systemLabel" (blur)="overrideSysLabel = false" (keypress)="restrictSpaceAndSpecialChar($event)" required>
 						<mat-error *ngIf="fieldNameFormGroup.controls.systemLabel.errors?.required">
 							{{'REQUIRED_FIELD' | translate}}</mat-error>
 						<mat-error *ngIf="fieldNameFormGroup.controls.systemLabel.errors?.pattern">
@@ -195,7 +195,11 @@
 							<mat-error>{{'REQUIRED_FIELD' | translate}}</mat-error>
 						</mat-form-field>
 						<mat-form-field>
+<<<<<<< HEAD
 							<input matInput placeholder="System label" formControlName="systemLabel" required >
+=======
+							<input matInput placeholder="System label" formControlName="systemLabel" required (keypress)="restrictSpaceAndSpecialChar($event)">
+>>>>>>> main
 							<mat-error *ngIf="fieldFilePreviewNameFormGroup.controls.systemLabel.errors?.required">
 								{{'REQUIRED_FIELD' | translate}}</mat-error>
 							<mat-error *ngIf="fieldFilePreviewNameFormGroup.controls.systemLabel.errors?.pattern">
@@ -459,7 +463,11 @@
 						<input disabled matInput placeholder="Display label" [(ngModel)]=field.DISPLAY_LABEL>
 					</mat-form-field>
 					<mat-form-field>
+<<<<<<< HEAD
 						<input disabled matInput  placeholder="System label" [(ngModel)]=field.NAME >
+=======
+						<input disabled matInput placeholder="System label" [(ngModel)]=field.NAME (keypress)="restrictSpaceAndSpecialChar($event)">
+>>>>>>> main
 					</mat-form-field>
 					<mat-form-field
 						*ngIf="field.relationshipType==='One to One' || field.relationshipType==='Many to Many' || field.relationshipType==='One to Many'"
@@ -506,7 +514,7 @@
 							(keyup)="updateRelationFieldName()">
 					</mat-form-field>
 					<mat-form-field style="width: 100%;">
-						<input matInput type="text" placeholder="System label" [(ngModel)]="relationshipObj.NAME">
+						<input matInput type="text" placeholder="System label" [(ngModel)]="relationshipObj.NAME" (keypress)="restrictSpaceAndSpecialChar($event)">
 					</mat-form-field>
 					<mat-form-field
 						*ngIf="field.relationshipType==='One to One'|| field.relationshipType==='Many to Many'|| field.relationshipType==='One to Many'"
@@ -791,14 +799,14 @@
 			<form [formGroup]="fieldSelectFormGroup" (ngSubmit)="save()">
 				<div fxLayout="row">
 					<mat-form-field fxFlex="100">
-						<textarea matInput cdkTextareaAutosize #myTextArea (click)="onClickOfTextArea(myTextArea)" cdkAutosizeMinRows="5"
+						<textarea matInput cdkTextareaAutosize id="myTextArea" (click)="onClickOfTextArea($event.srcElement)" cdkAutosizeMinRows="5"
 							placeholder="Create a Formula *" formControlName="formulaString" (keydown)="onkeydownOfFormula($event)"> </textarea>
 					</mat-form-field>
 				</div>
 				<div fxLayout="row wrap">
 					<div *ngFor="let field of formulaFields; index as i">
 						<button
-							*ngIf="field.DATA_TYPE.DISPLAY  !== 'Relationship' && field.RELATIONSHIP_TYPE !== 'One to Many'  || isDefaultField(field)"
+							*ngIf="field.DATA_TYPE.DISPLAY  !== 'Relationship' && field.RELATIONSHIP_TYPE !== 'One to Many' || isDefaultField(field)"
 							type="button" style="margin-top:5px; margin-right:5px" mat-raised-button color="primary"
 							(click)="insertInToBody(field)">{{field.DISPLAY_LABEL}}
 						</button>
@@ -810,21 +818,21 @@
 						<mat-menu #relationshipVars="matMenu">
 							<ng-container *ngFor="let relField of relatedFields[field.MODULE]; index as j">
 								<button *ngIf="field.DATA_TYPE.DISPLAY !== 'Relationship'  || isDefaultField(relField)" mat-menu-item
-									(click)="concatenateVariables(field, relField)">{{relField.DISPLAY_LABEL}}</button>
+									(click)="concatenateVariables(field,undefined,undefined, relField)">{{relField.DISPLAY_LABEL}}</button>
 								<button
 									*ngIf="relField.DATA_TYPE.DISPLAY === 'Relationship' && relField.RELATIONSHIP_TYPE !== 'Many to Many' && relField.RELATIONSHIP_TYPE !== 'One to Many' && !isDefaultField(relField)"
 									mat-menu-item [matMenuTriggerFor]="subRelationshipVars">{{relField.DISPLAY_LABEL}}</button>
 								<mat-menu #subRelationshipVars="matMenu">
 									<ng-container *ngFor="let levelTwoRelField of relatedFields[relField.MODULE]; index as k">
 										<button *ngIf="levelTwoRelField.DATA_TYPE.DISPLAY !== 'Relationship' || isDefaultField(levelTwoRelField)" mat-menu-item
-											(click)="concatenateVariables(field, relField, levelTwoRelField)">{{levelTwoRelField.DISPLAY_LABEL}}</button>
+											(click)="concatenateVariables(field, undefined,undefined,relField, levelTwoRelField)">{{levelTwoRelField.DISPLAY_LABEL}}</button>
 										<button
 											*ngIf="levelTwoRelField.DATA_TYPE.DISPLAY === 'Relationship' && levelTwoRelField.RELATIONSHIP_TYPE !== 'Many to Many' && !isDefaultField(levelTwoRelField)"
 											mat-menu-item [matMenuTriggerFor]="subSubRelationshipVars">{{levelTwoRelField.DISPLAY_LABEL}}</button>
 										<mat-menu #subSubRelationshipVars="matMenu">
 											<ng-container *ngFor="let levelThreeRelField of relatedFields[levelTwoRelField.MODULE]; index as l">
 												<button *ngIf="levelThreeRelField.DATA_TYPE.DISPLAY  !== 'Relationship'" mat-menu-item
-													(click)="concatenateVariables(field, relField, levelTwoRelField, levelThreeRelField)">{{levelThreeRelField.DISPLAY_LABEL}}</button>
+													(click)="concatenateVariables(field,undefined,undefined, relField, levelTwoRelField, levelThreeRelField)">{{levelThreeRelField.DISPLAY_LABEL}}</button>
 											</ng-container>
 										</mat-menu>
 									</ng-container>
@@ -1072,6 +1080,106 @@
 				</mat-checkbox>
 			</div>
 		</div>
+
+		<!--LIST FORMULA-->
+		<div fxLayout="column" *ngSwitchCase="'List Formula'">
+			<label class="mat-body-strong" fxLayoutAlign="end center">{{"ADD_FORMULA" | translate}}
+				<button mat-icon-button>
+					<mat-icon class="pointer" (click)="addFormulaToList()">add_circle</mat-icon>
+				</button></label>
+			<mat-accordion>
+				<div [formArray]="listFormulaFormArray" (ngSubmit)="save()">
+					<div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap=10px class="pad10"
+						*ngFor="let formulaGroup of listFormulaFormArray.controls; let i = index">
+						<mat-expansion-panel expanded>
+							<mat-expansion-panel-header>
+								<mat-panel-title>
+									{{formulaGroup.value.FORMULA_LABEL}}
+								</mat-panel-title>
+								<mat-panel-description>
+									{{formulaGroup.value.formulaString}}
+								</mat-panel-description>
+							</mat-expansion-panel-header>
+							<form [formGroup]="formulaGroup">
+								<div fxLayoutAlign="start center" fxLayoutGap=10px>
+									<mat-form-field>
+										<input matInput (keyup)="updateFormulaName(formulaGroup)" formControlName="FORMULA_LABEL" type="text"
+											placeholder="{{'FORMULA_LABEL' | translate}}" required>
+									</mat-form-field>
+									<mat-form-field>
+										<input matInput formControlName="FORMULA_NAME" type="text" placeholder="{{'FORMULA_NAME' | translate}}" required>
+									</mat-form-field>
+								</div>
+								<div fxLayout="row">
+									<mat-form-field fxFlex="100">
+										<textarea matInput cdkTextareaAutosize [id]="'myTextArea' + i" (click)="onClickOfTextArea($event.srcElement)"
+											cdkAutosizeMinRows="5" placeholder="Create a Formula *" formControlName="formulaString"
+											(keydown)="onkeydownOfFormula($event)"> </textarea>
+									</mat-form-field>
+								</div>
+								<div fxLayout="row wrap">
+									<div *ngFor="let field of formulaFields; index as f">
+										<button
+											*ngIf="field.DATA_TYPE.DISPLAY  !== 'Relationship' && field.RELATIONSHIP_TYPE !== 'One to Many'  || isDefaultField(field)"
+											type="button" style="margin-top:5px; margin-right:5px" mat-stroked-button color="primary"
+											(click)="insertInToBody(field,formulaGroup, i)">{{field.DISPLAY_LABEL}}
+										</button>
+
+										<button
+											*ngIf="field.DATA_TYPE.DISPLAY  === 'Relationship' && field.RELATIONSHIP_TYPE !== 'One to Many' && field.RELATIONSHIP_TYPE !== 'Many to Many' && !isDefaultField(field)"
+											type="button" style="margin-top:5px; margin-right:5px" mat-stroked-button color="primary"
+											[matMenuTriggerFor]="relationshipVars">{{field.DISPLAY_LABEL}}</button>
+										<mat-menu #relationshipVars="matMenu">
+											<ng-container *ngFor="let relField of relatedFields[field.MODULE]; index as j">
+												<button *ngIf="field.DATA_TYPE.DISPLAY !== 'Relationship'  || isDefaultField(relField)" mat-menu-item
+													(click)="concatenateVariables(field, formulaGroup,i,relField)">{{relField.DISPLAY_LABEL}}</button>
+												<button
+													*ngIf="relField.DATA_TYPE.DISPLAY === 'Relationship' && relField.RELATIONSHIP_TYPE !== 'Many to Many' && relField.RELATIONSHIP_TYPE !== 'One to Many' && !isDefaultField(relField)"
+													mat-menu-item [matMenuTriggerFor]="subRelationshipVars">{{relField.DISPLAY_LABEL}}</button>
+												<mat-menu #subRelationshipVars="matMenu">
+													<ng-container *ngFor="let levelTwoRelField of relatedFields[relField.MODULE]; index as k">
+														<button *ngIf="levelTwoRelField.DATA_TYPE.DISPLAY !== 'Relationship' || isDefaultField(levelTwoRelField)"
+															mat-menu-item
+															(click)="concatenateVariables(field, formulaGroup,i,relField, levelTwoRelField)">{{levelTwoRelField.DISPLAY_LABEL}}</button>
+														<button
+															*ngIf="levelTwoRelField.DATA_TYPE.DISPLAY === 'Relationship' && levelTwoRelField.RELATIONSHIP_TYPE !== 'Many to Many' && !isDefaultField(levelTwoRelField)"
+															mat-menu-item [matMenuTriggerFor]="subSubRelationshipVars">{{levelTwoRelField.DISPLAY_LABEL}}</button>
+														<mat-menu #subSubRelationshipVars="matMenu">
+															<ng-container *ngFor="let levelThreeRelField of relatedFields[levelTwoRelField.MODULE]; index as l">
+																<button *ngIf="levelThreeRelField.DATA_TYPE.DISPLAY  !== 'Relationship'" mat-menu-item
+																	(click)="concatenateVariables(field, formulaGroup,i, relField, levelTwoRelField, levelThreeRelField)">{{levelThreeRelField.DISPLAY_LABEL}}</button>
+															</ng-container>
+														</mat-menu>
+													</ng-container>
+												</mat-menu>
+											</ng-container>
+										</mat-menu>
+									</div>
+								</div>
+								<mat-divider style="margin-top: 10px" fxLayout="row wrap"></mat-divider>
+								<div style="padding: 20px 10px 0 10px;" fxLayout="row wrap" fxLayoutGap="10px grid">
+									<mat-chip-list>
+										<mat-chip class="mat-h4" *ngFor="let field of formulaOperators" (click)="insertInToBody(field, formulaGroup, i)"
+											color="primary" selected>
+											{{field.DISPLAY_LABEL}}</mat-chip>
+									</mat-chip-list>
+								</div>
+								<mat-divider style="margin-top: 10px" fxLayout="row wrap"></mat-divider>
+								<div style="padding: 20px 10px 0 10px;" fxLayout="row wrap" fxLayoutGap="10px grid">
+									<mat-chip-list>
+										<mat-chip class="mat-h4" *ngFor="let field of formulaSpecialOperators" (click)="insertInToBody(field, formulaGroup, i)"
+											color="primary" selected>
+											{{field.DISPLAY_LABEL}}</mat-chip>
+									</mat-chip-list>
+								</div>
+							</form>
+						</mat-expansion-panel>
+						<mat-icon class="pointer" (click)="removeFormulaFromList(i)">remove_circle</mat-icon>
+					</div>
+				</div>
+			</mat-accordion>
+		</div>
+		<!-- END LIST FORMULA-->
 
 		<!--APPROVAL-->
 		<div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px" *ngSwitchCase="'Approval'">

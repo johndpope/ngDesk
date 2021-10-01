@@ -42,8 +42,8 @@ public class CustomReportRepositoryImpl implements CustomReportRepository {
 	}
 
 	@Override
-	public Optional<List<Report>> findByCollectionName(String collectionName) {
-		return Optional.ofNullable(mongoOperations.find(new Query(), Report.class, collectionName));
+	public List<Report> findByCollectionName(String collectionName) {
+		return mongoOperations.find(new Query(), Report.class, collectionName);
 	}
 
 }

@@ -210,8 +210,6 @@ export class ReceiptCaptureService {
 
 	loadReceiptUploaderView(panel, panelName, xPos, yPos, panelIndex, field) {
 		let width = panel['GRIDS'][xPos][yPos].WIDTH;
-		let oneRowHeight = 77;
-		let receiptHeight = oneRowHeight * panel['GRIDS'].length - 1;
 
 		return `<div style ="padding-right:10px; padding-bottom:10px;padding-left:20px; padding-top:10px;"  fxLayoutGap="10px">
 
@@ -233,8 +231,8 @@ export class ReceiptCaptureService {
 
 	
  	<div fxLayout="column" *ngIf = "context.receiptAttachments.length>0" fxLayoutAlign="start end" class="CELL_${panelName}_${xPos}_${yPos}" fxFlex="{{context.panels[${panelIndex}].GRIDS[${xPos}][${yPos}].WIDTH}}" [ngStyle]="{'border-radius': '5px'}">
-  			<img *ngIf = "context.receiptAttachments[0].ATTACHMENT_UUID" [src]=  "context.createURLForReceiptPreview(context.receiptAttachments[0].ATTACHMENT_UUID,'${field.FIELD_ID}')"  width="${width}%" height ="${receiptHeight}px" style = "position: relative;">
-			<img *ngIf = "context.receiptAttachments[0].FILE" [src]=  "context.receiptAttachments[0].FILE"  width="${width}%" height ="${receiptHeight}px" style = "position: relative;">	
+  			<img *ngIf = "context.receiptAttachments[0].ATTACHMENT_UUID" [src]=  "context.createURLForReceiptPreview(context.receiptAttachments[0].ATTACHMENT_UUID,'${field.FIELD_ID}')"  width="${width}%" height ="auto" style = "position: relative;">
+			<img *ngIf = "context.receiptAttachments[0].FILE" [src]=  "context.receiptAttachments[0].FILE"  width="${width}%" height ="auto" style = "position: relative;">	
 			<div fxLayout="row"style = "position: absolute;">
 			<button *ngIf = "context.receiptAttachments[0].ATTACHMENT_UUID" mat-icon-button   type = "button" (click)="context.SaveAttachnent(context.receiptAttachments[0].ATTACHMENT_UUID,'${field.FIELD_ID}')" title  = "Download" color = "primary"><mat-icon class="pointer">save_alt</mat-icon></button>
 			<button *ngIf = "context.receiptAttachments[0].ATTACHMENT_UUID || context.receiptAttachments[0].FILE "  mat-icon-button   type = "button" (click)="context.removeReceiptCaptured('${field.NAME}')" title  = "Delete"><mat-icon class="pointer">clear</mat-icon></button>
