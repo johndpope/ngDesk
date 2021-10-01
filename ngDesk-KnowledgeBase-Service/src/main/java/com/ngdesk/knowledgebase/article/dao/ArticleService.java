@@ -74,6 +74,7 @@ public class ArticleService {
 	}
 
 	public Article setDefaultValuesForUpdate(Article article, Article oldArticle) {
+		article.setOrder(oldArticle.getOrder());
 		article.setCreatedBy(oldArticle.getCreatedBy());
 		article.setDateCreated(oldArticle.getDateCreated());
 		article.setDateUpdated(new Date());

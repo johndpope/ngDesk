@@ -96,6 +96,7 @@ public class SectionAPI {
 	}
 
 	public Section setDefaultValuesForUpdate(Section section, Section existingSection) {
+		section.setOrder(existingSection.getOrder());
 		section.setCreatedBy(existingSection.getCreatedBy());
 		section.setDateCreated(existingSection.getDateCreated());
 		section.setDateUpdated(new Date());
