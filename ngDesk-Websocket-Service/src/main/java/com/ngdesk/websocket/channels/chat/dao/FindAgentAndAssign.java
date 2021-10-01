@@ -55,8 +55,13 @@ public class FindAgentAndAssign {
 	DataProxy dataProxy;
 
 	public void assignChatToAgent(Company company, ChatUser chatUser, Map<String, Object> customer) {
-
 		String companyId = company.getId();
+		Optional<Map<String, Object>> optionalCustomerRoleEntry = entryRepository
+				.findById(customer.get("ROLE").toString(), "roles_" + companyId);
+		String customerRole = null;
+		if (optionalCustomerRoleEntry.isPresent()) {
+			customerRole = optionalCustomerRoleEntry.get().get("NAME").toString();
+		}
 		Optional<Module> optionalChatModule = modulesRepository.findModuleByName("Chat", "modules_" + company.getId());
 		List<String> teamsWhoCanChat = company.getChatSettings().getTeamsWhoCanChat();
 		ConcurrentHashMap<String, UserSessions> sessionMap = sessionService.sessions.get(company.getCompanySubdomain());
@@ -80,7 +85,6 @@ public class FindAgentAndAssign {
 				}
 			}
 		}
-
 		if (agentUserEntry != null) {
 			Optional<Map<String, Object>> optionalContactEntry = entryRepository
 					.findById(agentUserEntry.get("CONTACT").toString(), "Contacts_" + companyId);
@@ -110,7 +114,6 @@ public class FindAgentAndAssign {
 					isTeams = true;
 				}
 			}
-
 			// Check the status and teams
 			if (isTeams) {
 				Optional<Map<String, Object>> optionalChatEntry = entryRepository
@@ -166,27 +169,27 @@ public class FindAgentAndAssign {
 							chatEntry.put("STATUS", "Chatting");
 							dataProxy.putModuleEntry(chatEntry, optionalChatModule.get().getModuleId(), false,
 									companyId, customer.get("USER_UUID").toString());
-
 							// Notify the agent that You have been assigned a new chat
 							Notification notifyAgent = new Notification(company.getId(), chatModule.getModuleId(),
 									customer.get("_id").toString(), agentUserEntry.get("_id").toString(), new Date(),
 									new Date(), false, "You have been assigned a new chat");
 							redisTemplate.convertAndSend("notification", notifyAgent);
 
-							NotificationOfAgentDetails notify = new NotificationOfAgentDetails(companyId,
-									agentFirstName, agentLastName, agentUserEntry.get("_id").toString(),
+							NotificationOfAgentDetails notificationOfAgentDetails = new NotificationOfAgentDetails(
+									companyId, agentFirstName, agentLastName, agentUserEntry.get("_id").toString(),
 									customer.get("_id").toString(), true, chatUser.getSessionUUID(), "AGENTS_DATA",
-									new Date(), agentRole);
-							redisTemplate.convertAndSend("agents-available", notify);
+									new Date(), agentRole, customerRole, customer.get("USER_UUID").toString());
+							redisTemplate.convertAndSend("agents-available", notificationOfAgentDetails);
 
 						}
 					}
 				}
 			}
 		} else {
-			NotificationOfAgentDetails notify = new NotificationOfAgentDetails(companyId, null, null, null,
-					customer.get("_id").toString(), true, chatUser.getSessionUUID(), "AGENTS_DATA", new Date(), null);
-			redisTemplate.convertAndSend("agents-available", notify);
+			NotificationOfAgentDetails notificationOfAgentDetails = new NotificationOfAgentDetails(companyId, null,
+					null, null, customer.get("_id").toString(), false, chatUser.getSessionUUID(), "AGENTS_DATA", null,
+					null, customerRole, customer.get("USER_UUID").toString());
+			redisTemplate.convertAndSend("agents-available", notificationOfAgentDetails);
 
 		}
 	}

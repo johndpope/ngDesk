@@ -24,13 +24,17 @@ public class NotificationOfAgentDetails {
 
 	private String agentRole;
 
+	private String customerRole;
+
+	private String customerUuid;
+
 	public NotificationOfAgentDetails() {
 
 	}
 
 	public NotificationOfAgentDetails(String companyId, String agentFirstName, String agentLastName, String agentDataId,
 			String customerDataId, Boolean agentsAvailable, String sessionUuid, String messageType,
-			Date agentAssignedTime, String agentRole) {
+			Date agentAssignedTime, String agentRole, String customerRole, String customerUuid) {
 		super();
 		this.companyId = companyId;
 		this.agentFirstName = agentFirstName;
@@ -42,6 +46,8 @@ public class NotificationOfAgentDetails {
 		this.messageType = messageType;
 		this.agentAssignedTime = agentAssignedTime;
 		this.agentRole = agentRole;
+		this.customerRole = customerRole;
+		this.customerUuid = customerUuid;
 	}
 
 	public String getCompanyId() {
@@ -122,6 +128,22 @@ public class NotificationOfAgentDetails {
 
 	public void setAgentRole(String agentRole) {
 		this.agentRole = agentRole;
+	}
+
+	public String getCustomerRole() {
+		return customerRole;
+	}
+
+	public void setCustomerRole(String customerRole) {
+		this.customerRole = customerRole;
+	}
+
+	public String getCustomerUuid() {
+		return customerUuid;
+	}
+
+	public void setCustomerUuid(String customerUuid) {
+		this.customerUuid = customerUuid;
 	}
 
 }
