@@ -113,7 +113,6 @@ public class RelationshipFieldService {
 				"Time Window", "Approval", "Zoom", "Password", "File Upload", "Aggregate", "File Preview");
 		if (optionalField.isPresent()) {
 			ModuleField relatedField = optionalField.get();
-			System.out.println("relatedField.getGroupId()==" + relatedField.getGroupId());
 			if (notAllowedPrimaryTypes.contains(relatedField.getDataType().getDisplay())) {
 				String[] vars = { relatedField.getName() };
 				throw new BadRequestException("INVALID_PRIMARY_DISPLAY_FIELD", vars);
