@@ -298,12 +298,12 @@ public class DataService {
 				if (!customOperators.contains(fields[0])) {
 					ModuleField moduleField = moduleFields.stream().filter(field -> field.getName().equals(fields[0]))
 							.findFirst().orElse(null);
-					if (moduleField.getDataType().getDisplay().equals("Formula")) {
+					if (moduleField!= null && moduleField.getDataType().getDisplay().equals("Formula")) {
 						String updatedFormula = getFormulaRecursively(moduleField, moduleFields,
 								moduleField.getFormula(), entry);
 						formula = formula.replaceAll("\\{\\{" + matcher.group(1) + "\\}\\}",
 								"(" + updatedFormula + ")");
-					} else if (moduleField.getDataType().getDisplay().equals("List Formula")) {
+					} else if (moduleField!= null && moduleField.getDataType().getDisplay().equals("List Formula")) {
 						List<ListFormulaField> listFormulas = moduleField.getListFormula();
 						String updatedListFormula = "";
 						List<String> listOfFormulas = new ArrayList<String>();
