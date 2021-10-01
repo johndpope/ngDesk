@@ -56,7 +56,7 @@ public class AttachmentService {
 			@RequestParam(value = "message_id", required = false) String messageId,
 			@RequestParam("entry_id") String entryId,
 			@RequestParam(value = "module_id", required = false) String moduleId) {
-
+		System.out.println("12345===========================");
 		try {
 			log.trace("Enter AttachmentService.getAttachment()");
 
@@ -85,21 +85,21 @@ public class AttachmentService {
 						throw new BadRequestException("ARTICLE_DOES_NOT_EXISTS");
 					}
 
-					if (articleDocument.containsKey("ATTACHMENTS") && articleDocument.get("ATTACHMENTS") != null) {
+					if (articleDocument.containsKey("attachments") && articleDocument.get("attachments") != null) {
 
 						Document attachmentDocument = attachmentsCollection
-								.find(Filters.eq("ATTACHMENT_UUID", attachmentUuid)).first();
+								.find(Filters.eq("attachmentUuid", attachmentUuid)).first();
 						if (attachmentDocument == null) {
 							throw new BadRequestException("INVALID_ATTACHMENT_UUID");
 						}
 
-						String hash = attachmentDocument.getString("HASH");
+						String hash = attachmentDocument.getString("hash");
 
-						List<Document> attachments = (List<Document>) articleDocument.get("ATTACHMENTS");
+						List<Document> attachments = (List<Document>) articleDocument.get("attachments");
 						for (Document attachment : attachments) {
-							if (hash.equals(attachment.getString("HASH"))) {
-								String file = attachmentDocument.getString("FILE");
-								String fileName = attachment.getString("FILE_NAME");
+							if (hash.equals(attachment.getString("hash"))) {
+								String file = attachmentDocument.getString("file");
+								String fileName = attachment.getString("fileName");
 								byte[] decoded = Base64.decodeBase64(file.getBytes());
 
 								HttpHeaders headers = new HttpHeaders();
@@ -143,7 +143,8 @@ public class AttachmentService {
 					}
 				}
 
-				MongoCollection<Document> entriesCollection = mongoTemplate.getCollection(moduleName.replaceAll("\\s+", "_") + "_" + companyId);
+				MongoCollection<Document> entriesCollection = mongoTemplate
+						.getCollection(moduleName.replaceAll("\\s+", "_") + "_" + companyId);
 				Document entry = entriesCollection
 						.find(Filters.and(Filters.eq("_id", new ObjectId(entryId)), Filters.eq("DELETED", false)))
 						.first();
@@ -158,24 +159,24 @@ public class AttachmentService {
 						if (message.getString("MESSAGE_ID").equals(messageId)) {
 
 							Document attachment = attachmentsCollection
-									.find(Filters.eq("ATTACHMENT_UUID", attachmentUuid)).first();
+									.find(Filters.eq("attachmentUuid", attachmentUuid)).first();
 
 							if (attachment == null) {
 								throw new ForbiddenException("INVALID_ATTACHMENT_UUID");
 							}
 
-							List<Document> messageAttachments = (List<Document>) message.get("ATTACHMENTS");
+							List<Document> messageAttachments = (List<Document>) message.get("attachments");
 							String fileName = null;
 
 							for (Document messageAttachment : messageAttachments) {
-								if (messageAttachment.getString("HASH")
-										.equalsIgnoreCase(attachment.getString("HASH"))) {
-									fileName = messageAttachment.getString("FILE_NAME");
+								if (messageAttachment.getString("hash")
+										.equalsIgnoreCase(attachment.getString("hash"))) {
+									fileName = messageAttachment.getString("fileName");
 									break;
 								}
 							}
 
-							String file = attachment.getString("FILE");
+							String file = attachment.getString("file");
 							byte[] decoded = Base64.decodeBase64(file.getBytes());
 
 							HttpHeaders headers = new HttpHeaders();
@@ -242,13 +243,13 @@ public class AttachmentService {
 						String json = new ObjectMapper().writeValueAsString(attachment);
 						Document attachmentDoc = Document.parse(json);
 
-						Document document = attachmentsCollection.find(Filters.eq("HASH", attachment.getHash()))
+						Document document = attachmentsCollection.find(Filters.eq("hash", attachment.getHash()))
 								.first();
 						if (document == null) {
-							attachmentDoc.remove("FILE_NAME");
+							attachmentDoc.remove("fileName");
 							attachmentsCollection.insertOne(attachmentDoc);
 						} else {
-							attachment.setAttachmentUuid(document.getString("ATTACHMENT_UUID"));
+							attachment.setAttachmentUuid(document.getString("attachmentUuid"));
 						}
 
 						attachment.setFile(null);

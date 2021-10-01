@@ -111,6 +111,7 @@ public class ArticleService {
 				newAttachment.setAttachmentUuid(UUID.randomUUID().toString());
 				newAttachment.setHash(hash);
 				newAttachment.setFileName(attachment.getFileName());
+				newAttachment.setFile(attachment.getFile());
 				articleRepository.saveAttachment(newAttachment,
 						"attachments_" + authManager.getUserDetails().getCompanyId());
 				attachmentList.add(newAttachment);
@@ -120,7 +121,7 @@ public class ArticleService {
 				newAttachment.setAttachmentUuid(optionalHash.get().getAttachmentUuid());
 				newAttachment.setFileName(attachment.getFileName());
 				attachmentList.add(newAttachment);
-				
+
 			}
 
 			article.setAttachments(attachmentList);
