@@ -92,6 +92,9 @@ public class ModuleField {
 	@Field("FORMULA")
 	private String formula;
 
+	@Field("LIST_FORMULA")
+	private List<ListFormulaField> listFormula;
+
 	@Field("CREATED_BY")
 	private String createdBy;
 
@@ -131,9 +134,10 @@ public class ModuleField {
 			Integer maxSize, Boolean autonumberGeneration, Long autonumberStartingNumber,
 			Boolean picklistDisplayAlphabetically, Boolean picklistUseFirstValue, List<String> picklistValues,
 			String groupId, DataFilter dataFilter, String aggregationType, String aggregationField,
-			String aggregationRelatedField, Map<String, String> inheritanceMapping, String formula, String createdBy,
-			String lastUpdatedBy, String prefix, String suffix, String numericFormat, Boolean inherited,
-			String toCurrency, String fromCurrency, String dateIncurred, List<Condition> conditions) {
+			String aggregationRelatedField, Map<String, String> inheritanceMapping, String formula,
+			List<com.ngdesk.graphql.modules.dao.ListFormulaField> listFormula, String createdBy, String lastUpdatedBy,
+			String prefix, String suffix, String numericFormat, Boolean inherited, String toCurrency,
+			String fromCurrency, String dateIncurred, List<Condition> conditions) {
 		super();
 		this.fieldId = fieldId;
 		this.name = name;
@@ -162,6 +166,7 @@ public class ModuleField {
 		this.aggregationRelatedField = aggregationRelatedField;
 		this.inheritanceMapping = inheritanceMapping;
 		this.formula = formula;
+		this.listFormula = listFormula;
 		this.createdBy = createdBy;
 		this.lastUpdatedBy = lastUpdatedBy;
 		this.prefix = prefix;
@@ -388,6 +393,14 @@ public class ModuleField {
 
 	public void setFormula(String formula) {
 		this.formula = formula;
+	}
+
+	public List<ListFormulaField> getListFormula() {
+		return listFormula;
+	}
+
+	public void setListFormula(List<ListFormulaField> listFormula) {
+		this.listFormula = listFormula;
 	}
 
 	public String getCreatedBy() {
