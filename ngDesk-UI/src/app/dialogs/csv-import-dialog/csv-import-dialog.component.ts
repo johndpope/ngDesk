@@ -46,25 +46,28 @@ export class CsvImportDialogComponent implements OnInit {
 	public separators = ['-', 'Blank space'];
 	public selectedDateTimeFormat;
 	public dateTimeFormat = [
-		'dd/MM/yyyy hh:mm:ss',
-		'dd-MM-yyyy hh:mm:ss',
-		'MM/dd/yyyy hh:mm:ss',
-		'MM-dd-yyyy hh:mm:ss',
+		'dd/mm/yyyy hh:mm:ss',
+		'dd-mm-yyyy hh:mm:ss',
+		'mm/dd/yyyy hh:mm:ss',
+		'mm-dd-yyyy hh:mm:ss',
 	];
 	public selectedDate;
 	public dateFormat = [
-		'dd/MM/yyyy',
-		'MM/dd/yyyy',
-		'dd-MM-yyyy',
-		'MM-dd-yyyy',
-		'dd MMM yyyy',
-		'dd MMMM yyyy',
-		'MMM dd, yyyy',
-		'MMMM dd, yyyy',
+		'dd/mm/yyyy',
+		'mm/dd/yyyy',
+		'dd-mm-yyyy',
+		'mm-dd-yyyy',
+		'dd mmm yyyy',
+		'dd mmmm yyyy',
+		'mmm dd, yyyy',
+		'mmmm dd, yyyy',
 	];
 	public selectedTimeFormat;
 	public timeFormat = ['h:mm', 'h:mm:ss'];
-
+	public dateField: boolean;
+	public phoneField: boolean;
+	public dateTimeField: boolean;
+	public timeField: boolean;
 	constructor(
 		@Inject(MAT_DIALOG_DATA) public data: any,
 		public dialogRef: MatDialogRef<CsvImportDialogComponent>,
@@ -96,6 +99,15 @@ export class CsvImportDialogComponent implements OnInit {
 				field.NAME !== 'ROLE'
 			) {
 				this.fields.push(field);
+				if (field.DATA_TYPE.DISPLAY === 'Date') {
+					this.dateField = true;
+				} else if (field.DATA_TYPE.DISPLAY === 'Phone') {
+					this.phoneField = true;
+				} else if (field.DATA_TYPE.DISPLAY === 'Date/Time') {
+					this.dateTimeField = true;
+				} else if (field.DATA_TYPE.DISPLAY === 'Time') {
+					this.timeField = true;
+				}
 				if (this.headers && this.headers.includes(field.DISPLAY_LABEL)) {
 					selectedFieldsDropdown[i] = field.DISPLAY_LABEL;
 				}
