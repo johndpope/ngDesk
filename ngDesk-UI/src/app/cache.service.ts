@@ -562,11 +562,6 @@ export class CacheService {
 								);
 							} else if (field.DATA_TYPE.BACKEND === 'BLOB') {
 								graphqlQuery = this.buildBlobQuery(graphqlQuery, field.NAME);
-							} else if (field.DATA_TYPE.DISPLAY === 'List Formula') {
-								graphqlQuery = this.buildListFormulaQuery(
-									graphqlQuery,
-									field.NAME
-								);
 							}
 						}
 					}
@@ -582,18 +577,6 @@ export class CacheService {
 				};
 			})
 		);
-	}
-
-	public buildListFormulaQuery(graphqlQuery, fieldName) {
-		graphqlQuery = graphqlQuery.replace(
-			"'" + fieldName + "'",
-			fieldName +
-				`{
-				FORMULA_NAME
-				VALUE
-			}`
-		);
-		return graphqlQuery;
 	}
 
 	public buildDiscussionQuery(graphqlQuery, fieldName) {

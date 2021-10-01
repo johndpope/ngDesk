@@ -222,7 +222,7 @@ export class TriggersDetailService {
 			);
 
 		const templatesResponse = this.htmlTemplateApiService
-			.getTemplates(moduleId)
+			.getTemplates(this.moduleId)
 			.pipe(
 				map((response) => {
 					return response['content'];

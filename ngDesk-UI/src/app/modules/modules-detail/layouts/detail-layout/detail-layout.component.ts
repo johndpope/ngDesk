@@ -142,12 +142,6 @@ export class DetailLayoutComponent implements OnInit {
 		yPos: null,
 		size: 0,
 	};
-	public listFormulaEncountered = false;
-	public listFormulaPosition = {
-		xPos: null,
-		yPos: null,
-		size: 0,
-	};
 
 	public dataMaterialModule: any = {
 		imports: [
@@ -404,12 +398,12 @@ export class DetailLayoutComponent implements OnInit {
 											});
 											this.layoutStyle = data.LAYOUT_STYLE;
 											this.layout.role = data.ROLE;
-											if (data.PANELS) {
-												data.PANELS.forEach((value) => {
-													this.loadNewGridAndView(value);
-													this.globalIndex++;
-												});
-											}
+											if(data.PANELS){
+											data.PANELS.forEach((value) => {
+												this.loadNewGridAndView(value);
+												this.globalIndex++;
+											});
+										}
 											if (data.TITLE_BAR) {
 												const titleBar = data.TITLE_BAR.map((value) => {
 													return {
@@ -509,13 +503,6 @@ export class DetailLayoutComponent implements OnInit {
 		) {
 			this.bannerMessageService.errorNotifications.push({
 				message: this.translateService.instant('CANNOT_BE_DROPPED_TO_HEADER'),
-			});
-			return;
-		} else if (this.fieldsMap[fieldId].DATA_TYPE.DISPLAY === 'List Formula') {
-			this.bannerMessageService.errorNotifications.push({
-				message: this.translateService.instant(
-					'LIST_FORMULA_CANNOT_BE_DROPPED'
-				),
 			});
 			return;
 		}
@@ -684,8 +671,7 @@ export class DetailLayoutComponent implements OnInit {
 				custom.conditionPosition,
 				custom.conditionPosition.size
 			);
-		}
-		if (custom.receiptDropped) {
+		} else if (custom.receiptDropped) {
 			custom.receiptDropped = false;
 			custom.receiptPosition.xPos =
 				num === -1 && custom.receiptPosition.xPos > index
@@ -695,19 +681,6 @@ export class DetailLayoutComponent implements OnInit {
 				name,
 				custom.receiptPosition,
 				custom.receiptPosition.size
-			);
-		}
-		if (custom.listFormulaDropped) {
-			custom.listFormulaDropped = false;
-			custom.listFormulaPosition.xPos =
-				num === -1 && custom.listFormulaPosition.xPos > index
-					? custom.listFormulaPosition.xPos - 1
-					: custom.listFormulaPosition.xPos;
-
-			this.loadLayoutWithListFormulaSection(
-				name,
-				custom.listFormulaPosition,
-				custom.listFormulaPosition.size
 			);
 		}
 	}
@@ -952,7 +925,6 @@ export class DetailLayoutComponent implements OnInit {
 		let filePreviewEncountered = false;
 		let conditionEncountered = false;
 		let receiptEncountered = false;
-		let listFormulaEncountered = false;
 
 		const fields = [];
 		const size = grids[0].length === 0 ? 10 : grids.length;
@@ -1068,18 +1040,6 @@ export class DetailLayoutComponent implements OnInit {
 							receiptEncountered = true;
 						}
 					}
-					if (!listFormulaEncountered) {
-						if (
-							this.fieldsMap[grids[i][j].FIELD_ID] &&
-							this.fieldsMap[grids[i][j].FIELD_ID].DATA_TYPE.DISPLAY ===
-								'List Formula'
-						) {
-							this.listFormulaEncountered = true;
-							this.listFormulaPosition.xPos = i;
-							this.listFormulaPosition.yPos = j;
-							listFormulaEncountered = true;
-						}
-					}
 					layout = layout + this.replaceCellTemplate(grids, name, i, j);
 				}
 			}
@@ -1191,13 +1151,6 @@ export class DetailLayoutComponent implements OnInit {
 						xPos: null,
 						yPos: null,
 				  },
-			listFormulaDropped: false,
-			listFormulaPosition: this.listFormulaEncountered
-				? this.listFormulaPosition
-				: {
-						xPos: null,
-						yPos: null,
-				  },
 		});
 		if (this.discussionEncountered) {
 			let size = 0;
@@ -1285,26 +1238,6 @@ export class DetailLayoutComponent implements OnInit {
 			this.loadLayoutWithReceiptSection(name, this.receiptPosition, size);
 		}
 		this.receiptEncountered = false;
-
-		if (this.listFormulaEncountered) {
-			let size = 0;
-			for (let y = this.listFormulaPosition.yPos; y < 4; y++) {
-				if (
-					!grids[this.listFormulaPosition.xPos][y].IS_EMPTY &&
-					this.fieldsMap[grids[this.listFormulaPosition.xPos][y].FIELD_ID]
-						.DATA_TYPE.DISPLAY === 'List Formula'
-				) {
-					size = size + 1;
-				}
-			}
-			this.listFormulaPosition.size = size;
-			this.loadLayoutWithListFormulaSection(
-				name,
-				this.listFormulaPosition,
-				size
-			);
-		}
-		this.listFormulaEncountered = false;
 	}
 
 	// DROP HERE TEMPLATE
@@ -1359,7 +1292,7 @@ export class DetailLayoutComponent implements OnInit {
 
 	  <div class="pointer" fxFlex fxLayoutAlign="end center">
 	  <!-- hide field Settings for file preview datatype -->
-	  <span *ngIf="context.fieldsMap['${fieldId}'].DATA_TYPE.DISPLAY!=='Discussion' && context.fieldsMap['${fieldId}'].DATA_TYPE.DISPLAY!=='List Formula' && context.fieldsMap['${fieldId}'].DATA_TYPE.DISPLAY!=='File Preview' "
+	  <span *ngIf="context.fieldsMap['${fieldId}'].DATA_TYPE.DISPLAY!=='Discussion' && context.fieldsMap['${fieldId}'].DATA_TYPE.DISPLAY!=='File Preview' "
 	  (click)="context.openSettings(context.customLayouts[${index}].grids[${i}][${j}])"
 	  >
 	  <mat-icon class="grey-black-color" matTooltip="{{'FIELD_SETTINGS'|translate}}" fontSet="material-icons-outlined">
@@ -1441,8 +1374,7 @@ export class DetailLayoutComponent implements OnInit {
 			field.DATA_TYPE.DISPLAY !== 'Image' &&
 			field.DATA_TYPE.DISPLAY !== 'File Preview' &&
 			field.DATA_TYPE.DISPLAY !== 'Condition' &&
-			field.DATA_TYPE.DISPLAY !== 'Receipt Capture' &&
-			field.DATA_TYPE.DISPLAY !== 'List Formula'
+			field.DATA_TYPE.DISPLAY !== 'Receipt Capture'
 		) {
 			// REMOVE THE FIELD FROM THE LIST
 
@@ -1658,26 +1590,6 @@ export class DetailLayoutComponent implements OnInit {
 				FIELD_ID: fieldId,
 			};
 			this.loadLayoutWithReceiptSection(name, custom.receiptPosition, 2);
-		} else if (
-			field.DATA_TYPE.DISPLAY === 'List Formula' &&
-			this.validateListFormulaPosition(name, xPos, yPos, 2)
-		) {
-			this.module.FIELDS = this.module.FIELDS.filter(
-				(element) => element.FIELD_ID !== fieldId
-			);
-			custom.listFormulaPosition.xPos = xPos;
-			custom.listFormulaPosition.yPos = yPos;
-			custom.grids[xPos][yPos] = {
-				IS_EMPTY: false,
-				HEIGHT: custom.grids.length,
-				WIDTH: 100,
-				FIELD_ID: fieldId,
-			};
-			this.loadLayoutWithListFormulaSection(
-				name,
-				custom.listFormulaPosition,
-				2
-			);
 		} else {
 			this.bannerMessageService.errorNotifications.push({
 				message: this.translateService.instant('FIELD_CANNOT_BE_DROPPED'),
@@ -2188,8 +2100,6 @@ export class DetailLayoutComponent implements OnInit {
 				this.onDeleteCondition(name, i, j);
 			} else if (removedField.DATA_TYPE.DISPLAY === 'Receipt Capture') {
 				this.onDeleteReceiptCaptureField(name, i, j);
-			} else if (removedField.DATA_TYPE.DISPLAY === 'List Formula') {
-				this.onDeleteListFormulaField(name, i, j);
 			} else {
 				let maxGrid = j;
 				for (let y = j + 1; y < 4; y++) {
@@ -2379,19 +2289,6 @@ export class DetailLayoutComponent implements OnInit {
 			i >= custom.receiptPosition.xPos
 		) {
 			return 100;
-		} else if (
-			custom.listFormulaDropped &&
-			i >= custom.listFormulaPosition.xPos &&
-			(custom.listFormulaPosition.yPos === 2 ||
-				custom.listFormulaPosition.yPos === 0)
-		) {
-			return 50;
-		} else if (
-			custom.listFormulaDropped &&
-			custom.listFormulaPosition.yPos === 1 &&
-			i >= custom.listFormulaPosition.xPos
-		) {
-			return 100;
 		}
 
 		return 25;
@@ -2431,17 +2328,7 @@ export class DetailLayoutComponent implements OnInit {
 			custom.receiptPosition.yPos !== j
 		) {
 			return 50;
-		} else if (
-			custom.listFormulaDropped &&
-			i >= custom.listFormulaPosition.xPos &&
-			(custom.listFormulaPosition.yPos === 2 ||
-				custom.listFormulaPosition.yPos === 0) &&
-			custom.listFormulaPosition.yPos !== j
-		) {
-			return 50;
 		} else if (custom.conditionDropped) {
-			return 100;
-		} else if (custom.listFormulaDropped) {
 			return 100;
 		}
 
@@ -2475,12 +2362,6 @@ export class DetailLayoutComponent implements OnInit {
 			custom.receiptPosition.yPos === j
 		) {
 			return custom.receiptPosition.size * 25;
-		} else if (
-			custom.listFormulaDropped &&
-			custom.listFormulaPosition.xPos === i &&
-			custom.listFormulaPosition.yPos === j
-		) {
-			return custom.listFormulaPosition.size * 25;
 		} else if (custom.conditionDropped) {
 			return 100;
 		}
@@ -2684,31 +2565,13 @@ export class DetailLayoutComponent implements OnInit {
 				}
 			} else if (
 				custom.receiptDropped &&
-				custom.receiptPosition.xPos === i &&
-				custom.receiptPosition.yPos === j
+				custom.receiptDropped.xPos === i &&
+				custom.receiptDropped.yPos === j
 			) {
 				if (custom.imagePosition.size === 3) {
 					this.loadLayoutWithReceiptSection(name, custom.receiptPosition, 2);
 				} else {
 					this.loadLayoutWithReceiptSection(name, custom.receiptPosition, 3);
-				}
-			} else if (
-				custom.listFormulaDropped &&
-				custom.listFormulaPosition.xPos === i &&
-				custom.listFormulaPosition.yPos === j
-			) {
-				if (custom.imagePosition.size === 3) {
-					this.loadLayoutWithListFormulaSection(
-						name,
-						custom.receiptPosition,
-						2
-					);
-				} else {
-					this.loadLayoutWithListFormulaSection(
-						name,
-						custom.receiptPosition,
-						3
-					);
 				}
 			} else {
 				if (event.value > custom.grids[i][j].WIDTH) {
@@ -3280,7 +3143,6 @@ export class DetailLayoutComponent implements OnInit {
 		mainTemplate = mainTemplate + `</div><!--END_RECEIPT_CAPTURE_SECTION-->`;
 		return mainTemplate;
 	}
-
 	public validateReceiptPosition(name, i, j, size) {
 		const custom = this.customLayouts.find((f) => f.name === name);
 		if (!custom.receiptDropped) {
@@ -3336,9 +3198,6 @@ export class DetailLayoutComponent implements OnInit {
 						};
 						layout = layout + this.initialTemplate(custom.grids, name, x, y);
 					} else {
-						if (custom.grids[y + 1] && !custom.grids[y + 1][y].IS_EMPTY) {
-							custom.grids[x][y].WIDTH = custom.grids[x][y].WIDTH / 2;
-						}
 						layout =
 							layout + this.replaceCellTemplate(custom.grids, name, x, y);
 					}
@@ -3351,233 +3210,5 @@ export class DetailLayoutComponent implements OnInit {
 		}
 		custom.customLayout = custom.customLayout.replace(receiptRegex, layout);
 		custom.receiptDropped = false;
-	}
-
-	public buildTemplateForListFormula(name, size) {
-		const custom = this.customLayouts.find((f) => f.name === name);
-		const xPos = custom.listFormulaPosition.xPos;
-		const yPos = custom.listFormulaPosition.yPos;
-		let flex = 0;
-		const columnTemplate = `<div fxLayout=column fxLayoutGap=5px fxFlex='COLUMN_FLEX'>ADD_ROWS_FOR_THIS_COLUMN</div>`;
-		let rows = ``;
-		const ImageInitialSize = custom.listFormulaPosition.size;
-		const field = custom.grids[xPos][yPos].FIELD_ID;
-		const settings = custom.grids[xPos][yPos].settings;
-		const endPos =
-			xPos + 3 > custom.grids.length ? custom.grids.length : xPos + 3;
-
-		if (custom.listFormulaPosition.size === 3) {
-			for (let x = xPos; x <= endPos; x++) {
-				for (let y = yPos; y < yPos + 3; y++) {
-					custom.grids[x][y] = {
-						IS_EMPTY: true,
-						HEIGHT: 10,
-						WIDTH: 25,
-						FIELD_ID: '',
-						settings: null,
-					};
-				}
-			}
-		}
-
-		if (size === 2) {
-			custom.listFormulaPosition.size = 2;
-			flex = 50;
-		} else if (size === 3) {
-			custom.listFormulaPosition.size = 3;
-			flex = 75;
-		} else if (size === 4) {
-			custom.listFormulaPosition.size = 4;
-			flex = 100;
-			custom.grids[xPos][0] = {
-				IS_EMPTY: false,
-				HEIGHT: custom.grids.length,
-				WIDTH: 100,
-				FIELD_ID: field,
-				settings: settings,
-			};
-		}
-		if (size !== 4) {
-			for (let x = xPos; x <= endPos; x++) {
-				for (let y = yPos; y < yPos + size; y++) {
-					custom.grids[x][y] = {
-						IS_EMPTY: false,
-						HEIGHT: 4,
-						WIDTH: 100,
-						FIELD_ID: field,
-						settings: settings,
-					};
-				}
-			}
-		}
-
-		let row1 = '';
-		let row2 = '';
-		for (let x = xPos; x <= endPos; x++) {
-			if (yPos === 1 && size === 2) {
-				row1 = row1 + this.buildRowForDiscussion(name, 3, x, yPos);
-				row2 = row2 + this.buildRowForDiscussion(name, 3, x, 0);
-			} else {
-				rows = rows + this.buildRowForDiscussion(name, size, x, yPos);
-			}
-		}
-		const flexRegex = new RegExp('COLUMN_FLEX');
-		const rowsRegex = new RegExp('ADD_ROWS_FOR_THIS_COLUMN');
-		let columnWithRows = columnTemplate.replace(rowsRegex, rows);
-		columnWithRows = columnWithRows.replace(flexRegex, (100 - flex).toString());
-
-		let columnWithImage = columnTemplate.replace(flexRegex, flex.toString());
-		columnWithImage = columnWithImage.replace(
-			rowsRegex,
-			this.replaceCellTemplate(custom.grids, name, xPos, yPos)
-		);
-		let mainTemplate = `<div class='LIST_FORMULA_SECTION' fxLayoutGap=5px fxFlex fxLayout="row">`;
-		if (yPos === 0) {
-			// FIRST COLUMN
-			mainTemplate = mainTemplate + columnWithImage + columnWithRows;
-		} else if (yPos === 1 && size === 2) {
-			// MIDDLE
-			let column1WithRows1 = columnTemplate.replace(rowsRegex, row1);
-			column1WithRows1 = column1WithRows1.replace(
-				flexRegex,
-				(flex / 2).toString()
-			);
-			let column2WithRows2 = columnTemplate.replace(rowsRegex, row2);
-			column2WithRows2 = column2WithRows2.replace(
-				flexRegex,
-				(flex / 2).toString()
-			);
-			mainTemplate =
-				mainTemplate + column1WithRows1 + columnWithImage + column2WithRows2;
-		} else {
-			// END
-			mainTemplate = mainTemplate + columnWithRows + columnWithImage;
-		}
-		mainTemplate = mainTemplate + `</div><!--END_LIST_FORMULA_SECTION-->`;
-		return mainTemplate;
-	}
-
-	public loadLayoutWithListFormulaSection(name, listFormulaPosition, size) {
-		const custom = this.customLayouts.find((f) => f.name === name);
-		const removeDivFrom = listFormulaPosition.xPos + 1;
-		const removeDivTo =
-			listFormulaPosition.xPos + 3 > custom.grids.length - 1
-				? custom.grids.length - 1
-				: listFormulaPosition.xPos + 3;
-		custom.customLayout = custom.customLayout.replace(
-			new RegExp(
-				`<div class='ROW_${removeDivFrom}([\\s\\S]*?)<!--END_ROW_${removeDivTo}-->`
-			),
-			''
-		);
-
-		if (!custom.listFormulaDropped) {
-			const rowRegex = new RegExp(
-				`<div class='ROW_${listFormulaPosition.xPos}([\\s\\S]*?)<!--END_ROW_${listFormulaPosition.xPos}-->`
-			);
-			custom.customLayout = custom.customLayout.replace(
-				rowRegex,
-				this.buildTemplateForListFormula(name, size)
-			);
-		} else {
-			const listFormulaRegex = new RegExp(
-				`<div class='LIST_FORMULA_SECTION([\\s\\S]*?)<!--END_LIST_FORMULA_SECTION-->`
-			);
-			custom.customLayout = custom.customLayout.replace(
-				listFormulaRegex,
-				this.buildTemplateForListFormula(name, size)
-			);
-		}
-		custom.listFormulaDropped = true;
-	}
-
-	public onDeleteListFormulaField(name, i, j) {
-		const custom = this.customLayouts.find((f) => f.name === name);
-		const removeDivTo =
-			i + 3 > custom.grids.length ? custom.grids.length - 1 : i + 3;
-		const listFormulaRegex = new RegExp(
-			`<div class='LIST_FORMULA_SECTION([\\s\\S]*?)<!--END_LIST_FORMULA_SECTION-->`
-		);
-		let layout = '';
-		for (let x = i; x <= removeDivTo; x++) {
-			layout = layout + `<div class='ROW_${x}' fxLayout="row" fxLayoutGap=5px>`;
-			for (let y = 0; y < 4; y++) {
-				if (custom.grids[x][y].IS_EMPTY) {
-					custom.grids[x][y] = {
-						IS_EMPTY: true,
-						HEIGHT: 10,
-						WIDTH: 25,
-						FIELD_ID: '',
-						settings: null,
-					};
-					layout = layout + this.initialTemplate(custom.grids, name, x, y);
-				} else {
-					if (
-						this.fieldsMap[custom.grids[x][y].FIELD_ID].DATA_TYPE.DISPLAY ===
-						'List Formula'
-					) {
-						custom.grids[x][y] = {
-							IS_EMPTY: true,
-							HEIGHT: 10,
-							WIDTH: 25,
-							FIELD_ID: '',
-							settings: null,
-						};
-						layout = layout + this.initialTemplate(custom.grids, name, x, y);
-					} else {
-						if (custom.grids[y + 1] && !custom.grids[y + 1][y].IS_EMPTY) {
-							custom.grids[x][y].WIDTH = custom.grids[x][y].WIDTH / 2;
-						}
-						layout =
-							layout + this.replaceCellTemplate(custom.grids, name, x, y);
-					}
-				}
-			}
-			layout =
-				layout +
-				`<div fxLayoutAlign="center center"><mat-icon style="cursor: pointer;"
-			(click)="context.gridRow('${name}', ${x}, -1)">close</mat-icon></div></div><!--END_ROW_${x}-->`;
-		}
-		custom.customLayout = custom.customLayout.replace(listFormulaRegex, layout);
-		custom.listFormulaDropped = false;
-	}
-
-	public validateListFormulaPosition(name, i, j, size) {
-		const custom = this.customLayouts.find((f) => f.name === name);
-		const removeDivTo =
-			i + 4 > custom.grids.length ? custom.grids.length - 1 : i + 4;
-		if (!custom.listFormulaDropped) {
-			if (i < 12 && j !== 3) {
-				for (let x = i; x < removeDivTo; x++) {
-					for (let y = j; y < j + size; y++) {
-						if (!custom.grids[x][y].IS_EMPTY) {
-							return false;
-						}
-					}
-				}
-			} else {
-				return false;
-			}
-		} else {
-			for (let x = i; x < removeDivTo; x++) {
-				if (!custom.grids[x][j].IS_EMPTY) {
-					return false;
-				}
-			}
-		}
-
-		for (let x = 0; x < custom.grids.length; x++) {
-			for (let y = 0; y < 4; y++) {
-				if (!custom.grids[x][y].IS_EMPTY) {
-					if (
-						this.fieldsMap[custom.grids[x][y].FIELD_ID].DATA_TYPE.DISPLAY ===
-						'List Formula'
-					) {
-						return false;
-					}
-				}
-			}
-		}
-		return true;
 	}
 }

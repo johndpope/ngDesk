@@ -205,8 +205,7 @@ public class MergeService {
 							entry.put(formulaField.getName(), formulaFieldValue);
 
 						} else {
-							String value = dataService.getFormulaFieldValue(module, entry, formulaField,
-									formulaField.getFormula());
+							String value = dataService.getFormulaFieldValue(module, entry, formulaField);
 							entry.put(formulaField.getName(), value);
 						}
 					}

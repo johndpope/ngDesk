@@ -50,17 +50,9 @@ export class NewField {
 		private NUMERIC_FORMAT?: string,
 		private PREFIX?: string,
 		private SUFFIX?: string,
-		private CONDITIONS?: [],
-		private LIST_FORMULA?: []
+		private CONDITIONS?: []
+
 	) {}
-
-	get listFormula() {
-		return this.LIST_FORMULA;
-	}
-
-	set listFormula(value) {
-		this.LIST_FORMULA = value;
-	}
 
 	get aggregationField() {
 		return this.AGGREGATION_FIELD;

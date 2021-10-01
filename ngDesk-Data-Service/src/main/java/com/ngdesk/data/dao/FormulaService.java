@@ -464,27 +464,4 @@ public class FormulaService {
 
 		return messageHtml;
 	}
-
-	public boolean listFormulaAdded(Map<String, Object> entry, ModuleField field, String formulaName) {
-		if (entry.get(field.getName()) == null) {
-			return false;
-		}
-		List<ListFormulaFieldValue> listFormulaFieldValues = new ArrayList<ListFormulaFieldValue>();
-		try {
-			listFormulaFieldValues = mapper.readValue(mapper.writeValueAsString(entry.get(field.getName())),
-					mapper.getTypeFactory().constructCollectionType(List.class, ListFormulaFieldValue.class));
-		} catch (Exception e) {
-			e.printStackTrace();
-
-		}
-		if (listFormulaFieldValues == null) {
-			return false;
-		} else if (listFormulaFieldValues.size() == 0) {
-			return false;
-		}
-		Optional<ListFormulaFieldValue> optionalFieldValue = listFormulaFieldValues.stream()
-				.filter(listFormulaFieldValue -> listFormulaFieldValue.getFormulaName().equalsIgnoreCase(formulaName))
-				.findFirst();
-		return optionalFieldValue.isPresent();
-	}
 }

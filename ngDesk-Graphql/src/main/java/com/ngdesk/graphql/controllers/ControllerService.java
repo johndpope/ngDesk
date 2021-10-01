@@ -236,10 +236,10 @@ public class ControllerService {
 				}
 			}
 
-			// Save the file in System in particular path 
+			// Save the file in System in particular path
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 			String reportName = fileName + "-" + format.format(new Date());
-			FileWriter myWriter = new FileWriter("/opt/ngdesk/reports/" + reportName + ".csv");
+			FileWriter myWriter = new FileWriter("/opt/" + reportName + ".csv");
 			myWriter.write(writer.toString());
 			myWriter.close();
 

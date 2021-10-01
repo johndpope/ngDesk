@@ -178,6 +178,7 @@ export class RenderListLayoutNewComponent implements OnInit, OnDestroy {
 			}
 		});
 		this.reloadDataOnUpdate();
+		this.parseMethod();
 	}
 
 	public ngOnDestroy() {
@@ -611,6 +612,38 @@ export class RenderListLayoutNewComponent implements OnInit, OnDestroy {
 			);
 		}
 	}
+	public parseMethod() {
+		let pair;
+		let fieldQuery = '';
+		let temp;
+		let value0;
+		let query;
+		const string = 'EMAIL_ADDRESS CONTACT.FULL_NAME CONTACT.FIRST_NAME';
+		if (string.length > 0) {
+			const values = string.split(' ');
+			for (let i = 0; i < values.length; i++) {
+				if (values[i] !== undefined) {
+					value0 = values[0];
+					const value = values[i];
+					if (value.indexOf('.') !== -1) {
+						pair = value.split('.');
+						if (pair !== undefined) {
+							fieldQuery += ' ' + pair[1];
+						}
+					}
+					if (pair !== undefined && i === values.length - 1) {
+						temp = `${pair[0]}` + '{' + fieldQuery + '}';
+					}
+				}
+			}
+			if (temp !== undefined) {
+				query = value0 + ' ' + temp;
+			} else {
+				query = value0;
+			}
+			console.log(query);
+		}
+	}
 
 	public formatChronometerFields(entriesReponse) {
 		let chronometer = this.module.FIELDS.find(
@@ -880,6 +913,7 @@ export class RenderListLayoutNewComponent implements OnInit, OnDestroy {
 			if (result === this.translateService.instant('OK')) {
 				selectedEntries.forEach((selectedEntry) => {
 					const dataId = selectedEntry.DATA_ID;
+
 					let dialogId = `render-detail-dialog_0`;
 					if (this.renderDetailHelper.dialog.openDialogs.length > 0) {
 						dialogId = `render-detail-dialog_${this.renderDetailHelper.dialog.openDialogs.length}`;

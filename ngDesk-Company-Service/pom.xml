@@ -8,12 +8,13 @@
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.3.4.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
-	</parent> 
+	</parent>
 	<groupId>com.ngdesk.company.company</groupId>
 	<artifactId>ngDesk-Company-Service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ngDesk-Company-Service</name>
 	<description>ngDesk microservice for companies</description>
+
 
 
 	<properties>
@@ -171,7 +172,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<image>
-						<name>ngdesk/company:latest</name>
+						<name>gitlab.bluemsp.com:5050/ngdesk/ngdesk/company:latest</name>
 					</image>
 					<layers>
 						<enabled>true</enabled>

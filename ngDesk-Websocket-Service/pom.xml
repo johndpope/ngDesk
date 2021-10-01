@@ -15,6 +15,9 @@
 	<name>ngDesk-Websocket-Service</name>
 	<description>Microservice for ngDesk-Websockets</description>
 
+
+
+
 	<properties>
 		<java.version>11</java.version>
 		<spring-cloud.version>Hoxton.SR8</spring-cloud.version>
@@ -150,7 +153,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<image>
-						<name>ngdesk/websocket:latest</name>
+						<name>gitlab.bluemsp.com:5050/ngdesk/ngdesk/websocket:latest</name>
 					</image>
 					<layers>
 						<enabled>true</enabled>

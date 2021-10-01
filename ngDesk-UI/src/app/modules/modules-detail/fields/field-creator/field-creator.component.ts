@@ -37,7 +37,6 @@ export class FieldCreatorComponent implements OnInit {
 	public fieldNameFormGroup: FormGroup;
 	public fieldFilePreviewNameFormGroup: FormGroup;
 	public fieldSelectFormGroup: FormGroup;
-	public listFormulaFormArray: FormArray;
 	public inheritanceFormGroup: FormGroup;
 	public fieldMappingFormGroup: FormGroup;
 	public fieldTypes: DATATYPE[] = [
@@ -58,7 +57,6 @@ export class FieldCreatorComponent implements OnInit {
 		{ DISPLAY: 'File Preview', BACKEND: 'BLOB' },
 		{ DISPLAY: 'Formula', BACKEND: 'String' },
 		{ DISPLAY: 'Image', BACKEND: 'BLOB' },
-		{ DISPLAY: 'List Formula', BACKEND: 'String' },
 		{ DISPLAY: 'List Text', BACKEND: 'Array' },
 		{ DISPLAY: 'Number', BACKEND: 'Integer' },
 		{ DISPLAY: 'Password', BACKEND: 'String' },
@@ -212,7 +210,6 @@ export class FieldCreatorComponent implements OnInit {
 	];
 	cursorPossition: any = {};
 	isCursorIsActive: boolean = false;
-	textAreaCursorPositions: any = {};
 	constructor(
 		private router: Router,
 		private route: ActivatedRoute,
@@ -440,15 +437,6 @@ export class FieldCreatorComponent implements OnInit {
 			formulaString: ['', Validators.required],
 		});
 
-		this.textAreaCursorPositions['myTextArea'] = {
-			isCursorActive: false,
-			startPosition: 0,
-			endPosition: 0,
-		};
-
-		this.listFormulaFormArray = this._formBuilder.array([]);
-		this.addFormulaToList();
-
 		this.inheritanceFormGroup = this._formBuilder.group({
 			inheritances: this._formBuilder.array([]),
 		});
@@ -457,8 +445,8 @@ export class FieldCreatorComponent implements OnInit {
 			fieldMapping: this._formBuilder.array([]),
 		});
 
-		this.cursorPossition.startPosition = 0;
-		this.cursorPossition.endPosition = 0;
+		this.cursorPossition.startPossition = 0;
+		this.cursorPossition.endPossition = 0;
 	}
 
 	public createInheritanceItem(): FormGroup {
@@ -838,19 +826,6 @@ export class FieldCreatorComponent implements OnInit {
 			this.relationshipObj.DISPLAY_LABEL.toUpperCase().replace(/ /g, '_');
 	}
 
-	/** restricting the space  */
-
-	public restrictSpaceAndSpecialChar(event): boolean {
-		const charCode = event.which ? event.which : event.keyCode;
-		return (
-			((charCode > 64 && charCode < 91) ||
-			(charCode > 96 && charCode < 123) ||
-			charCode == 8 ||
-			charCode == 32 ||
-			(charCode >= 48 && charCode <= 57)) && (charCode != 32)
-		);
-	}
-
 	public save() {
 		this.errorMessage = '';
 		if (
@@ -1019,67 +994,6 @@ export class FieldCreatorComponent implements OnInit {
 				);
 			}
 		}
-
-		if (this.fieldNameFormGroup.value.dataType.DISPLAY === 'List Formula') {
-			if (this.fieldNameFormGroup.valid) {
-				this.stepName = 'Field details';
-				this.field = new NewField(
-					null,
-					null,
-					0,
-					null,
-					0,
-					0,
-					this.fieldNameFormGroup.value.dataType,
-					null,
-					this.fieldNameFormGroup.value.displayLabel,
-					null,
-					null,
-					null,
-					null,
-					null,
-					null,
-					null,
-					null,
-					null,
-					this.fieldNameFormGroup.value.systemLabel,
-					null,
-					null,
-					[],
-					null,
-					null,
-					false,
-					false,
-					true,
-					0,
-					null,
-					null,
-					false,
-					false,
-					null,
-					null,
-					null,
-					0,
-					0,
-					false,
-					false,
-					null,
-					false,
-					null,
-					null,
-					null,
-					null,
-					null,
-					null,
-					null,
-					null,
-					null,
-					null,
-					this.listFormulaFormArray.value
-				);
-			}
-		}
-
 		if (this.field.dataType.DISPLAY === 'Checkbox') {
 			if (this.fieldMappingFormGroup.value.fieldMapping.length !== 0) {
 				let fieldMappingObj = {};
@@ -1188,12 +1102,6 @@ export class FieldCreatorComponent implements OnInit {
 							this.errorMessage = this.translateService.instant(
 								'COUNTRY_DEFAULT_VALUE_REQUIRED'
 							);
-						}
-					}
-					if (this.field.dataType.DISPLAY === 'List Formula') {
-						const formulaList: any[] = this.field.LIST_FORMULA;
-						for (let formula of formulaList) {
-							formula['FORMULA'] = formula.formulaString;
 						}
 					}
 					this.fieldApiService.postField(this.moduleId, this.field).subscribe(
@@ -1410,7 +1318,9 @@ export class FieldCreatorComponent implements OnInit {
 	public isDefaultField(field): boolean {
 		const defaultFields = [
 			'ASSIGNEE',
-			'ACCOUNT'
+			'CREATED_BY',
+			'LAST_UPDATED_BY',
+			'ACCOUNT',
 		];
 		if (defaultFields.indexOf(field.NAME) !== -1) {
 			return true;
@@ -1444,15 +1354,13 @@ export class FieldCreatorComponent implements OnInit {
 			field.DATA_TYPE.DISPLAY == 'Zipcode' ||
 			field.DATA_TYPE.DISPLAY == 'Formula' ||
 			field.DATA_TYPE.DISPLAY == 'Aggregate' ||
-			field.DATA_TYPE.DISPLAY == 'List Formula' ||
 			(field.DATA_TYPE.DISPLAY == 'Text' &&
 				field.NAME !== 'CHANNEL' &&
 				field.NAME !== 'DATA_ID' &&
 				field.NAME !== 'PASSWORD') ||
 			(field.DATA_TYPE.DISPLAY == 'Relationship' &&
 				(field.RELATIONSHIP_TYPE === 'One to One' ||
-				(field.RELATIONSHIP_TYPE === 'Many to One'&& field.NAME!=='CREATED_BY' &&
-				field.NAME!=='LAST_UPDATED_BY') ) )
+					field.RELATIONSHIP_TYPE === 'Many to One'))
 		) {
 			return true;
 		} else {
@@ -1518,14 +1426,7 @@ export class FieldCreatorComponent implements OnInit {
 		return true;
 	}
 
-	public concatenateVariables(
-		field,
-		fieldSelectFormGroup?,
-		index?,
-		mainItem?,
-		subItem?,
-		subSubItem?
-	) {
+	public concatenateVariables(field, mainItem?, subItem?, subSubItem?) {
 		let concatVariable = mainItem.NAME;
 		if (subItem) {
 			concatVariable += `.${subItem.NAME}`;
@@ -1533,34 +1434,28 @@ export class FieldCreatorComponent implements OnInit {
 				concatVariable += `.${subSubItem.NAME}`;
 			}
 		}
-		this.insertInToBody(field, fieldSelectFormGroup, index, concatVariable);
+		this.insertInToBody(field, concatVariable);
 	}
 
 	onClickOfTextArea(myTextArea) {
 		if (
-			myTextArea.selectionStart !==
-				this.textAreaCursorPositions[myTextArea.id].startPosition ||
-			this.textAreaCursorPositions[myTextArea.id].startPosition == 0
+			myTextArea.selectionStart !== this.cursorPossition.startPossition ||
+			this.cursorPossition.startPossition == 0
 		) {
-			this.textAreaCursorPositions[myTextArea.id] = {
-				isCursorActive: true,
-				startPosition: myTextArea.selectionStart,
-				endPosition: myTextArea.selectionEnd,
-			};
+			this.isCursorIsActive = true;
+			this.cursorPossition.startPossition = myTextArea.selectionStart;
+			this.cursorPossition.endPossition = myTextArea.selectionEnd;
 		} else {
-			this.textAreaCursorPositions[myTextArea.id].isCursorActive = false;
+			this.isCursorIsActive = false;
 		}
 	}
 
 	/** creating formula string  */
 
-	public insertInToBody(field, fieldSelectFormGroup?, index?, relatedField?) {
-		if (!fieldSelectFormGroup) {
-			fieldSelectFormGroup = this.fieldSelectFormGroup;
-		}
-		let formula = fieldSelectFormGroup.value.formulaString;
+	public insertInToBody(field, relatedField?) {
+		let formula = this.fieldSelectFormGroup.value.formulaString;
 		if (!field.NAME && !relatedField) {
-			this.injectOperatorInToBody(field, formula, fieldSelectFormGroup, index);
+			this.injectOperatorInToBody(field, formula);
 		} else {
 			let fieldVar;
 			fieldVar = field.NAME;
@@ -1572,20 +1467,16 @@ export class FieldCreatorComponent implements OnInit {
 			} else {
 				formula = this.insertValuesByCursorValues(
 					this.setValuesForDefaults(fieldVar),
-					formula,
-					index
+					formula
 				);
 			}
-			fieldSelectFormGroup.controls['formulaString'].patchValue(formula);
+			this.fieldSelectFormGroup.controls['formulaString'].patchValue(formula);
 		}
 	}
 
 	/* To add operators +,-,*,/,(,), SPACE**/
 
-	public injectOperatorInToBody(field, formula, fieldSelectFormGroup?, index?) {
-		if (!fieldSelectFormGroup) {
-			fieldSelectFormGroup = this.fieldSelectFormGroup;
-		}
+	public injectOperatorInToBody(field, formula) {
 		if (
 			(field.DISPLAY_LABEL === '(' || field.DISPLAY_LABEL === '( )') &&
 			!formula
@@ -1594,39 +1485,27 @@ export class FieldCreatorComponent implements OnInit {
 		} else if (formula && field.DISPLAY_LABEL === 'BLANK SPACE') {
 			formula = this.insertValuesByCursorValues(
 				'+' + field.VALUE + '+',
-				formula,
-				index
+				formula
 			);
 		} else if (formula) {
-			formula = this.insertValuesByCursorValues(
-				field.DISPLAY_LABEL,
-				formula,
-				index
-			);
+			formula = this.insertValuesByCursorValues(field.DISPLAY_LABEL, formula);
 		}
-		fieldSelectFormGroup.controls['formulaString'].patchValue(formula);
+		this.fieldSelectFormGroup.controls['formulaString'].patchValue(formula);
 	}
 
 	/** to insert values as sub string */
 
-	insertValuesByCursorValues(newValue, oldString, index?) {
-		var textAreaId = 'myTextArea';
-		if (index !== undefined) {
-			textAreaId = textAreaId + index;
-		}
-		if (this.textAreaCursorPositions[textAreaId].isCursorActive) {
+	insertValuesByCursorValues(newValue, oldString) {
+		if (this.isCursorIsActive) {
 			let newString =
-				oldString.substring(
-					0,
-					this.textAreaCursorPositions[textAreaId].startPosition
-				) +
+				oldString.substring(0, this.cursorPossition.startPossition) +
 				newValue +
 				oldString.substring(
-					this.textAreaCursorPositions[textAreaId].endPosition,
+					this.cursorPossition.endPossition,
 					oldString.length
 				);
-			this.textAreaCursorPositions[textAreaId].startPosition += newValue.length;
-			this.textAreaCursorPositions[textAreaId].endPosition += newValue.length;
+			this.cursorPossition.startPossition += newValue.length;
+			this.cursorPossition.endPossition += newValue.length;
 			return newString;
 		} else {
 			return (oldString += newValue);
@@ -1679,44 +1558,6 @@ export class FieldCreatorComponent implements OnInit {
 			if (result !== 'close') {
 				this.field.CONDITIONS = result;
 			}
-		});
-	}
-
-	public addFormulaToList() {
-		const textArea: string = 'myTextArea' + this.listFormulaFormArray.length;
-		this.textAreaCursorPositions[textArea] = {
-			isCursorActive: false,
-			startPosition: 0,
-			endPosition: 0,
-		};
-		this.listFormulaFormArray.push(
-			this._formBuilder.group({
-				formulaString: ['', Validators.required],
-				FORMULA_NAME: ['', Validators.required],
-				FORMULA_LABEL: ['', Validators.required],
-			})
-		);
-	}
-
-	public removeFormulaFromList(i) {
-		this.listFormulaFormArray.removeAt(i);
-	}
-	public resetTextAreaPositions() {
-		Object.keys(this.textAreaCursorPositions).forEach((position) => {
-			this.textAreaCursorPositions[position] = {
-				isCursorActive: false,
-				startPosition: 0,
-				endPosition: 0,
-			};
-		});
-	}
-
-	public updateFormulaName(formulaGroup) {
-		formulaGroup.patchValue({
-			FORMULA_NAME: formulaGroup.value.FORMULA_LABEL.toUpperCase().replace(
-				/\s+/g,
-				'_'
-			),
 		});
 	}
 }

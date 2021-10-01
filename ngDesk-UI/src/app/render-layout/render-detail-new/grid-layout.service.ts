@@ -5,7 +5,6 @@ import { DiscussionService } from '@src/app/render-layout/data-types/discussion.
 import { FilePreviewService } from '../data-types/file-preview.service';
 import { ImageviewerService } from '../data-types/imageviewer.service';
 import { ReceiptCaptureService } from '../data-types/receipt-capture.service';
-import { ListFormulaService } from '../data-types/list-formula.service';
 
 @Injectable({
 	providedIn: 'root',
@@ -16,8 +15,7 @@ export class GridLayoutService {
 		private filePreviewService: FilePreviewService,
 		private commonLayoutService: CommonLayoutService,
 		private imageViewer: ImageviewerService,
-		private receiptViewer: ReceiptCaptureService,
-		private listFormulaService: ListFormulaService
+		private receiptViewer: ReceiptCaptureService
 	) {}
 
 	imageViewerWidth = 0;
@@ -29,11 +27,6 @@ export class GridLayoutService {
 	receiptPossition: any = {};
 	hasReceipt: boolean = false;
 	receiptFieldAdded: boolean = false;
-
-	listFormulaWidth = 0;
-	listFormulaPosition: any = {};
-	hasListFormula: boolean = false;
-	listFormulaAdded: boolean = false;
 
 	public getCustomPanelsForGridLayout(layout) {
 		const customPanels = [];
@@ -54,12 +47,6 @@ export class GridLayoutService {
 				},
 				HAS_FILE_PREVIEW: false,
 				FILE_PREVIEW_POSITION: {
-					X_POS: null,
-					Y_POS: null,
-					SIZE: 0,
-				},
-				HAS_LIST_FORMULA: false,
-				LIST_FORMULA_POSITION: {
 					X_POS: null,
 					Y_POS: null,
 					SIZE: 0,
@@ -138,14 +125,6 @@ export class GridLayoutService {
 								moduleField['DATA_TYPE']['DISPLAY'] === 'Receipt Capture'
 							) {
 								this.hasReceipt = true;
-							} else if (
-								moduleField &&
-								!panel['HAS_LIST_FORMULA'] &&
-								moduleField['DATA_TYPE']['DISPLAY'] === 'List Formula'
-							) {
-								panel['HAS_LIST_FORMULA'] = true;
-								panel['LIST_FORMULA_POSITION']['X_POS'] = i;
-								panel['LIST_FORMULA_POSITION']['Y_POS'] = j;
 							}
 
 							layout += this.getTemplateForGrids(
@@ -205,34 +184,8 @@ export class GridLayoutService {
 					panelIndex,
 					module
 				);
-			} else if (panel['HAS_LIST_FORMULA']) {
-				let listFormulaWidth = 0;
-				const gridRow = panel['GRIDS'][panel['LIST_FORMULA_POSITION']['X_POS']];
-				let formulaField = {};
-				gridRow.forEach((grid) => {
-					if (!grid['IS_EMPTY']) {
-						const moduleField = module['FIELDS'].find(
-							(field) => field['FIELD_ID'] === grid['FIELD_ID']
-						);
-						if (moduleField['DATA_TYPE']['DISPLAY'] === 'List Formula') {
-							formulaField = moduleField;
-							listFormulaWidth += 1;
-						}
-					}
-				});
-				panel['LIST_FORMULA_POSITION']['SIZE'] = listFormulaWidth;
-
-				panel = this.listFormulaService.getLayoutForListFormula(
-					panel,
-					panel['LIST_FORMULA_POSITION']['X_POS'],
-					panel['LIST_FORMULA_POSITION']['Y_POS'],
-					formulaField,
-					panelIndex,
-					listFormulaWidth,
-					layoutStyle,
-					layoutType
-				);
 			}
+
 			//To call Image viewer
 			//to get grid
 
@@ -334,8 +287,7 @@ export class GridLayoutService {
 							currentField['DATA_TYPE']['DISPLAY'] !== 'Discussion' &&
 							currentField['DATA_TYPE']['DISPLAY'] !== 'File Preview' &&
 							currentField['DATA_TYPE']['DISPLAY'] !== 'Image' &&
-							currentField['DATA_TYPE']['DISPLAY'] !== 'Receipt Capture' &&
-							currentField['DATA_TYPE']['DISPLAY'] !== 'List Formula'
+							currentField['DATA_TYPE']['DISPLAY'] !== 'Receipt Capture'
 						) {
 							const templateForDataType =
 								this.commonLayoutService.getTemplateForField(

@@ -305,7 +305,7 @@ public class DataService {
 								moduleField.getFormula(), entry);
 						formula = formula.replaceAll("\\{\\{" + matcher.group(1) + "\\}\\}",
 								"(" + updatedFormula + ")");
-					} else if (moduleField != null && moduleField.getDataType().getDisplay().equals("List Formula")) {
+					} else if (moduleField.getDataType().getDisplay().equals("List Formula")) {
 						List<ListFormulaField> listFormulas = moduleField.getListFormula();
 						String updatedListFormula = "";
 						List<String> listOfFormulas = new ArrayList<String>();

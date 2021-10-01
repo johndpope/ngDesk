@@ -5,7 +5,7 @@
         <version>0.0.1-SNAPSHOT</version>
         <name>ngDesk-Main</name>
         <packaging>pom</packaging>
- 
+
 
         <modules>
                 <module>../ngDesk-Commons</module>

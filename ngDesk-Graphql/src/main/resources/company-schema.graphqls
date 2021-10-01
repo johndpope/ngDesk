@@ -938,6 +938,7 @@ type Category{
     visibleTo: [Teams]
 }
 
+
 type Escalation{
 
    esclalationId: String
@@ -965,9 +966,3 @@ type EscalateTo{
   teamIds: [String]
 }
 
-type ListFormulaFieldValue{
-    FORMULA_NAME: String
-	VALUE: String
-
-}
-	

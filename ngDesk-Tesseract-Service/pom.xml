@@ -13,7 +13,7 @@
 	<artifactId>ngDesk-Tesseract-Service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ngDesk-Data-Service</name>
-	<description>ngDesk project to handle all module entries</description> 
+	<description>ngDesk project to handle all module entries</description>
 
 
 	<properties>

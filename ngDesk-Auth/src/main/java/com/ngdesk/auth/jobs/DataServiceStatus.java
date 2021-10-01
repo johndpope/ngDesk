@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import com.ngdesk.commons.Global;
-import com.ngdesk.commons.mail.SendMail;
 import com.twilio.Twilio;
 import com.twilio.http.HttpMethod;
 import com.twilio.rest.api.v2010.account.Call;
@@ -41,9 +40,6 @@ public class DataServiceStatus {
 	@Value("${env}")
 	private String environment;
 
-	@Autowired
-	SendMail sendMail;
-
 	@Scheduled(fixedRate = 60 * 1000)
 	public void run() {
 
@@ -55,22 +51,20 @@ public class DataServiceStatus {
 			e.printStackTrace();
 			if (environment.equals("prd")) {
 				try {
-					sendMail.send("rob@allbluesolutions.com", "error@ngdesk.com", "ngDesk - ngdesk-data container",
-							"Data Service not responding in ngdesk production, Restart required");
+					Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+					Call.creator(new PhoneNumber("+14692009202"), new PhoneNumber(fromNumber),
+							new URI(twilloCallUrl + "?text="
+									+ URLEncoder.encode("Data Service not responding, Restart required", "utf-8")))
+							.setMethod(HttpMethod.GET).create();
 
-					sendMail.send("spencer@allbluesolutions.com", "error@ngdesk.com", "ngDesk - ngdesk-data container",
-							"Data Service not responding in ngdesk production, Restart required");
-
-					sendMail.send("sandra@subscribeit.com", "error@ngdesk.com", "ngDesk - ngdesk-data container",
-							"Data Service not responding in ngdesk production, Restart required");
-					
-					sendMail.send("sharath.satish@subscribeit.com", "error@ngdesk.com", "ngDesk - ngdesk-data container",
-							"Data Service not responding in ngdesk production, Restart required");
-
-					sendMail.send("ashok.gajapathy@subscribeit.com", "error@ngdesk.com",
-							"ngDesk - ngdesk-data container",
-							"Data Service not responding in ngdesk production, Restart required");
-				} catch (Exception e1) {
+					Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+					Call.creator(new PhoneNumber("+13126784446"), new PhoneNumber(fromNumber),
+							new URI(twilloCallUrl + "?text="
+									+ URLEncoder.encode("Data Service not responding, Restart required", "utf-8")))
+							.setMethod(HttpMethod.GET).create();
+				} catch (UnsupportedEncodingException e1) {
+					e1.printStackTrace();
+				} catch (URISyntaxException e1) {
 					e1.printStackTrace();
 				}
 

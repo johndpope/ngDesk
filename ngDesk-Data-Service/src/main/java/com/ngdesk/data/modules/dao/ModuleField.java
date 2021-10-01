@@ -99,10 +99,6 @@ public class ModuleField {
 	@JsonProperty("FORMULA")
 	private String formula;
 
-	@Field("LIST_FORMULA")
-	@JsonProperty("LIST_FORMULA")
-	private List<ListFormulaField> listFormula;
-
 	@JsonProperty("PREFIX")
 	@Field("PREFIX")
 	private String prefix;
@@ -140,9 +136,8 @@ public class ModuleField {
 			Boolean visibility, List<String> picklistValues, String defaultValue, Boolean notEditable,
 			Integer autoNumberStartingNumber, Map<String, String> inheritanceMapping, Boolean inheritedField,
 			String inheritanceLevel, String aggregationField, String aggregationRelatedField, String aggregationType,
-			DataFilter dataFilter, Boolean unique, String formula, List<ListFormulaField> listFormula, String prefix,
-			String suffix, String numericFormat, String toCurrency, String fromCurrency, String dateIncurred,
-			List<Condition> conditions) {
+			DataFilter dataFilter, Boolean unique, String formula, String prefix, String suffix, String numericFormat,
+			String toCurrency, String fromCurrency, String dateIncurred, List<Condition> conditions) {
 		super();
 		this.fieldId = fieldId;
 		this.name = name;
@@ -167,7 +162,6 @@ public class ModuleField {
 		this.dataFilter = dataFilter;
 		this.unique = unique;
 		this.formula = formula;
-		this.listFormula = listFormula;
 		this.prefix = prefix;
 		this.suffix = suffix;
 		this.numericFormat = numericFormat;
@@ -267,14 +261,6 @@ public class ModuleField {
 
 	public String getFormula() {
 		return formula;
-	}
-
-	public List<ListFormulaField> getListFormula() {
-		return listFormula;
-	}
-
-	public void setListFormula(List<ListFormulaField> listFormula) {
-		this.listFormula = listFormula;
 	}
 
 	public String getPrefix() {

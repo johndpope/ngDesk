@@ -129,7 +129,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<image>
-						<name>ngdesk/schedule:latest</name>
+						<name>gitlab.bluemsp.com:5050/ngdesk/ngdesk/schedule:latest</name>
 					</image>
 					<layers>
 						<enabled>true</enabled>

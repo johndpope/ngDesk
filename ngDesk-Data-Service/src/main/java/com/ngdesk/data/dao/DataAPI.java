@@ -35,15 +35,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ngdesk.commons.exceptions.BadRequestException;
 import com.ngdesk.commons.exceptions.ForbiddenException;
 import com.ngdesk.commons.mail.EmailService;
 import com.ngdesk.commons.managers.AuthManager;
 import com.ngdesk.data.modules.dao.Condition;
-import com.ngdesk.data.modules.dao.ListFormulaField;
 import com.ngdesk.data.modules.dao.ListLayout;
 import com.ngdesk.data.modules.dao.ListMobileLayout;
 import com.ngdesk.data.modules.dao.Module;
@@ -221,20 +217,15 @@ public class DataAPI {
 
 			List<ModuleField> formulaFields = module.getFields().stream()
 					.filter(field -> field.getDataType().getDisplay().equals("Formula")).collect(Collectors.toList());
+
 			for (ModuleField field : formulaFields) {
-				String value = dataService.getFormulaFieldValue(module, payload, field, field.getFormula());
+				String value = dataService.getFormulaFieldValue(module, payload, field);
 				if (NumberUtils.isParsable(value)) {
 					payload.put(field.getName(), Float.valueOf(value));
 				} else {
 					payload.put(field.getName(), value);
 				}
 			}
-
-			List<ModuleField> listFormulaFields = module.getFields().stream()
-					.filter(field -> field.getDataType().getDisplay().equals("List Formula"))
-					.collect(Collectors.toList());
-
-			payload = dataService.getListFormulaField(listFormulaFields, entry, payload, module);
 
 			Optional<ModuleField> optionalReceiptCaptureField = module.getFields().stream()
 					.filter(field -> field.getDataType().getDisplay().equals("Receipt Capture")).findFirst();
@@ -329,7 +320,7 @@ public class DataAPI {
 		}
 
 		if (module.getName().equals("Teams")) {
-			dataService.isEditableTeam(entry.get("_id").toString(), entry.get("NAME").toString());
+			dataService.isEditableTeam(entry.get("_id").toString(),entry.get("NAME").toString());
 		}
 
 		if (module.getName().equals("Users")) {
@@ -405,17 +396,13 @@ public class DataAPI {
 		List<ModuleField> formulaFields = module.getFields().stream()
 				.filter(field -> field.getDataType().getDisplay().equals("Formula")).collect(Collectors.toList());
 		for (ModuleField field : formulaFields) {
-			String value = dataService.getFormulaFieldValue(module, payload, field, field.getFormula());
+			String value = dataService.getFormulaFieldValue(module, payload, field);
 			if (NumberUtils.isParsable(value)) {
 				payload.put(field.getName(), Float.valueOf(value));
 			} else {
 				payload.put(field.getName(), value);
 			}
 		}
-		List<ModuleField> listFormulaFields = module.getFields().stream()
-				.filter(field -> field.getDataType().getDisplay().equals("List Formula")).collect(Collectors.toList());
-
-		payload = dataService.getListFormulaField(listFormulaFields, entry, payload, module);
 
 		Optional<Map<String, Object>> optionalPreivousCopy = entryRepository.findById(payload.get("_id").toString(),
 				collectionName);
@@ -1075,7 +1062,6 @@ public class DataAPI {
 		}
 
 		Module module = optionalModule.get();
-
 		List<ModuleField> formulaFields = module.getFields().stream()
 				.filter(field -> field.getDataType().getDisplay().equals("Formula")).collect(Collectors.toList());
 
@@ -1085,56 +1071,10 @@ public class DataAPI {
 		String value = "";
 
 		for (ModuleField formulaField : formulaFields) {
-			value = dataService.getFormulaFieldValue(module, formattedEntry, formulaField, formulaField.getFormula());
+			value = dataService.getFormulaFieldValue(module, formattedEntry, formulaField);
 			payload.put(formulaField.getName(), value);
 		}
 
-		ObjectMapper mapper = new ObjectMapper();
-
-		List<ModuleField> listFormulaFields = module.getFields().stream()
-				.filter(field -> field.getDataType().getDisplay().equals("List Formula")).collect(Collectors.toList());
-
-		for (ModuleField listFormulaField : listFormulaFields) {
-			boolean isPresent = false;
-			List<ListFormulaFieldValue> finalListFormulaFieldValues = new ArrayList<ListFormulaFieldValue>();
-			List<ListFormulaFieldValue> listFormulaFieldValues = new ArrayList<ListFormulaFieldValue>();
-			try {
-				listFormulaFieldValues = mapper.readValue(
-						mapper.writeValueAsString(entry.get(listFormulaField.getName())),
-						mapper.getTypeFactory().constructCollectionType(List.class, ListFormulaFieldValue.class));
-			} catch (Exception e) {
-				e.printStackTrace();
-
-			}
-			if (listFormulaFieldValues != null) {
-				for (ListFormulaFieldValue listFormulaFieldValue : listFormulaFieldValues) {
-					if (listFormulaFieldValue.getFormulaName() != null
-							&& !listFormulaFieldValue.getFormulaName().isEmpty()) {
-						isPresent = true;
-						List<ListFormulaField> listFormulas = listFormulaField.getListFormula();
-						ListFormulaField listFormula = listFormulas.stream()
-								.filter(lFormula -> lFormula.getFormulaName()
-										.equalsIgnoreCase(listFormulaFieldValue.getFormulaName()))
-								.findAny().orElse(null);
-						if (listFormula == null) {
-							String[] vars = { listFormulaFieldValue.getFormulaName() };
-							throw new BadRequestException("FORMULA_NAME_INVALID", vars);
-						} else {
-							String formula = listFormula.getFormula();
-							value = dataService.getFormulaFieldValue(module, formattedEntry, listFormulaField, formula);
-							listFormulaFieldValue.setValue(value);
-							if (NumberUtils.isParsable(value)) {
-								listFormulaFieldValue.setValue(Double.valueOf(value));
-							}
-							finalListFormulaFieldValues.add(listFormulaFieldValue);
-						}
-					}
-				}
-				if (isPresent) {
-					payload.put(listFormulaField.getName(), finalListFormulaFieldValues);
-				}
-			}
-		}
 		return payload;
 	}
 }

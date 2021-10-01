@@ -77,7 +77,6 @@ import com.ngdesk.graphql.modules.data.dao.DistinctEntryValuesFetcher;
 import com.ngdesk.graphql.modules.data.dao.EntryDataFetcher;
 import com.ngdesk.graphql.modules.data.dao.FormulaDataFetcher;
 import com.ngdesk.graphql.modules.data.dao.IndividualEntryFetcher;
-import com.ngdesk.graphql.modules.data.dao.ListFormulaDataFetcher;
 import com.ngdesk.graphql.modules.data.dao.OneToManyCountDataFetcher;
 import com.ngdesk.graphql.modules.data.dao.OneToManyDataFetcher;
 import com.ngdesk.graphql.modules.data.dao.OneToManyUnmappedCountDataFetcher;
@@ -499,9 +498,6 @@ public class DataUtility {
 	CategoriesCountDataFetcher categoriesCountDataFetcher;
 
 	@Autowired
-	ListFormulaDataFetcher listFormulaDatafetcher;
-	
-	@Autowired
 	EscalationDataFetcher escalationDataFetcher;
 
 	@Autowired
@@ -653,10 +649,6 @@ public class DataUtility {
 
 						} else if (field.getDataType().getDisplay().equals("Receipt Capture")) {
 							schemaMap.put(field.getName(), "MessageAttachment");
-
-						} else if (field.getDataType().getDisplay().equals("List Formula")) {
-
-							schemaMap.put(field.getName(), "[ListFormulaFieldValue]");
 
 						} else {
 							switch (field.getDataType().getBackend()) {
@@ -825,6 +817,7 @@ public class DataUtility {
 		builder.type("Section", typeWiring -> typeWiring.dataFetcher("createdBy", entryDataFetcher));
 		builder.type("Section", typeWiring -> typeWiring.dataFetcher("lastUpdatedBy", entryDataFetcher));
 
+		
 		// ARTICLE
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getKbArticle", articleDataFetcher));
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getAllKbArticles", articlesDataFetcher));
@@ -832,7 +825,7 @@ public class DataUtility {
 		builder.type("Article", typeWiring -> typeWiring.dataFetcher("createdBy", entryDataFetcher));
 		builder.type("Article", typeWiring -> typeWiring.dataFetcher("lastUpdatedBy", entryDataFetcher));
 		builder.type("Article", typeWiring -> typeWiring.dataFetcher("author", entryDataFetcher));
-
+		
 		// Notification
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getNotification", notificationDataFetcher));
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getNotifications", notificationsDataFetcher));
@@ -897,7 +890,6 @@ public class DataUtility {
 
 		// MODULE FIELDS
 		builder.type("ModuleField", typeWiring -> typeWiring.dataFetcher("primaryDisplayField", fieldDataFetcher));
-//		builder.type("ModuleField", typeWiring -> typeWiring.dataFetcher("module", moduleDataFetcher));
 		builder.type("ModuleField", typeWiring -> typeWiring.dataFetcher("relationshipField", fieldDataFetcher));
 		builder.type("ModuleField", typeWiring -> typeWiring.dataFetcher("aggregationRelatedField", fieldDataFetcher));
 		builder.type("ModuleField", typeWiring -> typeWiring.dataFetcher("createdBy", entryDataFetcher));
@@ -1020,16 +1012,13 @@ public class DataUtility {
 					} else if (field.getDataType().getDisplay().equals("Workflow Stages")) {
 						builder.type(module.getName().replaceAll("\\s+", "_"),
 								typeWiring -> typeWiring.dataFetcher(field.getName(), workflowInstancesDataFetcher));
-					} else if (field.getDataType().getDisplay().equals("List Formula")) {
-						builder.type(module.getName().replaceAll("\\s+", "_"),
-								typeWiring -> typeWiring.dataFetcher(field.getName(), listFormulaDatafetcher));
 					}
 				}
 
 			});
 
 		}
-
+	
 		return builder.build();
 	}
 

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>      
+<?xml version="1.0" encoding="UTF-8"?>     
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -14,7 +14,8 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ngDesk-Report-Service</name>
 	<description>ngDesk Micro Service for Reporting</description>
- 
+
+
 	<properties>
 		<java.version>11</java.version>
 		<spring-cloud.version>Hoxton.SR8</spring-cloud.version>
@@ -25,7 +26,8 @@
 		<sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
 		<sonar.language>java</sonar.language>
 	</properties>
- 
+
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -178,7 +180,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<image>
-						<name>ngdesk/report:latest</name>
+						<name>gitlab.bluemsp.com:5050/ngdesk/ngdesk/report:latest</name>
 					</image>
 					<layers>
 						<enabled>true</enabled>
