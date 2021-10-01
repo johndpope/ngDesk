@@ -103,6 +103,5 @@
 	"BASE_VALUE_NOT_NULL": "Base value cannot be null, please try again",
 	"INVALID_DATE_FORMAT": "The date format you have been selected is invalid, please select a valid format",
 	"INVALID_FORM" : "Selected Form doesnot exist or might have been deleted",
-	"RELATIONSHIP_FIELD_ALREADY_EXIST_IN_OTHER_ENTRY": "The ${1} may have been used in other existing entry, please try again"
-
+	"FORMULA_NAME_INVALID" :"Formula Name ${1} is invalid or may have been deleted from list formula field, Please try again"
 }

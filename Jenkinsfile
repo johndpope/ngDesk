@@ -32,9 +32,14 @@ pipeline {
 				        def reportsChanged = ''
 				        def tesseractChanged = ''
 				        def notificationsChanged = ''
+						def restChanged = ''
+						def managerChanged = ''
+						def gatewayChanged = ''
 
 				        // frontend services
 				        def uiChanged = ''
+				       
+				 	
 				    
 				    
 				     dir('/var/jenkins_home/projects/ngdesk-project/ngDesk') {
@@ -56,14 +61,24 @@ pipeline {
 				                reportsChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Report-Service ''').trim()
 				                tesseractChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Tesseract-Service ''').trim()
 				                notificationsChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Notification-Service ''').trim()
+								restChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Rest ''').trim()
+								managerChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Manager ''').trim()
+								gatewayChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Gateway ''').trim()
+
 
 				                uiChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-UI''').trim()
 				              checkout([$class: 'GitSCM', branches: [[name: 'origin/main']], userRemoteConfigs: [[url: 'https://github.com/SubscribeIT/ngDesk.git']]])
 				            }
 
-					if (authChanged.length() > 0) {
-                            			buildMicroservice('auth', 'ngDesk-Auth')
-                        		}
+						if (authChanged.length() > 0) {
+							buildMicroservice('auth', 'ngDesk-Auth')
+						}
+						
+						if(uiChanged.length() > 0){
+								dir('/var/jenkins_home/projects/ngdesk-web-project') {
+									checkout([$class: 'GitSCM', branches: [[name: '*/master']], userRemoteConfigs: [[credentialsId: "${env.GIT_CREDENTIAL_ID}", url: "${env.GIT_WEB_URL}"]]])
+								}
+						}
 
 				        if (integrationChanged.length() > 0) {
                            			 buildMicroservice('integration', 'ngDesk-Integration-Service')
@@ -71,6 +86,10 @@ pipeline {
 
 				        if (graphqlChanged.length() > 0) {
 				            buildMicroservice('graphql', 'ngDesk-Graphql')
+				        }
+
+						if (samChanged.length() > 0) {
+				            buildMicroservice('sam', 'ngDesk-Sam-Service')
 				        }
 
 				        if (reportsChanged.length() > 0) {
@@ -112,11 +131,23 @@ pipeline {
 				        if (roleChanged.length() > 0) {
 				            buildMicroservice('role', 'ngDesk-Role-Service')
 				        }
+
+						if (restChanged.length() > 0) {
+				            buildMicroservice('ngdesk-rest', 'ngDesk-Rest')
+				        }
+
+						if (managerChanged.length() > 0) {
+				            buildMicroservice('ngdesk-manager', 'ngDesk-Manager')
+				        }
+
+						if (gatewayChanged.length() > 0) {
+				            buildMicroservice('ngdesk-gateway', 'ngDesk-Gateway')
+				        }
 				        
 				        if (uiChanged.length() > 0) {	
-				            generateSwagger('ngDesk-UI', '../ngDesk-Workflow-Service/target/openapi.json', 'workflow-api')
 				            generateSwagger('ngDesk-UI', '../ngDesk-Auth/target/openapi.json', 'auth-api')
 				            generateSwagger('ngDesk-UI', '../ngDesk-Integration-Service/target/openapi.json', 'integration-api')
+				            generateSwagger('ngDesk-UI', '../ngDesk-Workflow-Service/target/openapi.json', 'workflow-api')
 				            generateSwagger('ngDesk-UI', '../ngDesk-Module-Service/target/openapi.json', 'module-api')
 				            generateSwagger('ngDesk-UI', '../ngDesk-Role-Service/target/openapi.json', 'role-api')
 				            generateSwagger('ngDesk-UI', '../ngDesk-Escalation-Service/target/openapi.json', 'escalation-api')
@@ -138,18 +169,71 @@ pipeline {
 				                sh 'cp -r dist/ngDesk-Angular/. /var/jenkins_home/projects/ngdesk-web-project/src/main/resources/static/'
 				            }
 
+							  dir('/var/jenkins_home/projects/ngdesk-web-project') {
+                                sh 'mvn package'
+                                sh './mvnw spring-boot:build-image'
+
+                                    docker.withRegistry("${env.DOCKER_HUB_URL}", "${env.DOCKER_HUB_KEY}") {
+										def newImage = docker.image("${env.DOCKER_IMAGE_NAME}/ngdesk-web:latest")
+										newImage.push()
+										docker.withServer("${env.PROD_SERVER_URL}") {
+										    sh "docker rename ngdesk-web ngdesk-web-old"
+										    sh "docker stop ngdesk-web-old"
+										    sh "docker pull ngdesk/ngdesk-web"
+										    sh "docker run --name ngdesk-web -d -e SPRING_PROFILES_ACTIVE=dockernew --network=host ngdesk/ngdesk-web"
+										    sh "docker rm ngdesk-web-old"
+										    sh 'docker image prune -f'
+										}
+									} 
+                                }
+
 				        }
-
-				
-
 					}
+					emailext (
+						subject: "PROD Deployment success!!!",
+						body: "Go check PROD",
+						to: "${EMPLOYEE_EMAIL_ADDRESSES}",
+						from: "${JENKINS_FROM_EMAIL_ADDRESS}"
+					)
 				}
 			}
 		}
+		post {
+    always {
+
+      echo 'stuff to do always'   
+      sh 'env'
+
+    }
+    failure {
+      script {
+        echo 'pipeline failed, at least one step failed'
+
+          emailext (
+            subject: "PROD FAILED deployment!!!",
+            body: "Go check Jenkins and PROD",
+            to: "${EMPLOYEE_EMAIL_ADDRESSES}",
+			from: "${JENKINS_FROM_EMAIL_ADDRESS}"
+          )
+      }
+
+    }
+  }
+
 }
 def buildMicroservice(serviceName, path) {
  dir('/var/jenkins_home/projects/ngdesk-project/ngDesk/' + path) {
 
+
+	 if(serviceName == 'ngdesk-rest' || serviceName == 'ngdesk-manager' || serviceName == 'ngdesk-gateway'){
+		 sh 'mvn package -DskipTests'
+
+		 if(serviceName == 'ngdesk-gateway'){
+			 sh './mvnw spring-boot:build-image'
+		 } else {
+			 docker.build("${env.DOCKER_IMAGE_NAME}/" + serviceName + ":latest")
+		 }
+	 } else{
         sh 'mvn install -f pom-packaging.xml'
 
         // Generate package
@@ -162,11 +246,25 @@ def buildMicroservice(serviceName, path) {
         sh 'mvn test -f pom-packaging.xml'
         //junit '**/surefire-reports/*.xml'
         
-        sh "mvn sonar:sonar -Dsonar.projectKey=${path} -Dsonar.host.url=env.SONAR_URL -Dsonar.login=env.SONAR_LOGIN"
         
-        //create docker image
-        // push to docker hub
-        // post to prod
+        sh "mvn sonar:sonar -Dsonar.projectKey=${path} -Dsonar.host.url=${env.SONAR_URL} -Dsonar.login=${env.SONAR_LOGIN}"
+        
+        sh './mvnw spring-boot:build-image'
+	 }
+        docker.withRegistry("${env.DOCKER_HUB_URL}", "${env.DOCKER_HUB_KEY}") {
+            def newImage = docker.image("${env.DOCKER_IMAGE_NAME}/" + serviceName + ":latest")
+            newImage.push()
+            docker.withServer("${env.PROD_SERVER_URL}") {
+                sh "docker rename ngdesk-${serviceName} ngdesk-${serviceName}-old"
+                sh "docker stop ngdesk-${serviceName}-old"
+                sh "docker pull ngdesk/${serviceName}"
+                sh "docker run --mount type=bind,source=/opt/ngdesk,target=/opt/ngdesk --name ngdesk-${serviceName} -d -e SPRING_PROFILES_ACTIVE=dockernew --network=host ngdesk/${serviceName}"
+                sh "docker rm ngdesk-${serviceName}-old"
+                sh 'docker image prune -f'
+            }
+         }
+        
+       
         
     }
 }
@@ -174,8 +272,7 @@ def buildMicroservice(serviceName, path) {
 def generateSwagger(frontendProject, serviceJsonPath, name) {
 
     dir('/var/jenkins_home/projects/ngdesk-project/ngDesk/' + frontendProject) {
-
-        sh "openapi-generator generate -g typescript-angular -i ${serviceJsonPath} -o ngdesk-swagger/${name} --additional-properties npmName=@ngdesk/${name},ngVersion=11.0.0,npmVersion=1.0.0"
+        sh "openapi-generator-cli generate -g typescript-angular -i ${serviceJsonPath} -o ngdesk-swagger/${name} --additional-properties npmName=@ngdesk/${name},ngVersion=11.0.0,npmVersion=1.0.0"
         dir('ngdesk-swagger/' + name) {
             sh 'npm install'
             sh 'npm run build'
@@ -186,12 +283,5 @@ def generateSwagger(frontendProject, serviceJsonPath, name) {
     }
 
 }
-
-
-
-
-
-
-
 
 
