@@ -1,5 +1,6 @@
 package com.ngdesk.module.field.dao;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -13,6 +14,8 @@ import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ngdesk.commons.exceptions.BadRequestException;
 import com.ngdesk.commons.managers.AuthManager;
 import com.ngdesk.module.dao.Module;
@@ -58,7 +61,10 @@ public class FieldValidator {
 			isValidCurrencyExchange(module, moduleField);
 			break;
 		case "Formula":
-			isValidFormula(module, moduleField);
+			isValidFormulaField(module, moduleField);
+			break;
+		case "List Formula":
+			isValidListFormula(module, moduleField);
 			break;
 		case "Picklist":
 		case "Picklist (Multi-Select)":
@@ -71,7 +77,7 @@ public class FieldValidator {
 			isValidButtonDataType(moduleField, module);
 			break;
 		case "Discussion":
-			isValidDiscussionField(module,moduleField);
+			isValidDiscussionField(module, moduleField);
 			break;
 		case "Chronometer":
 			moduleField = isValidChronometer(moduleField);
@@ -132,9 +138,11 @@ public class FieldValidator {
 		}
 	}
 
-	public void isValidDiscussionField(Module module,ModuleField moduleField) {
+	public void isValidDiscussionField(Module module, ModuleField moduleField) {
 		Optional<ModuleField> optionalDiscussionField = module.getFields().stream()
-				.filter(field -> field.getDataType().getDisplay().equals("Discussion")&&!field.getFieldId().equals(moduleField.getFieldId())).findFirst();
+				.filter(field -> field.getDataType().getDisplay().equals("Discussion")
+						&& !field.getFieldId().equals(moduleField.getFieldId()))
+				.findFirst();
 		if (optionalDiscussionField.isPresent()) {
 			String[] vars = { module.getName() };
 			throw new BadRequestException("DUPLICATE_DISCUSSION_FIELD", vars);
@@ -184,8 +192,8 @@ public class FieldValidator {
 		String backendDataType = aggregationRelatedField.getDataType().getBackend();
 		String displayDataType = aggregationRelatedField.getDataType().getDisplay();
 
-		if (!backendDataType.equals("Float") && !backendDataType.equals("Integer")
-				&& !backendDataType.equals("Double") && !displayDataType.equals("Formula")) {
+		if (!backendDataType.equals("Float") && !backendDataType.equals("Integer") && !backendDataType.equals("Double")
+				&& !displayDataType.equals("Formula")) {
 			throw new BadRequestException("INVALID_AGGREGATION_RELATIONSHIP_FIELD", null);
 		}
 
@@ -208,7 +216,8 @@ public class FieldValidator {
 				"Text Area Long", "Text Area Rich", "Time", "URL", "File Upload", "Payment", "Discussion", "Checkbox",
 				"Date", "Date/Time", "Street 1", "Street 2", "City", "Country", "State", "Zipcode", "List Text",
 				"Chronometer", "ID", "Address", "Button", "Workflow Stages", "Aggregate", "Approval", "File Preview",
-				"Zoom", "Image", "Condition", "PDF", "Time Window", "Currency Exchange", "Receipt Capture", "Password");
+				"Zoom", "Image", "Condition", "PDF", "Time Window", "Currency Exchange", "Receipt Capture", "Password",
+				"List Formula");
 
 		List<String> backendDataTypes = List.of("String", "Array", "Float", "json", "Integer", "Double", "Boolean",
 				"Date", "BLOB", "Button", "Aggregate", "Zoom", "Approval");
@@ -253,7 +262,7 @@ public class FieldValidator {
 	public void isValidDispayAndBackendDataType(DataType dataType) {
 		String[] displayTypes = { "Email", "Phone", "Picklist", "Text", "Text Area", "Text Area Long", "Text Area Rich",
 				"URL", "Street 1", "Street 2", "City", "Country", "State", "ID", "Address", "Zipcode", "Condition",
-				"Password" };
+				"Password", "List Formula" };
 		String[] data = { dataType.getBackend(), dataType.getDisplay() };
 		for (String display : displayTypes) {
 			if (dataType.getDisplay().equals(display) && !dataType.getBackend().equals("String")) {
@@ -430,83 +439,104 @@ public class FieldValidator {
 		}
 	}
 
-	public void isValidFormula(Module module, ModuleField moduleField) {
+	public void isValidFormulaField(Module module, ModuleField moduleField) {
 		if (moduleField.getDataType().getDisplay().equals("Formula")) {
 			if (moduleField.getFormula() == null || moduleField.getFormula().isBlank()) {
 				throw new BadRequestException("FORMULA_FIELD_EMPTY", null);
 			}
 
 			String formula = moduleField.getFormula();
-			Optional<List<Module>> optionalModules = moduleRepository
-					.findAllModules("modules_" + authManager.getUserDetails().getCompanyId());
-			List<Module> modules = optionalModules.get();
-			List<ModuleField> moduleFields = module.getFields();
-			List<String> displayDatatypes = List.of("Auto Number", "Currency", "Number", "Text", "Street 1", "Street 2",
-					"City", "Country", "State", "Zipcode", "Chronometer", "Email", "Picklist", "Formula",
-					"Currency Exchange");
-			List<String> stringDisplayDataTypes = List.of("Text", "Street 1", "Street 2", "City", "Country", "State",
-					"Zipcode", "Chronometer", "Email", "Picklist");
+			isValidFormula(module, moduleField, formula);
+		}
+	}
 
-			if (!validateBrackets(formula)) {
-				throw new BadRequestException("BRACKETS_NOT_CLOSED_PROPERLY", null);
-			}
+	public String isValidFormula(Module module, ModuleField moduleField, String formula) {
+		Optional<List<Module>> optionalModules = moduleRepository
+				.findAllModules("modules_" + authManager.getUserDetails().getCompanyId());
+		List<Module> modules = optionalModules.get();
+		List<ModuleField> moduleFields = module.getFields();
+		List<String> displayDatatypes = List.of("Auto Number", "Currency", "Number", "Text", "Street 1", "Street 2",
+				"City", "Country", "State", "Zipcode", "Chronometer", "Email", "Picklist", "Formula",
+				"Currency Exchange", "List Formula");
+		List<String> stringDisplayDataTypes = List.of("Text", "Street 1", "Street 2", "City", "Country", "State",
+				"Zipcode", "Chronometer", "Email", "Picklist");
 
-			String regExpPos = "([\\(]+[\\/*+-])|([\\/*+-][\\)]+)|(^[\\/+*-])|([\\/+*-]$)|([\\/+*-][\\/+*-]+)";
-			Pattern pattern = Pattern.compile(regExpPos);
-			Matcher matcher = pattern.matcher(formula);
-			if (matcher.find()) {
-				String[] vars = { matcher.group() };
-				throw new BadRequestException("OPERATOR_POSITION_NOT_VALID", vars);
-			}
+		if (!validateBrackets(formula)) {
+			throw new BadRequestException("BRACKETS_NOT_CLOSED_PROPERLY", null);
+		}
 
-			formula = getFormulaRecursively(moduleField, module);
+		String regExpPos = "([\\(]+[\\/*+-])|([\\/*+-][\\)]+)|(^[\\/+*-])|([\\/+*-]$)|([\\/+*-][\\/+*-]+)";
+		Pattern pattern = Pattern.compile(regExpPos);
+		Matcher matcher = pattern.matcher(formula);
+		if (matcher.find()) {
+			String[] vars = { matcher.group() };
+			throw new BadRequestException("OPERATOR_POSITION_NOT_VALID", vars);
+		}
 
-			int stringFieldCount = 0;
-			String reg = "\\{\\{(?i)(inputMessage[_a-zA-Z0-9\\.\\-]+)\\}\\}";
-			pattern = Pattern.compile(reg);
-			matcher = pattern.matcher(formula);
-			while (matcher.find()) {
-				String path = matcher.group(1).split("(?i)inputMessage\\.")[1];
-				String[] fields = path.split("\\.");
-				String fieldDisplayType;
-				if (fields.length == 1) {
-					if (validateCustomOperators(fields[0])) {
-						continue;
-					}
-
-					Optional<ModuleField> optionalField = moduleFields.stream()
-							.filter(field -> field.getName().equals(fields[0])).findFirst();
-					if (optionalField.isEmpty()) {
-						String[] vars = { fields[0], module.getName() };
-						throw new BadRequestException("FIELD_NOT_FOUND", vars);
-					}
-					ModuleField field = optionalField.get();
-					if (field.getDataType().getDisplay().equals("Relationship")) {
-						String[] vars = { fields[0] };
-						throw new BadRequestException("FIELD_CANNOT_END_BY_RELATIONSHIP", vars);
-
-					} else if (!displayDatatypes.contains(field.getDataType().getDisplay())) {
-						String[] vars = { fields[0] };
-						throw new BadRequestException("DISPALY_TYPE_NOT_VALID_FOR_FORMULA", vars);
-					}
-					fieldDisplayType = field.getDataType().getDisplay();
-				} else {
-					fieldDisplayType = validateFormulaRecursively(module, modules, path, displayDatatypes);
+		formula = getFormulaRecursively(formula, module);
+		int stringFieldCount = 0;
+		String reg = "\\{\\{(?i)(inputMessage[_a-zA-Z0-9\\.\\-]+)\\}\\}";
+		pattern = Pattern.compile(reg);
+		matcher = pattern.matcher(formula);
+		while (matcher.find()) {
+			String path = matcher.group(1).split("(?i)inputMessage\\.")[1];
+			String[] fields = path.split("\\.");
+			String fieldDisplayType;
+			if (fields.length == 1) {
+				if (validateCustomOperators(fields[0])) {
+					continue;
 				}
 
-				if (stringDisplayDataTypes.contains(fieldDisplayType)) {
-					stringFieldCount += 1;
+				Optional<ModuleField> optionalField = moduleFields.stream()
+						.filter(field -> field.getName().equals(fields[0])).findFirst();
+				if (optionalField.isEmpty()) {
+					String[] vars = { fields[0], module.getName() };
+					throw new BadRequestException("FIELD_NOT_FOUND", vars);
 				}
+				ModuleField field = optionalField.get();
+				if (field.getDataType().getDisplay().equals("List Formula")) {
+					List<ListFormulaField> listFormulaFields = field.getListFormula();
+					for (ListFormulaField listFormulaField : listFormulaFields) {
+
+						matcher = pattern.matcher(listFormulaField.getFormula());
+						while (matcher.find()) {
+							String listFormulaPath = matcher.group(1).split("(?i)inputMessage\\.")[1];
+							String[] listfields = listFormulaPath.split("\\.");
+							if (Arrays.asList(listfields).contains(moduleField.getName())) {
+								String[] vars = { moduleField.getName() };
+								throw new BadRequestException("FIELD_CANNOT_BE_LOOPED", vars);
+							}
+						}
+					}
+				}
+				if (field.getDataType().getDisplay().equals("Relationship")) {
+					String[] vars = { fields[0] };
+					throw new BadRequestException("FIELD_CANNOT_END_BY_RELATIONSHIP", vars);
+
+				} else if (!displayDatatypes.contains(field.getDataType().getDisplay())) {
+					String[] vars = { fields[0] };
+					throw new BadRequestException("DISPALY_TYPE_NOT_VALID_FOR_FORMULA", vars);
+				}
+				fieldDisplayType = field.getDataType().getDisplay();
+			} else {
+				fieldDisplayType = validateFormulaRecursively(module, modules, path, displayDatatypes);
 			}
-			if (stringFieldCount > 0) {
-				String regExpOp = "[\\/\\*\\-]";
-				pattern = Pattern.compile(regExpOp);
-				matcher = pattern.matcher(formula);
-				if (matcher.results().count() > 0) {
-					throw new BadRequestException("FOR_STRING_OPERATORS_NOT_ALLOWED", null);
-				}
+
+			if (stringDisplayDataTypes.contains(fieldDisplayType)) {
+				stringFieldCount += 1;
 			}
 		}
+		if (stringFieldCount > 0) {
+			String regExpOp = "[\\/\\*\\-]";
+			pattern = Pattern.compile(regExpOp);
+			matcher = pattern.matcher(formula);
+			if (matcher.results().count() > 0) {
+				throw new BadRequestException("FOR_STRING_OPERATORS_NOT_ALLOWED", null);
+			}
+			return "String";
+
+		}
+		return "Number";
 	}
 
 	public String validateFormulaRecursively(Module module, List<Module> modules, String path,
@@ -561,6 +591,10 @@ public class FieldValidator {
 				String[] vars = { fields[1] };
 				throw new BadRequestException("DISPALY_TYPE_NOT_VALID_FOR_FORMULA", vars);
 
+			} else if (relatedfield.getDataType().getDisplay().equals("List Formula")) {
+				String[] vars = { fields[1] };
+				throw new BadRequestException("DISPLAY_TYPE_NOT_VALID_FOR_LIST_FORMULA", vars);
+
 			} else if (!displayDatatypes.contains(relatedfield.getDataType().getDisplay())) {
 				String[] vars = { fields[1] };
 				throw new BadRequestException("DISPALY_TYPE_NOT_VALID_FOR_FORMULA", vars);
@@ -606,8 +640,7 @@ public class FieldValidator {
 		return false;
 	}
 
-	public String getFormulaRecursively(ModuleField formulaField, Module module) {
-		String formula = formulaField.getFormula();
+	public String getFormulaRecursively(String formula, Module module) {
 		List<ModuleField> moduleFields = module.getFields();
 
 		String reg = "\\{\\{(?i)(inputMessage[_a-zA-Z0-9\\.\\-]+)\\}\\}";
@@ -616,16 +649,20 @@ public class FieldValidator {
 		while (matcher.find()) {
 			String path = matcher.group(1).split("(?i)inputMessage\\.")[1];
 			String[] fields = path.split("\\.");
-			ModuleField moduleField = moduleFields.stream().filter(field -> field.getName().equals(fields[0]))
-					.findFirst().orElse(null);
-			if (moduleField == null) {
-				String[] vars = { fields[0], module.getName() };
-				throw new BadRequestException("FIELD_NOT_FOUND", vars);
-			}
 
-			if (moduleField.getDataType().getDisplay().equals("Formula")) {
-				String updatedFormula = getFormulaRecursively(moduleField, module);
-				formula = formula.replaceAll("\\{\\{" + matcher.group(1) + "\\}\\}", "(" + updatedFormula + ")");
+			if (!validateCustomOperators(fields[0])) {
+
+				ModuleField moduleField = moduleFields.stream().filter(field -> field.getName().equals(fields[0]))
+						.findFirst().orElse(null);
+				if (moduleField == null) {
+					String[] vars = { fields[0], module.getName() };
+					throw new BadRequestException("FIELD_NOT_FOUND", vars);
+				}
+
+				if (moduleField.getDataType().getDisplay().equals("Formula")) {
+					String updatedFormula = getFormulaRecursively(moduleField.getFormula(), module);
+					formula = formula.replaceAll("\\{\\{" + matcher.group(1) + "\\}\\}", "(" + updatedFormula + ")");
+				}
 			}
 		}
 
@@ -641,6 +678,77 @@ public class FieldValidator {
 				throw new BadRequestException("RECEIPT_CAPTURE_DATA_TYPE_EXIST", null);
 			}
 		}
+	}
+
+	public void isValidListFormula(Module module, ModuleField moduleField) {
+
+		if (moduleField.getListFormula() == null || moduleField.getListFormula().isEmpty()) {
+			throw new BadRequestException("LIST_FORMULA_EMPTY", null);
+		}
+		List<ListFormulaField> listFormulas = moduleField.getListFormula();
+
+		ModuleField previousField = module.getFields().stream()
+				.filter(field -> field.getFieldId().equals(moduleField.getFieldId())).findAny().orElse(null);
+		
+		List<String> formulaTypes = new ArrayList<String>();
+
+		for (ListFormulaField listFormula : listFormulas) {
+			if (listFormula.getFormula().isEmpty() || listFormula.getFormulaName().isEmpty()
+					|| listFormula.getFormulaLabel().isEmpty()) {
+				throw new BadRequestException("LIST_FORMULA_FIELDS_EMPTY", null);
+			}
+			isFormulaNameDuplicate(listFormula);
+			if (previousField != null) {
+				List<ListFormulaField> previousListFormulas = previousField.getListFormula();
+				isFormulaNameChanged(listFormulas, previousListFormulas);
+			}
+			String formula = listFormula.getFormula();
+			String type = isValidFormula(module, moduleField, formula);
+			if(!formulaTypes.contains(type)) {
+				formulaTypes.add(type);
+			}
+			
+		}
+		if(formulaTypes.size() >1) {
+			throw new BadRequestException("MIXED_FORMULA_TYPES", null);
+		}
+
+	}
+
+	public void isFormulaNameChanged(List<ListFormulaField> listFormulas, List<ListFormulaField> previousListFormulas) {
+
+		List<String> listFormulasNames = new ArrayList<String>();
+		List<String> previousListFormulasNames = new ArrayList<String>();
+		listFormulas.forEach(field -> {
+			listFormulasNames.add(field.getFormulaName());
+		});
+		previousListFormulas.forEach(field -> {
+			previousListFormulasNames.add(field.getFormulaName());
+		});
+		if (previousListFormulasNames.size() > listFormulas.size()) {
+			throw new BadRequestException("LIST_FORMULA_NAME_DELETED", null);
+		} else if (previousListFormulasNames.size() < listFormulas.size()) {
+			if (!listFormulasNames.containsAll(previousListFormulasNames)) {
+				throw new BadRequestException("LIST_FORMULA_NAME_CHANGED", null);
+			}
+		} else {
+			if (!listFormulasNames.equals(previousListFormulasNames)) {
+				throw new BadRequestException("LIST_FORMULA_NAME_CHANGED", null);
+			}
+		}
+
+	}
+
+	public void isFormulaNameDuplicate(ListFormulaField listFormula) {
+
+		List<String> listFormulasNames = new ArrayList<String>();
+		if (!listFormulasNames.contains(listFormula.getFormulaName())) {
+			listFormulasNames.add(listFormula.getFormulaName());
+		} else {
+			String[] vars = { listFormula.getFormulaName() };
+			throw new BadRequestException("LIST_FORMULA_NAME_DUPLICATE", vars);
+		}
+
 	}
 
 }

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?> 
 <project xmlns="http://maven.apache.org/POM/4.0.0" 
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -10,15 +10,12 @@
 		<version>2.3.4.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	
+
 	<groupId>com.ngdesk.module</groupId>
 	<artifactId>ngDesk-Module-Service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ngDesk-Module-Service</name>
 	<description>Microservice for ngDesk Modules</description>
-
-
-
 
 	<properties>
 		<java.version>11</java.version>
@@ -191,7 +188,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<image>
-						<name>gitlab.bluemsp.com:5050/ngdesk/ngdesk/module:latest</name>
+						<name>ngdesk/module:latest</name>
 					</image>
 					<layers>
 						<enabled>true</enabled>

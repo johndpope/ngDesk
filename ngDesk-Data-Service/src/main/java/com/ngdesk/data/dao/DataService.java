@@ -25,6 +25,7 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.text.translate.UnicodeUnescaper;
 import org.apache.http.util.Asserts;
 import org.bson.types.ObjectId;
@@ -66,6 +67,7 @@ import com.ngdesk.commons.mail.EmailService;
 import com.ngdesk.commons.managers.AuthManager;
 import com.ngdesk.data.elastic.ElasticMessage;
 import com.ngdesk.data.modules.dao.Condition;
+import com.ngdesk.data.modules.dao.ListFormulaField;
 import com.ngdesk.data.modules.dao.ListLayout;
 import com.ngdesk.data.modules.dao.ListMobileLayout;
 import com.ngdesk.data.modules.dao.Module;
@@ -201,16 +203,18 @@ public class DataService {
 		return entry;
 	}
 
-	public String getFormulaFieldValue(Module module, Map<String, Object> entry, ModuleField formulaField) {
-		String value = formulaField.getFormula();
+	public String getFormulaFieldValue(Module module, Map<String, Object> entry, ModuleField formulaField,
+			String value) {
+
 		List<ModuleField> moduleFields = module.getFields();
 		List<String> customOperators = List.of("BLANK_SPACE");
 		List<String> stringDisplayDataTypes = List.of("Text", "Street 1", "Street 2", "City", "Country", "State",
 				"Zipcode", "Chronometer", "Email", "Picklist");
-		List<String> numericDisplayDataTypes = List.of("Auto Number", "Currency", "Number", "Currency Exchange");
+		List<String> numericDisplayDataTypes = List.of("Auto Number", "Currency", "Number", "Currency Exchange",
+				"List Formula");
 
 		try {
-			value = getFormulaRecursively(formulaField, moduleFields);
+			value = getFormulaRecursively(formulaField, moduleFields, value, entry);
 			String reg = "\\{\\{(?i)(inputMessage[_a-zA-Z0-9\\.\\-]+)\\}\\}";
 			Pattern pattern = Pattern.compile(reg);
 			Matcher matcher = pattern.matcher(value);
@@ -234,7 +238,6 @@ public class DataService {
 								.getAllModules("modules_" + authManager.getUserDetails().getCompanyId());
 						fieldDisplayType = getDisplayTypeByPath(path, module, modules);
 					}
-
 					if (stringDisplayDataTypes.contains(fieldDisplayType)) {
 						if (generatedValue.equals("") || generatedValue == null) {
 							value = value.replaceAll("\\{\\{" + matcher.group(1) + "\\}\\}", "''");
@@ -282,23 +285,42 @@ public class DataService {
 		return null;
 	}
 
-	public String getFormulaRecursively(ModuleField formulaField, List<ModuleField> moduleFields) {
-		String formula = formulaField.getFormula();
+	public String getFormulaRecursively(ModuleField formulaField, List<ModuleField> moduleFields, String formula,
+			Map<String, Object> entry) {
 		try {
+			List<String> customOperators = List.of("BLANK_SPACE");
 			String reg = "\\{\\{(?i)(inputMessage[_a-zA-Z0-9\\.\\-]+)\\}\\}";
 			Pattern pattern = Pattern.compile(reg);
 			Matcher matcher = pattern.matcher(formula);
 			while (matcher.find()) {
 				String path = matcher.group(1).split("(?i)inputMessage\\.")[1];
-				
 				String[] fields = path.split("\\.");
-				
-				ModuleField moduleField = moduleFields.stream().filter(field -> field.getName().equals(fields[0]))
-						.findFirst().orElse(null);
-				
-				if ( moduleField!= null && moduleField.getDataType().getDisplay().equals("Formula")) {
-					String updatedFormula = getFormulaRecursively(moduleField, moduleFields);
-					formula = formula.replaceAll("\\{\\{" + matcher.group(1) + "\\}\\}", "(" + updatedFormula + ")");
+				if (!customOperators.contains(fields[0])) {
+					ModuleField moduleField = moduleFields.stream().filter(field -> field.getName().equals(fields[0]))
+							.findFirst().orElse(null);
+					if (moduleField.getDataType().getDisplay().equals("Formula")) {
+						String updatedFormula = getFormulaRecursively(moduleField, moduleFields,
+								moduleField.getFormula(), entry);
+						formula = formula.replaceAll("\\{\\{" + matcher.group(1) + "\\}\\}",
+								"(" + updatedFormula + ")");
+					} else if (moduleField.getDataType().getDisplay().equals("List Formula")) {
+						List<ListFormulaField> listFormulas = moduleField.getListFormula();
+						String updatedListFormula = "";
+						List<String> listOfFormulas = new ArrayList<String>();
+						for (ListFormulaField listFormula : listFormulas) {
+							if (formulaService.listFormulaAdded(entry, moduleField, listFormula.getFormulaName())) {
+								listOfFormulas.add("(" + listFormula.getFormula() + ")");
+							}
+						}
+						updatedListFormula = String.join("+", listOfFormulas);
+						String updatedFormula = getFormulaRecursively(moduleField, moduleFields, updatedListFormula,
+								entry);
+						if (!updatedListFormula.isBlank()) {
+							formula = formula.replaceAll("\\{\\{" + matcher.group(1) + "\\}\\}",
+									"(" + updatedFormula + ")");
+
+						}
+					}
 				}
 			}
 		} catch (Exception e) {
@@ -674,11 +696,6 @@ public class DataService {
 				if (entry.get(fieldName) == null || entry.get(fieldName).toString().isBlank()) {
 					existingEntry.put(fieldName, "0m");
 				}
-			} else if (field.getDataType().getDisplay().equalsIgnoreCase("Receipt Capture")) {
-
-				if (entry.get(fieldName) == null || entry.get(fieldName).toString().isBlank()) {
-					existingEntry.put(fieldName, null);
-				}
 			}
 
 			boolean isChanged = false;
@@ -991,7 +1008,7 @@ public class DataService {
 		}
 	}
 
-	public void isEditableTeam(String dataId,String name) {
+	public void isEditableTeam(String dataId, String name) {
 		Page<Role> roles = rolesRepository.findAll(PageRequest.of(0, 999),
 				"roles_" + authManager.getUserDetails().getCompanyId());
 		List<String> values = new ArrayList<String>();
@@ -1007,13 +1024,13 @@ public class DataService {
 				.filter(team -> team.get("_id").toString().equals(dataId)).findAny();
 
 		if (optionalTeam.isPresent()) {
-			 if(optionalTeam.get().get("NAME").equals("Global")||optionalTeam.get().get("NAME").equals("Public")) {
-				 throw new ForbiddenException("FORBIDDEN");
-			 }
-			
-			 else if(!values.contains(name)) {
+			if (optionalTeam.get().get("NAME").equals("Global") || optionalTeam.get().get("NAME").equals("Public")) {
+				throw new ForbiddenException("FORBIDDEN");
+			}
 
-			throw new ForbiddenException("FORBIDDEN");
+			else if (!values.contains(name)) {
+
+				throw new ForbiddenException("FORBIDDEN");
 			}
 
 		}
@@ -1949,6 +1966,54 @@ public class DataService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public Map<String, Object> getListFormulaField(List<ModuleField> listFormulaFields, Map<String, Object> entry,
+			Map<String, Object> payload, Module module) {
+
+		for (ModuleField listFormulaField : listFormulaFields) {
+			boolean isPresent = false;
+			ObjectMapper mapper = new ObjectMapper();
+			List<ListFormulaFieldValue> finalListFormulaFieldValues = new ArrayList<ListFormulaFieldValue>();
+			List<ListFormulaFieldValue> listFormulaFieldValues = new ArrayList<ListFormulaFieldValue>();
+			try {
+				listFormulaFieldValues = mapper.readValue(
+						mapper.writeValueAsString(entry.get(listFormulaField.getName())),
+						mapper.getTypeFactory().constructCollectionType(List.class, ListFormulaFieldValue.class));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			if (listFormulaFieldValues != null) {
+				for (ListFormulaFieldValue listFormulaFieldValue : listFormulaFieldValues) {
+					if (!listFormulaFieldValue.getFormulaName().isEmpty()) {
+						isPresent = true;
+						List<ListFormulaField> listFormulas = listFormulaField.getListFormula();
+						ListFormulaField listFormula = listFormulas.stream()
+								.filter(lFormula -> lFormula.getFormulaName()
+										.equalsIgnoreCase(listFormulaFieldValue.getFormulaName()))
+								.findAny().orElse(null);
+						if (listFormula == null) {
+							String[] vars = { listFormulaFieldValue.getFormulaName() };
+							throw new BadRequestException("FORMULA_NAME_INVALID", vars);
+						} else {
+							String formula = listFormula.getFormula();
+							String value = getFormulaFieldValue(module, payload, listFormulaField, formula);
+							if (NumberUtils.isParsable(value)) {
+								listFormulaFieldValue.setValue(Float.valueOf(value));
+							} else {
+								listFormulaFieldValue.setValue(value);
+							}
+							finalListFormulaFieldValues.add(listFormulaFieldValue);
+
+						}
+					}
+				}
+			}
+			if (isPresent) {
+				payload.put(listFormulaField.getName(), finalListFormulaFieldValues);
+			}
+		}
+		return payload;
 	}
 
 }
