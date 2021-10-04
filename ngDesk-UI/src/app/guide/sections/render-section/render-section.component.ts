@@ -64,14 +64,12 @@ export class RenderSectionComponent implements OnInit {
 				this.guideService.getKbCategoryById(this.section['CATEGORY']).subscribe(
 					(categoryResponse: any) => {
 						this.category = this.convertCategory(categoryResponse);
-
 						this.guideService
-
-							.getArticlesBySection(this.section['SECTION_ID'], true)
+							.getArticlesBySectionId(this.section['SECTION_ID'])
 							.subscribe(
 								(articlesResponse: any) => {
 									this.articles = this.sortByOrder(
-										articlesResponse.DATA.filter(
+										articlesResponse.getArticlesBySectionId.filter(
 											(article) =>
 												article.PUBLISH === true &&
 												article.SECTION === this.section['sectionId']
