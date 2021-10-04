@@ -118,10 +118,15 @@ export class PdfDetailComponent implements OnInit, OnDestroy {
 					(data) => data.MODULE_ID === field.MODULE
 				);
 				const fields = module.FIELDS;
-				const response = fields.find(
-					(data) => data.FIELD_ID === field.PRIMARY_DISPLAY_FIELD
-				);
-				fieldVar = `${fieldVar}.${response.NAME}`;
+				let response;
+				if (field.PRIMARY_DISPLAY_FIELD) {
+					response = fields.find(
+						(data) => data.FIELD_ID === field.PRIMARY_DISPLAY_FIELD
+					);
+					fieldVar = `${fieldVar}.${response.NAME}`;
+				} else {
+					fieldVar = `${fieldVar}`;
+				}
 				const newBody = `${bodyEnd[0]} {{inputMessage.${fieldVar}}}</body></html>`;
 				tinymce.activeEditor.setContent(newBody);
 				this.pdfForm.get('HTML_TEMPLATE').setValue(newBody);
