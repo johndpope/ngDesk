@@ -27,7 +27,7 @@
 		<div fxLayout="row" *ngIf="dateTimeField" fxFlex="100">
 			<div fxLayout="column" fxFlex="40">
 				<mat-label style="margin-top:9%;font-family:Roboto, Helvetica Neue, sans-serif">
-					Select date/time format:</mat-label>
+					Select date/time field format:</mat-label>
 			</div>
 			<div fxLayout="column" fxFlex="60">
 				<mat-form-field>
@@ -42,7 +42,7 @@
 		<div fxLayout="row" *ngIf="dateField" fxFlex="100">
 			<div fxLayout="column" fxFlex="40">
 				<mat-label style="margin-top:9%;font-family:Roboto, Helvetica Neue, sans-serif">
-					Select date format:</mat-label>
+					Select date field format:</mat-label>
 			</div>
 			<div fxLayout="column" fxFlex="60">
 				<mat-form-field>
@@ -57,7 +57,7 @@
 		<div fxLayout="row" *ngIf="timeField" fxFlex="100">
 			<div fxLayout="column" fxFlex="40">
 				<mat-label style="margin-top:9%;font-family:Roboto, Helvetica Neue, sans-serif">
-					Select time format:</mat-label>
+					Select time field format:</mat-label>
 			</div>
 			<div fxLayout="column" fxFlex="60">
 				<mat-form-field fxFlex="60">
@@ -70,8 +70,11 @@
 			</div>
 		</div>
 		<div fxLayout="row" *ngIf="phoneField" fxFlex="100">
-			<div fxLayout="column" fxFlex="40"></div>
-			<div fxLayout="column" fxFlex="50">
+			<div fxLayout="column" fxFlex="40">
+				<mat-label style="margin-top:9%;font-family:Roboto, Helvetica Neue, sans-serif">
+					Select phone field format:</mat-label>
+			</div>
+			<div fxLayout="column" fxFlex="60">
 				<mat-form-field>
 					<mat-select placeholder="Select separator" [(ngModel)]="selectedSeparator">
 						<mat-option *ngFor="let separator of separators" [value]="separator">
