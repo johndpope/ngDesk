@@ -168,6 +168,10 @@ public class FieldAPI {
 		}
 
 		relationshipFieldService.validateInheritanceMapping(relatedModule, field2);
+		
+		relationshipFieldService.validatePrimaryDisplayField(field1, relatedModule);
+		relationshipFieldService.validatePrimaryDisplayField(field2, module);
+
 
 		fieldApi.saveField(field1, module.getModuleId());
 		fieldApi.saveField(field2, relatedModule.getModuleId());
