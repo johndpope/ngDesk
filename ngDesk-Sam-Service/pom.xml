@@ -18,8 +18,6 @@
 
 
 
-
-
 	<properties>
 		<java.version>11</java.version>
 		<spring-cloud.version>Hoxton.SR8</spring-cloud.version>
@@ -171,7 +169,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<image>
-						<name>gitlab.bluemsp.com:5050/ngdesk/ngdesk/sam:latest</name>
+						<name>ngdesk/sam:latest</name>
 					</image>
 					<layers>
 						<enabled>true</enabled>

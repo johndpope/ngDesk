@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?> 
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -14,9 +14,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ngDesk-Data-Service</name>
 	<description>ngDesk project to handle all module entries</description>
-
-
-
+ 
 	<properties>
 		<java.version>11</java.version>
 		<spring-cloud.version>Hoxton.SR8</spring-cloud.version>
@@ -219,7 +217,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<image>
-						<name>gitlab.bluemsp.com:5050/ngdesk/ngdesk/data:latest</name>
+						<name>ngdesk/data:latest</name>
 					</image>
 					<layers>
 						<enabled>true</enabled>

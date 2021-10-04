@@ -15,10 +15,6 @@
 	<name>ngDesk-Escalation-Service</name>
 	<description>Demo project for Spring Boot</description>
 
-
-
-
-
 	<properties>
 		<java.version>11</java.version>
 		<spring-cloud.version>Hoxton.SR8</spring-cloud.version>
@@ -154,7 +150,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 				    <image>
-						<name>gitlab.bluemsp.com:5050/ngdesk/ngdesk/escalation:latest</name>
+						<name>ngdesk/escalation:latest</name>
 					</image>
 					<layers>
 						<enabled>true</enabled>
