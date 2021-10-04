@@ -17,11 +17,12 @@ import com.ngdesk.data.dao.WorkflowPayload;
 import com.ngdesk.websocket.channels.chat.dao.ChatChannelMessage;
 import com.ngdesk.websocket.channels.chat.dao.ChatStatusMessage;
 import com.ngdesk.websocket.notification.dao.Notification;
-import com.ngdesk.websocket.subscribers.NotificationOfAgentDetailsSubscriber;
+import com.ngdesk.websocket.notification.dao.NotificationOfAgentDetails;
 import com.ngdesk.websocket.subscribers.ChatChannelSubscriber;
 import com.ngdesk.websocket.subscribers.ChatSettingsUpdateSubscriber;
 import com.ngdesk.websocket.subscribers.ChatStatusSubscriber;
 import com.ngdesk.websocket.subscribers.ModuleNotificationSubscriber;
+import com.ngdesk.websocket.subscribers.NotificationOfAgentDetailsSubscriber;
 import com.ngdesk.websocket.subscribers.NotificationSubscriber;
 
 @Configuration
@@ -86,15 +87,14 @@ public class RedisConfig {
 	}
 
 	@Bean
-	public RedisTemplate<String, NotificationOfAgentDetailsSubscriber> redisNotificationOfAgentDetailsSubscriberTemplate(
+	public RedisTemplate<String, NotificationOfAgentDetails> redisNotificationOfAgentDetailsSubscriberTemplate(
 			LettuceConnectionFactory redisConnectionFactory) {
-		RedisTemplate<String, NotificationOfAgentDetailsSubscriber> redisNotificationOfAgentDetailsSubscriberTemplate = new RedisTemplate<String, NotificationOfAgentDetailsSubscriber>();
-		redisNotificationOfAgentDetailsSubscriberTemplate.setConnectionFactory(redisConnectionFactory);
-		redisNotificationOfAgentDetailsSubscriberTemplate
-				.setValueSerializer(new Jackson2JsonRedisSerializer<NotificationOfAgentDetailsSubscriber>(
-						NotificationOfAgentDetailsSubscriber.class));
-		redisNotificationOfAgentDetailsSubscriberTemplate.setKeySerializer(new StringRedisSerializer());
-		return redisNotificationOfAgentDetailsSubscriberTemplate;
+		RedisTemplate<String, NotificationOfAgentDetails> redisNotificationOfAgentDetailsTemplate = new RedisTemplate<String, NotificationOfAgentDetails>();
+		redisNotificationOfAgentDetailsTemplate.setConnectionFactory(redisConnectionFactory);
+		redisNotificationOfAgentDetailsTemplate.setValueSerializer(
+				new Jackson2JsonRedisSerializer<NotificationOfAgentDetails>(NotificationOfAgentDetails.class));
+		redisNotificationOfAgentDetailsTemplate.setKeySerializer(new StringRedisSerializer());
+		return redisNotificationOfAgentDetailsTemplate;
 	}
 
 	@Bean

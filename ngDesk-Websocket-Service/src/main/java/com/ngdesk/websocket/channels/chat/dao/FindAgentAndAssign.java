@@ -46,6 +46,9 @@ public class FindAgentAndAssign {
 	RedisTemplate<String, Notification> redisTemplate;
 
 	@Autowired
+	RedisTemplate<String, NotificationOfAgentDetails> redisTemplateNotificationOfAgentDetails;
+
+	@Autowired
 	Global global;
 
 	@Autowired
@@ -180,7 +183,8 @@ public class FindAgentAndAssign {
 									customer.get("_id").toString(), true, chatUser.getSessionUUID(), "AGENTS_DATA",
 									new Date(), agentRole, customerRole, customer.get("USER_UUID").toString(),
 									existingChatEntry.get("_id").toString());
-							redisTemplate.convertAndSend("agents_available", notificationOfAgentDetails);
+							redisTemplateNotificationOfAgentDetails.convertAndSend("agents_available",
+									notificationOfAgentDetails);
 
 						}
 					}
@@ -190,7 +194,7 @@ public class FindAgentAndAssign {
 			NotificationOfAgentDetails notificationOfAgentDetails = new NotificationOfAgentDetails(companyId, null,
 					null, null, customer.get("_id").toString(), false, chatUser.getSessionUUID(), "AGENTS_DATA", null,
 					null, customerRole, customer.get("USER_UUID").toString(), null);
-			redisTemplate.convertAndSend("agents_available", notificationOfAgentDetails);
+			redisTemplateNotificationOfAgentDetails.convertAndSend("agents_available", notificationOfAgentDetails);
 
 		}
 	}
