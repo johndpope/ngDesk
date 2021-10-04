@@ -77,8 +77,8 @@ export class WebsocketService {
 				this.addLogsToApplication(message);
 			} else if (message.TYPE === 'CHAT_SETTINGS_UPDATED') {
 				this.toolbarService.updateShowAcceptChat();
-			} else if (message.type === 'CHAT_STATUS') {
-				this.toolbarService.updateChatStatus(message.chatStatus);
+			} else if (message.TYPE === 'CHAT_STATUS') {
+				this.toolbarService.updateChatStatus(message.CHAT_STATUS);
 			} else {
 				this.updateData(message);
 			}

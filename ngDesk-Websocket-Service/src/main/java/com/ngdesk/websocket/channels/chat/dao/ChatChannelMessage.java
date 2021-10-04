@@ -1,13 +1,19 @@
 package com.ngdesk.websocket.channels.chat.dao;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ChatChannelMessage {
 
+	@JsonProperty("COMPANY_ID")
 	private String companyId;
 
+	@JsonProperty("SESSION_UUID")
 	private String sessionUUId;
-
+	
+	@JsonProperty("CHAT_CHANNEL")
 	private ChatChannel chatChannel;
 
+	@JsonProperty("TYPE")
 	private String messageType;
 
 	public ChatChannelMessage() {
