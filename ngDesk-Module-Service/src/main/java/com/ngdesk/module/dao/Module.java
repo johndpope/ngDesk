@@ -102,6 +102,7 @@ public class Module {
 	@JsonProperty("LAST_UPDATED_BY")
 	@Field("LAST_UPDATED_BY")
 	private String lastUpdatedBy;
+	
 
 	public Module() {
 	}
@@ -276,5 +277,7 @@ public class Module {
 	public void setLastUpdatedBy(String lastUpdatedBy) {
 		this.lastUpdatedBy = lastUpdatedBy;
 	}
+
+	
 
 }

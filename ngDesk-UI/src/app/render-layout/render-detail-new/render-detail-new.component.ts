@@ -79,6 +79,7 @@ import { MatListOptionCheckboxPosition } from '@angular/material/list';
 export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	@ViewChild(MatSort, { static: true }) private sort: MatSort;
 	@ViewChild(MatPaginator, { static: true }) private paginator: MatPaginator;
+	public minAllowPastDate:any = new Date();
 	public mobileTitle: String = ' ';
 	private module;
 	public entry: any = {};

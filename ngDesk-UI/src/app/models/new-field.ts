@@ -1,3 +1,5 @@
+import { values } from "lodash";
+
 export class NewField {
 	constructor(
 		private AUTO_NUMBER_DISPLAY_FORMAT: string,
@@ -51,7 +53,8 @@ export class NewField {
 		private PREFIX?: string,
 		private SUFFIX?: string,
 		private CONDITIONS?: [],
-		private LIST_FORMULA?: []
+		private LIST_FORMULA?: [],
+		private RESTRICT_PAST_DATE?: boolean
 	) {}
 
 	get listFormula() {
@@ -427,6 +430,14 @@ export class NewField {
 
 	set visibility(value) {
 		this.VISIBILITY = value;
+	}
+
+	get restrictPastDate(){
+		return this.RESTRICT_PAST_DATE;
+	}
+
+	set restrictPastDate(value){
+		this.RESTRICT_PAST_DATE = value;
 	}
 
 	get showPreviewOfFiles() {

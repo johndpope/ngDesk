@@ -34,6 +34,7 @@ import * as moment from 'moment';
 	providers: [{ provide: OWL_DATE_TIME_FORMATS, useValue: OWL_DATE_FORMATS }],
 })
 export class FieldCreatorComponent implements OnInit {
+	public minAllowPastDate = new Date();
 	public fieldNameFormGroup: FormGroup;
 	public fieldFilePreviewNameFormGroup: FormGroup;
 	public fieldSelectFormGroup: FormGroup;
@@ -213,6 +214,7 @@ export class FieldCreatorComponent implements OnInit {
 	cursorPossition: any = {};
 	isCursorIsActive: boolean = false;
 	textAreaCursorPositions: any = {};
+	
 	constructor(
 		private router: Router,
 		private route: ActivatedRoute,

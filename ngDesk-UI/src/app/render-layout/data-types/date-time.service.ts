@@ -7,6 +7,7 @@ export class DateTimeService {
 	constructor() {}
 
 	public getDateTime(field, layoutStyle, layoutType) {
+		console.log(field.RESTRICT_PAST_DATE)
 		if (
 			layoutType === 'detail' ||
 			(layoutType === 'edit' &&
@@ -21,7 +22,7 @@ export class DateTimeService {
        (ngModelChange)="context.evaluateConditions('${field.FIELD_ID}');context.entry.${field.NAME}=$event"
        [required]="context.fieldsMap['${field.FIELD_ID}'].REQUIRED"
        [disabled]="!context.editAccess || context.fieldsMap['${field.FIELD_ID}'].NOT_EDITABLE || context.customModulesService.fieldsDisableMap['${field.FIELD_ID}']"
-			 (keypress)="false">
+			 (keypress)="false" [min]="${field.RESTRICT_PAST_DATE}?context.minAllowPastDate:0">
        <owl-date-time #${field.NAME}></owl-date-time>
 	   <mat-icon matSuffix *ngIf="context.helpTextMap.get('${field.FIELD_ID}')"
             class="color-primary"  matTooltip="${field.HELP_TEXT}">help_outline</mat-icon>
@@ -37,7 +38,7 @@ export class DateTimeService {
       (ngModelChange)="context.evaluateConditions($event, '${field.FIELD_ID}')"
       [required]="context.fieldsMap['${field.FIELD_ID}'].REQUIRED"
       [disabled]="!context.editAccess || (context.fieldsMap['${field.FIELD_ID}'].NOT_EDITABLE && !context.createLayout)  || context.customModulesService.fieldsDisableMap['${field.FIELD_ID}']"
-			(keypress)="false">
+			(keypress)="false"[min]="${field.RESTRICT_PAST_DATE}?context.minAllowPastDate:0">
       <owl-date-time #${field.NAME}></owl-date-time>
 	  <mat-icon matSuffix *ngIf="context.helpTextMap.get('${field.FIELD_ID}')"
             class="color-primary"  matTooltip="${field.HELP_TEXT}">help_outline</mat-icon>

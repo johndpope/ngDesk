@@ -192,6 +192,7 @@ public class FieldAPI {
 	@PostMapping("modules/{module_id}/field")
 	public ModuleField postField(@Valid @RequestBody ModuleField moduleField,
 			@PathVariable("module_id") String moduleId) {
+		System.out.println(moduleField);
 		if (!roleService.isSystemAdmin()) {
 			throw new ForbiddenException("FORBIDDEN");
 		}
@@ -321,13 +322,15 @@ public class FieldAPI {
 	@GetMapping("/{module_id}/field/{field_id}")
 	public ModuleField getOneField(@PathVariable("module_id") String moduleId,
 			@PathVariable("field_id") String fieldId) {
-
+		
 		Optional<Module> optionalField = moduleRepository.findById(moduleId,
 				"modules_" + authManager.getUserDetails().getCompanyId());
 		List<ModuleField> allFields = optionalField.get().getFields();
+		System.out.println(allFields);
 		ModuleField fields = allFields.stream().filter(ModuleField -> ModuleField.getFieldId().equals(fieldId))
 				.findAny().get();
-
+		
+		System.out.println("All the fields getting --------> "+fields);
 		return fields;
 
 	}

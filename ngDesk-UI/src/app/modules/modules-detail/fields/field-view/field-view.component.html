@@ -193,30 +193,34 @@
 					</div>
 
 					<!--DATE-->
-					<div fxLayout="row" fxLayoutAlign="center center" *ngSwitchCase="'Date'" fxLayoutGap="20px">
-						<div fxLayout="column" fxLayoutGap="20px" fxFlex>
-							<mat-form-field>
+					<div fxLayout="column" *ngSwitchCase="'Date'" fxLayoutGap="20px">
+						<div fxLayout="row" fxLayoutGap="20px">
+							<mat-form-field fxFlex> 
 								<input type="text" matInput tabindex="1" placeholder="{{'HELP_TEXT' | translate}}" formControlName="HELP_TEXT">
 							</mat-form-field>
-							<div fxLayout="row" fxLayoutAlign="start center">
-								<mat-checkbox [labelPosition]="'after'" tabindex="3" formControlName="VISIBILITY">
-									{{'HIDDEN' | translate}}
-								</mat-checkbox>
-								<mat-icon style="transform: scale(0.7);" matTooltip="{{'HIDDEN_FIELD_HINT' | translate}}">help_outline
-								</mat-icon>
-							</div>
-
-						</div>
-						<div fxLayout="column" fxLayoutGap="20px" fxFlex>
-							<mat-form-field>
+							<mat-form-field fxFlex>
 								<input placeholder="{{ 'DEFAULT_VALUE' | translate}}" matInput [owlDateTimeTrigger]="dt" [owlDateTime]="dt"
 									formControlName="DEFAULT_VALUE" (keypress)="false">
 								<owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
 							</mat-form-field>
-							<mat-checkbox [labelPosition]="'after'" tabindex="4" formControlName="REQUIRED">
-								{{'REQUIRED_FIELD' | translate}}
-							</mat-checkbox>
 						</div>
+							<div fxLayout="row" fxLayoutGap="20px">
+								<div fxLayout="row" fxlayoutGap="5px" fxFlex>
+									<mat-checkbox [labelPosition]="'after'" tabindex="3" formControlName="VISIBILITY">
+										{{'HIDDEN' | translate}}
+									</mat-checkbox>
+									<mat-icon style="transform: scale(0.7);" matTooltip="{{'HIDDEN_FIELD_HINT' | translate}}">help_outline
+									</mat-icon>
+								</div>
+								<mat-checkbox [labelPosition]="'after'" tabindex="4" formControlName="REQUIRED" fxFlex>
+									{{'REQUIRED_FIELD' | translate}}
+								</mat-checkbox>
+							</div>
+							<div fxLayout="row" fxLayoutGap="20px">
+								<mat-checkbox tabindex="4" formControlName="RESTRICT_PAST_DATE">
+									{{'RESTRICT_PAST_DATE'|translate}}
+								</mat-checkbox>
+							</div>
 					</div>
 
 					<!--DATE/TIME-->
@@ -239,11 +243,16 @@
 								<mat-icon style="transform: scale(0.7);" matTooltip="{{'HIDDEN_FIELD_HINT' | translate}}">help_outline
 								</mat-icon>
 							</div>
-							<mat-checkbox fxLayoutAlign="center center" [labelPosition]="'after'" tabindex="4" formControlName="REQUIRED" fxFlex>
+							<mat-checkbox [labelPosition]="'after'" tabindex="4" formControlName="REQUIRED" fxFlex>
 								{{'REQUIRED_FIELD' | translate}}
 							</mat-checkbox>
-							<mat-checkbox fxLayoutAlign="end center" [disabled]="true" [labelPosition]="'after'" formControlName="NOT_EDITABLE" fxFlex>
+						</div>
+						<div fxLayout="row" fxLayoutGap="20px">
+							<mat-checkbox [disabled]="true" [labelPosition]="'after'" formControlName="NOT_EDITABLE" fxFlex>
 								{{'NOT_EDITABLE' | translate}}
+							</mat-checkbox>
+							<mat-checkbox formControlName = "RESTRICT_PAST_DATE" [labelPosition]="'after'" fxFlex>
+								{{'RESTRICT_PAST_DATE'|translate}}
 							</mat-checkbox>
 						</div>
 					</div>

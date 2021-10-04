@@ -2200,5 +2200,6 @@
 	"FORMULA_NAME": " Formula System Label",
 	"ADD_FORMULA": "Add Formula",
 	"SCHEDULES_USER_SEARCH": "Search is based on email address",
-	"LIST_FORMULA_CANNOT_BE_DROPPED": "List formula field cannot be dropped to sidebar"
+	"LIST_FORMULA_CANNOT_BE_DROPPED": "List formula field cannot be dropped to sidebar",
+	"RESTRICT_PAST_DATE": "Restrict past dates"
 }

@@ -39,6 +39,8 @@ import * as moment from 'moment';
 })
 export class FieldViewComponent implements OnInit {
 	@ViewChild('auto') matAutocomplete: MatAutocomplete;
+	public minAllowPastDate = new Date();
+	public minDate = new Date(1990,0,1);
 	public fieldForm: FormGroup;
 	public fieldFilePreviewNameFormGroup: FormGroup;
 	public phoneNumberForm: FormGroup;
@@ -397,6 +399,7 @@ export class FieldViewComponent implements OnInit {
 
 		this.modulesService.getFieldById(this.moduleId, this.fieldId).subscribe(
 			(response: any) => {
+				console.log(response)
 				const picklistArray = response.PICKLIST_VALUES;
 				delete response.PICKLIST_VALUES;
 				const conditions = response.CONDITIONS;
@@ -849,6 +852,7 @@ export class FieldViewComponent implements OnInit {
 		}
 	}
 
+	
 	public removeItem(index: number): void {
 		const picklistValues = this.fieldForm.get('PICKLIST_VALUES') as FormArray;
 		if (index >= 0) {

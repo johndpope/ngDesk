@@ -252,7 +252,12 @@ public class ModuleField {
 	@Field("CONDITIONS")
 	@Valid
 	private List<Condition> conditions;
-
+	
+	@Schema(description = "this field is for restricting past date", required = false)
+	@Field("RESTRICT_PAST_DATE")
+	@JsonProperty("RESTRICT_PAST_DATE")
+	private Boolean restrictPastDate;
+	
 	public ModuleField() {
 
 	}
@@ -274,7 +279,7 @@ public class ModuleField {
 			@Length(max = 3, message = "Prefix value can't be more than three characters long") String prefix,
 			@Length(max = 3, message = "Suffix value can't be more than three characters long") String suffix,
 			String numericFormat, Boolean listTextUnique, String toCurrency, String fromCurrency, String dateIncurred,
-			@Valid List<Condition> conditions) {
+			@Valid List<Condition> conditions, boolean restrictPastDate) {
 		super();
 		this.fieldId = fieldId;
 		this.name = name;
@@ -320,6 +325,7 @@ public class ModuleField {
 		this.fromCurrency = fromCurrency;
 		this.dateIncurred = dateIncurred;
 		this.conditions = conditions;
+		this.restrictPastDate = restrictPastDate;
 	}
 
 	public String getFieldId() {
@@ -673,5 +679,14 @@ public class ModuleField {
 	public void setListTextUnique(Boolean listTextUnique) {
 		this.listTextUnique = listTextUnique;
 	}
+
+	public boolean isRestrictPastDate() {
+		return restrictPastDate;
+	}
+
+	public void setRestrictPastDate(boolean restrictPastDate) {
+		this.restrictPastDate = restrictPastDate;
+	}
+	
 
 }

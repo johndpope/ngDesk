@@ -11,6 +11,7 @@ import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.ngdesk.modules.rules.Condition;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -185,6 +186,9 @@ public class Field {
 
 	@JsonProperty("CONDITIONS")
 	List<Condition> conditions;
+	
+	@JsonProperty("RESTRICT_PAST_DATE")
+	private boolean restrictPastDate;
 
 	public Field() {
 	}
@@ -206,7 +210,7 @@ public class Field {
 			@Pattern(regexp = "sum", message = "NOT_VALID_AGGREGATION_TYPE") String aggregationType,
 			String aggregationField, String aggregationRelatedField, Map<String, String> inheritanceMapping,
 			Map<String, String> fieldsMapping, boolean unique, String prefix, String suffix, String numericFormat,
-			String toCurrency, String fromCurrency, String dateIncurred, List<Condition> conditions) {
+			String toCurrency, String fromCurrency, String dateIncurred, List<Condition> conditions,boolean restrictPastDate) {
 		super();
 		this.fieldId = fieldId;
 		this.name = name;
@@ -262,6 +266,7 @@ public class Field {
 		this.fromCurrency = fromCurrency;
 		this.dateIncurred = dateIncurred;
 		this.conditions = conditions;
+		this.restrictPastDate = restrictPastDate;
 	}
 
 	public String getFieldId() {
@@ -695,5 +700,14 @@ public class Field {
 	public void setConditions(List<Condition> conditions) {
 		this.conditions = conditions;
 	}
+
+	public boolean isRestrictPastDate() {
+		return restrictPastDate;
+	}
+
+	public void setRestrictPastDate(boolean restrictPastDate) {
+		this.restrictPastDate = restrictPastDate;
+	}
+	
 
 }

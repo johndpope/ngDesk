@@ -7,6 +7,7 @@ export class DateService {
 	constructor() {}
 
 	public getDate(field, layoutStyle, layoutType) {
+        console.log(field.RESTRICT_PAST_DATE)
 		if (layoutType === 'detail') {
 			return `
             <mat-form-field appearance="${layoutStyle}"
@@ -20,7 +21,8 @@ export class DateService {
         context.entry.${field.NAME}=$event"
         [required]="context.fieldsMap['${field.FIELD_ID}'].REQUIRED"
         [disabled]="!context.editAccess || context.fieldsMap['${field.FIELD_ID}'].NOT_EDITABLE || context.customModulesService.fieldsDisableMap['${field.FIELD_ID}']"
-				(keypress)="false">
+				(keypress)="false" [min]="${field.RESTRICT_PAST_DATE}?context.minAllowPastDate:0">
+        
         <owl-date-time [pickerType]="'calendar'" #${field.NAME}></owl-date-time>
         <mat-icon matSuffix *ngIf="context.helpTextMap.get('${field.FIELD_ID}')"
             class="color-primary"  matTooltip="${field.HELP_TEXT}">help_outline</mat-icon>
@@ -38,7 +40,7 @@ export class DateService {
         context.getCalculatedExchangeRate()"
         [required]="context.fieldsMap['${field.FIELD_ID}'].REQUIRED"
         [disabled]="!context.editAccess || (context.fieldsMap['${field.FIELD_ID}'].NOT_EDITABLE && !context.createLayout) || context.customModulesService.fieldsDisableMap['${field.FIELD_ID}']"
-				(keypress)="false">
+				(keypress)="false" [min]="${field.RESTRICT_PAST_DATE}?context.minAllowPastDate:0">
         <owl-date-time [pickerType]="'calendar'" #${field.NAME}></owl-date-time>
         <mat-icon matSuffix *ngIf="context.helpTextMap.get('${field.FIELD_ID}')"
             class="color-primary"  matTooltip="${field.HELP_TEXT}">help_outline</mat-icon>

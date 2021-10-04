@@ -139,6 +139,7 @@ public class Module {
 
 	@JsonProperty("ALTERNATE_PRIMARY_KEYS")
 	private List<String> alternatePrimaryKeys;
+	
 
 	public Module() {
 

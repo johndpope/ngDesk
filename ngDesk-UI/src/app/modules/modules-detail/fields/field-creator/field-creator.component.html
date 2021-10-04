@@ -262,53 +262,65 @@
 		</div>
 
 		<!--DATE-->
-		<div fxLayout="row" fxLayoutAlign="center center" *ngSwitchCase="'Date'" fxLayoutGap="20px">
-			<div fxLayout="column" fxLayoutGap="20px">
-				<mat-form-field>
+		<div fxLayout="column"  *ngSwitchCase="'Date'" fxLayoutGap="20px">
+			<div fxLayout="row" fxLayoutGap="20px">
+				<mat-form-field fxFlex>
 					<input type="text" matInput tabindex="1" placeholder="{{'HELP_TEXT' | translate}}" [(ngModel)]="field.helpText">
 				</mat-form-field>
-				<div fxLayout="row" fxLayoutAlign="start center">
-					<mat-checkbox [labelPosition]="'after'" tabindex="3" [(ngModel)]="field.visibility">
-						{{'HIDDEN' | translate}}
-					</mat-checkbox>
-					<mat-icon style="transform: scale(0.7);" matTooltip="{{'HIDDEN_FIELD_HINT' | translate}}">
-						help_outline</mat-icon>
-				</div>
-			</div>
-			<div fxLayout="column" fxLayoutGap="20px">
-				<mat-form-field>
+				<mat-form-field fxFlex>
 					<input placeholder="{{ 'DEFAULT_VALUE' | translate}}" matInput [owlDateTimeTrigger]="dt" [owlDateTime]="dt"
 						[(ngModel)]="field.defaultValue" (keypress)="false">
 					<owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
 				</mat-form-field>
-				<mat-checkbox [labelPosition]="'after'" tabindex="4" [(ngModel)]="field.required">
-					{{'REQUIRED_FIELD' | translate}}
-				</mat-checkbox>
 			</div>
-		</div>
-
-		<!--DATE/TIME-->
-		<div fxLayout="row" fxLayoutAlign="center center" *ngSwitchCase="'Date/Time'" fxLayoutGap="20px">
-			<div fxLayout="column" fxLayoutGap="20px">
-				<mat-form-field>
-					<input type="text" matInput tabindex="1" placeholder="{{'HELP_TEXT' | translate}}" [(ngModel)]="field.helpText">
-				</mat-form-field>
-				<div fxLayout="row" fxLayoutAlign="start center">
+			<div fxLayout="row" fxLayoutGap="20px">
+				<div fxLayout="row" fxLayoutGap="5px" fxFlex>
 					<mat-checkbox [labelPosition]="'after'" tabindex="3" [(ngModel)]="field.visibility">
 						{{'HIDDEN' | translate}}
 					</mat-checkbox>
 					<mat-icon style="transform: scale(0.7);" matTooltip="{{'HIDDEN_FIELD_HINT' | translate}}">
 						help_outline</mat-icon>
 				</div>
+				<mat-checkbox [labelPosition]="'after'" tabindex="4" [(ngModel)]="field.required" fxFlex>
+					{{'REQUIRED_FIELD' | translate}}
+				</mat-checkbox>
 			</div>
-			<div fxLayout="column" fxLayoutGap="20px">
-				<mat-form-field>
+			<div fxLayout="row">
+				<mat-checkbox tabindex="3" [(ngModel)]="field.restrictPastDate" > 
+					{{'RESTRICT_PAST_DATE' | translate}}
+				</mat-checkbox>
+			</div>
+		</div>
+		
+
+		<!--DATE/TIME-->
+		<div fxLayout="column" *ngSwitchCase="'Date/Time'" fxLayoutGap="20px">
+			<div fxLayout="row" fxLayoutGap="20px">
+				<mat-form-field fxFlex>
+					<input type="text" matInput tabindex="1" placeholder="{{'HELP_TEXT' | translate}}" [(ngModel)]="field.helpText">
+				</mat-form-field>
+				<mat-form-field fxFlex>
 					<input placeholder="{{ 'DEFAULT_VALUE' | translate}}" matInput [owlDateTimeTrigger]="dt" [owlDateTime]="dt"
 						[(ngModel)]="field.defaultValue" (keypress)="false">
 					<owl-date-time #dt></owl-date-time>
 				</mat-form-field>
-				<mat-checkbox [labelPosition]="'after'" tabindex="4" [(ngModel)]="field.required">
-					{{'REQUIRED_FIELD' | translate}}
+			</div>
+			<div fxLayout="row" fxLayoutGap="20px">
+				<div fxLayout="row" fxLayoutGap="5px" fxFlex>
+					<mat-checkbox [labelPosition]="'after'" tabindex="3" [(ngModel)]="field.visibility">
+						{{'HIDDEN' | translate}}
+					</mat-checkbox>
+					<mat-icon style="transform: scale(0.7);" matTooltip="{{'HIDDEN_FIELD_HINT' | translate}}">
+						help_outline
+					</mat-icon>
+				</div>
+					<mat-checkbox [labelPosition]="'after'" tabindex="4" [(ngModel)]="field.required" fxFlex>
+						{{'REQUIRED_FIELD' | translate}}
+					</mat-checkbox>
+			</div>
+			<div fxLayout="row" fxLayoutGap="20px"> 
+				<mat-checkbox  [(ngModel)]="field.restrictPastDate">
+					{{'RESTRICT_PAST_DATE'|translate}}
 				</mat-checkbox>
 			</div>
 		</div>
