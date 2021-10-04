@@ -390,5 +390,6 @@
   "LIST_FORMULA_NAME_CHANGED":"Formula names cannot be deleted or changed in the list formula",
   "LIST_FORMULA_NAME_DELETED":"Formula names cannot be deleted in the list formula",
   "FIELD_CANNOT_BE_LOOPED":" ${1} field you are trying to access cannot be looped",
-  "MIXED_FORMULA_TYPES" : "Formulas must be of type string or number, cannot have combination of both"
+  "MIXED_FORMULA_TYPES" : "Formulas must be of type string or number, cannot have combination of both",
+  "INVALID_PRIMARY_DISPLAY_FIELD": "The type of ${1} primary display field selected isn't valid, please select a valid primary display field"
 }
