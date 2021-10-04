@@ -23,7 +23,6 @@ import com.ngdesk.modules.list.mobile.layouts.ListMobileLayout;
 import com.ngdesk.modules.monitors.ModuleMonitor;
 import com.ngdesk.modules.rules.Rule;
 import com.ngdesk.modules.settings.ModuleSettings;
-import com.ngdesk.modules.slas.Sla;
 import com.ngdesk.modules.validations.ModuleValidation;
 import com.ngdesk.modules.workflows.ModuleWorkflow;
 
@@ -123,9 +122,6 @@ public class Module {
 	@Pattern(regexp = "([A-Za-z0-9\\s-]+)", message = "INVALID_PLURAL_NAME")
 	private String plural;
 
-	@JsonProperty("SLAS")
-	private List<Sla> slas = new ArrayList<Sla>();
-
 	@JsonProperty("SETTINGS")
 	@Valid
 	private ModuleSettings settings;
@@ -156,7 +152,7 @@ public class Module {
 			@Valid List<ModuleWorkflow> workflows,
 			@NotEmpty(message = "SINGULAR_NAME_REQUIRED") @Pattern(regexp = "([A-Za-z0-9\\s-]+)", message = "INVALID_SINGULAR_NAME") String singular,
 			@NotEmpty(message = "PLURAL_NAME_REQUIRED") @Pattern(regexp = "([A-Za-z0-9\\s-]+)", message = "INVALID_PLURAL_NAME") String plural,
-			List<Sla> slas, @Valid ModuleSettings settings, @Valid List<Chatbot> chatBots, List<Form> form,
+			@Valid ModuleSettings settings, @Valid List<Chatbot> chatBots, List<Form> form,
 			List<String> alternatePrimaryKeys) {
 		super();
 		this.name = name;
@@ -182,7 +178,6 @@ public class Module {
 		this.workflows = workflows;
 		this.singular = singular;
 		this.plural = plural;
-		this.slas = slas;
 		this.settings = settings;
 		this.chatBots = chatBots;
 		this.form = form;
@@ -371,14 +366,6 @@ public class Module {
 
 	public void setPlural(String plural) {
 		this.plural = plural;
-	}
-
-	public List<Sla> getSlas() {
-		return slas;
-	}
-
-	public void setSlas(List<Sla> slas) {
-		this.slas = slas;
 	}
 
 	public ModuleSettings getSettings() {
