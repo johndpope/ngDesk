@@ -68,6 +68,7 @@ import { OneToManyDialogComponent } from './../../dialogs/one-to-many-dialog/one
 import { indexOf } from 'lodash';
 import * as _moment from 'moment';
 import * as _momentTimeZone from 'moment-timezone';
+import { MatListOptionCheckboxPosition } from '@angular/material/list';
 
 @Component({
 	selector: 'app-render-detail-new',
@@ -208,6 +209,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	public passwordFieldMap: Map<String, boolean> = new Map<String, any>();
 	public passwordField = [];
 	public isRenderedFromOneToMany = null;
+	public checkboxPosition: MatListOptionCheckboxPosition = 'before';
 
 	constructor(
 		@Optional() @Inject(MAT_DIALOG_DATA) public modalData: any,
@@ -473,7 +475,10 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 										}
 										this.formulaFields = this.module.FIELDS.filter((field) => {
 											return (
-												field.DATA_TYPE.DISPLAY === 'Formula' && field.FORMULA
+												(field.DATA_TYPE.DISPLAY === 'Formula' &&
+													field.FORMULA) ||
+												(field.DATA_TYPE.DISPLAY === 'List Formula' &&
+													field.LIST_FORMULA)
 											);
 										});
 
@@ -1879,7 +1884,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	}
 
 	public doPostOrPutCall(payload, saveButtonValue) {
-		if (this.createLayout) {
+		if (this.createLayout || this.modalData) {
 			this.dataService
 				.postModuleEntry(this.module['MODULE_ID'], payload, false)
 				.subscribe(
@@ -1897,6 +1902,9 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 							this.saving = true;
 							this.onNotificationReload();
 							this.loaderService.isLoading2 = false;
+							this.bannerMessageService.successNotifications.push({
+								message: this.translateService.instant('SAVED_SUCCESSFULLY'),
+							});
 						}
 					},
 					(error) => {
@@ -1919,7 +1927,6 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 								`render/${this.route.snapshot.params.moduleId}`,
 							]);
 						} else if (saveButtonValue === 'continue') {
-							console.log('hit continue');
 							this.bannerMessageService.successNotifications.push({
 								message: this.translateService.instant('UPDATED_SUCCESSFULLY'),
 							});
@@ -3241,7 +3248,17 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 			.subscribe((results: any) => {
 				if (results) {
 					this.formulaFields.forEach((field) => {
-						if (results[field.NAME] && Number(results[field.NAME])) {
+						if (
+							field.DATA_TYPE.DISPLAY === 'List Formula' &&
+							results[field.NAME]
+						) {
+							this.entry[field.NAME] = results[field.NAME];
+						}
+						if (
+							field.DATA_TYPE.DISPLAY !== 'List Formula' &&
+							results[field.NAME] &&
+							Number(results[field.NAME])
+						) {
 							const value = +(Math.round(results[field.NAME] * 100) / 100);
 							this.entry[field.NAME] =
 								this.customModulesService.transformNumbersField(
@@ -3250,7 +3267,11 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 									field.PREFIX,
 									field.SUFFIX
 								);
-						} else if (results[field.NAME] && !Number(results[field.NAME])) {
+						} else if (
+							field.DATA_TYPE.DISPLAY !== 'List Formula' &&
+							results[field.NAME] &&
+							!Number(results[field.NAME])
+						) {
 							const value = results[field.NAME];
 							this.entry[field.NAME] =
 								this.customModulesService.transformNumbersField(
@@ -3259,6 +3280,25 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 									field.PREFIX,
 									field.SUFFIX
 								);
+						} else if (
+							field.DATA_TYPE.DISPLAY === 'List Formula' &&
+							results[field.NAME] &&
+							results[field.NAME] !== null &&
+							results[field.NAME].length > 0
+						) {
+							results[field.NAME].forEach((element) => {
+								if (Number(element['VALUE'])) {
+									const value = +(Math.round(element['VALUE'] * 100) / 100);
+									element['VALUE'] =
+										this.customModulesService.transformNumbersField(
+											value,
+											field.NUMERIC_FORMAT,
+											field.PREFIX,
+											field.SUFFIX
+										);
+								}
+							});
+							this.entry[field.NAME] = results[field.NAME];
 						}
 					});
 				}
@@ -3459,12 +3499,20 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	}
 
 	public closeCreateOneToManyDialog(cancel?) {
-		let modalData = {
-			dialogFieldId: this.modalData.FIELD.FIELD_ID,
-			formControls: this.modalData.FORM_CONTROLS,
-			relationFieldFilteredEntries:
-				this.modalData.RELATION_FIELD_FILTERED_ENTRIES,
-		};
+		let modalData;
+		if (this.modalData.FIELD) {
+			modalData = {
+				dialogFieldId: this.modalData.FIELD.FIELD_ID,
+				formControls: this.modalData.FORM_CONTROLS,
+				relationFieldFilteredEntries:
+					this.modalData.RELATION_FIELD_FILTERED_ENTRIES,
+			};
+		} else {
+			modalData = {
+				dataId: this.modalData.DATA_ID,
+				moduleId: this.modalData.MODULE_ID,
+			};
+		}
 		if (cancel) {
 			modalData['cancel'] = true;
 		}
@@ -3553,5 +3601,27 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	public navigateBack() {
 		this.router.navigate([window.localStorage.getItem('previousUrl')]);
 		window.localStorage.removeItem('previousUrl');
+	}
+
+	public onChangeSelectionList(event, field) {
+		this.entry[field.NAME] = event.option.selectionList._value;
+		this.getcalculatedValuesForFormula();
+	}
+
+	public compareFn(op1, op2) {
+		return op1.FORMULA_NAME === op2.FORMULA_NAME;
+	}
+
+	public getFormulaListValue(fieldName, formulaName) {
+		if (this.entry[fieldName]) {
+			const formula = this.entry[fieldName].find(
+				(field) => field.FORMULA_NAME === formulaName
+			);
+			if (formula && formula.VALUE) {
+				return formula.VALUE;
+			}
+		}
+
+		return '';
 	}
 }

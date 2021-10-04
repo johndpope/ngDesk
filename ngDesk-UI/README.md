@@ -1,10 +1,10 @@
-# ngDesk-UI
+# ngDesk-UI 
 
-Angular CLI: 12.0.4
+Angular CLI: 12.0.4 
 
 Node: 14.17.1 or higher
 
-## Getting started
+## Getting started 
 
 git clone the project  
 cd ngDesk-UI  
