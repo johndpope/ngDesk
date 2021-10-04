@@ -564,16 +564,45 @@ public class CsvImportService {
 					} else if (dataType.getDisplay().equalsIgnoreCase("Date/Time")
 							|| dataType.getDisplay().equalsIgnoreCase("Date")
 							|| dataType.getDisplay().equalsIgnoreCase("Time")) {
-
 						try {
+							List<String> dateFormats = List.of("dd/MM/yyyy hh:mm:ss", "dd-MM-yyyy hh:mm:ss",
+									"MM/dd/yyyy hh:mm:ss", "MM-dd-yyyy hh:mm:ss", "dd/MM/yyyy", "MM/dd/yyyy",
+									"dd-MM-yyyy", "MM-dd-yyyy", "dd MMM yyyy", "dd MMMM yyyy", "MMM dd, yyyy",
+									"MMMM dd, yyyy", "h:mm", "h:mm:ss");
+							CsvFormat csvFormat = csvDocument.getCsvFormat();
+							SimpleDateFormat df = new SimpleDateFormat();
+							String format = null;
+
+							if (dataType.getDisplay().equalsIgnoreCase("Date/Time")) {
+								format = dateFormats.stream().filter(
+										dateFormat -> dateFormat.equalsIgnoreCase(csvFormat.getDateTimeFormat()))
+										.findFirst().orElse(null);
+							} else if (dataType.getDisplay().equalsIgnoreCase("Date")) {
+								format = dateFormats.stream()
+										.filter(dateFormat -> dateFormat.equalsIgnoreCase(csvFormat.getDateFormat()))
+										.findFirst().orElse(null);
+							} else if (dataType.getDisplay().equalsIgnoreCase("Time")) {
+								format = dateFormats.stream()
+										.filter(timeFormat -> timeFormat.equalsIgnoreCase(csvFormat.getTimeFormat()))
+										.findFirst().orElse(null);
+							}
+
+							df = (format == null) ? new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSSX")
+									: new SimpleDateFormat(format);
 							Date date = new Date();
-							SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSSX");
 							date = df.parse(value);
 							inputMessage.put(fieldName, date);
 						} catch (Exception e) {
-							addToSet(i, displayLabel + " value is invalid", csvDocument.getCsvImportId());
-							error = true;
-							break;
+							try {
+								SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSSX");
+								Date date = new Date();
+								date = df.parse(value);
+								inputMessage.put(fieldName, date);
+							} catch (Exception exception) {
+								addToSet(i, displayLabel + " value is invalid", csvDocument.getCsvImportId());
+								error = true;
+								break;
+							}
 						}
 
 					} else if (dataType.getDisplay().equalsIgnoreCase("Relationship")
