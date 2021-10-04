@@ -60,7 +60,7 @@ public class FindAgentAndAssign {
 				.findById(customer.get("ROLE").toString(), "roles_" + companyId);
 		String customerRole = null;
 		if (optionalCustomerRoleEntry.isPresent()) {
-			customerRole = optionalCustomerRoleEntry.get().get("NAME").toString();
+			customerRole = optionalCustomerRoleEntry.get().get("_id").toString();
 		}
 		Optional<Module> optionalChatModule = modulesRepository.findModuleByName("Chat", "modules_" + company.getId());
 		List<String> teamsWhoCanChat = company.getChatSettings().getTeamsWhoCanChat();
@@ -104,7 +104,7 @@ public class FindAgentAndAssign {
 					.findById(agentUserEntry.get("ROLE").toString(), "Roles_" + companyId);
 			String agentRole = null;
 			if (optionalRoleEntry.isPresent()) {
-				agentRole = optionalRoleEntry.get().get("NAME").toString();
+				agentRole = optionalRoleEntry.get().get("_id").toString();
 			}
 
 			List<String> teams = (List<String>) agentUserEntry.get("TEAMS");
@@ -178,8 +178,9 @@ public class FindAgentAndAssign {
 							NotificationOfAgentDetails notificationOfAgentDetails = new NotificationOfAgentDetails(
 									companyId, agentFirstName, agentLastName, agentUserEntry.get("_id").toString(),
 									customer.get("_id").toString(), true, chatUser.getSessionUUID(), "AGENTS_DATA",
-									new Date(), agentRole, customerRole, customer.get("USER_UUID").toString());
-							redisTemplate.convertAndSend("agents-available", notificationOfAgentDetails);
+									new Date(), agentRole, customerRole, customer.get("USER_UUID").toString(),
+									existingChatEntry.get("_id").toString());
+							redisTemplate.convertAndSend("agents_available", notificationOfAgentDetails);
 
 						}
 					}
@@ -188,8 +189,8 @@ public class FindAgentAndAssign {
 		} else {
 			NotificationOfAgentDetails notificationOfAgentDetails = new NotificationOfAgentDetails(companyId, null,
 					null, null, customer.get("_id").toString(), false, chatUser.getSessionUUID(), "AGENTS_DATA", null,
-					null, customerRole, customer.get("USER_UUID").toString());
-			redisTemplate.convertAndSend("agents-available", notificationOfAgentDetails);
+					null, customerRole, customer.get("USER_UUID").toString(), null);
+			redisTemplate.convertAndSend("agents_available", notificationOfAgentDetails);
 
 		}
 	}

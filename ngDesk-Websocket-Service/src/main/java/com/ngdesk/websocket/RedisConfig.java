@@ -86,6 +86,18 @@ public class RedisConfig {
 	}
 
 	@Bean
+	public RedisTemplate<String, NotificationOfAgentDetailsSubscriber> redisNotificationOfAgentDetailsSubscriberTemplate(
+			LettuceConnectionFactory redisConnectionFactory) {
+		RedisTemplate<String, NotificationOfAgentDetailsSubscriber> redisNotificationOfAgentDetailsSubscriberTemplate = new RedisTemplate<String, NotificationOfAgentDetailsSubscriber>();
+		redisNotificationOfAgentDetailsSubscriberTemplate.setConnectionFactory(redisConnectionFactory);
+		redisNotificationOfAgentDetailsSubscriberTemplate
+				.setValueSerializer(new Jackson2JsonRedisSerializer<NotificationOfAgentDetailsSubscriber>(
+						NotificationOfAgentDetailsSubscriber.class));
+		redisNotificationOfAgentDetailsSubscriberTemplate.setKeySerializer(new StringRedisSerializer());
+		return redisNotificationOfAgentDetailsSubscriberTemplate;
+	}
+
+	@Bean
 	public LettuceConnectionFactory redisConnectionFactory() {
 		RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration(redisHost, redisPort);
 		configuration.setPassword(redisPassword);
@@ -132,7 +144,7 @@ public class RedisConfig {
 		container.addMessageListener(chatSettingsUpdateListner(), new PatternTopic("chat_settings_update"));
 		container.addMessageListener(chatStatusListner(), new PatternTopic("chat_status"));
 		container.addMessageListener(chatChannelListner(), new PatternTopic("chat_channel"));
-		container.addMessageListener(agentAvailableListener(), new PatternTopic("agents-available"));
+		container.addMessageListener(agentAvailableListener(), new PatternTopic("agents_available"));
 
 		return container;
 	}
