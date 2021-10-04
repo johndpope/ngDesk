@@ -287,7 +287,7 @@ export class CreateCategoryComponent implements OnInit, OnDestroy {
 		// EVENT AFTER MODAL DIALOG IS CLOSED
 		dialogRef.afterClosed().subscribe((result) => {
 			if (result === this.translateService.instant('DELETE')) {
-				this.guideService.deleteCategory(this.categoryId).subscribe(
+				this.categoryApiService.deleteCategory(this.categoryId).subscribe(
 					(deleteResponse: any) => {
 						this.router.navigate([`guide`]);
 					},
