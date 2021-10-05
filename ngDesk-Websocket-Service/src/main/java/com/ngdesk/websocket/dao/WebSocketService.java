@@ -29,11 +29,12 @@ import com.ngdesk.repositories.CompaniesRepository;
 import com.ngdesk.repositories.DnsRepository;
 import com.ngdesk.repositories.ModuleEntryRepository;
 import com.ngdesk.repositories.ModulesRepository;
+import com.ngdesk.websocket.SessionService;
 import com.ngdesk.websocket.UserSessions;
 import com.ngdesk.websocket.channels.chat.dao.ChatChannelMessage;
+import com.ngdesk.websocket.channels.chat.dao.ChatDiscussionMessage;
 import com.ngdesk.websocket.channels.chat.dao.ChatNotification;
 import com.ngdesk.websocket.channels.chat.dao.ChatStatusMessage;
-import com.ngdesk.websocket.SessionService;
 import com.ngdesk.websocket.companies.dao.ChatSettingsMessage;
 import com.ngdesk.websocket.companies.dao.Company;
 import com.ngdesk.websocket.companies.dao.DnsRecord;
@@ -153,6 +154,113 @@ public class WebSocketService {
 			e.printStackTrace();
 		}
 
+	}
+
+	public void addDiscussionToChatEntry(ChatDiscussionMessage chatDiscussionMessage, String subdomain, String userId,
+			boolean isTrigger) {
+		try {
+			System.out.println("hit");
+			DiscussionMessage message = chatDiscussionMessage.getDiscussionMessage();
+			Optional<Company> optionalCompany = companiesRepository.findCompanyBySubdomain(subdomain);
+			if (optionalCompany.isPresent()) {
+
+				Company company = optionalCompany.get();
+
+				Optional<Map<String, Object>> optionalUser = entryRepository.findEntryById(userId,
+						"Users_" + company.getId());
+				if (optionalUser.isPresent()) {
+
+					Map<String, Object> user = optionalUser.get();
+
+					String contactId = user.get("CONTACT").toString();
+					Optional<Map<String, Object>> optionalContact = entryRepository.findEntryById(contactId,
+							"Contacts_" + company.getId());
+
+					if (optionalContact.isPresent()) {
+
+						Map<String, Object> contact = optionalContact.get();
+
+						String firstName = contact.get("FIRST_NAME").toString();
+						String lastName = contact.get("LAST_NAME").toString();
+
+						Optional<Module> optionalModule = modulesRepository.findById(message.getModuleId(),
+								"modules_" + company.getId());
+						if (optionalModule.isPresent()) {
+							Module module = optionalModule.get();
+
+							ModuleField discussionField = module.getFields().stream()
+									.filter(field -> field.getDataType().getDisplay().equals("Discussion")).findFirst()
+									.orElse(null);
+							if (discussionField != null) {
+								Optional<Map<String, Object>> optionalEntry = entryRepository.findEntryById(
+										message.getDataId(),
+										moduleService.getCollectionName(module.getName(), company.getId()));
+
+								if (optionalEntry.isPresent()) {
+
+									Map<String, Object> entry = optionalEntry.get();
+									if (message.getMessageId() == null || message.getMessageId().isBlank()) {
+										message.setMessageId(UUID.randomUUID().toString());
+									}
+
+									Sender sender = new Sender(firstName, lastName, user.get("USER_UUID").toString(),
+											user.get("ROLE").toString());
+									message.setSender(sender);
+									message.setDateCreated(new Date());
+
+									entryRepository.addDiscussionToEntry(message, discussionField.getName(),
+											entry.get("_id").toString(),
+											moduleService.getCollectionName(module.getName(), company.getId()));
+									if (!isTrigger) {
+										WorkflowPayload workflowPayload = new WorkflowPayload(
+												user.get("_id").toString(), module.getModuleId(), company.getId(),
+												entry.get("_id").toString(), entry, "PUT", new Date());
+										addToQueue(workflowPayload);
+									}
+									System.out.println("PUBLISH");
+									// PUBLISH PAYLOAD TO USERS
+									if (message.getMessageType() != null
+											&& !message.getMessageType().equals("META_DATA")) {
+										publishDiscussionToUsersInvolved(company, message, entry);
+										publishChatDiscussionNotification(company, chatDiscussionMessage);
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void publishChatDiscussionNotification(Company company, ChatDiscussionMessage chatDiscussionMessage) {
+		chatDiscussionMessage.getDiscussionMessage().setType("CHAT_MESSAGE");
+
+		ObjectMapper mapper = new ObjectMapper();
+
+		if (sessionService.sessions.containsKey(company.getCompanySubdomain())) {
+			ConcurrentHashMap<String, UserSessions> sessions = sessionService.sessions
+					.get(company.getCompanySubdomain());
+
+			ConcurrentLinkedQueue<WebSocketSession> userSessions = sessions.get(chatDiscussionMessage.getSessionUuid())
+					.getSessions();
+			userSessions.forEach(session -> {
+				try {
+					String payload = mapper.writeValueAsString(chatDiscussionMessage.getDiscussionMessage());
+					session.sendMessage(new TextMessage(payload));
+				} catch (JsonProcessingException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+					userSessions.remove(session);
+				}
+			});
+		}
 	}
 
 	public String getSubdomain(String host) {
