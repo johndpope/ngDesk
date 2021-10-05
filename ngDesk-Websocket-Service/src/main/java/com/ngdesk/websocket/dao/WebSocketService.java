@@ -249,7 +249,7 @@ public class WebSocketService {
 					.getSessions();
 			userSessions.forEach(session -> {
 				try {
-					String payload = mapper.writeValueAsString(chatDiscussionMessage);
+					String payload = mapper.writeValueAsString(chatDiscussionMessage.getDiscussionMessage());
 					session.sendMessage(new TextMessage(payload));
 				} catch (JsonProcessingException e) {
 					e.printStackTrace();
