@@ -97,9 +97,9 @@ public class ChatService {
 											false, companyId, user.get("USER_UUID").toString());
 									chatNotification.setStatus("Chatting");
 									chatNotification.setType("CHAT_ENTRY");
-									publishAgentDetails(chatEntry, companyId);
 								}
 								addToChatNotificationQueue(chatNotification);
+								publishAgentDetails(chatEntry, companyId);
 							}
 						}
 					}
@@ -121,35 +121,46 @@ public class ChatService {
 	public void publishAgentDetails(Map<String, Object> chatEntry, String companyId) {
 
 		List<String> agents = (List<String>) chatEntry.get("AGENTS");
-		Optional<Map<String, Object>> optionalUserEntry = entryRepository.findById(agents.get(0), "Users_" + companyId);
+		if (agents != null) {
 
-		if (optionalUserEntry.isPresent()) {
-			Map<String, Object> agentUserEntry = optionalUserEntry.get();
-			Optional<Map<String, Object>> optionalContactEntry = entryRepository
-					.findById(agentUserEntry.get("CONTACT").toString(), "Contacts_" + companyId);
-			String agentFirstName = null;
-			String agentLastName = null;
+			Optional<Map<String, Object>> optionalUserEntry = entryRepository.findById(agents.get(0),
+					"Users_" + companyId);
 
-			if (optionalContactEntry.isPresent()) {
-				agentFirstName = optionalContactEntry.get().get("FIRST_NAME").toString();
-				agentLastName = optionalContactEntry.get().get("LAST_NAME").toString();
-				String agentRole = agentUserEntry.get("ROLE").toString();
-				String customerId = chatEntry.get("REQUESTOR").toString();
+			if (optionalUserEntry.isPresent()) {
 
-				Optional<Map<String, Object>> optionalCustomerEntry = entryRepository.findById(customerId,
-						"Users_" + companyId);
-				if (optionalCustomerEntry.isPresent()) {
-					Map<String, Object> customer = optionalCustomerEntry.get();
-					String customerRole = customer.get("ROLE").toString();
+				Map<String, Object> agentUserEntry = optionalUserEntry.get();
+				Optional<Map<String, Object>> optionalContactEntry = entryRepository
+						.findById(agentUserEntry.get("CONTACT").toString(), "Contacts_" + companyId);
+				String agentFirstName = null;
+				String agentLastName = null;
 
-					NotificationOfAgentDetails notificationOfAgentDetails = new NotificationOfAgentDetails(companyId,
-							agentFirstName, agentLastName, agentUserEntry.get("_id").toString(),
-							customer.get("_id").toString(), true, chatEntry.get("SESSION_UUID").toString(),
-							"AGENTS_DATA", new Date(), agentRole, customerRole, customer.get("USER_UUID").toString(),
-							chatEntry.get("_id").toString());
-					redisTemplateNotificationOfAgentDetails.convertAndSend("agents_available",
-							notificationOfAgentDetails);
+				if (optionalContactEntry.isPresent()) {
 
+					agentFirstName = optionalContactEntry.get().get("FIRST_NAME").toString();
+					agentLastName = optionalContactEntry.get().get("LAST_NAME").toString();
+					String agentRole = agentUserEntry.get("ROLE").toString();
+					String customerId = chatEntry.get("REQUESTOR").toString();
+					Optional<Map<String, Object>> optionalCustomerContactEntry = entryRepository.findById(customerId,
+							"Contacts_" + companyId);
+					if (optionalCustomerContactEntry.isPresent()) {
+
+						Map<String, Object> customerContactEntry = optionalCustomerContactEntry.get();
+						Optional<Map<String, Object>> optionalCustomerUserEntry = entryRepository
+								.findById(customerContactEntry.get("USER").toString(), "Users_" + companyId);
+						if (optionalCustomerUserEntry.isPresent()) {
+							Map<String, Object> customer = optionalCustomerUserEntry.get();
+							String customerRole = customer.get("ROLE").toString();
+
+							NotificationOfAgentDetails notificationOfAgentDetails = new NotificationOfAgentDetails(
+									companyId, agentFirstName, agentLastName, agentUserEntry.get("_id").toString(),
+									customer.get("_id").toString(), true, chatEntry.get("SESSION_UUID").toString(),
+									"AGENTS_DATA", new Date(), agentRole, customerRole,
+									customer.get("USER_UUID").toString(), chatEntry.get("DATA_ID").toString());
+							redisTemplateNotificationOfAgentDetails.convertAndSend("agents_available",
+									notificationOfAgentDetails);
+						}
+
+					}
 				}
 			}
 
