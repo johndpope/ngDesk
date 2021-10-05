@@ -15,10 +15,12 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import com.ngdesk.data.dao.WorkflowPayload;
 import com.ngdesk.websocket.channels.chat.dao.ChatChannelMessage;
+import com.ngdesk.websocket.channels.chat.dao.ChatNotification;
 import com.ngdesk.websocket.channels.chat.dao.ChatStatusMessage;
 import com.ngdesk.websocket.notification.dao.Notification;
 import com.ngdesk.websocket.notification.dao.NotificationOfAgentDetails;
 import com.ngdesk.websocket.subscribers.ChatChannelSubscriber;
+import com.ngdesk.websocket.subscribers.ChatNotificationSubscriber;
 import com.ngdesk.websocket.subscribers.ChatSettingsUpdateSubscriber;
 import com.ngdesk.websocket.subscribers.ChatStatusSubscriber;
 import com.ngdesk.websocket.subscribers.ModuleNotificationSubscriber;
@@ -54,6 +56,9 @@ public class RedisConfig {
 
 	@Autowired
 	NotificationOfAgentDetailsSubscriber agentAvailableSubscriber;
+
+	@Autowired
+	ChatNotificationSubscriber chatNotificationSubscriber;
 
 	@Bean
 	public RedisTemplate<String, WorkflowPayload> redisTemplate(LettuceConnectionFactory redisConnectionFactory) {
@@ -98,6 +103,17 @@ public class RedisConfig {
 	}
 
 	@Bean
+	public RedisTemplate<String, ChatNotification> redisChatNotificationTemplate(
+			LettuceConnectionFactory redisConnectionFactory) {
+		RedisTemplate<String, ChatNotification> redisChatNotificationTemplate = new RedisTemplate<String, ChatNotification>();
+		redisChatNotificationTemplate.setConnectionFactory(redisConnectionFactory);
+		redisChatNotificationTemplate
+				.setValueSerializer(new Jackson2JsonRedisSerializer<ChatNotification>(ChatNotification.class));
+		redisChatNotificationTemplate.setKeySerializer(new StringRedisSerializer());
+		return redisChatNotificationTemplate;
+	}
+
+	@Bean
 	public LettuceConnectionFactory redisConnectionFactory() {
 		RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration(redisHost, redisPort);
 		configuration.setPassword(redisPassword);
@@ -135,6 +151,11 @@ public class RedisConfig {
 	}
 
 	@Bean
+	MessageListenerAdapter chatNotificationListener() {
+		return new MessageListenerAdapter(chatNotificationSubscriber);
+	}
+
+	@Bean
 	public RedisMessageListenerContainer redisMessageListenerContainer(
 			LettuceConnectionFactory redisConnectionFactory) {
 		RedisMessageListenerContainer container = new RedisMessageListenerContainer();
@@ -145,6 +166,7 @@ public class RedisConfig {
 		container.addMessageListener(chatStatusListner(), new PatternTopic("chat_status"));
 		container.addMessageListener(chatChannelListner(), new PatternTopic("chat_channel"));
 		container.addMessageListener(agentAvailableListener(), new PatternTopic("agents_available"));
+		container.addMessageListener(chatNotificationListener(), new PatternTopic("chat_notification"));
 
 		return container;
 	}

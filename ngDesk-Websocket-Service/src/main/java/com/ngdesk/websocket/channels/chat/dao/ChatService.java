@@ -38,6 +38,9 @@ public class ChatService {
 	@Autowired
 	RedisTemplate<String, ChatChannelMessage> redisTemplate;
 
+	@Autowired
+	RedisTemplate<String, ChatNotification> redisTemplateForChatNotification;
+
 	public void publishPageLoad(ChatWidgetPayload pageLoad) {
 		try {
 			if (pageLoad.getSubdomain() != null) {
@@ -66,15 +69,26 @@ public class ChatService {
 								entry.put("CHANNEL", optionalChatChannel.get().getChannelId());
 								entry.put("SOURCE_TYPE", "chat");
 								Map<String, Object> user = optionalUserEntry.get();
+								Map<String, Object> chatEntry = new HashMap<String, Object>();
+								ChatNotification chatNotification = new ChatNotification();
+								chatNotification.setCompanyId(companyId);
+								chatNotification.setEntry(chatEntry);
+								chatNotification.setSessionUUID(pageLoad.getSessionUUID());
 								if (optionalChatEntry.isEmpty()) {
 									entry.put("STATUS", "Browsing");
-									dataProxy.postModuleEntry(entry, optionalChatModule.get().getModuleId(), false,
-											companyId, user.get("USER_UUID").toString());
+									chatEntry = dataProxy.postModuleEntry(entry, optionalChatModule.get().getModuleId(),
+											false, companyId, user.get("USER_UUID").toString());
+									chatNotification.setStatus("Browsing");
+									chatNotification.setType("CHAT_ENTRY");
+
 								} else {
 									entry.put("DATA_ID", optionalChatEntry.get().get("_id").toString());
-									dataProxy.putModuleEntry(entry, optionalChatModule.get().getModuleId(), false,
-											companyId, user.get("USER_UUID").toString());
+									chatEntry = dataProxy.putModuleEntry(entry, optionalChatModule.get().getModuleId(),
+											false, companyId, user.get("USER_UUID").toString());
+									chatNotification.setStatus("Chatting");
+									chatNotification.setType("CHAT_ENTRY");
 								}
+								addToChatNotificationQueue(chatNotification);
 							}
 						}
 					}
@@ -87,6 +101,10 @@ public class ChatService {
 
 	public void addToChatChannelQueue(ChatChannelMessage chatChannelMessage) {
 		redisTemplate.convertAndSend("chat_channel", chatChannelMessage);
+	}
+
+	public void addToChatNotificationQueue(ChatNotification message) {
+		redisTemplateForChatNotification.convertAndSend("chat_notification", message);
 	}
 
 }
