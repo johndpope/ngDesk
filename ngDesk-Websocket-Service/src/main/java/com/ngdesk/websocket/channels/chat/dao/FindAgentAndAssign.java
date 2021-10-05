@@ -192,7 +192,7 @@ public class FindAgentAndAssign {
 									notificationOfAgentDetails);
 
 							ChatNotification chatNotification = new ChatNotification(companyId, "CHAT_ENTRY",
-									chatUser.getSessionUUID(), updatedChatEntry, "");
+									chatUser.getSessionUUID(), updatedChatEntry, "Chatting");
 							addToChatNotificationQueue(chatNotification);
 
 						}
