@@ -33,7 +33,7 @@
 		</div>
 		<mat-divider [vertical]="true"></mat-divider>
 		<!-- Side bar start -->
-		<div fxLayout="column" fxFlex="20" fxFlex.sm="300px" fxFlex.md="300px" class="pad10" [ngStyle]="{'background': '#F8F9F9'}">
+		<div fxLayout="column" fxFlex="22" fxFlex.sm="300px" fxFlex.md="300px" class="pad10" [ngStyle]="{'background': '#F8F9F9'}">
 			<button *ngIf="!isSubmitting" mat-raised-button type="submit" color="primary">{{'SAVE' | translate}}</button>
 			<div style="min-height: 36px;" fxLayoutAlign="center center" *ngIf="isSubmitting">
 				<mat-spinner [diameter]="30"></mat-spinner>
