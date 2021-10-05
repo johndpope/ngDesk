@@ -40,6 +40,7 @@ import com.ngdesk.data.dao.SingleWorkflowPayload;
 import com.ngdesk.repositories.RolesRepository;
 import com.ngdesk.websocket.approval.dao.Approval;
 import com.ngdesk.websocket.approval.dao.ApprovalService;
+import com.ngdesk.websocket.channels.chat.dao.ChatDiscussionMessage;
 import com.ngdesk.websocket.channels.chat.dao.ChatService;
 import com.ngdesk.websocket.channels.chat.dao.ChatStatus;
 import com.ngdesk.websocket.channels.chat.dao.ChatStatusCheck;
@@ -221,7 +222,7 @@ public class SocketHandler extends TextWebSocketHandler {
 					userSessions.getSessions().add(session);
 				} else {
 					ConcurrentLinkedQueue<WebSocketSession> sessions = new ConcurrentLinkedQueue<WebSocketSession>();
-							sessions.add(session);
+					sessions.add(session);
 					userSessions.setSessions(sessions);
 				}
 			} else {
@@ -303,7 +304,7 @@ public class SocketHandler extends TextWebSocketHandler {
 			} else if (queryParamMap.containsKey("subdomain") && queryParamMap.containsKey("sessionUUID")) {
 				String sessionUUID = queryParamMap.get("sessionUUID");
 				subdomain = queryParamMap.get("subdomain");
-				
+
 				ConcurrentHashMap<String, UserSessions> userSessions = sessionService.sessions.get(subdomain);
 				userSessions.get(sessionUUID).getSessions().remove(session);
 
@@ -398,6 +399,37 @@ public class SocketHandler extends TextWebSocketHandler {
 													chatStatusService.publishOnChatStatusCheck(chatStatusCheck);
 
 												} catch (Exception e7) {
+
+													try {
+														ChatDiscussionMessage chatDiscussionMessage = mapper.readValue(
+																textMessage.getPayload(), ChatDiscussionMessage.class);
+														DiscussionMessage discussionMessage = chatDiscussionMessage
+																.getDiscussionMessage();
+
+														Assert.notNull(discussionMessage.getMessageType(),
+																"Message Type should not be null");
+														if (!discussionMessage.getMessageType()
+																.equalsIgnoreCase("ping")) {
+															Assert.notNull(discussionMessage.getMessage(),
+																	"Message should not be null");
+															Assert.notNull(discussionMessage.getDataId(),
+																	"Entry ID should not be null");
+
+															if (!discussionMessage.getMessageType().equals("MESSAGE")
+																	&& !discussionMessage.getMessageType()
+																			.equals("INTERNAL_COMMENT")) {
+																throw new IllegalArgumentException();
+															}
+															webSocketService.addDiscussionToChatEntry(
+																	chatDiscussionMessage, subdomain,
+																	chatDiscussionMessage.getAgentDataID(), false);
+
+														}
+
+													} catch (Exception e8) {
+
+													}
+
 												}
 
 											}
@@ -430,7 +462,28 @@ public class SocketHandler extends TextWebSocketHandler {
 						ChatUser chatUser = mapper.readValue(textMessage.getPayload(), ChatUser.class);
 						chatUserEntryService.chatUserEntryCreation(chatUser);
 					} catch (Exception e1) {
+						try {
+							ChatDiscussionMessage chatDiscussionMessage = mapper.readValue(textMessage.getPayload(),
+									ChatDiscussionMessage.class);
+							DiscussionMessage discussionMessage = chatDiscussionMessage.getDiscussionMessage();
 
+							Assert.notNull(discussionMessage.getMessageType(), "Message Type should not be null");
+							if (!discussionMessage.getMessageType().equalsIgnoreCase("ping")) {
+								Assert.notNull(discussionMessage.getMessage(), "Message should not be null");
+								Assert.notNull(discussionMessage.getDataId(), "Entry ID should not be null");
+
+								if (!discussionMessage.getMessageType().equals("MESSAGE")
+										&& !discussionMessage.getMessageType().equals("INTERNAL_COMMENT")) {
+									throw new IllegalArgumentException();
+								}
+								webSocketService.addDiscussionToChatEntry(chatDiscussionMessage, subdomain,
+										chatDiscussionMessage.getAgentDataID(), false);
+
+							}
+
+						} catch (Exception e2) {
+
+						}
 					}
 				}
 
