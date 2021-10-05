@@ -12,7 +12,7 @@ public interface CustomModuleEntryRepository {
 	public Optional<Map<String, Object>> findEntryById(String entryId, String collectionName);
 
 	public void addDiscussionToEntry(DiscussionMessage message, String discussionFieldName, String entryId,
-			String collectionName);
+			String collectionName, String variable, Object value);
 
 	public List<Map<String, Object>> findTeamsByIds(List<String> teamIds, String collectionName);
 
@@ -38,7 +38,5 @@ public interface CustomModuleEntryRepository {
 	public void setUserPhoneNumberAndDeletedToFalse(String emailAddress, Phone phone, String collectionName);
 
 	public void setUserDeletedToFalse(String emailAddress, String collectionName);
-
-	public void updateEntry(String dataId, String variable, Object value, String collectionName);
 
 }

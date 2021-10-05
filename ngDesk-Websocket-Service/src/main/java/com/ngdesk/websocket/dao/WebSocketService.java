@@ -122,15 +122,11 @@ public class WebSocketService {
 											user.get("ROLE").toString());
 									message.setSender(sender);
 									message.setDateCreated(new Date());
-
+									Date dateUpdated = new Date();
 									entryRepository.addDiscussionToEntry(message, discussionField.getName(),
 											entry.get("_id").toString(),
-											moduleService.getCollectionName(module.getName(), company.getId()));
-									Date dateUpdated = new Date();
-
-									entryRepository.updateEntry(entry.get("_id").toString(), "DATE_UPDATED",
-											dateUpdated,
-											moduleService.getCollectionName(module.getName(), company.getId()));
+											moduleService.getCollectionName(module.getName(), company.getId()),
+											"DATE_UPDATED", dateUpdated);
 
 									if (!isTrigger) {
 										WorkflowPayload workflowPayload = new WorkflowPayload(

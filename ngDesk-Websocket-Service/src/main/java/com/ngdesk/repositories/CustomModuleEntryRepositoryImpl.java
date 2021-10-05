@@ -38,7 +38,7 @@ public class CustomModuleEntryRepositoryImpl implements CustomModuleEntryReposit
 
 	@Override
 	public void addDiscussionToEntry(DiscussionMessage message, String discussionFieldName, String entryId,
-			String collectionName) {
+			String collectionName, String variable, Object value) {
 		Assert.notNull(message, "The given message must not be null!");
 		Assert.notNull(collectionName, "The given collectionName must not be null!");
 		Assert.notNull(entryId, "The given id must not be null!");
@@ -51,7 +51,7 @@ public class CustomModuleEntryRepositoryImpl implements CustomModuleEntryReposit
 
 		Update update = new Update();
 		update.addToSet(discussionFieldName, message);
-
+		update.set(variable, value);
 		mongoOperations.updateFirst(query, update, collectionName);
 
 	}
@@ -173,14 +173,4 @@ public class CustomModuleEntryRepositoryImpl implements CustomModuleEntryReposit
 				Criteria.where("EFFECTIVE_TO").is(null));
 		return Optional.ofNullable(mongoOperations.findOne(new Query(criteria), Map.class, collectionName));
 	}
-	
-	@Override
-    public void updateEntry(String dataId, String variable, Object value , String collectionName) {
-        Update update = new Update();
-        update.set(variable, value);
-        Criteria criteria = new Criteria();
-		criteria.andOperator(Criteria.where("DELETED").is(false), Criteria.where("_id").is(dataId),
-				Criteria.where("EFFECTIVE_TO").is(null));
-        mongoOperations.updateFirst(new Query(criteria), update, collectionName);
-    }
 }
