@@ -1,12 +1,15 @@
 package com.ngdesk.websocket.channels.chat.dao;
 
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.expression.spel.ast.OpInc;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,6 +19,7 @@ import com.ngdesk.repositories.ModuleEntryRepository;
 import com.ngdesk.repositories.ModulesRepository;
 import com.ngdesk.websocket.companies.dao.Company;
 import com.ngdesk.websocket.modules.dao.Module;
+import com.ngdesk.websocket.notification.dao.NotificationOfAgentDetails;
 
 @Component
 public class ChatService {
@@ -36,10 +40,16 @@ public class ChatService {
 	ChatChannelRepository chatChannelRepository;
 
 	@Autowired
+	ModuleEntryRepository entryRepository;
+
+	@Autowired
 	RedisTemplate<String, ChatChannelMessage> redisTemplate;
 
 	@Autowired
 	RedisTemplate<String, ChatNotification> redisTemplateForChatNotification;
+
+	@Autowired
+	RedisTemplate<String, NotificationOfAgentDetails> redisTemplateNotificationOfAgentDetails;
 
 	public void publishPageLoad(ChatWidgetPayload pageLoad) {
 		try {
@@ -87,6 +97,7 @@ public class ChatService {
 											false, companyId, user.get("USER_UUID").toString());
 									chatNotification.setStatus("Chatting");
 									chatNotification.setType("CHAT_ENTRY");
+									publishAgentDetails(chatEntry, companyId);
 								}
 								addToChatNotificationQueue(chatNotification);
 							}
@@ -105,6 +116,45 @@ public class ChatService {
 
 	public void addToChatNotificationQueue(ChatNotification message) {
 		redisTemplateForChatNotification.convertAndSend("chat_notification", message);
+	}
+
+	public void publishAgentDetails(Map<String, Object> chatEntry, String companyId) {
+
+		List<String> agents = (List<String>) chatEntry.get("AGENTS");
+		Optional<Map<String, Object>> optionalUserEntry = entryRepository.findById(agents.get(0), "Users_" + companyId);
+
+		if (optionalUserEntry.isPresent()) {
+			Map<String, Object> agentUserEntry = optionalUserEntry.get();
+			Optional<Map<String, Object>> optionalContactEntry = entryRepository
+					.findById(agentUserEntry.get("CONTACT").toString(), "Contacts_" + companyId);
+			String agentFirstName = null;
+			String agentLastName = null;
+
+			if (optionalContactEntry.isPresent()) {
+				agentFirstName = optionalContactEntry.get().get("FIRST_NAME").toString();
+				agentLastName = optionalContactEntry.get().get("LAST_NAME").toString();
+				String agentRole = agentUserEntry.get("ROLE").toString();
+				String customerId = chatEntry.get("REQUESTOR").toString();
+
+				Optional<Map<String, Object>> optionalCustomerEntry = entryRepository.findById(customerId,
+						"Users_" + companyId);
+				if (optionalCustomerEntry.isPresent()) {
+					Map<String, Object> customer = optionalCustomerEntry.get();
+					String customerRole = customer.get("ROLE").toString();
+
+					NotificationOfAgentDetails notificationOfAgentDetails = new NotificationOfAgentDetails(companyId,
+							agentFirstName, agentLastName, agentUserEntry.get("_id").toString(),
+							customer.get("_id").toString(), true, chatEntry.get("SESSION_UUID").toString(),
+							"AGENTS_DATA", new Date(), agentRole, customerRole, customer.get("USER_UUID").toString(),
+							chatEntry.get("_id").toString());
+					redisTemplateNotificationOfAgentDetails.convertAndSend("agents_available",
+							notificationOfAgentDetails);
+
+				}
+			}
+
+		}
+
 	}
 
 }
