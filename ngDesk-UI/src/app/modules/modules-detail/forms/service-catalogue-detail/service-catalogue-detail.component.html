@@ -131,11 +131,14 @@
 								<mat-hint>{{'WORKFLOW_HINT' | translate}}</mat-hint>
 							</mat-form-field>
 
-							<div *ngIf="workflows.length === 0" fxLayout="row" fxLayoutGap="5px">
-								<a (click)="createNewWorkflow()"
-									style="cursor: pointer; text-decoration: underline;color: blue;">{{'WORKFLOW_BUTTON'|translate}}</a>
-								<mat-icon class="light-grey-color" style="transform: scale(0.8);" matTooltip="{{'WORKFLOW_FOR_FORM' | translate}}">
-									help_outline</mat-icon>
+							<div *ngIf="workflows.length === 0" fxLayout="column" fxLayoutGap="10px">
+								<div fxLayout="row" fxLayoutGap="5px">
+									<a (click)="createNewWorkflow()"
+										style="cursor: pointer; text-decoration: underline;color: blue;">{{'WORKFLOW_BUTTON'|translate}}</a>
+									<mat-icon class="light-grey-color" style="transform: scale(0.8);line-height :17px;"
+										matTooltip="{{'WORKFLOW_FOR_FORM' | translate}}">
+										help_outline</mat-icon>
+								</div>
 								<mat-hint>{{'WORKFLOW_HINT' | translate}}</mat-hint>
 							</div>
 						</div>
