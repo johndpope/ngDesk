@@ -133,7 +133,7 @@ public class NodeOperations {
 
 					DecimalFormat formatter = new DecimalFormat("#,###.00");
 					if (aggValue == null) {
-						return formatter.format(0);
+						return "0.00";
 					}
 					return formatter.format(aggValue);
 				}
@@ -211,13 +211,13 @@ public class NodeOperations {
 					} else if (isDataType(module, section, "Chronometer")) {
 						int value = Integer.parseInt(inputMessage.get(section).toString());
 						return getUserReadableChronometerValue(value, "");
-					} else if (isDataType(module, section, "Currency")) {
+					} else if (isDataType(module, section, "Currency") || isDataType(module, section, "Currency Exchange")) {
 						Double value = Double.parseDouble(inputMessage.get(section).toString());
 						ModuleField currencyField = module.getFields().stream()
 								.filter(field -> field.getName().equals(section)).findFirst().orElse(null);
 						String format = currencyField.getNumericFormat();
 						if (format == null || format.isBlank() || format.equals("None")) {
-							DecimalFormat formatter = new DecimalFormat("#,###.00");
+							DecimalFormat formatter = new DecimalFormat("#,###.0000");
 							return formatter.format(value);
 						} else {
 							DecimalFormat formatter = new DecimalFormat(format + ".00");
