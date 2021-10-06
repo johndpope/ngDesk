@@ -1,5 +1,7 @@
 package com.ngdesk.websocket.channels.chat.dao;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +15,7 @@ import org.springframework.expression.spel.ast.OpInc;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ngdesk.data.dao.DiscussionMessage;
 import com.ngdesk.repositories.ChatChannelRepository;
 import com.ngdesk.repositories.CompaniesRepository;
 import com.ngdesk.repositories.ModuleEntryRepository;
@@ -150,11 +153,12 @@ public class ChatService {
 						if (optionalCustomerUserEntry.isPresent()) {
 							Map<String, Object> customer = optionalCustomerUserEntry.get();
 							String customerRole = customer.get("ROLE").toString();
+							Date agentAssignedTime = fetchAgentAssignedTime(chatEntry);
 
 							NotificationOfAgentDetails notificationOfAgentDetails = new NotificationOfAgentDetails(
 									companyId, agentFirstName, agentLastName, agentUserEntry.get("_id").toString(),
 									customer.get("_id").toString(), true, chatEntry.get("SESSION_UUID").toString(),
-									"AGENTS_DATA", new Date(), agentRole, customerRole,
+									"AGENTS_DATA", agentAssignedTime, agentRole, customerRole,
 									customer.get("USER_UUID").toString(), chatEntry.get("DATA_ID").toString());
 							redisTemplateNotificationOfAgentDetails.convertAndSend("agents_available",
 									notificationOfAgentDetails);
@@ -165,6 +169,32 @@ public class ChatService {
 			}
 
 		}
+
+	}
+
+	public Date fetchAgentAssignedTime(Map<String, Object> chatEntry) {
+		try {
+			List<Map<String, Object>> chats = (List<Map<String, Object>>) chatEntry.get("CHAT");
+			List<Date> assignedDates = new ArrayList<Date>();
+			if (chats != null) {
+				for (Map<String, Object> chat : chats) {
+					if (chat.get("MESSAGE_TYPE").toString().equals("META_DATA")
+							&& chat.get("MESSAGE").toString().contains("has joined the chat")) {
+						String dateCreated = chat.get("DATE_CREATED").toString();
+						SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'+'00:00");
+						Date date = format.parse(dateCreated);
+						assignedDates.add(date);
+					}
+				}
+				if (assignedDates.size() > 0) {
+					return assignedDates.get(assignedDates.size() - 1);
+				}
+				return new Date();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new Date();
 
 	}
 
