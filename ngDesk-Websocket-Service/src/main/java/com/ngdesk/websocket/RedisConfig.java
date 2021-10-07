@@ -17,11 +17,13 @@ import com.ngdesk.data.dao.WorkflowPayload;
 import com.ngdesk.websocket.channels.chat.dao.ChatChannelMessage;
 import com.ngdesk.websocket.channels.chat.dao.ChatNotification;
 import com.ngdesk.websocket.channels.chat.dao.ChatStatusMessage;
+import com.ngdesk.websocket.channels.chat.dao.ChatTicketStatusMessage;
 import com.ngdesk.websocket.notification.dao.Notification;
 import com.ngdesk.websocket.subscribers.ChatChannelSubscriber;
 import com.ngdesk.websocket.subscribers.ChatNotificationSubscriber;
 import com.ngdesk.websocket.subscribers.ChatSettingsUpdateSubscriber;
 import com.ngdesk.websocket.subscribers.ChatStatusSubscriber;
+import com.ngdesk.websocket.subscribers.ChatTicketStatusSubscriber;
 import com.ngdesk.websocket.subscribers.ModuleNotificationSubscriber;
 import com.ngdesk.websocket.subscribers.NotificationSubscriber;
 
@@ -54,6 +56,9 @@ public class RedisConfig {
 
 	@Autowired
 	ChatNotificationSubscriber chatNotificationSubscriber;
+	
+	@Autowired
+	ChatTicketStatusSubscriber chatTicketStatusSubscriber;
 
 	@Bean
 	public RedisTemplate<String, WorkflowPayload> redisTemplate(LettuceConnectionFactory redisConnectionFactory) {
@@ -96,6 +101,17 @@ public class RedisConfig {
 		redisChatNotificationTemplate.setKeySerializer(new StringRedisSerializer());
 		return redisChatNotificationTemplate;
 	}
+	
+	@Bean
+	public RedisTemplate<String, ChatTicketStatusMessage> redisChatTicketStatusTemplate(
+			LettuceConnectionFactory redisConnectionFactory) {
+		RedisTemplate<String, ChatTicketStatusMessage> redisChatTicketStatusTemplate = new RedisTemplate<String, ChatTicketStatusMessage>();
+		redisChatTicketStatusTemplate.setConnectionFactory(redisConnectionFactory);
+		redisChatTicketStatusTemplate.setValueSerializer(
+				new Jackson2JsonRedisSerializer<ChatTicketStatusMessage>(ChatTicketStatusMessage.class));
+		redisChatTicketStatusTemplate.setKeySerializer(new StringRedisSerializer());
+		return redisChatTicketStatusTemplate;
+	}
 
 	@Bean
 	public LettuceConnectionFactory redisConnectionFactory() {
@@ -133,6 +149,11 @@ public class RedisConfig {
 	MessageListenerAdapter chatNotificationListener() {
 		return new MessageListenerAdapter(chatNotificationSubscriber);
 	}
+	
+	@Bean
+	MessageListenerAdapter chatTicketStatusListener() {
+		return new MessageListenerAdapter(chatTicketStatusSubscriber);
+	}
 
 	@Bean
 	public RedisMessageListenerContainer redisMessageListenerContainer(
@@ -145,7 +166,7 @@ public class RedisConfig {
 		container.addMessageListener(chatStatusListner(), new PatternTopic("chat_status"));
 		container.addMessageListener(chatChannelListner(), new PatternTopic("chat_channel"));
 		container.addMessageListener(chatNotificationListener(), new PatternTopic("chat_notification"));
-
+		container.addMessageListener(chatTicketStatusListener(), new PatternTopic("chat_ticket_status"));
 		return container;
 	}
 

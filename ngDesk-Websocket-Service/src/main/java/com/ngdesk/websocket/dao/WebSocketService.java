@@ -35,6 +35,7 @@ import com.ngdesk.websocket.channels.chat.dao.ChatChannelMessage;
 import com.ngdesk.websocket.channels.chat.dao.ChatDiscussionMessage;
 import com.ngdesk.websocket.channels.chat.dao.ChatNotification;
 import com.ngdesk.websocket.channels.chat.dao.ChatStatusMessage;
+import com.ngdesk.websocket.channels.chat.dao.ChatTicketStatusMessage;
 import com.ngdesk.websocket.companies.dao.ChatSettingsMessage;
 import com.ngdesk.websocket.companies.dao.Company;
 import com.ngdesk.websocket.companies.dao.DnsRecord;
@@ -512,6 +513,31 @@ public class WebSocketService {
 			userSessions.forEach(session -> {
 				try {
 					String payload = mapper.writeValueAsString(message);
+					session.sendMessage(new TextMessage(payload));
+				} catch (JsonProcessingException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+					userSessions.remove(session);
+				}
+			});
+		}
+
+	}
+
+	public void publishChatTicketStatus(Company company, ChatTicketStatusMessage chatTicketStatusMessage) {
+
+		ObjectMapper mapper = new ObjectMapper();
+		if (sessionService.sessions.containsKey(company.getCompanySubdomain())) {
+			ConcurrentHashMap<String, UserSessions> sessions = sessionService.sessions
+					.get(company.getCompanySubdomain());
+			ConcurrentLinkedQueue<WebSocketSession> userSessions = sessions
+					.get(chatTicketStatusMessage.getSessionUUId()).getSessions();
+			userSessions.forEach(session -> {
+				try {
+					String payload = mapper.writeValueAsString(chatTicketStatusMessage);
 					session.sendMessage(new TextMessage(payload));
 				} catch (JsonProcessingException e) {
 					e.printStackTrace();

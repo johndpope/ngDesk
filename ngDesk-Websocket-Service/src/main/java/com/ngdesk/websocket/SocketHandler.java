@@ -45,6 +45,8 @@ import com.ngdesk.websocket.channels.chat.dao.ChatService;
 import com.ngdesk.websocket.channels.chat.dao.ChatStatus;
 import com.ngdesk.websocket.channels.chat.dao.ChatStatusCheck;
 import com.ngdesk.websocket.channels.chat.dao.ChatStatusService;
+import com.ngdesk.websocket.channels.chat.dao.ChatTicket;
+import com.ngdesk.websocket.channels.chat.dao.ChatTicketCreationService;
 import com.ngdesk.websocket.channels.chat.dao.ChatUser;
 import com.ngdesk.websocket.channels.chat.dao.ChatUserEntryService;
 import com.ngdesk.websocket.channels.chat.dao.ChatWidgetPayload;
@@ -113,6 +115,9 @@ public class SocketHandler extends TextWebSocketHandler {
 
 	@Autowired
 	ChatUserEntryService chatUserEntryService;
+
+	@Autowired
+	ChatTicketCreationService chatTicketCreationService;
 
 	private static ReentrantLock lock = new ReentrantLock();
 
@@ -482,7 +487,8 @@ public class SocketHandler extends TextWebSocketHandler {
 							}
 
 						} catch (Exception e2) {
-
+							ChatTicket chatTicket = mapper.readValue(textMessage.getPayload(), ChatTicket.class);
+							chatTicketCreationService.chatTicketCreation(chatTicket);
 						}
 					}
 				}
