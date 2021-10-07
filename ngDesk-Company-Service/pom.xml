@@ -15,7 +15,6 @@
 	<name>ngDesk-Company-Service</name>
 	<description>ngDesk microservice for companies</description>
 
-
 	<properties>
 		<java.version>11</java.version>
 		<spring-cloud.version>Hoxton.SR8</spring-cloud.version>
