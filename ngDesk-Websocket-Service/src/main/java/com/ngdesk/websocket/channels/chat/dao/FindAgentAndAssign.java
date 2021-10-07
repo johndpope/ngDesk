@@ -46,9 +46,6 @@ public class FindAgentAndAssign {
 	RedisTemplate<String, Notification> redisTemplate;
 
 	@Autowired
-	RedisTemplate<String, NotificationOfAgentDetails> redisTemplateNotificationOfAgentDetails;
-
-	@Autowired
 	Global global;
 
 	@Autowired
@@ -62,12 +59,9 @@ public class FindAgentAndAssign {
 
 	public void assignChatToAgent(Company company, ChatUser chatUser, Map<String, Object> customer) {
 		String companyId = company.getId();
-		Optional<Map<String, Object>> optionalCustomerRoleEntry = entryRepository
-				.findById(customer.get("ROLE").toString(), "roles_" + companyId);
-		String customerRole = null;
-		if (optionalCustomerRoleEntry.isPresent()) {
-			customerRole = optionalCustomerRoleEntry.get().get("_id").toString();
-		}
+
+		String customerRole = customer.get("ROLE").toString();
+
 		Optional<Module> optionalChatModule = modulesRepository.findModuleByName("Chat", "modules_" + company.getId());
 		List<String> teamsWhoCanChat = company.getChatSettings().getTeamsWhoCanChat();
 		ConcurrentHashMap<String, UserSessions> sessionMap = sessionService.sessions.get(company.getCompanySubdomain());
@@ -106,12 +100,7 @@ public class FindAgentAndAssign {
 				contactId = optionalContactEntry.get().get("_id").toString();
 			}
 
-//			Optional<Map<String, Object>> optionalRoleEntry = entryRepository
-//					.findById(agentUserEntry.get("ROLE").toString(), "Roles_" + companyId);
 			String agentRole = agentUserEntry.get("ROLE").toString();
-//			if (optionalRoleEntry.isPresent()) {
-//				agentRole = optionalRoleEntry.get().get("_id").toString();
-//			}
 
 			List<String> teams = (List<String>) agentUserEntry.get("TEAMS");
 			Boolean isTeams = false;
@@ -173,6 +162,7 @@ public class FindAgentAndAssign {
 							chatEntry.put("AGENTS", agents);
 							chatEntry.put("DATA_ID", existingChatEntry.get("_id").toString());
 							chatEntry.put("STATUS", "Chatting");
+
 							Map<String, Object> updatedChatEntry = dataProxy.putModuleEntry(chatEntry,
 									optionalChatModule.get().getModuleId(), false, companyId,
 									customer.get("USER_UUID").toString());
@@ -188,11 +178,9 @@ public class FindAgentAndAssign {
 									new Date(), agentRole, customerRole, customer.get("USER_UUID").toString(),
 									existingChatEntry.get("_id").toString());
 
-							redisTemplateNotificationOfAgentDetails.convertAndSend("agents_available",
-									notificationOfAgentDetails);
-
 							ChatNotification chatNotification = new ChatNotification(companyId, "CHAT_ENTRY",
-									chatUser.getSessionUUID(), updatedChatEntry, "Chatting");
+									chatUser.getSessionUUID(), updatedChatEntry, "Chatting",
+									notificationOfAgentDetails);
 							addToChatNotificationQueue(chatNotification);
 
 						}
@@ -203,7 +191,10 @@ public class FindAgentAndAssign {
 			NotificationOfAgentDetails notificationOfAgentDetails = new NotificationOfAgentDetails(companyId, null,
 					null, null, customer.get("_id").toString(), false, chatUser.getSessionUUID(), "AGENTS_DATA", null,
 					null, customerRole, customer.get("USER_UUID").toString(), null);
-			redisTemplateNotificationOfAgentDetails.convertAndSend("agents_available", notificationOfAgentDetails);
+
+			ChatNotification chatNotification = new ChatNotification(companyId, "CHAT_ENTRY", chatUser.getSessionUUID(),
+					null, null, notificationOfAgentDetails);
+			addToChatNotificationQueue(chatNotification);
 
 		}
 	}
@@ -236,7 +227,7 @@ public class FindAgentAndAssign {
 
 		Sender sender = new Sender(contact.get("FIRST_NAME").toString(), contact.get("LAST_NAME").toString(),
 				systemUser.get("USER_UUID").toString(), systemUser.get("ROLE").toString());
-
+		
 		return new DiscussionMessage(message, new Date(), UUID.randomUUID().toString(), "META_DATA",
 				new ArrayList<MessageAttachment>(), sender, moduleId, dataId, null);
 

@@ -51,8 +51,7 @@ public class ChatService {
 	@Autowired
 	RedisTemplate<String, ChatNotification> redisTemplateForChatNotification;
 
-	@Autowired
-	RedisTemplate<String, NotificationOfAgentDetails> redisTemplateNotificationOfAgentDetails;
+
 
 	public void publishPageLoad(ChatWidgetPayload pageLoad) {
 		try {
@@ -100,9 +99,12 @@ public class ChatService {
 											false, companyId, user.get("USER_UUID").toString());
 									chatNotification.setStatus("Chatting");
 									chatNotification.setType("CHAT_ENTRY");
+									NotificationOfAgentDetails notificationOfAgentDetails = getAgentDetails(
+											optionalChatEntry.get(), companyId);
+									chatNotification.setNotificationOfAgentDetails(notificationOfAgentDetails);
+
 								}
 								addToChatNotificationQueue(chatNotification);
-								publishAgentDetails(chatEntry, companyId);
 							}
 						}
 					}
@@ -121,7 +123,7 @@ public class ChatService {
 		redisTemplateForChatNotification.convertAndSend("chat_notification", message);
 	}
 
-	public void publishAgentDetails(Map<String, Object> chatEntry, String companyId) {
+	public NotificationOfAgentDetails getAgentDetails(Map<String, Object> chatEntry, String companyId) {
 
 		List<String> agents = (List<String>) chatEntry.get("AGENTS");
 		if (agents != null) {
@@ -159,9 +161,8 @@ public class ChatService {
 									companyId, agentFirstName, agentLastName, agentUserEntry.get("_id").toString(),
 									customer.get("_id").toString(), true, chatEntry.get("SESSION_UUID").toString(),
 									"AGENTS_DATA", agentAssignedTime, agentRole, customerRole,
-									customer.get("USER_UUID").toString(), chatEntry.get("DATA_ID").toString());
-							redisTemplateNotificationOfAgentDetails.convertAndSend("agents_available",
-									notificationOfAgentDetails);
+									customer.get("USER_UUID").toString(), chatEntry.get("_id").toString());
+							return notificationOfAgentDetails;
 						}
 
 					}
@@ -169,21 +170,18 @@ public class ChatService {
 			}
 
 		}
-
+		return new NotificationOfAgentDetails();
 	}
 
 	public Date fetchAgentAssignedTime(Map<String, Object> chatEntry) {
 		try {
-			List<Map<String, Object>> chats = (List<Map<String, Object>>) chatEntry.get("CHAT");
+			List<DiscussionMessage> chats = (List<DiscussionMessage>) chatEntry.get("CHAT");
 			List<Date> assignedDates = new ArrayList<Date>();
 			if (chats != null) {
-				for (Map<String, Object> chat : chats) {
-					if (chat.get("MESSAGE_TYPE").toString().equals("META_DATA")
-							&& chat.get("MESSAGE").toString().contains("has joined the chat")) {
-						String dateCreated = chat.get("DATE_CREATED").toString();
-						SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'+'00:00");
-						Date date = format.parse(dateCreated);
-						assignedDates.add(date);
+				for (DiscussionMessage chat : chats) {
+					if (chat.getMessageType().equals("META_DATA")
+							&& chat.getMessage().contains("has joined the chat")) {
+						assignedDates.add(chat.getDateCreated());
 					}
 				}
 				if (assignedDates.size() > 0) {

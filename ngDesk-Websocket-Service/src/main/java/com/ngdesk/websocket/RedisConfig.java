@@ -18,13 +18,11 @@ import com.ngdesk.websocket.channels.chat.dao.ChatChannelMessage;
 import com.ngdesk.websocket.channels.chat.dao.ChatNotification;
 import com.ngdesk.websocket.channels.chat.dao.ChatStatusMessage;
 import com.ngdesk.websocket.notification.dao.Notification;
-import com.ngdesk.websocket.notification.dao.NotificationOfAgentDetails;
 import com.ngdesk.websocket.subscribers.ChatChannelSubscriber;
 import com.ngdesk.websocket.subscribers.ChatNotificationSubscriber;
 import com.ngdesk.websocket.subscribers.ChatSettingsUpdateSubscriber;
 import com.ngdesk.websocket.subscribers.ChatStatusSubscriber;
 import com.ngdesk.websocket.subscribers.ModuleNotificationSubscriber;
-import com.ngdesk.websocket.subscribers.NotificationOfAgentDetailsSubscriber;
 import com.ngdesk.websocket.subscribers.NotificationSubscriber;
 
 @Configuration
@@ -53,9 +51,6 @@ public class RedisConfig {
 
 	@Autowired
 	ChatChannelSubscriber chatChannelSubscriber;
-
-	@Autowired
-	NotificationOfAgentDetailsSubscriber agentAvailableSubscriber;
 
 	@Autowired
 	ChatNotificationSubscriber chatNotificationSubscriber;
@@ -89,17 +84,6 @@ public class RedisConfig {
 				.setValueSerializer(new Jackson2JsonRedisSerializer<ChatChannelMessage>(ChatChannelMessage.class));
 		redisChatChannelTemplate.setKeySerializer(new StringRedisSerializer());
 		return redisChatChannelTemplate;
-	}
-
-	@Bean
-	public RedisTemplate<String, NotificationOfAgentDetails> redisNotificationOfAgentDetailsSubscriberTemplate(
-			LettuceConnectionFactory redisConnectionFactory) {
-		RedisTemplate<String, NotificationOfAgentDetails> redisNotificationOfAgentDetailsTemplate = new RedisTemplate<String, NotificationOfAgentDetails>();
-		redisNotificationOfAgentDetailsTemplate.setConnectionFactory(redisConnectionFactory);
-		redisNotificationOfAgentDetailsTemplate.setValueSerializer(
-				new Jackson2JsonRedisSerializer<NotificationOfAgentDetails>(NotificationOfAgentDetails.class));
-		redisNotificationOfAgentDetailsTemplate.setKeySerializer(new StringRedisSerializer());
-		return redisNotificationOfAgentDetailsTemplate;
 	}
 
 	@Bean
@@ -146,11 +130,6 @@ public class RedisConfig {
 	}
 
 	@Bean
-	MessageListenerAdapter agentAvailableListener() {
-		return new MessageListenerAdapter(agentAvailableSubscriber);
-	}
-
-	@Bean
 	MessageListenerAdapter chatNotificationListener() {
 		return new MessageListenerAdapter(chatNotificationSubscriber);
 	}
@@ -165,7 +144,6 @@ public class RedisConfig {
 		container.addMessageListener(chatSettingsUpdateListner(), new PatternTopic("chat_settings_update"));
 		container.addMessageListener(chatStatusListner(), new PatternTopic("chat_status"));
 		container.addMessageListener(chatChannelListner(), new PatternTopic("chat_channel"));
-		container.addMessageListener(agentAvailableListener(), new PatternTopic("agents_available"));
 		container.addMessageListener(chatNotificationListener(), new PatternTopic("chat_notification"));
 
 		return container;
