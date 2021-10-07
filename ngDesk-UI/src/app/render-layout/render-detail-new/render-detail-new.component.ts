@@ -1293,13 +1293,10 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 			} else {
 				item = this.entry[fieldName].find((val) => val === option);
 			}
-
 			if (item) {
-				if (item) {
-					return true;
-				} else {
-					return false;
-				}
+				return true;
+			} else {
+				return false;
 			}
 		}
 	}
