@@ -924,11 +924,11 @@ export class FieldViewComponent implements OnInit {
 				field['DEFAULT_VALUE'] = this.fieldForm.value.DEFAULT_VALUE;
 			}
 			if (field.DATA_TYPE.DISPLAY === 'List Formula') {
-				field.LIST_FORMULA = this.listFormulaFormArray.getRawValue();
-				const formulaList: any[] = field.LIST_FORMULA;
-				for (let formula of formulaList) {
-					formula['FORMULA'] = formula.formulaString;
-				}
+				// field.LIST_FORMULA = this.listFormulaFormArray.getRawValue();
+				// const formulaList: any[] = field.LIST_FORMULA;
+				// for (let formula of formulaList) {
+				// 	formula['FORMULA'] = formula.formulaString;
+				// }
 			}
 		}
 
@@ -1049,10 +1049,7 @@ export class FieldViewComponent implements OnInit {
 	}
 
 	public isDefaultField(field): boolean {
-		const defaultFields = [
-			'ASSIGNEE',
-			'ACCOUNT'
-		];
+		const defaultFields = ['ASSIGNEE', 'ACCOUNT'];
 		if (defaultFields.indexOf(field.NAME) !== -1) {
 			return true;
 		}
@@ -1092,8 +1089,9 @@ export class FieldViewComponent implements OnInit {
 				field.NAME !== 'PASSWORD') ||
 			(field.DATA_TYPE.DISPLAY == 'Relationship' &&
 				(field.RELATIONSHIP_TYPE === 'One to One' ||
-				(field.RELATIONSHIP_TYPE === 'Many to One'&& field.NAME!=='CREATED_BY' &&
-				field.NAME!=='LAST_UPDATED_BY') ) )
+					(field.RELATIONSHIP_TYPE === 'Many to One' &&
+						field.NAME !== 'CREATED_BY' &&
+						field.NAME !== 'LAST_UPDATED_BY')))
 		) {
 			return true;
 		} else {
