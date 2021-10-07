@@ -1,0 +1,21 @@
+table{
+    width: 100%;
+}
+th, td {
+    overflow: hidden;
+    width:5% !important;
+   text-overflow: ellipsis;
+    white-space: nowrap;
+   
+  }
+
+  ::ng-deep .mat-sort-header-arrow{
+      color: #fff !important ;
+  }
+
+  .mat-sort-header{
+      color: white;
+  }
+
+  tr.mat-row {height: 20px;}
+  tr.mat-header-row{height: 45px;text-emphasis-color: white;}
