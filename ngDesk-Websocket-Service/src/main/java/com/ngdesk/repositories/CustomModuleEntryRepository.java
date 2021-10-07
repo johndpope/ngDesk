@@ -12,7 +12,7 @@ public interface CustomModuleEntryRepository {
 	public Optional<Map<String, Object>> findEntryById(String entryId, String collectionName);
 
 	public void addDiscussionToEntry(DiscussionMessage message, String discussionFieldName, String entryId,
-			String collectionName, String variable, Object value);
+			String collectionName);
 
 	public List<Map<String, Object>> findTeamsByIds(List<String> teamIds, String collectionName);
 

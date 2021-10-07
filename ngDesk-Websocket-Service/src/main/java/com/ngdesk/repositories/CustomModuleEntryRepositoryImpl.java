@@ -1,5 +1,6 @@
 package com.ngdesk.repositories;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -38,7 +39,7 @@ public class CustomModuleEntryRepositoryImpl implements CustomModuleEntryReposit
 
 	@Override
 	public void addDiscussionToEntry(DiscussionMessage message, String discussionFieldName, String entryId,
-			String collectionName, String variable, Object value) {
+			String collectionName) {
 		Assert.notNull(message, "The given message must not be null!");
 		Assert.notNull(collectionName, "The given collectionName must not be null!");
 		Assert.notNull(entryId, "The given id must not be null!");
@@ -51,7 +52,7 @@ public class CustomModuleEntryRepositoryImpl implements CustomModuleEntryReposit
 
 		Update update = new Update();
 		update.addToSet(discussionFieldName, message);
-		update.set(variable, value);
+		update.set("DATE_UPDATED", new Date());
 		mongoOperations.updateFirst(query, update, collectionName);
 
 	}
