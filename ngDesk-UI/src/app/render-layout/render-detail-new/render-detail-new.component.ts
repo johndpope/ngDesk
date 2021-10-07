@@ -1323,11 +1323,16 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	public remove(element, arrayName): void {
+	public remove(element, arrayName, trigger): void {
 		const index = this.entry[arrayName].indexOf(element);
 		if (index >= 0) {
 			const array = this.entry[arrayName];
 			array.splice(index, 1);
+			
+			// to set disabled and enabled content
+			trigger.openPanel();
+			trigger.closePanel();
+
 		}
 	}
 
