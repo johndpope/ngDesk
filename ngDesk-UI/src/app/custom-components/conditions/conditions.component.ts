@@ -128,7 +128,7 @@ export class ConditionsComponent implements OnInit {
 				}
 			});
 		});
-	
+
 		this.rolesService.getRoles().subscribe(
 			(rolesResponse: any) => {
 				rolesResponse['ROLES'].filter((role) => {
@@ -240,9 +240,7 @@ export class ConditionsComponent implements OnInit {
 				// field.DATA_TYPE.DISPLAY !== 'Approval' &&
 				field.DATA_TYPE.DISPLAY !== 'File Upload' &&
 				field.DATA_TYPE.DISPLAY !== 'PDF' &&
-				field.DATA_TYPE.DISPLAY !== 'Password' &&
-				field.RELATIONSHIP_TYPE !== 'One to Many' &&
-				field.DATA_TYPE.DISPLAY !== 'List Formula'
+				field.DATA_TYPE.DISPLAY !== 'Password'
 		);
 		if (this.parentName === 'dashboardsComponent') {
 			fields = fields.filter(
@@ -719,76 +717,83 @@ export class ConditionsComponent implements OnInit {
 		// Temporary fix
 		// TODO: need to figure out where the conditions are changed.
 		const currentConditions = this.conditions;
-		this.modulesService
-			.getFieldById(field.MODULE, field.PRIMARY_DISPLAY_FIELD)
-			.subscribe(
-				(relationModule: any) => {
-					field['RELATION_FIELD_NAME'] = relationModule.NAME;
-					this.modulesService.getEntries(field.MODULE).subscribe(
-						(entriesResponse: any) => {
-							// TODO: remove this when we stop using {{CURRENT_USER}} as condotion value for relationship fields
-							this.modulesService
-								.getModuleByName('Users')
-								.subscribe((userResponse: any) => {
-									this.modulesService
-										.getModuleByName('Contacts')
-										.subscribe((contactResponse: any) => {
-											if (
-												(this.parentName === 'listLayoutComponent' ||
-													this.parentName === 'roleLayoutComponent' ||
-													this.parentName === 'dashboardsComponent') &&
-												(userResponse.MODULE_ID === field.MODULE ||
-													contactResponse.MODULE_ID === field.MODULE)
-											) {
-												entriesResponse.DATA.push({
-													[relationModule.NAME]: '{{CURRENT_USER}}',
-													DATA_ID: '{{CURRENT_USER}}',
-												});
-											}
+		this.modulesService.getModuleById(field.MODULE).subscribe(
+			(module: any) => {
+				console.log('module..............', module);
+				const primaryDisplayField = module.FIELDS.find(
+					(fieldName) => fieldName.FIELD_ID === field.PRIMARY_DISPLAY_FIELD
+				);
+				field['RELATION_FIELD_NAME'] = primaryDisplayField.NAME;
+				if (primaryDisplayField) {
+					this.conditionsService
+						.buildQueryToGetRelationshipData(module, 0, primaryDisplayField, '')
+						.subscribe(
+							(entriesResponse: any) => {
+								// TODO: remove this when we stop using {{CURRENT_USER}} as condotion value for relationship fields
+								this.modulesService
+									.getModuleByName('Users')
+									.subscribe((userResponse: any) => {
+										this.modulesService
+											.getModuleByName('Contacts')
+											.subscribe((contactResponse: any) => {
+												if (
+													(this.parentName === 'listLayoutComponent' ||
+														this.parentName === 'roleLayoutComponent' ||
+														this.parentName === 'dashboardsComponent') &&
+													(userResponse.MODULE_ID === field.MODULE ||
+														contactResponse.MODULE_ID === field.MODULE)
+												) {
+													entriesResponse.DATA.push({
+														PRIMARY_DISPLAY_FIELD: '{{CURRENT_USER}}',
+														DATA_ID: '{{CURRENT_USER}}',
+													});
+												}
 
-											if (field.DATA_TYPE.DISPLAY === 'Custom') {
-												entriesResponse.DATA.push({
-													[relationModule.NAME]: '{{REQUESTOR}}',
-													DATA_ID: '{{REQUESTOR}}',
-												});
-											}
+												if (field.DATA_TYPE.DISPLAY === 'Custom') {
+													entriesResponse.DATA.push({
+														PRIMARY_DISPLAY_FIELD: '{{REQUESTOR}}',
+														DATA_ID: '{{REQUESTOR}}',
+													});
+												}
 
-											entriesResponse.DATA.forEach((entry) => {
-												entry['PRIMARY_DISPLAY_FIELD'] =
-													entry[relationModule.NAME];
+												entriesResponse.DATA.forEach((entry) => {
+													entry['PRIMARY_DISPLAY_FIELD'] =
+														entry['PRIMARY_DISPLAY_FIELD'];
+												});
+												if (
+													type === 'setValue' &&
+													field.DATA_TYPE.DISPLAY === 'Relationship'
+												) {
+													this.CONDITIONS['controls'][index]['controls'][
+														'CONDITION_VALUE'
+													].setValue(
+														entriesResponse.DATA.find(
+															(entry) =>
+																entry.DATA_ID ===
+																currentConditions[index].conditionValue
+														)
+													);
+													this.getRelationshipEntries(field);
+												} else {
+													this.autocompleteValuesInitial[field.NAME] =
+														entriesResponse.DATA;
+													this.autocompleteValuesFiltered[field.NAME] =
+														entriesResponse.DATA;
+												}
 											});
-											if (
-												type === 'setValue' &&
-												field.DATA_TYPE.DISPLAY === 'Relationship'
-											) {
-												this.CONDITIONS['controls'][index]['controls'][
-													'CONDITION_VALUE'
-												].setValue(
-													entriesResponse.DATA.find(
-														(entry) =>
-															entry.DATA_ID ===
-															currentConditions[index].conditionValue
-													)
-												);
-												this.getRelationshipEntries(field);
-											} else {
-												this.autocompleteValuesInitial[field.NAME] =
-													entriesResponse.DATA;
-												this.autocompleteValuesFiltered[field.NAME] =
-													entriesResponse.DATA;
-											}
-										});
-								});
-						},
-						(error) => {
-							console.log(error);
-						}
-					);
-				},
-				(error) => {
-					console.log(error);
+									});
+							},
+							(error) => {
+								console.log(error);
+							}
+						);
 				}
-			);
+			},
+
+			(error) => {
+				console.log(error);
+			}
+		);
 	}
 
 	public transformConditions(conditions?) {
