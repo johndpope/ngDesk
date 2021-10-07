@@ -924,11 +924,11 @@ export class FieldViewComponent implements OnInit {
 				field['DEFAULT_VALUE'] = this.fieldForm.value.DEFAULT_VALUE;
 			}
 			if (field.DATA_TYPE.DISPLAY === 'List Formula') {
-				// field.LIST_FORMULA = this.listFormulaFormArray.getRawValue();
-				// const formulaList: any[] = field.LIST_FORMULA;
-				// for (let formula of formulaList) {
-				// 	formula['FORMULA'] = formula.formulaString;
-				// }
+				field.LIST_FORMULA = this.listFormulaFormArray.getRawValue();
+				const formulaList: any[] = field.LIST_FORMULA;
+				for (let formula of formulaList) {
+					formula['FORMULA'] = formula.formulaString;
+				}
 			}
 		}
 
