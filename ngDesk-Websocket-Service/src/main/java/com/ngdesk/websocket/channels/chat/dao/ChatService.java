@@ -82,7 +82,6 @@ public class ChatService {
 								Map<String, Object> chatEntry = new HashMap<String, Object>();
 								ChatNotification chatNotification = new ChatNotification();
 								chatNotification.setCompanyId(companyId);
-								chatNotification.setEntry(chatEntry);
 								chatNotification.setSessionUUID(pageLoad.getSessionUUID());
 								chatNotification.setStatus("Browsing");
 								if (optionalChatEntry.isEmpty()) {
@@ -98,8 +97,12 @@ public class ChatService {
 									chatNotification.setType("CHAT_NOTIFICATION");
 									AgentDetails agentDetails = getAgentDetails(optionalChatEntry.get(), companyId);
 									chatNotification.setAgentDetails(agentDetails);
+									if (agentDetails != null && agentDetails.getAgentDataId() != null) {
+										chatNotification.setStatus("Chatting");
+									}
 
 								}
+								chatNotification.setEntry(chatEntry);
 								addToChatNotificationQueue(chatNotification);
 							}
 						}
@@ -153,9 +156,9 @@ public class ChatService {
 							String customerRole = customer.get("ROLE").toString();
 							Date agentAssignedTime = fetchAgentAssignedTime(chatEntry);
 
-							AgentDetails agentDetails = new AgentDetails(companyId, agentFirstName,
-									agentLastName, agentUserEntry.get("_id").toString(), customer.get("_id").toString(),
-									true, chatEntry.get("SESSION_UUID").toString(), agentAssignedTime, agentRole,
+							AgentDetails agentDetails = new AgentDetails(companyId, agentFirstName, agentLastName,
+									agentUserEntry.get("_id").toString(), customer.get("_id").toString(), true,
+									chatEntry.get("SESSION_UUID").toString(), agentAssignedTime, agentRole,
 									customerRole, customer.get("USER_UUID").toString(),
 									chatEntry.get("_id").toString());
 							return agentDetails;
