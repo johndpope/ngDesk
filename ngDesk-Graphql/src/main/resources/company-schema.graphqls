@@ -34,6 +34,9 @@ type Query {
 	getEnterpriseSearchCount: Int
 	getEnterpriseSearches(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [EnterpriseSearch]
 	getUnapprovedEnterpriseSearches(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [EnterpriseSearch]
+	getRole(roleId: String) : Role
+	getRoles(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String) : [Role]
+	getRolesCount : Int
 	getRoleLayout(id: String): RoleLayout
 	getRoleLayouts(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [RoleLayout]
 	getWorkflowInstancesByWorkflowIdAndDataId(workflowId: String,dataId: String): WorkflowInstance
@@ -320,6 +323,29 @@ type CreateEditMobileLayout {
 type Role {
 	roleId: String
 	name: String
+	description: String
+	permissions: [Permission]
+}
+
+type Permission{
+module: String
+modulePermission: ModuleLevelPermission
+fieldPermissions: [FieldPermission]
+
+}
+type ModuleLevelPermission {
+access: String 
+accessType: String
+edit: String
+view: String
+delete: String
+
+}
+type FieldPermission {
+
+fieldId: String
+permission: String
+
 }
 
 type OrderBy {

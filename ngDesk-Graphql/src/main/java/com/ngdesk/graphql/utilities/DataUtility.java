@@ -103,6 +103,9 @@ import com.ngdesk.graphql.reports.dao.ReportModuleDataFetcher;
 import com.ngdesk.graphql.reports.dao.ReportsDataFetcher;
 import com.ngdesk.graphql.role.dao.FieldPermissionDataFetcher;
 import com.ngdesk.graphql.role.dao.RoleDataFetcher;
+import com.ngdesk.graphql.role.dao.RoleDataFetcherById;
+import com.ngdesk.graphql.role.dao.RolesCountFetcher;
+import com.ngdesk.graphql.role.dao.RolesDataFetcher;
 import com.ngdesk.graphql.role.layout.dao.RoleLayoutCountFetcher;
 import com.ngdesk.graphql.role.layout.dao.RoleLayoutDataFetcher;
 import com.ngdesk.graphql.role.layout.dao.RoleLayoutModuleDataFetcher;
@@ -256,6 +259,15 @@ public class DataUtility {
 
 	@Autowired
 	RoleDataFetcher roleDataFetcher;
+	
+	@Autowired
+	RoleDataFetcherById roleDataFetcherById;
+	
+	@Autowired
+	RolesDataFetcher rolesDataFetcher;
+	
+	@Autowired
+	RolesCountFetcher rolesCountFetcher;
 
 	@Autowired
 	FieldsDataFetcher fieldsDataFetcher;
@@ -782,6 +794,10 @@ public class DataUtility {
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getAllCurrencies", currenciesDataFetcher));
 		builder.type("Currency", typeWiring -> typeWiring.dataFetcher("createdBy", entryDataFetcher));
 		builder.type("Currency", typeWiring -> typeWiring.dataFetcher("lastUpdatedBy", entryDataFetcher));
+		
+		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getRole", roleDataFetcherById));
+		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getRoles", rolesDataFetcher));
+		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getRolesCount", rolesCountFetcher));
 
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getRoleLayout", roleLayoutDataFetcher));
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getRoleLayouts", roleLayoutsDataFetcher));

@@ -8,4 +8,5 @@ import com.ngdesk.repositories.CustomNgdeskRepository;
 @Repository
 public interface RolesRepository extends CustomRolesRepository, CustomNgdeskRepository<Role, String> {
 
+	
 }
