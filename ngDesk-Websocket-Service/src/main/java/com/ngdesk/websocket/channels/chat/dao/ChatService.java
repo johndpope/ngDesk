@@ -22,7 +22,7 @@ import com.ngdesk.repositories.ModuleEntryRepository;
 import com.ngdesk.repositories.ModulesRepository;
 import com.ngdesk.websocket.companies.dao.Company;
 import com.ngdesk.websocket.modules.dao.Module;
-import com.ngdesk.websocket.notification.dao.NotificationOfAgentDetails;
+import com.ngdesk.websocket.notification.dao.AgentDetails;
 
 @Component
 public class ChatService {
@@ -50,8 +50,6 @@ public class ChatService {
 
 	@Autowired
 	RedisTemplate<String, ChatNotification> redisTemplateForChatNotification;
-
-
 
 	public void publishPageLoad(ChatWidgetPayload pageLoad) {
 		try {
@@ -86,22 +84,20 @@ public class ChatService {
 								chatNotification.setCompanyId(companyId);
 								chatNotification.setEntry(chatEntry);
 								chatNotification.setSessionUUID(pageLoad.getSessionUUID());
+								chatNotification.setStatus("Browsing");
 								if (optionalChatEntry.isEmpty()) {
 									entry.put("STATUS", "Browsing");
 									chatEntry = dataProxy.postModuleEntry(entry, optionalChatModule.get().getModuleId(),
 											false, companyId, user.get("USER_UUID").toString());
-									chatNotification.setStatus("Browsing");
-									chatNotification.setType("CHAT_ENTRY");
+									chatNotification.setType("CHAT_NOTIFICATION");
 
 								} else {
 									entry.put("DATA_ID", optionalChatEntry.get().get("_id").toString());
 									chatEntry = dataProxy.putModuleEntry(entry, optionalChatModule.get().getModuleId(),
 											false, companyId, user.get("USER_UUID").toString());
-									chatNotification.setStatus("Chatting");
-									chatNotification.setType("CHAT_ENTRY");
-									NotificationOfAgentDetails notificationOfAgentDetails = getAgentDetails(
-											optionalChatEntry.get(), companyId);
-									chatNotification.setNotificationOfAgentDetails(notificationOfAgentDetails);
+									chatNotification.setType("CHAT_NOTIFICATION");
+									AgentDetails agentDetails = getAgentDetails(optionalChatEntry.get(), companyId);
+									chatNotification.setAgentDetails(agentDetails);
 
 								}
 								addToChatNotificationQueue(chatNotification);
@@ -123,7 +119,7 @@ public class ChatService {
 		redisTemplateForChatNotification.convertAndSend("chat_notification", message);
 	}
 
-	public NotificationOfAgentDetails getAgentDetails(Map<String, Object> chatEntry, String companyId) {
+	public AgentDetails getAgentDetails(Map<String, Object> chatEntry, String companyId) {
 
 		List<String> agents = (List<String>) chatEntry.get("AGENTS");
 		if (agents != null) {
@@ -157,12 +153,12 @@ public class ChatService {
 							String customerRole = customer.get("ROLE").toString();
 							Date agentAssignedTime = fetchAgentAssignedTime(chatEntry);
 
-							NotificationOfAgentDetails notificationOfAgentDetails = new NotificationOfAgentDetails(
-									companyId, agentFirstName, agentLastName, agentUserEntry.get("_id").toString(),
-									customer.get("_id").toString(), true, chatEntry.get("SESSION_UUID").toString(),
-									"AGENTS_DATA", agentAssignedTime, agentRole, customerRole,
-									customer.get("USER_UUID").toString(), chatEntry.get("_id").toString());
-							return notificationOfAgentDetails;
+							AgentDetails agentDetails = new AgentDetails(companyId, agentFirstName,
+									agentLastName, agentUserEntry.get("_id").toString(), customer.get("_id").toString(),
+									true, chatEntry.get("SESSION_UUID").toString(), agentAssignedTime, agentRole,
+									customerRole, customer.get("USER_UUID").toString(),
+									chatEntry.get("_id").toString());
+							return agentDetails;
 						}
 
 					}
@@ -170,7 +166,7 @@ public class ChatService {
 			}
 
 		}
-		return new NotificationOfAgentDetails();
+		return new AgentDetails();
 	}
 
 	public Date fetchAgentAssignedTime(Map<String, Object> chatEntry) {

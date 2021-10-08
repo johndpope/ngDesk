@@ -29,7 +29,7 @@ import com.ngdesk.websocket.modules.dao.DataType;
 import com.ngdesk.websocket.modules.dao.Module;
 import com.ngdesk.websocket.modules.dao.ModuleField;
 import com.ngdesk.websocket.notification.dao.Notification;
-import com.ngdesk.websocket.notification.dao.NotificationOfAgentDetails;
+import com.ngdesk.websocket.notification.dao.AgentDetails;
 
 @Component
 public class FindAgentAndAssign {
@@ -172,15 +172,13 @@ public class FindAgentAndAssign {
 									new Date(), false, "You have been assigned a new chat");
 							redisTemplate.convertAndSend("notification", notifyAgent);
 
-							NotificationOfAgentDetails notificationOfAgentDetails = new NotificationOfAgentDetails(
-									companyId, agentFirstName, agentLastName, agentUserEntry.get("_id").toString(),
-									customer.get("_id").toString(), true, chatUser.getSessionUUID(), "AGENTS_DATA",
-									new Date(), agentRole, customerRole, customer.get("USER_UUID").toString(),
-									existingChatEntry.get("_id").toString());
+							AgentDetails agentDetails = new AgentDetails(companyId, agentFirstName, agentLastName,
+									agentUserEntry.get("_id").toString(), customer.get("_id").toString(), true,
+									chatUser.getSessionUUID(), new Date(), agentRole, customerRole,
+									customer.get("USER_UUID").toString(), existingChatEntry.get("_id").toString());
 
-							ChatNotification chatNotification = new ChatNotification(companyId, "CHAT_ENTRY",
-									chatUser.getSessionUUID(), updatedChatEntry, "Chatting",
-									notificationOfAgentDetails);
+							ChatNotification chatNotification = new ChatNotification(companyId, "CHAT_NOTIFICATION",
+									chatUser.getSessionUUID(), updatedChatEntry, "Chatting", agentDetails);
 							addToChatNotificationQueue(chatNotification);
 
 						}
@@ -188,12 +186,12 @@ public class FindAgentAndAssign {
 				}
 			}
 		} else {
-			NotificationOfAgentDetails notificationOfAgentDetails = new NotificationOfAgentDetails(companyId, null,
-					null, null, customer.get("_id").toString(), false, chatUser.getSessionUUID(), "AGENTS_DATA", null,
-					null, customerRole, customer.get("USER_UUID").toString(), null);
+			AgentDetails agentDetails = new AgentDetails(companyId, null, null, null, customer.get("_id").toString(),
+					false, chatUser.getSessionUUID(), null, null, customerRole, customer.get("USER_UUID").toString(),
+					null);
 
-			ChatNotification chatNotification = new ChatNotification(companyId, "CHAT_ENTRY", chatUser.getSessionUUID(),
-					null, null, notificationOfAgentDetails);
+			ChatNotification chatNotification = new ChatNotification(companyId, "CHAT_NOTIFICATION",
+					chatUser.getSessionUUID(), null, "Browsing", agentDetails);
 			addToChatNotificationQueue(chatNotification);
 
 		}
@@ -227,7 +225,7 @@ public class FindAgentAndAssign {
 
 		Sender sender = new Sender(contact.get("FIRST_NAME").toString(), contact.get("LAST_NAME").toString(),
 				systemUser.get("USER_UUID").toString(), systemUser.get("ROLE").toString());
-		
+
 		return new DiscussionMessage(message, new Date(), UUID.randomUUID().toString(), "META_DATA",
 				new ArrayList<MessageAttachment>(), sender, moduleId, dataId, null);
 

@@ -3,7 +3,7 @@ package com.ngdesk.websocket.channels.chat.dao;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.ngdesk.websocket.notification.dao.NotificationOfAgentDetails;
+import com.ngdesk.websocket.notification.dao.AgentDetails;
 
 public class ChatNotification {
 
@@ -23,21 +23,21 @@ public class ChatNotification {
 	private String status;
 
 	@JsonProperty("AGENT_DETAILS")
-	private NotificationOfAgentDetails notificationOfAgentDetails;
+	private AgentDetails agentDetails;
 
 	public ChatNotification() {
 		super();
 	}
 
 	public ChatNotification(String companyId, String type, String sessionUUID, Map<String, Object> entry, String status,
-			NotificationOfAgentDetails notificationOfAgentDetails) {
+			AgentDetails agentDetails) {
 		super();
 		this.companyId = companyId;
 		this.type = type;
 		this.sessionUUID = sessionUUID;
 		this.entry = entry;
 		this.status = status;
-		this.notificationOfAgentDetails = notificationOfAgentDetails;
+		this.agentDetails = agentDetails;
 	}
 
 	public String getCompanyId() {
@@ -80,12 +80,12 @@ public class ChatNotification {
 		this.status = status;
 	}
 
-	public NotificationOfAgentDetails getNotificationOfAgentDetails() {
-		return notificationOfAgentDetails;
+	public AgentDetails getAgentDetails() {
+		return agentDetails;
 	}
 
-	public void setNotificationOfAgentDetails(NotificationOfAgentDetails notificationOfAgentDetails) {
-		this.notificationOfAgentDetails = notificationOfAgentDetails;
+	public void setAgentDetails(AgentDetails agentDetails) {
+		this.agentDetails = agentDetails;
 	}
 
 }
