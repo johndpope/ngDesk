@@ -50,6 +50,7 @@ import com.ngdesk.websocket.channels.chat.dao.ChatTicketCreationService;
 import com.ngdesk.websocket.channels.chat.dao.ChatUser;
 import com.ngdesk.websocket.channels.chat.dao.ChatUserEntryService;
 import com.ngdesk.websocket.channels.chat.dao.ChatWidgetPayload;
+import com.ngdesk.websocket.channels.chat.dao.SendChatTranscript;
 import com.ngdesk.websocket.dao.WebSocketService;
 import com.ngdesk.websocket.graphql.dao.GraphqlProxy;
 import com.ngdesk.websocket.modules.dao.ButtonTypeService;
@@ -482,13 +483,19 @@ public class SocketHandler extends TextWebSocketHandler {
 									throw new IllegalArgumentException();
 								}
 								webSocketService.addDiscussionToChatEntry(chatDiscussionMessage, subdomain,
-										chatDiscussionMessage.getAgentDataID(), false);
+										chatDiscussionMessage.getCustomerDataID(), false);
 
 							}
 
 						} catch (Exception e2) {
-							ChatTicket chatTicket = mapper.readValue(textMessage.getPayload(), ChatTicket.class);
-							chatTicketCreationService.chatTicketCreation(chatTicket);
+//							try {
+								ChatTicket chatTicket = mapper.readValue(textMessage.getPayload(), ChatTicket.class);
+								chatTicketCreationService.chatTicketCreation(chatTicket);
+//							} catch (Exception e3) {
+//								SendChatTranscript sendChatTranscript = mapper.readValue(textMessage.getPayload(),
+//										SendChatTranscript.class);
+//								chatService.sendChatTranscript(sendChatTranscript);
+//							}
 						}
 					}
 				}

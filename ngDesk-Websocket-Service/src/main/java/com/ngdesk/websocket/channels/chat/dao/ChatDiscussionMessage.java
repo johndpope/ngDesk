@@ -11,6 +11,10 @@ public class ChatDiscussionMessage {
 	@Field("AGENT_DATA_ID")
 	private String agentDataID;
 
+	@JsonProperty("CUSTOMER_DATA_ID")
+	@Field("CUSTOMER_DATA_ID")
+	private String customerDataID;
+
 	@JsonProperty("SESSION_UUID")
 	@Field("SESSION_UUID")
 	private String sessionUuid;
@@ -23,9 +27,11 @@ public class ChatDiscussionMessage {
 
 	}
 
-	public ChatDiscussionMessage(String agentDataID, String sessionUuid, DiscussionMessage discussionMessage) {
+	public ChatDiscussionMessage(String agentDataID, String customerDataID, String sessionUuid,
+			DiscussionMessage discussionMessage) {
 		super();
 		this.agentDataID = agentDataID;
+		this.customerDataID = customerDataID;
 		this.sessionUuid = sessionUuid;
 		DiscussionMessage = discussionMessage;
 	}
@@ -52,6 +58,14 @@ public class ChatDiscussionMessage {
 
 	public void setDiscussionMessage(DiscussionMessage discussionMessage) {
 		DiscussionMessage = discussionMessage;
+	}
+
+	public String getCustomerDataID() {
+		return customerDataID;
+	}
+
+	public void setCustomerDataID(String customerDataID) {
+		this.customerDataID = customerDataID;
 	}
 
 }
