@@ -113,11 +113,11 @@ public class Blacklist {
 									String emailAddress = user.getString("EMAIL_ADDRESS");
 									String firstName = contacts.get("FIRST_NAME").toString();
 									String lastName = "";
-
-									if (contacts.containsKey("LAST_NAME") && contacts.get("LAST_NAME") != null) {
-										lastName = contacts.get("LAST_NAME").toString();
+									if (contacts != null) {
+										if (contacts.containsKey("LAST_NAME") && contacts.get("LAST_NAME") != null) {
+											lastName = contacts.get("LAST_NAME").toString();
+										}
 									}
-
 									String body = global.getFile("blacklist-incoming-body.html");
 									body = body.replace("FULL_NAME_REPLACE", firstName + " " + lastName);
 									body = body.replace("FROM_EMAIL_REPLACE", email);
