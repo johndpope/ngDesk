@@ -10,8 +10,8 @@ public class ChatTicketStatusMessage {
 	@JsonProperty("SESSION_UUID")
 	private String sessionUUId;
 
-	@JsonProperty("MESSAGE_TYPE")
-	private String messageType;
+	@JsonProperty("TYPE")
+	private String type;
 
 	@JsonProperty("STATUS")
 	private String status;
@@ -23,12 +23,11 @@ public class ChatTicketStatusMessage {
 
 	}
 
-	public ChatTicketStatusMessage(String companyId, String sessionUUId, String messageType, String status,
-			String message) {
+	public ChatTicketStatusMessage(String companyId, String sessionUUId, String type, String status, String message) {
 		super();
 		this.companyId = companyId;
 		this.sessionUUId = sessionUUId;
-		this.messageType = messageType;
+		this.type = type;
 		this.status = status;
 		this.message = message;
 	}
@@ -41,12 +40,20 @@ public class ChatTicketStatusMessage {
 		this.companyId = companyId;
 	}
 
-	public String getMessageType() {
-		return messageType;
+	public String getSessionUUId() {
+		return sessionUUId;
 	}
 
-	public void setMessageType(String messageType) {
-		this.messageType = messageType;
+	public void setSessionUUId(String sessionUUId) {
+		this.sessionUUId = sessionUUId;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public String getStatus() {
@@ -63,14 +70,6 @@ public class ChatTicketStatusMessage {
 
 	public void setMessage(String message) {
 		this.message = message;
-	}
-
-	public String getSessionUUId() {
-		return sessionUUId;
-	}
-
-	public void setSessionUUId(String sessionUUId) {
-		this.sessionUUId = sessionUUId;
 	}
 
 }
