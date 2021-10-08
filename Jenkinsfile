@@ -145,6 +145,7 @@ pipeline {
 				        }
 				        
 				        if (uiChanged.length() > 0) {	
+							generateSwagger('ngDesk-UI', '../../ngDesk-Private/ngDesk-Payment-Service/target/openapi.json', 'payment-api')
 				            generateSwagger('ngDesk-UI', '../ngDesk-Auth/target/openapi.json', 'auth-api')
 				            generateSwagger('ngDesk-UI', '../ngDesk-Integration-Service/target/openapi.json', 'integration-api')
 				            generateSwagger('ngDesk-UI', '../ngDesk-Workflow-Service/target/openapi.json', 'workflow-api')
@@ -157,7 +158,6 @@ pipeline {
 				            generateSwagger('ngDesk-UI', '../ngDesk-Report-Service/target/openapi.json', 'report-api')
 				            generateSwagger('ngDesk-UI', '../ngDesk-Notification-Service/target/openapi.json', 'notification-api')
 				            generateSwagger('ngDesk-UI', '../ngDesk-Company-Service/target/openapi.json', 'company-api')
-							generateSwagger('ngDesk-UI', '../ngDesk-Private/ngDesk-Payment-Service/target/openapi.json', 'payment-api')
 
 
 				            dir('/var/jenkins_home/projects/ngdesk-project/ngDesk/ngDesk-UI') {
