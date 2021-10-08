@@ -157,6 +157,8 @@ pipeline {
 				            generateSwagger('ngDesk-UI', '../ngDesk-Report-Service/target/openapi.json', 'report-api')
 				            generateSwagger('ngDesk-UI', '../ngDesk-Notification-Service/target/openapi.json', 'notification-api')
 				            generateSwagger('ngDesk-UI', '../ngDesk-Company-Service/target/openapi.json', 'company-api')
+							generateSwagger('ngDesk-UI', '../ngDesk-Private/ngDesk-Payment-Service/target/openapi.json', 'payment-api')
+
 
 				            dir('/var/jenkins_home/projects/ngdesk-project/ngDesk/ngDesk-UI') {
 				                sh 'rm -f package-lock.json'
