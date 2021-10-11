@@ -1,7 +1,10 @@
 package com.ngdesk.repositories;
 
+import org.springframework.stereotype.Repository;
+
 import com.ngdesk.role.dao.Role;
 
-public interface RoleRepository extends CustomNgdeskRepository<Role, String> {
+@Repository
+public interface RoleRepository extends CustomRoleRepositoty, CustomNgdeskRepository<Role, String> {
 
 }
