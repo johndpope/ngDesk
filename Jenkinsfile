@@ -235,7 +235,7 @@ def buildMicroservice(serviceName, path) {
 	 if(serviceName == 'rest' || serviceName == 'manager' || serviceName == 'gateway' || serviceName == 'config-server'){
 		 sh 'mvn package -DskipTests'
 
-		 if(serviceName == 'gateway'){
+		 if(serviceName == 'gateway' || serviceName == 'config-server'){
 			 sh './mvnw spring-boot:build-image'
 		 } else {
 			 docker.build("${env.DOCKER_IMAGE_NAME}/" + serviceName + ":latest")
