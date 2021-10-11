@@ -65,7 +65,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<image>
-						<name>ghcr.io/subscribeit/ngdesk/config-server:latest</name>
+						<name>ngdesk/config-server:latest</name>
 					</image>
 					<layers>
 						<enabled>true</enabled>
