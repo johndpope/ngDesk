@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.UUID;
 
 import javax.annotation.PostConstruct;
 
@@ -25,8 +24,6 @@ import com.ngdesk.company.dao.Company;
 import com.ngdesk.company.plugin.dao.Plugin;
 import com.ngdesk.company.plugin.dao.Tier;
 import com.ngdesk.company.plugin.dao.TierModule;
-import com.ngdesk.company.rolelayout.dao.RoleLayout;
-import com.ngdesk.company.rolelayout.dao.Tab;
 import com.ngdesk.repositories.ModuleEntryRepository;
 import com.ngdesk.repositories.ModuleRepository;
 import com.ngdesk.repositories.PluginRepository;
@@ -296,6 +293,16 @@ public class ModuleService {
 			if (module.getName().equals("Expense Reports")) {
 
 				workflowJson = global.getFile("ExpenseReportsWorkflows.json");
+				workflowJson = workflowJson.replaceAll("ADMIN_TEAM_REPLACE", adminTeamId);
+				ObjectMapper mapper = new ObjectMapper();
+				List<Workflow> expenseReportWorkflow = mapper.readValue(workflowJson,
+						mapper.getTypeFactory().constructCollectionType(List.class, Workflow.class));
+				module.setWorkflows(expenseReportWorkflow);
+
+			}
+			if (module.getName().equals("Expenses")) {
+
+				workflowJson = global.getFile("ExpensesModuleWorkflow.json");
 				workflowJson = workflowJson.replaceAll("ADMIN_TEAM_REPLACE", adminTeamId);
 				ObjectMapper mapper = new ObjectMapper();
 				List<Workflow> expenseReportWorkflow = mapper.readValue(workflowJson,

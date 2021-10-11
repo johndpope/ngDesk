@@ -24,9 +24,8 @@ public interface CustomModuleEntryRepository {
 
 	public Optional<Map<String, Object>> findUserByEmailAddressIncludingDeleted(String emailAddress,
 			String collectionName);
-	
-	public Optional<Map<String, Object>> findUserByEmailAddress(String emailAddress,
-			String collectionName);
+
+	public Optional<Map<String, Object>> findUserByEmailAddress(String emailAddress, String collectionName);
 
 	public Optional<Map<String, Object>> findAccountByName(String accountName, String collectionName);
 
