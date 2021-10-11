@@ -29,4 +29,6 @@ Installation
 2. Check python3 is installed and if not install it
 3. $ apt install -y python3-pip 
 4. $ pip install docker
+5. $ wget https://raw.githubusercontent.com/SubscribeIT/ngDesk/main/ngdesk
+6. $ chmod +x ngdesk
 
