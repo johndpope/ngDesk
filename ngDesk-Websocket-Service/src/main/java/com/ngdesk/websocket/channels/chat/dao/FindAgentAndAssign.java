@@ -89,7 +89,6 @@ public class FindAgentAndAssign {
 			Optional<Map<String, Object>> optionalContactEntry = entryRepository
 					.findById(agentUserEntry.get("CONTACT").toString(), "Contacts_" + companyId);
 			String fullName = null;
-			String contactId = null;
 			String agentFirstName = null;
 			String agentLastName = null;
 
@@ -97,7 +96,15 @@ public class FindAgentAndAssign {
 				fullName = optionalContactEntry.get().get("FULL_NAME").toString();
 				agentFirstName = optionalContactEntry.get().get("FIRST_NAME").toString();
 				agentLastName = optionalContactEntry.get().get("LAST_NAME").toString();
-				contactId = optionalContactEntry.get().get("_id").toString();
+			}
+			// Fetch the customer contactId
+			String customerContactId = null;
+			if (customer != null) {
+				Optional<Map<String, Object>> optionalCustomerContactEntry = entryRepository
+						.findById(customer.get("CONTACT").toString(), "Contacts_" + companyId);
+				if (optionalCustomerContactEntry.isPresent()) {
+					customerContactId = optionalCustomerContactEntry.get().get("_id").toString();
+				}
 			}
 
 			String agentRole = agentUserEntry.get("ROLE").toString();
@@ -156,7 +163,7 @@ public class FindAgentAndAssign {
 							agents.add(agent);
 							HashMap<String, Object> chatEntry = new HashMap<String, Object>();
 							Map<String, Object> requestor = new HashMap<String, Object>();
-							requestor.put("DATA_ID", contactId);
+							requestor.put("DATA_ID", customerContactId);
 
 							chatEntry.put("REQUESTOR", requestor);
 							chatEntry.put("AGENTS", agents);
