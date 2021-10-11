@@ -9,25 +9,25 @@ import getpass
 
 if __name__ == '__main__':
 
-    effective_user = os.getenv("SUDO_USER")
-    effective_uid = int(os.getenv("SUDO_UID"))
+#     effective_user = os.getenv("SUDO_USER")
+#     effective_uid = int(os.getenv("SUDO_UID"))
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--services', '-s', help='service to be checkout locally', nargs='+')
-    parser.add_argument('--mounts', '-m', help='clear mounted data or not, accepted values are keep (default) or clear')
-    parser.add_argument('--branch', '-b', help='name of a branch on ngdesk project to be checkedout')
+#     parser = argparse.ArgumentParser()
+#     parser.add_argument('--services', '-s', help='service to be checkout locally', nargs='+')
+#     parser.add_argument('--mounts', '-m', help='clear mounted data or not, accepted values are keep (default) or clear')
+#     parser.add_argument('--branch', '-b', help='name of a branch on ngdesk project to be checkedout')
 
-    mounts = 'keep'
-    services = []
-    branch = ''
+#     mounts = 'keep'
+#     services = []
+#     branch = ''
 
-    args = parser.parse_args()
-    if args.services:
-        services = args.services
-    if args.mounts:
-        mounts = args.mounts
-    if args.branch:
-        branch = args.branch
+#     args = parser.parse_args()
+#     if args.services:
+#         services = args.services
+#     if args.mounts:
+#         mounts = args.mounts
+#     if args.branch:
+#         branch = args.branch
 
     with open(os.path.join('/tmp', '__init__.py'), 'w') as fp:
         pass
