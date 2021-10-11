@@ -124,6 +124,7 @@ export class RenderListLayoutNewComponent implements OnInit, OnDestroy {
 		'Number',
 		'Currency',
 		'Formula',
+		'Derived',
 	];
 	public listLayoutExists = true;
 	private fieldMap = [];
@@ -177,7 +178,6 @@ export class RenderListLayoutNewComponent implements OnInit, OnDestroy {
 			}
 		});
 		this.reloadDataOnUpdate();
-		this.parseMethod();
 	}
 
 	public ngOnDestroy() {
@@ -372,6 +372,24 @@ export class RenderListLayoutNewComponent implements OnInit, OnDestroy {
 	}
 
 	public setCustomTableColumnHeaders(layoutField) {
+		if (layoutField.indexOf('.') !== -1) {
+			let headersObject = {
+				DISPLAY: '',
+				NAME: '',
+				DATA_TYPE: 'Derived',
+				BACKEND_TYPE: 'String',
+			};
+			headersObject = this.getNestedFields(
+				layoutField,
+				this.moduleId,
+				headersObject
+			);
+
+			this.customTableService.columnsHeaders.push(headersObject.DISPLAY);
+			this.customTableService.columnsHeadersObj.push(headersObject);
+
+			return;
+		}
 		const field = this.module.FIELDS.find(
 			(selectedField) => selectedField.FIELD_ID === layoutField
 		);
@@ -441,6 +459,16 @@ export class RenderListLayoutNewComponent implements OnInit, OnDestroy {
 		}
 		let fieldsQuery = 'DATA_ID: _id' + '\n';
 		fieldsToShow.forEach((fieldId) => {
+			if (fieldId.indexOf('.') !== -1) {
+				let output = { NAME: '', DISPLAY: '' };
+				output = this.getNestedFields(fieldId, this.moduleId, output);
+				let name = output.NAME.replace(/\./g, '{');
+				for (let i = output.NAME.split('.').length; i > 1; i--) {
+					name = name + '}';
+				}
+				fieldsQuery = fieldsQuery + name + '\n';
+				return;
+			}
 			const moduleField = this.module.FIELDS.find(
 				(field) => field.FIELD_ID === fieldId
 			);
@@ -581,38 +609,6 @@ export class RenderListLayoutNewComponent implements OnInit, OnDestroy {
 				searchString,
 				true
 			);
-		}
-	}
-	public parseMethod() {
-		let pair;
-		let fieldQuery = '';
-		let temp;
-		let value0;
-		let query;
-		const string = 'EMAIL_ADDRESS CONTACT.FULL_NAME CONTACT.FIRST_NAME';
-		if (string.length > 0) {
-			const values = string.split(' ');
-			for (let i = 0; i < values.length; i++) {
-				if (values[i] !== undefined) {
-					value0 = values[0];
-					const value = values[i];
-					if (value.indexOf('.') !== -1) {
-						pair = value.split('.');
-						if (pair !== undefined) {
-							fieldQuery += ' ' + pair[1];
-						}
-					}
-					if (pair !== undefined && i === values.length - 1) {
-						temp = `${pair[0]}` + '{' + fieldQuery + '}';
-					}
-				}
-			}
-			if (temp !== undefined) {
-				query = value0 + ' ' + temp;
-			} else {
-				query = value0;
-			}
-			console.log(query);
 		}
 	}
 
@@ -884,7 +880,6 @@ export class RenderListLayoutNewComponent implements OnInit, OnDestroy {
 			if (result === this.translateService.instant('OK')) {
 				selectedEntries.forEach((selectedEntry) => {
 					const dataId = selectedEntry.DATA_ID;
-
 					let dialogId = `render-detail-dialog_0`;
 					if (this.renderDetailHelper.dialog.openDialogs.length > 0) {
 						dialogId = `render-detail-dialog_${this.renderDetailHelper.dialog.openDialogs.length}`;
@@ -1061,5 +1056,47 @@ export class RenderListLayoutNewComponent implements OnInit, OnDestroy {
 		this.customTableService.pageIndex = 0;
 		this.customTableService.pageSize = 20;
 		this.getListLayoutEntries(this.moduleId, this.currentListLayout, '', true);
+	}
+
+	public getNestedFields(field, moduleId, output): any {
+		if (field === null) {
+			return output;
+		} else if (field.indexOf('.') === -1) {
+			const foundModule = this.allModules.find(
+				(module) => module.MODULE_ID === moduleId
+			);
+			const foundField = foundModule.FIELDS.find(
+				(moduleField) => moduleField.FIELD_ID === field
+			);
+			output.DISPLAY = output.DISPLAY + foundField.DISPLAY_LABEL;
+			output.NAME = output.NAME + foundField.NAME;
+			return this.getNestedFields(null, null, output);
+		} else {
+			const split = field.split('.');
+			const fieldId = split.shift();
+			const foundModule = this.allModules.find(
+				(module) => module.MODULE_ID === moduleId
+			);
+
+			const currentField = foundModule.FIELDS.find(
+				(fieldNested) => fieldId === fieldNested.FIELD_ID
+			);
+			output.DISPLAY = output.DISPLAY + currentField.DISPLAY_LABEL + '.';
+			output.NAME = output.NAME + currentField.NAME + '.';
+			return this.getNestedFields(split.join('.'), currentField.MODULE, output);
+		}
+	}
+
+	public getDerivedValue(col, element): String {
+		try {
+			if (
+				eval(`element.${col.NAME}`) === undefined ||
+				eval(`element.${col.NAME}`) === null
+			) {
+				return '-';
+			}
+			return eval(`element.${col.NAME}`);
+		} catch (e) {}
+		return '-';
 	}
 }

@@ -267,7 +267,7 @@ type ModuleField {
 	relationshipType: String
 	primaryDisplayField: ModuleField
 	relationshipField: ModuleField
-	module: Module
+	module: String
 	dataType: DataType
 	visibility: Boolean
 	required: Boolean
@@ -600,18 +600,19 @@ type CatalogueForm{
    moduleId:String
    formId:Form
 }
+
 type ApprovalDetails {
-status: String
-deniedBy: [DeniedBy]
-approvedBy: [String]
-teamsWhoCanApprove:[String]
-approvers:[String]
-displayButton: Boolean
+	status: String
+	deniedBy: [DeniedBy]
+	approvedBy: [String]
+	teamsWhoCanApprove:[String]
+	approvers:[String]
+	displayButton: Boolean
 }
 
 type DeniedBy{
-deniedUser:Users
-deniedComments: String
+	deniedUser:Users
+	deniedComments: String
 }
  
 type Report {
@@ -941,7 +942,6 @@ type Category{
     visibleTo: [Teams]
 }
 
-
 type Escalation{
 
    esclalationId: String
@@ -1004,5 +1004,11 @@ type CsvFormat{
    dateFormat: String
    timeFormat: String
    dateTimeFormat: String
+}
+
+type ListFormulaFieldValue{
+    FORMULA_NAME: String
+	VALUE: String
+
 }
 

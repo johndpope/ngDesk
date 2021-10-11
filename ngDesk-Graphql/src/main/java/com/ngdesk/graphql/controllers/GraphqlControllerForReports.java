@@ -139,12 +139,11 @@ public class GraphqlControllerForReports {
 			Map<String, Object> resultDataMap = mapper.readValue(mapper.writeValueAsString(result.getData()),
 					Map.class);
 
-			controllerService.generateCsvForEntries(resultDataMap, reportInput.getFieldNames(),
-					reportInput.getFileName(), reportInput.getEmailIds());
-
 			if (resultDataMap == null) {
 				throw new BadRequestException("INVALID_QUERY", null);
 			}
+			controllerService.generateCsvForEntries(resultDataMap, reportInput.getFieldNames(),
+					reportInput.getFileName(), reportInput.getEmailIds());
 
 		} catch (JsonMappingException e) {
 			e.printStackTrace();

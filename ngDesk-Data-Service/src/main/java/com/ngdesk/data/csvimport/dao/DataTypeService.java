@@ -12,6 +12,7 @@ import java.util.UUID;
 
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ngdesk.commons.Global;
@@ -26,6 +27,7 @@ import com.ngdesk.data.modules.dao.ModuleField;
 import com.ngdesk.data.modules.dao.ModuleService;
 import com.ngdesk.repositories.module.entry.ModuleEntryRepository;
 
+@Service
 public class DataTypeService {
 
 	@Autowired

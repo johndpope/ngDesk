@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ngdesk.commons.exceptions.InternalErrorException;
@@ -22,6 +23,7 @@ import com.ngdesk.data.sam.dao.DataProxy;
 import com.ngdesk.repositories.module.entry.ModuleEntryRepository;
 import com.ngdesk.repositories.roles.RolesRepository;
 
+@Service
 public class UserModuleService {
 
 	@Autowired

@@ -337,7 +337,7 @@ export class NodeCustomizationComponent implements OnInit {
 			this.escalation = this.data.CELL_DATA.VALUE.ESCALATION;
 			this.htmlTemplate = this.data.CELL_DATA.VALUE.PDF_TEMPLATE;
 			this.signTemplate = this.data.CELL_DATA.VALUE.PDF_TEMPLATE_ID;
-			this.storeTemplate = this.data.CELL_DATA.FIELD_ID;
+			this.storeTemplate = this.data.CELL_DATA.VALUE.FIELD_ID;
 			this.updateFields = this.data.CELL_DATA.VALUE.FIELDS;
 			this.channelId = this.data.CELL_DATA.VALUE.CHANNEL_ID;
 			this.createEntryModuleId = this.data.CELL_DATA.VALUE.MODULE;
@@ -399,7 +399,7 @@ export class NodeCustomizationComponent implements OnInit {
 		this.dialogRef.close();
 	}
 
-	createnewPdf(){
+	createnewPdf() {
 		this.router.navigate([`modules/${this.moduleId}/pdf/new`]);
 		this.dialogRef.close();
 	}

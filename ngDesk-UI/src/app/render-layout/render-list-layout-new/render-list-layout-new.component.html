@@ -111,6 +111,7 @@
 								*ngIf="col.DATA_TYPE === 'Relationship' && (element[col.NAME] === undefined || element[col.NAME] === null)"></span>
 							<span *ngIf="col.DATA_TYPE === 'Aggregate'">{{customModuleService.convertAggregateFields(col,module,element[col.NAME])
 								| async}}</span>
+							<span *ngIf="col.DATA_TYPE === 'Derived'">{{getDerivedValue(col, element)}}</span>
 							<div *ngIf="col.DATA_TYPE === 'Picklist'" style="overflow: hidden;text-overflow: ellipsis;line-height: 15px;">
 								<mat-menu #menu="matMenu">
 									<button mat-menu-item *ngFor="let item of col.PICKLIST_VALUES" (click)="updatePicklist(element,col,item)">
