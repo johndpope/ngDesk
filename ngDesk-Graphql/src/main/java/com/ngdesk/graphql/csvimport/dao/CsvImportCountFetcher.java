@@ -10,17 +10,17 @@ import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;
 
 @Component
-public class CsvImportCountFetcher implements DataFetcher<Integer>{
+public class CsvImportCountFetcher implements DataFetcher<Integer> {
 
 	@Autowired
 	AuthManager authManager;
 
 	@Autowired
-	CsvImportRepository csvImportRepository; 
+	CsvImportRepository csvImportRepository;
 
 	@Override
 	public Integer get(DataFetchingEnvironment environment) throws Exception {
-		String companyId = authManager.getUserDetails().getCompanyId();
-		return csvImportRepository.findCsvImportsCount(companyId, "csv_import");
+
+		return csvImportRepository.findCsvImportsCount(authManager.getUserDetails().getCompanyId(), "csv_import");
 	}
 }

@@ -108,16 +108,8 @@ public interface CustomModuleEntryRepository {
 
 	public Optional<List<Map<String, Object>>> findAllTeams(List<String> teamIds, String userId, String companyId);
 
-	public void addDataToSetByVariable(String filterVariable, String filterValue, String variable, String value,
-			String collectionName);
-
-	public void pullDataByVariable(String filterVariable, String filterValue, String variable, String value,
-			String collectionName);
-
 	public Optional<Map<String, Object>> findTeamsByVariableForIsPersonal(String fieldName, String value,
 			String collectionName);
-
-	public Optional<Map<String, Object>> findBySortingField(String fieldName, String collectionName);
 
 	public Optional<Map<String, Object>> findEntryByVariable(String fieldName, Object value, String collectionName);
 

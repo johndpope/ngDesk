@@ -1,7 +1,6 @@
 package com.ngdesk.repositories.csvimport;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,31 +20,13 @@ public class CustomCsvImportRepositoryImpl implements CustomCsvImportRepository 
 	private MongoOperations mongoOperations;
 
 	@Override
-	public Optional<Map<String, Object>> findEntryById(String entryId, String collectionName) {
-		Assert.notNull(entryId, "The given id must not be null!");
-		Assert.notNull(collectionName, "The given collectionName must not be null!");
-		Criteria criteria = new Criteria();
-		Query query = new Query(criteria.where("_id").is(entryId));
-		return Optional.ofNullable(mongoOperations.findOne(query, Map.class, collectionName));
-	}
-
-	@Override
-	public List<CsvImport> findEntriesByVariable(String variable, String value, String collectionName) {
+	public Optional<List<CsvImport>> findEntriesByVariable(String variable, String value, String collectionName) {
 		Assert.notNull(variable, "The given variable must not be null!");
 		Assert.notNull(collectionName, "The given collectionName must not be null!");
 		Query query = new Query(Criteria.where(variable).is(value));
 
-		return mongoOperations.find(query, CsvImport.class, collectionName);
+		return Optional.ofNullable(mongoOperations.find(query, CsvImport.class, collectionName));
 
-	}
-
-	@Override
-	public Optional<CsvImport> findEntryByVariable(String variable, String value, String collectionName) {
-		Assert.notNull(variable, "The given variable must not be null!");
-		Assert.notNull(collectionName, "The given collectionName must not be null!");
-		Query query = new Query(Criteria.where(variable).is(value));
-
-		return Optional.ofNullable(mongoOperations.findOne(query, CsvImport.class, collectionName));
 	}
 
 	@Override

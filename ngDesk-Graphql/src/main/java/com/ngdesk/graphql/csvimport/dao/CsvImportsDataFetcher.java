@@ -10,9 +10,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import com.ngdesk.commons.managers.AuthManager;
-import com.ngdesk.graphql.role.dao.Role;
+import com.ngdesk.graphql.role.layout.dao.RoleService;
 import com.ngdesk.repositories.csvimport.CsvImportRepository;
-import com.ngdesk.repositories.role.RolesRepository;
 
 import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;
@@ -27,17 +26,15 @@ public class CsvImportsDataFetcher implements DataFetcher<List<CsvImport>> {
 	CsvImportRepository csvImportRepository;
 
 	@Autowired
-	RolesRepository rolesRepository;
+	RoleService roleService;
 
 	@Override
 	public List<CsvImport> get(DataFetchingEnvironment environment) throws Exception {
 
-		String companyId = authManager.getUserDetails().getCompanyId();
 		Integer page = environment.getArgument("pageNumber");
 		Integer pageSize = environment.getArgument("pageSize");
 		String sortBy = environment.getArgument("sortBy");
 		String orderBy = environment.getArgument("orderBy");
-		String roleId = authManager.getUserDetails().getRole();
 
 		if (page == null || page < 0) {
 			page = 0;
@@ -62,14 +59,11 @@ public class CsvImportsDataFetcher implements DataFetcher<List<CsvImport>> {
 			}
 		}
 		Pageable pageable = PageRequest.of(page, pageSize, sort);
-		List<CsvImport> csvImports = csvImportRepository.findAllCsvImports(pageable, companyId, "csv_import");
+		Optional<List<CsvImport>> optionalCsvImports = csvImportRepository.findAllCsvImports(pageable,
+				authManager.getUserDetails().getCompanyId(), "csv_import");
 
-		Optional<Role> optionalRole = rolesRepository.findById(roleId, "roles_" + companyId);
-		Role role = optionalRole.get();
-
-		if (role != null && role.getName().equals("SystemAdmin")) {
-
-			return csvImports;
+		if (optionalCsvImports.isPresent() && roleService.isSystemAdmin(authManager.getUserDetails().getRole())) {
+			return optionalCsvImports.get();
 		}
 		return null;
 	}

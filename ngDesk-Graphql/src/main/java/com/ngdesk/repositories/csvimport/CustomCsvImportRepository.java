@@ -13,6 +13,6 @@ public interface CustomCsvImportRepository {
 
 	public Optional<CsvImport> findCsvImportById(String companyId, String csvImportId, String collectionName);
 
-	public List<CsvImport> findAllCsvImports(Pageable pageable, String companyId, String collectionName);
+	public Optional<List<CsvImport>> findAllCsvImports(Pageable pageable, String companyId, String collectionName);
 
 }

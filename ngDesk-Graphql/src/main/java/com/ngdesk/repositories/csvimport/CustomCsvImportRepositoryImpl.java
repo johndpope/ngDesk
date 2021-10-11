@@ -33,10 +33,10 @@ public class CustomCsvImportRepositoryImpl implements CustomCsvImportRepository 
 	}
 
 	@Override
-	public List<CsvImport> findAllCsvImports(Pageable pageable, String companyId, String collectionName) {
+	public Optional<List<CsvImport>> findAllCsvImports(Pageable pageable, String companyId, String collectionName) {
 		Query query = new Query(Criteria.where("companyId").is(companyId));
 		query.with(pageable);
-		return mongoOperations.find(query, CsvImport.class, collectionName);
+		return Optional.ofNullable(mongoOperations.find(query, CsvImport.class, collectionName));
 	}
 
 }

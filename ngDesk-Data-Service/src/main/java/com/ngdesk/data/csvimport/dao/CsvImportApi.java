@@ -23,18 +23,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ngdesk.commons.exceptions.BadRequestException;
 import com.ngdesk.commons.exceptions.ForbiddenException;
-import com.ngdesk.commons.exceptions.InternalErrorException;
 import com.ngdesk.commons.managers.AuthManager;
 import com.ngdesk.data.modules.dao.Module;
 import com.ngdesk.data.roles.dao.RolesService;
 import com.ngdesk.data.validator.Validator;
 import com.ngdesk.repositories.csvimport.CsvImportRepository;
 import com.ngdesk.repositories.module.entry.ModulesRepository;
+import com.opencsv.CSVReader;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -60,16 +59,12 @@ public class CsvImportApi {
 	@PostMapping(value = "/modules/{module_id}/csv")
 	@Operation(summary = "Post imported csv data", description = "Post imported csv data")
 	public CsvImport importFromCsv(
-			@Parameter(description = "Company ID", required = false) @RequestParam(value = "company_id", required = false) String companyId,
 			@Parameter(description = "Module ID", required = true) @PathVariable("module_id") String moduleId,
 			@RequestBody CsvImport csvImport) {
-		String role = authManager.getUserDetails().getRole();
-		companyId = authManager.getUserDetails().getCompanyId();
-		String createdById = authManager.getUserDetails().getUserId();
 
-		if (role != null) {
-			if (!roleService.isSystemAdmin(role)) {
-				if (!roleService.isAuthorizedForRecord(role, "POST", moduleId)) {
+		if (authManager.getUserDetails().getRole() != null) {
+			if (!roleService.isSystemAdmin(authManager.getUserDetails().getRole())) {
+				if (!roleService.isAuthorizedForRecord(authManager.getUserDetails().getRole(), "POST", moduleId)) {
 					throw new ForbiddenException("FORBIDDEN");
 				}
 			}
@@ -79,7 +74,8 @@ public class CsvImportApi {
 			throw new BadRequestException("INVALID_MODULE", null);
 		}
 
-		Optional<Module> optionalModule = modulesRepository.findById(moduleId, "modules_" + companyId);
+		Optional<Module> optionalModule = modulesRepository.findById(moduleId,
+				"modules_" + authManager.getUserDetails().getCompanyId());
 		if (optionalModule.isEmpty()) {
 			throw new BadRequestException("INVALID_MODULE", null);
 		}
@@ -87,8 +83,9 @@ public class CsvImportApi {
 		List<CsvImportLog> logs = new ArrayList<CsvImportLog>();
 		CsvImportData csvImportData = csvImport.getCsvImportData();
 		CsvFormat csvFormat = csvImport.getCsvFormat();
-		CsvImport entry = new CsvImport(null, "QUEUED", csvImportData, moduleId, logs, companyId,
-				csvImportData.getFileName(), csvFormat, new Date(), createdById);
+		CsvImport entry = new CsvImport(null, "QUEUED", csvImportData, moduleId, logs,
+				authManager.getUserDetails().getCompanyId(), csvImportData.getFileName(), csvFormat, new Date(),
+				authManager.getUserDetails().getUserId());
 
 		entry = csvImportRepository.save(entry, "csv_import");
 		return entry;
@@ -101,69 +98,60 @@ public class CsvImportApi {
 			@RequestBody CsvImportData csvImportData) {
 		InputStream is = null;
 		BufferedReader br = null;
-		try {
-			String file = csvImportData.getFile();
-			Base64.Decoder dec = Base64.getDecoder();
-			byte[] decbytes = dec.decode(file);
-			is = new ByteArrayInputStream(decbytes);
-			List<String> headers = new ArrayList<String>();
+		String file = csvImportData.getFile();
+		Base64.Decoder dec = Base64.getDecoder();
+		byte[] decbytes = dec.decode(file);
+		is = new ByteArrayInputStream(decbytes);
+		List<String> headers = new ArrayList<String>();
+		String vars[] = { csvImportData.getFileName() };
 
-			if (csvImportData.getFileType().equals("xlsx")) {
-				// DECODING IF XLSX
-				Workbook workbook = new XSSFWorkbook(is);
-				Sheet datatypeSheet = workbook.getSheetAt(0);
-				Iterator<Row> iterator = datatypeSheet.iterator();
-				while (iterator.hasNext()) {
-					Row currentRow = iterator.next();
-					Iterator<Cell> cellIterator = currentRow.iterator();
-					while (cellIterator.hasNext()) {
-						Cell currentCell = cellIterator.next();
-						headers.add(currentCell.toString());
-					}
-					workbook.close();
-					break;
+		if (csvImportData.getFileType().equals("xlsx") || csvImportData.getFileType().equals("xls")) {
+			Workbook workbook = null;
+			Sheet datatypeSheet;
+			try {
+				if (csvImportData.getFileType().equals("xlsx")) {
+					workbook = new XSSFWorkbook(is);
+				} else {
+					workbook = new HSSFWorkbook(is);
 				}
-			} else if (csvImportData.getFileType().equals("xls")) {
-				Workbook workbook = new HSSFWorkbook(is);
-				Sheet datatypeSheet = workbook.getSheetAt(0);
-				Iterator<Row> iterator = datatypeSheet.iterator();
-				while (iterator.hasNext()) {
-					Row currentRow = iterator.next();
-					Iterator<Cell> cellIterator = currentRow.iterator();
-					while (cellIterator.hasNext()) {
-						Cell currentCell = cellIterator.next();
-						headers.add(currentCell.toString());
-					}
-					workbook.close();
-					break;
+				datatypeSheet = workbook.getSheetAt(0);
+				workbook.close();
+			} catch (IOException e) {
+				throw new BadRequestException("FILE_CORRUPTED", vars);
+			}
+			Iterator<Row> iterator = datatypeSheet.iterator();
+			while (iterator.hasNext()) {
+				Row currentRow = iterator.next();
+				Iterator<Cell> cellIterator = currentRow.iterator();
+				while (cellIterator.hasNext()) {
+					Cell currentCell = cellIterator.next();
+					headers.add(currentCell.toString());
 				}
-			} else if (csvImportData.getFileType().equals("csv")) {
-				// DECODING THE BYTE STRING SENT FROM FRONT-END
-				br = new BufferedReader(new InputStreamReader(is));
-				String line = "";
-				int i = 0;
-
-				while ((line = br.readLine()) != null) {
-					if (i == 0) {
-						// SPLITTING THE FIRST LINE OF THE FILE TO GET HEADERS
-						headers = Arrays.asList(line.split(","));
-						i++;
+				break;
+			}
+		} else if (csvImportData.getFileType().equals("csv")) {
+			br = new BufferedReader(new InputStreamReader(is));
+			CSVReader csvReader = new CSVReader(br);
+			List<String[]> list = new ArrayList<>();
+			try {
+				list = csvReader.readAll();
+				csvReader.close();
+			} catch (IOException e) {
+				throw new BadRequestException("FILE_CORRUPTED", vars);
+			} finally {
+				if (br != null) {
+					try {
+						br.close();
+					} catch (IOException e) {
 					}
 				}
 			}
-
-			return headers;
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (br != null) {
-				try {
-					br.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
+			String[] headersArray = Arrays.stream(list.get(0)).map(String::trim).toArray(String[]::new);
+			headers = Arrays.asList(headersArray);
+		} else {
+			vars = new String[] { csvImportData.getFileType() };
+			throw new BadRequestException("FILE_FORMAT_NOT_SUPPORTED", vars);
 		}
-		throw new InternalErrorException("INTERNAL_ERROR");
+		return headers;
 	}
 }

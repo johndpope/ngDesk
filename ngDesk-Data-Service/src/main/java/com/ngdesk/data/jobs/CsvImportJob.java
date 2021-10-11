@@ -11,12 +11,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ngdesk.commons.mail.SendMail;
 import com.ngdesk.data.company.dao.Company;
 import com.ngdesk.data.csvimport.dao.CsvImport;
 import com.ngdesk.data.csvimport.dao.CsvImportData;
 import com.ngdesk.data.csvimport.dao.CsvImportService;
+import com.ngdesk.data.csvimport.dao.DataTypeService;
+import com.ngdesk.data.csvimport.dao.UserModuleService;
 import com.ngdesk.data.dao.DataService;
 import com.ngdesk.data.dao.Relationship;
 import com.ngdesk.data.modules.dao.Module;
@@ -62,6 +63,12 @@ public class CsvImportJob {
 	CsvImportService csvImportService;
 
 	@Autowired
+	DataTypeService dataTypeService;
+
+	@Autowired
+	UserModuleService userModuleService;
+
+	@Autowired
 	SendMail sendMail;
 
 	@Value("${env}")
@@ -73,9 +80,14 @@ public class CsvImportJob {
 	@Scheduled(fixedRate = 1000)
 	public void importCsv() {
 
-		ObjectMapper mapper = new ObjectMapper();
 		try {
-			List<CsvImport> csvImports = csvImportRepository.findEntriesByVariable("status", "QUEUED", "csv_import");
+			Optional<List<CsvImport>> optionalCsvImports = csvImportRepository.findEntriesByVariable("status", "QUEUED",
+					"csv_import");
+
+			if (optionalCsvImports.isEmpty()) {
+				return;
+			}
+			List<CsvImport> csvImports = optionalCsvImports.get();
 
 			for (CsvImport csvDocument : csvImports) {
 
@@ -88,93 +100,99 @@ public class CsvImportJob {
 
 				Company company = optionalCompany.get();
 				String companySubdomain = company.getCompanySubdomain();
-				String language = company.getLanguage();
-				if (language.equalsIgnoreCase("EN")) {
-					language = "English";
+
+				List<Module> modules = modulesRepository
+						.getAllModules(moduleService.getCollectionName("modules", companyId));
+				if (modules == null) {
+					continue;
 				}
 
+				Optional<Map<String, Object>> optionalUserEntry = moduleEntryRepository
+						.findEntryById(csvDocument.getCreatedBy(), moduleService.getCollectionName("Users", companyId));
+				if (optionalUserEntry.isEmpty()) {
+					continue;
+				}
+
+				Map<String, Object> user = optionalUserEntry.get();
+				String userUuid = user.get("USER_UUID").toString();
+
+				Optional<Map<String, Object>> optionalGlobalTeam = moduleEntryRepository.findEntryByFieldName("NAME",
+						"Global", moduleService.getCollectionName("Teams", companyId));
+				if (optionalGlobalTeam.isEmpty()) {
+					continue;
+				}
+
+				Map<String, Object> globalTeam = optionalGlobalTeam.get();
+				String globalTeamId = globalTeam.get("_id").toString();
+
+				Optional<Role> optionalCustomerRole = rolesRepository.findRoleName("Customers",
+						moduleService.getCollectionName("roles", companyId));
+				if (optionalCustomerRole.isEmpty()) {
+					continue;
+				}
+				Role customerRole = optionalCustomerRole.get();
+				String customerRoleId = customerRole.getId();
+
+				csvImportRepository.updateEntry(csvDocument.getCsvImportId(), "status", "PROCESSING", "csv_import");
+
+				CsvImportData body = csvDocument.getCsvImportData();
+				String moduleId = csvDocument.getModuleId();
+
+				Optional<Module> optionalModule = modules.stream()
+						.filter(module -> module.getModuleId().equals(moduleId)).findFirst();
+
 				try {
-					List<Module> modules = modulesRepository
-							.getAllModules(moduleService.getCollectionName("modules", companyId));
-
-					Optional<Map<String, Object>> optionalUserEntry = moduleEntryRepository.findEntryById(
-							csvDocument.getCreatedBy(), moduleService.getCollectionName("Users", companyId));
-					Map<String, Object> user = optionalUserEntry.get();
-					String userUuid = user.get("USER_UUID").toString();
-
-					Optional<Map<String, Object>> optionalGlobalTeam = moduleEntryRepository.findEntryByFieldName(
-							"NAME", "Global", moduleService.getCollectionName("Teams", companyId));
-
-					Map<String, Object> globalTeam = optionalGlobalTeam.get();
-					String globalTeamId = globalTeam.get("_id").toString();
-
-					Optional<Role> optionalCustomerRole = rolesRepository.findRoleName("Customers",
-							moduleService.getCollectionName("roles", companyId));
-					Role customerRole = optionalCustomerRole.get();
-					String customerRoleId = customerRole.getId();
-
-					csvImportRepository.updateEntry(csvDocument.getCsvImportId(), "status", "PROCESSING", "csv_import");
-
-					CsvImportData body = csvDocument.getCsvImportData();
-					String moduleId = csvDocument.getModuleId();
-
-					Optional<Module> optionalModule = modules.stream()
-							.filter(module -> module.getModuleId().equals(moduleId)).findFirst();
-
 					if (optionalModule.isPresent()) {
 						// CREATE THE ENTRY
 						Module module = optionalModule.get();
 						String moduleName = module.getName();
 						List<ModuleField> fields = module.getFields();
 						int i = 0;
-						boolean isEmpty = true;
 
 						Map<Integer, Map<String, Object>> rowMap = csvImportService.decodeFile(body, fields);
-						isEmpty = (rowMap != null) ? false : true;
 
-						if (isEmpty) {
+						if (rowMap == null) {
 							csvImportRepository.updateEntry(csvDocument.getCsvImportId(), "status", "FAILED",
 									"csv_import");
 							continue;
 						} else {
+							boolean error = false;
 							i = 0;
 							for (Integer key : rowMap.keySet()) {
+
+								Map<String, Object> inputMessage = rowMap.get(key);
+								i++;
+
+								if (inputMessage.containsKey("DATE_CREATED") || inputMessage.containsKey("DATE_UPDATED")
+										|| inputMessage.containsKey("LAST_UPDATED_BY")
+										|| inputMessage.containsKey("CREATED_BY")) {
+									inputMessage.remove("DATE_CREATED");
+									inputMessage.remove("DATE_UPDATED");
+									inputMessage.remove("LAST_UPDATED_BY");
+									inputMessage.remove("CREATED_BY");
+								}
+
+								String phoneNumber = "";
+
+								inputMessage = dataTypeService.formatDataTypes(fields, inputMessage, csvDocument, i,
+										companyId, user, globalTeamId, module);
+
+								if (inputMessage == null) {
+									error = true;
+									break;
+								}
+
+								inputMessage = dataService.addInternalFields(module, inputMessage,
+										csvDocument.getCreatedBy(), companyId);
 								try {
-									Map<String, Object> inputMessage = rowMap.get(key);
-									i++;
-
-									if (inputMessage.containsKey("DATE_CREATED")
-											|| inputMessage.containsKey("DATE_UPDATED")
-											|| inputMessage.containsKey("LAST_UPDATED_BY")
-											|| inputMessage.containsKey("CREATED_BY")) {
-										inputMessage.remove("DATE_CREATED");
-										inputMessage.remove("DATE_UPDATED");
-										inputMessage.remove("LAST_UPDATED_BY");
-										inputMessage.remove("CREATED_BY");
-									}
-
-									String phoneNumber = "";
-									boolean error = false;
-
-									inputMessage = csvImportService.formatDataTypes(fields, inputMessage, csvDocument,
-											i, companyId, user, globalTeamId, module);
-									error = (inputMessage == null) ? true : false;
-
-									if (error) {
-										continue;
-									}
-
-									inputMessage = dataService.addInternalFields(module, inputMessage,
-											csvDocument.getCreatedBy(), companyId);
-
 									if (moduleName.equals("Users") || moduleName.equals("Contacts")) {
 
 										String accountId = csvImportService.getAccountId(inputMessage, companyId,
 												modules, globalTeamId, userUuid, csvDocument, i);
-										error = (accountId == null) ? true : false;
 
-										if (error) {
-											continue;
+										if (accountId == null) {
+											error = true;
+											break;
 										}
 
 										inputMessage.put("ACCOUNT", accountId);
@@ -198,8 +216,8 @@ public class CsvImportJob {
 									}
 
 									if (moduleName.equalsIgnoreCase("Users")) {
-										csvImportService.handleUserModule(inputMessage, modules, userUuid, module,
-												company, globalTeam, language, phoneNumber);
+										userModuleService.handleUserModule(inputMessage, modules, userUuid, module,
+												company, globalTeam, phoneNumber);
 									} else {
 										if (moduleName.equals("Accounts")) {
 											if (!csvImportService.accountExists(
@@ -225,11 +243,18 @@ public class CsvImportJob {
 								} catch (Exception e) {
 									e.printStackTrace();
 									csvImportService.addToSet(i, e.getMessage(), csvDocument.getCsvImportId());
-									continue;
+									error = true;
+									break;
 								}
 							}
-							csvImportRepository.updateEntry(csvDocument.getCsvImportId(), "status", "COMPLETED",
-									"csv_import");
+
+							if (error == false) {
+								csvImportRepository.updateEntry(csvDocument.getCsvImportId(), "status", "COMPLETED",
+										"csv_import");
+							} else {
+								csvImportRepository.updateEntry(csvDocument.getCsvImportId(), "status", "FAILED",
+										"csv_import");
+							}
 						}
 					} else {
 						csvImportRepository.updateEntry(csvDocument.getCsvImportId(), "status", "FAILED", "csv_import");
@@ -245,11 +270,8 @@ public class CsvImportJob {
 					String info = "<br>Subdomain: " + companySubdomain + "<br>File Name: " + csvDocument.getName();
 
 					if (environment.equals("prd")) {
-						sendMail.send("spencer@allbluesolutions.com", "support@ngdesk.com",
+						sendMail.send("karthik.balasubramanya@allbluesolutions.com", "support@ngdesk.com",
 								"Internal Error: Stack Trace", sStackTrace + info);
-
-						sendMail.send("shashank.shankaranand@allbluesolutions.com", "support@ngdesk.com",
-								"Internal Error: Stack Trace", sStackTrace);
 					}
 					csvImportRepository.updateEntry(csvDocument.getCsvImportId(), "status", "FAILED", "csv_import");
 					continue;

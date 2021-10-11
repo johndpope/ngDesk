@@ -17,7 +17,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.aggregation.AccumulatorOperators;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
@@ -1411,36 +1410,6 @@ public class CustomModuleEntryRepositoryImpl implements CustomModuleEntryReposit
 	}
 
 	@Override
-	public void pullDataByVariable(String filterVariable, String filterValue, String variable, String value,
-			String collectionName) {
-		Criteria criteria = new Criteria();
-		criteria.andOperator(Criteria.where(filterVariable).is(filterValue), Criteria.where("DELETED").is(false),
-				Criteria.where("EFFECTIVE_TO").is(null));
-		Query query = new Query();
-		query.addCriteria(criteria);
-
-		Update update = new Update();
-		update.pull(variable, value);
-
-		mongoOperations.updateFirst(query, update, collectionName);
-	}
-
-	@Override
-	public void addDataToSetByVariable(String filterVariable, String filterValue, String variable, String value,
-			String collectionName) {
-		Criteria criteria = new Criteria();
-		criteria.andOperator(Criteria.where(filterVariable).is(filterValue), Criteria.where("DELETED").is(false),
-				Criteria.where("EFFECTIVE_TO").is(null));
-		Query query = new Query();
-		query.addCriteria(criteria);
-
-		Update update = new Update();
-		update.addToSet(variable, value);
-
-		mongoOperations.updateFirst(query, update, collectionName);
-	}
-
-	@Override
 	public Optional<Map<String, Object>> findTeamsByVariableForIsPersonal(String fieldName, String value,
 			String collectionName) {
 		Assert.notNull(value, "The given value must not be null!");
@@ -1454,25 +1423,12 @@ public class CustomModuleEntryRepositoryImpl implements CustomModuleEntryReposit
 	}
 
 	@Override
-	public Optional<Map<String, Object>> findBySortingField(String fieldName, String collectionName) {
-		Assert.notNull(collectionName, "The given collectionName must not be null!");
-
-		Criteria criteria = new Criteria();
-		criteria.andOperator(Criteria.where("DELETED").is(false), Criteria.where("EFFECTIVE_TO").is(null));
-		Query query = new Query();
-		query.addCriteria(criteria);
-
-		return Optional.ofNullable(
-				mongoOperations.findOne(query.with(Sort.by(Direction.DESC, fieldName)), Map.class, collectionName));
-	}
-	
-	@Override
 	public Optional<Map<String, Object>> findEntryByVariable(String fieldName, Object value, String collectionName) {
 		Assert.notNull(value, "The given value must not be null!");
 		Assert.notNull(collectionName, "The given collectionName must not be null!");
 
-		Pattern pattern = Pattern.compile("^"+value.toString().trim()+"$", Pattern.CASE_INSENSITIVE);
-		Criteria criteria = new Criteria();				
+		Pattern pattern = Pattern.compile("^" + value.toString().trim() + "$", Pattern.CASE_INSENSITIVE);
+		Criteria criteria = new Criteria();
 		criteria.andOperator(Criteria.where("DELETED").is(false), Criteria.where(fieldName).regex(pattern),
 				Criteria.where("EFFECTIVE_TO").is(null));
 

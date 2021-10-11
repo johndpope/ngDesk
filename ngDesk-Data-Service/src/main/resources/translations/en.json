@@ -103,6 +103,7 @@
 	"BASE_VALUE_NOT_NULL": "Base value cannot be null, please try again",
 	"INVALID_DATE_FORMAT": "The date format you have been selected is invalid, please select a valid format",
 	"INVALID_FORM" : "Selected Form does not exist or might have been deleted",
-	"INVALID_INPUT_FORMAT" : "The selected field ${1} input format is invalid, please select a valid format"
-
+	"INVALID_INPUT_FORMAT" : "The selected field ${1} input format is invalid, please select a valid format",
+	"FILE_CORRUPTED" : "The selected file ${1} is corrupted, please try again",
+	"FILE_FORMAT_NOT_SUPPORTED" : "The selected file format ${1} is not supported, please try again with these formats: CSV, XLS, XLSX"
 }
