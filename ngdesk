@@ -34,6 +34,6 @@ if __name__ == '__main__':
 
     res = urllib.request.urlretrieve('https://raw.githubusercontent.com/SubscribeIT/ngDesk/main/ngdesk_build_update.py', '/tmp/ngdesk_build_update.py')
     sys.path.insert(1, '/tmp/')
-    import build_ngdesk
+    import ngdesk_build_update
     os.setuid(0)
     ngdesk_build_update.build_ngdesk()
