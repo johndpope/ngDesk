@@ -190,7 +190,7 @@ export class GuideService {
 	public getkbSections(sectionId) {
 		let query = '';
 		query = `{
-				DATA: getKbSection(sectionId: "${sectionId}") {
+				DATA:getKbSection(sectionId: "${sectionId}") {
 					name
 					sectionId
 					description
