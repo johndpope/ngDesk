@@ -232,7 +232,7 @@ def buildMicroservice(serviceName, path) {
  dir('/var/jenkins_home/projects/ngdesk-project/ngDesk/' + path) {
 
 
-	 if(serviceName == 'rest' || serviceName == 'manager' || serviceName == 'gateway'){
+	 if(serviceName == 'rest' || serviceName == 'manager' || serviceName == 'gateway' || serviceName == 'config-server'){
 		 sh 'mvn package -DskipTests'
 
 		 if(serviceName == 'gateway'){
