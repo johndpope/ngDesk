@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?> 
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -13,8 +13,7 @@
 	<artifactId>ngDesk-Config-Server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ngDesk-Config-Server</name>
-	<description>Application to store configs</description>
-
+	<description>Application to store configs</description>	
 
 
 	<properties>
@@ -66,7 +65,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<image>
-						<name>ngdesk/config-server:latest</name>
+						<name>ghcr.io/subscribeit/ngdesk/config-server:latest</name>
 					</image>
 					<layers>
 						<enabled>true</enabled>
