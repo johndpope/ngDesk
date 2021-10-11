@@ -1,8 +1,0 @@
-server:  
-  port:
-    9999
-spring:  
-  application:    
-    name: config-repo  
-my:    
-  greeting: helloworld from config server
