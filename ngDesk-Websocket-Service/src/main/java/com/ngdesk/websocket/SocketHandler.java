@@ -50,7 +50,6 @@ import com.ngdesk.websocket.channels.chat.dao.ChatTicketCreationService;
 import com.ngdesk.websocket.channels.chat.dao.ChatUser;
 import com.ngdesk.websocket.channels.chat.dao.ChatUserEntryService;
 import com.ngdesk.websocket.channels.chat.dao.ChatWidgetPayload;
-import com.ngdesk.websocket.channels.chat.dao.SendChatTranscript;
 import com.ngdesk.websocket.dao.WebSocketService;
 import com.ngdesk.websocket.graphql.dao.GraphqlProxy;
 import com.ngdesk.websocket.modules.dao.ButtonTypeService;
