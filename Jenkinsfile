@@ -133,15 +133,15 @@ pipeline {
 				        }
 
 						if (restChanged.length() > 0) {
-				            buildMicroservice('ngdesk-rest', 'ngDesk-Rest')
+				            buildMicroservice('rest', 'ngDesk-Rest')
 				        }
 
 						if (managerChanged.length() > 0) {
-				            buildMicroservice('ngdesk-manager', 'ngDesk-Manager')
+				            buildMicroservice('manager', 'ngDesk-Manager')
 				        }
 
 						if (gatewayChanged.length() > 0) {
-				            buildMicroservice('ngdesk-gateway', 'ngDesk-Gateway')
+				            buildMicroservice('gateway', 'ngDesk-Gateway')
 				        }
 				        
 				        if (uiChanged.length() > 0) {	
@@ -176,13 +176,13 @@ pipeline {
                                 sh './mvnw spring-boot:build-image'
 
                                     docker.withRegistry("${env.DOCKER_HUB_URL}", "${env.DOCKER_HUB_KEY}") {
-										def newImage = docker.image("${env.DOCKER_IMAGE_NAME}/ngdesk-web:latest")
+										def newImage = docker.image("${env.DOCKER_IMAGE_NAME}/web:latest")
 										newImage.push()
 										docker.withServer("${env.PROD_SERVER_URL}") {
 										    sh "docker rename ngdesk-web ngdesk-web-old"
 										    sh "docker stop ngdesk-web-old"
-										    sh "docker pull ngdesk/ngdesk-web"
-										    sh "docker run --name ngdesk-web -d -e SPRING_PROFILES_ACTIVE=dockernew --network=host ngdesk/ngdesk-web"
+										    sh "docker pull ngdesk/web"
+										    sh "docker run --name ngdesk-web -d -e SPRING_PROFILES_ACTIVE=dockernew --network=host ngdesk/web"
 										    sh "docker rm ngdesk-web-old"
 										    sh 'docker image prune -f'
 										}
@@ -227,10 +227,10 @@ def buildMicroservice(serviceName, path) {
  dir('/var/jenkins_home/projects/ngdesk-project/ngDesk/' + path) {
 
 
-	 if(serviceName == 'ngdesk-rest' || serviceName == 'ngdesk-manager' || serviceName == 'ngdesk-gateway'){
+	 if(serviceName == 'rest' || serviceName == 'manager' || serviceName == 'gateway'){
 		 sh 'mvn package -DskipTests'
 
-		 if(serviceName == 'ngdesk-gateway'){
+		 if(serviceName == 'gateway'){
 			 sh './mvnw spring-boot:build-image'
 		 } else {
 			 docker.build("${env.DOCKER_IMAGE_NAME}/" + serviceName + ":latest")
