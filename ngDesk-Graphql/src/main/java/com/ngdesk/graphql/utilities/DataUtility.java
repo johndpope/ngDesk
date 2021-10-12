@@ -34,6 +34,7 @@ import com.ngdesk.graphql.company.dao.CompanyDataFetcher;
 import com.ngdesk.graphql.csvimport.dao.CsvImportCountFetcher;
 import com.ngdesk.graphql.csvimport.dao.CsvImportDataFetcher;
 import com.ngdesk.graphql.csvimport.dao.CsvImportsDataFetcher;
+import com.ngdesk.graphql.csvimport.dao.CsvLogsDataFetcher;
 import com.ngdesk.graphql.currency.dao.CurrenciesDataFetcher;
 import com.ngdesk.graphql.currency.dao.CurrencyDataFetcher;
 import com.ngdesk.graphql.dashboards.dao.AdvancedPieChartValueFetcher;
@@ -520,6 +521,9 @@ public class DataUtility {
 	
 	@Autowired
 	CsvImportsDataFetcher csvImportsDataFetcher;
+	
+	@Autowired
+	CsvLogsDataFetcher csvLogsDataFetcher;
 
 	public GraphQL createGraphQlObject(Company company) throws IOException {
 		try {
@@ -976,6 +980,7 @@ public class DataUtility {
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getCsvImports", csvImportsDataFetcher));
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getCsvImportsCount", csvImportCountFetcher));
 		builder.type("CsvImport", typeWiring -> typeWiring.dataFetcher("createdBy", entryDataFetcher));
+		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getCsvLogs", csvLogsDataFetcher));
 
 		for (Module module : modules) {
 			String name = "get" + module.getName().replaceAll("\\s+", "_");

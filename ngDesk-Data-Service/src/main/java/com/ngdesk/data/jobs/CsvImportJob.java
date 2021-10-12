@@ -148,6 +148,7 @@ public class CsvImportJob {
 						String moduleName = module.getName();
 						List<ModuleField> fields = module.getFields();
 						int i = 0;
+						int totalLines = 0;
 
 						Map<Integer, Map<String, Object>> rowMap = csvImportService.decodeFile(body, fields);
 
@@ -158,6 +159,7 @@ public class CsvImportJob {
 						} else {
 							boolean error = false;
 							i = 0;
+							totalLines = rowMap.keySet().size();
 							for (Integer key : rowMap.keySet()) {
 
 								Map<String, Object> inputMessage = rowMap.get(key);
@@ -248,13 +250,7 @@ public class CsvImportJob {
 								}
 							}
 
-							if (error == false) {
-								csvImportRepository.updateEntry(csvDocument.getCsvImportId(), "status", "COMPLETED",
-										"csv_import");
-							} else {
-								csvImportRepository.updateEntry(csvDocument.getCsvImportId(), "status", "FAILED",
-										"csv_import");
-							}
+							csvImportService.updateCsvEntry(error, totalLines, i, csvDocument.getCsvImportId());
 						}
 					} else {
 						csvImportRepository.updateEntry(csvDocument.getCsvImportId(), "status", "FAILED", "csv_import");

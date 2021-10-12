@@ -91,6 +91,7 @@ type Query {
 	getCsvImport(csvImportId: String): CsvImport
 	getCsvImports(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [CsvImport]
 	getCsvImportsCount: Int
+	getCsvLogs(csvImportId: String, pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [CsvImportLog]
 	MODULE_FUNCTIONS_REPLACE
 }
 
@@ -978,6 +979,8 @@ type CsvImport{
    companyId: String
    name: String
    csvFormat: CsvFormat
+   completedCount: Int
+   failedCount: Int
    dateCreated: DateTime
    createdBy: Users
 }

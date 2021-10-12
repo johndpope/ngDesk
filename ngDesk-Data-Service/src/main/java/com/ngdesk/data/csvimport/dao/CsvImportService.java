@@ -550,4 +550,25 @@ public class CsvImportService {
 		return accountId;
 	}
 
+	public void updateCsvEntry(boolean error, int totalLines, int i, String dataId) {
+		int completedCount;
+		int failedCount;
+		String status;
+		if (error == false) {
+			completedCount = i;
+			status = "COMPLETED";
+		} else {
+			completedCount = Math.abs(i - 1);
+			status = "FAILED";
+		}
+		failedCount = totalLines - completedCount;
+
+		Map<String, Object> entry = new HashMap<String, Object>();
+		entry.put("status", status);
+		entry.put("completedCount", completedCount);
+		entry.put("failedCount", failedCount);
+
+		csvImportRepository.updateEntry(dataId, entry, "csv_import");
+	}
+
 }

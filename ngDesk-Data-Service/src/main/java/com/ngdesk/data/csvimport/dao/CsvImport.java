@@ -24,6 +24,10 @@ public class CsvImport {
 
 	private CsvFormat csvFormat;
 
+	private int completedCount;
+
+	private int failedCount;
+
 	private Date dateCreated;
 
 	private String createdBy;
@@ -33,8 +37,8 @@ public class CsvImport {
 	}
 
 	public CsvImport(String csvImportId, String status, CsvImportData csvImportData, String moduleId,
-			List<CsvImportLog> logs, String companyId, String name, CsvFormat csvFormat, Date dateCreated,
-			String createdBy) {
+			List<CsvImportLog> logs, String companyId, String name, CsvFormat csvFormat, int completedCount,
+			int failedCount, Date dateCreated, String createdBy) {
 		super();
 		this.csvImportId = csvImportId;
 		this.status = status;
@@ -44,6 +48,8 @@ public class CsvImport {
 		this.companyId = companyId;
 		this.name = name;
 		this.csvFormat = csvFormat;
+		this.completedCount = completedCount;
+		this.failedCount = failedCount;
 		this.dateCreated = dateCreated;
 		this.createdBy = createdBy;
 	}
@@ -110,6 +116,22 @@ public class CsvImport {
 
 	public void setCsvFormat(CsvFormat csvFormat) {
 		this.csvFormat = csvFormat;
+	}
+
+	public int getCompletedCount() {
+		return completedCount;
+	}
+
+	public void setCompletedCount(int completedCount) {
+		this.completedCount = completedCount;
+	}
+
+	public int getFailedCount() {
+		return failedCount;
+	}
+
+	public void setFailedCount(int failedCount) {
+		this.failedCount = failedCount;
 	}
 
 	public Date getDateCreated() {
