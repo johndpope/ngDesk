@@ -114,10 +114,11 @@ def check_container_started(image):
                     if resp.ok:
                         container_started = True
                         break
+                    else:
+                        time.sleep(healthcheck_interval)
                 except requests.exceptions.ConnectionError:
-                    continue
+                    time.sleep(healthcheck_interval)
                     
-                time.sleep(healthcheck_interval)
 
         if container_started == False:
             sys.exit(image['name'] + ' failed to start in alloted time')
