@@ -2200,5 +2200,8 @@
 	"FORMULA_NAME": " Formula System Label",
 	"ADD_FORMULA": "Add Formula",
 	"SCHEDULES_USER_SEARCH": "Search is based on email address",
-	"LIST_FORMULA_CANNOT_BE_DROPPED": "List formula field cannot be dropped to sidebar"
+	"LIST_FORMULA_CANNOT_BE_DROPPED": "List formula field cannot be dropped to sidebar",
+	"lINE_NUMBER": "lineNumber",
+	"ERROR_MESSAGE": "errorMessage",
+	"NO_LOGS_FOUND": "No logs found"
 }

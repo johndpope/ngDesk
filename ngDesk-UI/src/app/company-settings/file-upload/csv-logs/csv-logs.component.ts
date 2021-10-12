@@ -14,6 +14,8 @@ import { CsvLogsService } from './csv-logs-detail/csv-logs-detail.service';
 	styleUrls: ['./csv-logs.component.scss'],
 })
 export class CsvLogsComponent implements OnInit, OnDestroy {
+	public importFailed: boolean;
+	public fileName = '';
 	constructor(
 		public modulesService: ModulesService,
 		private dialog: MatDialog,
@@ -77,7 +79,7 @@ export class CsvLogsComponent implements OnInit, OnDestroy {
 			.getAllCsvImports(page, pageSize, sortBy, orderBy)
 			.subscribe(
 				(csvImportResponse: any) => {
-					console.log('csvImportResponse', csvImportResponse);
+					console.log(csvImportResponse);
 					this.customTableService.setTableDataSource(
 						csvImportResponse.DATA,
 						csvImportResponse.TOTAL_RECORDS
@@ -95,7 +97,7 @@ export class CsvLogsComponent implements OnInit, OnDestroy {
 	}
 
 	public rowClicked(event) {
-		if (event.status === 'COMPLETED') {
+		if (event.status === 'FAILED') {
 			this.router.navigate([
 				`company-settings/file-upload/csv-logs/${event.csvImportId}`,
 			]);
