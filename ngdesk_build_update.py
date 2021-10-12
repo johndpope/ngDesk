@@ -1,10 +1,9 @@
 import docker
-import urllib.request
-import os, pwd, stat
+import requests
+import os, stat
 from os import path
-import getpass
-import shutil
-from itertools import chain
+import sys
+import time
 
 client = docker.from_env()
 
@@ -26,7 +25,7 @@ def build_ngdesk():
 
 
     ngdesk_images = [
-        {'name': 'ngdesk-consul', 'path': 'ngdesk/consul:latest'}, 
+        {'name': 'ngdesk-consul', 'path': 'ngdesk/consul:latest', 'healthcheck': {'type': 'curl', 'start_period': 120, 'url': 'http://localhost:8500/actuator/health'}}, 
         {'name': 'ngdesk-zipkin', 'path': 'ngdesk/zipkin:latest'}, 
         {'name': 'ngdesk-rabbit', 'path': 'rabbitmq:3.8'}, 
         {'name': 'ngdesk-redis', 'path': 'bitnami/redis:6.0.8'},
@@ -88,14 +87,41 @@ def build_ngdesk():
                 start_containers(image_path, image_name)
         except docker.errors.NotFound:
             start_containers(image_path, image_name)
+
+
+        check_container_started(image)
+
         
         print(image_name + ' done')
+
+def check_container_started(image):
+
+    if 'healthcheck' in image:
+        print('check container started')
+        image_healthcheck = image['healthcheck']
+        healthcheck_attempts = image_healthcheck['start_period'] / 5
+        container_started = False
+
+        for x in range(healthcheck_attempts):
+            if image_healthcheck['type'] == 'curl':
+                resp = requests.get(image_healthcheck['url'])
+                if resp.ok:
+                    container_started = True
+                    break
+                
+                time.sleep(5)
+
+        if container_started == False:
+            sys.exit(image['name'] + ' failed to start in alloted time')
+
+
+
 
 
 
 def start_containers(image_path, image_name):
     if image_name == 'ngdesk-mongodb':
-        client.containers.run(image_path, name=image_name, detach=True, network_mode='host', volumes={'/ngdesk/mongodb':{'bind':'/data/db', 'mode': 'rw'}}, healthcheck={"Test": ["CMD-SHELL", "mongo --eval \"rs.initiate({_id: 'rs0', version: 1, members: [{ _id: 0, host : 'localhost:27017' } ]})\""],"Interval": 1000000 * 500, "Timeout": 1000000 * 5 * 1000, "Retries": 3, "StartPeriod": 1000000 * 5 * 1000}, restart_policy={'Name': 'always'})
+        client.containers.run(image_path, name=image_name, detach=True, network_mode='host', volumes={'/ngdesk/mongodb':{'bind':'/data/db', 'mode': 'rw'}}, healthcheck={"Test": ["CMD-SHELL", "mongo --eval \"rs.initiate({_id: 'rs0', version: 1, members: [{ _id: 0, host : 'localhost:27017' } ]})\""],"Interval": 1000000 * 500, "Timeout": 1000000 * 5 * 1000, "Retries": 3, "StartPeriod": 1000000 * 5 * 1000})
     elif image_name == 'ngdesk-elasticsearch':
         print('fix elastic')
         # TODO: fix this
@@ -104,16 +130,16 @@ def start_containers(image_path, image_name):
     # elif image_name == 'ngdesk-kibana':
     #     client.containers.run(image_path, name=image_name, detach=True, network_mode='host', environment=['ELASTICSEARCH_HOSTS=http://localhost:9200'])
     elif image_name == 'ngdesk-redis':
-        client.containers.run(image_path, name=image_name, detach=True, network_mode='host', environment=['REDIS_PASSWORD=Qk4CSfb4hU7f'], restart_policy={'Name': 'always'})
+        client.containers.run(image_path, name=image_name, detach=True, network_mode='host', environment=['REDIS_PASSWORD=Qk4CSfb4hU7f'])
     elif image_name == 'ngdesk-nginx':
         # urllib.request.urlretrieve('http://10.2.15.60/nginx/nginx.conf', '/ngdesk/nginx/nginx.conf')
         # urllib.request.urlretrieve('http://10.2.15.60/nginx/ngdesk.crt', '/ngdesk/nginx/ngdesk.crt')
         # urllib.request.urlretrieve('http://10.2.15.60/nginx/ngdesk.key', '/ngdesk/nginx/ngdesk.key')
         # client.containers.run(image_path, name=image_name, detach=True, network_mode='host', volumes={'/ngdesk/nginx/nginx.conf':{'bind':'/etc/nginx/nginx.conf', 'mode': 'ro'}, '/ngdesk/nginx/ngdesk.crt':{'bind':'/etc/nginx/keys/ngdesk.crt'}, '/ngdesk/nginx/ngdesk.key':{'bind':'/etc/nginx/keys/ngdesk.key'}})
         # client.containers.run(image_path, name=image_name, detach=True, network_mode='host', volumes={'/ngdesk/nginx/exmaple.crt':{'bind':'/etc/nginx/keys/'}, '/ngdesk/nginx/exmaple.key':{'bind':'/etc/nginx/keys/'}})
-        client.containers.run(image_path, name=image_name, detach=True, network_mode='host', volumes={'/ngdesk/nginx':{'bind':'/etc/nginx/keys', 'mode': 'ro'}}, restart_policy={'Name': 'always'})
+        client.containers.run(image_path, name=image_name, detach=True, network_mode='host', volumes={'/ngdesk/nginx':{'bind':'/etc/nginx/keys', 'mode': 'ro'}})
         # client.containers.run(image_path, name=image_name, detach=True, network_mode='host')
     elif image_name == 'ngdesk-email-server':
-        client.containers.run(image_path, name=image_name, detach=True, network_mode='host', environment=['MANAGER_HOST=localhost'], restart_policy={'Name': 'always'})
+        client.containers.run(image_path, name=image_name, detach=True, network_mode='host', environment=['MANAGER_HOST=localhost'])
     else:
-        client.containers.run(image_path, name=image_name, detach=True, network_mode='host', restart_policy={'Name': 'always'})
+        client.containers.run(image_path, name=image_name, detach=True, network_mode='host', HealthCheck={ "Test": ["CMD", "curl", "--fail", "http://localhost:3000/", "||", "exit", "1"], "Interval": 1000000 * 5 * 100, "Timeout": 1000000 * 5 * 1000, "Retries": 3, "StartPeriod": 1000000 * 5 * 1000})
