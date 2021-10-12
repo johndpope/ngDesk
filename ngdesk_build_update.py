@@ -38,7 +38,7 @@ def build_ngdesk():
         {'name': 'ngdesk-rest', 'path': 'ngdesk/rest:latest'}, 
         {'name': 'ngdesk-manager', 'path': 'ngdesk/manager:latest'}, 
         
-        #{'name': 'ngdesk-nginx', 'path': docker_registry_ngdesk_group + 'ngdesk-nginx:latest'}, 
+        {'name': 'ngdesk-nginx', 'path': 'ngdesk/nginx:latest'}, 
         {'name': 'ngdesk-gateway', 'path': 'ngdesk/gateway:latest'}, 
 
         {'name': 'ngdesk-auth', 'path': 'ngdesk/auth:latest'}, 
@@ -105,7 +105,8 @@ def start_containers(image_path, image_name):
         # urllib.request.urlretrieve('http://10.2.15.60/nginx/nginx.conf', '/ngdesk/nginx/nginx.conf')
         # urllib.request.urlretrieve('http://10.2.15.60/nginx/ngdesk.crt', '/ngdesk/nginx/ngdesk.crt')
         # urllib.request.urlretrieve('http://10.2.15.60/nginx/ngdesk.key', '/ngdesk/nginx/ngdesk.key')
-        client.containers.run(image_path, name=image_name, detach=True, network_mode='host', volumes={'/ngdesk/nginx/nginx.conf':{'bind':'/etc/nginx/nginx.conf', 'mode': 'ro'}, '/ngdesk/nginx/ngdesk.crt':{'bind':'/etc/nginx/keys/ngdesk.crt'}, '/ngdesk/nginx/ngdesk.key':{'bind':'/etc/nginx/keys/ngdesk.key'}})
+        # client.containers.run(image_path, name=image_name, detach=True, network_mode='host', volumes={'/ngdesk/nginx/nginx.conf':{'bind':'/etc/nginx/nginx.conf', 'mode': 'ro'}, '/ngdesk/nginx/ngdesk.crt':{'bind':'/etc/nginx/keys/ngdesk.crt'}, '/ngdesk/nginx/ngdesk.key':{'bind':'/etc/nginx/keys/ngdesk.key'}})
+        client.containers.run(image_path, name=image_name, detach=True, network_mode='host')
     elif image_name == 'ngdesk-email-server':
         client.containers.run(image_path, name=image_name, detach=True, network_mode='host', environment=['MANAGER_HOST=localhost'])
     else:
