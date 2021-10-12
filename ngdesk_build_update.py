@@ -100,7 +100,7 @@ def start_containers(image_path, image_name):
     # elif image_name == 'ngdesk-kibana':
     #     client.containers.run(image_path, name=image_name, detach=True, network_mode='host', environment=['ELASTICSEARCH_HOSTS=http://localhost:9200'])
     elif image_name == 'ngdesk-redis':
-        client.containers.run(image_path, name=image_name, detach=True, network_mode='host', environment=['REDIS_PASSWORD=Pn35x2dUW'])
+        client.containers.run(image_path, name=image_name, detach=True, network_mode='host', environment=['REDIS_PASSWORD=Qk4CSfb4hU7f'])
     elif image_name == 'ngdesk-nginx':
         # urllib.request.urlretrieve('http://10.2.15.60/nginx/nginx.conf', '/ngdesk/nginx/nginx.conf')
         # urllib.request.urlretrieve('http://10.2.15.60/nginx/ngdesk.crt', '/ngdesk/nginx/ngdesk.crt')
