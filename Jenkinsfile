@@ -38,7 +38,9 @@ pipeline {
 					def gatewayChanged = ''
 
 					// frontend services
+					def nginxChanged = ''
 					def uiChanged = ''
+					
 				
 					dir('/var/jenkins_home/projects/ngdesk-project/ngDesk') {
 
@@ -66,7 +68,11 @@ pipeline {
 						gatewayChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Gateway ''').trim()
 
 
+						nginxChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Nginx''').trim()
 						uiChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-UI''').trim()
+						
+
+
 						checkout([$class: 'GitSCM', branches: [[name: 'origin/main']], userRemoteConfigs: [[url: 'https://github.com/SubscribeIT/ngDesk.git']]])
 					}
 
@@ -146,6 +152,15 @@ pipeline {
 
 					if (gatewayChanged.length() > 0) {
 						buildMicroservice('gateway', 'ngDesk-Gateway')
+					}
+
+					if (nginxChanged.length() > 0) {
+						dir('/var/jenkins_home/projects/ngdesk-project/ngDesk/ngDesk-Nginx') {
+							docker.withRegistry("${env.DOCKER_HUB_URL}", "${env.DOCKER_HUB_KEY}") {
+								def newImage = docker.image("${env.DOCKER_IMAGE_NAME}/nginx:latest")
+								newImage.push()
+							}
+						}
 					}
 					
 					if (uiChanged.length() > 0) {	
