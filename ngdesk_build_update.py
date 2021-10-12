@@ -95,22 +95,25 @@ def build_ngdesk():
 
 def start_containers(image_path, image_name):
     if image_name == 'ngdesk-mongodb':
-        client.containers.run(image_path, name=image_name, detach=True, network_mode='host', volumes={'/ngdesk/mongodb':{'bind':'/data/db', 'mode': 'rw'}}, healthcheck={"Test": ["CMD-SHELL", "mongo --eval \"rs.initiate({_id: 'rs0', version: 1, members: [{ _id: 0, host : 'localhost:27017' } ]})\""],"Interval": 1000000 * 500, "Timeout": 1000000 * 5 * 1000, "Retries": 3, "StartPeriod": 1000000 * 5 * 1000})
+        client.containers.run(image_path, name=image_name, detach=True, network_mode='host', volumes={'/ngdesk/mongodb':{'bind':'/data/db', 'mode': 'rw'}}, healthcheck={"Test": ["CMD-SHELL", "mongo --eval \"rs.initiate({_id: 'rs0', version: 1, members: [{ _id: 0, host : 'localhost:27017' } ]})\""],"Interval": 1000000 * 500, "Timeout": 1000000 * 5 * 1000, "Retries": 3, "StartPeriod": 1000000 * 5 * 1000}, restart_policy={'Name': 'always'})
     elif image_name == 'ngdesk-elasticsearch':
-        client.containers.run(image_path, name=image_name, detach=True, network_mode='host', volumes={'/ngdesk/elasticsearch':{'bind':'/usr/share/elasticsearch/data', 'mode': 'rw'}}, environment=['discovery.type=single-node', 'ES_JAVA_OPTS=-Xms1g -Xmx1g'])
+        print('fix elastic')
+        # TODO: fix this
+        # docker run -d --name ngdesk-elasticsearch --network host -e "discovery.type=single-node" -e "ES_JAVA_OPTS=-Xms1g -Xmx1g" elasticsearch:7.14.1
+        # client.containers.run(image_path, name=image_name, detach=True, network_mode='host', volumes={'/ngdesk/elasticsearch':{'bind':'/usr/share/elasticsearch/data', 'mode': 'rw'}}, environment=['discovery.type=single-node', 'ES_JAVA_OPTS=-Xms1g -Xmx1g'])
     # elif image_name == 'ngdesk-kibana':
     #     client.containers.run(image_path, name=image_name, detach=True, network_mode='host', environment=['ELASTICSEARCH_HOSTS=http://localhost:9200'])
     elif image_name == 'ngdesk-redis':
-        client.containers.run(image_path, name=image_name, detach=True, network_mode='host', environment=['REDIS_PASSWORD=Qk4CSfb4hU7f'])
+        client.containers.run(image_path, name=image_name, detach=True, network_mode='host', environment=['REDIS_PASSWORD=Qk4CSfb4hU7f'], restart_policy={'Name': 'always'})
     elif image_name == 'ngdesk-nginx':
         # urllib.request.urlretrieve('http://10.2.15.60/nginx/nginx.conf', '/ngdesk/nginx/nginx.conf')
         # urllib.request.urlretrieve('http://10.2.15.60/nginx/ngdesk.crt', '/ngdesk/nginx/ngdesk.crt')
         # urllib.request.urlretrieve('http://10.2.15.60/nginx/ngdesk.key', '/ngdesk/nginx/ngdesk.key')
         # client.containers.run(image_path, name=image_name, detach=True, network_mode='host', volumes={'/ngdesk/nginx/nginx.conf':{'bind':'/etc/nginx/nginx.conf', 'mode': 'ro'}, '/ngdesk/nginx/ngdesk.crt':{'bind':'/etc/nginx/keys/ngdesk.crt'}, '/ngdesk/nginx/ngdesk.key':{'bind':'/etc/nginx/keys/ngdesk.key'}})
         # client.containers.run(image_path, name=image_name, detach=True, network_mode='host', volumes={'/ngdesk/nginx/exmaple.crt':{'bind':'/etc/nginx/keys/'}, '/ngdesk/nginx/exmaple.key':{'bind':'/etc/nginx/keys/'}})
-        client.containers.run(image_path, name=image_name, detach=True, network_mode='host', volumes={'/ngdesk/nginx':{'bind':'/etc/nginx/keys', 'mode': 'ro'}})
+        client.containers.run(image_path, name=image_name, detach=True, network_mode='host', volumes={'/ngdesk/nginx':{'bind':'/etc/nginx/keys', 'mode': 'ro'}}, restart_policy={'Name': 'always'})
         # client.containers.run(image_path, name=image_name, detach=True, network_mode='host')
     elif image_name == 'ngdesk-email-server':
-        client.containers.run(image_path, name=image_name, detach=True, network_mode='host', environment=['MANAGER_HOST=localhost'])
+        client.containers.run(image_path, name=image_name, detach=True, network_mode='host', environment=['MANAGER_HOST=localhost'], restart_policy={'Name': 'always'})
     else:
-        client.containers.run(image_path, name=image_name, detach=True, network_mode='host')
+        client.containers.run(image_path, name=image_name, detach=True, network_mode='host', restart_policy={'Name': 'always'})
