@@ -103,7 +103,7 @@ def check_container_started(image):
         healthcheck_interval = image_healthcheck['interval']
         container_started = False
 
-        print('healthcheck_attempts' + str(healthcheck_attempts))
+        print(healthcheck_attempts)
 
         for x in range(healthcheck_attempts):
             if image_healthcheck['type'] == 'curl':
