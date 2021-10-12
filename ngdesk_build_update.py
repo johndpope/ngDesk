@@ -30,7 +30,7 @@ def build_ngdesk():
         {'name': 'ngdesk-zipkin', 'path': 'ngdesk/zipkin:latest'}, 
         {'name': 'ngdesk-rabbit', 'path': 'rabbitmq:3.8'}, 
         {'name': 'ngdesk-redis', 'path': 'bitnami/redis:6.0.8'},
-        #{'name': 'ngdesk-config-server', 'path': docker_registry_ngdesk_group + 'ngdesk-config-server:latest'}, 
+        {'name': 'ngdesk-config-server', 'path': 'ngdesk/config-server:latest'}, 
 
         {'name': 'ngdesk-mongodb', 'path': 'ngdesk/mongodb:latest'}, 
         {'name': 'ngdesk-elasticsearch', 'path': 'ngdesk/elasticsearch:latest'}, 
