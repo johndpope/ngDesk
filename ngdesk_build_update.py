@@ -4,6 +4,7 @@ import os, stat
 from os import path
 import sys
 import time
+import socket
 
 client = docker.from_env()
 
@@ -27,8 +28,7 @@ def build_ngdesk():
     ngdesk_images = [
         {'name': 'ngdesk-consul', 'path': 'ngdesk/consul:latest', 'healthcheck': {'type': 'curl', 'attempts': 24, 'interval': 5, 'url': 'http://localhost:8500/ui/'}}, 
         {'name': 'ngdesk-zipkin', 'path': 'ngdesk/zipkin:latest', 'healthcheck': {'type': 'curl', 'attempts': 24, 'interval': 5, 'url': 'http://localhost:9411/health'}}, 
-        # {'name': 'ngdesk-rabbit', 'path': 'rabbitmq:3.8', 'healthcheck': {'type': 'curl', 'attempts': 24, 'interval': 5, 'url': 'http://localhost:5672/health'}}, 
-        {'name': 'ngdesk-rabbit', 'path': 'rabbitmq:3.8-management', 'healthcheck': {'type': 'curl', 'attempts': 24, 'interval': 5, 'url': 'http://localhost:15672/api/health/checks/node'}}, 
+        {'name': 'ngdesk-rabbit', 'path': 'rabbitmq:3.8', 'healthcheck': {'type': 'socket', 'attempts': 24, 'interval': 5, 'port': 5672}}, 
         {'name': 'ngdesk-redis', 'path': 'bitnami/redis:6.0.8'},
         {'name': 'ngdesk-config-server', 'path': 'ngdesk/config-server:latest'}, 
 
@@ -119,6 +119,14 @@ def check_container_started(image):
                         time.sleep(healthcheck_interval)
                 except requests.exceptions.ConnectionError:
                     time.sleep(healthcheck_interval)
+            elif image_healthcheck['type'] == 'socket':
+                sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                result = sock.connect_ex(('127.0.0.1', image_healthcheck['port']))
+                if result == 0:
+                    container_started = True
+                    break
+                sock.close()
+
                     
 
         if container_started == False:
