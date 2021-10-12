@@ -109,11 +109,13 @@ public class Blacklist {
 
 									Document contacts = (Document) contactCollection
 											.find(Filters.eq("_id", new ObjectId(user.getString("CONTACT")))).first();
-
-									String emailAddress = user.getString("EMAIL_ADDRESS");
-									String firstName = contacts.get("FIRST_NAME").toString();
 									String lastName = "";
+									String firstName = "";
+									String emailAddress = user.getString("EMAIL_ADDRESS");
 									if (contacts != null) {
+										if (contacts.containsKey("FIRST_NAME") && contacts.get("FIRST_NAME") != null) {
+											firstName = contacts.get("FIRST_NAME").toString();
+										}
 										if (contacts.containsKey("LAST_NAME") && contacts.get("LAST_NAME") != null) {
 											lastName = contacts.get("LAST_NAME").toString();
 										}
