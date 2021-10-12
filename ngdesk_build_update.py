@@ -26,8 +26,9 @@ def build_ngdesk():
 
     ngdesk_images = [
         {'name': 'ngdesk-consul', 'path': 'ngdesk/consul:latest', 'healthcheck': {'type': 'curl', 'attempts': 24, 'interval': 5, 'url': 'http://localhost:8500/ui/'}}, 
-        {'name': 'ngdesk-zipkin', 'path': 'ngdesk/zipkin:latest'}, 
-        {'name': 'ngdesk-rabbit', 'path': 'rabbitmq:3.8'}, 
+        {'name': 'ngdesk-zipkin', 'path': 'ngdesk/zipkin:latest', 'healthcheck': {'type': 'curl', 'attempts': 24, 'interval': 5, 'url': 'http://localhost:9411/health'}}, 
+        # {'name': 'ngdesk-rabbit', 'path': 'rabbitmq:3.8', 'healthcheck': {'type': 'curl', 'attempts': 24, 'interval': 5, 'url': 'http://localhost:5672/health'}}, 
+        {'name': 'ngdesk-rabbit', 'path': 'rabbitmq:3.8-management', 'healthcheck': {'type': 'curl', 'attempts': 24, 'interval': 5, 'url': 'http://localhost:15672/api/health/checks/node'}}, 
         {'name': 'ngdesk-redis', 'path': 'bitnami/redis:6.0.8'},
         {'name': 'ngdesk-config-server', 'path': 'ngdesk/config-server:latest'}, 
 
