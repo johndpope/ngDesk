@@ -142,4 +142,5 @@ def start_containers(image_path, image_name):
     elif image_name == 'ngdesk-email-server':
         client.containers.run(image_path, name=image_name, detach=True, network_mode='host', environment=['MANAGER_HOST=localhost'])
     else:
-        client.containers.run(image_path, name=image_name, detach=True, network_mode='host', HealthCheck={ "Test": ["CMD", "curl", "--fail", "http://localhost:3000/", "||", "exit", "1"], "Interval": 1000000 * 5 * 100, "Timeout": 1000000 * 5 * 1000, "Retries": 3, "StartPeriod": 1000000 * 5 * 1000})
+        client.containers.run(image_path, name=image_name, detach=True, network_mode='host')
+        # client.containers.run(image_path, name=image_name, detach=True, network_mode='host', HealthCheck={ "Test": ["CMD", "curl", "--fail", "http://localhost:3000/", "||", "exit", "1"], "Interval": 1000000 * 5 * 100, "Timeout": 1000000 * 5 * 1000, "Retries": 3, "StartPeriod": 1000000 * 5 * 1000})
