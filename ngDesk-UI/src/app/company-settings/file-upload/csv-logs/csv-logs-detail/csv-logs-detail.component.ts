@@ -103,10 +103,6 @@ export class CsvLogsDetailComponent implements OnInit {
 			);
 	}
 
-	public sortData(event) {
-		this.getLogs();
-	}
-
 	public pageChangeEmit(event) {
 		this.getLogs();
 	}

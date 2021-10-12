@@ -37,6 +37,7 @@ export class CsvLogsService {
 					lineNumber
 					errorMessage
 			  }
+			TOTAL_RECORDS: getCsvLogsCount(csvImportId: "${id}")
 		}`;
 		return this.http.post(`${this.globals.graphqlUrl}`, query);
 	}

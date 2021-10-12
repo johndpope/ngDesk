@@ -2201,7 +2201,7 @@
 	"ADD_FORMULA": "Add Formula",
 	"SCHEDULES_USER_SEARCH": "Search is based on email address",
 	"LIST_FORMULA_CANNOT_BE_DROPPED": "List formula field cannot be dropped to sidebar",
-	"lINE_NUMBER": "lineNumber",
-	"ERROR_MESSAGE": "errorMessage",
+	"lINE_NUMBER": "Line Number",
+	"ERROR_MESSAGE": "Error Message",
 	"NO_LOGS_FOUND": "No logs found"
 }

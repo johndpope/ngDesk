@@ -3,9 +3,9 @@
 	<app-title-bar class="light-grey-color" title="{{'CSV_LOGS' | translate}}">
 	</app-title-bar>
 </ng-template>
-<!-- <div fxLayoutAlign="center" style="padding: 20px;"> -->
-<!-- <div fxlayout="column" class="mat-elevation-z2" fxFlex="70" style="padding-top: 20px;border-radius: 4px"> -->
-<!-- <div fxLayout="row" fxLayoutAlign="center">
+<div fxLayoutAlign="center" style="padding: 20px;">
+	<div fxlayout="column" class="mat-elevation-z2" fxFlex="70" style="padding-top: 20px;border-radius: 4px">
+		<div fxLayout="row" fxLayoutAlign="center">
 			<mat-label class="mat-h2">{{fileName}}</mat-label>
 		</div>
 		<div class="mat-h3" fxLayoutAlign="center center" fxLayout="row" fxLayoutGap="50px">
@@ -15,28 +15,19 @@
 			<button mat-raised-button (click)="openTable()">
 				Lines Failed : {{failedCount ? failedCount: 0}}
 			</button>
-		</div> -->
-<!-- <div fxLayoutAlign="center">
-			<div *ngIf="table" fxLayout="row" style="border: 1px solid;" fxFlex="80" fxLayoutAlign="center center">
+		</div>
 
-				table
+		<div fxLayout="column" fxLayoutGap="10px" class="pad10">
+			<div fxLayout="row">
+				<div fxFlex>
+					<app-custom-table [templateRef]="columnTemplateRef" noRecordsMessage="{{'NO_LOGS_FOUND' | translate}}"
+						(pageChangeEmit)="pageChangeEmit($event);customTableService.isLoading = true">
+						<ng-template #columnTemplateRef let-element="element" let-col="col">
+							{{element[col.NAME]}}
+						</ng-template>
+					</app-custom-table>
+				</div>
 			</div>
-		</div> -->
-
-<div fxLayout="column" fxLayoutGap="10px" class="pad10">
-	<div fxLayout="row">
-		<div fxFlex>
-			<app-custom-table [templateRef]="columnTemplateRef" noRecordsMessage="{{'NO_LOGS_FOUND' | translate}}"
-				(sortData)="sortData($event);customTableService.isLoading = true"
-				(pageChangeEmit)="pageChangeEmit($event);customTableService.isLoading = true">
-				<ng-template #columnTemplateRef let-element="element" let-col="col">
-					{{element[col.NAME]}}
-				</ng-template>
-			</app-custom-table>
 		</div>
 	</div>
 </div>
-
-<!-- <div class="mat-h3" *ngIf="logs.length === 0" fxLayoutAlign="center">{{'NO_ERROR_LOGS_FOUND' | translate}}</div> -->
-<!-- </div> -->
-<!-- </div> -->
