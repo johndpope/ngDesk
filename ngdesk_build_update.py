@@ -125,6 +125,8 @@ def check_container_started(image):
                 if result == 0:
                     container_started = True
                     break
+                else:
+                    time.sleep(healthcheck_interval)
                 sock.close()
 
                     
