@@ -25,7 +25,7 @@ def build_ngdesk():
 
 
     ngdesk_images = [
-        {'name': 'ngdesk-consul', 'path': 'ngdesk/consul:latest', 'healthcheck': {'type': 'curl', 'start_period': 120, 'url': 'http://localhost:8500/actuator/health'}}, 
+        {'name': 'ngdesk-consul', 'path': 'ngdesk/consul:latest', 'healthcheck': {'type': 'curl', 'attempts': 25, 'interval': 5, 'url': 'http://localhost:8500/actuator/health'}}, 
         {'name': 'ngdesk-zipkin', 'path': 'ngdesk/zipkin:latest'}, 
         {'name': 'ngdesk-rabbit', 'path': 'rabbitmq:3.8'}, 
         {'name': 'ngdesk-redis', 'path': 'bitnami/redis:6.0.8'},
@@ -99,7 +99,8 @@ def check_container_started(image):
     if 'healthcheck' in image:
         print('check container started')
         image_healthcheck = image['healthcheck']
-        healthcheck_attempts = image_healthcheck['start_period'] / 5
+        healthcheck_attempts = image_healthcheck['attempts']
+        healthcheck_interval = image_healthcheck['interval']
         container_started = False
 
         for x in range(healthcheck_attempts):
@@ -109,7 +110,7 @@ def check_container_started(image):
                     container_started = True
                     break
                 
-                time.sleep(5)
+                time.sleep(healthcheck_interval)
 
         if container_started == False:
             sys.exit(image['name'] + ' failed to start in alloted time')
