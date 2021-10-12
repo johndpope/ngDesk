@@ -108,12 +108,15 @@ def check_container_started(image):
         for x in range(healthcheck_attempts):
             if image_healthcheck['type'] == 'curl':
                 print(image_healthcheck['url'])
-                resp = requests.get(image_healthcheck['url'])
-                print(resp)
-                if resp.ok:
-                    container_started = True
-                    break
-                
+                try:
+                    resp = requests.get(image_healthcheck['url'])
+                    print(resp)
+                    if resp.ok:
+                        container_started = True
+                        break
+                except requests.exceptions.ConnectionError:
+                    continue
+                    
                 time.sleep(healthcheck_interval)
 
         if container_started == False:
