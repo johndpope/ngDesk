@@ -1,5 +1,8 @@
 package com.ngdesk.role.dao;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -7,10 +10,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class FieldPermission {
 
 	@JsonProperty("FIELD")
+	@NotEmpty(message = "FIELD_ID_REQUIRED")
 	@Field("FIELD")
 	private String fieldId;
 
 	@JsonProperty("PERMISSION")
+	@NotEmpty(message = "FIELD_PERMISSION_REQUIRED")
+	@Pattern(regexp = "Read/Write|Not Set|Read|Write Only Creator|Not Editable|Write by team", message = "NOT_VALID_FIELD_PERMISSION_LEVEL")
 	@Field("PERMISSION")
 	private String permission;
 
@@ -18,7 +24,8 @@ public class FieldPermission {
 
 	}
 
-	public FieldPermission(String fieldId, String permission) {
+	public FieldPermission(@NotEmpty(message = "FIELD_ID_REQUIRED") String fieldId,
+			@NotEmpty(message = "FIELD_PERMISSION_REQUIRED") @Pattern(regexp = "Read/Write|Not Set|Read|Write Only Creator|Not Editable|Write by team", message = "NOT_VALID_FIELD_PERMISSION_LEVEL") String permission) {
 		super();
 		this.fieldId = fieldId;
 		this.permission = permission;

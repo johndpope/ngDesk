@@ -2,18 +2,21 @@ package com.ngdesk.role.dao;
 
 import java.util.List;
 
-import org.springframework.data.annotation.Id;
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Role {
 
-	@JsonProperty("ROLE_ID")
-	@Id
-	public String id;
-
 	@JsonProperty("NAME")
+	@NotEmpty(message = "ROLE_NAME_REQUIRED")
+	@Pattern(regexp = "([A-Za-z0-9]+)", message = "INVALID_ROLE_NAME")
+	@Size(max = 30, message = "INVALID_ROLE_NAME_SIZE")
 	@Field("NAME")
 	private String name;
 
@@ -22,18 +25,27 @@ public class Role {
 	private String description;
 
 	@JsonProperty("PERMISSIONS")
+	@Valid
+	@Size(min = 1, message = "ROLE_PERMISSION_REQUIRED")
 	@Field("PERMISSIONS")
 	private List<Permission> permissions;
 
+	@JsonProperty("ROLE_ID")
+	public String id;
+
 	public Role() {
+
 	}
 
-	public Role(String id, String name, String description, List<Permission> permissions) {
+	public Role(
+			@NotEmpty(message = "ROLE_NAME_REQUIRED") @Pattern(regexp = "([A-Za-z0-9]+)", message = "INVALID_ROLE_NAME") @Size(max = 30, message = "INVALID_ROLE_NAME_SIZE") String name,
+			String description,
+			@Valid @Size(min = 1, message = "ROLE_PERMISSION_REQUIRED") List<Permission> permissions, String id) {
 		super();
-		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.permissions = permissions;
+		this.id = id;
 	}
 
 	public String getId() {

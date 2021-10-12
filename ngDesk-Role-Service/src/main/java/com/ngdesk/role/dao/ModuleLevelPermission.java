@@ -1,5 +1,8 @@
 package com.ngdesk.role.dao;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -7,22 +10,32 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class ModuleLevelPermission {
 
 	@JsonProperty("ACCESS")
+	@Pattern(regexp = "Enabled|Not Set|Disabled", message = "NOT_VALID_ACCESS")
+	@NotEmpty(message = "ACCESS_REQUIRED")
 	@Field("ACCESS")
 	private String access;
 
 	@JsonProperty("ACCESS_TYPE")
+	@Pattern(regexp = "Normal|Not Set|Admin", message = "NOT_VALID_ACCESS_TYPE")
+	@NotEmpty(message = "ACCESS_TYPE_REQUIRED")
 	@Field("ACCESS_TYPE")
 	private String accessType;
 
 	@JsonProperty("EDIT")
+	@Pattern(regexp = "All|Not Set|None", message = "NOT_VALID_EDIT")
+	@NotEmpty(message = "MODULE_PERMISSION_EDIT_REQUIRED")
 	@Field("EDIT")
 	private String edit;
 
 	@JsonProperty("VIEW")
+	@Pattern(regexp = "All|Not Set|None", message = "NOT_VALID_VIEW")
+	@NotEmpty(message = "MODULE_PERMISSION_VIEW_REQUIRED")
 	@Field("VIEW")
 	private String view;
 
 	@JsonProperty("DELETE")
+	@Pattern(regexp = "All|Not Set|None", message = "NOT_VALID_DELETE")
+	@NotEmpty(message = "MODULE_PERMISSION_DELETE_REQUIRED")
 	@Field("DELETE")
 	private String delete;
 
@@ -30,8 +43,12 @@ public class ModuleLevelPermission {
 
 	}
 
-	
-	public ModuleLevelPermission(String access, String accessType, String edit, String view, String delete) {
+	public ModuleLevelPermission(
+			@Pattern(regexp = "Enabled|Not Set|Disabled", message = "NOT_VALID_ACCESS") @NotEmpty(message = "ACCESS_REQUIRED") String access,
+			@Pattern(regexp = "Normal|Not Set|Admin", message = "NOT_VALID_ACCESS_TYPE") @NotEmpty(message = "ACCESS_TYPE_REQUIRED") String accessType,
+			@Pattern(regexp = "All|Not Set|None", message = "NOT_VALID_EDIT") @NotEmpty(message = "MODULE_PERMISSION_EDIT_REQUIRED") String edit,
+			@Pattern(regexp = "All|Not Set|None", message = "NOT_VALID_VIEW") @NotEmpty(message = "MODULE_PERMISSION_VIEW_REQUIRED") String view,
+			@Pattern(regexp = "All|Not Set|None", message = "NOT_VALID_DELETE") @NotEmpty(message = "MODULE_PERMISSION_DELETE_REQUIRED") String delete) {
 		super();
 		this.access = access;
 		this.accessType = accessType;
@@ -39,7 +56,6 @@ public class ModuleLevelPermission {
 		this.view = view;
 		this.delete = delete;
 	}
-
 
 	public String getAccess() {
 		return access;

@@ -7,6 +7,8 @@ import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventLis
 import org.springframework.data.mongodb.core.mapping.event.BeforeConvertEvent;
 import org.springframework.stereotype.Component;
 
+import com.ngdesk.commons.exceptions.BadRequestException;
+import com.ngdesk.commons.exceptions.NotFoundException;
 import com.ngdesk.commons.managers.AuthManager;
 import com.ngdesk.repositories.RoleRepository;
 
@@ -23,11 +25,19 @@ public class BeforeSaveListner extends AbstractMongoEventListener<Role> {
 	public void onBeforeConvert(BeforeConvertEvent<Role> event) {
 		Role role = event.getSource();
 		findDuplicateName(role);
-	}
-
-	private void findDuplicateName(Role role) {
-		Optional<Role> optionalRole = roleRepository.findRoleByName(role.getName(),
-				"roles_" + authManager.getUserDetails().getCompanyId());
 
 	}
+
+	public void findDuplicateName(Role role) {
+		String companyId = authManager.getUserDetails().getCompanyId();
+		String collectionName = "roles_" + companyId;
+		System.out.println(role.getName() + "       " + companyId + "      " + collectionName);
+		Optional<Role> optionalRole = roleRepository.findRoleByName(role.getName(), collectionName);
+		// System.out.println("-------------" + optionalRole.get().getName());
+		if (optionalRole.isPresent()) {
+			String[] variables = { "ROLE", "NAME" };
+			throw new BadRequestException("DAO_VARIABLE_ALREADY_EXISTS", variables);
+		}
+	}
+
 }
