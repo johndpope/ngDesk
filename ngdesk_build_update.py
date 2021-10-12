@@ -25,7 +25,7 @@ def build_ngdesk():
 
 
     ngdesk_images = [
-        {'name': 'ngdesk-consul', 'path': 'ngdesk/consul:latest', 'healthcheck': {'type': 'curl', 'attempts': 25, 'interval': 5, 'url': 'http://localhost:8500/actuator/health'}}, 
+        {'name': 'ngdesk-consul', 'path': 'ngdesk/consul:latest', 'healthcheck': {'type': 'curl', 'attempts': 24, 'interval': 5, 'url': 'http://localhost:8500/ui/'}}, 
         {'name': 'ngdesk-zipkin', 'path': 'ngdesk/zipkin:latest'}, 
         {'name': 'ngdesk-rabbit', 'path': 'rabbitmq:3.8'}, 
         {'name': 'ngdesk-redis', 'path': 'bitnami/redis:6.0.8'},
@@ -107,7 +107,9 @@ def check_container_started(image):
 
         for x in range(healthcheck_attempts):
             if image_healthcheck['type'] == 'curl':
+                print(image_healthcheck['url'])
                 resp = requests.get(image_healthcheck['url'])
+                print(resp)
                 if resp.ok:
                     container_started = True
                     break
