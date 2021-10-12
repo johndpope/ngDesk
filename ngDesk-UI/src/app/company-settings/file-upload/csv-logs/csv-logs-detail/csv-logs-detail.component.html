@@ -12,12 +12,12 @@
 			<button mat-raised-button>
 				Lines completed : {{completedCount ? completedCount: 0}}
 			</button>
-			<button mat-raised-button (click)="openTable()">
+			<button mat-raised-button (click)="displayLogTable()">
 				Lines Failed : {{failedCount ? failedCount: 0}}
 			</button>
 		</div>
 
-		<div fxLayout="column" fxLayoutGap="10px" class="pad10">
+		<div *ngIf="logTable" fxLayout="column" fxLayoutGap="10px" class="pad10">
 			<div fxLayout="row">
 				<div fxFlex>
 					<app-custom-table [templateRef]="columnTemplateRef" noRecordsMessage="{{'NO_LOGS_FOUND' | translate}}"

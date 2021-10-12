@@ -11,9 +11,8 @@ import { ModulesService } from '@src/app/modules/modules.service';
 	styleUrls: ['./csv-logs-detail.component.scss'],
 })
 export class CsvLogsDetailComponent implements OnInit {
-	public logs = [];
 	public fileName = '';
-	public table: boolean;
+	public logTable: boolean;
 	public failedCount: number;
 	public completedCount: number;
 	public logId;
@@ -29,42 +28,6 @@ export class CsvLogsDetailComponent implements OnInit {
 
 	public ngOnInit() {
 		this.logId = this.route.snapshot.params['dataId'];
-		const columnsHeaders: string[] = [
-			this.translateService.instant('lINE_NUMBER'),
-			this.translateService.instant('ERROR_MESSAGE'),
-		];
-		const columnsHeadersObj = [
-			{
-				DISPLAY: this.translateService.instant('lINE_NUMBER'),
-				NAME: 'lineNumber',
-			},
-			{
-				DISPLAY: this.translateService.instant('ERROR_MESSAGE'),
-				NAME: 'errorMessage',
-			},
-		];
-		if (!this.customTableService.sortBy) {
-			this.customTableService.sortBy = 'lineNumber';
-		}
-		if (!this.customTableService.sortOrder) {
-			this.customTableService.sortOrder = 'asc';
-		}
-		if (!this.customTableService.pageIndex) {
-			this.customTableService.pageIndex = 0;
-		}
-		if (!this.customTableService.pageSize) {
-			this.customTableService.pageSize = 10;
-		}
-		this.customTableService.activeSort = {
-			ORDER_BY: 'asc',
-			SORT_BY: this.translateService.instant('lINE_NUMBER'),
-			NAME: 'lineNumber',
-		};
-
-		this.customTableService.columnsHeaders = columnsHeaders;
-		this.customTableService.columnsHeadersObj = columnsHeadersObj;
-		this.customTableService.isLoading = true;
-		this.getLogs();
 		this.csvLogsService.getCsvImport(this.logId).subscribe(
 			(response: any) => {
 				this.failedCount = response.DATA.failedCount;
@@ -113,7 +76,43 @@ export class CsvLogsDetailComponent implements OnInit {
 		this.customTableService.pageIndex = undefined;
 		this.customTableService.pageSize = undefined;
 	}
-	public openTable() {
-		this.table = true;
+	public displayLogTable() {
+		this.logTable = true;
+		const columnsHeaders: string[] = [
+			this.translateService.instant('lINE_NUMBER'),
+			this.translateService.instant('ERROR_MESSAGE'),
+		];
+		const columnsHeadersObj = [
+			{
+				DISPLAY: this.translateService.instant('lINE_NUMBER'),
+				NAME: 'lineNumber',
+			},
+			{
+				DISPLAY: this.translateService.instant('ERROR_MESSAGE'),
+				NAME: 'errorMessage',
+			},
+		];
+		if (!this.customTableService.sortBy) {
+			this.customTableService.sortBy = 'lineNumber';
+		}
+		if (!this.customTableService.sortOrder) {
+			this.customTableService.sortOrder = 'asc';
+		}
+		if (!this.customTableService.pageIndex) {
+			this.customTableService.pageIndex = 0;
+		}
+		if (!this.customTableService.pageSize) {
+			this.customTableService.pageSize = 10;
+		}
+		this.customTableService.activeSort = {
+			ORDER_BY: 'asc',
+			SORT_BY: this.translateService.instant('lINE_NUMBER'),
+			NAME: 'lineNumber',
+		};
+
+		this.customTableService.columnsHeaders = columnsHeaders;
+		this.customTableService.columnsHeadersObj = columnsHeadersObj;
+		this.customTableService.isLoading = true;
+		this.getLogs();
 	}
 }
