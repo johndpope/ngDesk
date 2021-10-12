@@ -85,13 +85,13 @@ pipeline {
 					}
 					
 					if(uiChanged.length() > 0){
-							dir('/var/jenkins_home/projects/ngdesk-web-project') {
-								checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs: [[credentialsId: "${env.GIT_CREDENTIAL_ID}", url: "${env.GIT_WEB_URL}"]]])
-							}
+						dir('/var/jenkins_home/projects/ngdesk-web-project') {
+							checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs: [[credentialsId: "${env.GIT_CREDENTIAL_ID}", url: "${env.GIT_WEB_URL}"]]])
+						}
 					}
 
 					if (integrationChanged.length() > 0) {
-									buildMicroservice('integration', 'ngDesk-Integration-Service')
+						buildMicroservice('integration', 'ngDesk-Integration-Service')
 					}
 
 					if (graphqlChanged.length() > 0) {
@@ -157,7 +157,7 @@ pipeline {
 					if (nginxChanged.length() > 0) {
 						dir('/var/jenkins_home/projects/ngdesk-project/ngDesk/ngDesk-Nginx') {
 							docker.withRegistry("${env.DOCKER_HUB_URL}", "${env.DOCKER_HUB_KEY}") {
-								def newImage = docker.image("${env.DOCKER_IMAGE_NAME}/nginx:latest")
+								def newImage = docker.build("${env.DOCKER_IMAGE_NAME}/nginx:latest")
 								newImage.push()
 							}
 						}
@@ -277,14 +277,14 @@ def buildMicroservice(serviceName, path) {
             def newImage = docker.image("${env.DOCKER_IMAGE_NAME}/" + serviceName + ":latest")
             newImage.push()
             if(serviceName != 'config-server'){
-            docker.withServer("${env.PROD_SERVER_URL}") {
-                sh "docker rename ngdesk-${serviceName} ngdesk-${serviceName}-old"
-                sh "docker stop ngdesk-${serviceName}-old"
-                sh "docker pull ngdesk/${serviceName}"
-                sh "docker run --mount type=bind,source=/opt/ngdesk,target=/opt/ngdesk --name ngdesk-${serviceName} -d -e SPRING_PROFILES_ACTIVE=dockernew --network=host ngdesk/${serviceName}"
-                sh "docker rm ngdesk-${serviceName}-old"
-                sh 'docker image prune -f'
-            }
+				docker.withServer("${env.PROD_SERVER_URL}") {
+					sh "docker rename ngdesk-${serviceName} ngdesk-${serviceName}-old"
+					sh "docker stop ngdesk-${serviceName}-old"
+					sh "docker pull ngdesk/${serviceName}"
+					sh "docker run --mount type=bind,source=/opt/ngdesk,target=/opt/ngdesk --name ngdesk-${serviceName} -d -e SPRING_PROFILES_ACTIVE=dockernew --network=host ngdesk/${serviceName}"
+					sh "docker rm ngdesk-${serviceName}-old"
+					sh 'docker image prune -f'
+				}
             }
          }
         
