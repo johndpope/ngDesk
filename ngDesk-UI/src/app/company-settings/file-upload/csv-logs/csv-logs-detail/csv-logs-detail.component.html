@@ -29,5 +29,11 @@
 				</div>
 			</div>
 		</div>
+		<div class="mat-caption" *ngIf="logTable" fxLayout="column" fxLayoutGap="10px" class="pad10">
+			<div fxLayout="row" fxLayoutGap="5px">
+				<div style="font-weight: 500;"> Note : </div>
+				<div> {{'NOTE_FOR_FAILED_LINES' | translate}}</div>
+			</div>
+		</div>
 	</div>
 </div>

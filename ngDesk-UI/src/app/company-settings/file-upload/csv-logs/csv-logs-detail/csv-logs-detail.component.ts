@@ -32,7 +32,6 @@ export class CsvLogsDetailComponent implements OnInit {
 			(response: any) => {
 				this.failedCount = response.DATA.failedCount;
 				this.completedCount = response.DATA.completedCount;
-				console.log('1', response);
 				this.fileName = response.DATA.csvImportData.fileName;
 			},
 			(error: any) => {
