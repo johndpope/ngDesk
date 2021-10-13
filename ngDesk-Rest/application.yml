@@ -1,0 +1,6 @@
+spring:
+  cloud:
+    consul:
+      discovery:
+        healthCheckPath: /ngdesk/actuator/health
+        healthCheckInterval: 15s
