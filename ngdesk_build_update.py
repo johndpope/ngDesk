@@ -43,7 +43,6 @@ def build_ngdesk():
 
         {'name': 'ngdesk-auth', 'path': 'ngdesk/auth:latest', 'healthcheck': {'type': 'curl', 'attempts': 24, 'interval': 5, 'url': 'http://localhost:8070/actuator/health'}}, 
         {'name': 'ngdesk-escalation', 'path': 'ngdesk/escalation:latest', 'healthcheck': {'type': 'curl', 'attempts': 24, 'interval': 5, 'url': 'http://localhost:8081/actuator/health'}}, 
-        {'name': 'ngdesk-integration', 'path': 'ngdesk/integration:latest', 'healthcheck': {'type': 'curl', 'attempts': 24, 'interval': 5, 'url': 'http://localhost:8095/actuator/health'}}, 
         {'name': 'ngdesk-sam', 'path': 'ngdesk/sam:latest', 'healthcheck': {'type': 'curl', 'attempts': 24, 'interval': 5, 'url': 'http://localhost:8083/actuator/health'}}, 
         {'name': 'ngdesk-workflow', 'path': 'ngdesk/workflow:latest', 'healthcheck': {'type': 'curl', 'attempts': 24, 'interval': 5, 'url': 'http://localhost:8084/actuator/health'}}, 
         {'name': 'ngdesk-sidebar', 'path': 'ngdesk/sidebar:latest', 'healthcheck': {'type': 'curl', 'attempts': 24, 'interval': 5, 'url': 'http://localhost:8085/actuator/health'}}, 
