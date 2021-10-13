@@ -56,7 +56,6 @@ public class AttachmentService {
 			@RequestParam(value = "message_id", required = false) String messageId,
 			@RequestParam("entry_id") String entryId,
 			@RequestParam(value = "module_id", required = false) String moduleId) {
-		System.out.println("12345===========================");
 		try {
 			log.trace("Enter AttachmentService.getAttachment()");
 

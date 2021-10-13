@@ -44,6 +44,7 @@ public class ArticlesNoAuthDataFetcher implements DataFetcher<List<Article>> {
 	public List<Article> get(DataFetchingEnvironment environment) throws Exception {
 		String subdomain = (String) sessionManager.getSessionInfo().get("subdomain");
 		Company company = companyRepository.findByCompanySubdomain(subdomain).orElse(null);
+
 		if (company == null) {
 			throw new BadRequestException("INVALID_COMPANY", null);
 		}

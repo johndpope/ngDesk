@@ -22,7 +22,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 
 @RestController
-@Component
 public class SectionAPI {
 
 	@Autowired
@@ -53,13 +52,10 @@ public class SectionAPI {
 		}
 		Section existingSection = optionalExistingSection.get();
 		Section updatedSection = setDefaultValuesForUpdate(section, existingSection);
-		// Todo
-
 		return sectionRepository.save(updatedSection, "sections_" + authManager.getUserDetails().getCompanyId());
 	}
 
 	@DeleteMapping("/sections/{id}")
-
 	@Operation(summary = "Deletes a Section", description = "Deletes a Section")
 	public void deleteSection(
 			@Parameter(description = "Section ID", required = true) @PathVariable("id") String sectionId) {
@@ -77,14 +73,10 @@ public class SectionAPI {
 			throw new NotFoundException("DAO_NOT_FOUND", vars);
 
 		}
-
-		// Todo
-
 		sectionRepository.deleteById(sectionId, "sections_" + authManager.getUserDetails().getCompanyId());
 	}
 
 	public Section setDefaultValuesToPost(Section section) {
-
 		int totalCount = sectionRepository.getCount("sections_" + authManager.getUserDetails().getCompanyId());
 		section.setOrder(totalCount + 1);
 		section.setDateCreated(new Date());
