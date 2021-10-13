@@ -97,7 +97,7 @@ public class ReportApi {
 
 			HttpHeaders headers = new HttpHeaders();
 			headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + reportName + ".csv");
-			String content = new String(Files.readAllBytes(Paths.get("/opt/" + reportName + ".csv")));
+			String content = new String(Files.readAllBytes(Paths.get("/opt/ngdesk/reports/" + reportName + ".csv")));
 
 			InputStream targetStream = IOUtils.toInputStream(content, "UTF-8");
 			return ResponseEntity.ok().headers(headers)

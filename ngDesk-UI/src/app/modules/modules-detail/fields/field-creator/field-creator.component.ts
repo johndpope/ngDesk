@@ -670,7 +670,19 @@ export class FieldCreatorComponent implements OnInit {
 									fieldresponse.FIELDS.forEach((field) => {
 										if (
 											field.DATA_TYPE.DISPLAY !== 'Relationship' &&
-											field.DATA_TYPE.DISPLAY !== 'Phone'
+											field.DATA_TYPE.DISPLAY !== 'Phone' &&
+											field.DATA_TYPE.DISPLAY !== 'Date' &&
+											field.DATA_TYPE.DISPLAY !== 'Date/Time' &&
+											field.DATA_TYPE.DISPLAY !== 'Time' &&
+											field.DATA_TYPE.DISPLAY !== 'Zoom' &&
+											field.DATA_TYPE.DISPLAY !== 'Button' &&
+											field.DATA_TYPE.DISPLAY !== 'Time Window' &&
+											field.DATA_TYPE.DISPLAY !== 'Approval' &&
+											field.DATA_TYPE.DISPLAY !== 'Zoom' &&
+											field.DATA_TYPE.DISPLAY !== 'File Upload' &&
+											field.DATA_TYPE.DISPLAY !== 'Password' &&
+											field.DATA_TYPE.DISPLAY !== 'Aggregate' &&
+											field.DATA_TYPE.DISPLAY !== 'File Preview'
 										) {
 											this.parentModuleFields.push(field);
 										}
@@ -798,7 +810,19 @@ export class FieldCreatorComponent implements OnInit {
 					response.FIELDS.forEach((field) => {
 						if (
 							field.DATA_TYPE.DISPLAY !== 'Relationship' &&
-							field.DATA_TYPE.DISPLAY !== 'Phone'
+							field.DATA_TYPE.DISPLAY !== 'Phone' &&
+							field.DATA_TYPE.DISPLAY !== 'Date' &&
+							field.DATA_TYPE.DISPLAY !== 'Date/Time' &&
+							field.DATA_TYPE.DISPLAY !== 'Time' &&
+							field.DATA_TYPE.DISPLAY !== 'Zoom' &&
+							field.DATA_TYPE.DISPLAY !== 'Button' &&
+							field.DATA_TYPE.DISPLAY !== 'Time Window' &&
+							field.DATA_TYPE.DISPLAY !== 'Approval' &&
+							field.DATA_TYPE.DISPLAY !== 'Zoom' &&
+							field.DATA_TYPE.DISPLAY !== 'File Upload' &&
+							field.DATA_TYPE.DISPLAY !== 'Password' &&
+							field.DATA_TYPE.DISPLAY !== 'Aggregate' &&
+							field.DATA_TYPE.DISPLAY !== 'File Preview'
 						) {
 							this.selectedModuleFields.push(field);
 						}
@@ -836,6 +860,19 @@ export class FieldCreatorComponent implements OnInit {
 	public updateRelationFieldName() {
 		this.relationshipObj.NAME =
 			this.relationshipObj.DISPLAY_LABEL.toUpperCase().replace(/ /g, '_');
+	}
+
+	/** restricting the space  */
+
+	public restrictSpaceAndSpecialChar(event): boolean {
+		const charCode = event.which ? event.which : event.keyCode;
+		return (
+			((charCode > 64 && charCode < 91) ||
+			(charCode > 96 && charCode < 123) ||
+			charCode == 8 ||
+			charCode == 32 ||
+			(charCode >= 48 && charCode <= 57)) && (charCode != 32)
+		);
 	}
 
 	public save() {

@@ -4,22 +4,23 @@ import com.ngdesk.data.dao.DiscussionMessage;
 
 public class ChatDiscussionMessage {
 
-	
 	private String agentDataID;
 
+	private String customerDataID;
 
 	private String sessionUuid;
 
-	
 	private DiscussionMessage DiscussionMessage;
 
 	public ChatDiscussionMessage() {
 
 	}
 
-	public ChatDiscussionMessage(String agentDataID, String sessionUuid, DiscussionMessage discussionMessage) {
+	public ChatDiscussionMessage(String agentDataID, String customerDataID, String sessionUuid,
+			DiscussionMessage discussionMessage) {
 		super();
 		this.agentDataID = agentDataID;
+		this.customerDataID = customerDataID;
 		this.sessionUuid = sessionUuid;
 		DiscussionMessage = discussionMessage;
 	}
@@ -46,6 +47,14 @@ public class ChatDiscussionMessage {
 
 	public void setDiscussionMessage(DiscussionMessage discussionMessage) {
 		DiscussionMessage = discussionMessage;
+	}
+
+	public String getCustomerDataID() {
+		return customerDataID;
+	}
+
+	public void setCustomerDataID(String customerDataID) {
+		this.customerDataID = customerDataID;
 	}
 
 }

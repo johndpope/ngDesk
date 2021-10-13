@@ -50,6 +50,7 @@ import com.ngdesk.websocket.channels.chat.dao.ChatTicketCreationService;
 import com.ngdesk.websocket.channels.chat.dao.ChatUser;
 import com.ngdesk.websocket.channels.chat.dao.ChatUserEntryService;
 import com.ngdesk.websocket.channels.chat.dao.ChatWidgetPayload;
+import com.ngdesk.websocket.channels.chat.dao.SendChatTranscript;
 import com.ngdesk.websocket.dao.WebSocketService;
 import com.ngdesk.websocket.graphql.dao.GraphqlProxy;
 import com.ngdesk.websocket.modules.dao.ButtonTypeService;
@@ -457,42 +458,53 @@ public class SocketHandler extends TextWebSocketHandler {
 					logController.addLogToApplication(newLog, subdomain, id);
 				}
 			} else if (queryParamMap.containsKey("sessionUUID") && queryParamMap.containsKey("subdomain")) {
-
 				try {
-					ChatWidgetPayload pageLoad = mapper.readValue(textMessage.getPayload(), ChatWidgetPayload.class);
-					chatService.publishPageLoad(pageLoad);
-
+					SendChatTranscript sendChatTranscript = mapper.readValue(textMessage.getPayload(),
+							SendChatTranscript.class);
+					chatService.sendChatTranscript(sendChatTranscript);
 				} catch (Exception e) {
+
 					try {
-						ChatUser chatUser = mapper.readValue(textMessage.getPayload(), ChatUser.class);
-						chatUserEntryService.chatUserEntryCreation(chatUser);
+						ChatWidgetPayload pageLoad = mapper.readValue(textMessage.getPayload(),
+								ChatWidgetPayload.class);
+						chatService.publishPageLoad(pageLoad);
+
 					} catch (Exception e1) {
 						try {
-							ChatDiscussionMessage chatDiscussionMessage = mapper.readValue(textMessage.getPayload(),
-									ChatDiscussionMessage.class);
-							DiscussionMessage discussionMessage = chatDiscussionMessage.getDiscussionMessage();
-
-							Assert.notNull(discussionMessage.getMessageType(), "Message Type should not be null");
-							if (!discussionMessage.getMessageType().equalsIgnoreCase("ping")) {
-								Assert.notNull(discussionMessage.getMessage(), "Message should not be null");
-								Assert.notNull(discussionMessage.getDataId(), "Entry ID should not be null");
-
-								if (!discussionMessage.getMessageType().equals("MESSAGE")
-										&& !discussionMessage.getMessageType().equals("INTERNAL_COMMENT")) {
-									throw new IllegalArgumentException();
-								}
-								webSocketService.addDiscussionToChatEntry(chatDiscussionMessage, subdomain,
-										chatDiscussionMessage.getAgentDataID(), false);
-
-							}
-
+							ChatUser chatUser = mapper.readValue(textMessage.getPayload(), ChatUser.class);
+							chatUserEntryService.chatUserEntryCreation(chatUser);
 						} catch (Exception e2) {
-							ChatTicket chatTicket = mapper.readValue(textMessage.getPayload(), ChatTicket.class);
-							chatTicketCreationService.chatTicketCreation(chatTicket);
+							try {
+								ChatDiscussionMessage chatDiscussionMessage = mapper.readValue(textMessage.getPayload(),
+										ChatDiscussionMessage.class);
+								DiscussionMessage discussionMessage = chatDiscussionMessage.getDiscussionMessage();
+
+								Assert.notNull(discussionMessage.getMessageType(), "Message Type should not be null");
+								if (!discussionMessage.getMessageType().equalsIgnoreCase("ping")) {
+									Assert.notNull(discussionMessage.getMessage(), "Message should not be null");
+									Assert.notNull(discussionMessage.getDataId(), "Entry ID should not be null");
+
+									if (!discussionMessage.getMessageType().equals("MESSAGE")
+											&& !discussionMessage.getMessageType().equals("INTERNAL_COMMENT")) {
+										throw new IllegalArgumentException();
+									}
+									webSocketService.addDiscussionToChatEntry(chatDiscussionMessage, subdomain,
+											chatDiscussionMessage.getCustomerDataID(), false);
+
+								}
+
+							} catch (Exception e3) {
+								try {
+									ChatTicket chatTicket = mapper.readValue(textMessage.getPayload(),
+											ChatTicket.class);
+									chatTicketCreationService.chatTicketCreation(chatTicket);
+								} catch (Exception e4) {
+
+								}
+							}
 						}
 					}
 				}
-
 			}
 
 		} catch (JsonMappingException e) {

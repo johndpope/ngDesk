@@ -1,5 +1,6 @@
 package com.ngdesk.websocket.channels.chat.dao;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,21 +9,24 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
+import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.expression.spel.ast.OpInc;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ngdesk.commons.Global;
+import com.ngdesk.commons.mail.SendMail;
 import com.ngdesk.data.dao.DiscussionMessage;
+import com.ngdesk.data.dao.Sender;
 import com.ngdesk.repositories.ChatChannelRepository;
 import com.ngdesk.repositories.CompaniesRepository;
 import com.ngdesk.repositories.ModuleEntryRepository;
 import com.ngdesk.repositories.ModulesRepository;
 import com.ngdesk.websocket.companies.dao.Company;
 import com.ngdesk.websocket.modules.dao.Module;
-import com.ngdesk.websocket.notification.dao.NotificationOfAgentDetails;
+import com.ngdesk.websocket.notification.dao.AgentDetails;
 
 @Component
 public class ChatService {
@@ -52,7 +56,10 @@ public class ChatService {
 	RedisTemplate<String, ChatNotification> redisTemplateForChatNotification;
 
 	@Autowired
-	RedisTemplate<String, NotificationOfAgentDetails> redisTemplateNotificationOfAgentDetails;
+	Global global;
+
+	@Autowired
+	SendMail sendMail;
 
 	public void publishPageLoad(ChatWidgetPayload pageLoad) {
 		try {
@@ -85,24 +92,28 @@ public class ChatService {
 								Map<String, Object> chatEntry = new HashMap<String, Object>();
 								ChatNotification chatNotification = new ChatNotification();
 								chatNotification.setCompanyId(companyId);
-								chatNotification.setEntry(chatEntry);
 								chatNotification.setSessionUUID(pageLoad.getSessionUUID());
+								chatNotification.setStatus("Browsing");
 								if (optionalChatEntry.isEmpty()) {
 									entry.put("STATUS", "Browsing");
 									chatEntry = dataProxy.postModuleEntry(entry, optionalChatModule.get().getModuleId(),
 											false, companyId, user.get("USER_UUID").toString());
-									chatNotification.setStatus("Browsing");
-									chatNotification.setType("CHAT_ENTRY");
+									chatNotification.setType("CHAT_NOTIFICATION");
 
 								} else {
 									entry.put("DATA_ID", optionalChatEntry.get().get("_id").toString());
 									chatEntry = dataProxy.putModuleEntry(entry, optionalChatModule.get().getModuleId(),
 											false, companyId, user.get("USER_UUID").toString());
-									chatNotification.setStatus("Chatting");
-									chatNotification.setType("CHAT_ENTRY");
+									chatNotification.setType("CHAT_NOTIFICATION");
+									AgentDetails agentDetails = getAgentDetails(optionalChatEntry.get(), companyId);
+									chatNotification.setAgentDetails(agentDetails);
+									if (agentDetails != null && agentDetails.getAgentDataId() != null) {
+										chatNotification.setStatus("Chatting");
+									}
+
 								}
+								chatNotification.setEntry(chatEntry);
 								addToChatNotificationQueue(chatNotification);
-								publishAgentDetails(chatEntry, companyId);
 							}
 						}
 					}
@@ -121,7 +132,7 @@ public class ChatService {
 		redisTemplateForChatNotification.convertAndSend("chat_notification", message);
 	}
 
-	public void publishAgentDetails(Map<String, Object> chatEntry, String companyId) {
+	public AgentDetails getAgentDetails(Map<String, Object> chatEntry, String companyId) {
 
 		List<String> agents = (List<String>) chatEntry.get("AGENTS");
 		if (agents != null) {
@@ -155,13 +166,12 @@ public class ChatService {
 							String customerRole = customer.get("ROLE").toString();
 							Date agentAssignedTime = fetchAgentAssignedTime(chatEntry);
 
-							NotificationOfAgentDetails notificationOfAgentDetails = new NotificationOfAgentDetails(
-									companyId, agentFirstName, agentLastName, agentUserEntry.get("_id").toString(),
-									customer.get("_id").toString(), true, chatEntry.get("SESSION_UUID").toString(),
-									"AGENTS_DATA", agentAssignedTime, agentRole, customerRole,
-									customer.get("USER_UUID").toString(), chatEntry.get("DATA_ID").toString());
-							redisTemplateNotificationOfAgentDetails.convertAndSend("agents_available",
-									notificationOfAgentDetails);
+							AgentDetails agentDetails = new AgentDetails(companyId, agentFirstName, agentLastName,
+									agentUserEntry.get("_id").toString(), customer.get("_id").toString(), true,
+									chatEntry.get("SESSION_UUID").toString(), agentAssignedTime, agentRole,
+									customerRole, customer.get("USER_UUID").toString(),
+									chatEntry.get("_id").toString());
+							return agentDetails;
 						}
 
 					}
@@ -169,21 +179,18 @@ public class ChatService {
 			}
 
 		}
-
+		return new AgentDetails();
 	}
 
 	public Date fetchAgentAssignedTime(Map<String, Object> chatEntry) {
 		try {
-			List<Map<String, Object>> chats = (List<Map<String, Object>>) chatEntry.get("CHAT");
+			List<DiscussionMessage> chats = (List<DiscussionMessage>) chatEntry.get("CHAT");
 			List<Date> assignedDates = new ArrayList<Date>();
 			if (chats != null) {
-				for (Map<String, Object> chat : chats) {
-					if (chat.get("MESSAGE_TYPE").toString().equals("META_DATA")
-							&& chat.get("MESSAGE").toString().contains("has joined the chat")) {
-						String dateCreated = chat.get("DATE_CREATED").toString();
-						SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'+'00:00");
-						Date date = format.parse(dateCreated);
-						assignedDates.add(date);
+				for (DiscussionMessage chat : chats) {
+					if (chat.getMessageType().equals("META_DATA")
+							&& chat.getMessage().contains("has joined the chat")) {
+						assignedDates.add(chat.getDateCreated());
 					}
 				}
 				if (assignedDates.size() > 0) {
@@ -196,6 +203,84 @@ public class ChatService {
 		}
 		return new Date();
 
+	}
+
+	// Send chat transcript to mail
+	public void sendChatTranscript(SendChatTranscript sendChatTranscript) {
+
+		try {
+			String subdomain = sendChatTranscript.getSubdomain();
+			Optional<Company> optionalCompany = companiesRepository.findCompanyBySubdomain(subdomain);
+			if (optionalCompany.isPresent()) {
+				Company company = optionalCompany.get();
+				String companyId = company.getId();
+
+				// BUILDING CHAT TRANSCRIPT
+				Optional<Map<String, Object>> optionalChatEntry = moduleEntryRepository
+						.findBySessionUuid(sendChatTranscript.getSessionUUID(), "Chat_" + companyId);
+				if (optionalChatEntry.isPresent()) {
+					String chatTranscipt = global.getFile("chat_transcript.html");
+					Map<String, Object> chatEntry = optionalChatEntry.get();
+					List<DiscussionMessage> chats = (List<DiscussionMessage>) chatEntry.get("CHAT");
+					String messageChat = "";
+					String companyTimezone = "UTC";
+					if (!company.getTimezone().isEmpty()) {
+						companyTimezone = company.getTimezone();
+					}
+					for (DiscussionMessage chat : chats) {
+						String chatWithoutHtml = chat.getMessage();
+						Sender sender = chat.getSender();
+
+						Date chatCreatedTime = chat.getDateCreated();
+						SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm a");
+						TimeZone tz = TimeZone.getTimeZone(companyTimezone);
+						formatter.setTimeZone(tz);
+						String chatDisplayDateTime = formatter.format(chatCreatedTime);
+
+						if (chat.getMessageType().equals("META_DATA")) {
+							if (messageChat.length() != 0) {
+								messageChat = messageChat + "<br/>" + "(" + chatDisplayDateTime + ")" + " "
+										+ "<div class='mat-caption' style='color: #68737D; font-weight: 500;'>"
+										+ chatWithoutHtml + "</div>";
+							} else {
+								messageChat = "(" + chatDisplayDateTime + ")" + " "
+										+ "<div class='mat-caption' style='color: #68737D; font-weight: 500;'>"
+										+ chatWithoutHtml + "</div>";
+							}
+						}
+						if (chat.getMessageType().equals("MESSAGE")) {
+							if (messageChat.length() == 0) {
+								messageChat = "(" + chatDisplayDateTime + ")" + " " + sender.getFirstName() + ": "
+										+ chatWithoutHtml + "<br/>";
+							} else {
+								messageChat = messageChat + "<br/>" + "(" + chatDisplayDateTime + ")" + " "
+										+ sender.getFirstName() + ": " + chatWithoutHtml + "<br/>";
+							}
+						}
+					}
+					Optional<Map<String, Object>> optionalContactEntry = moduleEntryRepository
+							.findById(chatEntry.get("REQUESTOR").toString(), "Contacts_" + companyId);
+
+					if (optionalContactEntry.isPresent()) {
+
+						String userName = optionalContactEntry.get().get("FULL_NAME").toString();
+						chatTranscipt = chatTranscipt.replace("NAME_REPLACE", userName);
+						chatTranscipt = chatTranscipt.replace("CHAT_HISTORY_REPLACE", messageChat); // FETCHING DATA
+						Optional<Map<String, Object>> optionalUserEntry = moduleEntryRepository
+								.findById(optionalContactEntry.get().get("USER").toString(), "Users_" + companyId);
+						if (optionalUserEntry.isPresent()) {
+							String to = optionalUserEntry.get().get("EMAIL_ADDRESS").toString();
+							String from = "support@" + subdomain + ".ngdesk.com";
+							String subject = "Chat Transcript from ngDesk";
+							String body = chatTranscipt;
+							sendMail.send(to, from, subject, body);
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+
+		}
 	}
 
 }

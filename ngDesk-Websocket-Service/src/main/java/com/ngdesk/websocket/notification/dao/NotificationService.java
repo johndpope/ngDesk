@@ -101,28 +101,4 @@ public class NotificationService {
 		}
 	}
 
-	public void publishAgentNotification(Company company, NotificationOfAgentDetails notifyAgentDetails) {
-		ObjectMapper mapper = new ObjectMapper();
-
-		if (sessionService.sessions.containsKey(company.getCompanySubdomain())) {
-			ConcurrentHashMap<String, UserSessions> sessions = sessionService.sessions
-					.get(company.getCompanySubdomain());
-
-			ConcurrentLinkedQueue<WebSocketSession> userSessions = sessions.get(notifyAgentDetails.getSessionUuid())
-					.getSessions();
-			userSessions.forEach(session -> {
-				try {
-					String payload = mapper.writeValueAsString(notifyAgentDetails);
-					session.sendMessage(new TextMessage(payload));
-				} catch (JsonProcessingException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				} catch (IllegalStateException e) {
-					e.printStackTrace();
-					userSessions.remove(session);
-				}
-			});
-		}
 	}
-}

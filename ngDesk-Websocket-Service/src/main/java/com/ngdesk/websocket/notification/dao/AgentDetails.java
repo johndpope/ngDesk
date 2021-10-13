@@ -4,7 +4,7 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class NotificationOfAgentDetails {
+public class AgentDetails {
 
 	@JsonProperty("COMPANY_ID")
 	private String companyId;
@@ -27,9 +27,6 @@ public class NotificationOfAgentDetails {
 	@JsonProperty("SESSION_UUID")
 	private String sessionUuid;
 
-	@JsonProperty("TYPE")
-	private String messageType;
-
 	@JsonProperty("AGENT_ASSIGNED_TIME")
 	private Date agentAssignedTime;
 
@@ -45,14 +42,13 @@ public class NotificationOfAgentDetails {
 	@JsonProperty("CHAT_ENTRY_ID")
 	private String chatEntryId;
 
-	public NotificationOfAgentDetails() {
+	public AgentDetails() {
 
 	}
 
-	public NotificationOfAgentDetails(String companyId, String agentFirstName, String agentLastName, String agentDataId,
-			String customerDataId, Boolean agentsAvailable, String sessionUuid, String messageType,
-			Date agentAssignedTime, String agentRoleId, String customerRoleId, String customerUuid,
-			String chatEntryId) {
+	public AgentDetails(String companyId, String agentFirstName, String agentLastName, String agentDataId,
+			String customerDataId, Boolean agentsAvailable, String sessionUuid, Date agentAssignedTime,
+			String agentRoleId, String customerRoleId, String customerUuid, String chatEntryId) {
 		super();
 		this.companyId = companyId;
 		this.agentFirstName = agentFirstName;
@@ -61,7 +57,6 @@ public class NotificationOfAgentDetails {
 		this.customerDataId = customerDataId;
 		this.agentsAvailable = agentsAvailable;
 		this.sessionUuid = sessionUuid;
-		this.messageType = messageType;
 		this.agentAssignedTime = agentAssignedTime;
 		this.agentRoleId = agentRoleId;
 		this.customerRoleId = customerRoleId;
@@ -123,14 +118,6 @@ public class NotificationOfAgentDetails {
 
 	public void setSessionUuid(String sessionUuid) {
 		this.sessionUuid = sessionUuid;
-	}
-
-	public String getMessageType() {
-		return messageType;
-	}
-
-	public void setMessageType(String messageType) {
-		this.messageType = messageType;
 	}
 
 	public Date getAgentAssignedTime() {

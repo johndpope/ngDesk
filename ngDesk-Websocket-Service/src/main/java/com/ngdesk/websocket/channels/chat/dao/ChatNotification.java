@@ -2,35 +2,35 @@ package com.ngdesk.websocket.channels.chat.dao;
 
 import java.util.Map;
 
-public class ChatNotification {
+import com.ngdesk.websocket.notification.dao.AgentDetails;
 
+public class ChatNotification {
 
 	private String companyId;
 
-
 	private String type;
 
-	
 	private String sessionUUID;
 
-	
 	private Map<String, Object> entry;
 
-	
 	private String status;
+
+	private AgentDetails agentDetails;
 
 	public ChatNotification() {
 		super();
 	}
 
-	public ChatNotification(String companyId, String type, String sessionUUID, Map<String, Object> entry,
-			String status) {
+	public ChatNotification(String companyId, String type, String sessionUUID, Map<String, Object> entry, String status,
+			AgentDetails agentDetails) {
 		super();
 		this.companyId = companyId;
 		this.type = type;
 		this.sessionUUID = sessionUUID;
 		this.entry = entry;
 		this.status = status;
+		this.agentDetails = agentDetails;
 	}
 
 	public String getCompanyId() {
@@ -71,6 +71,14 @@ public class ChatNotification {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public AgentDetails getAgentDetails() {
+		return agentDetails;
+	}
+
+	public void setAgentDetails(AgentDetails agentDetails) {
+		this.agentDetails = agentDetails;
 	}
 
 }

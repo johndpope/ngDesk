@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.data.mongodb.core.query.Criteria;
+
 import com.ngdesk.data.dao.DiscussionMessage;
 
 public interface CustomModuleEntryRepository {
@@ -25,10 +27,15 @@ public interface CustomModuleEntryRepository {
 	public void updateEntry(String dataId, Map<String, Object> metaData, String collectionName);
 
 	public void updateMetadataEvents(String entryId, DiscussionMessage eventsDiscussionMessage, String collectionName);
-	
-	public Optional<Map<String,Object>> findChatBysessionUUID(String sessionUUID,String collectionName);
+
+	public Optional<Map<String, Object>> findChatBysessionUUID(String sessionUUID, String collectionName);
 
 	public List<Map<String, Object>> findEntriesByCollectionName(String collectionName);
 
 	public Optional<Map<String, Object>> findEntriesBySessionUuid(String sessionUuid, String collectionName);
+
+	public List<String> findDistinctEntries(String fieldName, String collectionName);
+
+	public Optional<Map<String, Object>> findAggregationFieldValue(String fieldName, String value,
+			String aggregationField, String aggregationType, Criteria criterias, String collectionName);
 }

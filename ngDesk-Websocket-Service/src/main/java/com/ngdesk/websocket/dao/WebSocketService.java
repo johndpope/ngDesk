@@ -129,10 +129,10 @@ public class WebSocketService {
 											user.get("ROLE").toString());
 									message.setSender(sender);
 									message.setDateCreated(new Date());
-
 									entryRepository.addDiscussionToEntry(message, discussionField.getName(),
 											entry.get("_id").toString(),
 											moduleService.getCollectionName(module.getName(), company.getId()));
+
 									if (!isTrigger) {
 										WorkflowPayload workflowPayload = new WorkflowPayload(
 												user.get("_id").toString(), module.getModuleId(), company.getId(),
@@ -160,7 +160,7 @@ public class WebSocketService {
 	public void addDiscussionToChatEntry(ChatDiscussionMessage chatDiscussionMessage, String subdomain, String userId,
 			boolean isTrigger) {
 		try {
-			System.out.println("hit");
+
 			DiscussionMessage message = chatDiscussionMessage.getDiscussionMessage();
 			Optional<Company> optionalCompany = companiesRepository.findCompanyBySubdomain(subdomain);
 			if (optionalCompany.isPresent()) {
@@ -218,7 +218,6 @@ public class WebSocketService {
 												entry.get("_id").toString(), entry, "PUT", new Date());
 										addToQueue(workflowPayload);
 									}
-									System.out.println("PUBLISH");
 									// PUBLISH PAYLOAD TO USERS
 									if (message.getMessageType() != null
 											&& !message.getMessageType().equals("META_DATA")) {
