@@ -8,22 +8,23 @@ ngDesk is an open source CRM, Expense, Ticket Management, Workflow and Chat plat
 
 * Latest documentation: https://support.ngdesk.com/
 
-* Get Help: support at ngdesk.com or post an issue on GitHub
+* Help: support@ngdesk.com or post an issue on GitHub
 
 ## Table of Contents
 
 - [Requirements](#requirements)
 - [Installation](#installation)
-- [Update](#update)
+- [Upgrading](#upgrading)
 - [Release Notes](#release-notes)
 
 
 ### Requirements
 
 
-1. Linux Server which supports Docker 20.10.8 or greater (Ubuntu 20.04 LTS reccommended)
-2. 8gb of ram or more
-3. Approx 20GB of disk space
+1. Linux server which supports Docker 20.10.8 or greater (Ubuntu 20.04 LTS recommended)
+2. 8GB of ram or more
+3. 24GB of disk space or more
+4. Python 3
 
 
 ### Installation
@@ -38,7 +39,7 @@ ngDesk is an open source CRM, Expense, Ticket Management, Workflow and Chat plat
 7. $ `./ngdesk --action build` and follow the promts
 
 
-### Update
+### Upgrading
 
 `./ngdesk --action update`
 
