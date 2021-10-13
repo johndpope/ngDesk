@@ -243,7 +243,6 @@ public class CsvImportJob {
 										}
 									}
 								} catch (Exception e) {
-									e.printStackTrace();
 									csvImportService.addToSet(i, e.getMessage(), csvDocument.getCsvImportId());
 									error = true;
 									break;
@@ -256,7 +255,6 @@ public class CsvImportJob {
 						csvImportRepository.updateEntry(csvDocument.getCsvImportId(), "status", "FAILED", "csv_import");
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
 					csvImportService.addToSet(0, "Failed to import file", csvDocument.getCsvImportId());
 
 					StringWriter sw = new StringWriter();

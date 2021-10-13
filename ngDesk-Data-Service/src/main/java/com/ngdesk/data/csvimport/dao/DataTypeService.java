@@ -56,9 +56,9 @@ public class DataTypeService {
 
 			if (inputMessage.containsKey(fieldName)) {
 				if (!field.getRequired() && inputMessage.get(fieldName).toString().isBlank()) {
-                    inputMessage.remove(fieldName);
-                    continue;
-                }
+					inputMessage.remove(fieldName);
+					continue;
+				}
 				String value = inputMessage.get(fieldName).toString().trim();
 				List<String> ignoredFields = List.of("CREATED_BY", "LAST_UPDATED_BY");
 				List<String> numericDataTypes = List.of("Auto Number", "Currency", "Number");
@@ -181,7 +181,8 @@ public class DataTypeService {
 						try {
 							phone = createPhoneObject(split[0].trim(), split[1].trim(), phone);
 						} catch (Exception e) {
-							csvImportService.addToSet(i, displayLabel + " value is invalid", csvDocument.getCsvImportId());
+							csvImportService.addToSet(i, displayLabel + " value is invalid",
+									csvDocument.getCsvImportId());
 							break;
 						}
 						inputMessage.put(fieldName, phone);

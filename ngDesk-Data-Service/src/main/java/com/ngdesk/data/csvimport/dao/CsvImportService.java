@@ -96,7 +96,6 @@ public class CsvImportService {
 		try {
 			accountEntry = dataAPI.postModuleEntry(account, accountModule.getModuleId(), true, companyId, userUuid);
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw new InternalErrorException(formatErrorMessage(e.getMessage()));
 		}
 		return accountEntry;
@@ -234,7 +233,6 @@ public class CsvImportService {
 									dataAPI.putModuleEntry(entry, relationModule.getModuleId(), true, companyId,
 											userUuid, false);
 								} catch (Exception e) {
-									e.printStackTrace();
 									throw new InternalErrorException(formatErrorMessage(e.getMessage()));
 								}
 							}
@@ -418,22 +416,21 @@ public class CsvImportService {
 					}
 				}
 			}
-			
-			list = list.stream().filter(item -> !(item.length == 1 && item[0].isBlank()))
-                    .collect(Collectors.toList());
+
+			list = list.stream().filter(item -> !(item.length == 1 && item[0].isBlank())).collect(Collectors.toList());
 
 			List<String[]> updatedList = new ArrayList<>();
-            for (String[] column : list) {
-                boolean Invalid = true;
-                for (String a : column) {
-                    if (!a.trim().isBlank()) {
-                        Invalid = false;
-                    }
-                }
-                if (!Invalid) {
-                	updatedList.add(column);
-                }
-            }
+			for (String[] column : list) {
+				boolean Invalid = true;
+				for (String value : column) {
+					if (!value.trim().isBlank()) {
+						Invalid = false;
+					}
+				}
+				if (!Invalid) {
+					updatedList.add(column);
+				}
+			}
 
 			for (String[] column : updatedList) {
 				List<String> fieldValues = new ArrayList<String>();
