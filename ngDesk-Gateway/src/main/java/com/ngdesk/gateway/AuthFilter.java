@@ -76,10 +76,10 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
 		};
 	}
 
-	public static class Config {
-		private static String signingKey = jwtSecret;
+	public class Config {
+		private  String signingKey = jwtSecret;
 
-		public static String getSigningKey() {
+		public String getSigningKey() {
 			return signingKey;
 		}
 
