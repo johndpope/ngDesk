@@ -61,13 +61,15 @@ def build_ngdesk():
     print('build_ngdesk')
 
 
-    print('Before the installation starts, we need to gather some infomation from you. This infomation will be used to setup the admin user and default behavior and will not be transmitted out of this system.')
+    print('Before the installation starts, we need to gather some infomation from you. This infomation will be used to setup the admin user and default behavior of the application, the info will not be transmitted out of this system.')
     first_name = input("Enter your first name: ")
     last_name = input("Enter your last name: ")
     email = input("Enter your email: ")
     company_name = input("Enter your company name: ")
     domain = input("Enter the domain you will use to access the website: ")
     password = getpass.getpass('Enter your password (minimum 8 characters, with atleast one upper case, and atleast one special character): ')
+
+    # TODO: check password matches regex
 
     cert_gen(domain)
 
@@ -160,7 +162,7 @@ def create_company(company_name, email, first_name, last_name, password):
         ]
     }
 
-    resp = requests.post('http://localhost:8443/api/ngdesk-company-service-v1/company', payload)
+    resp = requests.post('http://localhost:8443/api/ngdesk-company-service-v1/company', json=payload)
     print(resp)
 
 
@@ -232,8 +234,8 @@ def cert_gen(common_name):
     organization_unit_name="ngDesk"
     serial_number=0
     validity_end_in_seconds=10*365*24*60*60
-    KEY_FILE = "private.key"
-    CERT_FILE="selfsigned.crt"
+    KEY_FILE = "example.key"
+    CERT_FILE="example.crt"
     #can look at generated file using openssl:
     #openssl x509 -inform pem -in selfsigned.crt -noout -text
     # create a key pair
@@ -254,9 +256,9 @@ def cert_gen(common_name):
     cert.set_issuer(cert.get_subject())
     cert.set_pubkey(k)
     cert.sign(k, 'sha512')
-    with open(CERT_FILE, "wt") as f:
+    with open("/ngdesk/nginx/example.crt", "wt") as f:
         f.write(crypto.dump_certificate(crypto.FILETYPE_PEM, cert).decode("utf-8"))
-    with open(KEY_FILE, "wt") as f:
+    with open("/ngdesk/nginx/example.key", "wt") as f:
         f.write(crypto.dump_privatekey(crypto.FILETYPE_PEM, k).decode("utf-8"))
 
 
