@@ -73,7 +73,7 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
 	}
 
 	public static class Config {
-		private static String signingKey = "Vdu7IxJ5Lvcp0YUJ";
+		private static String signingKey = "BGyfRFcVCMGbJWEN";
 
 		public static String getSigningKey() {
 			return signingKey;
