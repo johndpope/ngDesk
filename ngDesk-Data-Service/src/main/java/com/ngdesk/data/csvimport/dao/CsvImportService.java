@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -417,8 +418,24 @@ public class CsvImportService {
 					}
 				}
 			}
+			
+			list = list.stream().filter(item -> !(item.length == 1 && item[0].isBlank()))
+                    .collect(Collectors.toList());
 
-			for (String[] column : list) {
+			List<String[]> updatedList = new ArrayList<>();
+            for (String[] column : list) {
+                boolean Invalid = true;
+                for (String a : column) {
+                    if (!a.trim().isBlank()) {
+                        Invalid = false;
+                    }
+                }
+                if (!Invalid) {
+                	updatedList.add(column);
+                }
+            }
+
+			for (String[] column : updatedList) {
 				List<String> fieldValues = new ArrayList<String>();
 				for (String row : column) {
 					if (isHeader) {
@@ -444,7 +461,7 @@ public class CsvImportService {
 					i++;
 				}
 				isHeader = false;
-				if (list.indexOf(column) == list.size() - 1) {
+				if (updatedList.indexOf(column) == updatedList.size() - 1) {
 					isEmpty = false;
 				}
 			}

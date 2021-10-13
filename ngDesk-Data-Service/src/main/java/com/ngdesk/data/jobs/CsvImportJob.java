@@ -257,7 +257,7 @@ public class CsvImportJob {
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
-					csvImportService.addToSet(0, e.getMessage(), csvDocument.getCsvImportId());
+					csvImportService.addToSet(0, "Failed to import file", csvDocument.getCsvImportId());
 
 					StringWriter sw = new StringWriter();
 					PrintWriter pw = new PrintWriter(sw);

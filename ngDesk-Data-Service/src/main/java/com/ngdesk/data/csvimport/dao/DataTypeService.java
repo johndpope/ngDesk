@@ -55,6 +55,10 @@ public class DataTypeService {
 			DataType dataType = field.getDataType();
 
 			if (inputMessage.containsKey(fieldName)) {
+				if (!field.getRequired() && inputMessage.get(fieldName).toString().isBlank()) {
+                    inputMessage.remove(fieldName);
+                    continue;
+                }
 				String value = inputMessage.get(fieldName).toString().trim();
 				List<String> ignoredFields = List.of("CREATED_BY", "LAST_UPDATED_BY");
 				List<String> numericDataTypes = List.of("Auto Number", "Currency", "Number");
