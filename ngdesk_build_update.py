@@ -82,12 +82,18 @@ def build_ngdesk():
 
         try:
             curr_container = client.containers.get(image_name)
+            print(curr_container)
             if local_image_id != pulled_image_id:
+                print('image ids do not match')
                 curr_container.stop()
                 curr_container.remove()
 
                 start_containers(image_path, image_name)
+            else:
+                print('image ids MATCH')
+                curr_container.start()
         except docker.errors.NotFound:
+            print('container doesnt exist')
             start_containers(image_path, image_name)
 
 
@@ -105,7 +111,7 @@ def create_company():
     email = input("Enter your email: ")
     company_name = input("Enter your company name: ")
     subdomain = input("Enter your subdomain: ")
-    password = getpass.getpass('Enter your password: ')
+    password = getpass.getpass('Enter your password (minimum 8 characters, with atleast one upper case, and atleast one special character): ')
 
     payload = {
         "COMPANY_NAME": company_name,
@@ -131,7 +137,8 @@ def create_company():
         ]
     }
 
-    resp = requests.post('http://localhost:8092/api/ngdesk-company-service-v1/company', payload)
+    resp = requests.post('http://localhost:8443/api/ngdesk-company-service-v1/company', payload)
+    print(resp)
 
 
 def check_container_started(image):
@@ -202,4 +209,8 @@ def start_containers(image_path, image_name):
         client.containers.run(image_path, name=image_name, detach=True, network_mode='host', environment=['MANAGER_HOST=localhost'])
     else:
         client.containers.run(image_path, name=image_name, detach=True, network_mode='host')
-        # client.containers.run(image_path, name=image_name, detach=True, network_mode='host', HealthCheck={ "Test": ["CMD", "curl", "--fail", "http://localhost:3000/", "||", "exit", "1"], "Interval": 1000000 * 5 * 100, "Timeout": 1000000 * 5 * 1000, "Retries": 3, "StartPeriod": 1000000 * 5 * 1000})
+
+
+
+
+
