@@ -54,7 +54,7 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
 				}
 
 				String jwt = exchange.getRequest().getHeaders().get("authentication_token").get(0);
-				Claims claims = Jwts.parser().setSigningKey(config.getSigningKey()).parseClaimsJws(jwt).getBody();
+				Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(jwt).getBody();
 				Date expirationDate = claims.getExpiration();
 				Date now = new Date();
 
@@ -76,12 +76,12 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
 		};
 	}
 
-	public class Config {
-		private  String signingKey = jwtSecret;
-
-		public String getSigningKey() {
-			return signingKey;
-		}
+	public static class Config {
+//		private  String signingKey = jwtSecret;
+//
+//		public String getSigningKey() {
+//			return signingKey;
+//		}
 
 	}
 }
