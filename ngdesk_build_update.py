@@ -71,10 +71,9 @@ def build_ngdesk():
     email = input("Enter your email: ")
     company_name = input("Enter your company name: ")
     domain = input("Enter the domain you will use to access the website: ")
-    # password = getpass.getpass('Enter your password (minimum 8 characters, with atleast one upper case, and atleast one special character): ')
     password = get_valid_password()
 
-    # TODO: check password matches regex
+    # TODO: check email matches regex
 
     cert_gen(domain)
 
