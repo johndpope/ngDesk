@@ -238,10 +238,10 @@ pipeline {
 
 }
 def buildMicroservice(serviceName, path) {
- dir('/var/jenkins_home/projects/ngdesk-project/ngDesk/' + path) {
+	dir('/var/jenkins_home/projects/ngdesk-project/ngDesk/' + path) {
 
 
-	 if(serviceName == 'rest' || serviceName == 'manager' || serviceName == 'gateway' || serviceName == 'config-server'){
+	if(serviceName == 'rest' || serviceName == 'manager' || serviceName == 'gateway' || serviceName == 'config-server'){
 		 sh 'mvn package -DskipTests'
 
 		 if(serviceName == 'gateway' || serviceName == 'config-server'){
@@ -270,7 +270,7 @@ def buildMicroservice(serviceName, path) {
         docker.withRegistry("${env.DOCKER_HUB_URL}", "${env.DOCKER_HUB_KEY}") {
             def newImage = docker.image("${env.DOCKER_IMAGE_NAME}/" + serviceName + ":latest")
             newImage.push()
-            if(serviceName != 'config-server'){
+            if(serviceName != 'config-server' && serviceName != 'gateway'){
 				docker.withServer("${env.PROD_SERVER_URL}") {
 					sh "docker rename ngdesk-${serviceName} ngdesk-${serviceName}-old"
 					sh "docker stop ngdesk-${serviceName}-old"
