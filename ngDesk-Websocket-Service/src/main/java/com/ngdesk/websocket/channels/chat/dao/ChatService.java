@@ -1,5 +1,7 @@
 package com.ngdesk.websocket.channels.chat.dao;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -7,13 +9,17 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
+import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ngdesk.commons.Global;
+import com.ngdesk.commons.mail.SendMail;
 import com.ngdesk.data.dao.DiscussionMessage;
+import com.ngdesk.data.dao.Sender;
 import com.ngdesk.repositories.ChatChannelRepository;
 import com.ngdesk.repositories.CompaniesRepository;
 import com.ngdesk.repositories.ModuleEntryRepository;
@@ -48,6 +54,12 @@ public class ChatService {
 
 	@Autowired
 	RedisTemplate<String, ChatNotification> redisTemplateForChatNotification;
+
+	@Autowired
+	Global global;
+
+	@Autowired
+	SendMail sendMail;
 
 	public void publishPageLoad(ChatWidgetPayload pageLoad) {
 		try {
@@ -191,6 +203,84 @@ public class ChatService {
 		}
 		return new Date();
 
+	}
+
+	// Send chat transcript to mail
+	public void sendChatTranscript(SendChatTranscript sendChatTranscript) {
+
+		try {
+			String subdomain = sendChatTranscript.getSubdomain();
+			Optional<Company> optionalCompany = companiesRepository.findCompanyBySubdomain(subdomain);
+			if (optionalCompany.isPresent()) {
+				Company company = optionalCompany.get();
+				String companyId = company.getId();
+
+				// BUILDING CHAT TRANSCRIPT
+				Optional<Map<String, Object>> optionalChatEntry = moduleEntryRepository
+						.findBySessionUuid(sendChatTranscript.getSessionUUID(), "Chat_" + companyId);
+				if (optionalChatEntry.isPresent()) {
+					String chatTranscipt = global.getFile("chat_transcript.html");
+					Map<String, Object> chatEntry = optionalChatEntry.get();
+					List<DiscussionMessage> chats = (List<DiscussionMessage>) chatEntry.get("CHAT");
+					String messageChat = "";
+					String companyTimezone = "UTC";
+					if (!company.getTimezone().isEmpty()) {
+						companyTimezone = company.getTimezone();
+					}
+					for (DiscussionMessage chat : chats) {
+						String chatWithoutHtml = chat.getMessage();
+						Sender sender = chat.getSender();
+
+						Date chatCreatedTime = chat.getDateCreated();
+						SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm a");
+						TimeZone tz = TimeZone.getTimeZone(companyTimezone);
+						formatter.setTimeZone(tz);
+						String chatDisplayDateTime = formatter.format(chatCreatedTime);
+
+						if (chat.getMessageType().equals("META_DATA")) {
+							if (messageChat.length() != 0) {
+								messageChat = messageChat + "<br/>" + "(" + chatDisplayDateTime + ")" + " "
+										+ "<div class='mat-caption' style='color: #68737D; font-weight: 500;'>"
+										+ chatWithoutHtml + "</div>";
+							} else {
+								messageChat = "(" + chatDisplayDateTime + ")" + " "
+										+ "<div class='mat-caption' style='color: #68737D; font-weight: 500;'>"
+										+ chatWithoutHtml + "</div>";
+							}
+						}
+						if (chat.getMessageType().equals("MESSAGE")) {
+							if (messageChat.length() == 0) {
+								messageChat = "(" + chatDisplayDateTime + ")" + " " + sender.getFirstName() + ": "
+										+ chatWithoutHtml + "<br/>";
+							} else {
+								messageChat = messageChat + "<br/>" + "(" + chatDisplayDateTime + ")" + " "
+										+ sender.getFirstName() + ": " + chatWithoutHtml + "<br/>";
+							}
+						}
+					}
+					Optional<Map<String, Object>> optionalContactEntry = moduleEntryRepository
+							.findById(chatEntry.get("REQUESTOR").toString(), "Contacts_" + companyId);
+
+					if (optionalContactEntry.isPresent()) {
+
+						String userName = optionalContactEntry.get().get("FULL_NAME").toString();
+						chatTranscipt = chatTranscipt.replace("NAME_REPLACE", userName);
+						chatTranscipt = chatTranscipt.replace("CHAT_HISTORY_REPLACE", messageChat); // FETCHING DATA
+						Optional<Map<String, Object>> optionalUserEntry = moduleEntryRepository
+								.findById(optionalContactEntry.get().get("USER").toString(), "Users_" + companyId);
+						if (optionalUserEntry.isPresent()) {
+							String to = optionalUserEntry.get().get("EMAIL_ADDRESS").toString();
+							String from = "support@" + subdomain + ".ngdesk.com";
+							String subject = "Chat Transcript from ngDesk";
+							String body = chatTranscipt;
+							sendMail.send(to, from, subject, body);
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+
+		}
 	}
 
 }

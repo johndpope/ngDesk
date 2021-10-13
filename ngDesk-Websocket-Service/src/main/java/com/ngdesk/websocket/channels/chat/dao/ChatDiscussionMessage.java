@@ -1,26 +1,15 @@
 package com.ngdesk.websocket.channels.chat.dao;
 
-import org.springframework.data.mongodb.core.mapping.Field;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ngdesk.data.dao.DiscussionMessage;
 
 public class ChatDiscussionMessage {
 
-	@JsonProperty("AGENT_DATA_ID")
-	@Field("AGENT_DATA_ID")
 	private String agentDataID;
 
-	@JsonProperty("CUSTOMER_DATA_ID")
-	@Field("CUSTOMER_DATA_ID")
 	private String customerDataID;
 
-	@JsonProperty("SESSION_UUID")
-	@Field("SESSION_UUID")
 	private String sessionUuid;
 
-	@JsonProperty("DISCUSSION_MESSAGE")
-	@Field("DISCUSSION_MESSAGE")
 	private DiscussionMessage DiscussionMessage;
 
 	public ChatDiscussionMessage() {

@@ -4,6 +4,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.ngdesk.commons.annotations.CustomNotEmpty;
+import com.ngdesk.commons.annotations.CustomTimeZoneValidation;
 
 public class Company {
 
@@ -26,17 +28,31 @@ public class Company {
 	@Field("COMPANY_UUID")
 	private String companyUuid;
 
+	@JsonProperty("TIMEZONE")
+	@Field("TIMEZONE")
+	private String timezone;
+
 	public Company() {
 
 	}
 
-	public Company(String id, String companySubdomain, Phone phone, ChatSettings chatSettings, String companyUuid) {
+	public Company(String id, String companySubdomain, Phone phone, ChatSettings chatSettings, String companyUuid,
+			String timezone) {
 		super();
 		this.id = id;
 		this.companySubdomain = companySubdomain;
 		this.phone = phone;
 		this.chatSettings = chatSettings;
 		this.companyUuid = companyUuid;
+		this.timezone = timezone;
+	}
+
+	public String getTimezone() {
+		return timezone;
+	}
+
+	public void setTimezone(String timezone) {
+		this.timezone = timezone;
 	}
 
 	public String getId() {
