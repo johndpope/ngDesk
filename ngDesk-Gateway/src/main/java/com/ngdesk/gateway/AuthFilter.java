@@ -21,6 +21,9 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
 	@Autowired
 	WhitelistService whitelistService;
 	
+	@Value("${jwt.secret}")
+	private String jwtSecret;
+	
 	private static final Logger logger = LoggerFactory.getLogger(AuthFilter.class);
 
 	public AuthFilter() {
@@ -73,7 +76,7 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
 	}
 
 	public static class Config {
-		private static String signingKey = "Vdu7IxJ5Lvcp0YUJ";
+		private static String signingKey = jwtSecret;
 
 		public static String getSigningKey() {
 			return signingKey;
