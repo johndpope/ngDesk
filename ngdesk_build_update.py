@@ -7,9 +7,10 @@ import time
 import socket
 import getpass
 from OpenSSL import crypto, SSL
+import logging
 
 
-
+logging.basicConfig(filename='ngdesk_build_update.log', filemode='w', format='%(asctime)s - %(levelname)s - %(message)s')
 client = docker.from_env()
 print('''
               _____            _    
@@ -52,14 +53,14 @@ ngdesk_images = [
     {'name': 'ngdesk-report', 'path': 'ngdesk/report:latest', 'healthcheck': {'type': 'curl', 'attempts': 24, 'interval': 5, 'url': 'http://localhost:8099/actuator/health'}}, 
     {'name': 'ngdesk-web', 'path': 'ngdesk/web:latest', 'healthcheck': {'type': 'curl', 'attempts': 24, 'interval': 5, 'url': 'http://localhost:8200/actuator/health'}}, 
     {'name': 'ngdesk-notification', 'path': 'ngdesk/notification:latest', 'healthcheck': {'type': 'curl', 'attempts': 24, 'interval': 5, 'url': 'http://localhost:8096/actuator/health'}},
-    {'name': 'ngdesk-email-server', 'path': 'ngdesk/email-server:latest'},
+    {'name': 'ngdesk-email-server', 'path': 'ngdesk/email-server:latest', 'healthcheck': {'type': 'socket', 'attempts': 24, 'interval': 5, 'port': 8025}},
     {'name': 'ngdesk-email-sender', 'path': 'ngdesk/email-sender:latest'}
 ]
 
 
 def build_ngdesk():
-    print('build_ngdesk')
 
+    logging.debug('enter build_ngdesk()')
 
     print('Before the installation starts, we need to gather some infomation from you. This infomation will be used to setup the admin user and default behavior of the application, the info will not be transmitted out of this system.')
     first_name = input("Enter your first name: ")
@@ -77,10 +78,12 @@ def build_ngdesk():
 
     create_company(company_name, email, first_name, last_name, password)
 
+    logging.debug('exit build_ngdesk()')
+
 
 def update_ngdesk():
 
-    print('update_ngdesk')
+    logging.debug('enter update_ngdesk()')
  
     if path.isdir('/ngdesk') == False:
         os.mkdir('/ngdesk')
@@ -129,13 +132,16 @@ def update_ngdesk():
         check_container_started(image)
 
         
-        print(image_name + ' done')
+        print(image_name + ' started successfully')
+
+    logging.debug('exit update_ngdesk()')
 
 
 
 
 def create_company(company_name, email, first_name, last_name, password):
-    print('create company')
+    
+    logging.debug('enter create_company(%s, %s, %s, %s, %s)', company_name, email, first_name, last_name, password)
 
 
     payload = {
@@ -163,27 +169,27 @@ def create_company(company_name, email, first_name, last_name, password):
     }
 
     resp = requests.post('http://localhost:8443/api/ngdesk-company-service-v1/company', json=payload)
-    print(resp)
-    print(resp.content)
+    logging.debug('post company status code: ' + str(resp.status_code))
+    logging.debug('post company status response content: ' + resp.content)
+
+
+    logging.debug('exit create_company()')
 
 
 def check_container_started(image):
 
+    logging.debug('enter check_container_started()')
+
     if 'healthcheck' in image:
-        print('check container started')
         image_healthcheck = image['healthcheck']
         healthcheck_attempts = image_healthcheck['attempts']
         healthcheck_interval = image_healthcheck['interval']
         container_started = False
 
-        print(healthcheck_attempts)
-
         for x in range(healthcheck_attempts):
             if image_healthcheck['type'] == 'curl':
-                print(image_healthcheck['url'])
                 try:
                     resp = requests.get(image_healthcheck['url'])
-                    print(resp)
                     if resp.ok:
                         container_started = True
                         break
@@ -206,12 +212,17 @@ def check_container_started(image):
         if container_started == False:
             sys.exit(image['name'] + ' failed to start in alloted time')
 
+    logging.debug('exit check_container_started()')
+
 
 
 
 
 
 def start_containers(image_path, image_name):
+
+    logging.debug('enter start_containers()')
+
     if image_name == 'ngdesk-mongodb':
         client.containers.run(image_path, name=image_name, detach=True, network_mode='host', volumes={'/ngdesk/mongodb':{'bind':'/data/db', 'mode': 'rw'}}, healthcheck={"Test": ["CMD-SHELL", "mongo --eval \"rs.initiate({_id: 'rs0', version: 1, members: [{ _id: 0, host : 'localhost:27017' } ]})\""],"Interval": 1000000 * 500, "Timeout": 1000000 * 5 * 1000, "Retries": 3, "StartPeriod": 1000000 * 5 * 1000})
     elif image_name == 'ngdesk-elasticsearch':
@@ -225,8 +236,13 @@ def start_containers(image_path, image_name):
     else:
         client.containers.run(image_path, name=image_name, detach=True, network_mode='host')
 
+    logging.debug('exit start_containers()')
+
 
 def cert_gen(common_name):
+
+    logging.debug('enter cert_gen()')
+
     email_address="support@ngdesk.com"
     country_name="US"
     locality_name="Dallas"
@@ -235,8 +251,6 @@ def cert_gen(common_name):
     organization_unit_name="ngDesk"
     serial_number=0
     validity_end_in_seconds=10*365*24*60*60
-    KEY_FILE = "example.key"
-    CERT_FILE="example.crt"
     #can look at generated file using openssl:
     #openssl x509 -inform pem -in selfsigned.crt -noout -text
     # create a key pair
@@ -262,11 +276,14 @@ def cert_gen(common_name):
     with open("/ngdesk/nginx/example.key", "wt") as f:
         f.write(crypto.dump_privatekey(crypto.FILETYPE_PEM, k).decode("utf-8"))
 
+    logging.debug('exit cert_gen()')
+
 
 
 
 if __name__ == '__main__':
-    print('Manually running script')
+
+    logging.debug('enter __main__')
     build_ngdesk()
 
 
