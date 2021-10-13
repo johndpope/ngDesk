@@ -105,7 +105,7 @@ def create_company():
     email = input("Enter your email: ")
     company_name = input("Enter your company name: ")
     subdomain = input("Enter your subdomain: ")
-    password = getpass.getpass('Enter your passwoord: ')
+    password = getpass.getpass('Enter your password: ')
 
     payload = {
         "COMPANY_NAME": company_name,
@@ -131,7 +131,7 @@ def create_company():
         ]
     }
 
-    resp = requests.post('http://localhost:9082/api/ngdesk-company-service-v1/company', payload)
+    resp = requests.post('http://localhost:8092/api/ngdesk-company-service-v1/company', payload)
 
 
 def check_container_started(image):
