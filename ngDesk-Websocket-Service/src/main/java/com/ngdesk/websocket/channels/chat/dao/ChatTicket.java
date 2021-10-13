@@ -14,7 +14,7 @@ public class ChatTicket {
 
 	private String message;
 
-	private String messageType;
+	private String type;
 
 	private List<MessageAttachment> attachments;
 
@@ -24,14 +24,14 @@ public class ChatTicket {
 
 	}
 
-	public ChatTicket(String companySubdomain, ChatTicketSender sender, String subject, String message,
-			String messageType, List<MessageAttachment> attachments, String sessionUUId) {
+	public ChatTicket(String companySubdomain, ChatTicketSender sender, String subject, String message, String type,
+			List<MessageAttachment> attachments, String sessionUUId) {
 		super();
 		this.companySubdomain = companySubdomain;
 		this.sender = sender;
 		this.subject = subject;
 		this.message = message;
-		this.messageType = messageType;
+		this.type = type;
 		this.attachments = attachments;
 		this.sessionUUId = sessionUUId;
 	}
@@ -68,12 +68,12 @@ public class ChatTicket {
 		this.message = message;
 	}
 
-	public String getMessageType() {
-		return messageType;
+	public String getType() {
+		return type;
 	}
 
-	public void setMessageType(String messageType) {
-		this.messageType = messageType;
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public List<MessageAttachment> getAttachments() {

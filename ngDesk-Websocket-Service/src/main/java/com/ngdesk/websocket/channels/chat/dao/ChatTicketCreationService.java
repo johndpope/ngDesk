@@ -66,7 +66,7 @@ public class ChatTicketCreationService {
 							user.get("ROLE").toString());
 					List<DiscussionMessage> messages = new ArrayList<DiscussionMessage>();
 					DiscussionMessage discussionMessage = new DiscussionMessage(chatTicket.getMessage(), new Date(),
-							UUID.randomUUID().toString(), chatTicket.getMessageType(), chatTicket.getAttachments(),
+							UUID.randomUUID().toString(), chatTicket.getType(), chatTicket.getAttachments(),
 							sender, null, null, null);
 					messages.add(discussionMessage);
 					HashMap<String, Object> entry = new HashMap<String, Object>();

@@ -78,7 +78,7 @@ public class FindAgentAndAssign {
 				if (chatStatus.equalsIgnoreCase("available")) {
 					Integer chatEntries = entryRepository.findByAgentAndCollectionName(userId.toString(),
 							"Chat_" + company.getId());
-					if (chatEntries <= 5) {
+					if (chatEntries <= company.getChatSettings().getMaxChatPerAgent()) {
 
 						agentUserEntry = optionalUserEntry.get();
 					}

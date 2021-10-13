@@ -1,31 +1,33 @@
 package com.ngdesk.websocket.channels.chat.dao;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class ChatChannelMessage {
 
-	
 	private String companyId;
 
-	
 	private String sessionUUId;
-	
 
 	private ChatChannel chatChannel;
 
-
-	private String messageType;
+	private String type;
 
 	public ChatChannelMessage() {
 		super();
 	}
 
-	public ChatChannelMessage(String companyId, String sessionUUId, ChatChannel chatChannel, String messageType) {
+	public ChatChannelMessage(String companyId, String sessionUUId, ChatChannel chatChannel, String type) {
 		super();
 		this.companyId = companyId;
 		this.sessionUUId = sessionUUId;
 		this.chatChannel = chatChannel;
-		this.messageType = messageType;
+		this.type = type;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public String getSessionUUId() {
@@ -42,14 +44,6 @@ public class ChatChannelMessage {
 
 	public void setChatChannel(ChatChannel chatChannel) {
 		this.chatChannel = chatChannel;
-	}
-
-	public String getMessageType() {
-		return messageType;
-	}
-
-	public void setMessageType(String messageType) {
-		this.messageType = messageType;
 	}
 
 	public String getCompanyId() {
