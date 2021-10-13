@@ -2,23 +2,21 @@ package com.ngdesk.websocket.channels.chat.dao;
 
 import java.util.Map;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class ChatNotification {
 
-	@JsonProperty("COMPANY_ID")
+
 	private String companyId;
 
-	@JsonProperty("TYPE")
+
 	private String type;
 
-	@JsonProperty("SESSION_UUID")
+	
 	private String sessionUUID;
 
-	@JsonProperty("ENTRY")
+	
 	private Map<String, Object> entry;
 
-	@JsonProperty("STATUS")
+	
 	private String status;
 
 	public ChatNotification() {
