@@ -8,10 +8,13 @@ import socket
 import getpass
 from OpenSSL import crypto, SSL
 import logging
+import re
+
 
 
 logging.basicConfig(filename='ngdesk_build_update.log', filemode='w', format='%(asctime)s - %(levelname)s - %(message)s')
 client = docker.from_env()
+password_pattern = re.compile('^(?=.*?[A-Z])(?=.*?[#?!@$%^&*-]).{8,}$')
 print('''
               _____            _    
              |  __ \          | |   
@@ -68,7 +71,8 @@ def build_ngdesk():
     email = input("Enter your email: ")
     company_name = input("Enter your company name: ")
     domain = input("Enter the domain you will use to access the website: ")
-    password = getpass.getpass('Enter your password (minimum 8 characters, with atleast one upper case, and atleast one special character): ')
+    # password = getpass.getpass('Enter your password (minimum 8 characters, with atleast one upper case, and atleast one special character): ')
+    password = get_valid_password()
 
     # TODO: check password matches regex
 
@@ -143,7 +147,7 @@ def create_company(company_name, email, first_name, last_name, password):
     
     logging.debug('enter create_company(%s, %s, %s, %s, %s)', company_name, email, first_name, last_name, password)
 
-
+    # TOOD: handle phone, country and timezone
     payload = {
         "COMPANY_NAME": company_name,
         "COMPANY_SUBDOMAIN": "onprem-" + company_name,
@@ -237,6 +241,15 @@ def start_containers(image_path, image_name):
         client.containers.run(image_path, name=image_name, detach=True, network_mode='host')
 
     logging.debug('exit start_containers()')
+
+
+def get_valid_password():
+    while True:
+        password = getpass.getpass('Enter your password (minimum 8 characters, with atleast one upper case, and atleast one special character): ')
+        if password_pattern.match(password):
+            return password
+        else:
+            print("Password must be a minimum of 8 characters, with atleast one upper case, and atleast one special character")
 
 
 def cert_gen(common_name):
