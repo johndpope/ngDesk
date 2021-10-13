@@ -140,7 +140,7 @@ def create_company(company_name, email, first_name, last_name, password):
 
     payload = {
         "COMPANY_NAME": company_name,
-        "COMPANY_SUBDOMAIN": "onprem_" + company_name,
+        "COMPANY_SUBDOMAIN": "onprem-" + company_name,
         "EMAIL_ADDRESS": email,
         "FIRST_NAME": first_name,
         "HIDDEN_FIELD": "",
