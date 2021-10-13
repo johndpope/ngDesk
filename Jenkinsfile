@@ -270,7 +270,7 @@ def buildMicroservice(serviceName, path) {
         docker.withRegistry("${env.DOCKER_HUB_URL}", "${env.DOCKER_HUB_KEY}") {
             def newImage = docker.image("${env.DOCKER_IMAGE_NAME}/" + serviceName + ":latest")
             newImage.push()
-            if(serviceName != 'config-server' && serviceName != 'gateway'){
+            if(serviceName != 'config-server'){
 				docker.withServer("${env.PROD_SERVER_URL}") {
 					sh "docker rename ngdesk-${serviceName} ngdesk-${serviceName}-old"
 					sh "docker stop ngdesk-${serviceName}-old"
