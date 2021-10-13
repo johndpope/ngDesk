@@ -19,7 +19,6 @@ pipeline {
 											
 					// backend services
 					def authChanged = ''
-					def integrationChanged = ''
 					def dataChanged = ''
 					def websocketChanged = ''
 					def escalationChanged = ''
@@ -49,7 +48,6 @@ pipeline {
 						configServerChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Config-Server ''').trim()
 
 						authChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Auth ''').trim()
-						integrationChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Integration-Service ''').trim()
 						dataChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Data-Service''').trim()
 						websocketChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Websocket-Service''').trim()
 						escalationChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Escalation-Service''').trim()
@@ -88,10 +86,6 @@ pipeline {
 						dir('/var/jenkins_home/projects/ngdesk-web-project') {
 							checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs: [[credentialsId: "${env.GIT_CREDENTIAL_ID}", url: "${env.GIT_WEB_URL}"]]])
 						}
-					}
-
-					if (integrationChanged.length() > 0) {
-						buildMicroservice('integration', 'ngDesk-Integration-Service')
 					}
 
 					if (graphqlChanged.length() > 0) {
@@ -165,8 +159,8 @@ pipeline {
 					
 					if (uiChanged.length() > 0) {	
 						generateSwagger('ngDesk-UI', '../../ngDesk-Private/ngDesk-Payment-Service/target/openapi.json', 'payment-api')
+						generateSwagger('ngDesk-UI', '../../ngDesk-Private/ngDesk-Integration-Service/target/openapi.json', 'integration-api')
 						generateSwagger('ngDesk-UI', '../ngDesk-Auth/target/openapi.json', 'auth-api')
-						generateSwagger('ngDesk-UI', '../ngDesk-Integration-Service/target/openapi.json', 'integration-api')
 						generateSwagger('ngDesk-UI', '../ngDesk-Workflow-Service/target/openapi.json', 'workflow-api')
 						generateSwagger('ngDesk-UI', '../ngDesk-Module-Service/target/openapi.json', 'module-api')
 						generateSwagger('ngDesk-UI', '../ngDesk-Role-Service/target/openapi.json', 'role-api')
