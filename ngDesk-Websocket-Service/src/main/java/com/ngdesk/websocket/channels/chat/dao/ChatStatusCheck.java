@@ -1,16 +1,11 @@
 package com.ngdesk.websocket.channels.chat.dao;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class ChatStatusCheck {
 
-	@JsonProperty("USER_ID")
-	String userId;
+	private String userId;
 
-	@JsonProperty("COMPANY_SUBDOMAIN")
-	String subdomain;
+	private String subdomain;
 
-	@JsonProperty("STATUS_CHECK")
 	private boolean statusCheck;
 
 	public ChatStatusCheck() {

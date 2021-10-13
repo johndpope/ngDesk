@@ -2,39 +2,22 @@ package com.ngdesk.websocket.channels.chat.dao;
 
 import java.util.List;
 
-import org.springframework.data.mongodb.core.mapping.Field;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ngdesk.data.dao.MessageAttachment;
 
 public class ChatTicket {
 
-	@JsonProperty("COMPANY_SUBDOMAIN")
-	@Field("COMPANY_SUBDOMAIN")
 	private String companySubdomain;
 
-	@JsonProperty("SENDER")
-	@Field("SENDER")
 	private ChatTicketSender sender;
 
-	@JsonProperty("SUBJECT")
-	@Field("SUBJECT")
 	private String subject;
 
-	@JsonProperty("MESSAGE")
-	@Field("MESSAGE")
 	private String message;
 
-	@JsonProperty("MESSAGE_TYPE")
-	@Field("MESSAGE_TYPE")
 	private String messageType;
 
-	@JsonProperty("ATTACHMENTS")
-	@Field("ATTACHMENTS")
 	private List<MessageAttachment> attachments;
 
-	@JsonProperty("SESSION_UUID")
-	@Field("SESSION_UUID")
 	private String sessionUUId;
 
 	public ChatTicket() {

@@ -1,21 +1,11 @@
 package com.ngdesk.websocket.channels.chat.dao;
 
-import org.springframework.data.mongodb.core.mapping.Field;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class ChatTicketSender {
 
-	@JsonProperty("FIRST_NAME")
-	@Field("FIRST_NAME")
 	private String firstName;
 
-	@JsonProperty("LAST_NAME")
-	@Field("LAST_NAME")
 	private String lastName;
 
-	@JsonProperty("EMAIL_ADDRESS")
-	@Field("EMAIL_ADDRESS")
 	private String emailAddress;
 
 	public ChatTicketSender() {
