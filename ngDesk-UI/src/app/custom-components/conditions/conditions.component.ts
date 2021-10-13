@@ -719,7 +719,6 @@ export class ConditionsComponent implements OnInit {
 		const currentConditions = this.conditions;
 		this.modulesService.getModuleById(field.MODULE).subscribe(
 			(module: any) => {
-				console.log('module..............', module);
 				const primaryDisplayField = module.FIELDS.find(
 					(fieldName) => fieldName.FIELD_ID === field.PRIMARY_DISPLAY_FIELD
 				);
