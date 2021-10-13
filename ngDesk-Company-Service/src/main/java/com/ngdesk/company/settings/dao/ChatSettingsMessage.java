@@ -1,16 +1,11 @@
 package com.ngdesk.company.settings.dao;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class ChatSettingsMessage {
 
-	@JsonProperty("COMPANY_ID")
 	private String companyId;
 
-	@JsonProperty("TYPE")
 	private String type;
 
-	@JsonProperty("CHAT_SETTINGS")
 	private ChatSettings chatSettings;
 
 	public ChatSettingsMessage() {

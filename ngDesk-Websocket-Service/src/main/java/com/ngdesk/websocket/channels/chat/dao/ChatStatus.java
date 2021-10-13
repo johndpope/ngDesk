@@ -6,14 +6,11 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(Include.NON_NULL)
 public class ChatStatus {
 
-	
-	String userId;
+	private String userId;
 
-	
-	String subdomain;
+	private String subdomain;
 
-	
-	boolean accepting;
+	private boolean accepting;
 
 	public ChatStatus() {
 

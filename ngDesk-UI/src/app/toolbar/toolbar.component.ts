@@ -396,9 +396,9 @@ export class ToolbarComponent implements OnDestroy, OnInit {
 		this.accept = false;
 		const receiptId = require('uuid').v4();
 		const chatStatus = {
-			USER_ID: this.usersService.user.DATA_ID,
-			COMPANY_SUBDOMAIN: this.usersService.getSubdomain(),
-			ACCEPTING_CHATS: status,
+			userId: this.usersService.user.DATA_ID,
+			subdomain: this.usersService.getSubdomain(),
+			accepting: status,
 		};
 		this.websocketService.publishChatStatus(chatStatus);
 		//donot uncomment this
@@ -674,9 +674,9 @@ export class ToolbarComponent implements OnDestroy, OnInit {
 
 	public checkChatStatus() {
 		const chatStatusCheck = {
-			USER_ID: this.usersService.user.DATA_ID,
-			COMPANY_SUBDOMAIN: this.usersService.getSubdomain(),
-			STATUS_CHECK: true,
+			userId: this.usersService.user.DATA_ID,
+			subdomain: this.usersService.getSubdomain(),
+			statusCheck: true,
 		};
 		this.websocketService.publishChatStatusCheck(chatStatusCheck);
 

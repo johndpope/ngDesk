@@ -75,10 +75,10 @@ export class WebsocketService {
 			let message = JSON.parse(event.data);
 			if (message.TYPE === 'PROBE_LOG') {
 				this.addLogsToApplication(message);
-			} else if (message.TYPE === 'CHAT_SETTINGS_UPDATED') {
+			} else if (message.type === 'CHAT_SETTINGS_UPDATED') {
 				this.toolbarService.updateShowAcceptChat();
-			} else if (message.TYPE === 'CHAT_STATUS') {
-				this.toolbarService.updateChatStatus(message.CHAT_STATUS);
+			} else if (message.type === 'CHAT_STATUS') {
+				this.toolbarService.updateChatStatus(message.chatStatus);
 			} else {
 				this.updateData(message);
 			}
