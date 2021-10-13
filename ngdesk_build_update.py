@@ -5,6 +5,8 @@ from os import path
 import sys
 import time
 import socket
+import getpass
+
 
 client = docker.from_env()
 
@@ -57,7 +59,7 @@ def build_ngdesk():
         {'name': 'ngdesk-web', 'path': 'ngdesk/web:latest', 'healthcheck': {'type': 'curl', 'attempts': 24, 'interval': 5, 'url': 'http://localhost:8200/actuator/health'}}, 
         {'name': 'ngdesk-notification', 'path': 'ngdesk/notification:latest', 'healthcheck': {'type': 'curl', 'attempts': 24, 'interval': 5, 'url': 'http://localhost:8096/actuator/health'}},
         {'name': 'ngdesk-email-server', 'path': 'ngdesk/email-server:latest'},
-        {'name': 'ngdesk-email-server', 'path': 'ngdesk/email-sender:latest'}
+        {'name': 'ngdesk-email-sender', 'path': 'ngdesk/email-sender:latest'}
     ]
 
     print(ngdesk_images)
@@ -93,6 +95,44 @@ def build_ngdesk():
 
         
         print(image_name + ' done')
+
+    create_company()
+
+def create_company():
+    print('create company')
+    first_name = input("Enter your first name: ")
+    last_name = input("Enter your last name: ")
+    email = input("Enter your email: ")
+    company_name = input("Enter your company name: ")
+    subdomain = input("Enter your subdomain: ")
+    password = getpass.getpass('Enter your passwoord: ')
+
+    payload = {
+        "COMPANY_NAME": company_name,
+        "COMPANY_SUBDOMAIN": subdomain,
+        "EMAIL_ADDRESS": email,
+        "FIRST_NAME": first_name,
+        "HIDDEN_FIELD": "",
+        "LANGUAGE": "en",
+        "LAST_NAME": last_name,
+        "PASSWORD": password,
+        "PHONE": {
+            "COUNTRY_CODE": "US",
+            "DIAL_CODE": "+1",
+            "PHONE_NUMBER": "4692009202",
+            "COUNTRY_FLAG": "us.svg"
+        },
+        "TIMEZONE": "America/Chicago",
+        "PRICING_TIER": "professional",
+        "PLUGINS": [
+            "Ticketing",
+            "CRM",
+            "Change Requests"
+        ]
+    }
+
+    resp = requests.post('http://localhost:9082/api/ngdesk-company-service-v1/company', payload)
+
 
 def check_container_started(image):
 
