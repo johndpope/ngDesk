@@ -164,6 +164,7 @@ def create_company(company_name, email, first_name, last_name, password):
 
     resp = requests.post('http://localhost:8443/api/ngdesk-company-service-v1/company', json=payload)
     print(resp)
+    print(resp.content)
 
 
 def check_container_started(image):
