@@ -55,7 +55,7 @@ public class ChatTicketCreationService {
 				if (optionalTicketModule.isPresent()) {
 					ChatUser chatUser = new ChatUser(chatTicket.getSender().getFirstName(),
 							chatTicket.getSender().getLastName(), chatTicket.getSender().getEmailAddress(),
-							chatTicket.getSessionUUId(), "UserCreation", chatTicket.getCompanySubdomain());
+							chatTicket.getSessionUUID(), "UserCreation", chatTicket.getCompanySubdomain());
 					Map<String, Object> user = chatUserEntryService.createOrGetUser(company, chatUser);
 					String contactId = user.get("CONTACT").toString();
 					Optional<Map<String, Object>> optionalContact = moduleEntryRepository.findById(contactId,
@@ -66,8 +66,8 @@ public class ChatTicketCreationService {
 							user.get("ROLE").toString());
 					List<DiscussionMessage> messages = new ArrayList<DiscussionMessage>();
 					DiscussionMessage discussionMessage = new DiscussionMessage(chatTicket.getMessage(), new Date(),
-							UUID.randomUUID().toString(), chatTicket.getType(), chatTicket.getAttachments(),
-							sender, null, null, null);
+							UUID.randomUUID().toString(), chatTicket.getType(), chatTicket.getAttachments(), sender,
+							null, null, null);
 					messages.add(discussionMessage);
 					HashMap<String, Object> entry = new HashMap<String, Object>();
 					entry.put("MESSAGES", messages);
@@ -75,7 +75,7 @@ public class ChatTicketCreationService {
 					entry.put("REQUESTOR", contact.get("_id").toString());
 					entry.put("SUBJECT", chatTicket.getSubject());
 					ChatTicketStatusMessage chatTicketStatusMessage = new ChatTicketStatusMessage(companyId,
-							chatTicket.getSessionUUId(), "CHAT_TICKET_STATUS", "SUCCESS",
+							chatTicket.getSessionUUID(), "CHAT_TICKET_STATUS", "SUCCESS",
 							"Ticket has been created Succuessfully, Agent will reach back to you");
 					addToChatTicketStatusQueue(chatTicketStatusMessage);
 					dataProxy.postModuleEntry(entry, optionalTicketModule.get().getModuleId(), false, companyId,
@@ -86,7 +86,7 @@ public class ChatTicketCreationService {
 		} catch (Exception e) {
 
 			ChatTicketStatusMessage chatTicketStatusMessage = new ChatTicketStatusMessage(companyId,
-					chatTicket.getSessionUUId(), "CHAT_TICKET_STATUS", "FAILED",
+					chatTicket.getSessionUUID(), "CHAT_TICKET_STATUS", "FAILED",
 					"Ticket has not been created, Please try again");
 			addToChatTicketStatusQueue(chatTicketStatusMessage);
 

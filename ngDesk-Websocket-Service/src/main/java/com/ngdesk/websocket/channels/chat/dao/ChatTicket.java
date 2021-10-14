@@ -18,14 +18,14 @@ public class ChatTicket {
 
 	private List<MessageAttachment> attachments;
 
-	private String sessionUUId;
+	private String sessionUUID;
 
 	public ChatTicket() {
 
 	}
 
 	public ChatTicket(String companySubdomain, ChatTicketSender sender, String subject, String message, String type,
-			List<MessageAttachment> attachments, String sessionUUId) {
+			List<MessageAttachment> attachments, String sessionUUID) {
 		super();
 		this.companySubdomain = companySubdomain;
 		this.sender = sender;
@@ -33,7 +33,7 @@ public class ChatTicket {
 		this.message = message;
 		this.type = type;
 		this.attachments = attachments;
-		this.sessionUUId = sessionUUId;
+		this.sessionUUID = sessionUUID;
 	}
 
 	public String getCompanySubdomain() {
@@ -84,12 +84,12 @@ public class ChatTicket {
 		this.attachments = attachments;
 	}
 
-	public String getSessionUUId() {
-		return sessionUUId;
+	public String getSessionUUID() {
+		return sessionUUID;
 	}
 
-	public void setSessionUUId(String sessionUUId) {
-		this.sessionUUId = sessionUUId;
+	public void setSessionUUID(String sessionUUID) {
+		this.sessionUUID = sessionUUID;
 	}
 
 }
