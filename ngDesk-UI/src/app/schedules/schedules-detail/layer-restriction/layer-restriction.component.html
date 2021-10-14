@@ -30,7 +30,7 @@
 					</mat-option>
 				</mat-select>
 			</mat-form-field>
-			<label class="mat-body">{{'TO'|translate}} {{ restriction.endTime }}</label>
+			<label class="mat-body">{{'TO'|translate}}</label>
 			<mat-form-field>
 				<mat-select [disabled]="data.layer.restrictionType == 'Week'" placeholder="End Time" [(ngModel)]="restriction.endTime">
 					<mat-option *ngFor="let time of times" [value]="time">
@@ -54,14 +54,14 @@
         let restrictionIndex = index
       ">
 			<label class="mat-body">{{'FROM'|translate}}</label>
-			<mat-form-field fxFlex="15">
+			<mat-form-field fxFlex="16">
 				<mat-select [disabled]="data.layer.restrictionType == 'Day'" placeholder="Start Day" [(ngModel)]="restriction.startDay">
 					<mat-option *ngFor="let day of weekDays" [value]="day">
 						{{ day }}
 					</mat-option>
 				</mat-select>
 			</mat-form-field>
-			<mat-form-field fxFlex="15">
+			<mat-form-field fxFlex="16">
 				<mat-select [disabled]="data.layer.restrictionType == 'Day'" placeholder="Start Time" [(ngModel)]="restriction.startTime">
 					<mat-option *ngFor="let time of times" [value]="time">
 						{{ time }}
@@ -69,14 +69,14 @@
 				</mat-select>
 			</mat-form-field>
 			<label class="mat-body">{{'TO'|translate}}</label>
-			<mat-form-field fxFlex="15">
+			<mat-form-field fxFlex="16">
 				<mat-select [disabled]="data.layer.restrictionType == 'Day'" placeholder="End Day" [(ngModel)]="restriction.endDay">
 					<mat-option *ngFor="let day of weekDays" [value]="day">
 						{{ day }}
 					</mat-option>
 				</mat-select>
 			</mat-form-field>
-			<mat-form-field fxFlex="15">
+			<mat-form-field fxFlex="16">
 				<mat-select [disabled]="data.layer.restrictionType == 'Day'" placeholder="End Time" [(ngModel)]="restriction.endTime">
 					<mat-option *ngFor="let time of times" [value]="time">
 						{{ time }}
