@@ -11,14 +11,13 @@ import org.springframework.stereotype.Repository;
 import com.ngdesk.role.dao.Role;
 
 @Repository
-public class CustomRoleRepositoryImpl implements CustomRoleRepositoty {
+public class CustomRoleRepositoryImpl implements CustomRoleRepository {
 
 	@Autowired
 	private MongoOperations mongoOperations;
 
 	@Override
 	public Optional<Role> findRoleByName(String name, String collectionName) {
-		System.out.println(name + "        " + collectionName);
 		return Optional.ofNullable(
 				mongoOperations.findOne(new Query(Criteria.where("NAME").is(name)), Role.class, collectionName));
 	}

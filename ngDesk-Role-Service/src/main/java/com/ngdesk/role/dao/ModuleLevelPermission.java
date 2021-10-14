@@ -7,26 +7,32 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 public class ModuleLevelPermission {
 
+	@Schema(required = true, description = "ACCESS")
 	@JsonProperty("ACCESS")
 	@Pattern(regexp = "Enabled|Not Set|Disabled", message = "NOT_VALID_ACCESS")
 	@NotEmpty(message = "ACCESS_REQUIRED")
 	@Field("ACCESS")
 	private String access;
 
+	@Schema(required = true, description = "ACCESS TYPE")
 	@JsonProperty("ACCESS_TYPE")
 	@Pattern(regexp = "Normal|Not Set|Admin", message = "NOT_VALID_ACCESS_TYPE")
 	@NotEmpty(message = "ACCESS_TYPE_REQUIRED")
 	@Field("ACCESS_TYPE")
 	private String accessType;
 
+	@Schema(required = true, description = "EDIT")
 	@JsonProperty("EDIT")
 	@Pattern(regexp = "All|Not Set|None", message = "NOT_VALID_EDIT")
 	@NotEmpty(message = "MODULE_PERMISSION_EDIT_REQUIRED")
 	@Field("EDIT")
 	private String edit;
 
+	@Schema(required = true, description = "VIEW")
 	@JsonProperty("VIEW")
 	@Pattern(regexp = "All|Not Set|None", message = "NOT_VALID_VIEW")
 	@NotEmpty(message = "MODULE_PERMISSION_VIEW_REQUIRED")
