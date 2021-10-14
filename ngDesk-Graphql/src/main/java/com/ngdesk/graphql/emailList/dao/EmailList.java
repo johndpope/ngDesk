@@ -7,33 +7,40 @@ import java.util.List;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.ngdesk.graphql.modules.dao.Condition;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class EmailList {
 
+	@Field("EMAIL_LIST_ID")
 	private String emailListId;
 
+	@Field("NAME")
 	private String name;
 
+	@Field("DESCRIPTION")
 	private String description;
 
-	private List<Condition> conditions = new ArrayList<>();
+	@Field("CONDITIONS")
+	private List<EmailLIstCondition> conditions = new ArrayList<>();
 
+	@Field("DATE_CREATED")
 	private Date dateCreated;
 
+	@Field("DATE_UPDATED")
 	private Date dateUpdated;
 
+	@Field("LAST_UPDATED_BY")
 	private String lastUpdatedBy;
 
+	@Field("CREATED_BY")
 	private String createdBy;
 
 	public EmailList() {
 
 	}
 
-	public EmailList(String emailListId, String name, String description, List<Condition> conditions, Date dateCreated,
-			Date dateUpdated, String lastUpdatedBy, String createdBy) {
+	public EmailList(String emailListId, String name, String description, List<EmailLIstCondition> conditions,
+			Date dateCreated, Date dateUpdated, String lastUpdatedBy, String createdBy) {
 		super();
 		this.emailListId = emailListId;
 		this.name = name;
@@ -57,7 +64,7 @@ public class EmailList {
 		return description;
 	}
 
-	public List<Condition> getConditions() {
+	public List<EmailLIstCondition> getConditions() {
 		return conditions;
 	}
 
@@ -89,7 +96,7 @@ public class EmailList {
 		this.description = description;
 	}
 
-	public void setConditions(List<Condition> conditions) {
+	public void setConditions(List<EmailLIstCondition> conditions) {
 		this.conditions = conditions;
 	}
 
