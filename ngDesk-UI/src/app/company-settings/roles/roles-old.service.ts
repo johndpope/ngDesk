@@ -46,4 +46,36 @@ export class RolesService {
 	public deleteRole(roleId) {
 		return this.http.delete(`${this.globals.baseRestUrl}/roles/${roleId}`);
 	}
+
+	// Calling graphql call to fetch list of roles
+	public getAllRoles(query) {
+		return this.http.post(`${this.globals.graphqlUrl}`, query);
+	}
+
+	// Calling graphql call to fetch a role
+	public getRole(roleId) {
+		const query = `{
+			role: getRole(roleId: "${roleId}") {
+				ROLE_ID: roleId
+				NAME: name
+				DESCRIPTION: description
+				PERMISSIONS: permissions {
+					MODULE: module
+					MODULE_PERMISSION: modulePermission {
+						Access: access 
+						ACCESS_TYPE: accessType
+						EDIT: edit
+						VIEW: view
+						DELETE: delete
+					}
+					FIELD_PERMISSIONS: fieldPermissions {
+						FIELD_ID: fieldId
+						PERMISSION: permission
+					}
+				}
+			}
+		}`;
+
+		return this.http.post(`${this.globals.graphqlUrl}`, query);
+	}
 }

@@ -54,11 +54,11 @@ export class RoleMasterComponent implements OnInit {
 				columnsHeadersObj.push(
 					{
 						DISPLAY: this.translateService.instant('NAME'),
-						NAME: 'NAME',
+						NAME: 'name',
 					},
 					{
 						DISPLAY: this.translateService.instant('DESCRIPTION'),
-						NAME: 'DESCRIPTION',
+						NAME: 'description',
 					}
 				);
 				columnsHeaders.push(this.translateService.instant('NAME'));
@@ -80,7 +80,7 @@ export class RoleMasterComponent implements OnInit {
 
 				this.customTableService.columnsHeaders = columnsHeaders;
 				this.customTableService.columnsHeadersObj = columnsHeadersObj;
-				this.customTableService.sortBy = 'NAME';
+				this.customTableService.sortBy = 'name';
 				this.customTableService.sortOrder = 'asc';
 				this.customTableService.pageIndex = 0;
 				this.customTableService.pageSize = 10;
@@ -97,24 +97,54 @@ export class RoleMasterComponent implements OnInit {
 		);
 	}
 
-	private getRoles() {
+	// private getRoles() {
+	// 	const sortBy = this.customTableService.sortBy;
+	// 	const orderBy = this.customTableService.sortOrder;
+	// 	const page = this.customTableService.pageIndex;
+	// 	const pageSize = this.customTableService.pageSize;
+
+	// 	this.rolesService.getRoles(sortBy, orderBy, page + 1, pageSize).subscribe(
+	// 		(data: any) => {
+	// 			data['ROLES'].filter(
+	// 				(role) => {
+	// 					if (role.NAME === 'Customers')
+	// 					{
+	// 					  role['NAME'] = 'Customer'; 
+	// 					} 
+	// 				});
+	// 			this.customTableService.setTableDataSource(
+	// 				data.ROLES,
+	// 				data.TOTAL_RECORDS
+	// 			);
+	// 		},
+	// 		(error: any) => {
+	// 			this.bannerMessageService.errorNotifications.push({
+	// 				message: error.error.ERROR,
+	// 			});
+	// 		}
+	// 	);
+	// }
+
+	// Fetching all the roles based on page numebr and page size.
+	public getRoles() {
 		const sortBy = this.customTableService.sortBy;
 		const orderBy = this.customTableService.sortOrder;
 		const page = this.customTableService.pageIndex;
 		const pageSize = this.customTableService.pageSize;
+		const query = `{
+			roles: getRoles(pageNumber: ${page}, pageSize: ${pageSize}, sortBy: "${sortBy}", orderBy: "${orderBy}") {
+				name
+				description
+				roleId
+			}
+			totalCount: getRolesCount
+		}`;
 
-		this.rolesService.getRoles(sortBy, orderBy, page + 1, pageSize).subscribe(
-			(data: any) => {
-				data['ROLES'].filter(
-					(role) => {
-						if (role.NAME === 'Customers')
-						{
-						  role['NAME'] = 'Customer'; 
-						} 
-					});
+		this.rolesService.getAllRoles(query).subscribe(
+			(rolesResponse: any) => {
 				this.customTableService.setTableDataSource(
-					data.ROLES,
-					data.TOTAL_RECORDS
+					rolesResponse.roles,
+					rolesResponse.totalCount
 				);
 			},
 			(error: any) => {
@@ -132,9 +162,9 @@ export class RoleMasterComponent implements OnInit {
 			rowData.NAME === 'Agent' ||
 			rowData.NAME === 'Customer'
 		) {
-			this.router.navigate([`company-settings/roles/${rowData.ROLE_ID}`]);
+			this.router.navigate([`company-settings/roles/${rowData.roleId}`]);
 		} else {
-			this.router.navigate([`company-settings/roles/edit/${rowData.ROLE_ID}`]);
+			this.router.navigate([`company-settings/roles/edit/${rowData.roleId}`]);
 		}
 	}
 
