@@ -8,6 +8,8 @@ import { CustomTableService } from 'src/app/custom-table/custom-table.service';
 import { ConfirmDialogComponent } from 'src/app/dialogs/confirm-dialog/confirm-dialog.component';
 import { UsersService } from 'src/app/users/users.service';
 import { RolesService } from '../roles-old.service';
+import { RoleLayout } from '@ngdesk/role-api';
+import { RoleApiService } from '@ngdesk/role-api';
 
 @Component({
 	selector: 'app-role-master',
@@ -27,7 +29,8 @@ export class RoleMasterComponent implements OnInit {
 		private dialog: MatDialog,
 		public customTableService: CustomTableService,
 		private rolesService: RolesService,
-		private usersService: UsersService
+		private usersService: UsersService,
+		private roleApiService: RoleApiService
 	) {
 		// needs to subscribe here to get the translation once the actual file is loaded
 		// if using instant outside it wont get the trasnlation.
@@ -63,11 +66,12 @@ export class RoleMasterComponent implements OnInit {
 				);
 				columnsHeaders.push(this.translateService.instant('NAME'));
 				columnsHeaders.push(this.translateService.instant('DESCRIPTION'));
-				this.rolesActions.actions = this.customTableService.checkPermissionsForActions(
-					roleResponse,
-					this.rolesActions,
-					'Roles'
-				);
+				this.rolesActions.actions =
+					this.customTableService.checkPermissionsForActions(
+						roleResponse,
+						this.rolesActions,
+						'Roles'
+					);
 
 				// only if there are actions to be shown. Actions are based on permissions
 				if (this.rolesActions.actions.length > 0) {
@@ -105,13 +109,11 @@ export class RoleMasterComponent implements OnInit {
 
 		this.rolesService.getRoles(sortBy, orderBy, page + 1, pageSize).subscribe(
 			(data: any) => {
-				data['ROLES'].filter(
-					(role) => {
-						if (role.NAME === 'Customers')
-						{
-						  role['NAME'] = 'Customer'; 
-						} 
-					});
+				data['ROLES'].filter((role) => {
+					if (role.NAME === 'Customers') {
+						role['NAME'] = 'Customer';
+					}
+				});
 				this.customTableService.setTableDataSource(
 					data.ROLES,
 					data.TOTAL_RECORDS
@@ -169,7 +171,7 @@ export class RoleMasterComponent implements OnInit {
 		// EVENT AFTER MODAL DIALOG IS CLOSED
 		dialogRef.afterClosed().subscribe((result) => {
 			if (result === this.translateService.instant('DELETE')) {
-				this.rolesService.deleteRole(role.ROLE_ID).subscribe(
+				this.roleApiService.deleteRole(role.ROLE_ID).subscribe(
 					(roleResponse: any) => {
 						this.getRoles();
 						this.bannerMessageService.successNotifications.push({
