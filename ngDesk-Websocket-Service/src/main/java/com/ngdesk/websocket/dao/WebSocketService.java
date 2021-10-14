@@ -245,7 +245,7 @@ public class WebSocketService {
 			ConcurrentHashMap<String, UserSessions> sessions = sessionService.sessions
 					.get(company.getCompanySubdomain());
 
-			ConcurrentLinkedQueue<WebSocketSession> userSessions = sessions.get(chatDiscussionMessage.getSessionUuid())
+			ConcurrentLinkedQueue<WebSocketSession> userSessions = sessions.get(chatDiscussionMessage.getSessionUUID())
 					.getSessions();
 			userSessions.forEach(session -> {
 				try {

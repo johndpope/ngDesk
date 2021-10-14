@@ -8,21 +8,21 @@ public class ChatDiscussionMessage {
 
 	private String customerDataID;
 
-	private String sessionUuid;
+	private String sessionUUID;
 
-	private DiscussionMessage DiscussionMessage;
+	private DiscussionMessage discussionMessage;
 
 	public ChatDiscussionMessage() {
 
 	}
 
-	public ChatDiscussionMessage(String agentDataID, String customerDataID, String sessionUuid,
+	public ChatDiscussionMessage(String agentDataID, String customerDataID, String sessionUUID,
 			DiscussionMessage discussionMessage) {
 		super();
 		this.agentDataID = agentDataID;
 		this.customerDataID = customerDataID;
-		this.sessionUuid = sessionUuid;
-		DiscussionMessage = discussionMessage;
+		this.sessionUUID = sessionUUID;
+		this.discussionMessage = discussionMessage;
 	}
 
 	public String getAgentDataID() {
@@ -33,28 +33,28 @@ public class ChatDiscussionMessage {
 		this.agentDataID = agentDataID;
 	}
 
-	public String getSessionUuid() {
-		return sessionUuid;
-	}
-
-	public void setSessionUuid(String sessionUuid) {
-		this.sessionUuid = sessionUuid;
-	}
-
-	public DiscussionMessage getDiscussionMessage() {
-		return DiscussionMessage;
-	}
-
-	public void setDiscussionMessage(DiscussionMessage discussionMessage) {
-		DiscussionMessage = discussionMessage;
-	}
-
 	public String getCustomerDataID() {
 		return customerDataID;
 	}
 
 	public void setCustomerDataID(String customerDataID) {
 		this.customerDataID = customerDataID;
+	}
+
+	public String getSessionUUID() {
+		return sessionUUID;
+	}
+
+	public void setSessionUUID(String sessionUUID) {
+		this.sessionUUID = sessionUUID;
+	}
+
+	public DiscussionMessage getDiscussionMessage() {
+		return discussionMessage;
+	}
+
+	public void setDiscussionMessage(DiscussionMessage discussionMessage) {
+		this.discussionMessage = discussionMessage;
 	}
 
 }
