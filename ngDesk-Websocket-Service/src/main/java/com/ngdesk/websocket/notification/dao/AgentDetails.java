@@ -2,44 +2,30 @@ package com.ngdesk.websocket.notification.dao;
 
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class AgentDetails {
 
-	@JsonProperty("COMPANY_ID")
 	private String companyId;
 
-	@JsonProperty("AGENT_FIRST_NAME")
 	private String agentFirstName;
 
-	@JsonProperty("AGENT_LAST_NAME")
 	private String agentLastName;
 
-	@JsonProperty("AGENT_DATA_ID")
 	private String agentDataId;
 
-	@JsonProperty("CUSTOMER_DATA_ID")
 	private String customerDataId;
 
-	@JsonProperty("AGENTS_AVAILABLE")
 	private Boolean agentsAvailable;
 
-	@JsonProperty("SESSION_UUID")
 	private String sessionUuid;
 
-	@JsonProperty("AGENT_ASSIGNED_TIME")
 	private Date agentAssignedTime;
 
-	@JsonProperty("AGENT_ROLE_ID")
 	private String agentRoleId;
 
-	@JsonProperty("CUSTOMER_ROLE_ID")
 	private String customerRoleId;
 
-	@JsonProperty("CUSTOMER_UUID")
 	private String customerUuid;
 
-	@JsonProperty("CHAT_ENTRY_ID")
 	private String chatEntryId;
 
 	public AgentDetails() {

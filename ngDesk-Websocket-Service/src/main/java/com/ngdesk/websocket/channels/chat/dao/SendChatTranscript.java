@@ -1,28 +1,23 @@
 
 package com.ngdesk.websocket.channels.chat.dao;
 
-import org.springframework.data.mongodb.core.mapping.Field;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class SendChatTranscript {
 
-	@JsonProperty("SESSION_UUID")
-	@Field("SESSION_UUID")
 	private String sessionUUID;
 
-	@JsonProperty("SUBDOMAIN")
-	@Field("SUBDOMAIN")
 	private String subdomain;
+
+	private Boolean closeSession;
 
 	public SendChatTranscript() {
 
 	}
 
-	public SendChatTranscript(String sessionUUID, String subdomain) {
+	public SendChatTranscript(String sessionUUID, String subdomain, Boolean closeSession) {
 		super();
 		this.sessionUUID = sessionUUID;
 		this.subdomain = subdomain;
+		this.closeSession = closeSession;
 	}
 
 	public String getSessionUUID() {
@@ -39,6 +34,14 @@ public class SendChatTranscript {
 
 	public void setSubdomain(String subdomain) {
 		this.subdomain = subdomain;
+	}
+
+	public Boolean getCloseSession() {
+		return closeSession;
+	}
+
+	public void setCloseSession(Boolean closeSession) {
+		this.closeSession = closeSession;
 	}
 
 }
