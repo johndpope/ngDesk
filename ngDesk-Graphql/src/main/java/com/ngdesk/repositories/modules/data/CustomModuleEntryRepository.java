@@ -11,7 +11,6 @@ import com.ngdesk.commons.models.OrderBy;
 import com.ngdesk.graphql.modules.dao.Condition;
 import com.ngdesk.graphql.modules.dao.Module;
 import com.ngdesk.graphql.modules.dao.ModuleField;
-import com.ngdesk.graphql.reports.dao.Report;
 
 public interface CustomModuleEntryRepository {
 
@@ -95,5 +94,9 @@ public interface CustomModuleEntryRepository {
 	int getCountForUnmappedEntriesSearch(List<String> entryIds, String collectionName, String fieldName);
 
 	public Optional<Map<String, Object>> getPublicTeams(String collectionName);
+
+	public Optional<List<Map<String, Object>>> findEntriesWithConditions(List<Condition> conditionsList,
+			Pageable pageable, String collectionName, List<Module> modules, List<ModuleField> fields,
+			Set<String> teamIds);
 
 }

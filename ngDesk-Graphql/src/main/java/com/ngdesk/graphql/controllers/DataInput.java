@@ -4,16 +4,16 @@ import java.util.List;
 
 import com.ngdesk.graphql.role.layout.dao.RoleLayoutCondition;
 
-public class ReportDataInput {
+public class DataInput {
 	private String query;
 
 	private List<RoleLayoutCondition> conditions;
 
-	public ReportDataInput() {
+	public DataInput() {
 
 	}
 
-	public ReportDataInput(String query, List<RoleLayoutCondition> conditions) {
+	public DataInput(String query, List<RoleLayoutCondition> conditions) {
 		super();
 		this.query = query;
 		this.conditions = conditions;

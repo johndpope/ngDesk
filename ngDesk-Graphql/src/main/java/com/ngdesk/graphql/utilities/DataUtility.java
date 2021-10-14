@@ -47,6 +47,9 @@ import com.ngdesk.graphql.datatypes.DateTime;
 import com.ngdesk.graphql.discoverymap.dao.DiscoveryMapDataFetcher;
 import com.ngdesk.graphql.discoverymap.dao.DiscoveryMapsDataFetcher;
 import com.ngdesk.graphql.discoverymap.dao.UnApprovedDiscoveryMapsDataFetcher;
+import com.ngdesk.graphql.emailList.dao.EmailListCountFetcher;
+import com.ngdesk.graphql.emailList.dao.EmailListDataFetcher;
+import com.ngdesk.graphql.emailList.dao.EmailListsDataFetcher;
 import com.ngdesk.graphql.enterprisesearch.dao.EnterpriseSearchCountFetcher;
 import com.ngdesk.graphql.enterprisesearch.dao.EnterpriseSearchDataFetcher;
 import com.ngdesk.graphql.enterprisesearch.dao.EnterpriseSearchesDataFetcher;
@@ -70,6 +73,7 @@ import com.ngdesk.graphql.modules.dao.ModuleField;
 import com.ngdesk.graphql.modules.dao.ModulesDataFetcher;
 import com.ngdesk.graphql.modules.dao.ModulesService;
 import com.ngdesk.graphql.modules.data.dao.AggregationDataFetcher;
+import com.ngdesk.graphql.modules.data.dao.AllEntriesByConditionFetcher;
 import com.ngdesk.graphql.modules.data.dao.AllEntriesFetcher;
 import com.ngdesk.graphql.modules.data.dao.ChronometerDataFetcher;
 import com.ngdesk.graphql.modules.data.dao.CountDataFetcher;
@@ -160,6 +164,9 @@ public class DataUtility {
 
 	@Autowired
 	AllEntriesFetcher allEntriesFetcher;
+
+	@Autowired
+	AllEntriesByConditionFetcher allEntriesByConditionFetcher;
 
 	@Autowired
 	EntryDataFetcher entryDataFetcher;
@@ -500,7 +507,7 @@ public class DataUtility {
 
 	@Autowired
 	ListFormulaDataFetcher listFormulaDatafetcher;
-	
+
 	@Autowired
 	EscalationDataFetcher escalationDataFetcher;
 
@@ -509,6 +516,15 @@ public class DataUtility {
 
 	@Autowired
 	EscalationsCountDataFetcher escalationCountDataFetcher;
+
+	@Autowired
+	EmailListDataFetcher emailListDataFetcher;
+
+	@Autowired
+	EmailListsDataFetcher emailListsDataFetcher;
+
+	@Autowired
+	EmailListCountFetcher emailListCountFetcher;
 
 	public GraphQL createGraphQlObject(Company company) throws IOException {
 		try {
@@ -547,6 +563,10 @@ public class DataUtility {
 				String functionReportCsvTemplate = "getCsvFor" + replacedModuleName + "(moduleId: String): ["
 						+ replacedModuleName + "]";
 
+				String functionEntriesWithConditionTemplate = "getEntriesWithConditionFor" + replacedModuleName
+						+ "(moduleId: String, pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): ["
+						+ replacedModuleName + "]";
+
 				functionNamesBuilder.append(functionWidgetTemplate);
 				functionNamesBuilder.append(functionOneToManyTemplate);
 				functionNamesBuilder.append(functionOneToManyUnmappedTemplate);
@@ -554,6 +574,7 @@ public class DataUtility {
 				functionNamesBuilder.append(functionTemplate);
 				functionNamesBuilder.append(functionReportDataTemplate);
 				functionNamesBuilder.append(functionReportCsvTemplate);
+				functionNamesBuilder.append(functionEntriesWithConditionTemplate);
 
 				functionNamesBuilder.append("\n");
 
@@ -704,6 +725,7 @@ public class DataUtility {
 			TypeDefinitionRegistry typeRegistry = new SchemaParser().parse(schemaString);
 			RuntimeWiring wiring = buildRuntimeWiring(modules);
 			GraphQLSchema schema = new SchemaGenerator().makeExecutableSchema(typeRegistry, wiring);
+			// System.out.println("schema=="+schemaString);
 			return newGraphQL(schema).build();
 
 		} catch (Exception e) {
@@ -960,9 +982,20 @@ public class DataUtility {
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getEscalations", escalationsDataFetcher));
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getEscalationsCount", escalationCountDataFetcher));
 
+		// EMAIL_LIST
+		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getEmailList", emailListDataFetcher));
+		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getEmailLists", emailListsDataFetcher));
+		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getEmailListCount", emailListCountFetcher));
+		builder.type("EmailList", typeWiring -> typeWiring.dataFetcher("createdBy", entryDataFetcher));
+		builder.type("EmailList", typeWiring -> typeWiring.dataFetcher("lastUpdatedBy", entryDataFetcher));
+
 		for (Module module : modules) {
 			String name = "get" + module.getName().replaceAll("\\s+", "_");
 			builder.type("Query", typeWiring -> typeWiring.dataFetcher(name, allEntriesFetcher));
+
+			String entriesWithCondition = "getEntriesWithConditionFor" + module.getName().replaceAll("\\s+", "_");
+			builder.type("Query",
+					typeWiring -> typeWiring.dataFetcher(entriesWithCondition, allEntriesByConditionFetcher));
 
 			String roleName = name + "RoleLayout";
 			builder.type("Query", typeWiring -> typeWiring.dataFetcher(roleName, roleLayoutValuesDataFetcher));

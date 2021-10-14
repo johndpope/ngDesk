@@ -848,4 +848,28 @@ public class CustomModuleEntryRepositoryImpl implements CustomModuleEntryReposit
 		return Optional.ofNullable(mongoOperations.findOne(query, Map.class, collectionName));
 	}
 
+	@Override
+	public Optional<List<Map<String, Object>>> findEntriesWithConditions(List<Condition> conditionsList,
+			Pageable pageable, String collectionName, List<Module> modules, List<ModuleField> fields,
+			Set<String> teamIds) {
+		Criteria criteria = new Criteria();
+		if (!collectionName.contains("Users_")
+				&& !collectionName.equalsIgnoreCase("Teams_" + authManager.getUserDetails().getCompanyId())) {
+			criteria.andOperator(Criteria.where("DELETED").is(false), Criteria.where("EFFECTIVE_TO").is(null),
+					Criteria.where("TEAMS").in(teamIds), buildConditions(modules, conditionsList, fields));
+		}
+
+		Query query = new Query().with(pageable);
+		if (collectionName.contains("Users_")) {
+			criteria.andOperator(Criteria.where("DELETED").is(false), Criteria.where("EFFECTIVE_TO").is(null),
+					Criteria.where("EMAIL_ADDRESS").ne("ghost@ngdesk.com"),
+					Criteria.where("EMAIL_ADDRESS").ne("system@ngdesk.com"), Criteria.where("TEAMS").in(teamIds),
+					buildConditions(modules, conditionsList, fields));
+			query.fields().exclude("PASSWORD");
+		}
+		query.addCriteria(criteria);
+		query.fields().exclude("META_DATA");
+		return Optional.ofNullable(
+				mongoOperations.find(query, (Class<Map<String, Object>>) (Class) Map.class, collectionName));
+	}
 }
