@@ -15,6 +15,8 @@ import re
 logging.basicConfig(filename='ngdesk_build_update.log', filemode='w', format='%(asctime)s - %(levelname)s - %(message)s')
 client = docker.from_env()
 password_pattern = re.compile('^(?=.*?[A-Z])(?=.*?[#?!@$%^&*-]).{8,}$')
+email_pattern = re.compile('(.+)@(.+)\\.(.+)')
+
 print('''
               _____            _    
              |  __ \          | |   
@@ -68,7 +70,7 @@ def build_ngdesk():
     print('Before the installation starts, we need to gather some infomation from you. This infomation will be used to setup the admin user and default behavior of the application, the info will not be transmitted out of this system.')
     first_name = input("Enter your first name: ")
     last_name = input("Enter your last name: ")
-    email = input("Enter your email: ")
+    email = get_valid_email()
     company_name = input("Enter your company name: ")
     domain = input("Enter the domain you will use to access the website: ")
     password = get_valid_password()
@@ -249,6 +251,14 @@ def get_valid_password():
             return password
         else:
             print("Password must be a minimum of 8 characters, with atleast one upper case, and atleast one special character")
+
+def get_valid_email():
+    while True:
+        email = input("Enter your email: ")
+        if email_pattern.match(email):
+            return email
+        else:
+            print("Please enter a valid email address")
 
 
 def cert_gen(common_name):

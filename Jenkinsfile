@@ -155,12 +155,12 @@ pipeline {
 								newImage.push()
 							}
 							docker.withServer("${env.PROD_SERVER_URL}") {
-								//sh "docker rename ngdesk-nginx ngdesk-nginx-old"
-								//sh "docker stop ngdesk-nginx-old"
-								//sh "docker pull ngdesk/nginx"
-								//sh "docker run --name ngdesk-nginx -d -v /var/jenkins_home/projects/ngdesk-certs:/etc/nginx/keys -v /var/jenkins_home/projects/ngdesk-nginx-conf/nginx.conf:/etc/nginx/nginx.conf --network=host ngdesk/nginx"
-								//sh "docker rm ngdesk-nginx-old"
-								//sh 'docker image prune -f'
+								sh "docker rename ngdesk-nginx ngdesk-nginx-old"
+								sh "docker stop ngdesk-nginx-old"
+								sh "docker pull ngdesk/nginx"
+								sh "docker run --name ngdesk-nginx -d -v /ngdesk/nginx/keys:/etc/nginx/keys -v /ngdesk/nginx/nginx.conf:/etc/nginx/nginx.conf --network=host ngdesk/nginx"
+								sh "docker rm ngdesk-nginx-old"
+								sh 'docker image prune -f'
 							}
 						}
 					}
