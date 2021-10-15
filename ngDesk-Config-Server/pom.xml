@@ -20,6 +20,10 @@
 		<spring-cloud.version>Hoxton.SR8</spring-cloud.version>
 	</properties>
 
+	
+	
+	
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
