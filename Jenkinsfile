@@ -81,12 +81,6 @@ pipeline {
 					if (authChanged.length() > 0) {
 						buildMicroservice('auth', 'ngDesk-Auth')
 					}
-					
-					if(uiChanged.length() > 0){
-						dir('/var/jenkins_home/projects/ngdesk-web-project') {
-							checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs: [[credentialsId: "${env.GIT_CREDENTIAL_ID}", url: "${env.GIT_WEB_URL}"]]])
-						}
-					}
 
 					if (graphqlChanged.length() > 0) {
 						buildMicroservice('graphql', 'ngDesk-Graphql')
@@ -148,11 +142,25 @@ pipeline {
 						buildMicroservice('gateway', 'ngDesk-Gateway')
 					}
 
+					if(uiChanged.length() > 0){
+						dir('/var/jenkins_home/projects/ngdesk-web-project') {
+							checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs: [[credentialsId: "${env.GIT_CREDENTIAL_ID}", url: "${env.GIT_WEB_URL}"]]])
+						}
+					}
+
 					if (nginxChanged.length() > 0) {
 						dir('/var/jenkins_home/projects/ngdesk-project/ngDesk/ngDesk-Nginx') {
 							docker.withRegistry("${env.DOCKER_HUB_URL}", "${env.DOCKER_HUB_KEY}") {
 								def newImage = docker.build("${env.DOCKER_IMAGE_NAME}/nginx:latest")
 								newImage.push()
+							}
+							docker.withServer("${env.PROD_SERVER_URL}") {
+								//sh "docker rename ngdesk-nginx ngdesk-nginx-old"
+								//sh "docker stop ngdesk-nginx-old"
+								//sh "docker pull ngdesk/nginx"
+								//sh "docker run --name ngdesk-nginx -d -v /var/jenkins_home/projects/ngdesk-certs:/etc/nginx/keys -v /var/jenkins_home/projects/ngdesk-nginx-conf/nginx.conf:/etc/nginx/nginx.conf --network=host ngdesk/nginx"
+								//sh "docker rm ngdesk-nginx-old"
+								//sh 'docker image prune -f'
 							}
 						}
 					}
@@ -184,23 +192,23 @@ pipeline {
 							sh 'cp -r dist/ngDesk-Angular/. /var/jenkins_home/projects/ngdesk-web-project/src/main/resources/static/'
 						}
 
-							dir('/var/jenkins_home/projects/ngdesk-web-project') {
+						dir('/var/jenkins_home/projects/ngdesk-web-project') {
 							sh 'mvn package'
 							sh './mvnw spring-boot:build-image'
 
-								docker.withRegistry("${env.DOCKER_HUB_URL}", "${env.DOCKER_HUB_KEY}") {
-									def newImage = docker.image("${env.DOCKER_IMAGE_NAME}/web:latest")
-									newImage.push()
-									docker.withServer("${env.PROD_SERVER_URL}") {
-										sh "docker rename ngdesk-web ngdesk-web-old"
-										sh "docker stop ngdesk-web-old"
-										sh "docker pull ngdesk/web"
-										sh "docker run --name ngdesk-web -d -e SPRING_PROFILES_ACTIVE=dockernew --network=host ngdesk/web"
-										sh "docker rm ngdesk-web-old"
-										sh 'docker image prune -f'
-									}
-								} 
-							}
+							docker.withRegistry("${env.DOCKER_HUB_URL}", "${env.DOCKER_HUB_KEY}") {
+								def newImage = docker.image("${env.DOCKER_IMAGE_NAME}/web:latest")
+								newImage.push()
+								docker.withServer("${env.PROD_SERVER_URL}") {
+									sh "docker rename ngdesk-web ngdesk-web-old"
+									sh "docker stop ngdesk-web-old"
+									sh "docker pull ngdesk/web"
+									sh "docker run --name ngdesk-web -d -e SPRING_PROFILES_ACTIVE=dockernew --network=host ngdesk/web"
+									sh "docker rm ngdesk-web-old"
+									sh 'docker image prune -f'
+								}
+							} 
+						}
 
 					}
 				}
