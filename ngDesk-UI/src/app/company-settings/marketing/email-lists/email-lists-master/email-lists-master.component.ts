@@ -9,6 +9,7 @@ import { CustomTableService } from '../../../../custom-table/custom-table.servic
 import { ConfirmDialogComponent } from '../../../../dialogs/confirm-dialog/confirm-dialog.component';
 import { UsersService } from '../../../../users/users.service';
 import { RolesService } from '@src/app/roles/roles.service';
+import { EmailListService } from '@src/app/company-settings/marketing/email-lists/email-lists.service';
 
 @Component({
 	selector: 'app-email-lists-master',
@@ -28,7 +29,8 @@ export class EmailListsMasterComponent implements OnInit {
 		private rolesService: RolesService,
 		private companiesService: CompaniesService,
 		private router: Router,
-		private bannerMessageService: BannerMessageService
+		private bannerMessageService: BannerMessageService,
+		private emailListService: EmailListService
 	) {
 		// needs to subscribe here to get the translation once the actual file is loaded
 		// if using instant outside it wont get the trasnlation.
@@ -46,11 +48,12 @@ export class EmailListsMasterComponent implements OnInit {
 		this.rolesService.getRole(this.usersService.user.ROLE).subscribe(
 			(roleResponse: any) => {
 				// enable or disable actions depending on role permission
-				this.emailListsActions.actions = this.customTableService.checkPermissionsForActions(
-					roleResponse,
-					this.emailListsActions,
-					null
-				);
+				this.emailListsActions.actions =
+					this.customTableService.checkPermissionsForActions(
+						roleResponse,
+						this.emailListsActions,
+						null
+					);
 
 				const columnsHeaders: string[] = [
 					this.translateService.instant('NAME'),
@@ -96,13 +99,14 @@ export class EmailListsMasterComponent implements OnInit {
 		const page = this.customTableService.pageIndex;
 		const pageSize = this.customTableService.pageSize;
 
-		this.companiesService
-			.getAllEmailLists(sortBy, orderBy, page + 1, pageSize)
+		this.emailListService
+			.getAllEmailLists(page, pageSize, sortBy, orderBy)
 			.subscribe(
 				(response: any) => {
+					console.log(response);
 					this.customTableService.setTableDataSource(
-						response.EMAIL_LISTS,
-						response.TOTAL_RECORDS
+						response.emailLists,
+						response.totalCount
 					);
 				},
 				(error: any) => {

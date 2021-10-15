@@ -12,6 +12,7 @@ import { Condition } from '../../../../models/condition';
 import { EmailList } from '../../../../models/email-list';
 import { ModulesService } from '../../../../modules/modules.service';
 import { UsersService } from '../../../../users/users.service';
+import { EmailListService } from '@src/app/company-settings/marketing/email-lists/email-lists.service';
 
 @Component({
 	selector: 'app-email-lists-detail',
@@ -43,7 +44,8 @@ export class EmailListsDetailComponent implements OnInit {
 		private companiesService: CompaniesService,
 		private router: Router,
 		private route: ActivatedRoute,
-		private channelsService: ChannelsService
+		private channelsService: ChannelsService,
+		private emailListService: EmailListService
 	) {}
 
 	public ngOnInit() {
@@ -97,8 +99,9 @@ export class EmailListsDetailComponent implements OnInit {
 		this.setDatasource(0, 10);
 
 		if (emailListId !== 'new') {
-			this.companiesService.getEmailListById(emailListId).subscribe(
+			this.emailListService.getEmailList(emailListId).subscribe(
 				(emailListResponse: any) => {
+					emailListResponse = emailListResponse.emailList;
 					this.emailList = this.convertEmailList(emailListResponse);
 					this.emailListForm.get('NAME').setValue(emailListResponse.NAME);
 					this.emailListForm
@@ -234,9 +237,8 @@ export class EmailListsDetailComponent implements OnInit {
 	}
 
 	private getEmailListData() {
-		this.emailList[
-			'CONDITIONS'
-		] = this.conditionsComponent.transformConditions();
+		this.emailList['CONDITIONS'] =
+			this.conditionsComponent.transformConditions();
 		const sortBy = this.customTableService.sortBy;
 		const orderBy = this.customTableService.sortOrder;
 		const page = this.customTableService.pageIndex;
@@ -285,7 +287,8 @@ export class EmailListsDetailComponent implements OnInit {
 		if (this.emailListForm.valid) {
 			this.emailList.name = this.emailListForm.get('NAME').value;
 			this.emailList.description = this.emailListForm.get('DESCRIPTION').value;
-			this.emailList.conditions = this.conditionsComponent.transformConditions();
+			this.emailList.conditions =
+				this.conditionsComponent.transformConditions();
 			const emailListId = this.route.snapshot.params['emailListId'];
 			if (emailListId !== 'new') {
 				this.companiesService.putEmailList(this.emailList).subscribe(
