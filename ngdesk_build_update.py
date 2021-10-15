@@ -75,8 +75,6 @@ def build_ngdesk():
     domain = input("Enter the domain you will use to access the website: ")
     password = get_valid_password()
 
-    # TODO: check email matches regex
-
     cert_gen(domain)
 
     update_ngdesk()
