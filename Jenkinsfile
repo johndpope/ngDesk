@@ -241,48 +241,51 @@ def buildMicroservice(serviceName, path) {
 	dir('/var/jenkins_home/projects/ngdesk-project/ngDesk/' + path) {
 
 
-	if(serviceName == 'rest' || serviceName == 'manager' || serviceName == 'gateway' || serviceName == 'config-server'){
-		 sh 'mvn package -DskipTests'
+		if(serviceName == 'rest' || serviceName == 'manager' || serviceName == 'gateway' || serviceName == 'config-server'){
+			sh 'mvn package -DskipTests'
 
-		 if(serviceName == 'gateway' || serviceName == 'config-server'){
-			 sh './mvnw spring-boot:build-image'
-		 } else {
-			 docker.build("${env.DOCKER_IMAGE_NAME}/" + serviceName + ":latest")
-		 }
-	 } else{
-        sh 'mvn install -f pom-packaging.xml'
+			if(serviceName == 'gateway' || serviceName == 'config-server'){
+				sh './mvnw spring-boot:build-image'
+			} else {
+				docker.build("${env.DOCKER_IMAGE_NAME}/" + serviceName + ":latest")
+			}
+		} else{
+			sh 'mvn install -f pom-packaging.xml'
 
-        // Generate package
-        sh 'mvn package -f pom-packaging.xml'
+			// Generate package
+			sh 'mvn package -f pom-packaging.xml'
 
-        // Generate swagger
-        sh 'mvn verify -f pom-packaging.xml'
+			// Generate swagger
+			sh 'mvn verify -f pom-packaging.xml'
 
-        // Run unit test
-        sh 'mvn test -f pom-packaging.xml'
-        //junit '**/surefire-reports/*.xml'
-        
-        
-        sh "mvn sonar:sonar -Dsonar.projectKey=${path} -Dsonar.host.url=${env.SONAR_URL} -Dsonar.login=${env.SONAR_LOGIN}"
-        
-        sh './mvnw spring-boot:build-image'
-	 }
-        docker.withRegistry("${env.DOCKER_HUB_URL}", "${env.DOCKER_HUB_KEY}") {
-            def newImage = docker.image("${env.DOCKER_IMAGE_NAME}/" + serviceName + ":latest")
-            newImage.push()
-            if(serviceName != 'config-server'){
-				docker.withServer("${env.PROD_SERVER_URL}") {
-					sh "docker rename ngdesk-${serviceName} ngdesk-${serviceName}-old"
-					sh "docker stop ngdesk-${serviceName}-old"
-					sh "docker pull ngdesk/${serviceName}"
-					sh "docker run --mount type=bind,source=/opt/ngdesk,target=/opt/ngdesk --name ngdesk-${serviceName} -d -e SPRING_PROFILES_ACTIVE=dockernew --network=host ngdesk/${serviceName}"
-					sh "docker rm ngdesk-${serviceName}-old"
-					sh 'docker image prune -f'
+			// Run unit test
+			sh 'mvn test -f pom-packaging.xml'
+			//junit '**/surefire-reports/*.xml'
+			
+			
+			sh "mvn sonar:sonar -Dsonar.projectKey=${path} -Dsonar.host.url=${env.SONAR_URL} -Dsonar.login=${env.SONAR_LOGIN}"
+			
+			sh './mvnw spring-boot:build-image'
+		}
+		docker.withRegistry("${env.DOCKER_HUB_URL}", "${env.DOCKER_HUB_KEY}") {
+			def newImage = docker.image("${env.DOCKER_IMAGE_NAME}/" + serviceName + ":latest")
+			newImage.push()
+			docker.withServer("${env.PROD_SERVER_URL}") {
+				sh "docker rename ngdesk-${serviceName} ngdesk-${serviceName}-old"
+				sh "docker stop ngdesk-${serviceName}-old"
+				sh "docker pull ngdesk/${serviceName}"
+
+				if(serviceName == 'config-server'){
+					sh "docker run --mount type=bind,source=/opt/ngdesk,target=/opt/ngdesk --name ngdesk-${serviceName} -d -e SPRING_CLOUD_CONFIG_SERVER_GIT_URI=${evn.SPRING_CLOUD_CONFIG_SERVER_GIT_URI} -e SPRING_CLOUD_CONFIG_SERVER_GIT_DEFAULT_LABEL=${env.SPRING_CLOUD_CONFIG_SERVER_GIT_DEFAULT_LABEL} -e SPRING_CLOUD_CONFIG_SERVER_GIT_USERNAME=${env.SPRING_CLOUD_CONFIG_SERVER_GIT_USERNAME} -e SPRING_CLOUD_CONFIG_SERVER_GIT_PASSWORD=${env.SPRING_CLOUD_CONFIG_SERVER_GIT_PASSWORD} --network=host ngdesk/${serviceName}"
 				}
-            }
-         }
-        
-       
+				else {
+					sh "docker run --mount type=bind,source=/opt/ngdesk,target=/opt/ngdesk --name ngdesk-${serviceName} -d -e SPRING_PROFILES_ACTIVE=dockernew --network=host ngdesk/${serviceName}"
+				}
+				sh "docker rm ngdesk-${serviceName}-old"
+				sh 'docker image prune -f'
+				
+			} 
+		}
         
     }
 }
