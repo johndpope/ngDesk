@@ -37,6 +37,8 @@ ngDesk is an open source CRM, Expense, Ticket Management, Workflow and Chat plat
 5. $ `wget https://raw.githubusercontent.com/SubscribeIT/ngDesk/main/ngdesk`
 6. $ `chmod +x ngdesk`
 7. $ `./ngdesk --action build` and follow the promts
+8. Then open a web browser and go to `https://{server_ip_where_installed}`
+9. Login using the email and password you entered during installation
 
 
 ### Upgrading
