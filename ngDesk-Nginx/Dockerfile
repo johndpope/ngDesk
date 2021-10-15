@@ -21,5 +21,3 @@ COPY ./nginx.conf /etc/nginx/
 
 
 ENTRYPOINT ["/usr/local/openresty/nginx/sbin/nginx", "-c", "/etc/nginx/nginx.conf"]
-
-
