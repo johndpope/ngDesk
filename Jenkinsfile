@@ -276,7 +276,7 @@ def buildMicroservice(serviceName, path) {
 				sh "docker pull ngdesk/${serviceName}"
 
 				if(serviceName == 'config-server'){
-					sh "docker run --mount type=bind,source=/opt/ngdesk,target=/opt/ngdesk --name ngdesk-${serviceName} -d -e SPRING_CLOUD_CONFIG_SERVER_GIT_URI=${evn.SPRING_CLOUD_CONFIG_SERVER_GIT_URI} -e SPRING_CLOUD_CONFIG_SERVER_GIT_DEFAULT_LABEL=${env.SPRING_CLOUD_CONFIG_SERVER_GIT_DEFAULT_LABEL} -e SPRING_CLOUD_CONFIG_SERVER_GIT_USERNAME=${env.SPRING_CLOUD_CONFIG_SERVER_GIT_USERNAME} -e SPRING_CLOUD_CONFIG_SERVER_GIT_PASSWORD=${env.SPRING_CLOUD_CONFIG_SERVER_GIT_PASSWORD} --network=host ngdesk/${serviceName}"
+					sh "docker run --mount type=bind,source=/opt/ngdesk,target=/opt/ngdesk --name ngdesk-${serviceName} -d -e SPRING_CLOUD_CONFIG_SERVER_GIT_URI=${env.SPRING_CLOUD_CONFIG_SERVER_GIT_URI} -e SPRING_CLOUD_CONFIG_SERVER_GIT_DEFAULT_LABEL=${env.SPRING_CLOUD_CONFIG_SERVER_GIT_DEFAULT_LABEL} -e SPRING_CLOUD_CONFIG_SERVER_GIT_USERNAME=${env.SPRING_CLOUD_CONFIG_SERVER_GIT_USERNAME} -e SPRING_CLOUD_CONFIG_SERVER_GIT_PASSWORD=${env.SPRING_CLOUD_CONFIG_SERVER_GIT_PASSWORD} --network=host ngdesk/${serviceName}"
 				}
 				else {
 					sh "docker run --mount type=bind,source=/opt/ngdesk,target=/opt/ngdesk --name ngdesk-${serviceName} -d -e SPRING_PROFILES_ACTIVE=dockernew --network=host ngdesk/${serviceName}"
