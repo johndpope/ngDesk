@@ -8,6 +8,7 @@ import { Role } from 'src/app/models/role';
 import { ModulesService } from 'src/app/modules/modules.service';
 import { RolesService } from '../roles-old.service';
 import { RolesValidationService } from '../roles-validation.service';
+import { RoleApiService } from '@ngdesk/role-api';
 
 @Component({
 	selector: 'app-role-create',
@@ -22,7 +23,7 @@ export class RoleCreateComponent implements OnInit {
 	public buttonText: string;
 	public pageTitle: string;
 	public isSystemAdmin: boolean;
-	public displayfieldPermissionButton: boolean
+	public displayfieldPermissionButton: boolean;
 	public rolePermissions = [];
 	public modulePermissions = [];
 	public modules: any;
@@ -44,7 +45,7 @@ export class RoleCreateComponent implements OnInit {
 		private route: ActivatedRoute,
 		private modulesService: ModulesService,
 		private translateService: TranslateService,
-
+		private roleApiService: RoleApiService
 	) {}
 
 	public ngOnInit() {
@@ -61,7 +62,7 @@ export class RoleCreateComponent implements OnInit {
 			'Access',
 			'Delete',
 			'Create/Edit',
-			'View'
+			'View',
 		];
 		this.customTableService.columnsHeadersObj = [
 			{ DISPLAY: 'Modules', NAME: 'MODULE_NAME' },
@@ -69,7 +70,7 @@ export class RoleCreateComponent implements OnInit {
 			// { DISPLAY: 'Access Type', NAME: 'ACCESS_TYPE' }, commented for now may be used later
 			{ DISPLAY: 'Delete', NAME: 'DELETE' },
 			{ DISPLAY: 'Create/Edit', NAME: 'EDIT' },
-			{ DISPLAY: 'View', NAME: 'VIEW' }
+			{ DISPLAY: 'View', NAME: 'VIEW' },
 		];
 
 		if (this.roleId !== 'new') {
@@ -197,11 +198,14 @@ export class RoleCreateComponent implements OnInit {
 			this.role.NAME = this.roleForm.controls.NAME.value;
 			this.role.DESCRIPTION = this.roleForm.value['DESCRIPTION'];
 			if (this.roleId !== 'new') {
-				this.rolesService.putRoleById(this.role.ROLE_ID, this.role).subscribe(
+				this.roleApiService.putRole(this.role).subscribe(
 					(putResponse: any) => {
+						console.log('putResponse///////////////////', putResponse);
 						this.router.navigate(['company-settings/roles']);
 						this.bannerMessageService.successNotifications.push({
-							message: this.translateService.instant('ROLE_UPDATED_SUCCESSFULLY'),
+							message: this.translateService.instant(
+								'ROLE_UPDATED_SUCCESSFULLY'
+							),
 						});
 					},
 					(error: any) => {
@@ -212,8 +216,9 @@ export class RoleCreateComponent implements OnInit {
 				);
 			} else {
 				this.role.PERMISSIONS = this.rolePermissions;
-				this.rolesService.postRole(this.role).subscribe(
-					(putResponse: any) => {
+				this.roleApiService.postRole(this.role).subscribe(
+					(postResponse: any) => {
+						console.log('postResponse........', postResponse);
 						this.router.navigate(['company-settings/roles']);
 						this.bannerMessageService.successNotifications.push({
 							message: this.translateService.instant('SAVED_SUCCESSFULLY'),
@@ -230,12 +235,16 @@ export class RoleCreateComponent implements OnInit {
 	}
 
 	public fieldPermission(entry) {
-		if(entry.MODULE_NAME !== 'Schedules' && entry.MODULE_NAME !== 'Escalations') {
+		if (
+			entry.MODULE_NAME !== 'Schedules' &&
+			entry.MODULE_NAME !== 'Escalations'
+		) {
 			const module = this.modules.find(
 				(currentModule) => currentModule.NAME === entry.MODULE_NAME
 			);
-			this.router.navigate([`company-settings/roles/${this.roleId}/${module.MODULE_ID}/field-permisssion`]);
+			this.router.navigate([
+				`company-settings/roles/${this.roleId}/${module.MODULE_ID}/field-permisssion`,
+			]);
 		}
-
 	}
 }
