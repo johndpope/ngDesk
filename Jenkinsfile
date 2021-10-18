@@ -3,7 +3,7 @@ pipeline {
     stages {
     	
         stage('ngdesk') {
-			steps {
+			steps { 
 				script {
 
 					echo 'Hello ngDesk World!' 
