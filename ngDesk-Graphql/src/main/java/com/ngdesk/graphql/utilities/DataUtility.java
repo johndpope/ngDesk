@@ -78,6 +78,8 @@ import com.ngdesk.graphql.modules.data.dao.AllEntriesFetcher;
 import com.ngdesk.graphql.modules.data.dao.ChronometerDataFetcher;
 import com.ngdesk.graphql.modules.data.dao.CountDataFetcher;
 import com.ngdesk.graphql.modules.data.dao.DistinctEntryValuesFetcher;
+
+import com.ngdesk.graphql.modules.data.dao.EntriesCountWithConditionsDataFeacher;
 import com.ngdesk.graphql.modules.data.dao.EntryDataFetcher;
 import com.ngdesk.graphql.modules.data.dao.FormulaDataFetcher;
 import com.ngdesk.graphql.modules.data.dao.IndividualEntryFetcher;
@@ -526,6 +528,9 @@ public class DataUtility {
 	@Autowired
 	EmailListCountFetcher emailListCountFetcher;
 
+	@Autowired
+	EntriesCountWithConditionsDataFeacher entriesCountWithConditionsDataFeacher;
+
 	public GraphQL createGraphQlObject(Company company) throws IOException {
 		try {
 			String schemaString = IOUtils.toString(modulesSchemaResource.getInputStream());
@@ -846,6 +851,9 @@ public class DataUtility {
 		builder.type("Section", typeWiring -> typeWiring.dataFetcher("category", sectionCategoryDataFetcher));
 		builder.type("Section", typeWiring -> typeWiring.dataFetcher("createdBy", entryDataFetcher));
 		builder.type("Section", typeWiring -> typeWiring.dataFetcher("lastUpdatedBy", entryDataFetcher));
+		
+		builder.type("Query",
+				typeWiring -> typeWiring.dataFetcher("getCountForEntriesWithConditions", entriesCountWithConditionsDataFeacher));
 
 		// ARTICLE
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getKbArticle", articleDataFetcher));

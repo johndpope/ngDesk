@@ -91,6 +91,7 @@ type Query {
 	getEmailLists(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [EmailList]
 	getEmailList(id: String): EmailList
 	getEmailListCount: Int
+	getCountForEntriesWithConditions(moduleId: String): Int
 	MODULE_FUNCTIONS_REPLACE
 }
 
