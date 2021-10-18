@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
@@ -565,8 +566,6 @@ public class EmailListService {
 			String userId = user.getString("USER_ID");
 			String name = emailLists.getName();
 
-			emailLists.setDateCreated(new Timestamp(new Date().getTime()));
-			emailLists.setDateUpdated(new Timestamp(new Date().getTime()));
 			emailLists.setCreatedBy(userId);
 			emailLists.setLastUpdatedBy(userId);
 
@@ -610,9 +609,11 @@ public class EmailListService {
 			if (global.isExists("NAME", name, collectionName)) {
 				throw new BadRequestException("EMAIL_LIST_ALREADY_EXISTS");
 			}
-
 			String json = new ObjectMapper().writeValueAsString(emailLists);
 			Document emailList = Document.parse(json);
+			emailList.remove("EMAIL_LIST_ID");
+			emailList.put("DATE_CREATED", new Date());
+			emailList.put("DATE_UPDATED", new Date());
 			emailListsCollection.insertOne(emailList);
 			emailLists.setEmailListId(emailList.getObjectId("_id").toString());
 
@@ -674,7 +675,7 @@ public class EmailListService {
 				}
 
 			}
-			emailLists.setDateUpdated(new Timestamp(new Date().getTime()));
+
 			emailLists.setLastUpdatedBy(userId);
 
 			MongoCollection<Document> emailListsCollection = mongoTemplate.getCollection("email_lists_" + companyId);
@@ -685,6 +686,8 @@ public class EmailListService {
 
 			String json = new ObjectMapper().writeValueAsString(emailLists);
 			Document updateEmailList = Document.parse(json);
+			updateEmailList.remove("EMAIL_LIST_ID");
+			updateEmailList.append("DATE_UPDATED", new Date());
 			emailListsCollection.findOneAndReplace(Filters.eq("_id", new ObjectId(id)), updateEmailList);
 			log.trace("Exit EmailListService.putEmailList()");
 
