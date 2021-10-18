@@ -146,7 +146,6 @@ export class CsvImportDialogComponent implements OnInit {
 				.importFromCsv(moduleId, this.CsvImport)
 				.subscribe(
 					(response: any) => {
-						console.log('response', response);
 						this.bannerMessageService.successNotifications.push({
 							message: this.translateService.instant('IMPORTED_SUCCESSFULLY'),
 						});

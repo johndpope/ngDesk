@@ -51,7 +51,6 @@ export class CsvLogsDetailComponent implements OnInit {
 			.getAllImports(this.logId, page, pageSize, sortBy, orderBy)
 			.subscribe(
 				(csvImportResponse: any) => {
-					console.log('csvImportResponse', csvImportResponse);
 					this.customTableService.setTableDataSource(
 						csvImportResponse.DATA,
 						csvImportResponse.TOTAL_RECORDS

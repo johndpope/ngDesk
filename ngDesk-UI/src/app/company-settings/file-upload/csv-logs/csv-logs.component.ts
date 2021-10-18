@@ -79,7 +79,6 @@ export class CsvLogsComponent implements OnInit, OnDestroy {
 			.getAllCsvImports(page, pageSize, sortBy, orderBy)
 			.subscribe(
 				(csvImportResponse: any) => {
-					console.log(csvImportResponse);
 					this.customTableService.setTableDataSource(
 						csvImportResponse.DATA,
 						csvImportResponse.TOTAL_RECORDS
