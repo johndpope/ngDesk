@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ngdesk.commons.exceptions.BadRequestException;
 import com.ngdesk.commons.exceptions.NotFoundException;
 import com.ngdesk.commons.managers.AuthManager;
 import com.ngdesk.repositories.RoleRepository;
@@ -33,6 +34,7 @@ public class RoleAPI {
 	@PostMapping("/roles")
 	public Role postRole(@Valid @RequestBody Role role) {
 		String companyId = authManager.getUserDetails().getCompanyId();
+		findDuplicateName(role);
 		return roleRepository.save(role, "roles_" + companyId);
 
 	}
@@ -60,6 +62,16 @@ public class RoleAPI {
 		if (optionalRole.isEmpty()) {
 			String vars[] = { "ROLE" };
 			throw new NotFoundException("DAO_NOT_FOUND", vars);
+		}
+	}
+
+	public void findDuplicateName(Role role) {
+		String companyId = authManager.getUserDetails().getCompanyId();
+		String collectionName = "roles_" + companyId;
+		Optional<Role> optionalRole = roleRepository.findRoleByName(role.getName(), collectionName);
+		if (optionalRole.isPresent()) {
+			String[] variables = { "ROLE", "NAME" };
+			throw new BadRequestException("DAO_VARIABLE_ALREADY_EXISTS", variables);
 		}
 	}
 }
