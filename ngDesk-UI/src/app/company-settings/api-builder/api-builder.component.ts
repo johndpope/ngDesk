@@ -55,6 +55,12 @@ export class ApiBuilderComponent implements OnInit {
 	public selectedListLayout;
 	public currentRole;
 	public moduleId;
+	public moduleName;
+	public query;
+	private allModules: any = [];
+	public tempLayouts: any = [];
+	public module: any;
+	public fieldsQuery: string;
 
 	constructor(
 		private globals: AppGlobals,
@@ -72,6 +78,7 @@ export class ApiBuilderComponent implements OnInit {
 		// gets list of modules to select from
 		this.modulesService.getModules().subscribe(
 			(modulesResponse: any) => {
+				this.allModules = modulesResponse.MODULES;
 				this.modules = modulesResponse.MODULES.sort((a, b) =>
 					a.NAME.localeCompare(b.NAME)
 				);
@@ -123,12 +130,16 @@ export class ApiBuilderComponent implements OnInit {
 
 	public loadModuleFields(selectedModule) {
 		const baseUrl = `https://${this.usersService.getSubdomain()}.ngdesk.com/api/ngdesk-data-service-v1`;
+		const baseUrlGet = `https://${this.usersService.getSubdomain()}.ngdesk.com/api/ngdesk-graphql-service-v1/query`;
 		this.httpEndpoint = `'${baseUrl}/modules/${selectedModule.MODULE_ID}/data' -H 'authentication_token:`;
-		this.httpEndpointGet = `${baseUrl}/modules/${selectedModule.MODULE_ID}/data`;
+		this.httpEndpointGet = `${baseUrlGet}`;
 		this.moduleId = selectedModule.MODULE_ID;
+		this.moduleName = selectedModule.NAME;
+		this.module = selectedModule.FIELDS;
 		this.entry = {};
-		const tempLayouts = selectedModule.LIST_LAYOUTS;
-		this.setAllListLayouts(tempLayouts);
+		this.tempLayouts = selectedModule.LIST_LAYOUTS;
+		// this.fieldsQuery = '';
+		this.setAllListLayouts(this.tempLayouts);
 		this.additionalFields = selectedModule.FIELDS.filter(
 			(field) =>
 				!field.NOT_EDITABLE &&
@@ -156,8 +167,8 @@ export class ApiBuilderComponent implements OnInit {
 			if (this.selectedModule.NAME === element.NAME) {
 				element.FIELDS.forEach((label) => {
 					this.sortValues.push({
-						value: label.DISPLAY_LABEL,
-						viewValue: label.DISPLAY_LABEL,
+						value: label.NAME,
+						viewValue: label.NAME,
 					});
 				});
 			}
@@ -165,11 +176,19 @@ export class ApiBuilderComponent implements OnInit {
 	}
 
 	// copy curl command
+	// sort=${this.sort}&order=${this.order}&page=${this.page}&page_size=${this.pagesize}&search=${this.search}
+
 	public copyText() {
 		let val = '';
 		if (this.requestType === 'GET') {
 			val = `${this.curlCommand} ${this.httpEndpointGet}
-			sort=${this.sort}&order=${this.order}&page=${this.page}&page_size=${this.pagesize}&search=${this.search}
+			{
+				DATA: get${this.moduleName} (moduleId: "${this.moduleId}", layoutId: "${this.selectedListLayout}", pageNumber: ${this.page}, 
+				pageSize: ${this.pagesize}, sortBy: "${this.sort}", orderBy: "${this.order}") {
+					${this.fieldsQuery}
+				}
+				TOTAL_RECORDS: count(moduleId: "${this.moduleId}", layoutId: "${this.selectedListLayout}")
+			}
 			&authentication_token=${this.apiKey}`;
 		} else {
 			val = `${this.curlCommand} ${this.httpEndpoint}${
@@ -340,6 +359,96 @@ export class ApiBuilderComponent implements OnInit {
 			}
 		});
 		this.selectedListLayout = this.allListLayouts[0].LAYOUT_ID;
+		this.fieldQuery(this.allListLayouts[0]);
+	}
+	public generateQuery(value) {
+		if (this.isGetByFilter) {
+			this.tempLayouts.forEach((element) => {
+				if (element.LAYOUT_ID === value) {
+					this.fieldsQuery = '';
+					this.fieldQuery(element);
+				}
+			});
+		}
+	}
+
+	public fieldQuery(listLayoutValue) {
+		let fieldsToShow;
+		fieldsToShow = listLayoutValue.COLUMN_SHOW.FIELDS;
+		this.fieldsQuery = 'DATA_ID: _id' + '\n';
+		fieldsToShow.forEach((fieldId) => {
+			if (fieldId.indexOf('.') !== -1) {
+				let output = { NAME: '', DISPLAY: '' };
+				output = this.getNestedFields(fieldId, this.moduleId, output);
+				let name = output.NAME.replace(/\./g, '{');
+				for (let i = output.NAME.split('.').length; i > 1; i--) {
+					name = name + '}';
+				}
+				this.fieldsQuery = this.fieldsQuery + name + '\n';
+				return;
+			}
+			const moduleField = this.module.find(
+				(field) => field.FIELD_ID === fieldId
+			);
+			if (moduleField.NAME === 'CHANNEL') {
+				this.fieldsQuery += `CHANNEL {
+					name
+				}`;
+			} else {
+				if (moduleField.DATA_TYPE.DISPLAY === 'Relationship') {
+					const relatedModule = this.allModules.find(
+						(module) => module.MODULE_ID === moduleField.MODULE
+					);
+					const primaryDisplayField = relatedModule.FIELDS.find(
+						(field) => field.FIELD_ID === moduleField.PRIMARY_DISPLAY_FIELD
+					);
+					const relationshipQuery = `${moduleField.NAME} {
+						DATA_ID: _id
+						PRIMARY_DISPLAY_FIELD: ${primaryDisplayField.NAME}
+					}`;
+					this.fieldsQuery += relationshipQuery + '\n';
+				} else if (moduleField.DATA_TYPE.DISPLAY === 'Phone') {
+					this.fieldsQuery +=
+						`${moduleField.NAME} {
+						COUNTRY_CODE 
+						DIAL_CODE
+						PHONE_NUMBER
+						COUNTRY_FLAG
+					}` + '\n';
+				} else {
+					this.fieldsQuery += moduleField.NAME + '\n';
+				}
+			}
+		});
+	}
+
+	public getNestedFields(field, moduleId, output): any {
+		if (field === null) {
+			return output;
+		} else if (field.indexOf('.') === -1) {
+			const foundModule = this.allModules.find(
+				(module) => module.MODULE_ID === moduleId
+			);
+			const foundField = foundModule.FIELDS.find(
+				(moduleField) => moduleField.FIELD_ID === field
+			);
+			output.DISPLAY = output.DISPLAY + foundField.DISPLAY_LABEL;
+			output.NAME = output.NAME + foundField.NAME;
+			return this.getNestedFields(null, null, output);
+		} else {
+			const split = field.split('.');
+			const fieldId = split.shift();
+			const foundModule = this.allModules.find(
+				(module) => module.MODULE_ID === moduleId
+			);
+
+			const currentField = foundModule.FIELDS.find(
+				(fieldNested) => fieldId === fieldNested.FIELD_ID
+			);
+			output.DISPLAY = output.DISPLAY + currentField.DISPLAY_LABEL + '.';
+			output.NAME = output.NAME + currentField.NAME + '.';
+			return this.getNestedFields(split.join('.'), currentField.MODULE, output);
+		}
 	}
 
 	public updateAPI() {

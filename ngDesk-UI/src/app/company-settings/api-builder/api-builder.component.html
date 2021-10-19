@@ -217,8 +217,8 @@
 						</mat-form-field>
 
 						<mat-form-field *ngIf="isGetByFilter">
-							<mat-select placeholder="{{'SELECT_LAYOUT' | translate}}" [(ngModel)]="selectedListLayout" (selectionChange)="updateAPI();"
-								required>
+							<mat-select placeholder="{{'SELECT_LAYOUT' | translate}}" [(ngModel)]="selectedListLayout"
+								(selectionChange)="updateAPI();generateQuery($event.value)" required>
 								<mat-option *ngFor="let listLayout of allListLayouts" [value]="listLayout.LAYOUT_ID">
 									{{listLayout.NAME}}
 								</mat-option>
@@ -226,10 +226,10 @@
 						</mat-form-field>
 
 						<mat-form-field>
-							<input matInput type="number" placeholder="{{'PAGE_SIZE' | translate}}" [(ngModel)]="pagesize" required>
+							<input matInput type="number" placeholder="{{'PAGE' | translate}}" [(ngModel)]="page" required>
 						</mat-form-field>
 						<mat-form-field>
-							<input matInput type="number" placeholder="{{'PAGE' | translate}}" [(ngModel)]="page" required>
+							<input matInput type="number" placeholder="{{'PAGE_SIZE' | translate}}" [(ngModel)]="pagesize" required>
 						</mat-form-field>
 						<mat-form-field>
 							<mat-select placeholder="{{'SORT' | translate}}" [(ngModel)]="sort" required>
@@ -250,7 +250,7 @@
 
 				<mat-divider [vertical]="true"></mat-divider>
 				<div fxLayout="column" style="margin-left:20px" fxFlex="50">
-					<label class="mat-h2">{{'API_REQUEST' | translate}}</label>
+					<label class="mat-h2">{{'API_REQUEST' | translate}} ({{requestType}}) </label>
 					<div fxLayout="row" fxLayoutAlign="start center" style="background-color: #f6f8fa;">
 						<div *ngIf="requestType !=='GET'" #curlDiv style="white-space: nowrap;border-radius: 3px;font-size: 85%;line-height: 1.45;
             overflow: auto;padding: 16px;margin: 0px 14px 0px 14px;">
@@ -259,23 +259,45 @@
 						<div *ngIf="requestType ==='GET' && isGetByFilter" #curlDiv style="white-space: nowrap;border-radius: 3px;font-size: 85%;line-height: 1.45;
             overflow: auto;padding: 16px;margin: 0px 14px 0px 14px;">
 							&nbsp;{{curlCommand}}
-							'{{httpEndpointGet}}' -H 'authentication_token:{{apiKey}}' sort={{sort}}&order={{order}}&page={{page}}&page_size={{pagesize}}
-							
+							'{{httpEndpointGet}}' -H 'authentication_token:{{apiKey}}'
+							'{{ '{'}} DATA : get{{moduleName}} (moduleId: "{{moduleId}}" , layoutId: "{{selectedListLayout}}", pageNumber: {{page}}
+							,pageSize: {{pagesize}}, sortBy: "{{sort}}", orderBy: "{{order}}") ) {{ '{'}}
+							{{fieldsQuery}}
+							{{ '} '}}
+							TOTAL_RECORDS: count(moduleId: "{{moduleId}}", layoutId: "{{selectedListLayout}}")
+							{{ '} '}}'
 						</div>
 						<div *ngIf="requestType ==='GET' && !isGetByFilter" #curlDiv style="white-space: nowrap;border-radius: 3px;font-size: 85%;line-height: 1.45;
             overflow: auto;padding: 16px;margin: 0px 14px 0px 14px;">
 							&nbsp;{{curlCommand}}
-							'{{httpEndpointGet}}' -H 'authentication_token:{{apiKey}}' sort={{sort}}&order={{order}}&page={{page}}&page_size={{pagesize}}&search={{search}}
-							
+							'{{httpEndpointGet}}' -H 'authentication_token:{{apiKey}}'
+							'{{ '{'}} DATA : get{{moduleName}} (moduleId: "{{moduleId}}" , layoutId: "{{selectedListLayout}}", pageNumber: {{page}}
+							,pageSize: {{pagesize}}, sortBy: "{{sort}}", orderBy: "{{order}}") ) {{ '{'}}
+							{{fieldsQuery}}
+							{{ '} '}}
+							TOTAL_RECORDS: count(moduleId: "{{moduleId}}", layoutId: "{{selectedListLayout}}")
+							{{ '} '}}'
 						</div>
 						<button mat-icon-button #tooltip="matTooltip" (mouseenter)="copyTooltip=translateService.instant('COPY_TO_CLIPBOARD')"
 							matTooltip="{{copyTooltip}}" matTooltipPosition="below" (click)="copyText();tooltip.show()">
 							<mat-icon>content_copy</mat-icon>
 						</button>
 					</div>
-					<div *ngIf="requestType !=='GET'">
+					<div *ngIf="requestType ==='POST'">
 						<label class="mat-h2">{{'REQUEST_BODY' | translate}}</label>
 						<pre style="word-break: break-all; white-space: pre-wrap;">{{entry | json}}</pre>
+					</div>
+					<div *ngIf="requestType ==='GET'">
+						<label class="mat-h2">{{'QUERY' | translate}}</label>
+						<pre style="word-break: break-all; white-space: pre-wrap;">
+{{ '{'}} DATA : get{{moduleName}} (moduleId: "{{moduleId}}" , layoutId: "{{selectedListLayout}}", 
+	pageNumber: {{page}},pageSize: {{pagesize}}, sortBy: "{{sort}}", orderBy: "{{order}}") ) 
+	{{ '{'}}   		
+	{{fieldsQuery}}
+	{{ '} '}}
+    TOTAL_RECORDS: count(moduleId: "{{moduleId}}", layoutId: "{{selectedListLayout}}")
+{{ '} '}}
+						</pre>
 					</div>
 				</div>
 			</div>
