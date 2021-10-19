@@ -390,6 +390,7 @@ public class DataService {
 
 				entryRepository.save(article, "articles_" + companyId);
 			}
+			articleService.insertArticlesToElastic(articles, companyId);
 
 		} catch (Exception e) {
 			e.printStackTrace();
