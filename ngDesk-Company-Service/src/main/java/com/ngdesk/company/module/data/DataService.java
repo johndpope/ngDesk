@@ -19,6 +19,7 @@ import com.ngdesk.commons.exceptions.BadRequestException;
 import com.ngdesk.commons.exceptions.InternalErrorException;
 import com.ngdesk.company.dao.Company;
 import com.ngdesk.company.dao.Phone;
+import com.ngdesk.company.knowledgebase.dao.ArticleService;
 import com.ngdesk.repositories.ModuleEntryRepository;
 
 @Component
@@ -26,6 +27,9 @@ public class DataService {
 
 	@Autowired
 	ModuleEntryRepository entryRepository;
+
+	@Autowired
+	ArticleService articleService;
 
 	ObjectMapper mapper = new ObjectMapper();
 
@@ -385,6 +389,7 @@ public class DataService {
 				article.put("DATE_UPDATED", new Date());
 				entryRepository.save(article, "articles_" + companyId);
 			}
+			articleService.insertArticlesToElastic(articles, companyId);
 
 		} catch (Exception e) {
 			e.printStackTrace();

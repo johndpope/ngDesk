@@ -3,7 +3,7 @@ pipeline {
     stages {
     	
         stage('ngdesk') {
-			steps {
+			steps { 
 				script {
 
 					echo 'Hello ngDesk World!' 
@@ -19,7 +19,6 @@ pipeline {
 											
 					// backend services
 					def authChanged = ''
-					def integrationChanged = ''
 					def dataChanged = ''
 					def websocketChanged = ''
 					def escalationChanged = ''
@@ -38,7 +37,9 @@ pipeline {
 					def gatewayChanged = ''
 
 					// frontend services
+					def nginxChanged = ''
 					def uiChanged = ''
+					
 				
 					dir('/var/jenkins_home/projects/ngdesk-project/ngDesk') {
 
@@ -47,7 +48,6 @@ pipeline {
 						configServerChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Config-Server ''').trim()
 
 						authChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Auth ''').trim()
-						integrationChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Integration-Service ''').trim()
 						dataChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Data-Service''').trim()
 						websocketChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Websocket-Service''').trim()
 						escalationChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Escalation-Service''').trim()
@@ -66,7 +66,11 @@ pipeline {
 						gatewayChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Gateway ''').trim()
 
 
+						nginxChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-Nginx''').trim()
 						uiChanged = sh(returnStdout: true, script: '''git diff HEAD origin/main -- ngDesk-UI''').trim()
+						
+
+
 						checkout([$class: 'GitSCM', branches: [[name: 'origin/main']], userRemoteConfigs: [[url: 'https://github.com/SubscribeIT/ngDesk.git']]])
 					}
 
@@ -76,16 +80,6 @@ pipeline {
 
 					if (authChanged.length() > 0) {
 						buildMicroservice('auth', 'ngDesk-Auth')
-					}
-					
-					if(uiChanged.length() > 0){
-							dir('/var/jenkins_home/projects/ngdesk-web-project') {
-								checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs: [[credentialsId: "${env.GIT_CREDENTIAL_ID}", url: "${env.GIT_WEB_URL}"]]])
-							}
-					}
-
-					if (integrationChanged.length() > 0) {
-									buildMicroservice('integration', 'ngDesk-Integration-Service')
 					}
 
 					if (graphqlChanged.length() > 0) {
@@ -147,11 +141,34 @@ pipeline {
 					if (gatewayChanged.length() > 0) {
 						buildMicroservice('gateway', 'ngDesk-Gateway')
 					}
+
+					if(uiChanged.length() > 0){
+						dir('/var/jenkins_home/projects/ngdesk-web-project') {
+							checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs: [[credentialsId: "${env.GIT_CREDENTIAL_ID}", url: "${env.GIT_WEB_URL}"]]])
+						}
+					}
+
+					if (nginxChanged.length() > 0) {
+						dir('/var/jenkins_home/projects/ngdesk-project/ngDesk/ngDesk-Nginx') {
+							docker.withRegistry("${env.DOCKER_HUB_URL}", "${env.DOCKER_HUB_KEY}") {
+								def newImage = docker.build("${env.DOCKER_IMAGE_NAME}/nginx:latest")
+								newImage.push()
+							}
+							docker.withServer("${env.PROD_SERVER_URL}") {
+								sh "docker rename ngdesk-nginx ngdesk-nginx-old"
+								sh "docker stop ngdesk-nginx-old"
+								sh "docker pull ngdesk/nginx"
+								sh "docker run --name ngdesk-nginx -d -v /ngdesk/nginx/keys:/etc/nginx/keys -v /ngdesk/nginx/nginx.conf:/etc/nginx/nginx.conf --network=host ngdesk/nginx"
+								sh "docker rm ngdesk-nginx-old"
+								sh 'docker image prune -f'
+							}
+						}
+					}
 					
 					if (uiChanged.length() > 0) {	
 						generateSwagger('ngDesk-UI', '../../ngDesk-Private/ngDesk-Payment-Service/target/openapi.json', 'payment-api')
+						generateSwagger('ngDesk-UI', '../../ngDesk-Private/ngDesk-Integration-Service/target/openapi.json', 'integration-api')
 						generateSwagger('ngDesk-UI', '../ngDesk-Auth/target/openapi.json', 'auth-api')
-						generateSwagger('ngDesk-UI', '../ngDesk-Integration-Service/target/openapi.json', 'integration-api')
 						generateSwagger('ngDesk-UI', '../ngDesk-Workflow-Service/target/openapi.json', 'workflow-api')
 						generateSwagger('ngDesk-UI', '../ngDesk-Module-Service/target/openapi.json', 'module-api')
 						generateSwagger('ngDesk-UI', '../ngDesk-Role-Service/target/openapi.json', 'role-api')
@@ -175,23 +192,23 @@ pipeline {
 							sh 'cp -r dist/ngDesk-Angular/. /var/jenkins_home/projects/ngdesk-web-project/src/main/resources/static/'
 						}
 
-							dir('/var/jenkins_home/projects/ngdesk-web-project') {
+						dir('/var/jenkins_home/projects/ngdesk-web-project') {
 							sh 'mvn package'
 							sh './mvnw spring-boot:build-image'
 
-								docker.withRegistry("${env.DOCKER_HUB_URL}", "${env.DOCKER_HUB_KEY}") {
-									def newImage = docker.image("${env.DOCKER_IMAGE_NAME}/web:latest")
-									newImage.push()
-									docker.withServer("${env.PROD_SERVER_URL}") {
-										sh "docker rename ngdesk-web ngdesk-web-old"
-										sh "docker stop ngdesk-web-old"
-										sh "docker pull ngdesk/web"
-										sh "docker run --name ngdesk-web -d -e SPRING_PROFILES_ACTIVE=dockernew --network=host ngdesk/web"
-										sh "docker rm ngdesk-web-old"
-										sh 'docker image prune -f'
-									}
-								} 
-							}
+							docker.withRegistry("${env.DOCKER_HUB_URL}", "${env.DOCKER_HUB_KEY}") {
+								def newImage = docker.image("${env.DOCKER_IMAGE_NAME}/web:latest")
+								newImage.push()
+								docker.withServer("${env.PROD_SERVER_URL}") {
+									sh "docker rename ngdesk-web ngdesk-web-old"
+									sh "docker stop ngdesk-web-old"
+									sh "docker pull ngdesk/web"
+									sh "docker run --name ngdesk-web -d -e SPRING_PROFILES_ACTIVE=dockernew --network=host ngdesk/web"
+									sh "docker rm ngdesk-web-old"
+									sh 'docker image prune -f'
+								}
+							} 
+						}
 
 					}
 				}
@@ -229,51 +246,54 @@ pipeline {
 
 }
 def buildMicroservice(serviceName, path) {
- dir('/var/jenkins_home/projects/ngdesk-project/ngDesk/' + path) {
+	dir('/var/jenkins_home/projects/ngdesk-project/ngDesk/' + path) {
 
 
-	 if(serviceName == 'rest' || serviceName == 'manager' || serviceName == 'gateway' || serviceName == 'config-server'){
-		 sh 'mvn package -DskipTests'
+		if(serviceName == 'rest' || serviceName == 'manager' || serviceName == 'gateway' || serviceName == 'config-server'){
+			sh 'mvn package -DskipTests'
 
-		 if(serviceName == 'gateway' || serviceName == 'config-server'){
-			 sh './mvnw spring-boot:build-image'
-		 } else {
-			 docker.build("${env.DOCKER_IMAGE_NAME}/" + serviceName + ":latest")
-		 }
-	 } else{
-        sh 'mvn install -f pom-packaging.xml'
+			if(serviceName == 'gateway' || serviceName == 'config-server'){
+				sh './mvnw spring-boot:build-image'
+			} else {
+				docker.build("${env.DOCKER_IMAGE_NAME}/" + serviceName + ":latest")
+			}
+		} else{
+			sh 'mvn install -f pom-packaging.xml'
 
-        // Generate package
-        sh 'mvn package -f pom-packaging.xml'
+			// Generate package
+			sh 'mvn package -f pom-packaging.xml'
 
-        // Generate swagger
-        sh 'mvn verify -f pom-packaging.xml'
+			// Generate swagger
+			sh 'mvn verify -f pom-packaging.xml'
 
-        // Run unit test
-        sh 'mvn test -f pom-packaging.xml'
-        //junit '**/surefire-reports/*.xml'
-        
-        
-        sh "mvn sonar:sonar -Dsonar.projectKey=${path} -Dsonar.host.url=${env.SONAR_URL} -Dsonar.login=${env.SONAR_LOGIN}"
-        
-        sh './mvnw spring-boot:build-image'
-	 }
-        docker.withRegistry("${env.DOCKER_HUB_URL}", "${env.DOCKER_HUB_KEY}") {
-            def newImage = docker.image("${env.DOCKER_IMAGE_NAME}/" + serviceName + ":latest")
-            newImage.push()
-            if(serviceName != 'config-server'){
-            docker.withServer("${env.PROD_SERVER_URL}") {
-                sh "docker rename ngdesk-${serviceName} ngdesk-${serviceName}-old"
-                sh "docker stop ngdesk-${serviceName}-old"
-                sh "docker pull ngdesk/${serviceName}"
-                sh "docker run --mount type=bind,source=/opt/ngdesk,target=/opt/ngdesk --name ngdesk-${serviceName} -d -e SPRING_PROFILES_ACTIVE=dockernew --network=host ngdesk/${serviceName}"
-                sh "docker rm ngdesk-${serviceName}-old"
-                sh 'docker image prune -f'
-            }
-            }
-         }
-        
-       
+			// Run unit test
+			sh 'mvn test -f pom-packaging.xml'
+			//junit '**/surefire-reports/*.xml'
+			
+			
+			sh "mvn sonar:sonar -Dsonar.projectKey=${path} -Dsonar.host.url=${env.SONAR_URL} -Dsonar.login=${env.SONAR_LOGIN}"
+			
+			sh './mvnw spring-boot:build-image'
+		}
+		docker.withRegistry("${env.DOCKER_HUB_URL}", "${env.DOCKER_HUB_KEY}") {
+			def newImage = docker.image("${env.DOCKER_IMAGE_NAME}/" + serviceName + ":latest")
+			newImage.push()
+			docker.withServer("${env.PROD_SERVER_URL}") {
+				sh "docker rename ngdesk-${serviceName} ngdesk-${serviceName}-old"
+				sh "docker stop ngdesk-${serviceName}-old"
+				sh "docker pull ngdesk/${serviceName}"
+
+				if(serviceName == 'config-server'){
+					sh "docker run --mount type=bind,source=/opt/ngdesk,target=/opt/ngdesk --name ngdesk-${serviceName} -d -e SPRING_CLOUD_CONFIG_SERVER_GIT_URI=${env.SPRING_CLOUD_CONFIG_SERVER_GIT_URI} -e SPRING_CLOUD_CONFIG_SERVER_GIT_DEFAULT_LABEL=${env.SPRING_CLOUD_CONFIG_SERVER_GIT_DEFAULT_LABEL} -e SPRING_CLOUD_CONFIG_SERVER_GIT_USERNAME=${env.SPRING_CLOUD_CONFIG_SERVER_GIT_USERNAME} -e SPRING_CLOUD_CONFIG_SERVER_GIT_PASSWORD=${env.SPRING_CLOUD_CONFIG_SERVER_GIT_PASSWORD} --network=host ngdesk/${serviceName}"
+				}
+				else {
+					sh "docker run --mount type=bind,source=/opt/ngdesk,target=/opt/ngdesk --name ngdesk-${serviceName} -d -e SPRING_PROFILES_ACTIVE=dockernew --network=host ngdesk/${serviceName}"
+				}
+				sh "docker rm ngdesk-${serviceName}-old"
+				sh 'docker image prune -f'
+				
+			} 
+		}
         
     }
 }

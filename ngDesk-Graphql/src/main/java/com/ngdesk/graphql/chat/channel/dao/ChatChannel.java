@@ -65,9 +65,6 @@ public class ChatChannel {
 	@Field("MODULE")
 	private String module;
 
-	@Field("WORKFLOW")
-	private ChatChannelWorkflow workflow;
-
 	@Field("CHAT_PROMPTS")
 	private List<ChatPrompt> chatPrompt = new ArrayList<ChatPrompt>();
 
@@ -78,8 +75,7 @@ public class ChatChannel {
 	public ChatChannel(String name, String description, String sourceType, String title, String subTitle, String file,
 			String color, String textColor, String senderBubbleColor, String receiverBubbleColor,
 			String senderTextColor, String receiverTextColor, ChatChannelSettings settings, String channelId,
-			Date dateCreated, Date dateUpdated, String lastUpdated, String module, ChatChannelWorkflow workflow,
-			List<ChatPrompt> chatPrompt) {
+			Date dateCreated, Date dateUpdated, String lastUpdated, String module, List<ChatPrompt> chatPrompt) {
 		super();
 		this.name = name;
 		this.description = description;
@@ -99,7 +95,6 @@ public class ChatChannel {
 		this.dateUpdated = dateUpdated;
 		this.lastUpdated = lastUpdated;
 		this.module = module;
-		this.workflow = workflow;
 		this.chatPrompt = chatPrompt;
 	}
 
@@ -245,14 +240,6 @@ public class ChatChannel {
 
 	public void setModule(String module) {
 		this.module = module;
-	}
-
-	public ChatChannelWorkflow getWorkflow() {
-		return workflow;
-	}
-
-	public void setWorkflow(ChatChannelWorkflow workflow) {
-		this.workflow = workflow;
 	}
 
 	public List<ChatPrompt> getChatPrompt() {
