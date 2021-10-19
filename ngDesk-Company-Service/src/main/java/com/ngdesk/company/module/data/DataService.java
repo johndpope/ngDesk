@@ -387,7 +387,6 @@ public class DataService {
 			for (Map<String, Object> article : articles) {
 				article.put("DATE_CREATED", new Date());
 				article.put("DATE_UPDATED", new Date());
-
 				entryRepository.save(article, "articles_" + companyId);
 			}
 			articleService.insertArticlesToElastic(articles, companyId);

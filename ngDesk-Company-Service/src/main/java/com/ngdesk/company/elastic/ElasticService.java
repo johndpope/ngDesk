@@ -154,19 +154,19 @@ public class ElasticService {
 	}
 
 	private LinkedHashMap<String, Object> getFieldSearchProperties() {
-		List<String> fieldKeys = new ArrayList<String>();
-		fieldKeys.add("MODULE_ID");
-		fieldKeys.add("ENTRY_ID");
-		fieldKeys.add("COMPANY_ID");
-		fieldKeys.add("TEAMS");
+		List<String> fieldSearchKeys = new ArrayList<String>();
+		fieldSearchKeys.add("MODULE_ID");
+		fieldSearchKeys.add("ENTRY_ID");
+		fieldSearchKeys.add("COMPANY_ID");
+		fieldSearchKeys.add("TEAMS");
 		for (int i = 1; i <= 100; i++) {
-			fieldKeys.add("value" + i);
+			fieldSearchKeys.add("value" + i);
 		}
-		LinkedHashMap<String, Object> fieldProperties = new LinkedHashMap<String, Object>();
-		LinkedHashMap<String, Object> mapping2 = new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> fieldSearchProperties = new LinkedHashMap<String, Object>();
+		LinkedHashMap<String, Object> fieldSearchMapping = new LinkedHashMap<String, Object>();
 		int i = 1;
 
-		for (String key : fieldKeys) {
+		for (String key : fieldSearchKeys) {
 
 			Map<String, Object> textMapping = new HashMap<String, Object>();
 			if (i > 85) {
@@ -174,17 +174,17 @@ public class ElasticService {
 			} else {
 				textMapping.put("type", "keyword");
 			}
-			mapping2.put(key, textMapping);
+			fieldSearchMapping.put(key, textMapping);
 			i++;
 		}
-		fieldProperties.put("properties", mapping2);
+		fieldSearchProperties.put("properties", fieldSearchMapping);
 
-		return fieldProperties;
+		return fieldSearchProperties;
 	}
 
 	private LinkedHashMap<String, Object> getGlobalSearchProperties() {
 
-		Map<String, Object> mapping = new HashMap<String, Object>();
+		Map<String, Object> globalSearchMapping = new HashMap<String, Object>();
 		String[] fieldNames = { "ENTRY_ID", "input", "TEAMS", "FIELD_NAME", "MODULE_ID", "COMPANY_ID" };
 
 		for (String fieldName : fieldNames) {
@@ -193,11 +193,11 @@ public class ElasticService {
 			if (fieldName.equals("input")) {
 				textMapping.put("type", "keyword");
 			}
-			mapping.put(fieldName, textMapping);
+			globalSearchMapping.put(fieldName, textMapping);
 		}
-		LinkedHashMap<String, Object> propertiesObj = new LinkedHashMap<String, Object>();
-		propertiesObj.put("properties", mapping);
-		return propertiesObj;
+		LinkedHashMap<String, Object> globalSearchProperties = new LinkedHashMap<String, Object>();
+		globalSearchProperties.put("properties", globalSearchMapping);
+		return globalSearchProperties;
 	}
 
 	private LinkedHashMap<String, Object> getControllersProperties() {
@@ -218,10 +218,10 @@ public class ElasticService {
 	private LinkedHashMap<String, Object> getArticleProperties() {
 		try {
 			String articleMapping = "{\"properties\":{\"ARTICLE_ID\":{\"type\":\"text\",\"fields\":{\"keyword\":{\"type\":\"keyword\",\"ignore_above\":256}}},\"COMPANY_ID\":{\"type\":\"text\",\"fields\":{\"keyword\":{\"type\":\"keyword\",\"ignore_above\":256}}},\"FIELD_NAME\":{\"type\":\"text\",\"fields\":{\"keyword\":{\"type\":\"keyword\",\"ignore_above\":256}}},\"INPUT\":{\"type\":\"text\",\"fields\":{\"keyword\":{\"type\":\"keyword\",\"ignore_above\":256}}},\"SECTION\":{\"type\":\"text\",\"fields\":{\"keyword\":{\"type\":\"keyword\",\"ignore_above\":256}}},\"VISIBLE_TO\":{\"type\":\"text\",\"fields\":{\"keyword\":{\"type\":\"keyword\",\"ignore_above\":256}}}}}";
-			LinkedHashMap<String, Object> articleMap = new ObjectMapper().readValue(articleMapping,
+			LinkedHashMap<String, Object> articleProperties = new ObjectMapper().readValue(articleMapping,
 					LinkedHashMap.class);
 
-			return articleMap;
+			return articleProperties;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new BadRequestException("ERROR_WHILE_POSTING_ARTICLE_TO_ELASTIC", null);
