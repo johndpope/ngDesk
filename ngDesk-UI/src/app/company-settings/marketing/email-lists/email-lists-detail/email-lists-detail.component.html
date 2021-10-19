@@ -26,8 +26,7 @@
 		</div>
 		<div *ngIf="emailListForm.value.CONDITIONS.length > 0" class="pad10" fxFlex="60" fxLayout="column" fxLayout.xs="row" fxFlex.xs="60">
 			<div fxFlex>
-				<app-custom-table [templateRef]="columnTemplateRef" (sortData)="sortData();customTableService.isLoading = true"
-					(pageChangeEmit)="pageChangeEmit($event);customTableService.isLoading = true">
+				<app-custom-table [templateRef]="columnTemplateRef" (pageChangeEmit)="pageChangeEmit($event);customTableService.isLoading = true">
 					<ng-template #columnTemplateRef let-element="element" let-col="col">
 						{{element[col.NAME]}}
 					</ng-template>

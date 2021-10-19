@@ -233,7 +233,10 @@ export class EmailListsDetailComponent implements OnInit {
 					(condition) =>
 						condition.CONDITION === '' ||
 						condition.OPERATOR === '' ||
-						condition.CONDITION_VALUE === ''
+						condition.CONDITION_VALUE === '' ||
+						condition.CONDITION === null ||
+						condition.OPERATOR === null ||
+						condition.CONDITION_VALUE === null
 				);
 				if (
 					incompleteFound === undefined &&
@@ -245,10 +248,6 @@ export class EmailListsDetailComponent implements OnInit {
 					this.customTableService.setTableDataSource([], 0);
 				}
 			});
-	}
-
-	public sortData() {
-		this.getEmailListData();
 	}
 
 	public pageChangeEmit(event) {
@@ -276,17 +275,17 @@ export class EmailListsDetailComponent implements OnInit {
 			)
 			.subscribe(
 				(emailListData: any) => {
-					if (emailListData.DATA !== null) {
-						if (emailListData.DATA.length > 0) {
-							emailListData.DATA.forEach((element) => {
+					if (emailListData[0].DATA !== null) {
+						if (emailListData[1].COUNT > 0) {
+							emailListData[0].DATA.forEach((element) => {
 								element['FIRST_NAME'] = element.CONTACT.FIRST_NAME;
 								element['LAST_NAME'] = element.CONTACT.LAST_NAME;
 							});
 							this.isLoading = false;
-							this.allEmailListData = emailListData.DATA;
+							this.allEmailListData = emailListData[0].DATA;
 							this.customTableService.setTableDataSource(
-								emailListData.DATA,
-								emailListData.DATA.length
+								emailListData[0].DATA,
+								emailListData[1].COUNT
 							);
 						}
 					}

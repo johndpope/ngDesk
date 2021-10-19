@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { AppGlobals } from '../../../app.globals';
+import { forkJoin } from 'rxjs';
 
 Injectable({
 	providedIn: 'root',
@@ -53,7 +54,7 @@ export class EmailListService {
 			   moduleId: "${moduleId}"
 				 pageNumber: ${pageNumber}
 				 pageSize: ${pageSize}
-				 sortBy: "${sortBy}"
+				 sortBy: "DATE_CREATED"
 				 orderBy: "${orderBy}"
 			   ) {
 				 DATA_ID: _id
@@ -68,6 +69,29 @@ export class EmailListService {
 			query: query,
 			conditions: filters,
 		};
-		return this.http.post(`${this.globals.graphqlEmailListsUrl}`, payload);
+		const url = this.globals.graphqlEmailListsUrl;
+		const emailListData = this.makeGraphQLCall(url, payload);
+		const emailListCount = this.getAllEntriesCountWithConditions(
+			moduleId,
+			filters
+		);
+		return forkJoin([emailListData, emailListCount]);
+	}
+
+	public getAllEntriesCountWithConditions(moduleId, filters) {
+		let query = `{
+      COUNT: getCountForEntriesWithConditions(moduleId: "${moduleId}")
+    }`;
+
+		let payload: any = {
+			query: query,
+			conditions: filters,
+		};
+		const url = this.globals.graphqlEmailListsUrl;
+		return this.makeGraphQLCall(url, payload);
+	}
+
+	public makeGraphQLCall(url, query: string) {
+		return this.http.post(`${url}`, query);
 	}
 }
