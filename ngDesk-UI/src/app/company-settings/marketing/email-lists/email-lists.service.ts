@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { AppGlobals } from '@src/app/app.globals';
+import { AppGlobals } from '../../../app.globals';
 
 Injectable({
 	providedIn: 'root',
@@ -38,5 +38,36 @@ export class EmailListService {
 		}`;
 
 		return this.http.post(`${this.globals.graphqlUrl}`, query);
+	}
+
+	public getAllEntriesWithConditions(
+		moduleId,
+		pageNumber,
+		pageSize,
+		sortBy,
+		orderBy,
+		filters
+	) {
+		let query = `{      
+			DATA: getEntriesWithConditionForUsers(
+			   moduleId: "${moduleId}"
+				 pageNumber: ${pageNumber}
+				 pageSize: ${pageSize}
+				 sortBy: "${sortBy}"
+				 orderBy: "${orderBy}"
+			   ) {
+				 DATA_ID: _id
+				 EMAIL_ADDRESS: EMAIL_ADDRESS
+				 CONTACT {
+					 FIRST_NAME
+					 LAST_NAME
+				 }
+			 }
+				 }`;
+		let payload: any = {
+			query: query,
+			conditions: filters,
+		};
+		return this.http.post(`${this.globals.graphqlEmailListsUrl}`, payload);
 	}
 }

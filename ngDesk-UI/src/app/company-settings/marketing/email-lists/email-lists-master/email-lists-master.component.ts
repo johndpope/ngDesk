@@ -103,7 +103,6 @@ export class EmailListsMasterComponent implements OnInit {
 			.getAllEmailLists(page, pageSize, sortBy, orderBy)
 			.subscribe(
 				(response: any) => {
-					console.log(response);
 					this.customTableService.setTableDataSource(
 						response.emailLists,
 						response.totalCount
