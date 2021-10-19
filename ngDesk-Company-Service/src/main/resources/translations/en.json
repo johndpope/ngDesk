@@ -47,7 +47,7 @@
 	"POST_NEW_USER_FAILED": "Posting new user failed, Please contact technical support",
 	"POST_DEFAULT_USERS_FAILED": "Posting default users failed, Please contact technical support",
 	"POST_DEFAULT_TEAMS_FAILED": "Posting default teams failed, Please contact technical support",
-	"POST_EXPENSES_TEAMS_FAILED":"Posting expenses teams failed, Please contact technical support",
+	"POST_EXPENSES_TEAMS_FAILED": "Posting expenses teams failed, Please contact technical support",
 	"POST_DEFAULT_TICKETS_FAILED": "Posting default tickets failed, Please contact technical support",
 	"EMAIL_CHANNEL_POST_FAILED": "Posting email channel failed, Please contact technical support",
 	"DEFAULT_DASHBOARDS_POST_FAILED": "Posting default dashboards failed, Please contact technical suppport",
@@ -56,8 +56,10 @@
 	"LICENSE_KEY": "License key",
 	"NO_OF_USERS": "No of Users",
 	"INVALID_LICENSE_KEY": "This license key does not exist on our system please try again",
-	"COMPANY_TIMEZONE":"Company Timezone",
+	"COMPANY_TIMEZONE": "Company Timezone",
 	"ROLE_REQUIRED_CHAT_SETTINGS": "Atleast one role is required",
 	"MAX_NUMBER_OF_AGENTS_PER_CHAT": "Maximum number of agents must be between 1 - 5",
-	"INVALID_ROLE_SELECTED": "Invalid role selected"
+	"INVALID_ROLE_SELECTED": "Invalid role selected",
+	"ERROR_WHILE_POSTING_CONTROLLERS_TO_ELASTIC": "Parsing controller payload for elastic failed, Please contact technial support",
+	"ERROR_WHILE_POSTING_ARTICLE_TO_ELASTIC": "Parsing article payload for elastic failed, Please contact technical support"
 }
