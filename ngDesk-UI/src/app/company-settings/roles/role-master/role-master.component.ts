@@ -113,8 +113,8 @@ export class RoleMasterComponent implements OnInit {
 	// 				(role) => {
 	// 					if (role.NAME === 'Customers')
 	// 					{
-	// 					  role['NAME'] = 'Customer'; 
-	// 					} 
+	// 					  role['NAME'] = 'Customer';
+	// 					}
 	// 				});
 	// 			this.customTableService.setTableDataSource(
 	// 				data.ROLES,
@@ -191,7 +191,7 @@ export class RoleMasterComponent implements OnInit {
 					this.translateService.instant(
 						'ARE_YOU_SURE_YOU_WANT_TO_DELETE_ROLE'
 					) +
-					role.NAME +
+					role.name +
 					' ?',
 				buttonText: this.translateService.instant('DELETE'),
 				closeDialog: this.translateService.instant('CANCEL'),
@@ -203,7 +203,7 @@ export class RoleMasterComponent implements OnInit {
 		// EVENT AFTER MODAL DIALOG IS CLOSED
 		dialogRef.afterClosed().subscribe((result) => {
 			if (result === this.translateService.instant('DELETE')) {
-				this.roleApiService.deleteRole(role.ROLE_ID).subscribe(
+				this.roleApiService.deleteRole(role.roleId).subscribe(
 					(roleResponse: any) => {
 						this.getRoles();
 						this.bannerMessageService.successNotifications.push({
