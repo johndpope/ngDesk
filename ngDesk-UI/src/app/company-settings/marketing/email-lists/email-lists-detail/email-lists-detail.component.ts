@@ -35,6 +35,7 @@ export class EmailListsDetailComponent implements OnInit {
 	public fieldlist: any;
 	public fieldId: any;
 	public roleFieldId: any;
+	public usersModule: any;
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -121,6 +122,7 @@ export class EmailListsDetailComponent implements OnInit {
 			this.modulesService
 				.getModuleByName('Users')
 				.subscribe((modulesResponse: any) => {
+					this.usersModule = modulesResponse;
 					this.moduleId = modulesResponse.MODULE_ID;
 					this.fields = modulesResponse.FIELDS.filter(
 						(field) => field.NAME !== 'PASSWORD'
@@ -134,6 +136,7 @@ export class EmailListsDetailComponent implements OnInit {
 		const conditions: Condition[] = [];
 		this.modulesService.getModuleByName('Users').subscribe(
 			(modulesResponse: any) => {
+				this.usersModule = modulesResponse;
 				this.moduleId = modulesResponse.MODULE_ID;
 				this.fields = modulesResponse.FIELDS.filter(
 					(field) => field.NAME !== 'PASSWORD'
@@ -250,6 +253,10 @@ export class EmailListsDetailComponent implements OnInit {
 			});
 	}
 
+	public sortData() {
+		this.getEmailListData();
+	}
+
 	public pageChangeEmit(event) {
 		this.getEmailListData();
 	}
@@ -266,7 +273,7 @@ export class EmailListsDetailComponent implements OnInit {
 		const pageSize = this.customTableService.pageSize;
 		this.emailListService
 			.getAllEntriesWithConditions(
-				this.moduleId,
+				this.usersModule,
 				page,
 				pageSize,
 				sortBy,

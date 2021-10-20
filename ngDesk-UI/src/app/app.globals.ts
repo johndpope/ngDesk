@@ -17,7 +17,7 @@ export class AppGlobals {
 	public readonly graphqlEmailListsUrl =
 		'https://' +
 		window.location.hostname +
-		'/api/ngdesk-graphql-service-v1/data';
+		'/api/ngdesk-graphql-service-v1/data/condition';
 	public readonly graphqlReportsgenerateurl =
 		'https://' +
 		window.location.hostname +

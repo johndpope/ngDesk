@@ -42,7 +42,7 @@ export class EmailListService {
 	}
 
 	public getAllEntriesWithConditions(
-		moduleId,
+		usersModule,
 		pageNumber,
 		pageSize,
 		sortBy,
@@ -50,8 +50,8 @@ export class EmailListService {
 		filters
 	) {
 		let query = `{      
-			DATA: getEntriesWithConditionForUsers(
-			   moduleId: "${moduleId}"
+			DATA: get${usersModule.NAME}(
+			   moduleId: "${usersModule.MODULE_ID}"
 				 pageNumber: ${pageNumber}
 				 pageSize: ${pageSize}
 				 sortBy: "DATE_CREATED"
@@ -72,7 +72,7 @@ export class EmailListService {
 		const url = this.globals.graphqlEmailListsUrl;
 		const emailListData = this.makeGraphQLCall(url, payload);
 		const emailListCount = this.getAllEntriesCountWithConditions(
-			moduleId,
+			usersModule.MODULE_ID,
 			filters
 		);
 		return forkJoin([emailListData, emailListCount]);
@@ -80,7 +80,7 @@ export class EmailListService {
 
 	public getAllEntriesCountWithConditions(moduleId, filters) {
 		let query = `{
-      COUNT: getCountForEntriesWithConditions(moduleId: "${moduleId}")
+      COUNT: count(moduleId: "${moduleId}")
     }`;
 
 		let payload: any = {
