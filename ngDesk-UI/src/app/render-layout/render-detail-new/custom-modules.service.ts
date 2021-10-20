@@ -329,7 +329,7 @@ export class CustomModulesService {
 			const fieldControlName = moduleField.FIELD_ID.replace(/-/g, '_') + 'Ctrl';
 			this.formControls[fieldControlName] = new FormControl();
 			if (
-				moduleField.NOT_EDITABLE ||
+				(moduleField.NOT_EDITABLE && !createLayout) ||
 				this.fieldsDisableMap[moduleField.FIELD_ID]
 			) {
 				this.formControls[fieldControlName].disable();

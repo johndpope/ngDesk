@@ -54,7 +54,12 @@ export class RelationshipService {
 					}'] && context.customModulesService.layoutType ==='edit'" matSuffix style="cursor: pointer;display: inline-block;"
 (click)="context.navigateTorelationEntry('${field.MODULE}', 
 context.fieldsMap['${field.FIELD_ID}']) ;" color="primary">link</mat-icon>
-            <button matSuffix style="cursor: pointer;display: inline-block;padding: 0px;border: none;background: none;"
+            <button [disabled]="!context.editAccess || (context.fieldsMap['${
+							field.FIELD_ID
+						}'].NOT_EDITABLE && !context.createLayout) || context.customModulesService.fieldsDisableMap['${
+				field.FIELD_ID
+			}']" 
+            matSuffix style="cursor: pointer;display: inline-block;padding: 0px;border: none;background: none;"
           (click)="context.openOneToOneCreateLayoutDialog('${
 						field.MODULE
 					}',  context.fieldsMap['${
