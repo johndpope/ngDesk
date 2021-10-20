@@ -129,6 +129,7 @@ import com.ngdesk.graphql.userplugin.dao.UserPluginsByStatusDataFetcher;
 import com.ngdesk.graphql.workflow.NodeDataFetcher;
 import com.ngdesk.graphql.workflow.NodesExecutedDataFetcher;
 import com.ngdesk.graphql.workflow.StageDataFetcher;
+import com.ngdesk.graphql.workflow.WorkflowEntriesDataFetcher;
 import com.ngdesk.graphql.workflow.WorkflowEntryDataFetcher;
 import com.ngdesk.graphql.workflow.WorkflowInstanceDataFetcher;
 import com.ngdesk.graphql.workflow.WorkflowInstanceFetcher;
@@ -485,6 +486,9 @@ public class DataUtility {
 
 	@Autowired
 	SectionsCountFetcher sectionsCountFetcher;
+
+	@Autowired
+	WorkflowEntriesDataFetcher workflowEntriesDataFetcher;
 
 	@Autowired
 	SectionCategoryDataFetcher sectionCategoryDataFetcher;
@@ -925,8 +929,9 @@ public class DataUtility {
 		builder.type("Sender", typeWiring -> typeWiring.dataFetcher("ROLE", roleDataFetcher));
 
 		// WORKFLOW
-		builder.type("Workflow", typeWiring -> typeWiring.dataFetcher("getWorkflow", workflowEntryDataFetcher));
-		builder.type("Workflow", typeWiring -> typeWiring.dataFetcher("module", moduleDataFetcher));
+		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getWorkflow", workflowEntryDataFetcher));
+		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getWorkflows", workflowEntriesDataFetcher));
+		builder.type("Workflow", typeWiring -> typeWiring.dataFetcher("module", roleLayoutModuleDataFetcher));
 		builder.type("Workflow", typeWiring -> typeWiring.dataFetcher("createdBy", entryDataFetcher));
 		builder.type("Workflow", typeWiring -> typeWiring.dataFetcher("lastUpdated", entryDataFetcher));
 
