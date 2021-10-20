@@ -308,7 +308,10 @@ export class CustomModulesService {
 	}
 
 	public disableFieldBasedOnFieldPermission(fieldPermissions) {
-		if (fieldPermissions.getFieldPermissions !== null && fieldPermissions.getFieldPermissions.length > 0) {
+		if (
+			fieldPermissions.getFieldPermissions !== null &&
+			fieldPermissions.getFieldPermissions.length > 0
+		) {
 			fieldPermissions.getFieldPermissions.forEach((element) => {
 				this.fieldsDisableMap[element.fieldId] = element.notEditable;
 			});
@@ -326,7 +329,7 @@ export class CustomModulesService {
 			const fieldControlName = moduleField.FIELD_ID.replace(/-/g, '_') + 'Ctrl';
 			this.formControls[fieldControlName] = new FormControl();
 			if (
-				(moduleField.NOT_EDITABLE && !createLayout) ||
+				moduleField.NOT_EDITABLE ||
 				this.fieldsDisableMap[moduleField.FIELD_ID]
 			) {
 				this.formControls[fieldControlName].disable();
@@ -839,7 +842,12 @@ export class CustomModulesService {
 				if (fieldInRelatedModule.DATA_TYPE.DISPLAY === 'Chronometer') {
 					return this.renderLayoutService.chronometerFormatTransform(value, '');
 				} else {
-					return this.transformNumbersField(value, aggregateField.NUMERIC_FORMAT, aggregateField.PREFIX, aggregateField.SUFFIX);
+					return this.transformNumbersField(
+						value,
+						aggregateField.NUMERIC_FORMAT,
+						aggregateField.PREFIX,
+						aggregateField.SUFFIX
+					);
 				}
 			})
 		);
@@ -1206,7 +1214,12 @@ export class CustomModulesService {
 			this.oneToManyRelationshipData.VALUE = entry;
 			this.oneToManyRelationshipData.FIELD_NAME = relatedField.NAME;
 		}
-		this.inheritValues(relatedField, currentCurrenEntry.DATA_ID, relatedModule, entry);
+		this.inheritValues(
+			relatedField,
+			currentCurrenEntry.DATA_ID,
+			relatedModule,
+			entry
+		);
 	}
 
 	public inheritValues(field, entryId, module, currentEntry) {
@@ -1235,52 +1248,50 @@ export class CustomModulesService {
 				Object.entries(field.INHERITANCE_MAPPING)
 			);
 			// Fetch the child module entry using entryId
-			
-					const entry = currentEntry;
-					const keysList = Array.from(inheritanceMap.keys());
-					// Assign the parent field's inerited values
-					keysList.forEach((key) => {
-						const parentField = parentFieldsMap.get(key);
-						if (parentField) {
-							map.set(
-								parentFieldsMap.get(key).FIELD_ID,
-								entry[parentField.NAME]
-							);
-						}
 
-						resultMap.set(inheritanceMap.get(key), map.get(key));
-						const field = fieldsMap.get(inheritanceMap.get(key));
-						// this.entry[field.NAME] = resultMap.get(inheritanceMap.get(key));
-						const entryResult = {
-							fieldName: field.NAME,
-							value: resultMap.get(inheritanceMap.get(key))
-						}
-						this.customSubject.next(entryResult);
+			const entry = currentEntry;
+			const keysList = Array.from(inheritanceMap.keys());
+			// Assign the parent field's inerited values
+			keysList.forEach((key) => {
+				const parentField = parentFieldsMap.get(key);
+				if (parentField) {
+					map.set(parentFieldsMap.get(key).FIELD_ID, entry[parentField.NAME]);
+				}
 
-						// if inherited values are relationship
-						// needs to set data for form control
-						if (
-							field.DATA_TYPE.DISPLAY === 'Relationship' &&
-							(field.RELATIONSHIP_TYPE === 'One to One' ||
-								field.RELATIONSHIP_TYPE === 'Many to One')
-						) {
-							const event = {
-								option: {
-									value: resultMap.get(inheritanceMap.get(key)),
-								},
-							};
+				resultMap.set(inheritanceMap.get(key), map.get(key));
+				const field = fieldsMap.get(inheritanceMap.get(key));
+				// this.entry[field.NAME] = resultMap.get(inheritanceMap.get(key));
+				const entryResult = {
+					fieldName: field.NAME,
+					value: resultMap.get(inheritanceMap.get(key)),
+				};
+				this.customSubject.next(entryResult);
 
-							const fieldControlName =
-								field.FIELD_ID.replace(/-/g, '_') + 'Ctrl';
+				// if inherited values are relationship
+				// needs to set data for form control
+				if (
+					field.DATA_TYPE.DISPLAY === 'Relationship' &&
+					(field.RELATIONSHIP_TYPE === 'One to One' ||
+						field.RELATIONSHIP_TYPE === 'Many to One')
+				) {
+					const event = {
+						option: {
+							value: resultMap.get(inheritanceMap.get(key)),
+						},
+					};
 
-						}
-					});
-				
+					const fieldControlName = field.FIELD_ID.replace(/-/g, '_') + 'Ctrl';
+				}
+			});
 		}
 	}
 
-
-	public 	transformNumbersField(value: number, format?: String, prefix?: String, suffix?: String): String {
+	public transformNumbersField(
+		value: number,
+		format?: String,
+		prefix?: String,
+		suffix?: String
+	): String {
 		if (value === null || value === undefined) {
 			return '';
 		} else {
@@ -1305,26 +1316,26 @@ export class CustomModulesService {
 				if (isFloat) {
 					result = result + afterPoint;
 				}
-				result = prefix+' ' + result + ' ' + suffix;
+				result = prefix + ' ' + result + ' ' + suffix;
 				return result;
 			} else if (format === '#,###,###') {
 				let result = valueInString.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 				if (isFloat) {
 					result = result + afterPoint;
 				}
-				result = prefix+' ' + result + ' ' + suffix;
+				result = prefix + ' ' + result + ' ' + suffix;
 				return result;
 			} else {
 				if (isFloat) {
 					valueInString = valueInString + afterPoint;
 				}
-				if(prefix === null ){
+				if (prefix === null) {
 					prefix = '';
 				}
-				if (suffix === null){
+				if (suffix === null) {
 					suffix = '';
 				}
-				valueInString = prefix+' ' + valueInString + ' ' + suffix;
+				valueInString = prefix + ' ' + valueInString + ' ' + suffix;
 				return valueInString;
 			}
 		}

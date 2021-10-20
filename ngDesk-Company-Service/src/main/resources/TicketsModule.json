@@ -564,7 +564,7 @@
       "VISIBILITY": false,
       "DISPLAY_LABEL": "Requestor",
       "INTERNAL": true,
-      "NOT_EDITABLE": false,
+      "NOT_EDITABLE": true,
       "RELATIONSHIP_TYPE": "Many to One",
       "PRIMARY_DISPLAY_FIELD": "1abb3787-2ead-49ee-88cc-da911717c38d",
       "DATA_TYPE": {
