@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ngdesk.commons.Global;
 import com.ngdesk.commons.exceptions.NotFoundException;
@@ -97,35 +98,31 @@ public class ArticleService {
 		List<Attachment> attachmentList = new ArrayList<Attachment>();
 
 		for (Attachment attachment : article.getAttachments()) {
-			if (attachment.getFile() == null) {
-				throw new NotFoundException("ATTACHMENT_FILE_REQUIRED", null);
-			}
-		}
-
-		for (Attachment attachment : article.getAttachments()) {
-			String hash = global.passwordHash(attachment.getFile());
-			Optional<Attachment> optionalHash = articleRepository.findHashById(hash,
-					"attachments_" + authManager.getUserDetails().getCompanyId());
-			Attachment newAttachment = new Attachment();
-			if (optionalHash.isEmpty() == true) {
-
-				newAttachment.setAttachmentUuid(UUID.randomUUID().toString());
-				newAttachment.setHash(hash);
-				newAttachment.setFile(attachment.getFile());
-				articleRepository.saveAttachment(newAttachment,
+			if (attachment.getFile() != null) {
+				String hash = global.passwordHash(attachment.getFile());
+				Optional<Attachment> optionalHash = articleRepository.findHashById(hash,
 						"attachments_" + authManager.getUserDetails().getCompanyId());
-				newAttachment.setFileName(attachment.getFileName());
-				attachmentList.add(newAttachment);
-				newAttachment.setFile(null);
-			} else {
-				newAttachment.setHash(optionalHash.get().getHash());
-				newAttachment.setAttachmentUuid(optionalHash.get().getAttachmentUuid());
-				newAttachment.setFileName(attachment.getFileName());
-				attachmentList.add(newAttachment);
+				Attachment newAttachment = new Attachment();
+				if (optionalHash.isEmpty() == true) {
 
+					newAttachment.setAttachmentUuid(UUID.randomUUID().toString());
+					newAttachment.setHash(hash);
+					newAttachment.setFile(attachment.getFile());
+					articleRepository.saveAttachment(newAttachment,
+							"attachments_" + authManager.getUserDetails().getCompanyId());
+					newAttachment.setFileName(attachment.getFileName());
+					attachmentList.add(newAttachment);
+					newAttachment.setFile(null);
+				} else {
+					newAttachment.setHash(optionalHash.get().getHash());
+					newAttachment.setAttachmentUuid(optionalHash.get().getAttachmentUuid());
+					newAttachment.setFileName(attachment.getFileName());
+					attachmentList.add(newAttachment);
+
+				}
+
+				article.setAttachments(attachmentList);
 			}
-
-			article.setAttachments(attachmentList);
 		}
 		return article;
 	}
