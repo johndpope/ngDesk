@@ -563,9 +563,6 @@ public class DataUtility {
 				String functionReportCsvTemplate = "getCsvFor" + replacedModuleName + "(moduleId: String): ["
 						+ replacedModuleName + "]";
 
-				String functionEntriesWithConditionTemplate = "getEntriesWithConditionFor" + replacedModuleName
-						+ "(moduleId: String, pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): ["
-						+ replacedModuleName + "]";
 
 				functionNamesBuilder.append(functionWidgetTemplate);
 				functionNamesBuilder.append(functionOneToManyTemplate);
@@ -574,7 +571,6 @@ public class DataUtility {
 				functionNamesBuilder.append(functionTemplate);
 				functionNamesBuilder.append(functionReportDataTemplate);
 				functionNamesBuilder.append(functionReportCsvTemplate);
-				functionNamesBuilder.append(functionEntriesWithConditionTemplate);
 
 				functionNamesBuilder.append("\n");
 
@@ -725,7 +721,6 @@ public class DataUtility {
 			TypeDefinitionRegistry typeRegistry = new SchemaParser().parse(schemaString);
 			RuntimeWiring wiring = buildRuntimeWiring(modules);
 			GraphQLSchema schema = new SchemaGenerator().makeExecutableSchema(typeRegistry, wiring);
-			// System.out.println("schema=="+schemaString);
 			return newGraphQL(schema).build();
 
 		} catch (Exception e) {
