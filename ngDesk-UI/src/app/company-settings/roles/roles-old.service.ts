@@ -4,7 +4,7 @@ import { NGXLogger } from 'ngx-logger';
 import { AppGlobals } from '@src/app/app.globals';
 
 @Injectable({
-	providedIn: 'root'
+	providedIn: 'root',
 })
 export class RolesService {
 	constructor(
@@ -24,7 +24,7 @@ export class RolesService {
 				.set('page', page)
 				.set('page_size', pageSize);
 			return this.http.get(`${this.globals.baseRestUrl}/roles`, {
-				params: httpParams
+				params: httpParams,
 			});
 		} else {
 			return this.http.get(`${this.globals.baseRestUrl}/roles`);
@@ -55,21 +55,21 @@ export class RolesService {
 	// Calling graphql call to fetch a role
 	public getRole(roleId) {
 		const query = `{
-			role: getRole(roleId: "${roleId}") {
+			DATA:getRole(roleId: "${roleId}") {
 				ROLE_ID: roleId
 				NAME: name
 				DESCRIPTION: description
 				PERMISSIONS: permissions {
 					MODULE: module
-					MODULE_PERMISSION: modulePermission {
-						Access: access 
+					MODULE_PERMISSIONS: modulePermission {
+						ACCESS: access 
 						ACCESS_TYPE: accessType
 						EDIT: edit
 						VIEW: view
 						DELETE: delete
 					}
 					FIELD_PERMISSIONS: fieldPermissions {
-						FIELD_ID: fieldId
+						FIELD: fieldId
 						PERMISSION: permission
 					}
 				}

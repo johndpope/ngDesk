@@ -76,14 +76,14 @@ export class RoleCreateComponent implements OnInit {
 		if (this.roleId !== 'new') {
 			this.displayfieldPermissionButton = true;
 			this.role.DESCRIPTION = this.roleForm.value['DESCRIPTION'];
-			this.rolesService.getRoleById(this.roleId).subscribe(
-				(roleResponse: Role) => {
-					this.roleForm.controls['NAME'].setValue(roleResponse.NAME);
+			this.rolesService.getRole(this.roleId).subscribe(
+				(roleResponse: any) => {
+					this.roleForm.controls['NAME'].setValue(roleResponse.DATA.NAME);
 					this.roleForm.controls['DESCRIPTION'].setValue(
-						roleResponse.DESCRIPTION
+						roleResponse.DATA.DESCRIPTION
 					);
-					this.pageTitle = roleResponse.NAME;
-					if (roleResponse.NAME === 'SystemAdmin') {
+					this.pageTitle = roleResponse.DATA.NAME;
+					if (roleResponse.DATA.NAME === 'SystemAdmin') {
 						this.isSystemAdmin = true;
 					} else {
 						this.buttonText = 'Save';
@@ -92,7 +92,7 @@ export class RoleCreateComponent implements OnInit {
 						(modulesResponse: any) => {
 							this.modules = modulesResponse.MODULES;
 							let rolePermissions = [];
-							this.role = roleResponse;
+							this.role = roleResponse.DATA;
 							this.role.PERMISSIONS.forEach((permission) => {
 								const module = modulesResponse.MODULES.find(
 									(currentModule) =>

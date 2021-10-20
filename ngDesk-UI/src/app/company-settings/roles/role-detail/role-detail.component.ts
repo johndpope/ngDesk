@@ -33,7 +33,7 @@ export class RoleDetailComponent implements OnInit {
 		private route: ActivatedRoute,
 		private bannerMessageService: BannerMessageService,
 		private rolesValidationService: RolesValidationService,
-		private translateService: TranslateService,
+		private translateService: TranslateService
 	) {}
 
 	public ngOnInit() {
@@ -47,7 +47,7 @@ export class RoleDetailComponent implements OnInit {
 			// 'Access Type', commented for now may be used later
 			'Delete',
 			'Create/Edit',
-			'View'
+			'View',
 		];
 		this.customTableService.columnsHeadersObj = [
 			{ DISPLAY: 'Modules', NAME: 'MODULE_NAME' },
@@ -58,14 +58,14 @@ export class RoleDetailComponent implements OnInit {
 			{ DISPLAY: 'View', NAME: 'VIEW' },
 		];
 
-		this.rolesService.getRoleById(this.roleId).subscribe(
-			(roleResponse: Role) => {
-				if (roleResponse.NAME === 'Customers') {
-					this.pageTitle  = 'Customer'; 
+		this.rolesService.getRole(this.roleId).subscribe(
+			(roleResponse: any) => {
+				if (roleResponse.DATA.NAME === 'Customers') {
+					this.pageTitle = 'Customer';
 				} else {
-					this.pageTitle = roleResponse.NAME;
+					this.pageTitle = roleResponse.DATA.NAME;
 				}
-				if (roleResponse.NAME === 'SystemAdmin') {
+				if (roleResponse.DATA.NAME === 'SystemAdmin') {
 					this.isSystemAdmin = true;
 				} else {
 					this.buttonText = 'Save';
@@ -75,7 +75,7 @@ export class RoleDetailComponent implements OnInit {
 						this.modules = modulesResponse.MODULES;
 						console.log(this.modules);
 						const rolePermissions = [];
-						this.role = roleResponse;
+						this.role = roleResponse.DATA;
 						this.role.PERMISSIONS.forEach((permission) => {
 							const module = modulesResponse.MODULES.find(
 								(currentModule) => currentModule.MODULE_ID === permission.MODULE
@@ -144,13 +144,17 @@ export class RoleDetailComponent implements OnInit {
 	}
 
 	public fieldPermission(entry) {
-		if(entry.MODULE_NAME !== 'Schedules' && entry.MODULE_NAME !== 'Escalations') {
+		if (
+			entry.MODULE_NAME !== 'Schedules' &&
+			entry.MODULE_NAME !== 'Escalations'
+		) {
 			const module = this.modules.find(
 				(currentModule) => currentModule.NAME === entry.MODULE_NAME
 			);
-			this.router.navigate([`company-settings/roles/${this.roleId}/${module.MODULE_ID}/field-permisssion`]);
+			this.router.navigate([
+				`company-settings/roles/${this.roleId}/${module.MODULE_ID}/field-permisssion`,
+			]);
 		}
-
 	}
 	// 	private removeModuleNameFromPermissions() {
 	// 		this.role.PERMISSIONS.forEach(permission => {
