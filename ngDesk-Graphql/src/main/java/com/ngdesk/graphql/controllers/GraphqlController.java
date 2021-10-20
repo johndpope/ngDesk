@@ -39,7 +39,7 @@ public class GraphqlController {
 
 	@Autowired
 	CompanyRepository companyRepository;
-	
+
 	@Autowired
 	SessionManager sessionManager;
 
@@ -85,18 +85,18 @@ public class GraphqlController {
 		}
 		return ResponseEntity.ok(result.getData());
 	}
-	
-	@PostMapping(value = "/data")
+
+	@PostMapping(value = "/condition/data")
 	public ResponseEntity query(@RequestBody DataInput dataInput) {
 
-		String companyId = authManager.getUserDetails().getCompanyId();
 		ExecutionInput executionInput = ExecutionInput.newExecutionInput().query(dataInput.getQuery())
 				.context(new HashMap<String, Object>()).build();
 		sessionManager.getSessionInfo().put("conditions", dataInput.getConditions());
 
 		try {
-			if (!graphQlService.graphqlSessions.containsKey(companyId)) {
-				Optional<Company> optionalCompany = companyRepository.findById(companyId, "companies");
+			if (!graphQlService.graphqlSessions.containsKey(authManager.getUserDetails().getCompanyId())) {
+				Optional<Company> optionalCompany = companyRepository
+						.findById(authManager.getUserDetails().getCompanyId(), "companies");
 				if (optionalCompany.isPresent()) {
 					Company company = optionalCompany.get();
 					GraphQL graphQl = dataUtility.createGraphQlObject(company);
@@ -107,7 +107,8 @@ public class GraphqlController {
 			e.printStackTrace();
 
 		}
-		ExecutionResult result = graphQlService.graphqlSessions.get(companyId).execute(executionInput);
+		ExecutionResult result = graphQlService.graphqlSessions.get(authManager.getUserDetails().getCompanyId())
+				.execute(executionInput);
 		List<GraphQLError> errors = result.getErrors();
 		if (errors.size() > 0) {
 			GraphQLError error = errors.get(0);
@@ -129,6 +130,5 @@ public class GraphqlController {
 
 		return ResponseEntity.ok(result.getData());
 	}
-	
-	
+
 }

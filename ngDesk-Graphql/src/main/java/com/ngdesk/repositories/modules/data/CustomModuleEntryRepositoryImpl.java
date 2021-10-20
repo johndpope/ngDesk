@@ -111,7 +111,7 @@ public class CustomModuleEntryRepositoryImpl implements CustomModuleEntryReposit
 		Criteria criteria = new Criteria();
 		if (!roleService.isSystemAdmin(authManager.getUserDetails().getRole())
 				&& !collectionName.equalsIgnoreCase("Teams_" + authManager.getUserDetails().getCompanyId())) {
-			if (collectionName.contains("Users_" + authManager.getUserDetails().getCompanyId())) {
+			if (collectionName.equalsIgnoreCase("Users_" + authManager.getUserDetails().getCompanyId())) {
 				criteria.andOperator(Criteria.where("TEAMS").in(teamIds),
 						Criteria.where("EMAIL_ADDRESS").ne("ghost@ngdesk.com"),
 						Criteria.where("EMAIL_ADDRESS").ne("system@ngdesk.com"),
@@ -122,7 +122,7 @@ public class CustomModuleEntryRepositoryImpl implements CustomModuleEntryReposit
 			}
 
 		} else {
-			if (collectionName.contains("Users_" + authManager.getUserDetails().getCompanyId())) {
+			if (collectionName.equalsIgnoreCase("Users_" + authManager.getUserDetails().getCompanyId())) {
 				criteria.andOperator(Criteria.where("EMAIL_ADDRESS").ne("ghost@ngdesk.com"),
 						Criteria.where("EMAIL_ADDRESS").ne("system@ngdesk.com"),
 						buildConditions(modules, conditions, allFields));
@@ -454,7 +454,7 @@ public class CustomModuleEntryRepositoryImpl implements CustomModuleEntryReposit
 					if (backendDatatype.equalsIgnoreCase("Float")) {
 						isFloat = true;
 					}
-					switch (condition.getOpearator()) {
+					switch (condition.getOperator()) {
 					case "EQUALS_TO":
 						if (isInteger) {
 							criterias.add(Criteria.where(fieldName).is(Integer.parseInt(value)));
@@ -868,14 +868,14 @@ public class CustomModuleEntryRepositoryImpl implements CustomModuleEntryReposit
 			Pageable pageable, String collectionName, List<Module> modules, List<ModuleField> fields,
 			Set<String> teamIds) {
 		Criteria criteria = new Criteria();
-		if (!collectionName.contains("Users_")
+		if (!collectionName.equalsIgnoreCase("Users_" + authManager.getUserDetails().getCompanyId())
 				&& !collectionName.equalsIgnoreCase("Teams_" + authManager.getUserDetails().getCompanyId())) {
 			criteria.andOperator(Criteria.where("DELETED").is(false), Criteria.where("EFFECTIVE_TO").is(null),
 					Criteria.where("TEAMS").in(teamIds), buildConditions(modules, conditionsList, fields));
 		}
 
 		Query query = new Query().with(pageable);
-		if (collectionName.contains("Users_" + authManager.getUserDetails().getCompanyId())) {
+		if (collectionName.equalsIgnoreCase("Users_" + authManager.getUserDetails().getCompanyId())) {
 			criteria.andOperator(Criteria.where("DELETED").is(false), Criteria.where("EFFECTIVE_TO").is(null),
 					Criteria.where("EMAIL_ADDRESS").ne("ghost@ngdesk.com"),
 					Criteria.where("EMAIL_ADDRESS").ne("system@ngdesk.com"), Criteria.where("TEAMS").in(teamIds),

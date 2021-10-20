@@ -5,19 +5,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ngdesk.commons.exceptions.ForbiddenException;
 import com.ngdesk.commons.managers.AuthManager;
 import com.ngdesk.commons.managers.SessionManager;
 import com.ngdesk.graphql.CustomGraphqlException;
@@ -63,8 +59,6 @@ public class AllEntriesFetcher implements DataFetcher<List<Map<String, Object>>>
 	@Override
 	public List<Map<String, Object>> get(DataFetchingEnvironment environment) {
 		// When is customer should always be true
-		String companyId = authManager.getUserDetails().getCompanyId();
-		String role = authManager.getUserDetails().getRole();
 
 		String moduleId = environment.getArgument("moduleId");
 		Integer page = environment.getArgument("pageNumber");
@@ -74,8 +68,19 @@ public class AllEntriesFetcher implements DataFetcher<List<Map<String, Object>>>
 		String orderBy = environment.getArgument("orderBy");
 		String search = environment.getArgument("search");
 		Boolean includeConditions = environment.getArgument("includeConditions");
+		List<Condition> conditionsList = new ArrayList<Condition>();
 
-		Optional<Module> optionalModule = modulesRepository.findById(moduleId, "modules_" + companyId);
+		try {
+			conditionsList = mapper.readValue(
+					mapper.writeValueAsString(sessionManager.getSessionInfo().get("conditions")),
+					mapper.getTypeFactory().constructCollectionType(List.class, Condition.class));
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Optional<Module> optionalModule = modulesRepository.findById(moduleId,
+				"modules_" + authManager.getUserDetails().getCompanyId());
 		if (optionalModule.isEmpty()) {
 			throw new CustomGraphqlException(400, "INVALID_MODULE", null);
 		}
@@ -86,22 +91,25 @@ public class AllEntriesFetcher implements DataFetcher<List<Map<String, Object>>>
 			throw new CustomGraphqlException(400, "FORBIDDEN", null);
 		}
 
-		List<Module> modules = modulesRepository.findAllModules("modules_" + companyId);
-		String collectionName = module.getName().replaceAll("\\s", "_") + "_" + companyId;
+		List<Module> modules = modulesRepository
+				.findAllModules("modules_" + authManager.getUserDetails().getCompanyId());
 
+		String collectionName = modulesService.getCollectionName(module.getName(),
+				authManager.getUserDetails().getCompanyId());
 		Boolean isAdmin = false;
 
-		if (roleService.isSystemAdmin(role)) {
+		if (roleService.isSystemAdmin(authManager.getUserDetails().getRole())) {
 			isAdmin = true;
 		}
 
-		if (roleService.isCustomer(role)) {
+		if (roleService.isCustomer(authManager.getUserDetails().getRole())) {
 			includeConditions = true;
 		}
 
 		Set<String> teamIds = dataService.getAllTeamIds(isAdmin);
 
 		if ((search != null && !search.isBlank()) || layoutId == null || layoutId.isBlank()) {
+			List<ModuleField> moduleFields = modulesService.getAllFields(module, modules);
 			Sort sort = null;
 			if (sortBy == null) {
 				sort = Sort.by("DATE_CREATED");
@@ -121,6 +129,7 @@ public class AllEntriesFetcher implements DataFetcher<List<Map<String, Object>>>
 
 			Pageable pageable = PageRequest.of(page, pageSize, sort);
 			if (search != null && !search.isBlank()) {
+
 				List<String> entryIds = dataService.getIdsFromGlobalSearch(search, module, teamIds);
 
 				if (entryIds == null) {
@@ -128,18 +137,19 @@ public class AllEntriesFetcher implements DataFetcher<List<Map<String, Object>>>
 				}
 
 				if (layoutId != null && !layoutId.isBlank()) {
-					List<ModuleField> moduleFields = modulesService.getAllFields(module, modules);
 
 					List<ListLayout> webListLayouts = module.getListLayouts();
 					List<ListMobileLayout> mobileListLayouts = module.getListMobileLayouts();
 
 					Optional<ListLayout> optionalWebListLayout = webListLayouts.stream()
-							.filter(layout -> layout.getRole().equals(role) && layout.getLayoutId().equals(layoutId))
+							.filter(layout -> layout.getRole().equals(authManager.getUserDetails().getRole())
+									&& layout.getLayoutId().equals(layoutId))
 							.findFirst();
 					if (optionalWebListLayout.isEmpty()) {
 
-						Optional<ListMobileLayout> optionalMobileListLayout = mobileListLayouts.stream().filter(
-								layout -> layout.getRole().equals(role) && layout.getLayoutId().equals(layoutId))
+						Optional<ListMobileLayout> optionalMobileListLayout = mobileListLayouts.stream()
+								.filter(layout -> layout.getRole().equals(authManager.getUserDetails().getRole())
+										&& layout.getLayoutId().equals(layoutId))
 								.findFirst();
 						if (optionalMobileListLayout.isEmpty()) {
 							return new ArrayList<Map<String, Object>>();
@@ -162,11 +172,29 @@ public class AllEntriesFetcher implements DataFetcher<List<Map<String, Object>>>
 					return entryRepository.findEntriesWithSearch(entryIds, pageable, collectionName);
 
 				} else {
-					return entryRepository.findEntriesWithSearch(entryIds, pageable, collectionName);
+					if (conditionsList != null && !conditionsList.isEmpty()) {
+
+						return entryRepository.findEntriesWithSearchIncludingConditions(entryIds, conditionsList,
+								modules, moduleFields, pageable, collectionName);
+					} else {
+						return entryRepository.findEntriesWithSearch(entryIds, pageable, collectionName);
+					}
+
 				}
 
+			} else {
+
+				if (conditionsList != null && !conditionsList.isEmpty()) {
+					Optional<List<Map<String, Object>>> optionalEntriesList = entryRepository.findEntriesWithConditions(
+							conditionsList, pageable, collectionName, modules, moduleFields, teamIds);
+					if (optionalEntriesList.isPresent()) {
+						return optionalEntriesList.get();
+					}
+				}
+				return entryRepository.findEntries(pageable, teamIds, collectionName);
+
 			}
-			return entryRepository.findEntries(pageable, teamIds, collectionName);
+
 		} else {
 			List<ModuleField> moduleFields = modulesService.getAllFields(module, modules);
 
@@ -174,13 +202,15 @@ public class AllEntriesFetcher implements DataFetcher<List<Map<String, Object>>>
 			List<ListMobileLayout> mobileListLayouts = module.getListMobileLayouts();
 
 			Optional<ListLayout> optionalWebListLayout = webListLayouts.stream()
-					.filter(layout -> layout.getRole().equals(role) && layout.getLayoutId().equals(layoutId))
+					.filter(layout -> layout.getRole().equals(authManager.getUserDetails().getRole())
+							&& layout.getLayoutId().equals(layoutId))
 					.findFirst();
 
 			if (optionalWebListLayout.isEmpty()) {
 
 				Optional<ListMobileLayout> optionalMobileListLayout = mobileListLayouts.stream()
-						.filter(layout -> layout.getRole().equals(role) && layout.getLayoutId().equals(layoutId))
+						.filter(layout -> layout.getRole().equals(authManager.getUserDetails().getRole())
+								&& layout.getLayoutId().equals(layoutId))
 						.findFirst();
 				if (optionalMobileListLayout.isEmpty()) {
 					return new ArrayList<Map<String, Object>>();

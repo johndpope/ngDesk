@@ -5,14 +5,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ngdesk.commons.managers.AuthManager;
+import com.ngdesk.commons.managers.SessionManager;
 import com.ngdesk.graphql.modules.dao.Condition;
 import com.ngdesk.graphql.modules.dao.ListLayout;
 import com.ngdesk.graphql.modules.dao.ListMobileLayout;
@@ -30,10 +30,15 @@ import graphql.schema.DataFetchingEnvironment;
 public class CountDataFetcher implements DataFetcher<Integer> {
 
 	@Autowired
+	SessionManager sessionManager;
+
+	@Autowired
 	ModuleEntryRepository entryRepository;
 
 	@Autowired
 	AuthManager authManager;
+
+	ObjectMapper mapper = new ObjectMapper();
 
 	@Autowired
 	ModulesRepository modulesRepository;
@@ -50,50 +55,66 @@ public class CountDataFetcher implements DataFetcher<Integer> {
 	@Override
 	public Integer get(DataFetchingEnvironment environment) {
 
-		String companyId = authManager.getUserDetails().getCompanyId();
-		String role = authManager.getUserDetails().getRole();
 		String moduleId = environment.getArgument("moduleId");
 		String layoutId = environment.getArgument("layoutId");
 		String search = environment.getArgument("search");
 		Boolean includeConditions = environment.getArgument("includeConditions");
+		List<Condition> conditionsList = new ArrayList<Condition>();
 
-		Optional<Module> optionalModule = modulesRepository.findById(moduleId, "modules_" + companyId);
+		try {
+			conditionsList = mapper.readValue(
+					mapper.writeValueAsString(sessionManager.getSessionInfo().get("conditions")),
+					mapper.getTypeFactory().constructCollectionType(List.class, Condition.class));
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Optional<Module> optionalModule = modulesRepository.findById(moduleId,
+				"modules_" + authManager.getUserDetails().getCompanyId());
 		if (optionalModule.isEmpty()) {
 			// TODO: HANDLE CUSTOM ERROR
 			return 0;
 		}
 		Module module = optionalModule.get();
-		String collectionName = module.getName().replaceAll("\\s", "_") + "_" + companyId;
-		
+
+		String collectionName = modulesService.getCollectionName(module.getName(),
+				authManager.getUserDetails().getCompanyId());
 		Boolean isAdmin = false;
 
-		if (roleService.isSystemAdmin(role)) {
+		if (roleService.isSystemAdmin(authManager.getUserDetails().getRole())) {
 			isAdmin = true;
 		}
 
 		Set<String> teamIds = dataService.getAllTeamIds(isAdmin);
 
 		if ((search != null && !search.isBlank()) || layoutId == null || layoutId.isBlank()) {
+			List<Module> modules = modulesRepository
+					.findAllModules("modules_" + authManager.getUserDetails().getCompanyId());
+			List<ModuleField> moduleFields = modulesService.getAllFields(module, modules);
 
 			if (search != null && !search.isBlank()) {
 				List<String> entryIds = dataService.getIdsFromGlobalSearch(search, module, teamIds);
+
 				if (entryIds == null) {
 					entryIds = new ArrayList<String>();
 				}
+
 				if (layoutId != null && !layoutId.isBlank()) {
-					List<Module> modules = modulesRepository.findAllModules("modules_" + companyId);
-					List<ModuleField> moduleFields = modulesService.getAllFields(module, modules);
+
 					List<ListMobileLayout> mobileListLayouts = module.getListMobileLayouts();
 					List<ListLayout> webListLayouts = module.getListLayouts();
 
 					Optional<ListLayout> optionalWebListLayout = webListLayouts.stream()
-							.filter(layout -> layout.getLayoutId().equals(layoutId) && layout.getRole().equals(role))
+							.filter(layout -> layout.getLayoutId().equals(layoutId)
+									&& layout.getRole().equals(authManager.getUserDetails().getRole()))
 							.findFirst();
 
 					if (optionalWebListLayout.isEmpty()) {
 
-						Optional<ListMobileLayout> optionalMobileListLayout = mobileListLayouts.stream().filter(
-								layout -> layout.getLayoutId().equals(layoutId) && layout.getRole().equals(role))
+						Optional<ListMobileLayout> optionalMobileListLayout = mobileListLayouts.stream()
+								.filter(layout -> layout.getLayoutId().equals(layoutId)
+										&& layout.getRole().equals(authManager.getUserDetails().getRole()))
 								.findFirst();
 						if (optionalMobileListLayout.isEmpty()) {
 							return 0;
@@ -115,25 +136,38 @@ public class CountDataFetcher implements DataFetcher<Integer> {
 					return entryRepository.getCountForSearch(entryIds, collectionName);
 
 				} else {
-					return entryRepository.getCountForSearch(entryIds, collectionName);
+					if (conditionsList != null && !conditionsList.isEmpty()) {
+						return entryRepository.getCountForSearchIncludingConditions(entryIds, conditionsList, modules,
+								moduleFields, collectionName);
+					} else {
+						return entryRepository.getCountForSearch(entryIds, collectionName);
+					}
 				}
+			}
+			if (conditionsList != null && !conditionsList.isEmpty()) {
+				return entryRepository.getCountForLayouts(modules, moduleFields, conditionsList, collectionName,
+						teamIds);
 			}
 
 			return entryRepository.getCount(collectionName);
 		}
-		List<Module> modules = modulesRepository.findAllModules("modules_" + companyId);
+		List<Module> modules = modulesRepository
+				.findAllModules("modules_" + authManager.getUserDetails().getCompanyId());
 		List<ModuleField> moduleFields = modulesService.getAllFields(module, modules);
 		List<ListMobileLayout> mobileListLayouts = module.getListMobileLayouts();
 		List<ListLayout> webListLayouts = module.getListLayouts();
 
 		Optional<ListLayout> optionalWebListLayout = webListLayouts.stream()
-				.filter(layout -> layout.getLayoutId().equals(layoutId) && layout.getRole().equals(role)).findFirst();
+				.filter(layout -> layout.getLayoutId().equals(layoutId)
+						&& layout.getRole().equals(authManager.getUserDetails().getRole()))
+				.findFirst();
 
 		List<Condition> accountConditions = accessLevelControl(modules, moduleFields);
 		if (optionalWebListLayout.isEmpty()) {
 
 			Optional<ListMobileLayout> optionalMobileListLayout = mobileListLayouts.stream()
-					.filter(layout -> layout.getLayoutId().equals(layoutId) && layout.getRole().equals(role))
+					.filter(layout -> layout.getLayoutId().equals(layoutId)
+							&& layout.getRole().equals(authManager.getUserDetails().getRole()))
 					.findFirst();
 			if (optionalMobileListLayout.isEmpty()) {
 				return 0;
@@ -144,14 +178,16 @@ public class CountDataFetcher implements DataFetcher<Integer> {
 			if (accountConditions != null) {
 				conditions.addAll(accountConditions);
 			}
-			return entryRepository.getCountForLayouts(modules, moduleFields, layout.getConditions(), collectionName, teamIds);
+			return entryRepository.getCountForLayouts(modules, moduleFields, layout.getConditions(), collectionName,
+					teamIds);
 		}
 		ListLayout layout = optionalWebListLayout.get();
 		List<Condition> conditions = layout.getConditions();
 		if (accountConditions != null) {
 			conditions.addAll(accountConditions);
 		}
-		return entryRepository.getCountForLayouts(modules, moduleFields, layout.getConditions(), collectionName, teamIds);
+		return entryRepository.getCountForLayouts(modules, moduleFields, layout.getConditions(), collectionName,
+				teamIds);
 	}
 
 	public List<Condition> accessLevelControl(List<Module> modules, List<ModuleField> moduleFields) {

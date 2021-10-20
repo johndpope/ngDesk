@@ -73,13 +73,10 @@ import com.ngdesk.graphql.modules.dao.ModuleField;
 import com.ngdesk.graphql.modules.dao.ModulesDataFetcher;
 import com.ngdesk.graphql.modules.dao.ModulesService;
 import com.ngdesk.graphql.modules.data.dao.AggregationDataFetcher;
-import com.ngdesk.graphql.modules.data.dao.AllEntriesByConditionFetcher;
 import com.ngdesk.graphql.modules.data.dao.AllEntriesFetcher;
 import com.ngdesk.graphql.modules.data.dao.ChronometerDataFetcher;
 import com.ngdesk.graphql.modules.data.dao.CountDataFetcher;
 import com.ngdesk.graphql.modules.data.dao.DistinctEntryValuesFetcher;
-
-import com.ngdesk.graphql.modules.data.dao.EntriesCountWithConditionsDataFeacher;
 import com.ngdesk.graphql.modules.data.dao.EntryDataFetcher;
 import com.ngdesk.graphql.modules.data.dao.FormulaDataFetcher;
 import com.ngdesk.graphql.modules.data.dao.IndividualEntryFetcher;
@@ -166,9 +163,6 @@ public class DataUtility {
 
 	@Autowired
 	AllEntriesFetcher allEntriesFetcher;
-
-	@Autowired
-	AllEntriesByConditionFetcher allEntriesByConditionFetcher;
 
 	@Autowired
 	EntryDataFetcher entryDataFetcher;
@@ -528,9 +522,6 @@ public class DataUtility {
 	@Autowired
 	EmailListCountFetcher emailListCountFetcher;
 
-	@Autowired
-	EntriesCountWithConditionsDataFeacher entriesCountWithConditionsDataFeacher;
-
 	public GraphQL createGraphQlObject(Company company) throws IOException {
 		try {
 			String schemaString = IOUtils.toString(modulesSchemaResource.getInputStream());
@@ -851,9 +842,6 @@ public class DataUtility {
 		builder.type("Section", typeWiring -> typeWiring.dataFetcher("category", sectionCategoryDataFetcher));
 		builder.type("Section", typeWiring -> typeWiring.dataFetcher("createdBy", entryDataFetcher));
 		builder.type("Section", typeWiring -> typeWiring.dataFetcher("lastUpdatedBy", entryDataFetcher));
-		
-		builder.type("Query",
-				typeWiring -> typeWiring.dataFetcher("getCountForEntriesWithConditions", entriesCountWithConditionsDataFeacher));
 
 		// ARTICLE
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getKbArticle", articleDataFetcher));
@@ -1000,10 +988,6 @@ public class DataUtility {
 		for (Module module : modules) {
 			String name = "get" + module.getName().replaceAll("\\s+", "_");
 			builder.type("Query", typeWiring -> typeWiring.dataFetcher(name, allEntriesFetcher));
-
-			String entriesWithCondition = "getEntriesWithConditionFor" + module.getName().replaceAll("\\s+", "_");
-			builder.type("Query",
-					typeWiring -> typeWiring.dataFetcher(entriesWithCondition, allEntriesByConditionFetcher));
 
 			String roleName = name + "RoleLayout";
 			builder.type("Query", typeWiring -> typeWiring.dataFetcher(roleName, roleLayoutValuesDataFetcher));

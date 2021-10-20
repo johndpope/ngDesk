@@ -2,18 +2,18 @@ package com.ngdesk.graphql.controllers;
 
 import java.util.List;
 
-import com.ngdesk.graphql.role.layout.dao.RoleLayoutCondition;
+import com.ngdesk.graphql.modules.dao.Condition;
 
 public class DataInput {
 	private String query;
 
-	private List<RoleLayoutCondition> conditions;
+	private List<Condition> conditions;
 
 	public DataInput() {
 
 	}
 
-	public DataInput(String query, List<RoleLayoutCondition> conditions) {
+	public DataInput(String query, List<Condition> conditions) {
 		super();
 		this.query = query;
 		this.conditions = conditions;
@@ -27,11 +27,11 @@ public class DataInput {
 		this.query = query;
 	}
 
-	public List<RoleLayoutCondition> getConditions() {
+	public List<Condition> getConditions() {
 		return conditions;
 	}
 
-	public void setConditions(List<RoleLayoutCondition> conditions) {
+	public void setConditions(List<Condition> conditions) {
 		this.conditions = conditions;
 	}
 

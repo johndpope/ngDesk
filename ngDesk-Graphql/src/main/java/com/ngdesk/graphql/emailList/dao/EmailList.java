@@ -8,6 +8,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.ngdesk.graphql.modules.dao.Condition;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class EmailList {
@@ -22,7 +23,7 @@ public class EmailList {
 	private String description;
 
 	@Field("CONDITIONS")
-	private List<EmailLIstCondition> conditions = new ArrayList<>();
+	private List<Condition> conditions = new ArrayList<>();
 
 	@Field("DATE_CREATED")
 	private Date dateCreated;
@@ -40,7 +41,7 @@ public class EmailList {
 
 	}
 
-	public EmailList(String emailListId, String name, String description, List<EmailLIstCondition> conditions,
+	public EmailList(String emailListId, String name, String description, List<Condition> conditions,
 			Date dateCreated, Date dateUpdated, String lastUpdatedBy, String createdBy) {
 		super();
 		this.emailListId = emailListId;
@@ -65,7 +66,7 @@ public class EmailList {
 		return description;
 	}
 
-	public List<EmailLIstCondition> getConditions() {
+	public List<Condition> getConditions() {
 		return conditions;
 	}
 
@@ -97,7 +98,7 @@ public class EmailList {
 		this.description = description;
 	}
 
-	public void setConditions(List<EmailLIstCondition> conditions) {
+	public void setConditions(List<Condition> conditions) {
 		this.conditions = conditions;
 	}
 
