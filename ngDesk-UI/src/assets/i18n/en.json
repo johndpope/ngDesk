@@ -2180,6 +2180,7 @@
 	"SLA_RECURRING": "for sla to be recurring",
 	"NAVIGATE_TO_FORMS": "Navigate to selected form",
 	"WORKFLOW_TO_CREATE": "create workflow of type sla",
+	"WORKFLOW_FOR_FORM": "create workflow of type form/catalogue",
 	"WORKFLOW_BUTTON": "Create new workflow",
 	"RECURRENCE_INTERVAL_TIME": "Recurrence interval time ",
 	"ACCOUNT_LEVEL_ACCESS": "Account Level Access",
