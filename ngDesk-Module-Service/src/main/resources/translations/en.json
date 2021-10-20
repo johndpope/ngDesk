@@ -383,6 +383,7 @@
   "TRIGGERS_NOT_NULL": "Triggers cant be null",
   "CHAT_PROMPT_ALREADY_EXIST":"A chat prompt with this name already exists, please try with valid name",
   "INVALID_RUN_TRIGGER":"Invalid run trigger,please try with valid run trigger",
+  "RELATIONSHIP_FIELD_NESTED_ERROR":"The field cannot end with relationship field ${1},please choose a valid field",
   "LIST_FORMULA_EMPTY": "The List formula is empty, please provide a valid value",
   "DISPLAY_TYPE_NOT_VALID_FOR_LIST_FORMULA": "The ${1} field used in the list formula is not a valid type, please provide a valid field which is of type number and text",
   "LIST_FORMULA_FIELDS_EMPTY":"Please enter values for required field",
