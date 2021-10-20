@@ -86,7 +86,7 @@ public class GraphqlController {
 		return ResponseEntity.ok(result.getData());
 	}
 
-	@PostMapping(value = "/condition/data")
+	@PostMapping(value = "/data/condition")
 	public ResponseEntity query(@RequestBody DataInput dataInput) {
 
 		ExecutionInput executionInput = ExecutionInput.newExecutionInput().query(dataInput.getQuery())
