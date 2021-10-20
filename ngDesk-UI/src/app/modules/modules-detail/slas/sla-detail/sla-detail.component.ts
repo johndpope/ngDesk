@@ -11,7 +11,6 @@ import { Escalation } from '../../../../models/escalation';
 import { Field } from '../../../../models/field';
 import { SlaBusinessRulesComponent } from './sla-business-rules/sla-business-rules.component';
 import { ChannelsService } from 'src/app/channels/channels.service';
-import { ModulesService } from '../../../modules.service';
 import { LoaderService } from '@src/app/custom-components/loader/loader.service';
 import { WorkflowApiService } from '@ngdesk/workflow-api';
 import { SLA, SlaapiService } from '@ngdesk/module-api';
@@ -19,6 +18,13 @@ import { SlaService } from '../sla-service';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { TriggersDetailService } from '../../triggers/triggers-detail-new/triggers-detail.service';
+import { HttpClient } from '@angular/common/http';
+import { AppGlobals } from '../../../../app.globals';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import {FormControl} from '@angular/forms';
+
+
 
 @Component({
 	selector: 'app-sla-detail',
@@ -26,6 +32,9 @@ import { TriggersDetailService } from '../../triggers/triggers-detail-new/trigge
 	styleUrls: ['./sla-detail.component.scss'],
 })
 export class SlaDetailComponent implements OnInit {
+	
+	public workflowCurrentPage = 0;
+	public workflowPageSize = 10;
 	public recurringFlag: boolean;
 	public hasRestrictions: boolean;
 	public errorMessage: string;
@@ -53,6 +62,7 @@ export class SlaDetailComponent implements OnInit {
 	public checked = false;
 	public fieldlist: any;
 	public fieldId: any;
+
 	public workflows = [];
 	public sla: SLA = {
 		name: '',
@@ -82,6 +92,8 @@ export class SlaDetailComponent implements OnInit {
 	public selectedTeams = [];
 	public teams: any[] = [];
 	public readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+	public filteredWorkflows: Observable<string[]>;
+	public workflow = new FormControl();
 
 	constructor(
 		private cdr: ChangeDetectorRef,
@@ -97,7 +109,9 @@ export class SlaDetailComponent implements OnInit {
 		private workflowApiService: WorkflowApiService,
 		private slaApiService: SlaapiService,
 		private slaService: SlaService,
-		private triggersDetailService: TriggersDetailService
+		private triggersDetailService: TriggersDetailService,
+		private httpClient: HttpClient,
+		private appGlobals: AppGlobals,
 	) {}
 
 	public ngOnInit() {
@@ -114,10 +128,10 @@ export class SlaDetailComponent implements OnInit {
 				CONDITION_VALUE: '',
 			}),
 			SLA_EXPIRY: ['', Validators.required],
-			WORKFLOW: '',
+			workflow: this.workflow,
 			isRestricted: [false],
 		});
-
+		this.moduleId = this.route.snapshot.params['moduleId'];
 		this.setWorkflows();
 
 		// set the translated values for is required translation params
@@ -139,7 +153,7 @@ export class SlaDetailComponent implements OnInit {
 			},
 		};
 
-		this.moduleId = this.route.snapshot.params['moduleId'];
+		
 		this.slaService.getData(this.moduleId).subscribe((response) => {
 			response[0].FIELDS.filter(
 				(field) =>
@@ -209,16 +223,29 @@ export class SlaDetailComponent implements OnInit {
 	}
 
 	private setWorkflows() {
-		this.workflowApiService
-			.getWorkflows(this.route.snapshot.params['moduleId'])
-			.subscribe(
-				(workflowResponse: any) => {
-					this.workflows = workflowResponse.content;
-				},
-				(error: any) => {
-					this.errorMessage = error.error.ERROR;
-				}
-			);
+		const query = `{ 
+			WORKFLOWS: getWorkflows(
+			moduleId: "${this.moduleId}"
+		  ) {
+			WORKFLOW_ID: id
+			NAME: name
+		  }
+		}`
+		  this.makeGraphQLCall(query).subscribe(
+			(workflowResponse: any) => {
+				this.workflows = workflowResponse.WORKFLOWS;
+				this.filteredWorkflows = this.workflow.valueChanges
+      			.pipe(
+		        startWith(''),
+        		map(value => typeof value === 'string' ? value : value.WORKFLOW_ID),
+        		map(NAME => NAME ? this.filterWorkflow(NAME) : this.workflows.slice()));
+			},
+			(error: any) => {
+			  this.bannerMessageService.errorNotifications.push({
+				message: error.error.ERROR
+			  });
+			}
+		  );
 	}
 
 	public numberOnly(event): boolean {
@@ -230,7 +257,7 @@ export class SlaDetailComponent implements OnInit {
 	}
 
 	public createNewWorkflow() {
-		this.router.navigate([`modules/${this.moduleId}/workflows`]);
+		this.router.navigate([`modules/${this.moduleId}/workflows/create-new`]);
 	}
 
 	public onRecurring($event) {
@@ -471,7 +498,12 @@ export class SlaDetailComponent implements OnInit {
 				conditionValue.PICKLIST_VALUES;
 		}
 		if (sla.workflow !== null) {
-			this.slaForm.controls['WORKFLOW'].setValue(sla.workflow.id);
+			const workflowObject = {
+				NAME: sla.workflow.name,
+				WORKFLOW_ID: sla.workflow.id
+			}
+			// this.workflow.setValue(sla)
+			this.slaForm.controls['workflow'].setValue(workflowObject);
 		}
 	}
 
@@ -574,7 +606,7 @@ export class SlaDetailComponent implements OnInit {
 				},
 				isRestricted: this.sla.isRestricted,
 				businessRules: this.sla.businessRules,
-				workflow: this.slaForm.value.WORKFLOW,
+				workflow: this.slaForm.value.workflow.WORKFLOW_ID,
 			};
 			const slaId = this.route.snapshot.params['slaId'];
 			console.log('slaObj', slaObj);
@@ -712,4 +744,23 @@ export class SlaDetailComponent implements OnInit {
 	public disabledTeamCheck(entry, teams) {
 		return teams.indexOf(entry.DATA_ID) !== -1;
 	}
+
+	public makeGraphQLCall(query: string) {
+		return this.httpClient.post(`${this.appGlobals.graphqlUrl}`, query);
+	}
+
+	public navigateToWorkflow(){
+		const workflowId = this.slaForm.get('workflow').value.WORKFLOW_ID;
+		this.router.navigate([`modules/${this.moduleId}/workflows/${workflowId}`]);
+	}
+
+	public filterWorkflow(value: any): any[] {
+		const filterValue = value.toLowerCase();
+	
+		return this.workflows.filter(option => option.NAME.toLowerCase().includes(filterValue));
+	  }
+	public  displayFn(workflow: any): string {
+		return workflow && workflow.NAME ? workflow.NAME : '';
+	  }
+
 }

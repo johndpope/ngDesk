@@ -1084,7 +1084,7 @@
 						</mat-option>
 					</mat-select>
 				</mat-form-field>
-				<a mat-button (click)="createnew()">Create new workflow</a>
+				<a mat-button (click)="createnew()" *ngIf="workflows.length === 0">Create new workflow</a>
 			</div>
 		</div>
 
