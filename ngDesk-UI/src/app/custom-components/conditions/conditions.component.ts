@@ -128,7 +128,7 @@ export class ConditionsComponent implements OnInit {
 				}
 			});
 		});
-	
+
 		this.rolesService.getRoles().subscribe(
 			(rolesResponse: any) => {
 				rolesResponse['ROLES'].filter((role) => {
@@ -152,7 +152,9 @@ export class ConditionsComponent implements OnInit {
 				response.CHANNELS.forEach((element) => {
 					this.channels.push({ value: element.ID, viewValue: element.NAME });
 				});
-
+				this.channels = this.channels.sort((a, b) =>
+					a.viewValue.localeCompare(b.viewValue)
+				);
 				// set conditions from formgroup directive
 				this.CONDITIONS = this.fgd.control.get('CONDITIONS') as FormArray;
 				// TODO: remove get Modules and getModuleById  call and pass the fields from the parent
