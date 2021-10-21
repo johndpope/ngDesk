@@ -2202,5 +2202,15 @@
 	"FORMULA_NAME": " Formula System Label",
 	"ADD_FORMULA": "Add Formula",
 	"SCHEDULES_USER_SEARCH": "Search is based on email address",
-	"LIST_FORMULA_CANNOT_BE_DROPPED": "List formula field cannot be dropped to sidebar"
+	"LIST_FORMULA_CANNOT_BE_DROPPED": "List formula field cannot be dropped to sidebar",
+	"EDIT_RESTRICTION": "Edit restrictions",
+	"REMOVE_LAYER": "Remove Layer",
+	"MOVE_USER_POSITION_UPWARD": "Move the user position upwards",
+	"MOVE_USER_POSITION_DOWNWARD": "Move the user position downwards",
+	"SELECT_ROTATION_TYPE": "Select the rotation type",
+	"USER_HANDOFF_TIME": "Handoff time for the users",
+	"START_DATE_CHANGES": "Effective date for changes to take place",
+	"CALENDER": "Calender",
+	"START_TIME_CHANGES": "Effective time for changes to take place",
+	"PREVIOUS": "Previous"
 }
