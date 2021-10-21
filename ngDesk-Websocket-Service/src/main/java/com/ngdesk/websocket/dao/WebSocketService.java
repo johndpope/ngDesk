@@ -472,14 +472,10 @@ public class WebSocketService {
 	public void publishChatChannel(Company company, ChatChannelMessage message) {
 
 		ObjectMapper mapper = new ObjectMapper();
-		if (!sessionService.sessions.containsKey(company.getCompanySubdomain())) {
-			return;
-		}
-
-		ConcurrentHashMap<String, UserSessions> sessions = sessionService.sessions.get(company.getCompanySubdomain());
-		for (String sessionUUID : sessions.keySet()) {
-
-			ConcurrentLinkedQueue<WebSocketSession> userSessions = sessions.get(sessionUUID).getSessions();
+		if (sessionService.sessions.containsKey(company.getCompanySubdomain())) {
+			ConcurrentHashMap<String, UserSessions> sessions = sessionService.sessions
+					.get(company.getCompanySubdomain());
+			ConcurrentLinkedQueue<WebSocketSession> userSessions = sessions.get(message.getSessionUUId()).getSessions();
 			userSessions.forEach(session -> {
 				try {
 					String payload = mapper.writeValueAsString(message);
@@ -493,7 +489,6 @@ public class WebSocketService {
 					userSessions.remove(session);
 				}
 			});
-
 		}
 
 	}
@@ -501,14 +496,10 @@ public class WebSocketService {
 	public void publishChatNotification(Company company, ChatNotification message) {
 
 		ObjectMapper mapper = new ObjectMapper();
-		if (!sessionService.sessions.containsKey(company.getCompanySubdomain())) {
-			return;
-		}
-
-		ConcurrentHashMap<String, UserSessions> sessions = sessionService.sessions.get(company.getCompanySubdomain());
-		for (String sessionUUID : sessions.keySet()) {
-			ConcurrentLinkedQueue<WebSocketSession> userSessions = sessions.get(sessionUUID).getSessions();
-
+		if (sessionService.sessions.containsKey(company.getCompanySubdomain())) {
+			ConcurrentHashMap<String, UserSessions> sessions = sessionService.sessions
+					.get(company.getCompanySubdomain());
+			ConcurrentLinkedQueue<WebSocketSession> userSessions = sessions.get(message.getSessionUUID()).getSessions();
 			userSessions.forEach(session -> {
 				try {
 					String payload = mapper.writeValueAsString(message);
