@@ -2903,6 +2903,22 @@
       ],
       "CONDITIONS": [],
       "IS_DEFAULT": true
+    },
+     {
+      "LAYOUT_ID": "003a993a-19b3-4208-8e77-a1e82f5e9260",
+      "NAME": "Quotes",
+      "DESCRIPTION": "Quotes",
+      "ROLE": "SALES_ROLE_REPLACE",
+      "ORDER_BY": {
+        "COLUMN": "15044d64-e3f6-4000-b12a-abb8ea418906",
+        "ORDER": "Desc"
+      },
+      "FIELDS": [
+        "e4cff478-53f4-4230-81a2-e41aa5ee07e5",
+        "fcbfa0f5-60d3-4edb-8701-7985d491c8a5"
+      ],
+      "CONDITIONS": [],
+      "IS_DEFAULT": true
     }
   ],
   "CREATE_MOBILE_LAYOUTS": [
@@ -2933,6 +2949,20 @@
         "06e640b8-261c-4d26-bc20-c2c4fb0b1083"
       ],
       "ROLE": "AGENT_ROLE_REPLACE"
+    },
+    {
+      "LAYOUT_ID": "ec2ff107-c9aa-483d-bd88-58e2f691a607",
+      "NAME": "Quotes",
+      "DESCRIPTION": "Quotes",
+      "FIELDS": [
+        "e4cff478-53f4-4230-81a2-e41aa5ee07e5",
+        "9e57c8f5-1649-4382-a59f-34a03dcb421f",
+        "fcbfa0f5-60d3-4edb-8701-7985d491c8a5",
+        "8bac85b6-b7ec-4dbb-bda0-1c845a65ca54",
+        "35f42525-f30c-4846-b22d-2ce9d209ec39",
+        "06e640b8-261c-4d26-bc20-c2c4fb0b1083"
+      ],
+      "ROLE": "SALES_ROLE_REPLACE"
     }
   ],
   "EDIT_MOBILE_LAYOUTS": [
@@ -2962,6 +2992,19 @@
         "15044d64-e3f6-4000-b12a-abb8ea418906"
       ],
       "ROLE": "AGENT_ROLE_REPLACE"
+    },
+    {
+      "LAYOUT_ID": "19fe8114-24bc-4622-8a16-33ca58cd048c",
+      "NAME": "Quotes",
+      "DESCRIPTION": "Quotes",
+      "FIELDS": [
+        "e4cff478-53f4-4230-81a2-e41aa5ee07e5",
+        "8bac85b6-b7ec-4dbb-bda0-1c845a65ca54",
+        "fcbfa0f5-60d3-4edb-8701-7985d491c8a5",
+        "06e640b8-261c-4d26-bc20-c2c4fb0b1083",
+        "15044d64-e3f6-4000-b12a-abb8ea418906"
+      ],
+      "ROLE": "SALES_ROLE_REPLACE"
     }
   ],
   "CREATE_LAYOUTS": [

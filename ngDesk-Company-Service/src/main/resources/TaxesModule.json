@@ -1085,6 +1085,23 @@
       ],
       "CONDITIONS": [],
       "IS_DEFAULT": true
+    },
+    {
+      "LAYOUT_ID": "2af21f79-76dc-482d-a25f-14b41e77b11d",
+      "NAME": "Taxes",
+      "DESCRIPTION": "taxes",
+      "ID": "",
+     "ROLE": "ACCOUNTANT_ROLE_REPLACE",
+      "ORDER_BY": {
+        "COLUMN": "15044d64-e3f6-4000-b12a-abb8ea418906",
+        "ORDER": "Asc"
+      },
+      "FIELDS": [
+        "858ed3a6-9b74-4b07-aac1-43bce4695599",
+        "15044d64-e3f6-4000-b12a-abb8ea418906"
+      ],
+      "CONDITIONS": [],
+      "IS_DEFAULT": true
     }
   ],
   "CREATE_MOBILE_LAYOUTS": [
@@ -1115,6 +1132,20 @@
         "b6eef848-39e4-47e6-91d9-7f219d6eb07f"
       ],
       "ROLE": "ACCOUNTING_MANAGER_ROLE_REPLACE"
+    },
+    {
+      "LAYOUT_ID": "c02f688e-40a2-429c-810e-a4155c5dd964",
+      "NAME": "Taxes",
+      "DESCRIPTION": "taxes",
+      "FIELDS": [
+        "858ed3a6-9b74-4b07-aac1-43bce4695599",
+        "30dc5336-2d7f-41e7-ae31-c4609962b983",
+        "56a58885-fc29-4397-a0e4-5292f2937e7b",
+        "31a2992c-32e2-4591-be9e-f74212293d5f",
+        "92167190-f8b4-4a91-bb40-65f8517f53a3",
+        "b6eef848-39e4-47e6-91d9-7f219d6eb07f"
+      ],
+   "ROLE": "ACCOUNTANT_ROLE_REPLACE"
     }
   ],
   "EDIT_MOBILE_LAYOUTS": [
@@ -1145,6 +1176,20 @@
         "b6eef848-39e4-47e6-91d9-7f219d6eb07f"
       ],
       "ROLE": "ACCOUNTING_MANAGER_ROLE_REPLACE"
+    },
+    {
+      "LAYOUT_ID": "b1c253d8-5b14-40ed-b05c-70b8be560b15",
+      "NAME": "Taxes",
+      "DESCRIPTION": "taxes",
+      "FIELDS": [
+        "858ed3a6-9b74-4b07-aac1-43bce4695599",
+        "30dc5336-2d7f-41e7-ae31-c4609962b983",
+        "56a58885-fc29-4397-a0e4-5292f2937e7b",
+        "31a2992c-32e2-4591-be9e-f74212293d5f",
+        "92167190-f8b4-4a91-bb40-65f8517f53a3",
+        "b6eef848-39e4-47e6-91d9-7f219d6eb07f"
+      ],
+      "ROLE": "ACCOUNTANT_ROLE_REPLACE"
     }
   ],
   "DATE_CREATED": "DATE_REPLACE",

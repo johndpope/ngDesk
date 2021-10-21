@@ -1961,6 +1961,29 @@
         "83de5588-2080-4f76-8a5a-7eefa0db9de6"
       ],
       "IS_DEFAULT": true
+    },
+    {
+      "LAYOUT_ID": "79eebfd7-f483-47c4-833b-e06370a96d1e",
+      "NAME": "My Opportunities",
+      "DESCRIPTION": "My Opportunities",
+      "ROLE": "SALES_ROLE_REPLACE",
+      "ORDER_BY": {
+        "COLUMN": "15044d64-e3f6-4000-b12a-abb8ea418906",
+        "ORDER": "Desc"
+      },
+      "CONDITIONS": [
+        {
+          "CONDITION": "d1928fc3-20cb-437d-89db-f6eb2e47be9a",
+          "CONDITION_VALUE": "{{CURRENT_USER}}",
+          "OPERATOR": "EQUALS_TO",
+          "REQUIREMENT_TYPE": "All"
+        }
+      ],
+      "FIELDS": [
+        "84010f2c-5a2f-4e6c-a79b-91a42f046d90",
+        "83de5588-2080-4f76-8a5a-7eefa0db9de6"
+      ],
+      "IS_DEFAULT": true
     }
   ],
   "CREATE_MOBILE_LAYOUTS": [
@@ -1995,6 +2018,22 @@
         "94940a02-1790-4696-84aa-425d96bb7a47"
       ],
       "ROLE": "AGENT_ROLE_REPLACE"
+    },
+    {
+      "LAYOUT_ID": "cb9e78d9-4b09-43d7-a8ba-891f209b4509",
+      "NAME": "Opportunity",
+      "DESCRIPTION": "Opportunity",
+      "FIELDS": [
+        "84010f2c-5a2f-4e6c-a79b-91a42f046d90",
+        "e33a5dc0-d109-4c7d-8a88-095a8d7dc991",
+        "32479b5c-edca-4fcb-94eb-c14fa87cc9ad",
+        "30c08d40-2d6c-40ad-8316-7f168012d909",
+        "d1928fc3-20cb-437d-89db-f6eb2e47be9a",
+        "387d73dc-2e4a-4499-aed9-2acd8e173fcd",
+        "83de5588-2080-4f76-8a5a-7eefa0db9de6",
+        "94940a02-1790-4696-84aa-425d96bb7a47"
+      ],
+      "ROLE": "SALES_ROLE_REPLACE"
     }
   ],
   "EDIT_MOBILE_LAYOUTS": [
@@ -2029,6 +2068,22 @@
         "94940a02-1790-4696-84aa-425d96bb7a47"
       ],
       "ROLE": "AGENT_ROLE_REPLACE"
+    },
+    {
+      "LAYOUT_ID": "5451af72-b924-4e23-8020-177d292f5bae",
+      "NAME": "Opportunity",
+      "DESCRIPTION": "Opportunity",
+      "FIELDS": [
+        "84010f2c-5a2f-4e6c-a79b-91a42f046d90",
+        "e33a5dc0-d109-4c7d-8a88-095a8d7dc991",
+        "32479b5c-edca-4fcb-94eb-c14fa87cc9ad",
+        "30c08d40-2d6c-40ad-8316-7f168012d909",
+        "387d73dc-2e4a-4499-aed9-2acd8e173fcd",
+        "d1928fc3-20cb-437d-89db-f6eb2e47be9a",
+        "83de5588-2080-4f76-8a5a-7eefa0db9de6",
+        "94940a02-1790-4696-84aa-425d96bb7a47"
+      ],
+      "ROLE": "SALES_ROLE_REPLACE"
     }
   ],
   "DATE_CREATED": "DATE_REPLACE",

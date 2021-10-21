@@ -1241,6 +1241,22 @@
       ],
       "CONDITIONS": [],
       "IS_DEFAULT": true
+    },
+    {
+      "LAYOUT_ID": "8b9be293-9616-4863-8a89-780d7396cfe2",
+      "NAME": "Revenue Line Item",
+      "DESCRIPTION": "Revenue Line Item",
+      "ROLE": "SALES_ROLE_REPLACE",
+      "ORDER_BY": {
+        "COLUMN": "15044d64-e3f6-4000-b12a-abb8ea418906",
+        "ORDER": "Desc"
+      },
+      "FIELDS": [
+        "1b62d31f-6a3c-4506-a306-0e8d38454399",
+        "974a59c0-2ea5-42ba-bd96-4f3de052b6ab"
+      ],
+      "CONDITIONS": [],
+      "IS_DEFAULT": true
     }
   ],
   "CREATE_MOBILE_LAYOUTS": [
@@ -1277,6 +1293,23 @@
         "616efeed-6049-4db8-b9fc-edbb47256646"
       ],
       "ROLE": "AGENT_ROLE_REPLACE"
+    },
+    {
+      "LAYOUT_ID": "8e4c517d-b3ec-44aa-aa9e-de8d7c0cded9",
+      "NAME": "Revenue Line Item",
+      "DESCRIPTION": "Revenue Line Item",
+      "FIELDS": [
+        "1b62d31f-6a3c-4506-a306-0e8d38454399",
+        "a50f62e0-fc46-4bca-9640-089100cd72a8",
+        "37db6d22-d585-4e3f-9c00-7678b836cfef",
+        "5ffb58a4-3d42-40a4-b023-9fb9f49f75b9",
+        "78725d6f-2c7e-4a86-9289-be2498b943e0",
+        "730eefc5-7038-4248-a3bb-58198ee2e882",
+        "e7c0167e-04fe-4f7f-be42-25d296a02af6",
+        "974a59c0-2ea5-42ba-bd96-4f3de052b6ab",
+        "616efeed-6049-4db8-b9fc-edbb47256646"
+      ],
+      "ROLE": "SALES_ROLE_REPLACE"
     }
   ],
   "EDIT_MOBILE_LAYOUTS": [
@@ -1313,6 +1346,23 @@
         "616efeed-6049-4db8-b9fc-edbb47256646"
       ],
       "ROLE": "AGENT_ROLE_REPLACE"
+    },
+    {
+      "LAYOUT_ID": "7a1a8992-a495-4ce0-b7d0-bee6c41e719b",
+      "NAME": "Revenue Line Item",
+      "DESCRIPTION": "Revenue Line Item",
+      "FIELDS": [
+        "1b62d31f-6a3c-4506-a306-0e8d38454399",
+        "a50f62e0-fc46-4bca-9640-089100cd72a8",
+        "37db6d22-d585-4e3f-9c00-7678b836cfef",
+        "5ffb58a4-3d42-40a4-b023-9fb9f49f75b9",
+        "78725d6f-2c7e-4a86-9289-be2498b943e0",
+        "730eefc5-7038-4248-a3bb-58198ee2e882",
+        "e7c0167e-04fe-4f7f-be42-25d296a02af6",
+        "974a59c0-2ea5-42ba-bd96-4f3de052b6ab",
+        "616efeed-6049-4db8-b9fc-edbb47256646"
+      ],
+      "ROLE": "SALES_ROLE_REPLACE"
     }
   ],
   "DATE_CREATED": "DATE_REPLACE",

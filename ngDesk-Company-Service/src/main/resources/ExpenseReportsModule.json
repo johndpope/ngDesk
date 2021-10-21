@@ -2824,7 +2824,7 @@
       "DESCRIPTION": "expense reports",
       "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
       "ORDER_BY": {
-        "COLUMN": "38313213-763f-421a-bd12-824ed0411a61",
+        "COLUMN": "15044d64-e3f6-4000-b12a-abb8ea418906",
         "ORDER": "Asc"
       },
       "FIELDS": [
@@ -2840,7 +2840,7 @@
       "DESCRIPTION": "expense reports",
       "ROLE": "AGENT_ROLE_REPLACE",
       "ORDER_BY": {
-        "COLUMN": "38313213-763f-421a-bd12-824ed0411a61",
+        "COLUMN": "15044d64-e3f6-4000-b12a-abb8ea418906",
         "ORDER": "Asc"
       },
       "FIELDS": [
@@ -2856,7 +2856,39 @@
       "DESCRIPTION": "expense reports",
       "ROLE": "ACCOUNTING_MANAGER_ROLE_REPLACE",
       "ORDER_BY": {
-        "COLUMN": "38313213-763f-421a-bd12-824ed0411a61",
+        "COLUMN": "15044d64-e3f6-4000-b12a-abb8ea418906",
+        "ORDER": "Asc"
+      },
+      "FIELDS": [
+        "15044d64-e3f6-4000-b12a-abb8ea418906",
+        "e04e4bfc-ea9f-4a63-92b3-2ef573a36982"
+      ],
+      "CONDITIONS": [],
+      "IS_DEFAULT": true
+    },
+    {
+      "LAYOUT_ID": "a9089875-7eff-43d5-90d3-9e6d2441565f",
+      "NAME": "All Expense Reports",
+      "DESCRIPTION": "expense reports",
+      "ROLE": "ACCOUNTANT_ROLE_REPLACE",
+      "ORDER_BY": {
+        "COLUMN": "15044d64-e3f6-4000-b12a-abb8ea418906",
+        "ORDER": "Asc"
+      },
+      "FIELDS": [
+        "15044d64-e3f6-4000-b12a-abb8ea418906",
+        "e04e4bfc-ea9f-4a63-92b3-2ef573a36982"
+      ],
+      "CONDITIONS": [],
+      "IS_DEFAULT": true
+    },
+    {
+      "LAYOUT_ID": "8a6acaa6-5a40-44f9-a8ab-2facfef9375d",
+      "NAME": "All Expense Reports",
+      "DESCRIPTION": "expense reports",
+      "ROLE": "SPENDER_ROLE_REPLACE",
+      "ORDER_BY": {
+        "COLUMN": "15044d64-e3f6-4000-b12a-abb8ea418906",
         "ORDER": "Asc"
       },
       "FIELDS": [
@@ -2927,6 +2959,36 @@
         "41f135aa-e9d1-4888-920b-2a8d8672fb7b"
       ],
       "ROLE": "ACCOUNTING_MANAGER_ROLE_REPLACE"
+    },
+     {
+      "LAYOUT_ID": "8318e9d2-1fba-4a19-81c3-f0d5833dc1d7",
+      "NAME": "Expense Reports",
+      "DESCRIPTION": "expense reports",
+      "FIELDS": [
+        "e04e4bfc-ea9f-4a63-92b3-2ef573a36982",
+        "15044d64-e3f6-4000-b12a-abb8ea418906",
+        "619b25b5-5a31-4f88-97ac-ab54d203b904",
+        "331cd8f9-98a9-49f8-8547-38824d3c27e2",
+        "8b83946a-0c83-43c3-89b9-52d8e0daef97",
+        "422c6e7d-3c7a-4671-a935-6302b608fcae",
+        "41f135aa-e9d1-4888-920b-2a8d8672fb7b"
+      ],
+      "ROLE": "ACCOUNTANT_ROLE_REPLACE"
+    },
+      {
+      "LAYOUT_ID": "ab6d83b9-e9b7-4ede-82df-c87b9beb1c1d",
+      "NAME": "Expense Reports",
+      "DESCRIPTION": "expense reports",
+      "FIELDS": [
+        "e04e4bfc-ea9f-4a63-92b3-2ef573a36982",
+        "15044d64-e3f6-4000-b12a-abb8ea418906",
+        "619b25b5-5a31-4f88-97ac-ab54d203b904",
+        "331cd8f9-98a9-49f8-8547-38824d3c27e2",
+        "8b83946a-0c83-43c3-89b9-52d8e0daef97",
+        "422c6e7d-3c7a-4671-a935-6302b608fcae",
+        "41f135aa-e9d1-4888-920b-2a8d8672fb7b"
+      ],
+      "ROLE": "SPENDER_ROLE_REPLACE"
     }
   ],
   "EDIT_MOBILE_LAYOUTS": [
@@ -2989,6 +3051,36 @@
         "41f135aa-e9d1-4888-920b-2a8d8672fb7b"
       ],
       "ROLE": "ACCOUNTING_MANAGER_ROLE_REPLACE"
+    },
+    {
+      "LAYOUT_ID": "de0a3b84-4308-4733-b14e-ddd96024e958",
+      "NAME": "Expense Reports",
+      "DESCRIPTION": "expense reports",
+      "FIELDS": [
+        "e04e4bfc-ea9f-4a63-92b3-2ef573a36982",
+        "15044d64-e3f6-4000-b12a-abb8ea418906",
+        "619b25b5-5a31-4f88-97ac-ab54d203b904",
+        "331cd8f9-98a9-49f8-8547-38824d3c27e2",
+        "8b83946a-0c83-43c3-89b9-52d8e0daef97",
+        "422c6e7d-3c7a-4671-a935-6302b608fcae",
+        "41f135aa-e9d1-4888-920b-2a8d8672fb7b"
+      ],
+      "ROLE": "ACCOUNTANT_ROLE_REPLACE"
+    },
+    {
+      "LAYOUT_ID": "ea09daac-3631-4861-9a25-a7d04e711f63",
+      "NAME": "Expense Reports",
+      "DESCRIPTION": "expense reports",
+      "FIELDS": [
+        "e04e4bfc-ea9f-4a63-92b3-2ef573a36982",
+        "15044d64-e3f6-4000-b12a-abb8ea418906",
+        "619b25b5-5a31-4f88-97ac-ab54d203b904",
+        "331cd8f9-98a9-49f8-8547-38824d3c27e2",
+        "8b83946a-0c83-43c3-89b9-52d8e0daef97",
+        "422c6e7d-3c7a-4671-a935-6302b608fcae",
+        "41f135aa-e9d1-4888-920b-2a8d8672fb7b"
+      ],
+      "ROLE": "SPENDER_ROLE_REPLACE"
     }
   ],
   "WORKFLOWS": [],

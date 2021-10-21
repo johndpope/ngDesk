@@ -822,6 +822,23 @@
       ],
       "CONDITIONS": [],
       "IS_DEFAULT": true
+    },
+     {
+      "LAYOUT_ID": "657fe9f5-7e11-4735-8a9c-586650754dde",
+      "NAME": "Gl Codes",
+      "DESCRIPTION": "gl codes",
+      "ID": "",
+      "ROLE": "ACCOUNTANT_ROLE_REPLACE",
+      "ORDER_BY": {
+        "COLUMN": "15044d64-e3f6-4000-b12a-abb8ea418906",
+        "ORDER": "Asc"
+      },
+      "FIELDS": [
+        "82cb77b0-cd50-4b11-b738-5793c7a45d2b",
+        "15044d64-e3f6-4000-b12a-abb8ea418906"
+      ],
+      "CONDITIONS": [],
+      "IS_DEFAULT": true
     }
   ],
   "CREATE_MOBILE_LAYOUTS": [
@@ -846,6 +863,17 @@
         "b6eef848-39e4-47e6-91d9-7f219d6eb07f"
       ],
       "ROLE": "ACCOUNTING_MANAGER_ROLE_REPLACE"
+    },
+    {
+      "LAYOUT_ID": "8859ab6c-0731-41b8-a20c-4cdbe7b1f20c",
+      "NAME": "Gl Codes",
+      "DESCRIPTION": "gl codes",
+      "FIELDS": [
+        "82cb77b0-cd50-4b11-b738-5793c7a45d2b",
+        "62b7a5f4-1870-4f50-aafd-3f52b9d1cb3f",
+        "b6eef848-39e4-47e6-91d9-7f219d6eb07f"
+      ],
+      "ROLE": "ACCOUNTANT_ROLE_REPLACE"
     }
   ],
   "EDIT_MOBILE_LAYOUTS": [
@@ -870,6 +898,17 @@
         "b6eef848-39e4-47e6-91d9-7f219d6eb07f"
       ],
       "ROLE": "SYSTEMADMIN_ROLE_REPLACE"
+    },
+    {
+      "LAYOUT_ID": "72a8a562-0ad8-4db2-9546-9f86c752777a",
+      "NAME": "Gl Codes",
+      "DESCRIPTION": "gl codes",
+      "FIELDS": [
+        "82cb77b0-cd50-4b11-b738-5793c7a45d2b",
+        "62b7a5f4-1870-4f50-aafd-3f52b9d1cb3f",
+        "b6eef848-39e4-47e6-91d9-7f219d6eb07f"
+      ],
+      "ROLE": "ACCOUNTANT_ROLE_REPLACE"
     }
   ],
   "DATE_CREATED": "DATE_REPLACE",

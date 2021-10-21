@@ -1011,6 +1011,22 @@
       ],
       "CONDITIONS": [],
       "IS_DEFAULT": true
+    },
+    {
+      "LAYOUT_ID": "fddfd3f4-2a0b-4687-86aa-27a085cafc0e",
+      "NAME": "Product",
+      "DESCRIPTION": "Product",
+      "ROLE": "SALES_ROLE_REPLACE",
+      "ORDER_BY": {
+        "COLUMN": "ae1ae22e-c431-45f0-935f-0ab5f91b2521",
+        "ORDER": "Asc"
+      },
+      "FIELDS": [
+        "ae1ae22e-c431-45f0-935f-0ab5f91b2521",
+        "3d3ec969-09ad-417b-b200-a81af478850c"
+      ],
+      "CONDITIONS": [],
+      "IS_DEFAULT": true
     }
   ],
   "CREATE_MOBILE_LAYOUTS": [
@@ -1043,6 +1059,21 @@
         "ef08137c-beed-4b8e-af11-605a83addaf1"
       ],
       "ROLE": "AGENT_ROLE_REPLACE"
+    },
+    {
+      "LAYOUT_ID": "9df566d5-a223-4aaf-80f0-d9ab7a4a771a",
+      "NAME": "Product",
+      "DESCRIPTION": "Product",
+      "FIELDS": [
+        "3d3ec969-09ad-417b-b200-a81af478850c",
+        "ae1ae22e-c431-45f0-935f-0ab5f91b2521",
+        "0ac28bc5-10e9-4333-9316-da65cd426e11",
+        "81932c93-0d8c-4ce8-a4f1-2b8f3c37237b",
+        "f99fe1bf-15e3-4341-b30e-0416b572699e",
+        "13e68ac1-d3c2-4fdf-a152-9a812224b96e",
+        "ef08137c-beed-4b8e-af11-605a83addaf1"
+      ],
+      "ROLE": "SALES_ROLE_REPLACE"
     }
   ],
   "EDIT_MOBILE_LAYOUTS": [
@@ -1075,6 +1106,21 @@
         "ef08137c-beed-4b8e-af11-605a83addaf1"
       ],
       "ROLE": "AGENT_ROLE_REPLACE"
+    },
+    {
+      "LAYOUT_ID": "e6858a21-f2e3-4945-90fe-14029cdaec0c",
+      "NAME": "Product",
+      "DESCRIPTION": "Product",
+      "FIELDS": [
+        "3d3ec969-09ad-417b-b200-a81af478850c",
+        "ae1ae22e-c431-45f0-935f-0ab5f91b2521",
+        "0ac28bc5-10e9-4333-9316-da65cd426e11",
+        "81932c93-0d8c-4ce8-a4f1-2b8f3c37237b",
+        "f99fe1bf-15e3-4341-b30e-0416b572699e",
+        "13e68ac1-d3c2-4fdf-a152-9a812224b96e",
+        "ef08137c-beed-4b8e-af11-605a83addaf1"
+      ],
+      "ROLE": "SALES_ROLE_REPLACE"
     }
   ],
   "DATE_CREATED": "DATE_REPLACE",

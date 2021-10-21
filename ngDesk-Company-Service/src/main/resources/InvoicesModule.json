@@ -1730,6 +1730,22 @@
       ],
       "CONDITIONS": [],
       "IS_DEFAULT": true
+    },
+    {
+      "LAYOUT_ID": "3e71ac63-e033-410d-9211-26dc0987b1de",
+      "NAME": "Invoices",
+      "DESCRIPTION": "Invoices",
+      "ROLE": "SALES_ROLE_REPLACE",
+      "ORDER_BY": {
+        "COLUMN": "5ccf043f-7d2e-40a1-bf0b-470fb3eeecb5",
+        "ORDER": "Asc"
+      },
+      "FIELDS": [
+        "5ccf043f-7d2e-40a1-bf0b-470fb3eeecb5",
+        "309a6539-1a4f-483f-bb33-d42780dc2430"
+      ],
+      "CONDITIONS": [],
+      "IS_DEFAULT": true
     }
   ],
   "CREATE_MOBILE_LAYOUTS": [
@@ -1777,6 +1793,21 @@
         "bf7126a8-9835-4d84-b975-74ab3f2835a1"
       ],
       "ROLE": "CUSTOMERS_ROLE_REPLACE"
+    },
+    {
+      "LAYOUT_ID": "36b6d88b-4454-49df-9d4f-6d94170f88d5",
+      "NAME": "Invoices",
+      "DESCRIPTION": "Invoices",
+      "FIELDS": [
+        "5ccf043f-7d2e-40a1-bf0b-470fb3eeecb5",
+        "309a6539-1a4f-483f-bb33-d42780dc2430",
+        "5df074b3-3392-4d02-928b-e1bab8a27a0a",
+        "829098d4-15b2-48d4-a1fb-6c00cda848fa",
+        "2adc5457-3347-4f4e-8803-488b6678b424",
+        "462f1a0e-706c-4179-815c-0e84533e9515",
+        "bf7126a8-9835-4d84-b975-74ab3f2835a1"
+      ],
+      "ROLE": "SALES_ROLE_REPLACE"
     }
   ],
   "EDIT_MOBILE_LAYOUTS": [
@@ -1824,6 +1855,21 @@
         "bf7126a8-9835-4d84-b975-74ab3f2835a1"
       ],
       "ROLE": "CUSTOMERS_ROLE_REPLACE"
+    },
+    {
+      "LAYOUT_ID": "c2b4bd6c-1f46-4674-afea-1adef612ab45",
+      "NAME": "Invoices",
+      "DESCRIPTION": "Invoices",
+      "FIELDS": [
+        "5ccf043f-7d2e-40a1-bf0b-470fb3eeecb5",
+        "309a6539-1a4f-483f-bb33-d42780dc2430",
+        "5df074b3-3392-4d02-928b-e1bab8a27a0a",
+        "829098d4-15b2-48d4-a1fb-6c00cda848fa",
+        "2adc5457-3347-4f4e-8803-488b6678b424",
+        "462f1a0e-706c-4179-815c-0e84533e9515",
+        "bf7126a8-9835-4d84-b975-74ab3f2835a1"
+      ],
+      "ROLE": "SALES_ROLE_REPLACE"
     }
   ],
   "CREATE_LAYOUTS": [

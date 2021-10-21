@@ -1416,6 +1416,23 @@
       ],
       "CONDITIONS": [],
       "IS_DEFAULT": true
+    },
+    {
+      "LAYOUT_ID": "89fb9e9a-53dc-4879-90a7-82cbd9ea3d1e",
+      "NAME": "Categories",
+      "DESCRIPTION": "categories",
+      "ID": "",
+      "ROLE": "ACCOUNTANT_ROLE_REPLACE",
+      "ORDER_BY": {
+        "COLUMN": "15044d64-e3f6-4000-b12a-abb8ea418906",
+        "ORDER": "Asc"
+      },
+      "FIELDS": [
+        "b7ca529a-4450-40ad-9c69-c9c9522a9bfb",
+        "15044d64-e3f6-4000-b12a-abb8ea418906"
+      ],
+      "CONDITIONS": [],
+      "IS_DEFAULT": true
     }
   ],
   "CREATE_MOBILE_LAYOUTS": [
@@ -1444,6 +1461,19 @@
         "b6eef848-39e4-47e6-91d9-7f219d6eb07f"
       ],
       "ROLE": "ACCOUNTING_MANAGER_ROLE_REPLACE"
+    },
+    {
+      "LAYOUT_ID": "68795d8f-ea74-40a4-91cc-77e5af6dfe48",
+      "NAME": "Categories",
+      "DESCRIPTION": "categories",
+      "FIELDS": [
+        "b7ca529a-4450-40ad-9c69-c9c9522a9bfb",
+        "5ebcf811-a90b-4e69-9ffc-657f7765fc96",
+        "e1db5c7a-c8a8-49e4-b703-2eee485040bd",
+        "c01684b3-9cc6-4bab-b87b-53dbfb28bba2",
+        "b6eef848-39e4-47e6-91d9-7f219d6eb07f"
+      ],
+      "ROLE": "ACCOUNTANT_ROLE_REPLACE"
     }
   ],
   "EDIT_MOBILE_LAYOUTS": [
@@ -1472,6 +1502,19 @@
         "b6eef848-39e4-47e6-91d9-7f219d6eb07f"
       ],
       "ROLE": "ACCOUNTING_MANAGER_ROLE_REPLACE"
+    },
+    {
+      "LAYOUT_ID": "1c53750f-828b-478b-b258-3f9aba765142",
+      "NAME": "Categories",
+      "DESCRIPTION": "categories",
+      "FIELDS": [
+        "b7ca529a-4450-40ad-9c69-c9c9522a9bfb",
+        "5ebcf811-a90b-4e69-9ffc-657f7765fc96",
+        "e1db5c7a-c8a8-49e4-b703-2eee485040bd",
+        "c01684b3-9cc6-4bab-b87b-53dbfb28bba2",
+        "b6eef848-39e4-47e6-91d9-7f219d6eb07f"
+      ],
+      "ROLE": "ACCOUNTANT_ROLE_REPLACE"
     }
   ],
   "DATE_CREATED": "DATE_REPLACE",
