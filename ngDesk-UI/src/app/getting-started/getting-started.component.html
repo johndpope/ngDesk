@@ -5,7 +5,8 @@
 		<div fxLayoutAlign="center center" fxLayout="row" fxFlex="10" fxLayoutGap="30px">
 			<!--Progress spinner start-->
 			<div fxLayout="column" fxFlex="20" fxLayoutAlign="start start">
-				<div class="spinner spinner-color" style="position: relative;left: 50%;top: -12px;">
+				<div class="spinner spinner-color" style="position: relative;left: 50%;"
+					[ngStyle]="{'top': browser === 'Firefox' ? '3px' : '-12px'}">
 					<mat-progress-spinner diameter="60" strokeWidth="8" style="stroke-opacity: 0.2;" [mode]="mode" [value]="100">
 					</mat-progress-spinner>
 					<mat-progress-spinner diameter="60" strokeWidth="8" [mode]="mode" [value]="value">
@@ -120,7 +121,8 @@
 		</div>
 	</div>
 	<div class="getting-started" fxFlex="80" fxLayoutAlign="start start" fxFlexFill style="padding-top:10px; height: 100vh">
-		<app-customization *ngIf="currentStep === 0 && resourceSelected === 'none'" fxFlex></app-customization>
+		<app-customization *ngIf="currentStep === 0 && resourceSelected === 'none'" (saveEvent)="clickedSave()" fxFlex>
+		</app-customization>
 		<div *ngIf="currentStep === 1 && resourceSelected === 'none'" fxFlex="100" fxLayout="column">
 			<div style="padding-left: 10px;margin-top: 10px;">
 				<h1 class="mat-h1" style="font-weight: 550; margin: 0px;">{{'ACTIVATE_EMAIL' | translate}}</h1>
