@@ -77,7 +77,7 @@ public class ModuleService {
 //		moduleService.modulesMap.put("Bonus Issuances", new ObjectId("5f68d2d296151b30f85b4f15"));
 
 //		C
-		moduleService.modulesMap.put("Chat", new ObjectId("5f68d2d296151b30f85b4f13"));
+		moduleService.modulesMap.put("Chats", new ObjectId("5f68d2d296151b30f85b4f13"));
 		moduleService.modulesMap.put("Contacts", new ObjectId("5f68d2d296151b30f85b4f16"));
 		moduleService.modulesMap.put("Contracts", new ObjectId("5f68d2d296151b30f85b4f17"));
 		moduleService.modulesMap.put("Change Request", new ObjectId("60584b21b849a94aabb0bd08"));
@@ -311,7 +311,7 @@ public class ModuleService {
 
 			}
 
-			if (module.getName().equals("Chat")) {
+			if (module.getName().equals("Chats")) {
 				moduleService.postChatChannel(company, globalTeamId);
 			}
 
@@ -378,7 +378,7 @@ public class ModuleService {
 		try {
 			String chatChannelJson = global.getFile("ChatChannel.json");
 			chatChannelJson = chatChannelJson.replaceAll("COMPANY_SUBDOMAIN_REPLACE", company.getCompanySubdomain());
-			chatChannelJson = chatChannelJson.replaceAll("MODULE_ID", moduleService.modulesMap.get("Chat").toString());
+			chatChannelJson = chatChannelJson.replaceAll("MODULE_ID", moduleService.modulesMap.get("Chats").toString());
 			chatChannelJson = chatChannelJson.replaceAll("COMPANY_TIMEZONE", company.getTimezone());
 			Map<String, Object> chatChannel = new ObjectMapper().readValue(chatChannelJson, Map.class);
 			entryRepository.save(chatChannel, "channels_chat_" + company.getCompanyId());

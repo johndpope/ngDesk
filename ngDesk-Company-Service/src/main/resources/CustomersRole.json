@@ -162,7 +162,7 @@
 				"VIEW": "All",
 				"ACCESS": "Enabled"
 			},
-			"MODULE": "CHAT_REPLACE",
+			"MODULE": "CHATS_REPLACE",
 			"FIELD_PERMISSIONS": []
 		}
 	],

@@ -67,16 +67,17 @@ public class ChatService {
 				if (optionalCompany.isPresent()) {
 					Company company = optionalCompany.get();
 					String companyId = company.getId();
-					Optional<Module> optionalChatModule = modulesRepository.findModuleByName("Chat",
+					Optional<Module> optionalChatModule = modulesRepository.findModuleByName("Chats",
 							"modules_" + companyId);
 					if (optionalChatModule.isPresent()) {
 						Optional<Map<String, Object>> optionalChatEntry = moduleEntryRepository
-								.findBySessionUuid(pageLoad.getSessionUUID(), "Chat_" + companyId);
+								.findBySessionUuid(pageLoad.getSessionUUID(), "Chats_" + companyId);
 						Optional<Map<String, Object>> optionalUserEntry = moduleEntryRepository
 								.findUserByEmailAddress("system@ngdesk.com", "Users_" + companyId);
 						if (optionalUserEntry.isPresent()) {
 							ObjectMapper mapper = new ObjectMapper();
 							pageLoad.setCountry(Locale.getDefault().getDisplayCountry());
+
 							Optional<ChatChannel> optionalChatChannel = chatChannelRepository
 									.findChannelByName(pageLoad.getChannelName(), "channels_chat_" + companyId);
 							if (optionalChatChannel.isPresent()) {
@@ -214,7 +215,7 @@ public class ChatService {
 				String companyId = company.getId();
 
 				Optional<Map<String, Object>> optionalChatEntry = moduleEntryRepository
-						.findBySessionUuid(sendChatTranscript.getSessionUUID(), "Chat_" + companyId);
+						.findBySessionUuid(sendChatTranscript.getSessionUUID(), "Chats_" + companyId);
 
 				if (optionalChatEntry.isPresent()) {
 					Map<String, Object> chatEntry = optionalChatEntry.get();
@@ -291,7 +292,7 @@ public class ChatService {
 	public void setStatusOffline(Company company, Optional<Map<String, Object>> optionalContactEntry,
 			Map<String, Object> chatEntry) {
 
-		Optional<Module> optionalChatModule = modulesRepository.findModuleByName("Chat", "modules_" + company.getId());
+		Optional<Module> optionalChatModule = modulesRepository.findModuleByName("Chats", "modules_" + company.getId());
 
 		if (optionalChatModule.isPresent()) {
 			if (optionalContactEntry.isPresent()) {

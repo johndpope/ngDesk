@@ -28,8 +28,8 @@ import com.ngdesk.websocket.dao.WebSocketService;
 import com.ngdesk.websocket.modules.dao.DataType;
 import com.ngdesk.websocket.modules.dao.Module;
 import com.ngdesk.websocket.modules.dao.ModuleField;
-import com.ngdesk.websocket.notification.dao.Notification;
 import com.ngdesk.websocket.notification.dao.AgentDetails;
+import com.ngdesk.websocket.notification.dao.Notification;
 
 @Component
 public class FindAgentAndAssign {
@@ -62,7 +62,7 @@ public class FindAgentAndAssign {
 
 		String customerRole = customer.get("ROLE").toString();
 
-		Optional<Module> optionalChatModule = modulesRepository.findModuleByName("Chat", "modules_" + company.getId());
+		Optional<Module> optionalChatModule = modulesRepository.findModuleByName("Chats", "modules_" + company.getId());
 		List<String> teamsWhoCanChat = company.getChatSettings().getTeamsWhoCanChat();
 		ConcurrentHashMap<String, UserSessions> sessionMap = sessionService.sessions.get(company.getCompanySubdomain());
 		String userId = null;
@@ -77,7 +77,7 @@ public class FindAgentAndAssign {
 			if (optionalUserEntry.isPresent() && chatStatus != null) {
 				if (chatStatus.equalsIgnoreCase("available")) {
 					Integer chatEntries = entryRepository.findByAgentAndCollectionName(userId.toString(),
-							"Chat_" + company.getId());
+							"Chats_" + company.getId());
 					if (chatEntries <= company.getChatSettings().getMaxChatPerAgent()) {
 
 						agentUserEntry = optionalUserEntry.get();
@@ -119,7 +119,7 @@ public class FindAgentAndAssign {
 			// Check the status and teams
 			if (isTeams) {
 				Optional<Map<String, Object>> optionalChatEntry = entryRepository
-						.findBySessionUuid(chatUser.getSessionUUID(), "Chat_" + company.getId());
+						.findBySessionUuid(chatUser.getSessionUUID(), "Chats_" + company.getId());
 				if (optionalChatEntry.isPresent()) {
 					Map<String, Object> existingChatEntry = optionalChatEntry.get();
 

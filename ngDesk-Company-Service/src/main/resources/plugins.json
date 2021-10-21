@@ -234,7 +234,7 @@
 					"SUBSCRIBED": false,
 					"MODULES": [
 						{
-							"NAME": "Chat"
+							"NAME": "Chats"
 						}
 					],
 					"FEATURES": []
