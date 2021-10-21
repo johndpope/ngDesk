@@ -88,7 +88,8 @@ export class RoleCreateComponent implements OnInit {
 					} else {
 						this.buttonText = 'Save';
 					}
-					this.modulesService.getModules().subscribe(
+					const allModules = this.modulesService.getModulesFromGraphql();
+					allModules.subscribe(
 						(modulesResponse: any) => {
 							this.modules = modulesResponse.MODULES;
 							let rolePermissions = [];
@@ -121,7 +122,8 @@ export class RoleCreateComponent implements OnInit {
 				}
 			);
 		} else {
-			this.modulesService.getModules().subscribe((modulesResponse: any) => {
+			const allModules = this.modulesService.getModulesFromGraphql();
+			allModules.subscribe((modulesResponse: any) => {
 				this.modules = modulesResponse.MODULES;
 				this.rolePermissions = [];
 				this.modules.forEach((module) => {
