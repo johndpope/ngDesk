@@ -7,6 +7,7 @@ import {
 	OnInit,
 	Optional,
 	ViewChild,
+	ElementRef,
 } from '@angular/core';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MatDialog } from '@angular/material/dialog';
@@ -69,6 +70,7 @@ import { indexOf } from 'lodash';
 import * as _moment from 'moment';
 import * as _momentTimeZone from 'moment-timezone';
 import { MatListOptionCheckboxPosition } from '@angular/material/list';
+import { ChatDataService } from './chat-data.service';
 
 @Component({
 	selector: 'app-render-detail-new',
@@ -211,6 +213,8 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	public isRenderedFromOneToMany = null;
 	public checkboxPosition: MatListOptionCheckboxPosition = 'before';
 
+	public isFilterActive: boolean = false;
+	public chatChannel: any = {};
 	constructor(
 		@Optional() @Inject(MAT_DIALOG_DATA) public modalData: any,
 		@Optional()
@@ -336,7 +340,8 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 		private conditionService: ConditionService,
 		private _snackBar: MatSnackBar,
 		private loaderService: LoaderService,
-		public passwordEncryptionDecryptionService: PasswordEncryptionDecryptionService
+		public passwordEncryptionDecryptionService: PasswordEncryptionDecryptionService,
+		private chatDataService: ChatDataService
 	) {
 		this.dataMaterialModule = this.renderDetailHelper.dataMaterialModule;
 		this.tinyMceConfig = this.renderDetailHelper.config;
@@ -462,7 +467,6 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 										this.customModulesService.disableFieldBasedOnFieldPermission(
 											permissions
 										);
-
 										if (!this.rolesService.role) {
 											this.rolesService.role = roleResponse;
 										}
@@ -472,6 +476,10 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 											this.entry = responseList[1].entry;
 										} else {
 											this.entry = responseList[1];
+										}
+
+										if (this.module['NAME'] == 'Chat') {
+											this.getChatChannelDetails();
 										}
 										this.formulaFields = this.module.FIELDS.filter((field) => {
 											return (
@@ -1005,6 +1013,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 							this.entry,
 							layoutType
 						);
+						console.log(this.entry['CHAT']);
 						this.template = predefinedTemplate;
 					});
 			}
@@ -1328,11 +1337,10 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 		if (index >= 0) {
 			const array = this.entry[arrayName];
 			array.splice(index, 1);
-			
+
 			// to set disabled and enabled content
 			trigger.openPanel();
 			trigger.closePanel();
-
 		}
 	}
 
@@ -1401,6 +1409,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 								if (discussionMessages) {
 									this.entry[discussionField.NAME] =
 										discussionMessages.entry[discussionField.NAME];
+									// console.log(this.entry['CHAT']);
 								}
 							});
 					}
@@ -1589,6 +1598,10 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 					(response: any) => {
 						this.customModulesService.discussionControls['MESSAGE'] +=
 							response.MESSAGE;
+
+						if (this.module['NAME'] == 'Chat') {
+							this.convertHTMLToPlainText();
+						}
 					},
 					(error: any) => {
 						console.log(error);
@@ -1597,6 +1610,9 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 		} else {
 			this.customModulesService.discussionControls['MESSAGE'] +=
 				premadeResponse.MESSAGE;
+		}
+		if (this.module['NAME'] == 'Chat') {
+			this.convertHTMLToPlainText();
 		}
 	}
 
@@ -3628,5 +3644,62 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 		}
 
 		return '';
+	}
+
+	// chat related code
+
+	public triggerFunction(event, chatmessage) {
+		// enterToSend is checkbox in chat for if "press enter to submit" is preferred
+		// this.fileSizeLimit = true;
+		if (event.shiftKey && event.key === 'Enter') {
+			chatmessage += '\n';
+		} else if (event.key === 'Enter') {
+			this.publishMessages(chatmessage);
+		}
+	}
+
+	public publishMessages(chatmessage) {
+		// this.chatMessage = this.messageTextBox.nativeElement.value;
+		let messageBody = chatmessage;
+		const linkifyStr = require('linkifyjs/string');
+		messageBody = linkifyStr(messageBody, {});
+		const htmlMsg = `<html> <head></head> <body>${messageBody}</body> </html>`;
+		const msgObj = {
+			agentDataID: this.userService.user.DATA_ID,
+			customerDataID: this.entry.REQUESTOR.DATA_ID,
+			sessionUUID: this.entry.SESSION_UUID,
+			discussionMessage: {
+				ATTACHMENTS: [],
+				COMPANY_SUBDOMAIN: this.userService.getSubdomain(),
+				ENTRY_ID: this.route.snapshot.params['dataId'],
+				MESSAGE: htmlMsg,
+				MESSAGE_ID: '',
+				MESSAGE_TYPE: 'MESSAGE',
+				MODULE_ID: this.module['MODULE_ID'],
+				SENDER: {
+					FIRST_NAME: this.userService.user.FIRST_NAME,
+					LAST_NAME: this.userService.user.LAST_NAME,
+					ROLE: this.userService.user.ROLE,
+					USER_UUID: this.userService.user.USER_UUID,
+				},
+			},
+		};
+		this.websocketService.publishMessage(msgObj);
+		this.customModulesService.discussionControls['MESSAGE'] = '';
+	}
+
+	public getChatChannelDetails() {
+		this.chatDataService.getChatChannel().subscribe((chatChannel: any) => {
+			this.chatChannel = chatChannel.CHAT_CHANNEL;
+		});
+	}
+	// to get Plain text from premade responces
+	// using for chats
+	public convertHTMLToPlainText() {
+		let tempHtml = document.createElement('div');
+		tempHtml.innerHTML =
+			this.customModulesService.discussionControls['MESSAGE'];
+		this.customModulesService.discussionControls['MESSAGE'] =
+			tempHtml.innerText || tempHtml.textContent;
 	}
 }
