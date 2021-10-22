@@ -22,7 +22,6 @@ export class SchedulesService {
 	public usersMap = {};
 	public userModule;
 	public newUserArr = [];
-
 	constructor(
 		private http: HttpClient,
 		private globals: AppGlobals,

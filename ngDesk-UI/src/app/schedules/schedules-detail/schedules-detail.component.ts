@@ -36,6 +36,9 @@ import {
 	switchMap,
 } from 'rxjs/operators';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { EscalationsService } from '../../escalations/escalations.service';
+import { NavigateToSchedulesService } from '../../navigateToEscalation.service';
+
 
 @Component({
 	selector: 'app-schedules-detail',
@@ -95,16 +98,13 @@ export class SchedulesDetailComponent implements OnInit, OnDestroy {
 		private loaderService: LoaderService,
 		private cacheService: CacheService,
 		private schedulesService: SchedulesService,
-		private dataService: DataApiService
+		private dataService: DataApiService,
+		private navigateToSchedulesService: NavigateToSchedulesService
 	) {}
 
 	public ngOnInit() {
 		this.scheduleForm = this.formBuilder.group({});
 		const scheduleId = this.route.snapshot.params['scheduleId'];
-		if (this.route.snapshot.queryParams['value']) {
-			this.paramValue = this.route.snapshot.queryParams['value'];
-		}
-		this.escalationId = this.route.snapshot.queryParams['id'];
 		const scheduleName = this.route.snapshot.queryParams['scheduleName'];
 		this.dayInView = new Date();
 		this.dayInViewEnd = new Date();
@@ -843,15 +843,11 @@ export class SchedulesDetailComponent implements OnInit, OnDestroy {
 						this.companiesService.trackEvent(`Created Schedule`, {
 							SCHEDULE_ID: response.SCHEDULE_ID,
 						});
-						if (this.paramValue == 'escNew') {
-							this.router.navigate(['escalations/new']);
-						} else if (
-							this.escalationId != '' &&
-							this.escalationId != undefined
-						) {
-							this.router.navigate([`escalations` + '/' + this.escalationId]);
+						if (this.navigateToSchedulesService.navigateToSchedules) {
+							this.navigateToSchedulesService.navigateToSchedules = false;							
+							return this.router.navigate([`escalations/new`])
 						} else {
-							this.router.navigate(['schedules']);
+							return this.router.navigate(['schedules']);
 						}
 					},
 					(error) => {

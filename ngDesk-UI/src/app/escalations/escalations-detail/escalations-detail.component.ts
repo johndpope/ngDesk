@@ -31,6 +31,7 @@ import {
 	switchMap,
 } from 'rxjs/operators';
 import { ModulesService } from '@src/app/modules/modules.service';
+import { NavigateToSchedulesService } from '../../navigateToEscalation.service';
 
 @Component({
 	selector: 'app-escalations-detail',
@@ -62,7 +63,6 @@ export class EscalationsDetailComponent implements OnInit {
 	public userCtrl = new FormControl();
 	public teamCtrl = new FormControl();
 	public scheduleCtrl = new FormControl();
-
 	private escalationId: string;
 
 	@ViewChild('teamInput') public teamInput: ElementRef<HTMLInputElement>;
@@ -85,7 +85,8 @@ export class EscalationsDetailComponent implements OnInit {
 		private cacheService: CacheService,
 		private http: HttpClient,
 		private globals: AppGlobals,
-		private modulesService: ModulesService
+		private modulesService: ModulesService,
+		private navigateToSchedulesService: NavigateToSchedulesService,
 	) {}
 
 	public ngOnInit() {
@@ -269,15 +270,10 @@ export class EscalationsDetailComponent implements OnInit {
 		}
 	}
 
-	public createSchedules() {
-		if (this.escalationId === 'new') {
-			this.router.navigate([`schedules/new`], {
-				queryParams: { value: 'escNew' },
-			});
-		} else {
-			this.router.navigate([`schedules/new`], {
-				queryParams: { id: this.escalationId },
-			});
+	public createSchedules() {		
+		if (this.schedulesInitial.length === 0) {
+				this.navigateToSchedulesService.navigateToSchedules = true;
+		 		this.router.navigate([`schedules/new`])
 		}
 	}
 
