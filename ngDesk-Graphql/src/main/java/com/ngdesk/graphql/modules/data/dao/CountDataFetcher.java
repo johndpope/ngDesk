@@ -66,7 +66,7 @@ public class CountDataFetcher implements DataFetcher<Integer> {
 					mapper.writeValueAsString(sessionManager.getSessionInfo().get("conditions")),
 					mapper.getTypeFactory().constructCollectionType(List.class, Condition.class));
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 

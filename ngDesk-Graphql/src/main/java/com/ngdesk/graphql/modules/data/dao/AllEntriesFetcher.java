@@ -75,7 +75,7 @@ public class AllEntriesFetcher implements DataFetcher<List<Map<String, Object>>>
 					mapper.writeValueAsString(sessionManager.getSessionInfo().get("conditions")),
 					mapper.getTypeFactory().constructCollectionType(List.class, Condition.class));
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 
@@ -179,17 +179,12 @@ public class AllEntriesFetcher implements DataFetcher<List<Map<String, Object>>>
 					} else {
 						return entryRepository.findEntriesWithSearch(entryIds, pageable, collectionName);
 					}
-
 				}
 
 			} else {
-
 				if (conditionsList != null && !conditionsList.isEmpty()) {
-					Optional<List<Map<String, Object>>> optionalEntriesList = entryRepository.findEntriesWithConditions(
-							conditionsList, pageable, collectionName, modules, moduleFields, teamIds);
-					if (optionalEntriesList.isPresent()) {
-						return optionalEntriesList.get();
-					}
+					return entryRepository.findEntriesForLayout(modules, moduleFields, conditionsList, pageable,
+							collectionName, teamIds, module);
 				}
 				return entryRepository.findEntries(pageable, teamIds, collectionName);
 

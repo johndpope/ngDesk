@@ -111,24 +111,9 @@ public class CustomModuleEntryRepositoryImpl implements CustomModuleEntryReposit
 		Criteria criteria = new Criteria();
 		if (!roleService.isSystemAdmin(authManager.getUserDetails().getRole())
 				&& !collectionName.equalsIgnoreCase("Teams_" + authManager.getUserDetails().getCompanyId())) {
-			if (collectionName.equalsIgnoreCase("Users_" + authManager.getUserDetails().getCompanyId())) {
-				criteria.andOperator(Criteria.where("TEAMS").in(teamIds),
-						Criteria.where("EMAIL_ADDRESS").ne("ghost@ngdesk.com"),
-						Criteria.where("EMAIL_ADDRESS").ne("system@ngdesk.com"),
-						buildConditions(modules, conditions, allFields));
-			} else {
-				criteria.andOperator(Criteria.where("TEAMS").in(teamIds),
-						buildConditions(modules, conditions, allFields));
-			}
-
+			criteria.andOperator(Criteria.where("TEAMS").in(teamIds), buildConditions(modules, conditions, allFields));
 		} else {
-			if (collectionName.equalsIgnoreCase("Users_" + authManager.getUserDetails().getCompanyId())) {
-				criteria.andOperator(Criteria.where("EMAIL_ADDRESS").ne("ghost@ngdesk.com"),
-						Criteria.where("EMAIL_ADDRESS").ne("system@ngdesk.com"),
-						buildConditions(modules, conditions, allFields));
-			} else {
-				criteria.andOperator(buildConditions(modules, conditions, allFields));
-			}
+			criteria.andOperator(buildConditions(modules, conditions, allFields));
 		}
 		Query query = new Query(criteria);
 		query.fields().exclude("PASSWORD");
@@ -861,30 +846,5 @@ public class CustomModuleEntryRepositoryImpl implements CustomModuleEntryReposit
 		Criteria criteria = Criteria.where("NAME").is("Public");
 		Query query = new Query(criteria);
 		return Optional.ofNullable(mongoOperations.findOne(query, Map.class, collectionName));
-	}
-
-	@Override
-	public Optional<List<Map<String, Object>>> findEntriesWithConditions(List<Condition> conditionsList,
-			Pageable pageable, String collectionName, List<Module> modules, List<ModuleField> fields,
-			Set<String> teamIds) {
-		Criteria criteria = new Criteria();
-		if (!collectionName.equalsIgnoreCase("Users_" + authManager.getUserDetails().getCompanyId())
-				&& !collectionName.equalsIgnoreCase("Teams_" + authManager.getUserDetails().getCompanyId())) {
-			criteria.andOperator(Criteria.where("DELETED").is(false), Criteria.where("EFFECTIVE_TO").is(null),
-					Criteria.where("TEAMS").in(teamIds), buildConditions(modules, conditionsList, fields));
-		}
-
-		Query query = new Query().with(pageable);
-		if (collectionName.equalsIgnoreCase("Users_" + authManager.getUserDetails().getCompanyId())) {
-			criteria.andOperator(Criteria.where("DELETED").is(false), Criteria.where("EFFECTIVE_TO").is(null),
-					Criteria.where("EMAIL_ADDRESS").ne("ghost@ngdesk.com"),
-					Criteria.where("EMAIL_ADDRESS").ne("system@ngdesk.com"), Criteria.where("TEAMS").in(teamIds),
-					buildConditions(modules, conditionsList, fields));
-			query.fields().exclude("PASSWORD");
-		}
-		query.addCriteria(criteria);
-		query.fields().exclude("META_DATA");
-		return Optional.ofNullable(
-				mongoOperations.find(query, (Class<Map<String, Object>>) (Class) Map.class, collectionName));
 	}
 }

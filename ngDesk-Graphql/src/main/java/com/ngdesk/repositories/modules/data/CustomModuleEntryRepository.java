@@ -95,8 +95,4 @@ public interface CustomModuleEntryRepository {
 
 	public Optional<Map<String, Object>> getPublicTeams(String collectionName);
 
-	public Optional<List<Map<String, Object>>> findEntriesWithConditions(List<Condition> conditionsList,
-			Pageable pageable, String collectionName, List<Module> modules, List<ModuleField> fields,
-			Set<String> teamIds);
-
 }
