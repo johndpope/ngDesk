@@ -37,8 +37,8 @@ public class CustomChatChannelRepositoryImpl implements CustomChatChannelReposit
 	public Optional<List<Map<String, Object>>> findEntriesByAgentAndStatus(String agentId, String collectionName) {
 
 		Criteria criteria = new Criteria();
-		criteria.andOperator(criteria.where("AGENTS").in(agentId), criteria.where("STATUS").is("Chatting"),
-				criteria.where("EFFECTIVE_TO").is(null), criteria.where("DELETED").is(false));
+		criteria.andOperator(criteria.where("AGENTS").in(agentId), criteria.where("EFFECTIVE_TO").is(null),
+				criteria.where("DELETED").is(false));
 		Query query = new Query(criteria);
 
 		return Optional.ofNullable(
