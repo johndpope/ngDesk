@@ -13,7 +13,7 @@ export class EmailListService {
 	constructor(private http: HttpClient, private globals: AppGlobals) {}
 	public getEmailList(emailListId) {
 		const query = `{
-				emailList: getEmailList(id: "${emailListId}") {
+			EMAIL_LIST: getEmailList(id: "${emailListId}") {
  					EMAIL_LIST_ID:emailListId
 					NAME:name
  					DESCRIPTION:description
@@ -31,11 +31,11 @@ export class EmailListService {
 
 	public getAllEmailLists(page, pageSize, sortBy, orderBy) {
 		const query = `{
-			emailLists: getEmailLists(pageNumber: ${page}, pageSize: ${pageSize}, sortBy: "${sortBy}", orderBy: "${orderBy}") {
+			EMAIL_LISTS: getEmailLists(pageNumber: ${page}, pageSize: ${pageSize}, sortBy: "${sortBy}", orderBy: "${orderBy}") {
 				NAME: name
 				EMAIL_LIST_ID: emailListId
 			}
-			totalCount: getEmailListCount
+			TOTAL_RECORDS: getEmailListCount
 		}`;
 
 		return this.http.post(`${this.globals.graphqlUrl}`, query);
@@ -80,7 +80,7 @@ export class EmailListService {
 
 	public getAllEntriesCountWithConditions(moduleId, filters) {
 		let query = `{
-      COUNT: count(moduleId: "${moduleId}")
+      TOTAL_RECORDS: count(moduleId: "${moduleId}")
     }`;
 
 		let payload: any = {

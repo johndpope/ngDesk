@@ -104,8 +104,8 @@ export class EmailListsMasterComponent implements OnInit {
 			.subscribe(
 				(response: any) => {
 					this.customTableService.setTableDataSource(
-						response.emailLists,
-						response.totalCount
+						response.EMAIL_LISTS,
+						response.TOTAL_RECORDS
 					);
 				},
 				(error: any) => {

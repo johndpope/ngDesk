@@ -105,7 +105,7 @@ export class EmailListsDetailComponent implements OnInit {
 		if (emailListId !== 'new') {
 			this.emailListService.getEmailList(emailListId).subscribe(
 				(emailListResponse: any) => {
-					emailListResponse = emailListResponse.emailList;
+					emailListResponse = emailListResponse.EMAIL_LIST;
 					this.emailList = this.convertEmailList(emailListResponse);
 					this.emailListForm.get('NAME').setValue(emailListResponse.NAME);
 					this.emailListForm
@@ -283,7 +283,7 @@ export class EmailListsDetailComponent implements OnInit {
 			.subscribe(
 				(emailListData: any) => {
 					if (emailListData[0].DATA !== null) {
-						if (emailListData[1].COUNT > 0) {
+						if (emailListData[1].TOTAL_RECORDS > 0) {
 							emailListData[0].DATA.forEach((element) => {
 								element['FIRST_NAME'] = element.CONTACT.FIRST_NAME;
 								element['LAST_NAME'] = element.CONTACT.LAST_NAME;
@@ -292,7 +292,7 @@ export class EmailListsDetailComponent implements OnInit {
 							this.allEmailListData = emailListData[0].DATA;
 							this.customTableService.setTableDataSource(
 								emailListData[0].DATA,
-								emailListData[1].COUNT
+								emailListData[1].TOTAL_RECORDS
 							);
 						}
 					}
