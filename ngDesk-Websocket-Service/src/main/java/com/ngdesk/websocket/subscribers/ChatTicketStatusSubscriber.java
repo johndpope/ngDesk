@@ -27,9 +27,14 @@ public class ChatTicketStatusSubscriber implements MessageListener {
 		try {
 			ChatTicketStatusMessage chatTicketStatusMessage = new ObjectMapper().readValue(message.toString(),
 					ChatTicketStatusMessage.class);
-			Optional<Company> optionalCompany = companiesRepository.findById(chatTicketStatusMessage.getCompanyId(), "companies");
+			Optional<Company> optionalCompany = companiesRepository.findById(chatTicketStatusMessage.getCompanyId(),
+					"companies");
 			if (optionalCompany.isPresent()) {
-				webSocketService.publishChatTicketStatus(optionalCompany.get(), chatTicketStatusMessage);
+				if (chatTicketStatusMessage.getType().equals("CLOSE_SESSION")) {
+					webSocketService.publishChatStatusForCloseChat(optionalCompany.get(), chatTicketStatusMessage);
+				} else {
+					webSocketService.publishChatTicketStatus(optionalCompany.get(), chatTicketStatusMessage);
+				}
 			}
 
 		} catch (Exception e) {

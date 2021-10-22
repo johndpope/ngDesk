@@ -7,17 +7,17 @@ public class SendChatTranscript {
 
 	private String subdomain;
 
-	private Boolean closeSession;
+	private Boolean sendTranscript;
 
 	public SendChatTranscript() {
 
 	}
 
-	public SendChatTranscript(String sessionUUID, String subdomain, Boolean closeSession) {
+	public SendChatTranscript(String sessionUUID, String subdomain, Boolean sendTranscript) {
 		super();
 		this.sessionUUID = sessionUUID;
 		this.subdomain = subdomain;
-		this.closeSession = closeSession;
+		this.sendTranscript = sendTranscript;
 	}
 
 	public String getSessionUUID() {
@@ -36,12 +36,12 @@ public class SendChatTranscript {
 		this.subdomain = subdomain;
 	}
 
-	public Boolean getCloseSession() {
-		return closeSession;
+	public Boolean getSendTranscript() {
+		return sendTranscript;
 	}
 
-	public void setCloseSession(Boolean closeSession) {
-		this.closeSession = closeSession;
+	public void setSendTranscript(Boolean sendTranscript) {
+		this.sendTranscript = sendTranscript;
 	}
 
 }
