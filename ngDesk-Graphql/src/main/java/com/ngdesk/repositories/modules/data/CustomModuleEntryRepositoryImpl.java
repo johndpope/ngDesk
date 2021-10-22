@@ -113,7 +113,7 @@ public class CustomModuleEntryRepositoryImpl implements CustomModuleEntryReposit
 				&& !collectionName.equalsIgnoreCase("Teams_" + authManager.getUserDetails().getCompanyId())) {
 			criteria.andOperator(Criteria.where("TEAMS").in(teamIds), buildConditions(modules, conditions, allFields));
 		} else {
-			criteria.andOperator(buildConditions(modules, conditions, allFields));
+			criteria = buildConditions(modules, conditions, allFields);
 		}
 		Query query = new Query(criteria);
 		query.fields().exclude("PASSWORD");

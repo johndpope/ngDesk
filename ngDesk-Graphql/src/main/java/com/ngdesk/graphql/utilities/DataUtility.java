@@ -563,7 +563,6 @@ public class DataUtility {
 				String functionReportCsvTemplate = "getCsvFor" + replacedModuleName + "(moduleId: String): ["
 						+ replacedModuleName + "]";
 
-
 				functionNamesBuilder.append(functionWidgetTemplate);
 				functionNamesBuilder.append(functionOneToManyTemplate);
 				functionNamesBuilder.append(functionOneToManyUnmappedTemplate);
