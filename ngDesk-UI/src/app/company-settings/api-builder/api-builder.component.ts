@@ -61,6 +61,8 @@ export class ApiBuilderComponent implements OnInit {
 	public tempLayouts: any = [];
 	public module: any;
 	public fieldsQuery: string;
+	private roleName: string = '';
+	public includeConditions = true;
 
 	constructor(
 		private globals: AppGlobals,
@@ -116,6 +118,7 @@ export class ApiBuilderComponent implements OnInit {
 			.getRole(this.usersService.user.ROLE)
 			.subscribe((role: any) => {
 				this.currentRole = role.ROLE_ID;
+				this.roleName = role.NAME;
 			});
 
 		this.rolesService.getRoles().subscribe(
@@ -181,14 +184,22 @@ export class ApiBuilderComponent implements OnInit {
 	public copyText() {
 		let val = '';
 		if (this.requestType === 'GET') {
+			val = `${this.curlCommand} ${this.httpEndpointGet} { DATA: get${this.moduleName} \(moduleId: "${this.moduleId}", layoutId: "${this.selectedListLayout}", pageNumber: ${this.page}, pageSize: ${this.pagesize}, sortBy: "${this.sort}", orderBy: "${this.order}"\) { ${this.fieldsQuery} } TOTAL_RECORDS: count\(moduleId: "${this.moduleId}", layoutId: "${this.selectedListLayout}"\)} & authentication_token=${this.apiKey}  -H 'Content-Type: text/plain'`;
+		} else if (
+			this.requestType === 'GET' &&
+			this.search &&
+			this.search !== '' &&
+			this.search !== null
+		) {
 			val = `${this.curlCommand} ${this.httpEndpointGet}
 			{
 				DATA: get${this.moduleName} (moduleId: "${this.moduleId}", layoutId: "${this.selectedListLayout}", pageNumber: ${this.page}, 
-				pageSize: ${this.pagesize}, sortBy: "${this.sort}", orderBy: "${this.order}") {
+				pageSize: ${this.pagesize}, sortBy: "${this.sort}", orderBy: "${this.order}", search: "${this.search}",includeConditions: ${this.includeConditions}) {
 					${this.fieldsQuery}
 				}
-				TOTAL_RECORDS: count(moduleId: "${this.moduleId}", layoutId: "${this.selectedListLayout}")
+				TOTAL_RECORDS: count(moduleId: "${this.moduleId}", layoutId: "${this.selectedListLayout}, search: "${this.search}",includeConditions: ${this.includeConditions})
 			}
+
 			&authentication_token=${this.apiKey}`;
 		} else {
 			val = `${this.curlCommand} ${this.httpEndpoint}${
@@ -375,7 +386,7 @@ export class ApiBuilderComponent implements OnInit {
 	public fieldQuery(listLayoutValue) {
 		let fieldsToShow;
 		fieldsToShow = listLayoutValue.COLUMN_SHOW.FIELDS;
-		this.fieldsQuery = 'DATA_ID: _id' + '\n';
+		this.fieldsQuery = 'DATA_ID: _id' + ' ';
 		fieldsToShow.forEach((fieldId) => {
 			if (fieldId.indexOf('.') !== -1) {
 				let output = { NAME: '', DISPLAY: '' };
@@ -384,7 +395,7 @@ export class ApiBuilderComponent implements OnInit {
 				for (let i = output.NAME.split('.').length; i > 1; i--) {
 					name = name + '}';
 				}
-				this.fieldsQuery = this.fieldsQuery + name + '\n';
+				this.fieldsQuery = this.fieldsQuery + name + ' ';
 				return;
 			}
 			const moduleField = this.module.find(
@@ -406,7 +417,7 @@ export class ApiBuilderComponent implements OnInit {
 						DATA_ID: _id
 						PRIMARY_DISPLAY_FIELD: ${primaryDisplayField.NAME}
 					}`;
-					this.fieldsQuery += relationshipQuery + '\n';
+					this.fieldsQuery += relationshipQuery + ' ';
 				} else if (moduleField.DATA_TYPE.DISPLAY === 'Phone') {
 					this.fieldsQuery +=
 						`${moduleField.NAME} {
@@ -414,9 +425,9 @@ export class ApiBuilderComponent implements OnInit {
 						DIAL_CODE
 						PHONE_NUMBER
 						COUNTRY_FLAG
-					}` + '\n';
+					}` + ' ';
 				} else {
-					this.fieldsQuery += moduleField.NAME + '\n';
+					this.fieldsQuery += moduleField.NAME + ' ';
 				}
 			}
 		});
@@ -451,11 +462,15 @@ export class ApiBuilderComponent implements OnInit {
 		}
 	}
 
+	public includeConditionsChanged(value) {
+		this.includeConditions = value;
+	}
+
 	public updateAPI() {
 		if (this.isGetByFilter) {
-			this.httpEndpointGet = `${this.globals.baseRestUrl}/modules/${this.moduleId}/layouts/${this.selectedListLayout}?`;
+			this.httpEndpointGet = `${this.globals.graphqlUrl}`;
 		} else {
-			this.httpEndpointGet = `${this.globals.baseRestUrl}/modules${this.moduleId}/data?`;
+			this.httpEndpointGet = `${this.globals.graphqlUrl}`;
 		}
 	}
 

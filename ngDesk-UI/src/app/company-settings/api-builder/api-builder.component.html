@@ -238,12 +238,18 @@
 								</mat-option>
 							</mat-select>
 						</mat-form-field>
-						<div fxLayoutGap="20px">
+						<div fxLayoutGap="20px" style="margin-bottom:15px">
 							<mat-label>{{'ORDER'|translate}}</mat-label>
 							<mat-radio-group fxLayoutGap="10px" [(ngModel)]="order">
 								<mat-radio-button value="asc">Asc</mat-radio-button>
 								<mat-radio-button value="desc">Desc</mat-radio-button>
 							</mat-radio-group>
+						</div>
+						<div>
+							<mat-slide-toggle color="primary" (ngModelChange)="includeConditionsChanged($event)" [(ngModel)]="includeConditions"
+								[ngModelOptions]="{standalone: true}" *ngIf="roleName !== 'Customer'">
+								{{'INCLUDE_CONDITIONS' | translate}}
+							</mat-slide-toggle>
 						</div>
 					</div>
 				</div>
@@ -256,7 +262,8 @@
             overflow: auto;padding: 16px;margin: 0px 14px 0px 14px;">
 							&nbsp;{{curlCommand}} {{httpEndpoint}}{{apiKey}}' -H 'Content-Type: application/json' -d '{{entry | json}}'
 						</div>
-						<div *ngIf="requestType ==='GET' && isGetByFilter" #curlDiv style="white-space: nowrap;border-radius: 3px;font-size: 85%;line-height: 1.45;
+
+						<div *ngIf="requestType ==='GET' && isGetByFilter && search === '' ; else elseBlockWithGetByFilter" #curlDiv style="white-space: nowrap;border-radius: 3px;font-size: 85%;line-height: 1.45;
             overflow: auto;padding: 16px;margin: 0px 14px 0px 14px;">
 							&nbsp;{{curlCommand}}
 							'{{httpEndpointGet}}' -H 'authentication_token:{{apiKey}}'
@@ -267,17 +274,50 @@
 							TOTAL_RECORDS: count(moduleId: "{{moduleId}}", layoutId: "{{selectedListLayout}}")
 							{{ '} '}}'
 						</div>
-						<div *ngIf="requestType ==='GET' && !isGetByFilter" #curlDiv style="white-space: nowrap;border-radius: 3px;font-size: 85%;line-height: 1.45;
+
+						<ng-template #elseBlockWithGetByFilter>
+							<div *ngIf="requestType ==='GET' && isGetByFilter && search && search !== '' && search !== null" #curlDiv style="white-space: nowrap;border-radius: 3px;font-size: 85%;line-height: 1.45;
+            overflow: auto;padding: 16px;margin: 0px 14px 0px 14px;">
+								&nbsp;{{curlCommand}}
+								'{{httpEndpointGet}}' -H 'authentication_token:{{apiKey}}'
+								'{{ '{'}} DATA : get{{moduleName}} (moduleId: "{{moduleId}}" , layoutId: "{{selectedListLayout}}", pageNumber: {{page}}
+								,pageSize: {{pagesize}}, sortBy: "{{sort}}", orderBy: "{{order}}" , search: "{{search}}",includeConditions:
+								{{includeConditions}}) {{ '{'}}
+								{{fieldsQuery}}
+								{{ '} '}}
+								TOTAL_RECORDS: count(moduleId: "{{moduleId}}", layoutId: "{{selectedListLayout}}", search: "{{search}}",includeConditions:
+								{{includeConditions}})
+								{{ '} '}}'
+							</div>
+						</ng-template>
+
+						<div *ngIf="requestType ==='GET' && !isGetByFilter && search === '' ; else elseBlockWithOutGetByFilter" #curlDiv style="white-space: nowrap;border-radius: 3px;font-size: 85%;line-height: 1.45;
             overflow: auto;padding: 16px;margin: 0px 14px 0px 14px;">
 							&nbsp;{{curlCommand}}
 							'{{httpEndpointGet}}' -H 'authentication_token:{{apiKey}}'
 							'{{ '{'}} DATA : get{{moduleName}} (moduleId: "{{moduleId}}" , layoutId: "{{selectedListLayout}}", pageNumber: {{page}}
-							,pageSize: {{pagesize}}, sortBy: "{{sort}}", orderBy: "{{order}}") ) {{ '{'}}
+							,pageSize: {{pagesize}}, sortBy: "{{sort}}", orderBy: "{{order}}") {{ '{'}}
 							{{fieldsQuery}}
 							{{ '} '}}
 							TOTAL_RECORDS: count(moduleId: "{{moduleId}}", layoutId: "{{selectedListLayout}}")
 							{{ '} '}}'
 						</div>
+						<ng-template #elseBlockWithOutGetByFilter>
+							<div *ngIf="requestType ==='GET' && !isGetByFilter && search && search !== '' && search !== null" #curlDiv style="white-space: nowrap;border-radius: 3px;font-size: 85%;line-height: 1.45;
+            overflow: auto;padding: 16px;margin: 0px 14px 0px 14px;">
+								&nbsp;{{curlCommand}}
+								'{{httpEndpointGet}}' -H 'authentication_token:{{apiKey}}'
+								'{{ '{'}} DATA : get{{moduleName}} (moduleId: "{{moduleId}}" , layoutId: "{{selectedListLayout}}", pageNumber: {{page}}
+								,pageSize: {{pagesize}}, sortBy: "{{sort}}", orderBy: "{{order}}") , search: "{{search}}",includeConditions:
+								{{includeConditions}}) {{ '{'}}
+								{{fieldsQuery}}
+								{{ '} '}}
+								TOTAL_RECORDS: count(moduleId: "{{moduleId}}", layoutId: "{{selectedListLayout}}", search: "{{search}}",includeConditions:
+								{{includeConditions}})
+								{{ '} '}}'
+							</div>
+						</ng-template>
+
 						<button mat-icon-button #tooltip="matTooltip" (mouseenter)="copyTooltip=translateService.instant('COPY_TO_CLIPBOARD')"
 							matTooltip="{{copyTooltip}}" matTooltipPosition="below" (click)="copyText();tooltip.show()">
 							<mat-icon>content_copy</mat-icon>
@@ -287,11 +327,11 @@
 						<label class="mat-h2">{{'REQUEST_BODY' | translate}}</label>
 						<pre style="word-break: break-all; white-space: pre-wrap;">{{entry | json}}</pre>
 					</div>
-					<div *ngIf="requestType ==='GET'">
+					<div *ngIf="requestType ==='GET' && search === ''; else elseBlock">
 						<label class="mat-h2">{{'QUERY' | translate}}</label>
 						<pre style="word-break: break-all; white-space: pre-wrap;">
 {{ '{'}} DATA : get{{moduleName}} (moduleId: "{{moduleId}}" , layoutId: "{{selectedListLayout}}", 
-	pageNumber: {{page}},pageSize: {{pagesize}}, sortBy: "{{sort}}", orderBy: "{{order}}") ) 
+	pageNumber: {{page}},pageSize: {{pagesize}}, sortBy: "{{sort}}", orderBy: "{{order}}") 
 	{{ '{'}}   		
 	{{fieldsQuery}}
 	{{ '} '}}
@@ -299,6 +339,22 @@
 {{ '} '}}
 						</pre>
 					</div>
+					<ng-template #elseBlock>
+						<div *ngIf="requestType ==='GET' && search && search !== '' && search !== null ">
+							<label class="mat-h2">{{'QUERY' | translate}}</label>
+							<pre style="word-break: break-all; white-space: pre-wrap;">
+	{{ '{'}} DATA : get{{moduleName}} (moduleId: "{{moduleId}}" , layoutId: "{{selectedListLayout}}", 
+		pageNumber: {{page}},pageSize: {{pagesize}}, sortBy: "{{sort}}", orderBy: "{{order}}", search: "{{search}}",includeConditions:
+		{{includeConditions}}) 
+		{{ '{'}}   		
+		{{fieldsQuery}}
+		{{ '} '}}
+		TOTAL_RECORDS: count(moduleId: "{{moduleId}}", layoutId: "{{selectedListLayout}}", search: "{{search}}",includeConditions:
+		{{includeConditions}}){{ '} '}}
+							</pre>
+						</div>
+					</ng-template>
+
 				</div>
 			</div>
 		</mat-card>
