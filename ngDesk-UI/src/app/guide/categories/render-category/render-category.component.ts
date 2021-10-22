@@ -57,40 +57,50 @@ export class RenderCategoryComponent implements OnInit {
 		const categoryId = this.route.snapshot.params['categoryId'];
 		this.guideService.getKbCategoryById(categoryId).subscribe(
 			(categoryResponse: any) => {
+				console.log('categoryResponse', categoryResponse);
 				this.category = this.convertCategory(categoryResponse);
-				this.guideService.getSections(this.category.categoryId).subscribe(
-					(sectionsResponse: any) => {
-						this.sections = this.sortByOrder(sectionsResponse.DATA);
-						this.sections.forEach((section, index) => {
-							section['ARTICLES'] = [];
-							this.guideService
-								.getArticlesBySection(section.SECTION_ID, true)
-								.subscribe(
-									(articlesResponse: any) => {
-										section['ARTICLES'] = this.sortByOrder(
-											articlesResponse.DATA.filter(
-												(article) =>
-													article.PUBLISH === true &&
-													article.SECTION === section.SECTION_ID
-											)
-										);
-										if (index === this.sections.length - 1) {
+				console.log('this.category', this.category);
+
+				this.guideService
+					.getKbSectionByCategoryId(this.category.categoryId)
+					.subscribe(
+						(sectionsResponse: any) => {
+							console.log('sectionsResponse', sectionsResponse);
+							this.sections = this.sortByOrder(sectionsResponse.DATA);
+							this.sections.forEach((section, index) => {
+								section['ARTICLES'] = [];
+								//	debugger;
+								this.guideService
+									.getArticlesBySectionId(
+										sectionsResponse.DATA[index].sectionId
+									)
+									.subscribe(
+										(articlesResponse: any) => {
+											console.log('articlesResponse', articlesResponse);
+											section['ARTICLES'] = this.sortByOrder(
+												articlesResponse.getArticlesBySectionId.filter(
+													(article) =>
+														article.PUBLISH === true &&
+														article.SECTION === section.sectionId
+												)
+											);
+											if (index === this.sections.length - 1) {
+												this.isLoading = false;
+											}
+										},
+										(articlesError: any) => {
 											this.isLoading = false;
 										}
-									},
-									(articlesError: any) => {
-										this.isLoading = false;
-									}
-								);
-						});
-						if (this.sections.length === 0) {
+									);
+							});
+							if (this.sections.length === 0) {
+								this.isLoading = false;
+							}
+						},
+						(sectionsError: any) => {
 							this.isLoading = false;
 						}
-					},
-					(sectionsError: any) => {
-						this.isLoading = false;
-					}
-				);
+					);
 			},
 			(categoryError: any) => {
 				this.isLoading = false;

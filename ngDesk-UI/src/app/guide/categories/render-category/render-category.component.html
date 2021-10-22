@@ -50,7 +50,7 @@
 				<div fxFlex="50" *ngFor="let section of sections; let i=index">
 					<mat-list>
 						<h3 mat-subheader class="mat-subheading-2" fxFlexFill [ngStyle]="{'font-size': '19px', 'color': '#000000'}">
-							<a class="link pointer" (click)="viewDetail(section, 'Sections')">{{section.NAME}}</a>
+							<a class="link pointer" (click)="viewDetail(section, 'Sections')">{{section.name}}</a>
 						</h3>
 						<div *ngIf="section['ARTICLES']" fxLayoutGap="20px">
 							<div *ngFor="let article of section['ARTICLES']; last as last">
