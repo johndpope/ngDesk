@@ -294,6 +294,8 @@ export class EmailListsDetailComponent implements OnInit {
 								emailListData[0].DATA,
 								emailListData[1].TOTAL_RECORDS
 							);
+						} else {
+							this.allEmailListData = [];
 						}
 					}
 				},
