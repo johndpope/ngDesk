@@ -934,6 +934,10 @@ export class ServiceCatalogueDetailComponent implements OnInit {
 		}
 	}
 
+	public createNewWorkflow() {
+		this.router.navigate([`modules/${this.moduleId}/workflows`]);
+	}
+
 	public setSelectedValues(catalogue) {
 		if (catalogue) {
 			catalogue.visibleTo.forEach((data) => {

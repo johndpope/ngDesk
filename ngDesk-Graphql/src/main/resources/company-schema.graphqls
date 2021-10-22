@@ -79,6 +79,7 @@ type Query {
 	getChatChannel(name: String): ChatChannel
 	getChatPrompts(channelName: String): [ChatPrompt]
 	getChatPrompt(channelName: String, promptId: String): ChatPrompt
+	getWorkflows(moduleId: String): [Workflow]
 	getKbArticle(articleId:String):Article
 	getAllKbArticles(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String, search: String):[Article]
 	getAllKbArticlesCount(search: String): Int
@@ -264,7 +265,7 @@ type ModuleField {
 	relationshipType: String
 	primaryDisplayField: ModuleField
 	relationshipField: ModuleField
-	module: Module
+	module: String
 	dataType: DataType
 	visibility: Boolean
 	required: Boolean
@@ -938,7 +939,6 @@ type Category{
     visibleTo: [Teams]
 }
 
-
 type Escalation{
 
    esclalationId: String
@@ -966,3 +966,9 @@ type EscalateTo{
   teamIds: [String]
 }
 
+type ListFormulaFieldValue{
+    FORMULA_NAME: String
+	VALUE: String
+
+}
+	

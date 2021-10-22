@@ -29,7 +29,6 @@ import com.ngdesk.commons.managers.AuthManager;
 import com.ngdesk.company.currency.dao.CurrencyService;
 import com.ngdesk.company.dns.dao.DNSService;
 import com.ngdesk.company.elastic.ElasticService;
-import com.ngdesk.company.knowledgebase.dao.DefaultKnowledgeBaseService;
 import com.ngdesk.company.module.dao.ModuleService;
 import com.ngdesk.company.module.data.DataService;
 import com.ngdesk.company.role.dao.RoleService;
@@ -62,9 +61,6 @@ public class CompanyAPI {
 
 	@Autowired
 	private CompanySecutiriesService companySecurityService;
-
-	@Autowired
-	DefaultKnowledgeBaseService knowledgeBaseService;
 
 	@Autowired
 	RoleService roleService;
@@ -132,6 +128,7 @@ public class CompanyAPI {
 
 		postPlugins();
 		postPredefinedTemplates();
+		elasticService.postElasticIndicesIfNotExists();
 		company.setEmailAddress(company.getEmailAddress().toLowerCase());
 		company.setCompanySubdomain(company.getCompanySubdomain().toLowerCase());
 		company.setInviteMessage(companyService.getInviteMessage(company));

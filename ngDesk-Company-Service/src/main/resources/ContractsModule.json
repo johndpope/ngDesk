@@ -1417,8 +1417,8 @@
       },
       {
          "FIELD_ID":"d0f8c4c1-972d-479e-b290-1effe508aacc",
-         "NAME":"RENEWAL_REMAINDER_DATE",
-         "DISPLAY_LABEL":"Renewal Remainder date",
+         "NAME":"RENEWAL_REMINDER_DATE",
+         "DISPLAY_LABEL":"Renewal Reminder date",
          "HELP_TEXT":"",
          "DEFAULT_VALUE":null,
          "LENGTH":0,

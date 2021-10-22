@@ -7,6 +7,6 @@ import com.ngdesk.report.company.dao.Company;
 
 public interface CustomCompanyRepository {
 
-	public Optional<List<Company>> findAllCompanies(String collectionName);
+	public List<Company> findAllCompanies(String collectionName);
 
 }

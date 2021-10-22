@@ -133,11 +133,15 @@ export class EscalationsDetailComponent implements OnInit {
 						.subscribe((responseList) => {
 							this.editAccess = responseList[0];
 							this.schedules = responseList[1].SCHEDULES;
-
+							this.schedules = this.schedules.sort((a, b) =>
+								a.name.localeCompare(b.name)
+							);
 							this.schedulesInitial = JSON.parse(
 								JSON.stringify(responseList[1].SCHEDULES)
 							);
-
+							this.schedulesInitial = this.schedulesInitial.sort((a, b) =>
+								a.name.localeCompare(b.name)
+							);
 							this.usersInitial = JSON.parse(JSON.stringify(responseList[2]));
 
 							this.teamsInitial = JSON.parse(

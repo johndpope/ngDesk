@@ -3,7 +3,7 @@ import {
 	FormBuilder,
 	FormControl,
 	FormGroup,
-	Validators
+	Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -12,7 +12,6 @@ import { BannerMessageService } from '../../../custom-components/banner-message/
 import { LoaderService } from '../../../custom-components/loader/loader.service';
 import { ModulesService } from '../../../modules/modules.service';
 import { config } from '../../../tiny-mce/tiny-mce-config';
-
 
 @Component({
 	selector: 'app-premade-response-detail',
@@ -134,7 +133,9 @@ export class PremadeResponseDetailComponent implements OnInit {
 
 		this.modulesService.getModules().subscribe(
 			(modulesResponse: any) => {
-				this.modules = modulesResponse.MODULES;
+				this.modules = modulesResponse.MODULES.sort((a, b) =>
+					a.NAME.localeCompare(b.NAME)
+				);
 				this.modules = this.modules.filter((module) =>
 					module.FIELDS.some(
 						(field) => field.DATA_TYPE.DISPLAY === 'Discussion'

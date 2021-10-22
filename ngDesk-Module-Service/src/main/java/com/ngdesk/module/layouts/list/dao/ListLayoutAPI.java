@@ -82,6 +82,7 @@ public class ListLayoutAPI {
 
 		listLayoutRepository.saveListLayout("modules_" + authManager.getUserDetails().getCompanyId(), listLayout,
 				moduleId, authManager.getUserDetails().getCompanyId());
+		listLayoutService.getFieldValidate(moduleId,listLayout.getColumnShow().getFields());
 
 		return listLayout;
 	}
@@ -110,6 +111,9 @@ public class ListLayoutAPI {
 
 		listLayoutRepository.saveListLayout("modules_" + authManager.getUserDetails().getCompanyId(), listLayout,
 				moduleId, authManager.getUserDetails().getCompanyId());
+		
+		listLayoutService.getFieldValidate(moduleId,listLayout.getColumnShow().getFields());
+
 
 		return listLayout;
 	}

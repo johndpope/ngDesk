@@ -1,0 +1,36 @@
+#!/usr/bin/env python3
+
+import urllib.request
+import argparse
+import sys
+
+import os
+
+if __name__ == '__main__':
+
+#     effective_user = os.getenv("SUDO_USER")
+#     effective_uid = int(os.getenv("SUDO_UID"))
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--action', '-a', help='build or update', choices=['build', 'update'], required=True)
+
+
+    action = ''
+
+
+    args = parser.parse_args()
+    if args.action:
+        action = args.action
+
+
+    with open(os.path.join('/tmp', '__init__.py'), 'w') as fp:
+        pass
+
+    res = urllib.request.urlretrieve('https://raw.githubusercontent.com/SubscribeIT/ngDesk/main/ngdesk_build_update.py', '/tmp/ngdesk_build_update.py')
+    sys.path.insert(1, '/tmp/')
+    import ngdesk_build_update
+    os.setuid(0)
+    if action == 'build':
+        ngdesk_build_update.build_ngdesk()
+    elif action == 'update':
+        ngdesk_build_update.update_ngdesk()
