@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
@@ -215,6 +216,19 @@ public class ModuleService {
 	public void isValidModuleName(String moduleName) {
 		if (!Character.isLetter(moduleName.charAt(0))) {
 			throw new BadRequestException("MODULE_NAME_MUST_BE_CHARACTER", null);
+		}
+		List<String> list = Streamable.of(
+				"Schedules", "Schedule", "DiscoveryMaps", "DiscoveryMap", "UnApprovedDiscoveryMaps",
+				"NormalizationRules", "NormalizationRule", "SamFileRule", "SamFileRules", "Dashboard", "Dashboards",
+				"ScoreCardValue", "DistinctValues", "Module", "Modules", "Currency", "EnterpriseSearch",
+				"EnterpriseSearchs", "RoleLayout", "RoleLayouts", "SignatureDocument", "SignatureDocuments", "Task",
+				"Tasks", "Notification", "Notifications", "Catalogues", "Catalogue", "Reports", "Report", "Form",
+				"Forms", "Sla", "Slas", "KbSection", "KbSections", "ChatChannel", "ChatChannels", "ChatPrompt",
+				"ChatPrompts", "Workflows", "Workflow", "KbArticle", "KbArticles", "KbCategory", "KbCategories",
+				"Escalation", "Escalations", "Currencies").toList();
+		if (list.contains(moduleName)) {
+			String[] vars = { moduleName };
+			throw new BadRequestException("DAO_VARIABLE_CANNOT_BE_GIVEN", vars);
 		}
 	}
 }
