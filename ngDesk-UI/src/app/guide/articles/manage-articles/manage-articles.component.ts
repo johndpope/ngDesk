@@ -150,6 +150,9 @@ export class ManageArticlesComponent implements OnInit {
 
 	private updateArticle(article, publish) {
 		article.PUBLISH = publish;
+		article.replace(/"([^"]+)":/g, function ($0, $1) {
+			return '"' + $1.toLowerCase() + '":';
+		});
 		this.articleApiService.putArticle(article).subscribe(
 			(response: any) => {
 				this.getArticles();

@@ -30,7 +30,7 @@ export class ArrangeArticlesComponent implements OnInit {
 
 				this.section = this.convertSection(sectionsResponse);
 				this.guideService
-					.getKbSectionByCategoryId(this.category.categoryId)
+					.getKbCategoryById(sectionsResponse.DATA.category.categoryId)
 					.subscribe(
 						(categoryResponse: any) => {
 							console.log('categoryResponse', categoryResponse);
