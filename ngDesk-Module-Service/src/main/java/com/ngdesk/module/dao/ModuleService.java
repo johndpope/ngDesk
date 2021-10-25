@@ -217,7 +217,7 @@ public class ModuleService {
 		if (!Character.isLetter(moduleName.charAt(0))) {
 			throw new BadRequestException("MODULE_NAME_MUST_BE_CHARACTER", null);
 		}
-		List<String> list = Streamable.of(
+		List<String> list = List.of(
 				"Schedules", "Schedule", "DiscoveryMaps", "DiscoveryMap", "UnApprovedDiscoveryMaps",
 				"NormalizationRules", "NormalizationRule", "SamFileRule", "SamFileRules", "Dashboard", "Dashboards",
 				"ScoreCardValue", "DistinctValues", "Module", "Modules", "Currency", "EnterpriseSearch",
@@ -225,10 +225,12 @@ public class ModuleService {
 				"Tasks", "Notification", "Notifications", "Catalogues", "Catalogue", "Reports", "Report", "Form",
 				"Forms", "Sla", "Slas", "KbSection", "KbSections", "ChatChannel", "ChatChannels", "ChatPrompt",
 				"ChatPrompts", "Workflows", "Workflow", "KbArticle", "KbArticles", "KbCategory", "KbCategories",
-				"Escalation", "Escalations", "Currencies").toList();
+				"Escalation", "Escalations", "Currencies");
 		if (list.contains(moduleName)) {
 			String[] vars = { moduleName };
 			throw new BadRequestException("DAO_VARIABLE_CANNOT_BE_GIVEN", vars);
 		}
+		
+	
 	}
 }
