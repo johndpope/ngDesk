@@ -6,6 +6,8 @@ import { ModulesService } from '../../../modules/modules.service';
 import { RolesService } from '../roles-old.service';
 import { BannerMessageService } from '@src/app/custom-components/banner-message/banner-message.service';
 import { TranslateService } from '@ngx-translate/core';
+import { RoleApiService } from '@ngdesk/role-api';
+
 @Component({
 	selector: 'app-field-permission',
 	templateUrl: './field-permission.component.html',
@@ -38,7 +40,8 @@ export class FieldPermissionComponent implements OnInit {
 		private router: Router,
 		private route: ActivatedRoute,
 		private bannerMessageService: BannerMessageService,
-		private translateService: TranslateService
+		private translateService: TranslateService,
+		private roleApiService: RoleApiService
 	) {}
 
 	public ngOnInit() {
@@ -157,7 +160,7 @@ export class FieldPermissionComponent implements OnInit {
 				permission.FIELD_PERMISSIONS = this.fieldPermissions;
 			}
 		});
-		this.rolesService.putRoleById(this.role.ROLE_ID, this.role).subscribe(
+		this.roleApiService.putRole(this.role).subscribe(
 			(putResponse: any) => {
 				this.router.navigate([`company-settings/roles/${this.roleId}`]);
 				this.bannerMessageService.successNotifications.push({
