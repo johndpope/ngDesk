@@ -2200,5 +2200,9 @@
 	"FORMULA_LABEL": "Formula Display Label",
 	"FORMULA_NAME": " Formula System Label",
 	"ADD_FORMULA": "Add Formula",
-	"LIST_FORMULA_CANNOT_BE_DROPPED": "List formula field cannot be dropped to sidebar"
+	"LIST_FORMULA_CANNOT_BE_DROPPED": "List formula field cannot be dropped to sidebar",
+	"CUSTOMER_DETAILS":"Customer Details",
+	"FULL_NAME":"Full Name",
+	"CHAT_HISTORY":"Chat History",
+	"SAVED_TEMPLATES":"Saved Templates"
 }
