@@ -8,51 +8,43 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class EscalateTo {
 
-	@JsonProperty("SCHEDULE_IDS")
-	@Field("SCHEDULE_IDS")
-	private List<String> scheduleIds;
-
-	@JsonProperty("USER_IDS")
-	@Field("USER_IDS")
-	private List<String> userIds;
-
-	@JsonProperty("TEAM_IDS")
-	@Field("TEAM_IDS")
-	private List<String> teamIds;
+	private List<String> schedules;
+	private List<String> users;
+	private List<String> teams;
 
 	public EscalateTo() {
 
 	}
 
-	public EscalateTo(List<String> scheduleIds, List<String> userIds, List<String> teamIds) {
+	public EscalateTo(List<String> schedules, List<String> users, List<String> teams) {
 		super();
-		this.scheduleIds = scheduleIds;
-		this.userIds = userIds;
-		this.teamIds = teamIds;
+		this.schedules = schedules;
+		this.users = users;
+		this.teams = teams;
 	}
 
-	public List<String> getScheduleIds() {
-		return scheduleIds;
+	public List<String> getSchedules() {
+		return schedules;
 	}
 
-	public void setScheduleIds(List<String> scheduleIds) {
-		this.scheduleIds = scheduleIds;
+	public void setSchedules(List<String> schedules) {
+		this.schedules = schedules;
 	}
 
-	public List<String> getUserIds() {
-		return userIds;
+	public List<String> getUsers() {
+		return users;
 	}
 
-	public void setUserIds(List<String> userIds) {
-		this.userIds = userIds;
+	public void setUsers(List<String> users) {
+		this.users = users;
 	}
 
-	public List<String> getTeamIds() {
-		return teamIds;
+	public List<String> getTeams() {
+		return teams;
 	}
 
-	public void setTeamIds(List<String> teamIds) {
-		this.teamIds = teamIds;
+	public void setTeams(List<String> teams) {
+		this.teams = teams;
 	}
 
 }

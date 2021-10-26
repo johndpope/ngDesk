@@ -3,69 +3,57 @@ package com.ngdesk.escalation.dao;
 import java.util.List;
 
 import javax.validation.constraints.NotNull;
-
-import org.springframework.data.mongodb.core.mapping.Field;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ngdesk.commons.annotations.CustomNotNull;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 
 public class EscalateTo {
 
 	@Schema(description = "List of schedule Ids")
-	@JsonProperty("SCHEDULE_IDS")
-	@Field("SCHEDULE_IDS")
-	@CustomNotNull(message = "NOT_NULL", values = { "SCHEDULE_IDS" })
-	private List<String> scheduleIds;
-	
+	@CustomNotNull(message = "NOT_NULL", values = { "SCHEDULES" })
+	private List<String> schedules;
 	@Schema(description = "List of user Ids")
-	@JsonProperty("USER_IDS")
-	@Field("USER_IDS")
-	@CustomNotNull(message = "NOT_NULL", values = { "USER_IDS" })
-	private List<String> userIds;
+	@CustomNotNull(message = "NOT_NULL", values = { "USERS" })
+	private List<String> users;
 
 	@Schema(description = "List of team Ids")
-	@JsonProperty("TEAM_IDS")
-	@Field("TEAM_IDS")
-	@CustomNotNull(message = "NOT_NULL", values = { "TEAM_IDS" })
-	private List<String> teamIds;
+	@CustomNotNull(message = "NOT_NULL", values = { "TEAMS" })
+	private List<String> teams;
 
 	public EscalateTo() {
 
 	}
 
-	public EscalateTo(@NotNull(message = "SCHEDULE_IDS_NOT_NULL") List<String> scheduleIds,
-			@NotNull(message = "USER_IDS_NOT_NULL") List<String> userIds,
-			@NotNull(message = "TEAMS_IDS_NOT_NULL") List<String> teamIds) {
+	public EscalateTo(@NotNull(message = "SCHEDULES_NOT_NULL") List<String> schedules,
+			@NotNull(message = "USERS_NOT_NULL") List<String> users,
+			@NotNull(message = "TEAMS_NOT_NULL") List<String> teams) {
 		super();
-		this.scheduleIds = scheduleIds;
-		this.userIds = userIds;
-		this.teamIds = teamIds;
+		this.schedules = schedules;
+		this.users = users;
+		this.teams = teams;
 	}
 
-	public List<String> getScheduleIds() {
-		return scheduleIds;
+	public List<String> getUsers() {
+		return users;
 	}
 
-	public void setScheduleIds(List<String> scheduleIds) {
-		this.scheduleIds = scheduleIds;
+	public void setUsers(List<String> users) {
+		this.users = users;
 	}
 
-	public List<String> getUserIds() {
-		return userIds;
+	public List<String> getSchedules() {
+		return schedules;
 	}
 
-	public void setUserIds(List<String> userIds) {
-		this.userIds = userIds;
+	public void setSchedules(List<String> schedules) {
+		this.schedules = schedules;
 	}
 
-	public List<String> getTeamIds() {
-		return teamIds;
+	public List<String> getTeams() {
+		return teams;
 	}
 
-	public void setTeamIds(List<String> teamIds) {
-		this.teamIds = teamIds;
+	public void setTeams(List<String> teams) {
+		this.teams = teams;
 	}
 
 }

@@ -18,13 +18,15 @@ public class CustomEscalationRepositoryImpl implements CustomEscalationRepositor
 
 	@Override
 	public Optional<Escalation> findEscalationByName(String name, String collectionName) {
-		return Optional.ofNullable(mongoOperations.findOne(new Query(Criteria.where("NAME").is(name)), Escalation.class, collectionName));
+		return Optional.ofNullable(
+				mongoOperations.findOne(new Query(Criteria.where("name").is(name)), Escalation.class, collectionName));
 	}
 
 	@Override
-	public Optional<Escalation> findOtherEscalationsWithDuplicateName(String name, String escalationId, String collectionName) {
+	public Optional<Escalation> findOtherEscalationsWithDuplicateName(String name, String escalationId,
+			String collectionName) {
 		Criteria criteria = new Criteria();
-		criteria.andOperator(Criteria.where("NAME").is(name), Criteria.where("_id").ne(escalationId));
+		criteria.andOperator(Criteria.where("name").is(name), Criteria.where("_id").ne(escalationId));
 		return Optional.ofNullable(mongoOperations.findOne(new Query(criteria), Escalation.class, collectionName));
 	}
 

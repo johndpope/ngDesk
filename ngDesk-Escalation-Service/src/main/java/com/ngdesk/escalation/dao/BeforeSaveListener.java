@@ -16,48 +16,51 @@ public class BeforeSaveListener extends AbstractMongoEventListener<Escalation> {
 
 	@Autowired
 	EscalationRepository escalationRepository;
-	
+
 	@Override
 	public void onBeforeConvert(BeforeConvertEvent<Escalation> event) {
 		Escalation escalation = event.getSource();
-		
+
 		if (escalation.getId() == null) {
 			// NEW ESCALATION
-			Optional<Escalation> optional = escalationRepository.findEscalationByName(escalation.getName(), event.getCollectionName());
+			Optional<Escalation> optional = escalationRepository.findEscalationByName(escalation.getName(),
+					event.getCollectionName());
 			if (optional.isPresent()) {
-				String[] variables = {"ESCALATION_NAME","NAME"};
-				throw new BadRequestException("DAO_VARIABLE_ALREADY_EXISTS", variables) ;
+				String[] variables = { "ESCALATION_NAME", "NAME" };
+				throw new BadRequestException("DAO_VARIABLE_ALREADY_EXISTS", variables);
 			}
-			
+
 		} else {
 			// EXISTING ESCALATION CHECK IF ANY OTHER ESCALATION HAS SAME NAME
-			Optional<Escalation> optional = escalationRepository.findOtherEscalationsWithDuplicateName(escalation.getName(), escalation.getId(), event.getCollectionName());
+			Optional<Escalation> optional = escalationRepository.findOtherEscalationsWithDuplicateName(
+					escalation.getName(), escalation.getId(), event.getCollectionName());
 			if (optional.isPresent()) {
-				String[] variables = {"ESCALATION_NAME","NAME"};
-				throw new BadRequestException("DAO_VARIABLE_ALREADY_EXISTS", variables) ;
+				String[] variables = { "ESCALATION_NAME", "NAME" };
+				throw new BadRequestException("DAO_VARIABLE_ALREADY_EXISTS", variables);
 			}
 		}
-		
+
 		if (!validateEscalationRuleOrder(escalation)) {
 			throw new BadRequestException("ESCALATION_RULE_ORDER_INVALID", null);
 		}
-		
+
 		if (!validateEscalationRuleMinutes(escalation)) {
 			throw new BadRequestException("ESCALATION_RULE_MINS_AFTER_INVALID", null);
 		}
-		
-		for (EscalationRule rule: escalation.getRules()) {
+
+		for (EscalationRule rule : escalation.getRules()) {
 			EscalateTo escalateTo = rule.getEscalateTo();
-			
-			if (escalateTo.getScheduleIds() == null && escalateTo.getTeamIds() == null && escalateTo.getUserIds() == null) {
+
+			if (escalateTo.getSchedules() == null && escalateTo.getTeams() == null && escalateTo.getUsers() == null) {
 				throw new BadRequestException("ESCALATE_TO_REQUIRED", null);
 			}
-			
-			if (escalateTo.getScheduleIds().size() == 0 && escalateTo.getUserIds().size() == 0 && escalateTo.getTeamIds().size() == 0) {
+
+			if (escalateTo.getSchedules().size() == 0 && escalateTo.getTeams().size() == 0
+					&& escalateTo.getUsers().size() == 0) {
 				throw new BadRequestException("ESCALATE_TO_REQUIRED", null);
 			}
 		}
-		
+
 	}
 
 	public boolean validateEscalationRuleOrder(Escalation escalation) {
@@ -69,7 +72,7 @@ public class BeforeSaveListener extends AbstractMongoEventListener<Escalation> {
 		}
 		return true;
 	}
-	
+
 	public boolean validateEscalationRuleMinutes(Escalation escalation) {
 		List<EscalationRule> rules = escalation.getRules();
 		for (int i = 0; i < rules.size(); i++) {
