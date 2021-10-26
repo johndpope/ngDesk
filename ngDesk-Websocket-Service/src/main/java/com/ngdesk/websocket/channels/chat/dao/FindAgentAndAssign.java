@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -58,33 +59,42 @@ public class FindAgentAndAssign {
 	RedisTemplate<String, ChatNotification> redisTemplateForChatNotification;
 
 	public void assignChatToAgent(Company company, ChatUser chatUser, Map<String, Object> customer) {
-		String companyId = company.getId();
 
+		String companyId = company.getId();
 		String customerRole = customer.get("ROLE").toString();
 
 		Optional<Module> optionalChatModule = modulesRepository.findModuleByName("Chats", "modules_" + company.getId());
 		List<String> teamsWhoCanChat = company.getChatSettings().getTeamsWhoCanChat();
 		ConcurrentHashMap<String, UserSessions> sessionMap = sessionService.sessions.get(company.getCompanySubdomain());
+
 		String userId = null;
-
 		Map<String, Object> agentUserEntry = null;
-		for (String keySet : sessionMap.keySet()) {
+		List<String> agentsWhoCanChat = new ArrayList<String>();
 
-			userId = keySet;
-			UserSessions userSessions = sessionMap.get(userId);
-			String chatStatus = userSessions.getChatStatus();
+		for (String key : sessionMap.keySet()) {
+			userId = key;
 			Optional<Map<String, Object>> optionalUserEntry = entryRepository.findById(userId, "Users_" + companyId);
-			if (optionalUserEntry.isPresent() && chatStatus != null) {
-				if (chatStatus.equalsIgnoreCase("available")) {
-					Integer chatEntries = entryRepository.findByAgentAndCollectionName(userId.toString(),
-							"Chats_" + company.getId());
-					if (chatEntries <= company.getChatSettings().getMaxChatPerAgent()) {
-
-						agentUserEntry = optionalUserEntry.get();
-					}
+			if (optionalUserEntry.isPresent()) {
+				Integer chatEntries = entryRepository.findByAgentAndCollectionName(userId.toString(),
+						"Chats_" + company.getId());
+				UserSessions userSessions = sessionMap.get(key);
+				String chatStatus = userSessions.getChatStatus();
+				if (chatEntries < company.getChatSettings().getMaxChatPerAgent() && chatStatus != null
+						&& chatStatus.equalsIgnoreCase("available")) {
+					agentsWhoCanChat.add(key);
 				}
 			}
 		}
+
+		if (agentsWhoCanChat.size() > 0) {
+			int max = agentsWhoCanChat.size();
+			int min = 1;
+			int randomNumber = new Random().nextInt((max - min) + 1) + min;
+			userId = agentsWhoCanChat.get(randomNumber - 1);
+			Optional<Map<String, Object>> optionalUserEntry = entryRepository.findById(userId, "Users_" + companyId);
+			agentUserEntry = optionalUserEntry.get();
+		}
+
 		if (agentUserEntry != null) {
 			Optional<Map<String, Object>> optionalContactEntry = entryRepository
 					.findById(agentUserEntry.get("CONTACT").toString(), "Contacts_" + companyId);

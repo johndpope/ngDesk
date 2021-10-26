@@ -27,6 +27,7 @@ import com.ngdesk.graphql.categories.dao.CategoryDataFetcher;
 import com.ngdesk.graphql.channels.email.dao.ChannelDataFetcher;
 import com.ngdesk.graphql.chat.channel.dao.ChatChannelDataFetcher;
 import com.ngdesk.graphql.chat.channel.dao.ChatChannelsDataFetcher;
+import com.ngdesk.graphql.chat.channel.dao.ChatEntryByAgentDataFetcher;
 import com.ngdesk.graphql.chat.channel.dao.ChatPromptDataFetcher;
 import com.ngdesk.graphql.chat.channel.dao.ChatPromptsDataFetcher;
 import com.ngdesk.graphql.company.dao.AuthorizedUsersForChatDataFetcher;
@@ -156,7 +157,6 @@ public class DataUtility {
 	@Value("classpath:schedules-schema.graphqls")
 	private Resource scheduleSchemaResource;
 
-	
 	@Autowired
 	ModulesRepository modulesRepository;
 
@@ -502,7 +502,7 @@ public class DataUtility {
 
 	@Autowired
 	ListFormulaDataFetcher listFormulaDatafetcher;
-	
+
 	@Autowired
 	EscalationDataFetcher escalationDataFetcher;
 
@@ -511,9 +511,12 @@ public class DataUtility {
 
 	@Autowired
 	EscalationsCountDataFetcher escalationCountDataFetcher;
-	
+
 	@Autowired
 	AuthorizedUsersForChatDataFetcher authorizedUsersForChatFetcher;
+
+	@Autowired
+	ChatEntryByAgentDataFetcher chatEntryByAgentDataFetcher;
 
 	public GraphQL createGraphQlObject(Company company) throws IOException {
 		try {
@@ -966,12 +969,14 @@ public class DataUtility {
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getEscalations", escalationsDataFetcher));
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getEscalationsCount", escalationCountDataFetcher));
 
-		
-		//CHAT
-		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getAuthorizedUserForChat", authorizedUsersForChatFetcher));
+		// CHAT
+		builder.type("Query",
+				typeWiring -> typeWiring.dataFetcher("getAuthorizedUserForChat", authorizedUsersForChatFetcher));
 		builder.type("AuthorizedUsersForChat", typeWiring -> typeWiring.dataFetcher("users", relationshipDataFetcher));
-		
-		
+
+		builder.type("Query",
+				typeWiring -> typeWiring.dataFetcher("getEntriesByAgentAndStatus", chatEntryByAgentDataFetcher));
+
 		for (Module module : modules) {
 			String name = "get" + module.getName().replaceAll("\\s+", "_");
 			builder.type("Query", typeWiring -> typeWiring.dataFetcher(name, allEntriesFetcher));

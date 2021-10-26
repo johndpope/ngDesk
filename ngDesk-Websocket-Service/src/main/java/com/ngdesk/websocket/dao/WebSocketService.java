@@ -542,4 +542,40 @@ public class WebSocketService {
 
 	}
 
+	public void publishChatStatusForCloseChat(Company company, ChatTicketStatusMessage chatTicketStatusMessage) {
+
+		ObjectMapper mapper = new ObjectMapper();
+		if (sessionService.sessions.containsKey(company.getCompanySubdomain())) {
+
+			ConcurrentHashMap<String, UserSessions> sessions = sessionService.sessions
+					.get(company.getCompanySubdomain());
+			Optional<Map<String, Object>> optinalChatEntry = entryRepository
+					.findBySessionUuid(chatTicketStatusMessage.getSessionUUId(), "Chats_" + company.getId());
+			String userId = null;
+			if (optinalChatEntry.isPresent()) {
+				Map<String, Object> chatEntry = optinalChatEntry.get();
+				List<String> agents = (List<String>) chatEntry.get("AGENTS");
+				userId = agents.get(0);
+			}
+			ConcurrentLinkedQueue<WebSocketSession> userSessions = sessions.get(userId).getSessions();
+
+			Optional<Map<String, Object>> optionalUser = entryRepository.findEntryById(userId,
+					"Users_" + company.getId());
+			if (optionalUser.isPresent()) {
+				userSessions.forEach(session -> {
+					try {
+						String payload = mapper.writeValueAsString(chatTicketStatusMessage);
+						session.sendMessage(new TextMessage(payload));
+					} catch (JsonProcessingException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					} catch (IllegalStateException e) {
+						e.printStackTrace();
+						userSessions.remove(session);
+					}
+				});
+			}
+		}
+	}
 }

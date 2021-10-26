@@ -89,6 +89,7 @@ type Query {
 	getEscalations(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [Escalation]
 	getEscalationsCount: Int
 	getAuthorizedUserForChat: AuthorizedUsersForChat 
+	getEntriesByAgentAndStatus: [Chats]
 	MODULE_FUNCTIONS_REPLACE
 }
 

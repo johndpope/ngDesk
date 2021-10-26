@@ -223,7 +223,7 @@ public class ChatService {
 					Optional<Map<String, Object>> optionalContactEntry = moduleEntryRepository
 							.findById(chatEntry.get("REQUESTOR").toString(), "Contacts_" + companyId);
 
-					if (!sendChatTranscript.getCloseSession()) {
+					if (sendChatTranscript.getSendTranscript()) {
 						String messageChat = "";
 						String companyTimezone = "UTC";
 						if (!company.getTimezone().isEmpty()) {
@@ -276,11 +276,19 @@ public class ChatService {
 								String body = chatTranscipt;
 								sendMail.send(to, from, subject, body);
 								setStatusOffline(company, optionalContactEntry, chatEntry);
+								ChatTicketStatusMessage chatTicketStatusMessage = new ChatTicketStatusMessage(companyId,
+										sendChatTranscript.getSessionUUID(), "CLOSE_SESSION",
+										"CHAT_ENDED_FROM_CHATTING", "CUSTOMER_HAS_ENDED_THE_CHAT");
+								addToChatTicketStatusQueue(chatTicketStatusMessage);
 
 							}
 						}
 					} else {
 						setStatusOffline(company, optionalContactEntry, chatEntry);
+						ChatTicketStatusMessage chatTicketStatusMessage = new ChatTicketStatusMessage(companyId,
+								sendChatTranscript.getSessionUUID(), "CLOSE_SESSION", "CHAT_ENDED_FROM_CHATTING",
+								"CUSTOMER_HAS_ENDED_THE_CHAT");
+						addToChatTicketStatusQueue(chatTicketStatusMessage);
 					}
 				}
 			}
@@ -308,6 +316,10 @@ public class ChatService {
 			}
 		}
 
+	}
+
+	public void addToChatTicketStatusQueue(ChatTicketStatusMessage chatTicketStatusMessage) {
+		redisTemplate.convertAndSend("chat_ticket_status", chatTicketStatusMessage);
 	}
 
 }
