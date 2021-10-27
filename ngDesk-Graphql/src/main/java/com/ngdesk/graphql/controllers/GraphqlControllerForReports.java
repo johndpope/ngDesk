@@ -49,7 +49,7 @@ public class GraphqlControllerForReports {
 	ControllerService controllerService;
 
 	@PostMapping(value = "/reports/data")
-	public ResponseEntity query(@RequestBody DataInput reportDataInput) {
+	public ResponseEntity query(@RequestBody ReportInput reportDataInput) {
 
 		String companyId = authManager.getUserDetails().getCompanyId();
 		ExecutionInput executionInput = ExecutionInput.newExecutionInput().query(reportDataInput.getQuery())
