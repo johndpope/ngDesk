@@ -9,7 +9,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +16,11 @@ import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ngdesk.commons.Global;
 import com.ngdesk.commons.mail.SendMail;
 import com.ngdesk.company.dao.Company;
+import com.ngdesk.company.dao.Phone;
 import com.ngdesk.company.role.dao.Role;
 import com.ngdesk.repositories.CompanyRepository;
 import com.ngdesk.repositories.ModuleEntryRepository;
@@ -28,13 +29,14 @@ import com.ngdesk.repositories.RoleRepository;
 @Component
 public class DailyCompanySignup {
 
-	private final Logger log = LoggerFactory.getLogger(DailyCompanySignup.class);
-
 	@Autowired
 	Global global;
 
 	@Autowired
 	SendMail sendMail;
+
+	@Autowired
+	private Environment env;
 
 	@Autowired
 	RoleRepository roleRepository;
@@ -45,15 +47,12 @@ public class DailyCompanySignup {
 	@Autowired
 	ModuleEntryRepository moduleEntryRepository;
 
-	@Autowired
-	private Environment env;
+	private final Logger log = LoggerFactory.getLogger(DailyCompanySignup.class);
 
 	@Scheduled(fixedRate = 6000)
 	// 13:00 UTC = 9AM EST
 	// @Scheduled(cron = "0 0 13 * * *")
-
 	public void signupCompanies() {
-		System.out.println("entering********");
 		log.trace("Enter DailyCompanySignup.signupCompanies()");
 		try {
 			List<String> emailIds = new ArrayList<String>();
@@ -99,7 +98,7 @@ public class DailyCompanySignup {
 			log.trace("Total number of companies" + companyList.size());
 
 			for (Company company : companyList) {
-				System.out.println("company===" + company);
+
 				String companyId = company.getCompanyId().toString();
 
 				List<Role> rolesCollection = roleRepository.findAllRolesByCollectionName("roles_" + companyId).get();
@@ -112,16 +111,14 @@ public class DailyCompanySignup {
 
 				// GET FIRST SYSTEM ADMIN
 				Map<String, Object> firstAdminUser = usersCollection.stream()
-						.filter(users -> users.get("ROLE").toString().equalsIgnoreCase("SystemAdmin")).findFirst()
-						.orElse(null);
+						.filter(users -> users.get("ROLE").toString().equals(systemAdminId)).findFirst().orElse(null);
 				String contactId = firstAdminUser.get("CONTACT").toString();
 
 				List<Map<String, Object>> contactCollection = moduleEntryRepository
 						.getAllEntries("Contacts_" + companyId).get();
 
 				Map<String, Object> contactModule = contactCollection.stream()
-						.filter(contacts -> contacts.get("_id").toString().equalsIgnoreCase(contactId)).findFirst()
-						.orElse(null);
+						.filter(contacts -> contacts.get("_id").toString().equals(contactId)).findFirst().orElse(null);
 
 				// ADDING INDIVIDUAL ROWS
 				totalDetails = totalDetails + buildCompanyDetailsRow(company, firstAdminUser, contactModule);
@@ -162,10 +159,11 @@ public class DailyCompanySignup {
 
 			String firstName = firstAdminUser.get("FIRST_NAME").toString();
 			String lastName = firstAdminUser.get("LAST_NAME").toString();
+			ObjectMapper mapper = new ObjectMapper();
+			Phone phone = mapper.readValue(mapper.writeValueAsString(contactModule.get("PHONE_NUMBER")), Phone.class);
 			if (user != null) {
 				// GET PHONE NUMBER FROM COMPANY
-				String phoneNumber = ((Document) contactModule.get("PHONE_NUMBER")).getString("DIAL_CODE")
-						+ ((Document) contactModule.get("PHONE_NUMBER")).getString("PHONE_NUMBER");
+				String phoneNumber = phone.getDialCode() + phone.getPhoneNumber();
 
 				String pricingTire;
 				if (company.getPricing() == null) {
