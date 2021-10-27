@@ -9,4 +9,6 @@ public interface CustomWorkflowRepository {
 
 	public Optional<List<Workflow>> findWorkflowsToDisplay(String companyId, String moduleId, String collectionName);
 
+	public Optional<List<Workflow>> findAllWorkflowsInCompany(String companyId, String moduleId, String collectionName);
+
 }

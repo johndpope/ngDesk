@@ -439,7 +439,7 @@ public class CustomModuleEntryRepositoryImpl implements CustomModuleEntryReposit
 					if (backendDatatype.equalsIgnoreCase("Float")) {
 						isFloat = true;
 					}
-					switch (condition.getOpearator()) {
+					switch (condition.getOperator()) {
 					case "EQUALS_TO":
 						if (isInteger) {
 							criterias.add(Criteria.where(fieldName).is(Integer.parseInt(value)));
@@ -847,5 +847,4 @@ public class CustomModuleEntryRepositoryImpl implements CustomModuleEntryReposit
 		Query query = new Query(criteria);
 		return Optional.ofNullable(mongoOperations.findOne(query, Map.class, collectionName));
 	}
-
 }

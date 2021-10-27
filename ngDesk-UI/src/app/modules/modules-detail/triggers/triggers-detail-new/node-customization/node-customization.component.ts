@@ -80,8 +80,8 @@ export class NodeCustomizationComponent implements OnInit {
 	public updateEntryFieldsInitials: any[] = [];
 	public errors;
 	public approverConditionValue = [
-		'Any Approver',
 		'All Approvers',
+		'Any Approver',
 		'Minimum No. of Approvals',
 	];
 	public disableEntry: boolean;

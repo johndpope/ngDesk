@@ -49,6 +49,9 @@ import com.ngdesk.graphql.datatypes.DateTime;
 import com.ngdesk.graphql.discoverymap.dao.DiscoveryMapDataFetcher;
 import com.ngdesk.graphql.discoverymap.dao.DiscoveryMapsDataFetcher;
 import com.ngdesk.graphql.discoverymap.dao.UnApprovedDiscoveryMapsDataFetcher;
+import com.ngdesk.graphql.emailList.dao.EmailListCountFetcher;
+import com.ngdesk.graphql.emailList.dao.EmailListDataFetcher;
+import com.ngdesk.graphql.emailList.dao.EmailListsDataFetcher;
 import com.ngdesk.graphql.enterprisesearch.dao.EnterpriseSearchCountFetcher;
 import com.ngdesk.graphql.enterprisesearch.dao.EnterpriseSearchDataFetcher;
 import com.ngdesk.graphql.enterprisesearch.dao.EnterpriseSearchesDataFetcher;
@@ -131,6 +134,7 @@ import com.ngdesk.graphql.userplugin.dao.UserPluginsByStatusDataFetcher;
 import com.ngdesk.graphql.workflow.NodeDataFetcher;
 import com.ngdesk.graphql.workflow.NodesExecutedDataFetcher;
 import com.ngdesk.graphql.workflow.StageDataFetcher;
+import com.ngdesk.graphql.workflow.WorkflowEntriesDataFetcher;
 import com.ngdesk.graphql.workflow.WorkflowEntryDataFetcher;
 import com.ngdesk.graphql.workflow.WorkflowInstanceDataFetcher;
 import com.ngdesk.graphql.workflow.WorkflowInstanceFetcher;
@@ -489,6 +493,9 @@ public class DataUtility {
 	SectionsCountFetcher sectionsCountFetcher;
 
 	@Autowired
+	WorkflowEntriesDataFetcher workflowEntriesDataFetcher;
+
+	@Autowired
 	SectionCategoryDataFetcher sectionCategoryDataFetcher;
 
 	@Autowired
@@ -517,6 +524,15 @@ public class DataUtility {
 
 	@Autowired
 	ChatEntryByAgentDataFetcher chatEntryByAgentDataFetcher;
+
+	@Autowired
+	EmailListDataFetcher emailListDataFetcher;
+
+	@Autowired
+	EmailListsDataFetcher emailListsDataFetcher;
+
+	@Autowired
+	EmailListCountFetcher emailListCountFetcher;
 
 	public GraphQL createGraphQlObject(Company company) throws IOException {
 		try {
@@ -934,8 +950,9 @@ public class DataUtility {
 		builder.type("Sender", typeWiring -> typeWiring.dataFetcher("ROLE", roleDataFetcher));
 
 		// WORKFLOW
-		builder.type("Workflow", typeWiring -> typeWiring.dataFetcher("getWorkflow", workflowEntryDataFetcher));
-		builder.type("Workflow", typeWiring -> typeWiring.dataFetcher("module", moduleDataFetcher));
+		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getWorkflow", workflowEntryDataFetcher));
+		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getWorkflows", workflowEntriesDataFetcher));
+		builder.type("Workflow", typeWiring -> typeWiring.dataFetcher("module", roleLayoutModuleDataFetcher));
 		builder.type("Workflow", typeWiring -> typeWiring.dataFetcher("createdBy", entryDataFetcher));
 		builder.type("Workflow", typeWiring -> typeWiring.dataFetcher("lastUpdated", entryDataFetcher));
 
@@ -976,6 +993,13 @@ public class DataUtility {
 
 		builder.type("Query",
 				typeWiring -> typeWiring.dataFetcher("getEntriesByAgentAndStatus", chatEntryByAgentDataFetcher));
+
+		// EMAIL_LIST
+		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getEmailList", emailListDataFetcher));
+		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getEmailLists", emailListsDataFetcher));
+		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getEmailListCount", emailListCountFetcher));
+		builder.type("EmailList", typeWiring -> typeWiring.dataFetcher("createdBy", entryDataFetcher));
+		builder.type("EmailList", typeWiring -> typeWiring.dataFetcher("lastUpdatedBy", entryDataFetcher));
 
 		for (Module module : modules) {
 			String name = "get" + module.getName().replaceAll("\\s+", "_");
