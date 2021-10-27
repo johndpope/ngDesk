@@ -73,9 +73,6 @@ export class FileUploadComponent implements OnInit {
 					headers: [],
 				};
 			};
-		} else {
-			this.errorMessage =
-				'This file is not supported, Please try to upload a csv file';
 		}
 	}
 
