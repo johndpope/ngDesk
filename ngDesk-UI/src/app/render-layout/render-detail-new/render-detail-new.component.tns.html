@@ -1,21 +1,23 @@
-<ActionBar [title]="mobileTitle"  >
-	<NavigationButton  visibility="{{ (isIosDevice ||  previousUrl === '/sidebar')  ? 'visible' :'collapse'}}" text=" " android.systemIcon="ic_menu_back" (tap)="onMobileBackButton()" ></NavigationButton>
-	
-	<ActionItem  visibility="{{!noMobileLayoutPresent && !isMobileDataLoading && currentMobileView ==='DetailLayout' ? 'visible' : 'collapse'}}" ios.position="right" android.position="right" (tap)="editMobileEntry()"  (touch)="editMobileEntry()" >
-	<label style="color: white;font-size: 15;"  text="{{'EDIT' | translate}}" 
-	></label>
+<ActionBar [title]="mobileTitle">
+	<NavigationButton visibility="{{ (isIosDevice ||  previousUrl === '/sidebar')  ? 'visible' :'collapse'}}" text=" "
+		android.systemIcon="ic_menu_back" (tap)="onMobileBackButton()"></NavigationButton>
+
+	<ActionItem
+		visibility="{{!noMobileLayoutPresent && !isMobileDataLoading && currentMobileView ==='DetailLayout' ? 'visible' : 'collapse'}}"
+		ios.position="right" android.position="right" (tap)="editMobileEntry()" (touch)="editMobileEntry()">
+		<label style="color: white;font-size: 15;" text="{{'EDIT' | translate}}"></label>
 	</ActionItem>
 
-	<ActionItem visibility="{{ !isMobileDataLoading && currentMobileView ==='EditLayout' ? 'visible' : 'collapse' }}" ios.position="right"  
-	android.position="right"  (tap)="preSaveForMobile()"  (touch)="preSaveForMobile()">
-		<label style="color: #ffffff;font-size: 15;"   text="{{'SAVE' | translate}}" ></label>
+	<ActionItem visibility="{{ !isMobileDataLoading && currentMobileView ==='EditLayout' ? 'visible' : 'collapse' }}" ios.position="right"
+		android.position="right" (tap)="preSaveForMobile()" (touch)="preSaveForMobile()">
+		<label style="color: #ffffff;font-size: 15;" text="{{'SAVE' | translate}}"></label>
 	</ActionItem>
 
 </ActionBar>
 <!-- <StackLayout > -->
-	
-	
-	<!-- <StackLayout style="margin-left: 15px;" *ngIf= " !isMobileDataLoading && mobileTitle === 'Chat'" height="100%" >
+
+
+<!-- <StackLayout style="margin-left: 15px;" *ngIf= " !isMobileDataLoading && mobileTitle === 'Chats'" height="100%" >
 		
 		<ScrollView height="90%" id="myScoller" ios.pagingEnabled="true"  >
 			<StackLayout id="stackContainer"  >
@@ -64,150 +66,204 @@
 				</StackLayout>
 	</StackLayout> -->
 
-	<ActivityIndicator  [busy]="isMobileDataLoading "></ActivityIndicator>
-		<StackLayout style="text-align: center;padding-top: 350;" *ngIf="saving && !noMobileLayoutPresent">
-			<ActivityIndicator  [busy]="saving"></ActivityIndicator>
-		</StackLayout>
-		<ScrollView  *ngIf= "!noMobileLayoutPresent && !isMobileDataLoading &&  currentMobileView ==='DetailLayout'">
-			<StackLayout  *ngIf= " !isMobileDataLoading && mobileTitle !== 'Chat'">
+<ActivityIndicator [busy]="isMobileDataLoading "></ActivityIndicator>
+<StackLayout style="text-align: center;padding-top: 350;" *ngIf="saving && !noMobileLayoutPresent">
+	<ActivityIndicator [busy]="saving"></ActivityIndicator>
+</StackLayout>
+<ScrollView *ngIf="!noMobileLayoutPresent && !isMobileDataLoading &&  currentMobileView ==='DetailLayout'">
+	<StackLayout *ngIf=" !isMobileDataLoading && mobileTitle !== 'Chats'">
 		<StackLayout *ngFor="let field of mobileFieldsArray;let fieldIndex =index">
-			<label *ngIf="field.DISPLAY_LABEL === 'Messages'" (tap)="hideMobileDiscussion()" visibility="{{ showMobileDiscussion? 'visible' : 'collapse'}}" style="font-size:20;text-align: right;margin-right:40px;margin-top: 20px;color: #a7a4a4;" class="far" text="&#xf057;" ></label>
-			<TextView [(ngModel)]="customModulesService.discussionControls['MESSAGE']" *ngIf="field.DISPLAY_LABEL === 'Messages'" visibility="{{ showMobileDiscussion ? 'visible' : 'collapse'}}" style="height: 80;" hint="Type your reply here" (focus)="onTextViewFocusMobile()"></TextView>
-			<Button *ngIf="field.DISPLAY_LABEL === 'Messages' && !showMobileDiscussion" text="{{'REPLY'| translate}}" class ="-outline -rounded-sm"  (tap)="setMobileDiscussion()"></Button>
+			<label *ngIf="field.DISPLAY_LABEL === 'Messages'" (tap)="hideMobileDiscussion()"
+				visibility="{{ showMobileDiscussion? 'visible' : 'collapse'}}"
+				style="font-size:20;text-align: right;margin-right:40px;margin-top: 20px;color: #a7a4a4;" class="far" text="&#xf057;"></label>
+			<TextView [(ngModel)]="customModulesService.discussionControls['MESSAGE']" *ngIf="field.DISPLAY_LABEL === 'Messages'"
+				visibility="{{ showMobileDiscussion ? 'visible' : 'collapse'}}" style="height: 80;" hint="Type your reply here"
+				(focus)="onTextViewFocusMobile()"></TextView>
+			<Button *ngIf="field.DISPLAY_LABEL === 'Messages' && !showMobileDiscussion" text="{{'REPLY'| translate}}" class="-outline -rounded-sm"
+				(tap)="setMobileDiscussion()"></Button>
 			<!-- <StackLayout style="text-align: center;" orientation="horizontal"> -->
-				<Button *ngIf="field.DISPLAY_LABEL === 'Messages' && showMobileDiscussion"  text="{{'SEND'| translate}}" class ="-outline -rounded-sm" [isEnabled]="sendButtonEnabledForMobile" (tap)="sendMessageMobile()"></Button>
-				<!-- <Button text="{{'CANCEL'| translate}}" class ="-outline -rounded-sm" [isEnabled]="sendButtonEnabled" style="width: 40%;" (tap)="hideDiscussion()"></Button> -->
+			<Button *ngIf="field.DISPLAY_LABEL === 'Messages' && showMobileDiscussion" text="{{'SEND'| translate}}" class="-outline -rounded-sm"
+				[isEnabled]="sendButtonEnabledForMobile" (tap)="sendMessageMobile()"></Button>
+			<!-- <Button text="{{'CANCEL'| translate}}" class ="-outline -rounded-sm" [isEnabled]="sendButtonEnabled" style="width: 40%;" (tap)="hideDiscussion()"></Button> -->
 			<!-- </StackLayout> -->
 
 
-			<GridLayout columns="auto,auto" rows="auto,auto" >
-			<label row="0" col="0" visibility="{{ field.VISIBILITY? 'collapse' : 'visible'}}" style="height: 40;margin-left: 40px;font-size: 16;font-weight: bold;" text="{{field.DISPLAY_LABEL}}" textWrap="true" ></label>
-			<label row="0" col="1" *ngIf="field.DISPLAY_LABEL === 'Messages' && !changeMobileMessageType" (tap)="onChangeMobileMessageType($event)" visibility="{{ field.VISIBILITY? 'collapse' : 'visible'}}" style="font-size:20;font-weight: bold; margin-left: 5%;" class="fas" text="&#xf0d7;" ></label>
-			<label row="0" col="1" *ngIf="field.DISPLAY_LABEL === 'Messages' && changeMobileMessageType" (tap)="onChangeMobileMessageType($event)" visibility="{{ field.VISIBILITY? 'collapse' : 'visible'}}" style="font-size:20;font-weight: bold; margin-left: 5%;" class="fas" text="&#xf0d8;" ></label>
+			<GridLayout columns="auto,auto" rows="auto,auto">
+				<label row="0" col="0" visibility="{{ field.VISIBILITY? 'collapse' : 'visible'}}"
+					style="height: 40;margin-left: 40px;font-size: 16;font-weight: bold;" text="{{field.DISPLAY_LABEL}}" textWrap="true"></label>
+				<label row="0" col="1" *ngIf="field.DISPLAY_LABEL === 'Messages' && !changeMobileMessageType"
+					(tap)="onChangeMobileMessageType($event)" visibility="{{ field.VISIBILITY? 'collapse' : 'visible'}}"
+					style="font-size:20;font-weight: bold; margin-left: 5%;" class="fas" text="&#xf0d7;"></label>
+				<label row="0" col="1" *ngIf="field.DISPLAY_LABEL === 'Messages' && changeMobileMessageType"
+					(tap)="onChangeMobileMessageType($event)" visibility="{{ field.VISIBILITY? 'collapse' : 'visible'}}"
+					style="font-size:20;font-weight: bold; margin-left: 5%;" class="fas" text="&#xf0d8;"></label>
 			</GridLayout>
-			
-	
-			<label visibility="{{ field.VISIBILITY? 'collapse' : 'visible'}}"  *ngIf="field.DATA_TYPE.DISPLAY !== 'Discussion' && field.DATA_TYPE.DISPLAY !== 'Date/Time' && field.DATA_TYPE.DISPLAY !== 'Relationship' && field.DATA_TYPE.DISPLAY !== 'Checkbox'" style="height: 40;margin-left: 40px;font-size: 13;" text="{{entry[field.NAME]}}" textWrap="true"></label>
-			
-			<label visibility="{{ field.VISIBILITY? 'collapse' : 'visible'}}"  *ngIf="field.DATA_TYPE.DISPLAY === 'Date/Time'" style="height: 40;margin-left: 40px;font-size: 13;" text="{{entry[field.NAME] | dateFormat: 'medium'}}" textWrap="true" ></label>
 
-			<label visibility="{{ field.VISIBILITY? 'collapse' : 'visible'}}" *ngIf="field.DATA_TYPE.DISPLAY === 'Relationship'" style="height: 40;margin-left: 40px;font-size: 13;" text="{{relationshipDetailValuesForMobile[field.NAME]}}" textWrap="true" ></label>
 
-			<StackLayout visibility="{{ field.VISIBILITY? 'collapse' : 'visible'}}"  *ngIf="field.DATA_TYPE.DISPLAY === 'Checkbox' " orientation="horizontal" >
-				<CheckBox android:marginleft="5" isUserInteractionEnabled="false" class="checkbox"    *ngIf="field.DATA_TYPE.DISPLAY === 'Checkbox' "   checked="{{entry[field.NAME]}}"></CheckBox>
+			<label visibility="{{ field.VISIBILITY? 'collapse' : 'visible'}}"
+				*ngIf="field.DATA_TYPE.DISPLAY !== 'Discussion' && field.DATA_TYPE.DISPLAY !== 'Date/Time' && field.DATA_TYPE.DISPLAY !== 'Relationship' && field.DATA_TYPE.DISPLAY !== 'Checkbox'"
+				style="height: 40;margin-left: 40px;font-size: 13;" text="{{entry[field.NAME]}}" textWrap="true"></label>
+
+			<label visibility="{{ field.VISIBILITY? 'collapse' : 'visible'}}" *ngIf="field.DATA_TYPE.DISPLAY === 'Date/Time'"
+				style="height: 40;margin-left: 40px;font-size: 13;" text="{{entry[field.NAME] | dateFormat: 'medium'}}" textWrap="true"></label>
+
+			<label visibility="{{ field.VISIBILITY? 'collapse' : 'visible'}}" *ngIf="field.DATA_TYPE.DISPLAY === 'Relationship'"
+				style="height: 40;margin-left: 40px;font-size: 13;" text="{{relationshipDetailValuesForMobile[field.NAME]}}"
+				textWrap="true"></label>
+
+			<StackLayout visibility="{{ field.VISIBILITY? 'collapse' : 'visible'}}" *ngIf="field.DATA_TYPE.DISPLAY === 'Checkbox' "
+				orientation="horizontal">
+				<CheckBox android:marginleft="5" isUserInteractionEnabled="false" class="checkbox" *ngIf="field.DATA_TYPE.DISPLAY === 'Checkbox' "
+					checked="{{entry[field.NAME]}}"></CheckBox>
 			</StackLayout>
 			<!-- <StackLayout>
 			<CheckBox ios:marginTop="15" [formControl]="this.formControlsMobile[field.NAME]"   *ngIf="field.DATA_TYPE.DISPLAY === 'Checkbox' " text="{{field.DISPLAY_LABEL}}" checked="{{entry[field.NAME]}}"></CheckBox>
 			</StackLayout> -->
 			<StackLayout class="overlay" *ngIf="changeMobileMessageType && field.DISPLAY_LABEL === 'Messages'">
-				<StackLayout  class="dialog-wrapper"   *ngFor=" let option of mobileMessageTypeOption;let itemIndex=index" >
+				<StackLayout class="dialog-wrapper" *ngFor=" let option of mobileMessageTypeOption;let itemIndex=index">
 					<StackLayout *ngIf="itemIndex === 0" style="height: 1;background-color: #e0dede;padding-top: 10px;"></StackLayout>
-					<label class="{{itemIndex === selectedOptionIndexForMobile ? 'Selected' : 'Unselected' }}"  style="padding:13;" text="{{option}}" (tap)="changeMobileMessageDisplay(option,itemIndex)"></label>
+					<label class="{{itemIndex === selectedOptionIndexForMobile ? 'Selected' : 'Unselected' }}" style="padding:13;" text="{{option}}"
+						(tap)="changeMobileMessageDisplay(option,itemIndex)"></label>
 					<StackLayout *ngIf="itemIndex === 3 " style="height: 1;background-color: #e0dede;padding-top: 10px;"></StackLayout>
 					<!-- <label style="padding:15;" text="Internal Comments" ></label>
 					<label style="padding:15;" text="All" ></label> -->
 				</StackLayout>
 			</StackLayout>
-				<StackLayout  *ngIf="field.DATA_TYPE.BACKEND === 'String' && field.DATA_TYPE.DISPLAY === 'Discussion'">
-					<StackLayout visibility="{{ field.VISIBILITY ? 'collapse' : 'visible'}}"  *ngFor="let message of entry.MESSAGES.slice().reverse(); let i=index">
-						<StackLayout  *ngIf="message.MESSAGE_TYPE === messageShowTypeForMobile" >
-							<StackLayout  *ngIf="field.DATA_TYPE.BACKEND === 'String' && field.DATA_TYPE.DISPLAY === 'Discussion'" rows="*" columns="*,*,auto">
-								<label row="0" col="0" *ngIf="field.DATA_TYPE.BACKEND === 'String' && field.DATA_TYPE.DISPLAY === 'Discussion'" style="height: 40;margin-left: 40px;font-size: 13;" text="{{message.SENDER.FIRST_NAME}}"></label>
-								<label  row="0" col="3"  *ngIf="field.DATA_TYPE.BACKEND === 'String' && field.DATA_TYPE.DISPLAY === 'Discussion'" style="height: 40;margin-left: 40px;font-size: 13;" text="{{message.DATE_CREATED | dateFormat:'medium'}}"></label>
-							</StackLayout>
-								<StackLayout *ngIf="message.MESSAGE_TYPE !== 'INTERNAL_COMMENTS'">
-									<!-- <label style="margin-left: 40px;margin-right: 40px;font-size: 15;line-height: 0;" textWrap="true"   text="{{message.MESSAGE}}"></label>  -->
-									<HtmlView style="margin-left: 40px;margin-right: 40px;font-size: 15;line-height: 0;" textWrap="true"   html="{{message.MESSAGE}}"></HtmlView> 
-									<StackLayout style="height: 1;background-color: #e0dede;padding-top: 10px;"></StackLayout>
-								</StackLayout>
-								<StackLayout  *ngIf="message.MESSAGE_TYPE === 'INTERNAL_COMMENTS' && currentRole.NAME !== 'Customers'">
-									<HtmlView style="margin-left: 40px;margin-right: 40px;font-size: 15;line-height: 0;" textWrap="true" html="{{message.MESSAGE}}"></HtmlView>
-									<!-- <label style="margin-left: 40px;margin-right: 40px;font-size: 15;line-height: 0;" textWrap="true"   text="{{message.MESSAGE}}"></label>  -->
-									<StackLayout style="height: 1;background-color: #e0dede;padding-top: 10px;"></StackLayout>
-								</StackLayout>
+			<StackLayout *ngIf="field.DATA_TYPE.BACKEND === 'String' && field.DATA_TYPE.DISPLAY === 'Discussion'">
+				<StackLayout visibility="{{ field.VISIBILITY ? 'collapse' : 'visible'}}"
+					*ngFor="let message of entry.MESSAGES.slice().reverse(); let i=index">
+					<StackLayout *ngIf="message.MESSAGE_TYPE === messageShowTypeForMobile">
+						<StackLayout *ngIf="field.DATA_TYPE.BACKEND === 'String' && field.DATA_TYPE.DISPLAY === 'Discussion'" rows="*"
+							columns="*,*,auto">
+							<label row="0" col="0" *ngIf="field.DATA_TYPE.BACKEND === 'String' && field.DATA_TYPE.DISPLAY === 'Discussion'"
+								style="height: 40;margin-left: 40px;font-size: 13;" text="{{message.SENDER.FIRST_NAME}}"></label>
+							<label row="0" col="3" *ngIf="field.DATA_TYPE.BACKEND === 'String' && field.DATA_TYPE.DISPLAY === 'Discussion'"
+								style="height: 40;margin-left: 40px;font-size: 13;" text="{{message.DATE_CREATED | dateFormat:'medium'}}"></label>
 						</StackLayout>
-						<StackLayout  *ngIf="messageShowTypeForMobile === 'ALL'" >
-							visible				<StackLayout  *ngIf="field.DATA_TYPE.BACKEND === 'String' && field.DATA_TYPE.DISPLAY === 'Discussion'" rows="*" columns="*,*,auto">
-								<label row="0" col="0" *ngIf="field.DATA_TYPE.BACKEND === 'String' && field.DATA_TYPE.DISPLAY === 'Discussion'" style="height: 40;margin-left: 40px;font-size: 13;" text="{{message.SENDER.FIRST_NAME}}"></label>
-								<label  row="0" col="3"  *ngIf="field.DATA_TYPE.BACKEND === 'String' && field.DATA_TYPE.DISPLAY === 'Discussion'" style="height: 40;margin-left: 40px;font-size: 13;" text="{{message.DATE_CREATED | dateFormat:'medium'}}"></label>
-							</StackLayout>
-								<StackLayout  *ngIf="message.MESSAGE_TYPE !== 'INTERNAL_COMMENTS'">
-									<!-- <label style="margin-left: 40px;margin-right: 40px;font-size: 15;line-height: 0;" textWrap="true"   text="{{message.MESSAGE}}"></label>  -->
-									<HtmlView style="margin-left: 40px;margin-right: 40px;font-size: 15;line-height: 0;" textWrap="true"   html="{{message.MESSAGE}}"></HtmlView> 
-									<StackLayout style="height: 1;background-color: #e0dede;padding-top: 10px;"></StackLayout>
-								</StackLayout>
-								<StackLayout  *ngIf="message.MESSAGE_TYPE === 'INTERNAL_COMMENTS' && currentRole.NAME !== 'Customers'">
-									<!-- <label style="margin-left: 40px;margin-right: 40px;font-size: 15;line-height: 0;" textWrap="true"   text="{{message.MESSAGE}}"></label>  -->
-									<HtmlView style="margin-left: 40px;margin-right: 40px;font-size: 15;line-height: 0;" textWrap="true"   html="{{message.MESSAGE}}"></HtmlView> 
-									<StackLayout style="height: 1;background-color: #e0dede;padding-top: 10px;"></StackLayout>
-								</StackLayout>
+						<StackLayout *ngIf="message.MESSAGE_TYPE !== 'INTERNAL_COMMENTS'">
+							<!-- <label style="margin-left: 40px;margin-right: 40px;font-size: 15;line-height: 0;" textWrap="true"   text="{{message.MESSAGE}}"></label>  -->
+							<HtmlView style="margin-left: 40px;margin-right: 40px;font-size: 15;line-height: 0;" textWrap="true"
+								html="{{message.MESSAGE}}"></HtmlView>
+							<StackLayout style="height: 1;background-color: #e0dede;padding-top: 10px;"></StackLayout>
+						</StackLayout>
+						<StackLayout *ngIf="message.MESSAGE_TYPE === 'INTERNAL_COMMENTS' && currentRole.NAME !== 'Customers'">
+							<HtmlView style="margin-left: 40px;margin-right: 40px;font-size: 15;line-height: 0;" textWrap="true"
+								html="{{message.MESSAGE}}"></HtmlView>
+							<!-- <label style="margin-left: 40px;margin-right: 40px;font-size: 15;line-height: 0;" textWrap="true"   text="{{message.MESSAGE}}"></label>  -->
+							<StackLayout style="height: 1;background-color: #e0dede;padding-top: 10px;"></StackLayout>
+						</StackLayout>
+					</StackLayout>
+					<StackLayout *ngIf="messageShowTypeForMobile === 'ALL'">
+						visible <StackLayout *ngIf="field.DATA_TYPE.BACKEND === 'String' && field.DATA_TYPE.DISPLAY === 'Discussion'" rows="*"
+							columns="*,*,auto">
+							<label row="0" col="0" *ngIf="field.DATA_TYPE.BACKEND === 'String' && field.DATA_TYPE.DISPLAY === 'Discussion'"
+								style="height: 40;margin-left: 40px;font-size: 13;" text="{{message.SENDER.FIRST_NAME}}"></label>
+							<label row="0" col="3" *ngIf="field.DATA_TYPE.BACKEND === 'String' && field.DATA_TYPE.DISPLAY === 'Discussion'"
+								style="height: 40;margin-left: 40px;font-size: 13;" text="{{message.DATE_CREATED | dateFormat:'medium'}}"></label>
+						</StackLayout>
+						<StackLayout *ngIf="message.MESSAGE_TYPE !== 'INTERNAL_COMMENTS'">
+							<!-- <label style="margin-left: 40px;margin-right: 40px;font-size: 15;line-height: 0;" textWrap="true"   text="{{message.MESSAGE}}"></label>  -->
+							<HtmlView style="margin-left: 40px;margin-right: 40px;font-size: 15;line-height: 0;" textWrap="true"
+								html="{{message.MESSAGE}}"></HtmlView>
+							<StackLayout style="height: 1;background-color: #e0dede;padding-top: 10px;"></StackLayout>
+						</StackLayout>
+						<StackLayout *ngIf="message.MESSAGE_TYPE === 'INTERNAL_COMMENTS' && currentRole.NAME !== 'Customers'">
+							<!-- <label style="margin-left: 40px;margin-right: 40px;font-size: 15;line-height: 0;" textWrap="true"   text="{{message.MESSAGE}}"></label>  -->
+							<HtmlView style="margin-left: 40px;margin-right: 40px;font-size: 15;line-height: 0;" textWrap="true"
+								html="{{message.MESSAGE}}"></HtmlView>
+							<StackLayout style="height: 1;background-color: #e0dede;padding-top: 10px;"></StackLayout>
 						</StackLayout>
 					</StackLayout>
 				</StackLayout>
+			</StackLayout>
 			<StackLayout style="height:2px;background-color: #e0dede;"></StackLayout>
 		</StackLayout>
-			</StackLayout>
-		</ScrollView>
-		<ScrollView  *ngIf= "!noMobileLayoutPresent && !isMobileDataLoading &&  currentMobileView ==='EditLayout'">
-			<StackLayout *ngIf=" !isMobileDataLoading && mobileTitle !== 'Chat'">
-			<StackLayout *ngFor="let field of editMobileFieldsArray" >
-		<label visibility="{{ field.VISIBILITY? 'collapse' : 'visible'}}"  style="height: 40;margin-left: 40px;font-size: 16;font-weight: bold;" text="{{field.DISPLAY_LABEL}}"></label>
-			
-		<TextField visibility="{{ field.VISIBILITY? 'collapse' : 'visible'}}"  editable="{{ !field.NOT_EDITABLE }}"  [formControl]="formControlsMobile[field.NAME]"   *ngIf="field.DATA_TYPE.DISPLAY !== 'Discussion' && field.DATA_TYPE.DISPLAY !== 'Date/Time' && field.DATA_TYPE.DISPLAY !== 'Picklist' && field.DATA_TYPE.DISPLAY !== 'Relationship'  &&  field.DATA_TYPE.DISPLAY !== 'Checkbox' && field.DATA_TYPE.DISPLAY !== 'Phone' && field.DATA_TYPE.DISPLAY !== 'Chronometer'"  style="height: 40;margin-left: 40px;font-size: 13;" [(ngModel)]="entry[field.NAME]"></TextField>
-		
-		<!-- no need to uncomment -->
-		<!-- 0mo 0w 0d 0h 0m -->
-		<!-- <TextField visibility="{{ field.VISIBILITY? 'collapse' : 'visible'}}"    [formControl]="this.formControlsMobile[field.NAME]"  *ngIf="field.DATA_TYPE.DISPLAY === 'Picklist'" text="{{entry[field.NAME]}}" hint="{{entry[field.NAME]}}" editable="false" (tap)="showHideField(field)"></TextField> -->
-	
-		<TextField visibility="{{ field.VISIBILITY? 'collapse' : 'visible'}}" editable="{{ !field.NOT_EDITABLE }}" [formControl]="formControlsMobile[field.NAME]"   *ngIf="field.DATA_TYPE.DISPLAY === 'Chronometer' "  style="height: 40;margin-left: 40px;font-size: 13;" hint="0mo 0w 0d 0h 0m" [(ngModel)]="entry[field.NAME]"></TextField>
+	</StackLayout>
+</ScrollView>
+<ScrollView *ngIf="!noMobileLayoutPresent && !isMobileDataLoading &&  currentMobileView ==='EditLayout'">
+	<StackLayout *ngIf=" !isMobileDataLoading && mobileTitle !== 'Chats'">
+		<StackLayout *ngFor="let field of editMobileFieldsArray">
+			<label visibility="{{ field.VISIBILITY? 'collapse' : 'visible'}}"
+				style="height: 40;margin-left: 40px;font-size: 16;font-weight: bold;" text="{{field.DISPLAY_LABEL}}"></label>
 
-		<StackLayout visibility="{{ field.VISIBILITY? 'collapse' : 'visible'}}"  *ngIf="field.DATA_TYPE.DISPLAY === 'Checkbox' " orientation="horizontal" >
-		<CheckBox  android:marginleft="5" class="checkbox" [formControl]="formControlsMobile[field.NAME]" editable="{{ !field.NOT_EDITABLE }}"  *ngIf="field.DATA_TYPE.DISPLAY === 'Checkbox' "  checked="{{entry[field.NAME]}}"></CheckBox>
-		</StackLayout>
+			<TextField visibility="{{ field.VISIBILITY? 'collapse' : 'visible'}}" editable="{{ !field.NOT_EDITABLE }}"
+				[formControl]="formControlsMobile[field.NAME]"
+				*ngIf="field.DATA_TYPE.DISPLAY !== 'Discussion' && field.DATA_TYPE.DISPLAY !== 'Date/Time' && field.DATA_TYPE.DISPLAY !== 'Picklist' && field.DATA_TYPE.DISPLAY !== 'Relationship'  &&  field.DATA_TYPE.DISPLAY !== 'Checkbox' && field.DATA_TYPE.DISPLAY !== 'Phone' && field.DATA_TYPE.DISPLAY !== 'Chronometer'"
+				style="height: 40;margin-left: 40px;font-size: 13;" [(ngModel)]="entry[field.NAME]"></TextField>
 
-		<!-- <StackLayout> -->
-			<TextView  visibility="{{ field.VISIBILITY? 'collapse' : 'visible'}}"  *ngIf="field.DATA_TYPE.DISPLAY === 'Discussion' " style="height: 80;"   [(ngModel)]="customModulesService.discussionControls['MESSAGE']"  [formControl]="formControlsMobile[field.NAME]" editable="{{ !field.NOT_EDITABLE }}" hint="Type your message here" ></TextView>
-		<!-- </StackLayout> -->
-		
-		<TextField visibility="{{ field.VISIBILITY? 'collapse' : 'visible'}}" editable="{{ !field.NOT_EDITABLE }}"  [formControl]="formControlsMobile[field.NAME]" id="textField"  *ngIf="field.DATA_TYPE.DISPLAY === 'Picklist'" text="{{entry[field.NAME]}}" hint="{{entry[field.NAME]}}" editable="false" (tap)="showHideField(field,$event)" ></TextField>
-		
-		<StackLayout  *ngIf="field.DATA_TYPE.DISPLAY !=='Phone' && formControlsMobile[field.NAME].touched && field.DATA_TYPE.DISPLAY === 'Picklist' && !field.NOT_EDITABLE">
-		<ListPicker style="width: auto;"  *ngIf="field.DATA_TYPE.DISPLAY === 'Picklist' "  [items]="picklistValuesForMobile[field.NAME]" selectedIndex="{{ field['PICKLIST_VALUES'].indexOf(entry[field.NAME])}}" (tap)="selectedChanged($event,field)"></ListPicker>
-		</StackLayout>
-		
-		<TextField  visibility="{{ field.VISIBILITY? 'collapse' : 'visible'}}" editable="{{ !field.NOT_EDITABLE }}" [formControl]="formControlsMobile[field.NAME]"  textWrap="true" *ngIf="field.DATA_TYPE.DISPLAY === 'Relationship' && field.DATA_TYPE.BACKEND !== 'String' "  text="{{relationshipFieldValue[field.NAME]}}"   (tap)="showPicker(field,$event)" ></TextField>
-		
-	
-		<TextField id="textField" visibility="{{ field.VISIBILITY? 'collapse' : 'visible'}}" editable="{{ !field.NOT_EDITABLE }}" [formControl]="formControlsMobile[field.NAME]"   textWrap="true" *ngIf="field.DATA_TYPE.DISPLAY === 'Relationship' && field.DATA_TYPE.BACKEND === 'String' "  text="{{relationshipFieldValue[field.NAME]}}" (tap)="showPicker(field,$event)"></TextField>
-		<ScrollView *ngIf="  field.DATA_TYPE.DISPLAY !=='Phone' && field.DATA_TYPE.DISPLAY === 'Relationship' && formControlsMobile[field.NAME].touched && !field.NOT_EDITABLE ">
-		<StackLayout *ngIf="  field.DATA_TYPE.DISPLAY !=='Phone' && field.DATA_TYPE.DISPLAY === 'Relationship' && formControlsMobile[field.NAME].touched && !field.NOT_EDITABLE " >
-			<RadListView  style="height: 300px;"  *ngIf="!isloadingMobileData" loadOnDemandMode="Auto" (loadMoreDataRequested)="onMobileRelationshipFieldLoadMore($event)" [items]="relationshipPicklistValuesForMobile[field.NAME]" >
-                <ng-template let-entry="item">
-                    <StackLayout style="align-items: center; width: 50%;" (tap)="selectedRelationshipValue(entry,field)">
-                        <label style="text-align: center;"  textWrap="true"   text="{{entry}}"></label>
-                        <StackLayout style="height: 1;background-color: #e0dede;"></StackLayout>
-                    </StackLayout>
-                </ng-template>
-            </RadListView>
-		</StackLayout>
-		</ScrollView>
-			<StackLayout style="margin-left: 5px;"  *ngIf="field.DATA_TYPE.DISPLAY === 'Phone' && !field.NOT_EDITABLE" orientation="horizontal">
-			<!-- <Image style="height: 80;width: 80;"  src="../../assets/images/activation.jpg" stretch="aspectFill"></Image> -->
-			<!--  <TextField text="{{this.entry[field.NAME].COUNTRY_CODE}}" editable="false" (tap)="selectCountryDialog(field)" ></TextField> --> 
-			<TextField style="margin-right: 0;padding: 0;border: 0;margin-top: 0;margin-bottom: 0;"  [formControl]="formControlsMobile['DIAL_CODE']"  text="{{this.entry[field.NAME].DIAL_CODE}}"  (tap)="selectCountryDialog(field)"  editable="false" ></TextField>
-			<TextField style="margin: 0;padding: 0;border: 0;" width="95%" editable="{{ !field.NOT_EDITABLE }}"  [formControl]="formControlsMobile['PHONE_NUMBER']"  text="{{this.entry[field.NAME].PHONE_NUMBER}}"></TextField>
+			<!-- no need to uncomment -->
+			<!-- 0mo 0w 0d 0h 0m -->
+			<!-- <TextField visibility="{{ field.VISIBILITY? 'collapse' : 'visible'}}"    [formControl]="this.formControlsMobile[field.NAME]"  *ngIf="field.DATA_TYPE.DISPLAY === 'Picklist'" text="{{entry[field.NAME]}}" hint="{{entry[field.NAME]}}" editable="false" (tap)="showHideField(field)"></TextField> -->
+
+			<TextField visibility="{{ field.VISIBILITY? 'collapse' : 'visible'}}" editable="{{ !field.NOT_EDITABLE }}"
+				[formControl]="formControlsMobile[field.NAME]" *ngIf="field.DATA_TYPE.DISPLAY === 'Chronometer' "
+				style="height: 40;margin-left: 40px;font-size: 13;" hint="0mo 0w 0d 0h 0m" [(ngModel)]="entry[field.NAME]"></TextField>
+
+			<StackLayout visibility="{{ field.VISIBILITY? 'collapse' : 'visible'}}" *ngIf="field.DATA_TYPE.DISPLAY === 'Checkbox' "
+				orientation="horizontal">
+				<CheckBox android:marginleft="5" class="checkbox" [formControl]="formControlsMobile[field.NAME]"
+					editable="{{ !field.NOT_EDITABLE }}" *ngIf="field.DATA_TYPE.DISPLAY === 'Checkbox' " checked="{{entry[field.NAME]}}"></CheckBox>
 			</StackLayout>
 
+			<!-- <StackLayout> -->
+			<TextView visibility="{{ field.VISIBILITY? 'collapse' : 'visible'}}" *ngIf="field.DATA_TYPE.DISPLAY === 'Discussion' "
+				style="height: 80;" [(ngModel)]="customModulesService.discussionControls['MESSAGE']" [formControl]="formControlsMobile[field.NAME]"
+				editable="{{ !field.NOT_EDITABLE }}" hint="Type your message here"></TextView>
+			<!-- </StackLayout> -->
+
+			<TextField visibility="{{ field.VISIBILITY? 'collapse' : 'visible'}}" editable="{{ !field.NOT_EDITABLE }}"
+				[formControl]="formControlsMobile[field.NAME]" id="textField" *ngIf="field.DATA_TYPE.DISPLAY === 'Picklist'"
+				text="{{entry[field.NAME]}}" hint="{{entry[field.NAME]}}" editable="false" (tap)="showHideField(field,$event)"></TextField>
+
+			<StackLayout
+				*ngIf="field.DATA_TYPE.DISPLAY !=='Phone' && formControlsMobile[field.NAME].touched && field.DATA_TYPE.DISPLAY === 'Picklist' && !field.NOT_EDITABLE">
+				<ListPicker style="width: auto;" *ngIf="field.DATA_TYPE.DISPLAY === 'Picklist' " [items]="picklistValuesForMobile[field.NAME]"
+					selectedIndex="{{ field['PICKLIST_VALUES'].indexOf(entry[field.NAME])}}" (tap)="selectedChanged($event,field)"></ListPicker>
+			</StackLayout>
+
+			<TextField visibility="{{ field.VISIBILITY? 'collapse' : 'visible'}}" editable="{{ !field.NOT_EDITABLE }}"
+				[formControl]="formControlsMobile[field.NAME]" textWrap="true"
+				*ngIf="field.DATA_TYPE.DISPLAY === 'Relationship' && field.DATA_TYPE.BACKEND !== 'String' "
+				text="{{relationshipFieldValue[field.NAME]}}" (tap)="showPicker(field,$event)"></TextField>
+
+
+			<TextField id="textField" visibility="{{ field.VISIBILITY? 'collapse' : 'visible'}}" editable="{{ !field.NOT_EDITABLE }}"
+				[formControl]="formControlsMobile[field.NAME]" textWrap="true"
+				*ngIf="field.DATA_TYPE.DISPLAY === 'Relationship' && field.DATA_TYPE.BACKEND === 'String' "
+				text="{{relationshipFieldValue[field.NAME]}}" (tap)="showPicker(field,$event)"></TextField>
+			<ScrollView
+				*ngIf="  field.DATA_TYPE.DISPLAY !=='Phone' && field.DATA_TYPE.DISPLAY === 'Relationship' && formControlsMobile[field.NAME].touched && !field.NOT_EDITABLE ">
+				<StackLayout
+					*ngIf="  field.DATA_TYPE.DISPLAY !=='Phone' && field.DATA_TYPE.DISPLAY === 'Relationship' && formControlsMobile[field.NAME].touched && !field.NOT_EDITABLE ">
+					<RadListView style="height: 300px;" *ngIf="!isloadingMobileData" loadOnDemandMode="Auto"
+						(loadMoreDataRequested)="onMobileRelationshipFieldLoadMore($event)" [items]="relationshipPicklistValuesForMobile[field.NAME]">
+						<ng-template let-entry="item">
+							<StackLayout style="align-items: center; width: 50%;" (tap)="selectedRelationshipValue(entry,field)">
+								<label style="text-align: center;" textWrap="true" text="{{entry}}"></label>
+								<StackLayout style="height: 1;background-color: #e0dede;"></StackLayout>
+							</StackLayout>
+						</ng-template>
+					</RadListView>
+				</StackLayout>
+			</ScrollView>
+			<StackLayout style="margin-left: 5px;" *ngIf="field.DATA_TYPE.DISPLAY === 'Phone' && !field.NOT_EDITABLE" orientation="horizontal">
+				<!-- <Image style="height: 80;width: 80;"  src="../../assets/images/activation.jpg" stretch="aspectFill"></Image> -->
+				<!--  <TextField text="{{this.entry[field.NAME].COUNTRY_CODE}}" editable="false" (tap)="selectCountryDialog(field)" ></TextField> -->
+				<TextField style="margin-right: 0;padding: 0;border: 0;margin-top: 0;margin-bottom: 0;"
+					[formControl]="formControlsMobile['DIAL_CODE']" text="{{this.entry[field.NAME].DIAL_CODE}}" (tap)="selectCountryDialog(field)"
+					editable="false"></TextField>
+				<TextField style="margin: 0;padding: 0;border: 0;" width="95%" editable="{{ !field.NOT_EDITABLE }}"
+					[formControl]="formControlsMobile['PHONE_NUMBER']" text="{{this.entry[field.NAME].PHONE_NUMBER}}"></TextField>
+			</StackLayout>
+
 
 		</StackLayout>
-		
-			</StackLayout>
-		</ScrollView>
-		<StackLayout style="text-align: center; padding-top: 20%;" *ngIf="noMobileLayoutPresent">
-			<label  
-			text="No layouts present, create one by logging into ngDesk on a computer."
-			>
-		</label>			
-		</StackLayout>
-	
+
+	</StackLayout>
+</ScrollView>
+<StackLayout style="text-align: center; padding-top: 20%;" *ngIf="noMobileLayoutPresent">
+	<label text="No layouts present, create one by logging into ngDesk on a computer.">
+	</label>
+</StackLayout>
+
 <!-- </StackLayout> -->

@@ -58,7 +58,7 @@ export class ChannelComponent implements OnInit {
 						},
 						{
 							NAME: 'WORKFLOWS',
-							PATH: ['', 'modules', this.moduleId, 'workflows']
+							PATH: ['', 'modules', this.moduleId, 'workflows'],
 						},
 						{
 							NAME: 'SLAS',
@@ -78,10 +78,10 @@ export class ChannelComponent implements OnInit {
 						},
 						{
 							NAME: 'TASK',
-							PATH: ['', 'modules', this.moduleId, 'task']
-						}
+							PATH: ['', 'modules', this.moduleId, 'task'],
+						},
 					];
-				} else if (response.NAME === 'Chat') {
+				} else if (response.NAME === 'Chats') {
 					this.navigations = [
 						{
 							NAME: 'MODULE_DETAIL',
@@ -93,12 +93,12 @@ export class ChannelComponent implements OnInit {
 						},
 						{
 							NAME: 'WORKFLOWS',
-							PATH: ['', 'modules', this.moduleId, 'workflows']
+							PATH: ['', 'modules', this.moduleId, 'workflows'],
 						},
 						{
 							NAME: 'CHANNELS',
 							PATH: ['', 'modules', this.moduleId, 'channels'],
-						}
+						},
 					];
 				} else {
 					this.navigations = [
@@ -120,7 +120,7 @@ export class ChannelComponent implements OnInit {
 						},
 						{
 							NAME: 'WORKFLOWS',
-							PATH: ['', 'modules', this.moduleId, 'workflows']
+							PATH: ['', 'modules', this.moduleId, 'workflows'],
 						},
 						{
 							NAME: 'SLAS',
@@ -140,8 +140,8 @@ export class ChannelComponent implements OnInit {
 						},
 						{
 							NAME: 'TASK',
-							PATH: ['', 'modules', this.moduleId, 'task']
-						}
+							PATH: ['', 'modules', this.moduleId, 'task'],
+						},
 					];
 				}
 			},
@@ -183,7 +183,7 @@ export class ChannelComponent implements OnInit {
 			);
 		} else if (layoutName === 'chatChannel') {
 			this.router.navigate([
-				`modules/${this.moduleId}/channels/chat-widgets/Chat`,
+				`modules/${this.moduleId}/channels/chat-widgets/Chats`,
 			]);
 		} else {
 			this.router.navigate([`modules/${this.moduleId}/channels/${layoutName}`]);

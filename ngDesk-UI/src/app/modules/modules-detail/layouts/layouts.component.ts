@@ -34,7 +34,7 @@ export class LayoutsComponent implements OnInit {
 				this.isLoading = false;
 				this.module = response;
 				// module sidebar navigation for module accordingly
-				if (this.module.NAME === 'Chat') {
+				if (this.module.NAME === 'Chats') {
 					this.navigations = [
 						{
 							NAME: 'MODULE_DETAIL',
@@ -50,12 +50,12 @@ export class LayoutsComponent implements OnInit {
 						},
 						{
 							NAME: 'WORKFLOWS',
-							PATH: ['', 'modules', this.moduleId, 'workflows']
+							PATH: ['', 'modules', this.moduleId, 'workflows'],
 						},
 						{
 							NAME: 'CHANNELS',
 							PATH: ['', 'modules', this.moduleId, 'channels'],
-						}
+						},
 					];
 				} else if (this.module.NAME === 'Tickets') {
 					this.navigations = [
@@ -77,7 +77,7 @@ export class LayoutsComponent implements OnInit {
 						},
 						{
 							NAME: 'WORKFLOWS',
-							PATH: ['', 'modules', this.moduleId, 'workflows']
+							PATH: ['', 'modules', this.moduleId, 'workflows'],
 						},
 						{
 							NAME: 'SLAS',
@@ -97,8 +97,8 @@ export class LayoutsComponent implements OnInit {
 						},
 						{
 							NAME: 'TASK',
-							PATH: ['', 'modules', this.moduleId, 'task']
-						}
+							PATH: ['', 'modules', this.moduleId, 'task'],
+						},
 					];
 				} else {
 					{
@@ -121,7 +121,7 @@ export class LayoutsComponent implements OnInit {
 							},
 							{
 								NAME: 'WORKFLOWS',
-								PATH: ['', 'modules', this.moduleId, 'workflows']
+								PATH: ['', 'modules', this.moduleId, 'workflows'],
 							},
 							{
 								NAME: 'SLAS',
@@ -141,8 +141,8 @@ export class LayoutsComponent implements OnInit {
 							},
 							{
 								NAME: 'TASK',
-								PATH: ['', 'modules', this.moduleId, 'task']
-							}
+								PATH: ['', 'modules', this.moduleId, 'task'],
+							},
 						];
 					}
 				}
@@ -201,13 +201,13 @@ export class LayoutsComponent implements OnInit {
 				// adding the layout to list according to module
 				let i = 0;
 				this.navigationOfLayout.forEach((element) => {
-					if (this.module.NAME === 'Chat') {
-						console.log('element  ',element);
+					if (this.module.NAME === 'Chats') {
+						console.log('element  ', element);
 						if (
 							element.NAME === 'MOBILE_LIST_LAYOUT' ||
-							element.NAME === 'WEB_LIST_LAYOUT'||
-							element.NAME === 'WEB_EDIT_LAYOUT' 
-							) {
+							element.NAME === 'WEB_LIST_LAYOUT' ||
+							element.NAME === 'WEB_EDIT_LAYOUT'
+						) {
 							this.matCardFirstRow.push(element);
 							i++;
 						}

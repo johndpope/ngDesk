@@ -35,7 +35,14 @@ import { FilePreviewOverlayService } from '@src/app/shared/file-preview-overlay/
 import { UsersService } from '@src/app/users/users.service';
 import { HttpClient } from '@angular/common/http';
 import { AppGlobals } from '../../../../../app.globals';
-import {ChatChannelApiService, ChatChannel, BusinessRules, Restriction, BotSettings, ChatPromptApiService} from '@ngdesk/module-api'
+import {
+	ChatChannelApiService,
+	ChatChannel,
+	BusinessRules,
+	Restriction,
+	BotSettings,
+	ChatPromptApiService,
+} from '@ngdesk/module-api';
 
 @Component({
 	selector: 'app-chat-getting-started',
@@ -273,7 +280,10 @@ export class ChatGettingStartedComponent implements OnDestroy, OnInit {
 				}
 				this.chatBusinessRule = this.chatChannel.SETTINGS.BUSINESS_RULES;
 
-				if (this.chatChannel.SETTINGS.BUSINESS_RULES && this.chatChannel.SETTINGS.BUSINESS_RULES.ACTIVE) {
+				if (
+					this.chatChannel.SETTINGS.BUSINESS_RULES &&
+					this.chatChannel.SETTINGS.BUSINESS_RULES.ACTIVE
+				) {
 					this.timezone = this.chatChannel.SETTINGS.BUSINESS_RULES.TIMEZONE;
 					this.chatBusinessRule.RESTRICTION_TYPE =
 						this.chatChannel.SETTINGS.BUSINESS_RULES.RESTRICTION_TYPE;
@@ -290,9 +300,7 @@ export class ChatGettingStartedComponent implements OnDestroy, OnInit {
 							newRestriction.START_TIME = restriction.START_TIME;
 							newRestriction.END_TIME = restriction.END_TIME;
 							newRestriction.START_DAY = restriction.START_DAY;
-							layerRestrictions.push(
-								newRestriction
-							);
+							layerRestrictions.push(newRestriction);
 						}
 					);
 					this.chatBusinessRule.RESTRICTIONS = layerRestrictions;
@@ -389,7 +397,7 @@ export class ChatGettingStartedComponent implements OnDestroy, OnInit {
 					this.chatBusinessRule.TIMEZONE = TIMEZONE;
 					this.chatBusinessRule.ACTIVE = ACTIVE;
 					this.chatBusinessRule.RESTRICTION_TYPE = RESTRICTION_TYPE;
-					this.chatBusinessRule.RESTRICTIONS = RESTRICTIONS
+					this.chatBusinessRule.RESTRICTIONS = RESTRICTIONS;
 					this.disableOn = true;
 					this.buttonValue = true;
 				}
@@ -470,59 +478,60 @@ export class ChatGettingStartedComponent implements OnDestroy, OnInit {
 		if (!this.chatBusinessRule.ACTIVE) {
 			this.chatBusinessRule.RESTRICTION_TYPE = null;
 			this.chatChannel.SETTINGS.BUSINESS_RULES.TIMEZONE = null;
-		}else {
+		} else {
 			this.chatChannel.SETTINGS.BUSINESS_RULES.TIMEZONE = this.timezone;
 		}
 		this.chatChannel.SETTINGS.BUSINESS_RULES = this.chatBusinessRule;
-		const botSettings: BotSettings = {BOT_ENABLED: false,
-		CHAT_BOT: null };
+		const botSettings: BotSettings = { BOT_ENABLED: false, CHAT_BOT: null };
 		this.chatChannel.SETTINGS.BOT_SETTINGS = botSettings;
-		this.chatChannelApiService.updateChatChannel(this.chatChannel.NAME, this.chatChannel).subscribe(
-			(response: any) => {
-				this.companiesService
-					.getAllGettingStarted()
-					.subscribe((gettingStarted: any) => {
-						this.companiesService
-							.getUsageType(this.usersService.getSubdomain())
-							.subscribe((usage: any) => {
-								if (
-									gettingStarted.GETTING_STARTED[1].COMPLETED === false &&
-									usage.USAGE_TYPE.CHAT
-								) {
-									this.companiesService
-										.putGettingStarted(gettingStarted.GETTING_STARTED[1])
-										.subscribe(
-											(put: any) => {},
-											(errorResponse: any) => {
-												console.log(errorResponse);
-											}
-										);
+		this.chatChannelApiService
+			.updateChatChannel(this.chatChannel.NAME, this.chatChannel)
+			.subscribe(
+				(response: any) => {
+					this.companiesService
+						.getAllGettingStarted()
+						.subscribe((gettingStarted: any) => {
+							this.companiesService
+								.getUsageType(this.usersService.getSubdomain())
+								.subscribe((usage: any) => {
+									if (
+										gettingStarted.GETTING_STARTED[1].COMPLETED === false &&
+										usage.USAGE_TYPE.CHAT
+									) {
+										this.companiesService
+											.putGettingStarted(gettingStarted.GETTING_STARTED[1])
+											.subscribe(
+												(put: any) => {},
+												(errorResponse: any) => {
+													console.log(errorResponse);
+												}
+											);
 
-									this.bannerMessageService.successNotifications.push({
-										message: this.translateService.instant(
-											'SAVE_CHAT_CHANNEL_CUSTOMIZATION'
-										),
-									});
-								} else {
-									this.bannerMessageService.successNotifications.push({
-										message: this.translateService.instant(
-											'SAVE_CHAT_CHANNEL_CUSTOMIZATION'
-										),
-									});
-								}
-							});
+										this.bannerMessageService.successNotifications.push({
+											message: this.translateService.instant(
+												'SAVE_CHAT_CHANNEL_CUSTOMIZATION'
+											),
+										});
+									} else {
+										this.bannerMessageService.successNotifications.push({
+											message: this.translateService.instant(
+												'SAVE_CHAT_CHANNEL_CUSTOMIZATION'
+											),
+										});
+									}
+								});
+						});
+					this.companiesService.trackEvent(`Updated Channel`, {
+						CHANNEL_ID: response.CHANNEL_ID,
+						MODULE_ID: response.MODULE,
 					});
-				this.companiesService.trackEvent(`Updated Channel`, {
-					CHANNEL_ID: response.CHANNEL_ID,
-					MODULE_ID: response.MODULE,
-				});
-			},
-			(error: any) => {
-				this.bannerMessageService.errorNotifications.push({
-					message: error.error.ERROR,
-				});
-			}
-		);
+				},
+				(error: any) => {
+					this.bannerMessageService.errorNotifications.push({
+						message: error.error.ERROR,
+					});
+				}
+			);
 	}
 
 	public pageChangeEmit(event) {
@@ -573,7 +582,11 @@ export class ChatGettingStartedComponent implements OnDestroy, OnInit {
 		// EVENT AFTER MODAL DIALOG IS CLOSED
 		dialogRef.afterClosed().subscribe((result) => {
 			if (result === this.translateService.instant('DELETE')) {
-				this.chatPromptApiService.deleteChatPrompt(prompt.PROMPT_ID, this.route.snapshot.params.chatName)
+				this.chatPromptApiService
+					.deleteChatPrompt(
+						prompt.PROMPT_ID,
+						this.route.snapshot.params.chatName
+					)
 					.subscribe(
 						(triggersResponse: any) => {
 							this.getPrompts();
@@ -605,7 +618,7 @@ export class ChatGettingStartedComponent implements OnDestroy, OnInit {
 		window.open('https://www.youtube.com/watch?v=1MxHlYDf8oM');
 	}
 
-	public getPrompts(){
+	public getPrompts() {
 		const query = `{
 			getChatChannel(name:"${this.route.snapshot.params.chatName}"){
 				CHAT_PROMPTS: chatPrompt{
@@ -614,11 +627,10 @@ export class ChatGettingStartedComponent implements OnDestroy, OnInit {
 				} 
 			}          		   
 		}`;
-		this.makeGraphQLCall(query).subscribe(
-			(queryResponse: any) => {
-				this.allPrompts = queryResponse.getChatChannel.CHAT_PROMPTS;
-				this.setDatasource(0, 10);
-			});
+		this.makeGraphQLCall(query).subscribe((queryResponse: any) => {
+			this.allPrompts = queryResponse.getChatChannel.CHAT_PROMPTS;
+			this.setDatasource(0, 10);
+		});
 	}
 
 	public add(event: MatChipInputEvent): void {
@@ -644,7 +656,8 @@ export class ChatGettingStartedComponent implements OnDestroy, OnInit {
 	}
 
 	public sendEmailToDevelopers() {
-		this.chatChannelApiService.emailToDevelopers(this.chatChannel.NAME, this.developerEmails)
+		this.chatChannelApiService
+			.emailToDevelopers(this.chatChannel.NAME, this.developerEmails)
 			.subscribe(
 				(data: any) => {
 					this.bannerMessageService.successNotifications.push({

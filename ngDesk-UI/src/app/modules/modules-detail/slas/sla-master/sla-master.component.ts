@@ -117,7 +117,7 @@ export class SlaMasterComponent implements OnInit {
 							PATH: ['', 'modules', this.moduleId, 'task'],
 						},
 					];
-				} else if (response.NAME === 'Chat') {
+				} else if (response.NAME === 'Chats') {
 					this.navigations = [
 						{
 							NAME: 'MODULE_DETAIL',

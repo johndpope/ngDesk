@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 @Component({
 	selector: 'app-file-upload',
 	templateUrl: './file-upload.component.html',
-	styleUrls: ['./file-upload.component.scss']
+	styleUrls: ['./file-upload.component.scss'],
 })
 export class FileUploadComponent implements OnInit {
 	public fileUploadQueue;
@@ -25,7 +25,7 @@ export class FileUploadComponent implements OnInit {
 		FILE: '',
 		FILE_TYPE: '',
 		FILE_NAME: '',
-		HEADERS: {}
+		HEADERS: {},
 	};
 
 	constructor(
@@ -39,11 +39,11 @@ export class FileUploadComponent implements OnInit {
 	public ngOnInit() {
 		this.modulesService.getModules().subscribe((moduleResponse: any) => {
 			this.modules = moduleResponse.MODULES.sort((a, b) =>
-			a.NAME.localeCompare(b.NAME)
-		);
+				a.NAME.localeCompare(b.NAME)
+			);
 			// REMOVING TEAMS MODULE
 			this.modules = this.modules.filter(
-				module => module.NAME !== 'Teams' && module.NAME !== 'Chat'
+				(module) => module.NAME !== 'Teams' && module.NAME !== 'Chats'
 			);
 		});
 	}
@@ -62,7 +62,7 @@ export class FileUploadComponent implements OnInit {
 					FILE: data.split('base64,')[1],
 					FILE_TYPE: fileType,
 					FILE_NAME: fileNAme,
-					HEADERS: {}
+					HEADERS: {},
 				};
 			};
 		} else {
@@ -94,7 +94,7 @@ export class FileUploadComponent implements OnInit {
 					const csvData = {
 						HEADERS: this.headers,
 						MODULE: this.selectedModule,
-						CSV_IMPORT_DATA: this.csvImportData
+						CSV_IMPORT_DATA: this.csvImportData,
 					};
 					const dialogRef = this.dialog.open(CsvImportDialogComponent, {
 						data: {
@@ -103,10 +103,10 @@ export class FileUploadComponent implements OnInit {
 							buttonText: this.translateService.instant('IMPORT'),
 							action: this.translateService.instant('IMPORT'),
 							closeDialog: this.translateService.instant('CANCEL'),
-							executebuttonColor: 'warn'
-						}
+							executebuttonColor: 'warn',
+						},
 					});
-					dialogRef.afterClosed().subscribe(result => {
+					dialogRef.afterClosed().subscribe((result) => {
 						this.onNoClick();
 						this.dialogRef.close({ data: result });
 					});

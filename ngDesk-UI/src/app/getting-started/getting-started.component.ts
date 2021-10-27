@@ -207,7 +207,7 @@ export class GettingStartedComponent implements OnInit, OnDestroy {
 		this.checkGettingStarted = this.router.url.search('main:getting-started');
 		let channelName;
 		if (this.checkGettingStarted) {
-			channelName = 'Chat';
+			channelName = 'Chats';
 		} else {
 			channelName = this.route.snapshot.params.chatName;
 		}
@@ -223,7 +223,7 @@ export class GettingStartedComponent implements OnInit, OnDestroy {
 			.putFirstSignin(this.usersService.getSubdomain())
 			.subscribe((put: any) => {});
 		this.moduleId = this.route.snapshot.params['moduleId'];
-		const channelName = 'Chat';
+		const channelName = 'Chats';
 		this.timeZones = this.schedulesDetailService.timeZones;
 
 		// this.chatChannelSubscription = this.chatChannelChanges$.subscribe(
@@ -415,19 +415,15 @@ export class GettingStartedComponent implements OnInit, OnDestroy {
 
 		this.rolesService.getRoles().subscribe(
 			(rolesResponse: any) => {
-				rolesResponse['ROLES'].filter(
-					(role) => {
-						if (role.NAME === 'Customers')
-						{
-						  role['NAME'] = 'Customer'; 
-						} 
-					});
+				rolesResponse['ROLES'].filter((role) => {
+					if (role.NAME === 'Customers') {
+						role['NAME'] = 'Customer';
+					}
+				});
 				this.roles = rolesResponse.ROLES.filter(
 					(role) => role.NAME !== 'Public'
 				);
-				this.roles = this.roles.sort((a, b) =>
-					a.NAME.localeCompare(b.NAME)
-				);
+				this.roles = this.roles.sort((a, b) => a.NAME.localeCompare(b.NAME));
 			},
 			(error: any) => {
 				console.log(error);

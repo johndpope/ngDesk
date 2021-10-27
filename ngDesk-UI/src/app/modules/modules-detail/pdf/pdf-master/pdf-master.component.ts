@@ -46,125 +46,126 @@ export class PdfMasterComponent implements OnInit, OnDestroy {
 	public ngOnInit() {
 		this.moduleId = this.route.snapshot.params['moduleId'];
 		// use modules saved in cache
-		this.companyInfoSubscription = this.cacheService.companyInfoSubject.subscribe(
-			(dataStored) => {
-				if (dataStored) {
-					this.modules = this.cacheService.companyData['MODULES'];
-					const response = this.modules.find(
-						(data) => data.MODULE_ID === this.moduleId
-					);
-					this.module = response;
-					this.isLoading = false;
-					if (response.NAME === 'Tickets') {
-						this.navigations = [
-							{
-								NAME: 'MODULE_DETAIL',
-								PATH: ['', 'modules', this.moduleId],
-							},
-							{
-								NAME: 'FIELDS',
-								PATH: ['', 'modules', this.moduleId, 'fields'],
-							},
-							{
-								NAME: 'LAYOUTS',
-								PATH: ['', 'modules', this.moduleId, 'layouts'],
-							},
-							{
-								NAME: 'VALIDATIONS',
-								PATH: ['', 'modules', this.moduleId, 'validations'],
-							},
-							{
-								NAME: 'WORKFLOWS',
-								PATH: ['', 'modules', this.moduleId, 'workflows']
-							},
-							{
-								NAME: 'SLAS',
-								PATH: ['', 'modules', this.moduleId, 'slas'],
-							},
-							{
-								NAME: 'CHANNELS',
-								PATH: ['', 'modules', this.moduleId, 'channels'],
-							},
-							{
-								NAME: 'FORMS',
-								PATH: ['', 'modules', this.moduleId, 'forms'],
-							},
-							{
-								NAME: 'PDFs',
-								PATH: ['', 'modules', this.moduleId, 'pdf'],
-							},
-							{
-								NAME: 'TASK',
-								PATH: ['', 'modules', this.moduleId, 'task']
-							}
-						];
-					} else if (response.NAME === 'Chat') {
-						this.navigations = [
-							{
-								NAME: 'MODULE_DETAIL',
-								PATH: ['', 'modules', this.moduleId],
-							},
-							{
-								NAME: 'LAYOUTS',
-								PATH: ['', 'modules', this.moduleId, 'layouts'],
-							},
-							{
-								NAME: 'WORKFLOWS',
-								PATH: ['', 'modules', this.moduleId, 'workflows']
-							},
-						];
-					} else {
-						this.navigations = [
-							{
-								NAME: 'MODULE_DETAIL',
-								PATH: ['', 'modules', this.moduleId],
-							},
-							{
-								NAME: 'FIELDS',
-								PATH: ['', 'modules', this.moduleId, 'fields'],
-							},
-							{
-								NAME: 'LAYOUTS',
-								PATH: ['', 'modules', this.moduleId, 'layouts'],
-							},
-							{
-								NAME: 'VALIDATIONS',
-								PATH: ['', 'modules', this.moduleId, 'validations'],
-							},
-							{
-								NAME: 'WORKFLOWS',
-								PATH: ['', 'modules', this.moduleId, 'workflows']
-							},
-							{
-								NAME: 'SLAS',
-								PATH: ['', 'modules', this.moduleId, 'slas'],
-							},
-							{
-								NAME: 'FORMS',
-								PATH: ['', 'modules', this.moduleId, 'forms'],
-							},
-							{
-								NAME: 'CHANNELS',
-								PATH: ['', 'modules', this.moduleId, 'channels'],
-							},
-							{
-								NAME: 'PDFs',
-								PATH: ['', 'modules', this.moduleId, 'pdf'],
-							},
-							{
-								NAME: 'TASK',
-								PATH: ['', 'modules', this.moduleId, 'task']
-							}
-						];
+		this.companyInfoSubscription =
+			this.cacheService.companyInfoSubject.subscribe(
+				(dataStored) => {
+					if (dataStored) {
+						this.modules = this.cacheService.companyData['MODULES'];
+						const response = this.modules.find(
+							(data) => data.MODULE_ID === this.moduleId
+						);
+						this.module = response;
+						this.isLoading = false;
+						if (response.NAME === 'Tickets') {
+							this.navigations = [
+								{
+									NAME: 'MODULE_DETAIL',
+									PATH: ['', 'modules', this.moduleId],
+								},
+								{
+									NAME: 'FIELDS',
+									PATH: ['', 'modules', this.moduleId, 'fields'],
+								},
+								{
+									NAME: 'LAYOUTS',
+									PATH: ['', 'modules', this.moduleId, 'layouts'],
+								},
+								{
+									NAME: 'VALIDATIONS',
+									PATH: ['', 'modules', this.moduleId, 'validations'],
+								},
+								{
+									NAME: 'WORKFLOWS',
+									PATH: ['', 'modules', this.moduleId, 'workflows'],
+								},
+								{
+									NAME: 'SLAS',
+									PATH: ['', 'modules', this.moduleId, 'slas'],
+								},
+								{
+									NAME: 'CHANNELS',
+									PATH: ['', 'modules', this.moduleId, 'channels'],
+								},
+								{
+									NAME: 'FORMS',
+									PATH: ['', 'modules', this.moduleId, 'forms'],
+								},
+								{
+									NAME: 'PDFs',
+									PATH: ['', 'modules', this.moduleId, 'pdf'],
+								},
+								{
+									NAME: 'TASK',
+									PATH: ['', 'modules', this.moduleId, 'task'],
+								},
+							];
+						} else if (response.NAME === 'Chats') {
+							this.navigations = [
+								{
+									NAME: 'MODULE_DETAIL',
+									PATH: ['', 'modules', this.moduleId],
+								},
+								{
+									NAME: 'LAYOUTS',
+									PATH: ['', 'modules', this.moduleId, 'layouts'],
+								},
+								{
+									NAME: 'WORKFLOWS',
+									PATH: ['', 'modules', this.moduleId, 'workflows'],
+								},
+							];
+						} else {
+							this.navigations = [
+								{
+									NAME: 'MODULE_DETAIL',
+									PATH: ['', 'modules', this.moduleId],
+								},
+								{
+									NAME: 'FIELDS',
+									PATH: ['', 'modules', this.moduleId, 'fields'],
+								},
+								{
+									NAME: 'LAYOUTS',
+									PATH: ['', 'modules', this.moduleId, 'layouts'],
+								},
+								{
+									NAME: 'VALIDATIONS',
+									PATH: ['', 'modules', this.moduleId, 'validations'],
+								},
+								{
+									NAME: 'WORKFLOWS',
+									PATH: ['', 'modules', this.moduleId, 'workflows'],
+								},
+								{
+									NAME: 'SLAS',
+									PATH: ['', 'modules', this.moduleId, 'slas'],
+								},
+								{
+									NAME: 'FORMS',
+									PATH: ['', 'modules', this.moduleId, 'forms'],
+								},
+								{
+									NAME: 'CHANNELS',
+									PATH: ['', 'modules', this.moduleId, 'channels'],
+								},
+								{
+									NAME: 'PDFs',
+									PATH: ['', 'modules', this.moduleId, 'pdf'],
+								},
+								{
+									NAME: 'TASK',
+									PATH: ['', 'modules', this.moduleId, 'task'],
+								},
+							];
+						}
 					}
+				},
+				(error: any) => {
+					this.bannerMessageService.errorNotifications.push({
+						message: error.error.ERROR,
+					});
 				}
-			},
-			(error: any) => {
-				this.bannerMessageService.errorNotifications.push({
-					message: error.error.ERROR,
-				});
-			}
-		);
+			);
 		const columnsHeaders: string[] = [];
 		const columnsHeadersObj: {
 			DISPLAY: string;
@@ -243,19 +244,21 @@ export class PdfMasterComponent implements OnInit, OnDestroy {
 		// EVENT AFTER MODAL DIALOG IS CLOSED
 		dialogRef.afterClosed().subscribe((result) => {
 			if (result === this.translateService.instant('DELETE')) {
-				this.htmlTemplatenApiService.deleteTemplate(pdf.TEMPLATE_ID, this.moduleId).subscribe(
-					(response: any) => {
-						this.bannerMessageService.successNotifications.push({
-							message: this.translateService.instant('DELETED_SUCCESSFULLY'),
-						});
-						this.getPdf();
-					},
-					(error: any) => {
-						this.bannerMessageService.errorNotifications.push({
-							message: error.error.ERROR,
-						});
-					}
-				);
+				this.htmlTemplatenApiService
+					.deleteTemplate(pdf.TEMPLATE_ID, this.moduleId)
+					.subscribe(
+						(response: any) => {
+							this.bannerMessageService.successNotifications.push({
+								message: this.translateService.instant('DELETED_SUCCESSFULLY'),
+							});
+							this.getPdf();
+						},
+						(error: any) => {
+							this.bannerMessageService.errorNotifications.push({
+								message: error.error.ERROR,
+							});
+						}
+					);
 			}
 		});
 	}

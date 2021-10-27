@@ -41,7 +41,7 @@
 					<span fxFlex="1 1 auto"></span>
 				</div>
 
-				<div fxFlex fxLayoutGap="20px" *ngIf="module.NAME !== 'Chat' && module.NAME === 'Tickets'">
+				<div fxFlex fxLayoutGap="20px" *ngIf="module.NAME !== 'Chats' && module.NAME === 'Tickets'">
 					<mat-card [appHighlight]="{BACKGROUND: 'ghostwhite'}" fxFlex="40" fxLayout="column" fxLayoutAlign="center center" class="pointer"
 						(click)="navigateTo('email')">
 						<mat-icon fontSet="material-icons-outlined">email</mat-icon>
@@ -59,14 +59,14 @@
 					</mat-card>
 
 				</div>
-				<div fxFlex fxLayoutGap="20px" *ngIf="module.NAME === 'Chat'">
+				<div fxFlex fxLayoutGap="20px" *ngIf="module.NAME === 'Chats'">
 					<mat-card [appHighlight]="{BACKGROUND: 'ghostwhite'}" fxFlex="40" fxLayout="column" fxLayoutAlign="center center" class="pointer"
 						(click)="navigateTo('chatChannel')">
 						<mat-icon fontSet="material-icons-outlined">chat_bubble_outline</mat-icon>
 						<mat-label class="mat-body-2">{{'CHAT' | translate}}</mat-label>
 					</mat-card>
 				</div>
-				<div fxFlex fxLayoutGap="20px" *ngIf="module.NAME !== 'Chat' && module.NAME !== 'Tickets' ">
+				<div fxFlex fxLayoutGap="20px" *ngIf="module.NAME !== 'Chats' && module.NAME !== 'Tickets' ">
 					<mat-card [appHighlight]="{BACKGROUND: 'ghostwhite'}" fxFlex="40" fxLayout="column" fxLayoutAlign="center center" class="pointer"
 						(click)="navigateTo('email')">
 						<mat-icon fontSet="material-icons-outlined">email</mat-icon>

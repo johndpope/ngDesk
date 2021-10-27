@@ -109,7 +109,7 @@ export class ModulesDetailComponent implements OnInit {
 									DESCRIPTION: 'MANAGE_TASK',
 								},
 							];
-						} else if (response.NAME === 'Chat') {
+						} else if (response.NAME === 'Chats') {
 							this.navigations = [
 								{
 									NAME: 'MODULE_DETAIL',

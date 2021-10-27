@@ -518,7 +518,7 @@ export class RenderDetailLayoutComponent implements OnInit, OnDestroy {
 					if (!this.module) {
 						this.redirectToHome();
 					}
-					if (this.module.NAME !== 'Tickets' || this.module.NAME !== 'Chat') {
+					if (this.module.NAME !== 'Tickets' || this.module.NAME !== 'Chats') {
 						this.gridLayout = true;
 					}
 					const aggregateFields = [];
@@ -589,12 +589,11 @@ export class RenderDetailLayoutComponent implements OnInit, OnDestroy {
 																field.DEFAULT_VALUE
 															)
 														) {
-															moduleIdsForGet[
-																field.DEFAULT_VALUE
-															] = this.modulesService.getEntry(
-																relationModule.MODULE_ID,
-																field.DEFAULT_VALUE
-															);
+															moduleIdsForGet[field.DEFAULT_VALUE] =
+																this.modulesService.getEntry(
+																	relationModule.MODULE_ID,
+																	field.DEFAULT_VALUE
+																);
 														}
 													} else if (
 														field.RELATIONSHIP_TYPE === 'Many to Many' &&
@@ -602,9 +601,8 @@ export class RenderDetailLayoutComponent implements OnInit, OnDestroy {
 														field.DEFAULT_VALUE.search(',') !== -1
 													) {
 														manyToManyFlag = true;
-														const defaultValues = field.DEFAULT_VALUE.split(
-															','
-														);
+														const defaultValues =
+															field.DEFAULT_VALUE.split(',');
 														let valuesProcessed = 0;
 														defaultValues.forEach((element) => {
 															this.modulesService
@@ -709,12 +707,11 @@ export class RenderDetailLayoutComponent implements OnInit, OnDestroy {
 																		(module) =>
 																			module.MODULE_ID === field.MODULE
 																	);
-																	moduleIdsForGet[
-																		field.NAME
-																	] = this.modulesService.getSelectedEntries(
-																		relationModule.MODULE_ID,
-																		this.entry[field.NAME]
-																	);
+																	moduleIdsForGet[field.NAME] =
+																		this.modulesService.getSelectedEntries(
+																			relationModule.MODULE_ID,
+																			this.entry[field.NAME]
+																		);
 																}
 															}
 														}
@@ -746,7 +743,7 @@ export class RenderDetailLayoutComponent implements OnInit, OnDestroy {
 																this.initializeLayout('DETAIL_LAYOUTS');
 															}
 														}
-														if (this.module.NAME === 'Chat') {
+														if (this.module.NAME === 'Chats') {
 															this.getAllEntries();
 															this.subscribeChat();
 															this.notificationSubscription();
@@ -855,11 +852,10 @@ export class RenderDetailLayoutComponent implements OnInit, OnDestroy {
 						.pipe(
 							map((results: any) => {
 								if (results.DATA.length > 0) {
-									this.relationFieldFilteredEntries[
-										moduleField.NAME
-									] = this.relationFieldFilteredEntries[
-										moduleField.NAME
-									].concat(results.DATA);
+									this.relationFieldFilteredEntries[moduleField.NAME] =
+										this.relationFieldFilteredEntries[moduleField.NAME].concat(
+											results.DATA
+										);
 								}
 								return results.DATA;
 							})
@@ -883,7 +879,7 @@ export class RenderDetailLayoutComponent implements OnInit, OnDestroy {
 			this.countryCode[element.COUNTRY_DIAL_CODE].push(element.COUNTRY_FLAG);
 		});
 
-		this.channelsService.getChatChannel('Chat').subscribe(
+		this.channelsService.getChatChannel('Chats').subscribe(
 			(response: any) => {
 				this.senderBubbleColor = response.SENDER_BUBBLE_COLOR;
 				this.receiverBubbleColor = response.RECEIVER_BUBBLE_COLOR;
@@ -1018,7 +1014,7 @@ export class RenderDetailLayoutComponent implements OnInit, OnDestroy {
 						});
 					}
 
-					if (this.moduleNameMobile !== 'Chat') {
+					if (this.moduleNameMobile !== 'Chats') {
 						this.modulesService
 							.getModuleById(this.moduleId)
 							.subscribe((moduleResponse: any) => {
@@ -1046,14 +1042,14 @@ export class RenderDetailLayoutComponent implements OnInit, OnDestroy {
 												this.modulesService
 													.getEntries(relationModule.MODULE_ID)
 													.subscribe((entries: any) => {
-														const primaryDisplayField = relationModuleResponse.FIELDS.find(
-															(tempField) =>
-																tempField.FIELD_ID ===
-																fieldData.PRIMARY_DISPLAY_FIELD
-														);
-														this.relationshipDetailValues[
-															fieldData.NAME
-														] = new Array();
+														const primaryDisplayField =
+															relationModuleResponse.FIELDS.find(
+																(tempField) =>
+																	tempField.FIELD_ID ===
+																	fieldData.PRIMARY_DISPLAY_FIELD
+															);
+														this.relationshipDetailValues[fieldData.NAME] =
+															new Array();
 
 														if (fieldData.DATA_TYPE.BACKEND !== 'String') {
 															this.data[fieldData.NAME].forEach((element) => {
@@ -1188,13 +1184,14 @@ export class RenderDetailLayoutComponent implements OnInit, OnDestroy {
 										.getEntries(relationModule.MODULE_ID)
 										.subscribe((entries: any) => {
 											this.entriesArray[fieldData.NAME] = entries;
-											const primaryDisplayField = relationModuleResponse.FIELDS.find(
-												(tempField) =>
-													tempField.FIELD_ID === fieldData.PRIMARY_DISPLAY_FIELD
-											);
-											this.relationshipPicklistValues[
-												fieldData.NAME
-											] = new Array();
+											const primaryDisplayField =
+												relationModuleResponse.FIELDS.find(
+													(tempField) =>
+														tempField.FIELD_ID ===
+														fieldData.PRIMARY_DISPLAY_FIELD
+												);
+											this.relationshipPicklistValues[fieldData.NAME] =
+												new Array();
 											entries.DATA.forEach((value) => {
 												if (
 													!this.relationshipPicklistValues[
@@ -1234,9 +1231,8 @@ export class RenderDetailLayoutComponent implements OnInit, OnDestroy {
 													(E) => E.DATA_ID === field
 												);
 
-												this.relationshipFieldValue[
-													fieldData.NAME
-												] = new Array();
+												this.relationshipFieldValue[fieldData.NAME] =
+													new Array();
 												this.relationshipFieldValue[fieldData.NAME].push(
 													entry[0][primaryDisplayField.NAME]
 												);
@@ -1263,17 +1259,15 @@ export class RenderDetailLayoutComponent implements OnInit, OnDestroy {
 					this.relationshipPicklistValues[field.NAME][picker.selectedIndex]
 				);
 			} else {
-				this.relationshipFieldValue[
-					field.NAME
-				] = this.relationshipPicklistValues[field.NAME][picker.selectedIndex];
+				this.relationshipFieldValue[field.NAME] =
+					this.relationshipPicklistValues[field.NAME][picker.selectedIndex];
 			}
 		} else {
 			alert(this.translateService.instant('VALUE_EXISTS'));
 		}
 
-		this.relationshipFieldValue[field.NAME] = this.relationshipFieldValue[
-			field.NAME
-		].slice();
+		this.relationshipFieldValue[field.NAME] =
+			this.relationshipFieldValue[field.NAME].slice();
 
 		this.showRelationshipPicker = false;
 
@@ -1407,12 +1401,11 @@ export class RenderDetailLayoutComponent implements OnInit, OnDestroy {
 									this.data.MESSAGES.forEach((message) => {
 										let index = this.data.MESSAGES.indexOf(message);
 										if (message.MESSAGE_TYPE === 'META_DATA') {
-											this.data.MESSAGES[
-												index
-											].MESSAGE = message.MESSAGE.replace(
-												/<\/?[^>]+(>|$)/g,
-												''
-											).replace(/\s\s+/g, ' ');
+											this.data.MESSAGES[index].MESSAGE =
+												message.MESSAGE.replace(/<\/?[^>]+(>|$)/g, '').replace(
+													/\s\s+/g,
+													' '
+												);
 
 											this.metaDataArray.push(
 												message.MESSAGE.replace(/<\/?[^>]+(>|$)/g, '').replace(
@@ -1421,9 +1414,8 @@ export class RenderDetailLayoutComponent implements OnInit, OnDestroy {
 												)
 											);
 										} else {
-											this.data.MESSAGES[
-												index
-											].MESSAGE = message.MESSAGE.replace(/<[^>]*>/g, '');
+											this.data.MESSAGES[index].MESSAGE =
+												message.MESSAGE.replace(/<[^>]*>/g, '');
 											this.metaDataArray.push(
 												message.MESSAGE.replace(/<[^>]*>/g, '')
 											);
@@ -1468,9 +1460,8 @@ export class RenderDetailLayoutComponent implements OnInit, OnDestroy {
 					fieldData.DATA_TYPE.DISPLAY !== 'Chronometer' &&
 					fieldData.DATA_TYPE.DISPLAY !== 'Phone'
 				) {
-					entryToPut[fieldData.NAME] = this.formControlsMobile[
-						fieldData.NAME
-					].value;
+					entryToPut[fieldData.NAME] =
+						this.formControlsMobile[fieldData.NAME].value;
 				} else if (fieldData.DATA_TYPE.DISPLAY === 'Relationship') {
 					const relationModule = this.allModules.find(
 						(module) => module.MODULE_ID === fieldData.MODULE
@@ -1554,18 +1545,14 @@ export class RenderDetailLayoutComponent implements OnInit, OnDestroy {
 					entryToPut[fieldData.NAME] = '0m';
 				}
 				if (fieldData.DATA_TYPE.DISPLAY === 'Phone') {
-					entryToPut[fieldData.NAME].PHONE_NUMBER = this.formControlsMobile[
-						'PHONE_NUMBER'
-					].value;
-					entryToPut[fieldData.NAME].DIAL_CODE = this.formControlsMobile[
-						'DIAL_CODE'
-					].value;
-					entryToPut[fieldData.NAME].COUNTRY_FLAG = this.countryCode[
-						this.formControlsMobile['DIAL_CODE'].value
-					][2];
-					entryToPut[fieldData.NAME].COUNTRY_CODE = this.countryCode[
-						this.formControlsMobile['DIAL_CODE'].value
-					][1];
+					entryToPut[fieldData.NAME].PHONE_NUMBER =
+						this.formControlsMobile['PHONE_NUMBER'].value;
+					entryToPut[fieldData.NAME].DIAL_CODE =
+						this.formControlsMobile['DIAL_CODE'].value;
+					entryToPut[fieldData.NAME].COUNTRY_FLAG =
+						this.countryCode[this.formControlsMobile['DIAL_CODE'].value][2];
+					entryToPut[fieldData.NAME].COUNTRY_CODE =
+						this.countryCode[this.formControlsMobile['DIAL_CODE'].value][1];
 				}
 			}
 
@@ -1640,13 +1627,12 @@ export class RenderDetailLayoutComponent implements OnInit, OnDestroy {
 		this.previewRef.overlayComponent.closeButton.subscribe((value) => {
 			this.dialogRef.close();
 			switch (this.module.NAME) {
-				case 'Chat': {
+				case 'Chats': {
 					switch (value) {
 						// third step is new tickets button
 						case this.translateService.instant('WALKTHROUGH_PROGRESS_1_OF_5'): {
-							const element = this.elRef.nativeElement.querySelector(
-								'#chat-text-area'
-							);
+							const element =
+								this.elRef.nativeElement.querySelector('#chat-text-area');
 							this.showPreview(
 								element,
 								this.fpos.getWalkthroughData(this.module.NAME, 'chat-text-area')
@@ -1655,9 +1641,8 @@ export class RenderDetailLayoutComponent implements OnInit, OnDestroy {
 						}
 						// fourth step is emailing in ticket
 						case this.translateService.instant('WALKTHROUGH_PROGRESS_2_OF_5'): {
-							const element = this.elRef.nativeElement.querySelector(
-								'#chat-details-area'
-							);
+							const element =
+								this.elRef.nativeElement.querySelector('#chat-details-area');
 							this.showPreview(
 								element,
 								this.fpos.getWalkthroughData(
@@ -1705,9 +1690,8 @@ export class RenderDetailLayoutComponent implements OnInit, OnDestroy {
 					switch (value) {
 						// first step is status dropdown
 						case this.translateService.instant('WALKTHROUGH_PROGRESS_1_OF_8'): {
-							const element = this.elRef.nativeElement.querySelector(
-								'#assignee-dropdown'
-							);
+							const element =
+								this.elRef.nativeElement.querySelector('#assignee-dropdown');
 							this.showPreview(
 								element,
 								this.fpos.getWalkthroughData(
@@ -1719,9 +1703,8 @@ export class RenderDetailLayoutComponent implements OnInit, OnDestroy {
 						}
 						// second step is assignee dropdown
 						case this.translateService.instant('WALKTHROUGH_PROGRESS_2_OF_8'): {
-							const element = this.elRef.nativeElement.querySelector(
-								'#subject-heading'
-							);
+							const element =
+								this.elRef.nativeElement.querySelector('#subject-heading');
 							this.showPreview(
 								element,
 								this.fpos.getWalkthroughData(
@@ -1775,9 +1758,8 @@ export class RenderDetailLayoutComponent implements OnInit, OnDestroy {
 						}
 						// sixth step is private message toggle
 						case this.translateService.instant('WALKTHROUGH_PROGRESS_6_OF_8'): {
-							const element = this.elRef.nativeElement.querySelector(
-								'#time-spent-input'
-							);
+							const element =
+								this.elRef.nativeElement.querySelector('#time-spent-input');
 							this.showPreview(
 								element,
 								this.fpos.getWalkthroughData(
@@ -1839,9 +1821,8 @@ export class RenderDetailLayoutComponent implements OnInit, OnDestroy {
 	}
 
 	private getAvailableWalkthroughElements(moduleName: string) {
-		const availableWalkthroughElements = this.fpos.getAllWalkthroughData(
-			moduleName
-		);
+		const availableWalkthroughElements =
+			this.fpos.getAllWalkthroughData(moduleName);
 		const elementsFound = [];
 		for (let i = 0; i < availableWalkthroughElements.length; i++) {
 			const element = this.elRef.nativeElement.querySelector(
@@ -1989,7 +1970,7 @@ export class RenderDetailLayoutComponent implements OnInit, OnDestroy {
 	public checkRolePermissions() {
 		if (
 			this.module.NAME === 'Tickets' ||
-			this.module.NAME === 'Chat' ||
+			this.module.NAME === 'Chats' ||
 			this.module.NAME === 'Teams'
 		) {
 			return true;
@@ -2204,9 +2185,9 @@ export class RenderDetailLayoutComponent implements OnInit, OnDestroy {
 											}
 										} else if (
 											!walkthroughSuccess.hasOwnProperty('CHAT_DETAIL') &&
-											this.module.NAME === 'Chat'
+											this.module.NAME === 'Chats'
 										) {
-											this.showLearnMore('Chat');
+											this.showLearnMore('Chats');
 										}
 									});
 							}
@@ -2519,12 +2500,8 @@ export class RenderDetailLayoutComponent implements OnInit, OnDestroy {
 		const anyArray = [];
 
 		conditions.forEach((condition) => {
-			const {
-				CONDITION,
-				CONDITION_VALUE,
-				OPERATOR,
-				REQUIREMENT_TYPE,
-			} = condition;
+			const { CONDITION, CONDITION_VALUE, OPERATOR, REQUIREMENT_TYPE } =
+				condition;
 			const fieldName = fields.find((f) => f.FIELD_ID === CONDITION).NAME;
 
 			switch (OPERATOR.toLocaleUpperCase()) {
@@ -2995,9 +2972,8 @@ export class RenderDetailLayoutComponent implements OnInit, OnDestroy {
 						(response: any) => {
 							const field = moduleField.NAME;
 							this.relationFieldEntries[moduleField.NAME] = response.DATA;
-							this.oneToManyCountMap[field] = this.relationFieldEntries[
-								moduleField.NAME
-							].length;
+							this.oneToManyCountMap[field] =
+								this.relationFieldEntries[moduleField.NAME].length;
 						},
 						(error: any) => {
 							console.log(error);
@@ -3093,12 +3069,11 @@ export class RenderDetailLayoutComponent implements OnInit, OnDestroy {
 			moduleField.DATA_TYPE.DISPLAY === 'Chronometer' &&
 			this.entry[moduleField.NAME] !== undefined
 		) {
-			this.entry[
-				moduleField.NAME
-			] = this.renderLayoutService.chronometerFormatTransform(
-				this.entry[moduleField.NAME],
-				''
-			);
+			this.entry[moduleField.NAME] =
+				this.renderLayoutService.chronometerFormatTransform(
+					this.entry[moduleField.NAME],
+					''
+				);
 			this.oldChronometerValue = this.entry[moduleField.NAME];
 		}
 	}
@@ -3451,7 +3426,8 @@ export class RenderDetailLayoutComponent implements OnInit, OnDestroy {
 			case 'Currency Exchange':
 				return this.currencyExchangeService.getCurrencyExchange(
 					field,
-					this.layoutStyle);	
+					this.layoutStyle
+				);
 			case 'Chronometer':
 				return this.chronometerService.getChronometer(field, this.layoutStyle);
 			case 'Checkbox':
@@ -3793,19 +3769,15 @@ export class RenderDetailLayoutComponent implements OnInit, OnDestroy {
 						!this.entry[moduleField.NAME].PHONE_NUMBER ||
 						this.entry[moduleField.NAME].PHONE_NUMBER.length === 0
 					) {
-						this.entry[moduleField.NAME]['COUNTRY_CODE'] = this.entry[
-							moduleField.NAME
-						]['COUNTRY_CODE'];
-						this.entry[moduleField.NAME]['DIAL_CODE'] = this.entry[
-							moduleField.NAME
-						]['DIAL_CODE'];
-						this.entry[moduleField.NAME]['COUNTRY_FLAG'] = this.entry[
-							moduleField.NAME
-						]['COUNTRY_FLAG'];
+						this.entry[moduleField.NAME]['COUNTRY_CODE'] =
+							this.entry[moduleField.NAME]['COUNTRY_CODE'];
+						this.entry[moduleField.NAME]['DIAL_CODE'] =
+							this.entry[moduleField.NAME]['DIAL_CODE'];
+						this.entry[moduleField.NAME]['COUNTRY_FLAG'] =
+							this.entry[moduleField.NAME]['COUNTRY_FLAG'];
 					} else {
-						this.entry[moduleField.NAME]['PHONE_NUMBER'] = this.entry[
-							moduleField.NAME
-						]['PHONE_NUMBER'].toString();
+						this.entry[moduleField.NAME]['PHONE_NUMBER'] =
+							this.entry[moduleField.NAME]['PHONE_NUMBER'].toString();
 					}
 				}
 			}
@@ -3821,9 +3793,8 @@ export class RenderDetailLayoutComponent implements OnInit, OnDestroy {
 				) {
 					this.entry[moduleField.NAME] = '0m';
 				} else {
-					this.entry[moduleField.NAME] = this.chronometerValues[
-						moduleField.NAME
-					];
+					this.entry[moduleField.NAME] =
+						this.chronometerValues[moduleField.NAME];
 				}
 			}
 			// if (moduleField.DATA_TYPE.DISPLAY === 'Date/Time') {
@@ -3895,9 +3866,8 @@ export class RenderDetailLayoutComponent implements OnInit, OnDestroy {
 								)
 								.subscribe((ressponse) => {
 									this.bannerMessageService.successNotifications.push({
-										message: this.translateService.instant(
-											'SAVED_SUCCESSFULLY'
-										),
+										message:
+											this.translateService.instant('SAVED_SUCCESSFULLY'),
 									});
 									// .customTableService.dataIds.clear();
 									this.router.navigate([
@@ -4497,7 +4467,7 @@ export class RenderDetailLayoutComponent implements OnInit, OnDestroy {
 		this.modulesService.getEntries(this.moduleId).subscribe(
 			(response: any) => {
 				this.allEntries = response.DATA;
-				if (this.module.NAME === 'Chat') {
+				if (this.module.NAME === 'Chats') {
 					this.allEntries = this.allEntries.filter(
 						(entry) =>
 							entry.hasOwnProperty('REQUESTOR') &&
@@ -4588,9 +4558,10 @@ export class RenderDetailLayoutComponent implements OnInit, OnDestroy {
 				}
 
 				// updating tollbar notifications
-				this.notificationsService.unreadNotifications = response.NOTIFICATIONS.filter(
-					(notification) => notification.DATA_ID !== this.entry.DATA_ID
-				);
+				this.notificationsService.unreadNotifications =
+					response.NOTIFICATIONS.filter(
+						(notification) => notification.DATA_ID !== this.entry.DATA_ID
+					);
 			},
 			(error: any) => {
 				this.bannerMessageService.errorNotifications.push(error.error.ERROR);
@@ -4621,7 +4592,7 @@ export class RenderDetailLayoutComponent implements OnInit, OnDestroy {
 		if (this.updateSubscription && this.updateSubscription != null) {
 			this.updateSubscription.unsubscribe();
 		}
-		if (this.module.NAME === 'Chat') {
+		if (this.module.NAME === 'Chats') {
 			this.chatSub.unsubscribe();
 			this.notificationSub.unsubscribe();
 		} else {
@@ -4642,7 +4613,7 @@ export class RenderDetailLayoutComponent implements OnInit, OnDestroy {
 		if (this.updateSubscription && this.updateSubscription != null) {
 			this.updateSubscription.unsubscribe();
 		}
-		if (this.module.NAME === 'Chat') {
+		if (this.module.NAME === 'Chats') {
 			if (this.chatSub !== undefined) {
 				this.chatSub.unsubscribe();
 			}
@@ -4790,7 +4761,6 @@ export class RenderDetailLayoutComponent implements OnInit, OnDestroy {
 			this.filteredCountries = this.renderLayoutService.countries;
 		}
 	}
-
 
 	public setupOneToManyTable(moduleId, fieldId) {
 		//	this.currentTable = fieldId;
@@ -4973,7 +4943,8 @@ export class RenderDetailLayoutComponent implements OnInit, OnDestroy {
 		this.customTableService.columnsHeaders = columnsHeaders;
 		this.customTableService.columnsHeadersObj = columnsHeadersObj;
 		this.customTableService.sortBy = this.customTableService.activeSort.NAME;
-		this.customTableService.sortOrder = this.customTableService.activeSort.ORDER_BY;
+		this.customTableService.sortOrder =
+			this.customTableService.activeSort.ORDER_BY;
 		this.customTableService.isLoading = true;
 
 		// passes search to get entries call if its defined in local storage
@@ -5071,12 +5042,11 @@ export class RenderDetailLayoutComponent implements OnInit, OnDestroy {
 								const chronoFieldName = key.NAME;
 								this.listLayoutData.forEach((data) => {
 									if (data.hasOwnProperty(chronoFieldName)) {
-										data[
-											chronoFieldName
-										] = this.renderLayoutService.chronometerFormatTransform(
-											data[chronoFieldName],
-											''
-										);
+										data[chronoFieldName] =
+											this.renderLayoutService.chronometerFormatTransform(
+												data[chronoFieldName],
+												''
+											);
 									}
 								});
 							});
@@ -5298,7 +5268,8 @@ export class RenderDetailLayoutComponent implements OnInit, OnDestroy {
 					result.CREATE_LAYOUT_TABLE_DATA
 				);
 
-				this.customTableService.totalRecords = this.customTableService.customTableDataSource.data.length;
+				this.customTableService.totalRecords =
+					this.customTableService.customTableDataSource.data.length;
 			} else if (result.ONE_TO_MANY_DATA !== null && this.entryId !== 'new') {
 				const keysList = Array.from(result.ONE_TO_MANY_DATA.keys());
 
@@ -5473,5 +5444,4 @@ export class RenderDetailLayoutComponent implements OnInit, OnDestroy {
 			this.entry[fieldName] = resultMap.get(inheritanceMap.get(key));
 		});
 	}
-
 }

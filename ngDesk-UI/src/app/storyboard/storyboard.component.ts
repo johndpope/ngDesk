@@ -35,7 +35,7 @@ export class StoryboardComponent implements OnInit, OnDestroy {
 	public fields = [];
 	private moduleId: string;
 	public entryData: any;
-	public allowedModules = ['Tickets', 'Chat'];
+	public allowedModules = ['Tickets', 'Chats'];
 	public dashboardForm: FormGroup;
 	public teams = [];
 	public editEnabled = false;
@@ -74,8 +74,8 @@ export class StoryboardComponent implements OnInit, OnDestroy {
 			TEAMS: [[], Validators.required],
 		});
 		// use modules saved in cache
-		this.companyInfoSubscription = this.cacheService.companyInfoSubject.subscribe(
-			(dataStored) => {
+		this.companyInfoSubscription =
+			this.cacheService.companyInfoSubject.subscribe((dataStored) => {
 				if (dataStored) {
 					this.modules = this.cacheService.companyData['MODULES'];
 					const ticketsModule = this.cacheService.companyData['MODULES'].find(
@@ -101,9 +101,8 @@ export class StoryboardComponent implements OnInit, OnDestroy {
 							});
 						}
 					);
-					}
-			}
-		);
+				}
+			});
 
 		this.modulesService.getAllDashboard().subscribe((response: any) => {
 			this.rolesService
@@ -153,8 +152,9 @@ export class StoryboardComponent implements OnInit, OnDestroy {
 			}
 			let setWidget: Widget[];
 			// this.components.forEach((component: any) => {
-			let moduleId = this.modules.find((M) => M.NAME === comp.setModule)
-				.MODULE_ID;
+			let moduleId = this.modules.find(
+				(M) => M.NAME === comp.setModule
+			).MODULE_ID;
 			setWidget = [
 				{
 					MODULE: moduleId,
@@ -348,9 +348,8 @@ export class StoryboardComponent implements OnInit, OnDestroy {
 				this.isLoading = false;
 				const widgetEntries = response.WIDGETS;
 				widgetEntries.forEach((widget: any) => {
-					const comp = this.layoutService.components[
-						widgetEntries.indexOf(widget)
-					];
+					const comp =
+						this.layoutService.components[widgetEntries.indexOf(widget)];
 					this.setData(comp, this.entryData, widget);
 				});
 			},
@@ -472,8 +471,9 @@ export class StoryboardComponent implements OnInit, OnDestroy {
 			let moduleId;
 			if (this.components.indexOf(component) < this.components.length - 1) {
 				if (this.modules.find((M) => M.NAME === component.setModule)) {
-					moduleId = this.modules.find((M) => M.NAME === component.setModule)
-						.MODULE_ID;
+					moduleId = this.modules.find(
+						(M) => M.NAME === component.setModule
+					).MODULE_ID;
 				} else {
 					moduleId = component.setModule;
 				}

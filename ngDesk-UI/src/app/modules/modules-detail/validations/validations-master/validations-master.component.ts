@@ -46,7 +46,7 @@ export class ValidationsMasterComponent implements OnInit {
 
 		this.translateService.get('DELETE').subscribe((value: string) => {
 			// create a function on this.escalationsActions with the name of the translated word
-			this.validationActions[value] = validation => {
+			this.validationActions[value] = (validation) => {
 				this.deleteWorkflow(validation);
 			};
 			this.validationActions.actions[0].NAME = value;
@@ -80,7 +80,7 @@ export class ValidationsMasterComponent implements OnInit {
 						},
 						{
 							NAME: 'WORKFLOWS',
-							PATH: ['', 'modules', this.moduleId, 'workflows']
+							PATH: ['', 'modules', this.moduleId, 'workflows'],
 						},
 						{
 							NAME: 'SLAS',
@@ -100,10 +100,10 @@ export class ValidationsMasterComponent implements OnInit {
 						},
 						{
 							NAME: 'TASK',
-							PATH: ['', 'modules', this.moduleId, 'task']
-						}
+							PATH: ['', 'modules', this.moduleId, 'task'],
+						},
 					];
-				} else if (response.NAME === 'Chat') {
+				} else if (response.NAME === 'Chats') {
 					this.navigations = [
 						{
 							NAME: 'MODULE_DETAIL',
@@ -115,8 +115,8 @@ export class ValidationsMasterComponent implements OnInit {
 						},
 						{
 							NAME: 'WORKFLOWS',
-							PATH: ['', 'modules', this.moduleId, 'workflows']
-						}
+							PATH: ['', 'modules', this.moduleId, 'workflows'],
+						},
 					];
 				} else {
 					this.navigations = [
@@ -138,7 +138,7 @@ export class ValidationsMasterComponent implements OnInit {
 						},
 						{
 							NAME: 'WORKFLOWS',
-							PATH: ['', 'modules', this.moduleId, 'workflows']
+							PATH: ['', 'modules', this.moduleId, 'workflows'],
 						},
 						{
 							NAME: 'SLAS',
@@ -158,8 +158,8 @@ export class ValidationsMasterComponent implements OnInit {
 						},
 						{
 							NAME: 'TASK',
-							PATH: ['', 'modules', this.moduleId, 'task']
-						}
+							PATH: ['', 'modules', this.moduleId, 'task'],
+						},
 					];
 				}
 			});

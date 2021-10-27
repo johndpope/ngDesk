@@ -215,6 +215,14 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 
 	public isFilterActive: boolean = false;
 	public chatChannel: any = {};
+	public customersForAgent: any = {
+		CHATTING: [],
+		OFFLINE: [],
+	};
+	public currentUserStatus = '';
+	public customerDetail: any = {};
+	public chatboxDisabled = false;
+	public closeChatMessage = '';
 	constructor(
 		@Optional() @Inject(MAT_DIALOG_DATA) public modalData: any,
 		@Optional()
@@ -477,9 +485,12 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 										} else {
 											this.entry = responseList[1];
 										}
-
-										if (this.module['NAME'] == 'Chat') {
+										if (this.module['NAME'] == 'Chats') {
 											this.getChatChannelDetails();
+											this.getCustomerForAgent();
+											this.loadUserDetailsByRequestorId(
+												this.entry['REQUESTOR']['DATA_ID']
+											);
 										}
 										this.formulaFields = this.module.FIELDS.filter((field) => {
 											return (
@@ -763,7 +774,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 									// 	});
 									// }
 
-									if (this.module.NAME !== 'Chat') {
+									if (this.module.NAME !== 'Chats') {
 										this.modulesService
 											.getAllModules()
 											.subscribe((allModules: any) => {
@@ -947,7 +958,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	private toggleSaveOnTitleBar() {
 		switch (this.module['NAME']) {
 			case 'Tickets':
-			case 'Chat':
+			case 'Chats':
 			case 'Teams':
 				this.showSaveOnTitleBar = false;
 				break;
@@ -1599,7 +1610,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 						this.customModulesService.discussionControls['MESSAGE'] +=
 							response.MESSAGE;
 
-						if (this.module['NAME'] == 'Chat') {
+						if (this.module['NAME'] == 'Chats') {
 							this.convertHTMLToPlainText();
 						}
 					},
@@ -1611,7 +1622,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 			this.customModulesService.discussionControls['MESSAGE'] +=
 				premadeResponse.MESSAGE;
 		}
-		if (this.module['NAME'] == 'Chat') {
+		if (this.module['NAME'] == 'Chats') {
 			this.convertHTMLToPlainText();
 		}
 	}
@@ -3701,5 +3712,116 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 			this.customModulesService.discussionControls['MESSAGE'];
 		this.customModulesService.discussionControls['MESSAGE'] =
 			tempHtml.innerText || tempHtml.textContent;
+	}
+
+	public getCustomerForAgent() {
+		this.customersForAgent.CHATTING = [];
+		this.customersForAgent.OFFLINE = [];
+		this.chatDataService.getUsersForAgent().subscribe((users: any) => {
+			users.getEntriesByAgentAndStatus;
+
+			users.getEntriesByAgentAndStatus.forEach((user) => {
+				this.currentUserStatus = user.STATUS;
+				if (user.STATUS === 'Chatting') {
+					this.customersForAgent.CHATTING.push(user);
+				} else {
+					this.customersForAgent.OFFLINE.push(user);
+				}
+			});
+		});
+	}
+
+	public loadUserChatDetails(user) {
+		this.entry['CHAT'] = [];
+		this.entry = {};
+		this.cacheService
+			.getPrerequisiteForDetaiLayout(this.module['MODULE_ID'], user._id)
+			.subscribe(
+				(userChatDetails: any) => {
+					if (userChatDetails[1].hasOwnProperty('entry')) {
+						this.entry = userChatDetails[1].entry;
+					} else {
+						this.entry = userChatDetails[1];
+					}
+				},
+				(error) => {
+					console.log(error);
+				}
+			);
+	}
+
+	public loadUserDetailsByRequestorId(userID) {
+		this.modulesService.getAllModules().subscribe((allModules: any) => {
+			this.allModules = allModules['MODULES'];
+			const contactsModule = this.allModules.find(
+				(module) => module.NAME === 'Contacts'
+			);
+
+			this.cacheService
+				.getPrerequisiteForDetaiLayout(contactsModule['MODULE_ID'], userID)
+				.subscribe((customerDetails: any) => {
+					console.log(customerDetails);
+
+					if (customerDetails[1].hasOwnProperty('entry')) {
+						this.customerDetail = customerDetails[1].entry;
+					} else {
+						this.customerDetail = customerDetails[1];
+					}
+
+					console.log(this.entry);
+				});
+		});
+	}
+
+	public closeSession() {
+		this.chatboxDisabled = true;
+
+		const msgObj = {
+			agentDataID: this.userService.user.DATA_ID,
+			customerDataID: this.entry.REQUESTOR.DATA_ID,
+			sessionUUID: this.entry.SESSION_UUID,
+			discussionMessage: {
+				ATTACHMENTS: [],
+				COMPANY_SUBDOMAIN: this.userService.getSubdomain(),
+				ENTRY_ID: this.route.snapshot.params['dataId'],
+				MESSAGE:
+					' Session has been closed by ' +
+					this.userService.user.FIRST_NAME +
+					' ' +
+					this.userService.user.LAST_NAME,
+				MESSAGE_ID: '',
+				MESSAGE_TYPE: 'MESSAGE',
+				MODULE_ID: this.module['MODULE_ID'],
+				SENDER: {
+					FIRST_NAME: this.userService.user.FIRST_NAME,
+					LAST_NAME: this.userService.user.LAST_NAME,
+					ROLE: this.userService.user.ROLE,
+					USER_UUID: this.userService.user.USER_UUID,
+				},
+			},
+		};
+
+		this.websocketService.publishMessage(msgObj);
+
+		const endChatObj = {
+			sessionUUID: this.entry['SESSION_UUID'],
+			subdomain: this.userService.getSubdomain(),
+			sendTranscript: false,
+		};
+
+		this.websocketService.publishMessage(endChatObj);
+	}
+
+	public vlidateCloseSessionMessage(message) {
+		const ClosedMessage =
+			' Session has been closed by ' +
+			this.userService.user.FIRST_NAME +
+			' ' +
+			this.userService.user.LAST_NAME;
+		if (message == ClosedMessage) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

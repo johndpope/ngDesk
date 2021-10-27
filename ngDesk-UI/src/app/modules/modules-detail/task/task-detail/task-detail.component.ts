@@ -127,7 +127,7 @@ export class TaskDetailComponent implements OnInit {
 			this.modules = this.modules.filter(
 				(module) =>
 					module.NAME !== 'Teams' &&
-					module.NAME !== 'Chat' &&
+					module.NAME !== 'Chats' &&
 					module.NAME !== 'Users'
 			);
 		});
@@ -147,7 +147,7 @@ export class TaskDetailComponent implements OnInit {
 				this.modules = this.modules.filter(
 					(module) =>
 						module.NAME !== 'Teams' &&
-						module.NAME !== 'Chat' &&
+						module.NAME !== 'Chats' &&
 						module.NAME !== 'Users' &&
 						module.NAME !== 'Accounts' &&
 						module.NAME !== 'Contacts'

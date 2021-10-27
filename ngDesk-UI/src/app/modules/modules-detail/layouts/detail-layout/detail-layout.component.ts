@@ -233,7 +233,7 @@ export class DetailLayoutComponent implements OnInit {
 					(response: any) => {
 						this.module = response;
 						// TODO: Remove
-						if (response.NAME !== 'Tickets' && response.NAME !== 'Chat') {
+						if (response.NAME !== 'Tickets' && response.NAME !== 'Chats') {
 							// this.redirectToHome();
 							this.gridLayout = true;
 						}

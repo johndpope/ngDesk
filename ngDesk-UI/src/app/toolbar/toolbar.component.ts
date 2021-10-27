@@ -111,7 +111,7 @@ export class ToolbarComponent implements OnDestroy, OnInit {
 		public notificationApiService: NotificationApiService,
 		private http: HttpClient,
 		private globals: AppGlobals,
-		private toolbarService: ToolbarService,
+		private toolbarService: ToolbarService
 	) {
 		this.authToken = this.usersService.getAuthenticationToken();
 	}
@@ -130,13 +130,13 @@ export class ToolbarComponent implements OnDestroy, OnInit {
 						(module) => module['NAME'] === 'Tickets'
 					);
 					// const chatModule = this.cacheService.companyData['MODULES'].find(
-					// 	(module) => module['NAME'] === 'Chat'
+					// 	(module) => module['NAME'] === 'Chats'
 					// );
 
 					if (!this.authToken) {
 						this.enableSignup =
 							this.cacheService.companyData['COMPANY_ENROLLMENT'][
-							'ENABLE_SIGNUPS'
+								'ENABLE_SIGNUPS'
 							];
 					} else {
 						this.toolbarService.updateShowAcceptChat();
@@ -210,7 +210,6 @@ export class ToolbarComponent implements OnDestroy, OnInit {
 						}
 					}
 				}
-
 			}
 		);
 		// });
@@ -679,7 +678,5 @@ export class ToolbarComponent implements OnDestroy, OnInit {
 			statusCheck: true,
 		};
 		this.websocketService.publishChatStatusCheck(chatStatusCheck);
-
 	}
-
 }

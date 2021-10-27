@@ -13,7 +13,7 @@ import { ModulesService } from '../../../../modules.service';
 @Component({
 	selector: 'app-chat-bots-create',
 	templateUrl: './chat-bot-create.component.html',
-	styleUrls: ['./chat-bot-create.component.scss']
+	styleUrls: ['./chat-bot-create.component.scss'],
 })
 export class ChatBotCreateComponent implements OnInit {
 	public dialogRef: MatDialogRef<ConfirmDialogComponent>;
@@ -22,9 +22,9 @@ export class ChatBotCreateComponent implements OnInit {
 			{
 				NAME: '',
 				ICON: 'delete',
-				PERMISSION_NAME: 'DELETE'
-			}
-		]
+				PERMISSION_NAME: 'DELETE',
+			},
+		],
 	};
 	public showSideNav = true;
 	public navigations = [];
@@ -50,7 +50,7 @@ export class ChatBotCreateComponent implements OnInit {
 
 		this.translateService.get('DELETE').subscribe((value: string) => {
 			// create a function on this.escalationsActions with the name of the translated word
-			this.chatBotActions[value] = chatBot => {
+			this.chatBotActions[value] = (chatBot) => {
 				this.deleteChatBot(chatBot);
 			};
 			this.chatBotActions.actions[0].NAME = value;
@@ -69,86 +69,86 @@ export class ChatBotCreateComponent implements OnInit {
 					this.navigations = [
 						{
 							NAME: 'MODULE_DETAIL',
-							PATH: ['', 'modules', this.moduleId]
+							PATH: ['', 'modules', this.moduleId],
 						},
 						{
 							NAME: 'FIELDS',
-							PATH: ['', 'modules', this.moduleId, 'fields']
+							PATH: ['', 'modules', this.moduleId, 'fields'],
 						},
 						{
 							NAME: 'LAYOUTS',
-							PATH: ['', 'modules', this.moduleId, 'layouts']
+							PATH: ['', 'modules', this.moduleId, 'layouts'],
 						},
 						{
 							NAME: 'VALIDATIONS',
-							PATH: ['', 'modules', this.moduleId, 'validations']
+							PATH: ['', 'modules', this.moduleId, 'validations'],
 						},
 						{
 							NAME: 'WORKFLOWS',
-							PATH: ['', 'modules', this.moduleId, 'workflows']
+							PATH: ['', 'modules', this.moduleId, 'workflows'],
 						},
 						{
 							NAME: 'SLAS',
-							PATH: ['', 'modules', this.moduleId, 'slas']
+							PATH: ['', 'modules', this.moduleId, 'slas'],
 						},
 						{
 							NAME: 'CHANNELS',
-							PATH: ['', 'modules', this.moduleId, 'channels']
-						}
+							PATH: ['', 'modules', this.moduleId, 'channels'],
+						},
 					];
-				} else if (response.NAME === 'Chat') {
+				} else if (response.NAME === 'Chats') {
 					this.navigations = [
 						{
 							NAME: 'MODULE_DETAIL',
-							PATH: ['', 'modules', this.moduleId]
+							PATH: ['', 'modules', this.moduleId],
 						},
 						{
 							NAME: 'LAYOUTS',
-							PATH: ['', 'modules', this.moduleId, 'layouts']
+							PATH: ['', 'modules', this.moduleId, 'layouts'],
 						},
 						{
 							NAME: 'WORKFLOWS',
-							PATH: ['', 'modules', this.moduleId, 'workflows']
+							PATH: ['', 'modules', this.moduleId, 'workflows'],
 						},
 						{
 							NAME: 'CHANNELS',
-							PATH: ['', 'modules', this.moduleId, 'channels']
+							PATH: ['', 'modules', this.moduleId, 'channels'],
 						},
 						{
 							NAME: 'CHAT_BOTS',
-							PATH: ['', 'modules', this.moduleId, 'chatbots']
-						}
+							PATH: ['', 'modules', this.moduleId, 'chatbots'],
+						},
 					];
 				} else {
 					this.navigations = [
 						{
 							NAME: 'MODULE_DETAIL',
-							PATH: ['', 'modules', this.moduleId]
+							PATH: ['', 'modules', this.moduleId],
 						},
 						{
 							NAME: 'FIELDS',
-							PATH: ['', 'modules', this.moduleId, 'fields']
+							PATH: ['', 'modules', this.moduleId, 'fields'],
 						},
 						{
 							NAME: 'LAYOUTS',
-							PATH: ['', 'modules', this.moduleId, 'layouts']
+							PATH: ['', 'modules', this.moduleId, 'layouts'],
 						},
 						{
 							NAME: 'VALIDATIONS',
-							PATH: ['', 'modules', this.moduleId, 'validations']
+							PATH: ['', 'modules', this.moduleId, 'validations'],
 						},
 						{
 							NAME: 'WORKFLOWS',
-							PATH: ['', 'modules', this.moduleId, 'workflows']
+							PATH: ['', 'modules', this.moduleId, 'workflows'],
 						},
 						{
 							NAME: 'SLAS',
-							PATH: ['', 'modules', this.moduleId, 'slas']
+							PATH: ['', 'modules', this.moduleId, 'slas'],
 						},
 						{
 							NAME: 'CHANNELS',
-							PATH: ['', 'modules', this.moduleId, 'channels']
-						}
+							PATH: ['', 'modules', this.moduleId, 'channels'],
+						},
 					];
 				}
 			});
@@ -161,11 +161,11 @@ export class ChatBotCreateComponent implements OnInit {
 
 		columnsHeadersObj.push({
 			DISPLAY: this.translateService.instant('NAME'),
-			NAME: 'NAME'
+			NAME: 'NAME',
 		});
 		columnsHeadersObj.push({
 			DISPLAY: this.translateService.instant('ACTION'),
-			NAME: 'ACTION'
+			NAME: 'ACTION',
 		});
 		columnsHeaders.push(this.translateService.instant('NAME'));
 		columnsHeaders.push(this.translateService.instant('ACTION'));
@@ -194,7 +194,7 @@ export class ChatBotCreateComponent implements OnInit {
 			},
 			(chatBotError: any) => {
 				this.bannerMessageService.errorNotifications.push({
-					message: chatBotError.error.ERROR
+					message: chatBotError.error.ERROR,
 				});
 			}
 		);
@@ -212,12 +212,12 @@ export class ChatBotCreateComponent implements OnInit {
 				buttonText: this.translateService.instant('DELETE'),
 				closeDialog: this.translateService.instant('CANCEL'),
 				action: this.translateService.instant('DELETE'),
-				executebuttonColor: 'warn'
-			}
+				executebuttonColor: 'warn',
+			},
 		});
 
 		// EVENT AFTER MODAL DIALOG IS CLOSED
-		dialogRef.afterClosed().subscribe(result => {
+		dialogRef.afterClosed().subscribe((result) => {
 			if (result === this.translateService.instant('DELETE')) {
 				this.modulesService
 					.deleteChatBot(this.moduleId, chatBot.CHAT_BOT_ID)
@@ -225,13 +225,13 @@ export class ChatBotCreateComponent implements OnInit {
 						(chatBotsResonse: any) => {
 							this.companiesService.trackEvent(`Deleted ChatBot`, {
 								CHAT_BOT_ID: chatBot.CHAT_BOT_ID,
-								MODULE_ID: this.moduleId
+								MODULE_ID: this.moduleId,
 							});
 							this.getChatBots();
 						},
 						(chatBotsError: any) => {
 							this.bannerMessageService.errorNotifications.push({
-								message: chatBotsError.error.ERROR
+								message: chatBotsError.error.ERROR,
 							});
 						}
 					);
@@ -244,7 +244,7 @@ export class ChatBotCreateComponent implements OnInit {
 	}
 	public rowClicked(rowData): void {
 		this.router.navigate([
-			`modules/${this.moduleId}/chatbots/${rowData.CHAT_BOT_ID}`
+			`modules/${this.moduleId}/chatbots/${rowData.CHAT_BOT_ID}`,
 		]);
 	}
 

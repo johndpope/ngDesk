@@ -82,7 +82,7 @@ export class FieldMasterComponent implements OnInit {
 						},
 						{
 							NAME: 'WORKFLOWS',
-							PATH: ['', 'modules', this.moduleId, 'workflows']
+							PATH: ['', 'modules', this.moduleId, 'workflows'],
 						},
 						{
 							NAME: 'SLAS',
@@ -102,10 +102,10 @@ export class FieldMasterComponent implements OnInit {
 						},
 						{
 							NAME: 'TASK',
-							PATH: ['', 'modules', this.moduleId, 'task']
-						}
+							PATH: ['', 'modules', this.moduleId, 'task'],
+						},
 					];
-				} else if (response.NAME === 'Chat') {
+				} else if (response.NAME === 'Chats') {
 					this.navigations = [
 						{
 							NAME: 'MODULE_DETAIL',
@@ -121,13 +121,12 @@ export class FieldMasterComponent implements OnInit {
 						},
 						{
 							NAME: 'WORKFLOWS',
-							PATH: ['', 'modules', this.moduleId, 'workflows']
+							PATH: ['', 'modules', this.moduleId, 'workflows'],
 						},
 						{
 							NAME: 'CHANNELS',
 							PATH: ['', 'modules', this.moduleId, 'channels'],
-						}
-						
+						},
 					];
 				} else {
 					this.navigations = [
@@ -149,7 +148,7 @@ export class FieldMasterComponent implements OnInit {
 						},
 						{
 							NAME: 'WORKFLOWS',
-							PATH: ['', 'modules', this.moduleId, 'workflows']
+							PATH: ['', 'modules', this.moduleId, 'workflows'],
 						},
 						{
 							NAME: 'SLAS',
@@ -169,8 +168,8 @@ export class FieldMasterComponent implements OnInit {
 						},
 						{
 							NAME: 'TASK',
-							PATH: ['', 'modules', this.moduleId, 'task']
-						}
+							PATH: ['', 'modules', this.moduleId, 'task'],
+						},
 					];
 				}
 				this.getFields();

@@ -12,7 +12,7 @@ export class ChatDataService {
 
 	public getChatChannel() {
 		const channelQuery = `{
-      CHAT_CHANNEL: getChatChannel(name: "Chat") {
+      CHAT_CHANNEL: getChatChannel(name: "Chats") {
         name
         description
         sourceType
@@ -27,6 +27,28 @@ export class ChatDataService {
         receiverTextColor
         }
     }`;
-		return this.http.post(`${this.globals.graphqlUrl}`, channelQuery);
+		return this.makeGraphQLCall(channelQuery);
+	}
+
+	public getUsersForAgent() {
+		const requesterQuery = `
+    {
+      getEntriesByAgentAndStatus {
+      REQUESTOR{
+      FULL_NAME
+      USER{
+      EMAIL_ADDRESS
+      }
+      }
+      _id
+      STATUS
+      }
+      }
+      `;
+		return this.makeGraphQLCall(requesterQuery);
+	}
+
+	private makeGraphQLCall(query) {
+		return this.http.post(`${this.globals.graphqlUrl}`, query);
 	}
 }

@@ -295,7 +295,7 @@ export class FilePreviewOverlayService {
 
 	private showMoreData: ShowMoreData[] = [
 		{
-			MODULE: 'Chat',
+			MODULE: 'Chats',
 			DIALOG_TITLE: 'LEARN_MORE_CHAT_DETAIL_TITLE',
 			DIALOG_DESC: 'LEARN_MORE_CHAT_DETAIL_DESCRIPTION',
 			FIRST_STEP_ELEMENT: 'chat-messages',
@@ -311,7 +311,7 @@ export class FilePreviewOverlayService {
 	];
 
 	public getWalkthroughData(module: string, element: string): PopupData {
-		if (module === 'Chat') {
+		if (module === 'Chats') {
 			return this.chatsWalkthroughData.find((item) => item.element === element);
 		} else if (module === 'Ticket' || module === 'Tickets') {
 			return this.ticketsWalkthroughData.find(
@@ -321,7 +321,7 @@ export class FilePreviewOverlayService {
 	}
 
 	public getAllWalkthroughData(module: string): PopupData[] {
-		if (module === 'Chat') {
+		if (module === 'Chats') {
 			return this.chatsWalkthroughData;
 		} else if (module === 'Ticket' || module === 'Tickets') {
 			return this.ticketsWalkthroughData;
@@ -383,9 +383,8 @@ export class FilePreviewOverlayService {
 			null,
 			injector
 		);
-		const containerRef: ComponentRef<WalkthroughDialogComponent> = overlayRef.attach(
-			containerPortal
-		);
+		const containerRef: ComponentRef<WalkthroughDialogComponent> =
+			overlayRef.attach(containerPortal);
 		return containerRef.instance;
 	}
 

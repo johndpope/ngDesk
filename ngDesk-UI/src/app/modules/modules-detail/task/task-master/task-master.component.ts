@@ -104,10 +104,10 @@ export class TaskMasterComponent implements OnInit {
 						},
 						{
 							NAME: 'TASK',
-							PATH: ['', 'modules', this.moduleId, 'task']
-						}
+							PATH: ['', 'modules', this.moduleId, 'task'],
+						},
 					];
-				} else if (response.NAME === 'Chat') {
+				} else if (response.NAME === 'Chats') {
 					this.navigations = [
 						{
 							NAME: 'MODULE_DETAIL',
@@ -170,8 +170,8 @@ export class TaskMasterComponent implements OnInit {
 						},
 						{
 							NAME: 'TASK',
-							PATH: ['', 'modules', this.moduleId, 'task']
-						}
+							PATH: ['', 'modules', this.moduleId, 'task'],
+						},
 					];
 				}
 			},
@@ -224,7 +224,7 @@ export class TaskMasterComponent implements OnInit {
 		const page = this.customTableService.pageIndex;
 		const pageSize = this.customTableService.pageSize;
 		this.taskDetailService
-			.getAllTasks(moduleId,page, pageSize, sortBy, orderBy)
+			.getAllTasks(moduleId, page, pageSize, sortBy, orderBy)
 			.subscribe(
 				(taskResponse: any) => {
 					this.customTableService.setTableDataSource(
@@ -267,18 +267,16 @@ export class TaskMasterComponent implements OnInit {
 		// EVENT AFTER MODAL DIALOG IS CLOSED
 		dialogRef.afterClosed().subscribe((result) => {
 			if (result === this.translateService.instant('DELETE')) {
-				this.taskApiService
-					.deleteTask(task.taskId , this.moduleId)
-					.subscribe(
-						(taskResponse: any) => {
-							this.getTask();
-						},
-						(triggersError: any) => {
-							this.bannerMessageService.errorNotifications.push({
-								message: triggersError.error.ERROR,
-							});
-						}
-					);
+				this.taskApiService.deleteTask(task.taskId, this.moduleId).subscribe(
+					(taskResponse: any) => {
+						this.getTask();
+					},
+					(triggersError: any) => {
+						this.bannerMessageService.errorNotifications.push({
+							message: triggersError.error.ERROR,
+						});
+					}
+				);
 			}
 		});
 	}
@@ -288,9 +286,7 @@ export class TaskMasterComponent implements OnInit {
 	}
 
 	public rowClicked(rowData): void {
-		console.log('rowData' ,rowData);
-		this.router.navigate([
-			`modules/${this.moduleId}/task/${rowData.taskId}`,
-		]);
+		console.log('rowData', rowData);
+		this.router.navigate([`modules/${this.moduleId}/task/${rowData.taskId}`]);
 	}
 }

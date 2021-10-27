@@ -55,7 +55,7 @@ export class LayoutsMasterComponent implements OnInit {
 			(response: any) => {
 				this.isLoading = false;
 				this.module = response;
-				if (this.module.NAME === 'Chat') {
+				if (this.module.NAME === 'Chats') {
 					this.navigations = [
 						{
 							NAME: 'MODULE_DETAIL',
@@ -71,12 +71,12 @@ export class LayoutsMasterComponent implements OnInit {
 						},
 						{
 							NAME: 'WORKFLOWS',
-							PATH: ['', 'modules', this.moduleId, 'workflows']
+							PATH: ['', 'modules', this.moduleId, 'workflows'],
 						},
 						{
 							NAME: 'CHANNELS',
 							PATH: ['', 'modules', this.moduleId, 'channels'],
-						}
+						},
 					];
 				} else if (this.module.NAME === 'Tickets') {
 					this.navigations = [
@@ -98,7 +98,7 @@ export class LayoutsMasterComponent implements OnInit {
 						},
 						{
 							NAME: 'WORKFLOWS',
-							PATH: ['', 'modules', this.moduleId, 'workflows']
+							PATH: ['', 'modules', this.moduleId, 'workflows'],
 						},
 						{
 							NAME: 'SLAS',
@@ -118,8 +118,8 @@ export class LayoutsMasterComponent implements OnInit {
 						},
 						{
 							NAME: 'TASK',
-							PATH: ['', 'modules', this.moduleId, 'task']
-						}
+							PATH: ['', 'modules', this.moduleId, 'task'],
+						},
 					];
 				} else {
 					{
@@ -142,7 +142,7 @@ export class LayoutsMasterComponent implements OnInit {
 							},
 							{
 								NAME: 'WORKFLOWS',
-								PATH: ['', 'modules', this.moduleId, 'workflows']
+								PATH: ['', 'modules', this.moduleId, 'workflows'],
 							},
 							{
 								NAME: 'SLAS',
@@ -162,8 +162,8 @@ export class LayoutsMasterComponent implements OnInit {
 							},
 							{
 								NAME: 'TASK',
-								PATH: ['', 'modules', this.moduleId, 'task']
-							}
+								PATH: ['', 'modules', this.moduleId, 'task'],
+							},
 						];
 					}
 				}
@@ -239,13 +239,11 @@ export class LayoutsMasterComponent implements OnInit {
 			)
 			.subscribe(
 				(layoutResponse: any) => {
-					layoutResponse[this.layoutType.toUpperCase()].filter(
-						(role) => {
-							if (role.ROLE === 'Customers')
-							{
-							  role['ROLE'] = 'Customer'; 
-							} 
-						})
+					layoutResponse[this.layoutType.toUpperCase()].filter((role) => {
+						if (role.ROLE === 'Customers') {
+							role['ROLE'] = 'Customer';
+						}
+					});
 					this.customTableService.setTableDataSource(
 						layoutResponse[this.layoutType.toUpperCase()],
 						layoutResponse.TOTAL_RECORDS
