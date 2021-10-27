@@ -436,7 +436,7 @@ public class CsvImportService {
 				List<String> fieldValues = new ArrayList<String>();
 				for (String row : column) {
 					if (isHeader) {
-						headers.add(row);
+						headers.add(row.trim());
 					} else {
 						fieldValues.add(row);
 					}
@@ -524,19 +524,23 @@ public class CsvImportService {
 		return rowMap;
 	}
 
-	public String getAccountId(Map<String, Object> inputMessage, String companyId, List<Module> modules,
-			String globalTeamId, String userUuid, CsvImport csvDocument, int i) {
+	public String getAccountId(String moduleName, Map<String, Object> inputMessage, String companyId,
+			List<Module> modules, String globalTeamId, String userUuid, CsvImport csvDocument, int i) {
 
 		String accountId = null;
+		String accountName = "";
 
-		if (inputMessage.containsKey("EMAIL_ADDRESS")) {
+		if (moduleName.equals("Users") && inputMessage.containsKey("EMAIL_ADDRESS")) {
 			String userEmailAddress = inputMessage.get("EMAIL_ADDRESS").toString();
 			String[] splitEmail = userEmailAddress.split("@");
-			String accountName = "";
 			if (splitEmail.length > 1) {
 				accountName = splitEmail[1].trim();
 			}
+		} else if (moduleName.equals("Contacts") && inputMessage.containsKey("ACCOUNT")) {
+			accountName = inputMessage.get("ACCOUNT").toString().trim();
+		}
 
+		if (!accountName.isBlank()) {
 			if (!accountExists(accountName, companyId)) {
 				Module accountModule = modules.stream().filter(mod -> mod.getName().equals("Accounts")).findFirst()
 						.orElse(null);
@@ -557,9 +561,6 @@ public class CsvImportService {
 					accountId = accountEntry.get("_id").toString();
 				}
 			}
-		} else {
-			addToSet(i, "Email address is required", csvDocument.getCsvImportId());
-			return null;
 		}
 		return accountId;
 	}

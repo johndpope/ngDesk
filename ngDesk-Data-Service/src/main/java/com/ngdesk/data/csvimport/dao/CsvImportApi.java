@@ -148,6 +148,10 @@ public class CsvImportApi {
 			}
 			String[] headersArray = Arrays.stream(list.get(0)).map(String::trim).toArray(String[]::new);
 			headers = Arrays.asList(headersArray);
+			boolean bool = headers.stream().anyMatch(header -> (header == null || header.equals("")));
+			if(bool) {
+				throw new BadRequestException("HEADER_CANNOT_BE_EMPTY", null);
+			}
 		} else {
 			vars = new String[] { csvImportData.getFileType() };
 			throw new BadRequestException("FILE_FORMAT_NOT_SUPPORTED", vars);

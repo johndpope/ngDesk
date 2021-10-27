@@ -19,7 +19,6 @@ import com.ngdesk.data.csvimport.dao.CsvImportService;
 import com.ngdesk.data.csvimport.dao.DataTypeService;
 import com.ngdesk.data.csvimport.dao.UserModuleService;
 import com.ngdesk.data.dao.DataService;
-import com.ngdesk.data.dao.Relationship;
 import com.ngdesk.data.modules.dao.Module;
 import com.ngdesk.data.modules.dao.ModuleField;
 import com.ngdesk.data.modules.dao.ModuleService;
@@ -176,6 +175,36 @@ public class CsvImportJob {
 
 								String phoneNumber = "";
 
+								if (moduleName.equals("Users") || moduleName.equals("Contacts")) {
+									String accountId = null;
+									try {
+										accountId = csvImportService.getAccountId(moduleName, inputMessage, companyId,
+												modules, globalTeamId, userUuid, csvDocument, i);
+									} catch (Exception e) {
+										csvImportService.addToSet(i, e.getMessage(), csvDocument.getCsvImportId());
+										error = true;
+										break;
+									}
+
+									if (moduleName.equals("Users")) {
+										if (inputMessage.containsKey("PHONE_NUMBER")) {
+											phoneNumber = inputMessage.get("PHONE_NUMBER").toString();
+											inputMessage.remove("PHONE_NUMBER");
+										}
+										if (inputMessage.containsKey("DEFAULT_CONTACT_METHOD")) {
+											if (inputMessage.get("DEFAULT_CONTACT_METHOD") == null || inputMessage
+													.get("DEFAULT_CONTACT_METHOD").toString().equals("")) {
+												inputMessage.put("DEFAULT_CONTACT_METHOD", "Email");
+											}
+										} else {
+											inputMessage.put("DEFAULT_CONTACT_METHOD", "Email");
+										}
+										inputMessage.put("ROLE", customerRoleId);
+										inputMessage.put("IS_LOGIN_ALLOWED", false);
+										inputMessage.put("INVITE_ACCEPTED", false);
+									}
+								}
+
 								inputMessage = dataTypeService.formatDataTypes(fields, inputMessage, csvDocument, i,
 										companyId, user, globalTeamId, module);
 
@@ -187,60 +216,18 @@ public class CsvImportJob {
 								inputMessage = dataService.addInternalFields(module, inputMessage,
 										csvDocument.getCreatedBy(), companyId);
 								try {
-									if (moduleName.equals("Users") || moduleName.equals("Contacts")) {
-
-										String accountId = csvImportService.getAccountId(inputMessage, companyId,
-												modules, globalTeamId, userUuid, csvDocument, i);
-
-										if (accountId == null) {
-											error = true;
-											break;
-										}
-
-										inputMessage.put("ACCOUNT", accountId);
-										if (moduleName.equals("Users")) {
-											if (inputMessage.containsKey("PHONE_NUMBER")) {
-												phoneNumber = inputMessage.get("PHONE_NUMBER").toString();
-												inputMessage.remove("PHONE_NUMBER");
-											}
-											if (inputMessage.containsKey("DEFAULT_CONTACT_METHOD")) {
-												if (inputMessage.get("DEFAULT_CONTACT_METHOD") == null || inputMessage
-														.get("DEFAULT_CONTACT_METHOD").toString().equals("")) {
-													inputMessage.put("DEFAULT_CONTACT_METHOD", "Email");
-												}
-											} else {
-												inputMessage.put("DEFAULT_CONTACT_METHOD", "Email");
-											}
-											inputMessage.put("ROLE", customerRoleId);
-											inputMessage.put("IS_LOGIN_ALLOWED", false);
-											inputMessage.put("INVITE_ACCEPTED", false);
-										}
-									}
-
 									if (moduleName.equalsIgnoreCase("Users")) {
 										userModuleService.handleUserModule(inputMessage, modules, userUuid, module,
 												company, globalTeam, phoneNumber);
-									} else {
-										if (moduleName.equals("Accounts")) {
-											if (!csvImportService.accountExists(
-													inputMessage.get("ACCOUNT_NAME").toString(), companyId)) {
-												csvImportService.createModuleData(companyId, moduleName, inputMessage,
-														userUuid, modules);
-											}
-										} else if (moduleName.equals("Contacts")) {
-											String accountId = inputMessage.get("ACCOUNT").toString();
-											Relationship accountRelationship = new Relationship(accountId,
-													csvImportService.getPrimaryDisplayFieldValue("ACCOUNT", module,
-															companyId, accountId).toString());
-											if (accountRelationship != null) {
-												inputMessage.put("ACCOUNT", accountRelationship);
-											}
-											csvImportService.createModuleData(companyId, moduleName, inputMessage,
-													userUuid, modules);
-										} else {
+									} else if (moduleName.equals("Accounts")) {
+										if (!csvImportService.accountExists(inputMessage.get("ACCOUNT_NAME").toString(),
+												companyId)) {
 											csvImportService.createModuleData(companyId, moduleName, inputMessage,
 													userUuid, modules);
 										}
+									} else {
+										csvImportService.createModuleData(companyId, moduleName, inputMessage, userUuid,
+												modules);
 									}
 								} catch (Exception e) {
 									csvImportService.addToSet(i, e.getMessage(), csvDocument.getCsvImportId());
