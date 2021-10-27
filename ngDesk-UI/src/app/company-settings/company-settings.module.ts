@@ -61,6 +61,7 @@ import { CamgaignCategoryComponent } from '@src/app/company-settings/marketing/c
 import { CampaignsDetailComponent } from '@src/app/company-settings/marketing/campaigns/campaigns-detail/campaigns-detail.component';
 import { CampaignsMasterComponent } from '@src/app/company-settings/marketing/campaigns/campaigns-master/campaigns-master.component';
 import { CampaignsService } from '@src/app/company-settings/marketing/campaigns/campaigns.service';
+import { EmailListService } from '@src/app/company-settings/marketing/email-lists/email-lists.service';
 import { EmailListsDetailComponent } from '@src/app/company-settings/marketing/email-lists/email-lists-detail/email-lists-detail.component';
 import { EmailListsMasterComponent } from '@src/app/company-settings/marketing/email-lists/email-lists-master/email-lists-master.component';
 import { NormalizationRuleDetailComponent } from '@src/app/company-settings/normalization-rule/normalization-rule-detail/normalization-rule-detail.component';
@@ -103,7 +104,6 @@ import { CatalogueDetailComponent } from './catalogues/catalogue-detail/catalogu
 import { CatalogueMasterComponent } from './catalogues/catalogue-master/catalogue-master.component';
 import { AccountLevelAccessComponent } from './account-level-access/account-level-access.component';
 
-
 @NgModule({
 	imports: [
 		SharedModule,
@@ -139,7 +139,7 @@ import { AccountLevelAccessComponent } from './account-level-access/account-leve
 		MatSidenavModule,
 		MatSliderModule,
 		MatListModule,
-		ClipboardModule
+		ClipboardModule,
 	],
 	declarations: [
 		ApiKeyDialogComponent,
@@ -172,7 +172,7 @@ import { AccountLevelAccessComponent } from './account-level-access/account-leve
 		RoleDetailComponent,
 		FieldPermissionComponent,
 		CsvImportDialogComponent,
-		CurrenciesMasterComponent,    
+		CurrenciesMasterComponent,
 		CurrenciesDetailComponent,
 		CampaignsMasterComponent,
 		CampaignsDetailComponent,
@@ -204,9 +204,9 @@ import { AccountLevelAccessComponent } from './account-level-access/account-leve
 		MicrosoftTeamsIntegrationComponent,
 		MicrosoftTeamsUnsubscribeComponent,
 		DocusignIntegrationComponent,
-  		CatalogueDetailComponent,
-  		CatalogueMasterComponent,
-		AccountLevelAccessComponent
+		CatalogueDetailComponent,
+		CatalogueMasterComponent,
+		AccountLevelAccessComponent,
 	],
 	providers: [
 		RolesService,
@@ -217,6 +217,7 @@ import { AccountLevelAccessComponent } from './account-level-access/account-leve
 		CurrenciesDetailComponent,
 		CampaignsService,
 		CompanySettingService,
+		EmailListService,
 	],
 	// entryComponents: [
 	// 	SidebarMenuCustomizeDialogComponent,

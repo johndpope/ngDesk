@@ -47,6 +47,9 @@ import com.ngdesk.graphql.datatypes.DateTime;
 import com.ngdesk.graphql.discoverymap.dao.DiscoveryMapDataFetcher;
 import com.ngdesk.graphql.discoverymap.dao.DiscoveryMapsDataFetcher;
 import com.ngdesk.graphql.discoverymap.dao.UnApprovedDiscoveryMapsDataFetcher;
+import com.ngdesk.graphql.emailList.dao.EmailListCountFetcher;
+import com.ngdesk.graphql.emailList.dao.EmailListDataFetcher;
+import com.ngdesk.graphql.emailList.dao.EmailListsDataFetcher;
 import com.ngdesk.graphql.enterprisesearch.dao.EnterpriseSearchCountFetcher;
 import com.ngdesk.graphql.enterprisesearch.dao.EnterpriseSearchDataFetcher;
 import com.ngdesk.graphql.enterprisesearch.dao.EnterpriseSearchesDataFetcher;
@@ -504,7 +507,7 @@ public class DataUtility {
 
 	@Autowired
 	ListFormulaDataFetcher listFormulaDatafetcher;
-	
+
 	@Autowired
 	EscalationDataFetcher escalationDataFetcher;
 
@@ -513,6 +516,15 @@ public class DataUtility {
 
 	@Autowired
 	EscalationsCountDataFetcher escalationCountDataFetcher;
+
+	@Autowired
+	EmailListDataFetcher emailListDataFetcher;
+
+	@Autowired
+	EmailListsDataFetcher emailListsDataFetcher;
+
+	@Autowired
+	EmailListCountFetcher emailListCountFetcher;
 
 	public GraphQL createGraphQlObject(Company company) throws IOException {
 		try {
@@ -964,6 +976,13 @@ public class DataUtility {
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getEscalation", escalationDataFetcher));
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getEscalations", escalationsDataFetcher));
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getEscalationsCount", escalationCountDataFetcher));
+
+		// EMAIL_LIST
+		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getEmailList", emailListDataFetcher));
+		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getEmailLists", emailListsDataFetcher));
+		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getEmailListCount", emailListCountFetcher));
+		builder.type("EmailList", typeWiring -> typeWiring.dataFetcher("createdBy", entryDataFetcher));
+		builder.type("EmailList", typeWiring -> typeWiring.dataFetcher("lastUpdatedBy", entryDataFetcher));
 
 		for (Module module : modules) {
 			String name = "get" + module.getName().replaceAll("\\s+", "_");
