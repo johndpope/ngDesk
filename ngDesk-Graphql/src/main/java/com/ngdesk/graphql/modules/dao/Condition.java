@@ -5,14 +5,13 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class Condition {
-	
+
 	@Field("REQUIREMENT_TYPE")
 	private String requirementType;
 
 	@Field("OPERATOR")
-	private String opearator;
+	private String operator;
 
 	@Field("CONDITION")
 	private String condition;
@@ -23,29 +22,29 @@ public class Condition {
 	public Condition() {
 	}
 
-	public Condition(String requirementType, String opearator, String condition, String conditionValue) {
+	public Condition(String requirementType, String operator, String condition, String conditionValue) {
 		super();
 		this.requirementType = requirementType;
-		this.opearator = opearator;
+		this.operator = operator;
 		this.condition = condition;
 		this.conditionValue = conditionValue;
 	}
 
 	public String getRequirementType() {
 		return requirementType;
-		
+
 	}
 
 	public void setRequirementType(String requirementType) {
 		this.requirementType = requirementType;
 	}
 
-	public String getOpearator() {
-		return opearator;
+	public String getOperator() {
+		return operator;
 	}
 
-	public void setOpearator(String opearator) {
-		this.opearator = opearator;
+	public void setOpearator(String operator) {
+		this.operator = operator;
 	}
 
 	public String getCondition() {
@@ -63,6 +62,5 @@ public class Condition {
 	public void setConditionValue(String conditionValue) {
 		this.conditionValue = conditionValue;
 	}
-	
 
 }

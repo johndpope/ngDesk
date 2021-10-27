@@ -26,7 +26,7 @@
 		<div fxLayout="column" *ngFor="let layer of schedule.layers; let i = index" class="mat-elevation-z8">
 			<div class="pad10" fxLayout="row" fxLayoutAlign="space-between center">
 				<label class="mat-h3">{{'LAYER'|translate}} {{i+1}}</label>
-				<button mat-icon-button [disabled]="disableButtons" (click)="removeLayer(i)">
+				<button mat-icon-button [disabled]="disableButtons" (click)="removeLayer(i)" matTooltip="{{'REMOVE_LAYER'|translate}}">
 					<mat-icon class="pointer" *ngIf="schedule.layers.length > 1">remove_circle</mat-icon>
 				</button>
 			</div>
@@ -43,11 +43,13 @@
 								,'margin-left':'5px'}">{{usersMap[user].CONTACT.PRIMARY_DISPLAY_FIELD}}</label>
 							<div fxLayout="row">
 								<mat-icon class="pointer" [ngStyle]="{'color': usersMap[user].COLORS.backgroundImage === 'linear-gradient(to bottom,#eaf7fe,#dff4ff)'?'black':'white'
-								,'margin-left':'5px'}" *ngIf="userIndex != 0 && !disableButtons" (click)="swap(i,userIndex,'up')">
+								,'margin-left':'5px'}" *ngIf="userIndex != 0 && !disableButtons" (click)="swap(i,userIndex,'up')"
+									matTooltip="{{'MOVE_USER_POSITION_UPWARD'|translate}}">
 									arrow_upwards
 								</mat-icon>
 								<mat-icon class="pointer" [ngStyle]="{'color': usersMap[user].COLORS.backgroundImage === 'linear-gradient(to bottom,#eaf7fe,#dff4ff)'?'black':'white'
-								,'margin-left':'5px'}" *ngIf="userIndex != layer.users.length - 1 && !disableButtons" (click)="swap(i,userIndex,'down')">
+								,'margin-left':'5px'}" *ngIf="userIndex != layer.users.length - 1 && !disableButtons" (click)="swap(i,userIndex,'down')"
+									matTooltip="{{'MOVE_USER_POSITION_DOWNWARD'|translate}}">
 									arrow_downwards
 								</mat-icon>
 							</div>
@@ -79,34 +81,41 @@
 					<label class="mat-body">{{'STEP_2_SET_UP_ON_CALL'|translate}}</label>
 					<mat-form-field>
 						<mat-select [disabled]="disableButtons" placeholder="Rotation Type" [(ngModel)]="layer.rotationType"
-							(ngModelChange)="initTable()">
+							(ngModelChange)="initTable()" matTooltip="{{'SELECT_ROTATION_TYPE'|translate}}">
 							<mat-option *ngFor="let type of rotationTypes" [value]="type">
 								{{type}}
 							</mat-option>
 						</mat-select>
 					</mat-form-field>
 					<mat-form-field>
-						<mat-select [disabled]="disableButtons" placeholder="Handoff Time" [(ngModel)]="layer.startTime" (ngModelChange)="initTable()">
+						<mat-select [disabled]="disableButtons" placeholder="Handoff Time" [(ngModel)]="layer.startTime" (ngModelChange)="initTable()"
+							matTooltip="{{'USER_HANDOFF_TIME'|translate}}">
 							<mat-option *ngFor="let time of startTimes" [value]="time">
 								{{time}}
 							</mat-option>
 						</mat-select>
 					</mat-form-field>
-					<div fxLayout="column">
-						<div fxLayout="row" fxLayoutGap="5px">
-							<mat-checkbox [disabled]="disableButtons" color="primary" [(ngModel)]="layer.hasRestrictions"
-								(ngModelChange)="toggleRestrictions(i)">{{'RESTRICT_ON_CALL_SHIFT'|translate}}</mat-checkbox>
-							<label class="mat-body-strong pointer" (click)="toggleRestrictions(i)"
-								*ngIf="layer.hasRestrictions && !disableButtons">Edit</label>
+					<div fxLayout="row">
+						<div fxLayout="column">
+							<div fxLayout="row" fxLayoutGap="5px">
+								<mat-checkbox [disabled]="disableButtons" color="primary" [(ngModel)]="layer.hasRestrictions"
+									(ngModelChange)="toggleRestrictions(i)">{{'RESTRICT_ON_CALL_SHIFT'|translate}}</mat-checkbox>
+							</div>
+							<div fxLayout="row" *ngFor="let restriction of layer.restrictions;" style="margin-left:24px" fxLayoutGap="5px"
+								class="mat-body">
+								<label>{{'FROM'|translate}}</label>
+								<label *ngIf="layer.restrictionType == 'Week'">{{restriction.startDay}}</label>
+								<label>{{restriction.startTime}}</label>
+								<label>{{'TO'|translate}}</label>
+								<label *ngIf="layer.restrictionType == 'Week'">{{restriction.endDay}}</label>
+								<label>{{restriction.endTime}}</label>
+							</div>
 						</div>
-						<!-- MARGIN LEFT SET TO 24px TO MATCH THE CHECKBOX AT THE TOP -->
-						<div fxLayout="row" *ngFor="let restriction of layer.restrictions;" style="margin-left:24px" fxLayoutGap="5px" class="mat-body">
-							<label>{{'FROM'|translate}}</label>
-							<label *ngIf="layer.restrictionType == 'Week'">{{restriction.startDay}}</label>
-							<label>{{restriction.startTime}}</label>
-							<label>{{'TO'|translate}}</label>
-							<label *ngIf="layer.restrictionType == 'Week'">{{restriction.endDay}}</label>
-							<label>{{restriction.endTime}}</label>
+						<div fxLayout="column" style="padding-left:10px">
+							<button (click)="toggleRestrictions(i)" mat-raised-button color="primary" *ngIf="layer.hasRestrictions && !disableButtons"
+								matTooltip="{{'EDIT_RESTRICTION'|translate}}">
+								{{'EDIT'|translate}}
+							</button>
 						</div>
 					</div>
 				</div>
@@ -117,12 +126,13 @@
 					<label class="mat-body">{{ 'STEP_3_SELECT_TIME_FOR_CHANGES'|translate}}</label>
 					<mat-form-field>
 						<input [disabled]="disableButtons" matInput [matDatepicker]="picker" placeholder="Start Date" [(ngModel)]="layer.startDate"
-							(ngModelChange)="initTable()">
-						<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+							(ngModelChange)="initTable()" matTooltip="{{'START_DATE_CHANGES'|translate}}">
+						<mat-datepicker-toggle matSuffix [for]="picker" matTooltip="{{'Calender'|translate}}"></mat-datepicker-toggle>
 						<mat-datepicker #picker></mat-datepicker>
 					</mat-form-field>
 					<mat-form-field>
-						<input matInput placeholder="Start Time" readonly [value]="layer.startTime" [disabled]='true'>
+						<input matInput placeholder="Start Time" readonly [value]="layer.startTime" [disabled]='true'
+							matTooltip="{{'START_TIME_CHANGES'|translate}}">
 					</mat-form-field>
 				</div>
 			</div>
@@ -141,10 +151,10 @@
 		<div fxLayout="row" fxLayoutAlign="space-between center" class="pad10">
 			<div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="5px">
 				<button class="small-button" mat-raised-button (click)="setDates('today')">Today</button>
-				<button class="small-button" mat-raised-button (click)="setDates('previous')">
+				<button class="small-button" mat-raised-button (click)="setDates('previous')" matTooltip="{{'PREVIOUS'|translate}}">
 					<mat-icon>arrow_back</mat-icon>
 				</button>
-				<button class="small-button" (click)="setDates('next')" mat-raised-button>
+				<button class="small-button" matTooltip="{{'NEXT'|translate}}" (click)="setDates('next')" mat-raised-button>
 					<mat-icon>arrow_forward</mat-icon>
 				</button>
 				<b class="mat-body-2">{{dayInView | date : "MMM dd"}}</b>

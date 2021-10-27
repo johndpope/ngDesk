@@ -180,17 +180,19 @@ export class ToolbarComponent implements OnDestroy, OnInit {
 							this.moduleId = ticketsModule.MODULE_ID;
 							this.displayGettingStarted = true;
 							let i = 0;
-							this.cacheService.companyData['ALL_GETTING_STARTED'].forEach(
-								(element) => {
-									this.complete[i] = element.COMPLETED;
-									i++;
-								}
-							);
+							this.companiesService
+								.getAllGettingStarted()
+								.subscribe((getAll: any) => {
+									getAll.GETTING_STARTED.forEach((element) => {
+										this.complete[i] = element.COMPLETED;
+										i++;
+									});
+									this.calculateProgress();
+									this.publishProgress();
+									this.publishEmailStatus();
+									this.publishProgressChatIntegration();
+								});
 
-							this.calculateProgress();
-							this.publishProgress();
-							this.publishEmailStatus();
-							this.publishProgressChatIntegration();
 							// } else {
 							// this.moduleId = chatModule.MODULE_ID;
 							// this.displayGettingStarted = true;

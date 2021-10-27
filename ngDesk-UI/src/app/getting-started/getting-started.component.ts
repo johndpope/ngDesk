@@ -150,6 +150,8 @@ export class GettingStartedComponent implements OnInit, OnDestroy {
 		'chevron_right',
 		'chevron_right',
 	];
+	@ViewChild(ToolbarComponent)
+	private toolbarComponent: ToolbarComponent;
 
 	@ViewChild('chatSettingsTabs')
 	public chatSettingsTabs: MatTabGroup;
@@ -169,6 +171,7 @@ export class GettingStartedComponent implements OnInit, OnDestroy {
 	private currentStep = 0;
 	public resourceSelected = 'none';
 	public showTicketsGuide = false;
+	public browser;
 	constructor(
 		private toolbarComp: ToolbarComponent,
 		private rolesService: RolesService,
@@ -225,7 +228,7 @@ export class GettingStartedComponent implements OnInit, OnDestroy {
 		this.moduleId = this.route.snapshot.params['moduleId'];
 		const channelName = 'Chats';
 		this.timeZones = this.schedulesDetailService.timeZones;
-
+		this.browser = this.companiesService.eventMetaData.BROWSER;
 		// this.chatChannelSubscription = this.chatChannelChanges$.subscribe(
 		// 	(val: any) => {
 		// 		this.chatChannel = val;
@@ -553,6 +556,7 @@ export class GettingStartedComponent implements OnInit, OnDestroy {
 					let verificationCounter = 0;
 					// reset timer
 					clearInterval(this.verificationTimer);
+					this.progressTracking('Set-Up Support Email');
 					// timer is set for function to be called every 5 seconds
 					// will check if email returns email channel verification status of true or false
 					this.verificationTimer = setInterval(() => {
@@ -729,6 +733,7 @@ export class GettingStartedComponent implements OnInit, OnDestroy {
 					.subscribe(
 						(put: any) => {
 							this.loadExisting('0');
+							this.progressTracking('Set-Up Support Email');
 						},
 						(errorResponse: any) => {
 							console.log(errorResponse);
@@ -1060,6 +1065,10 @@ export class GettingStartedComponent implements OnInit, OnDestroy {
 		}
 	}
 
+	public clickedSave() {
+		this.progressTracking('Personalize your ngDesk');
+	}
+
 	public panelClicked(index) {
 		this.resourceSelected = 'none';
 		this.showResources = false;
@@ -1096,11 +1105,60 @@ export class GettingStartedComponent implements OnInit, OnDestroy {
 				this.bannerMessageService.successNotifications.push({
 					message: 'Successfully resent Activation Email',
 				});
+				this.progressTracking('Activate Email');
 			});
 	}
 	public tabClicked(tab) {
 		this.panelClicked(tab.index);
 	}
+
+	public progressTracking(stepName) {
+		this.gettingStarted.forEach((step) => {
+			if (
+				step.STEP_NAME == stepName &&
+				!step.COMPLETED &&
+				this.gettingStarted.length == 4
+			) {
+				if (stepName == 'Activate Email') {
+					for (
+						let i = this.gettingStarted.indexOf(step) + 1;
+						i < this.gettingStarted.length;
+						i++
+					) {
+						if (!this.gettingStarted[i].COMPLETED) {
+							this.currentStep = i;
+							break;
+						}
+					}
+					if (this.complete.indexOf(false) == -1) {
+						this.finish = true;
+					}
+				} else {
+					step.COMPLETED = true;
+					this.complete[this.gettingStarted.indexOf(step)] = true;
+					this.completedSteps += 1;
+					this.stepIcon[this.gettingStarted.indexOf(step)] =
+						'check_circle_outline';
+					this.value += 25;
+					for (
+						let i = this.gettingStarted.indexOf(step) + 1;
+						i < this.gettingStarted.length;
+						i++
+					) {
+						if (!this.gettingStarted[i].COMPLETED) {
+							this.currentStep = i;
+							break;
+						}
+					}
+					if (this.complete.indexOf(false) == -1) {
+						this.finish = true;
+					}
+					this.toolbarComponent.value = this.value;
+				}
+			}
+		});
+	}
+
 	public ngOnDestroy() {
 		if (this.chatChannelSubscription) {
 			this.chatChannelSubscription.unsubscribe();
@@ -1161,6 +1219,7 @@ export class GettingStartedComponent implements OnInit, OnDestroy {
 																	),
 																}
 															);
+															this.progressTracking('Invite Team Members');
 															this.loadExisting('0');
 															this.inviting = false;
 														},

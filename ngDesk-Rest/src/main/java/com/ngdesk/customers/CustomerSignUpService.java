@@ -130,7 +130,7 @@ public class CustomerSignUpService {
 							customer.setEmailAddress(emailAddress);
 							customer.setUserUUID(UUID.randomUUID().toString());
 							customer.setDisabled(false);
-							customer.setLanguage("en");
+							customer.setLanguage("English");
 							customer.setPassword(global.passwordHash(ha1Password));
 							customer.setRole(customerRoleId);
 							customer.setDateCreated(new Timestamp(new Date().getTime()));
