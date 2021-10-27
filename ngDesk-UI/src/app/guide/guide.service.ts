@@ -407,9 +407,51 @@ _id
 		return this.http.post(`${this.globals.graphqlUrl}`, query);
 	}
 
-	public getKbAricles(pageNumber, pageSize, sortBy, orderBy) {
+	public getKbAricles(pageNumber, pageSize, sortBy, orderBy, search) {
 		let query = '';
-		query = `{
+		if (search && search !== '' && search !== null) {
+			query = `{
+			DATA:	getAllKbArticles(
+				pageNumber: null, pageSize: null, sortBy: null, orderBy: null, search: "${search}"
+			) {
+			ARTICLE_ID: articleId
+			TITLE: title
+			BODY: body
+		 VISIBLE_TO: visibleTo
+		 {
+					 _id
+		 }
+			AUTHOR: author
+				{
+						_id
+
+						CONTACT{
+							FIRST_NAME
+							LAST_NAME
+								 }
+				}
+				OPEN_FOR_COMMENTS: openForComments
+				SOURCE_LANGUAGE: sourceLanguage
+				LABELS: labels
+				ORDER: order
+				SECTION: section
+				PUBLISH: publish
+				COMMENTS: comments
+				{
+						messageId
+				}
+				DATE_CREATED: dateCreated
+				DATE_UPDATED:	dateUpdated
+				LAST_UPDATED_BY:lastUpdatedBy {
+					_id
+				}
+				CREATED_BY: createdBy {
+					_id
+				}
+			}
+			}`;
+		} else {
+			query = `{
 			DATA:	getAllKbArticles(
 				pageNumber: ${pageNumber}, pageSize: ${pageSize}, sortBy: "${sortBy}", orderBy: "${orderBy}",search: null
 			) {
@@ -449,6 +491,8 @@ _id
 				}
 			}
 			}`;
+		}
+
 		return this.http.post(`${this.globals.graphqlUrl}`, query);
 	}
 

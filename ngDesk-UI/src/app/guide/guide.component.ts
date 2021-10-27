@@ -26,7 +26,7 @@ export class GuideComponent implements OnInit {
 	public logo;
 	public filteredArticles = [];
 	public showArticles = false;
-	public searchString: string;
+	public search: string;
 	constructor(
 		private router: Router,
 		private rolesService: RolesService,
@@ -115,13 +115,14 @@ export class GuideComponent implements OnInit {
 	}
 
 	public searchArticle(): void {
-		this.searchString = this.searchCategoriesForm.get('SEARCH').value;
-		localStorage.setItem('GUIDE_SEARCH_VALUE', this.searchString);
+		this.search = this.searchCategoriesForm.get('SEARCH').value;
+		localStorage.setItem('GUIDE_SEARCH_VALUE', this.search);
 		if (this.searchCategoriesForm.get('SEARCH').value) {
 			this.isLoading = true;
 			this.showArticles = true;
-			this.guideService.getSearchedArticle(this.searchString).subscribe(
+			this.guideService.getKbAricles('', '', '', '', this.search).subscribe(
 				(response: any) => {
+					console.log('response', response);
 					this.filteredArticles = response.DATA;
 					this.filteredArticles.forEach((article) => {
 						article.BODY = article.BODY.replace(/<[^>]+>/g, '');

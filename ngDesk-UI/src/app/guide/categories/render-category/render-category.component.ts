@@ -138,7 +138,7 @@ export class RenderCategoryComponent implements OnInit {
 	public viewDetail(obj, type) {
 		switch (type) {
 			case 'Sections': {
-				this.navigate(['guide', 'sections', obj.SECTION_ID, 'detail']);
+				this.navigate(['guide', 'sections', obj.sectionId, 'detail']);
 				break;
 			}
 

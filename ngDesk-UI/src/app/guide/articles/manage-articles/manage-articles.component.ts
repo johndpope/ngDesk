@@ -93,23 +93,27 @@ export class ManageArticlesComponent implements OnInit {
 		const orderBy = this.customTableService.sortOrder;
 		const page = this.customTableService.pageIndex;
 		const pageSize = this.customTableService.pageSize;
-		this.guideService.getKbAricles(page, pageSize, sortBy, orderBy).subscribe(
-			(response: any) => {
-				this.guideService
-					.getAllKbArticlesCount()
-					.subscribe((responseCount: any) => {
-						this.customTableService.setTableDataSource(
-							response.DATA,
-							responseCount.DATA
-						);
+		this.guideService
+			.getKbAricles(page, pageSize, sortBy, orderBy, '')
+			.subscribe(
+				(response: any) => {
+					console.log('response', response);
+					this.guideService
+						.getAllKbArticlesCount()
+						.subscribe((responseCount: any) => {
+							console.log('responseCount', responseCount);
+							this.customTableService.setTableDataSource(
+								response.DATA,
+								responseCount.DATA
+							);
+						});
+				},
+				(error: any) => {
+					this.bannerMessageService.errorNotifications.push({
+						message: error.error.ERROR,
 					});
-			},
-			(error: any) => {
-				this.bannerMessageService.errorNotifications.push({
-					message: error.error.ERROR,
-				});
-			}
-		);
+				}
+			);
 	}
 
 	private deleteArticle(article) {

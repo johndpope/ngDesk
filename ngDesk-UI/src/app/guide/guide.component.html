@@ -82,11 +82,11 @@
 			<div *ngIf="!isLoading && showArticles">
 				<label class="mat-h1">{{ 'SEARCH_RESULTS' | translate }}</label><br />
 				<label class="mat-small">{{ filteredArticles.length }} result<span *ngIf="filteredArticles.length > 1">s</span>
-					for "{{ searchString }}"</label><br /><br /><br />
+					for "{{ search }}"</label><br /><br /><br />
 				<label class="mat-title">{{ 'KNOWLEDGE_BASE' | translate }}</label>
 				<mat-divider> </mat-divider><br />
 				<label class="mat-body" *ngIf="filteredArticles.length == 0">{{ 'NO_RESULTS_FOR' | translate }}
-					"{{ searchString }}"</label>
+					"{{ search }}"</label>
 				<div *ngFor="let article of filteredArticles">
 					<a style="color: #3f51b5;" class="link mat-h3 pointer" (click)="redirect(article, 'Articles')">{{ article.TITLE }}</a>
 					<div class="mat-body" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
