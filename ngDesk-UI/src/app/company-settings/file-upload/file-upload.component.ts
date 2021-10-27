@@ -11,6 +11,7 @@ import {
 	DataApiService,
 	CsvImportApiService,
 } from '@ngdesk/data-api';
+import { BannerMessageService } from '@src/app/custom-components/banner-message/banner-message.service';
 
 @Component({
 	selector: 'app-file-upload',
@@ -39,7 +40,8 @@ export class FileUploadComponent implements OnInit {
 		private dialog: MatDialog,
 		public dialogRef: MatDialogRef<FileUploadComponent>,
 		private router: Router,
-		private csvImportApiService: CsvImportApiService
+		private csvImportApiService: CsvImportApiService,
+		public bannerMessageService: BannerMessageService
 	) {}
 
 	public ngOnInit() {
@@ -95,28 +97,36 @@ export class FileUploadComponent implements OnInit {
 			const moduleId = this.selectedModule.MODULE_ID;
 			this.csvImportApiService
 				.generateCsvHeaders(moduleId, this.csvImportData)
-				.subscribe((response: any) => {
-					this.headers = response;
-					const csvData = {
-						HEADERS: this.headers,
-						MODULE: this.selectedModule,
-						CSV_IMPORT_DATA: this.csvImportData,
-					};
-					const dialogRef = this.dialog.open(CsvImportDialogComponent, {
-						data: {
-							csvData: csvData,
-							dialogTitle: this.translateService.instant('IMPORT_FROM_CSV'),
-							buttonText: this.translateService.instant('IMPORT'),
-							action: this.translateService.instant('IMPORT'),
-							closeDialog: this.translateService.instant('CANCEL'),
-							executebuttonColor: 'warn',
-						},
-					});
-					dialogRef.afterClosed().subscribe((result) => {
-						this.onNoClick();
-						this.dialogRef.close({ data: result });
-					});
-				});
+				.subscribe(
+					(response: any) => {
+						this.headers = response;
+						const csvData = {
+							HEADERS: this.headers,
+							MODULE: this.selectedModule,
+							CSV_IMPORT_DATA: this.csvImportData,
+						};
+						const dialogRef = this.dialog.open(CsvImportDialogComponent, {
+							data: {
+								csvData: csvData,
+								dialogTitle: this.translateService.instant('IMPORT_FROM_CSV'),
+								buttonText: this.translateService.instant('IMPORT'),
+								action: this.translateService.instant('IMPORT'),
+								closeDialog: this.translateService.instant('CANCEL'),
+								executebuttonColor: 'warn',
+							},
+						});
+						dialogRef.afterClosed().subscribe((result) => {
+							this.onNoClick();
+							this.dialogRef.close({ data: result });
+						});
+					},
+					(error) => {
+						console.error(error);
+						this.bannerMessageService.errorNotifications.push({
+							message: error.error.ERROR,
+						});
+					}
+				);
 		}
 	}
 
