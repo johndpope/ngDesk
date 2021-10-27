@@ -71,7 +71,6 @@ public class HttpFilter implements Filter {
 			}
 
 			if (queryParams.containsKey("user_uuid") && queryParams.containsKey("company_id")) {
-				System.out.println("internal Call");
 				manager.loadUserDetailsForInternalCalls(queryParams.get("user_uuid").toString(),
 						queryParams.get("company_id").toString());
 			} else {
