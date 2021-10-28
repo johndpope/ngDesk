@@ -39,7 +39,7 @@ public class EscalationsDataFetcher implements DataFetcher<List<Escalation>> {
 		}
 		Sort sort = null;
 		if (sortBy == null) {
-			sort = Sort.by("DATE_CREATED");
+			sort = Sort.by("dateCreated");
 		} else {
 			sort = Sort.by(sortBy);
 		}
@@ -53,7 +53,7 @@ public class EscalationsDataFetcher implements DataFetcher<List<Escalation>> {
 			}
 		}
 		Pageable pageable = PageRequest.of(page, pageSize, sort);
-		return  escalationRepository.findAllEscalations(pageable,"escalations_"+companyId);
+		return escalationRepository.findAllEscalations(pageable, "escalations_" + companyId);
 	}
 
 }

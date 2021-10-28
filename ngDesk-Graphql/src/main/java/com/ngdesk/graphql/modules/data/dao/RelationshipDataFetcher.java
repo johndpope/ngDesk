@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ngdesk.commons.managers.AuthManager;
 import com.ngdesk.graphql.catalogue.dao.Catalogue;
 import com.ngdesk.graphql.categories.dao.Category;
+import com.ngdesk.graphql.escalation.dao.EscalateTo;
 import com.ngdesk.graphql.form.dao.Form;
 import com.ngdesk.graphql.knowledgebase.section.dao.Section;
 import com.ngdesk.graphql.schedules.dao.Layer;
@@ -66,15 +67,28 @@ public class RelationshipDataFetcher implements DataFetcher<List<Map<String, Obj
 
 							} catch (Exception e5) {
 
-								return null;
+								try {
+									EscalateTo escalateTo = environment.getSource();
+									String fieldType = environment.getFieldType().toString();
+									if (fieldType.equals("[Users]")) {
+										entryIds = escalateTo.getUsers();
+									} else {
+										entryIds = escalateTo.getTeams();
+									}
 
+								} catch (Exception e6) {
+									e6.printStackTrace();
+									return null;
+								}
 							}
-						}
 
+						}
 					}
 				}
+
 			}
 		}
+
 		if (entryIds == null || entryIds.size() == 0) {
 			return new ArrayList<Map<String, Object>>();
 		}

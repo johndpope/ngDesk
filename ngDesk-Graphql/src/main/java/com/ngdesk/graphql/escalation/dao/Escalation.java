@@ -4,42 +4,24 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Field;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Escalation {
 
 	@Id
-	@JsonProperty("ESCALATION_ID")
 	private String esclalationId;
 
-	@Field("NAME")
-	@JsonProperty("NAME")
 	private String name;
 
-	@JsonProperty("DESCRIPTION")
-	@Field("DESCRIPTION")
 	private String description;
 
-	@JsonProperty("RULES")
-	@Field("RULES")
 	private List<EscalationRule> rules;
 
-	@JsonProperty("DATE_CREATED")
-	@Field("DATE_CREATED")
 	private Date dateCreated;
 
-	@JsonProperty("DATE_UPDATED")
-	@Field("DATE_UPDATED")
 	private Date dateUpdated;
 
-	@JsonProperty("LAST_UPDATED_BY")
-	@Field("LAST_UPDATED_BY")
 	private String lastUpdated;
 
-	@JsonProperty("CREATED_BY")
-	@Field("CREATED_BY")
 	private String createdBy;
 
 	public Escalation() {

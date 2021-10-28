@@ -1,21 +1,11 @@
 package com.ngdesk.graphql.escalation.dao;
 
-import org.springframework.data.mongodb.core.mapping.Field;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class EscalationRule {
 
-	@JsonProperty("MINS_AFTER")
-	@Field("MINS_AFTER")
 	private Integer minsAfter;
 
-	@JsonProperty("ORDER")
-	@Field("ORDER")
 	private Integer order;
-
-	@JsonProperty("ESCALATE_TO")
-	@Field("ESCALATE_TO")
+	
 	private EscalateTo escalateTo;
 
 	public EscalationRule() {
