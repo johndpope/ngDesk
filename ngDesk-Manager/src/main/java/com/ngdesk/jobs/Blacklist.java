@@ -106,25 +106,30 @@ public class Blacklist {
 
 								String subject = "An email has been blocked";
 								for (Document user : adminUsers) {
+									if (user.getString("CONTACT") != null) {
+										Document contacts = (Document) contactCollection
+												.find(Filters.eq("_id", new ObjectId(user.getString("CONTACT"))))
+												.first();
 
-									Document contacts = (Document) contactCollection
-											.find(Filters.eq("_id", new ObjectId(user.getString("CONTACT")))).first();
-									String lastName = "";
-									String firstName = "";
-									String emailAddress = user.getString("EMAIL_ADDRESS");
-									if (contacts != null) {
-										if (contacts.containsKey("FIRST_NAME") && contacts.get("FIRST_NAME") != null) {
-											firstName = contacts.get("FIRST_NAME").toString();
+										String lastName = "";
+										String firstName = "";
+										String emailAddress = user.getString("EMAIL_ADDRESS");
+										if (contacts != null) {
+											if (contacts.containsKey("FIRST_NAME")
+													&& contacts.get("FIRST_NAME") != null) {
+												firstName = contacts.get("FIRST_NAME").toString();
+											}
+											if (contacts.containsKey("LAST_NAME")
+													&& contacts.get("LAST_NAME") != null) {
+												lastName = contacts.get("LAST_NAME").toString();
+											}
 										}
-										if (contacts.containsKey("LAST_NAME") && contacts.get("LAST_NAME") != null) {
-											lastName = contacts.get("LAST_NAME").toString();
-										}
+										String body = global.getFile("blacklist-incoming-body.html");
+										body = body.replace("FULL_NAME_REPLACE", firstName + " " + lastName);
+										body = body.replace("FROM_EMAIL_REPLACE", email);
+
+										sendMail.send(emailAddress, "support@ngdesk.com", subject, body);
 									}
-									String body = global.getFile("blacklist-incoming-body.html");
-									body = body.replace("FULL_NAME_REPLACE", firstName + " " + lastName);
-									body = body.replace("FROM_EMAIL_REPLACE", email);
-
-									sendMail.send(emailAddress, "support@ngdesk.com", subject, body);
 								}
 							}
 							incomingEmailsToRemove.add(email);
