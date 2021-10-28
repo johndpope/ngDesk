@@ -409,8 +409,8 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 	}
 
 	// removing teams from array
-	public remove(element, arrayName): void {
-		const index = this.articleForm.value[arrayName].indexOf(element);
+	public remove(label, arrayName): void {
+		const index = this.articleForm.value[arrayName].indexOf(label);
 
 		if (index >= 0) {
 			const array = this.articleForm.value[arrayName];
@@ -499,7 +499,7 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 
 	public removeFile(index: number): void {
 		this.articleForm.get('attachments').value.splice(index, 1);
-		this.fileSize -= this.filesArray[index].fileSize;
+		// this.fileSize -= this.filesArray[index].fileSize;
 	}
 
 	public save() {

@@ -100,7 +100,7 @@
 			<mat-form-field>
 				<mat-chip-list #chipList>
 					<mat-chip *ngFor="let label of articleForm.value.labels" [selectable]="true" [removable]="true"
-						(removed)="remove(label, 'LABELS')">{{label}}
+						(removed)="remove(label, 'labels')">{{label}}
 						<mat-icon matChipRemove>cancel</mat-icon>
 					</mat-chip> <input placeholder="{{'LABELS' | translate}}" [matChipInputFor]="chipList"
 						[matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="add($event)">
