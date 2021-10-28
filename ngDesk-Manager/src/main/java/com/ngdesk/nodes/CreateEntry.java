@@ -273,7 +273,7 @@ public class CreateEntry extends Node {
 			}
 
 			logger.trace("RESPONSE: " + response);
-
+ 
 			// ToDo Add response to inputMessage
 			if (response != null) {
 				JSONObject responseObj = new JSONObject(response);
