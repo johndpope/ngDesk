@@ -31,6 +31,8 @@ import {
 	switchMap,
 } from 'rxjs/operators';
 import { ModulesService } from '@src/app/modules/modules.service';
+import { BannerMessageService } from '@src/app/custom-components/banner-message/banner-message.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-escalations-detail',
@@ -85,7 +87,9 @@ export class EscalationsDetailComponent implements OnInit {
 		private cacheService: CacheService,
 		private http: HttpClient,
 		private globals: AppGlobals,
-		private modulesService: ModulesService
+		private modulesService: ModulesService,
+		private bannerMessageService: BannerMessageService,
+		private translateService: TranslateService
 	) {}
 
 	public ngOnInit() {
@@ -149,16 +153,20 @@ export class EscalationsDetailComponent implements OnInit {
 							);
 
 							if (this.escalationId !== 'new') {
-								this.escalationApiService
+								this.escalationService
 									.getEscalationById(this.escalationId)
 									.subscribe(
 										(escalationResponse: Escalation) => {
+											this.escalation.name = escalationResponse['DATA'].name;
+											this.escalation.description =
+												escalationResponse['DATA'].description;
+
 											this.escalation = escalationResponse;
 											this.escalationForm.controls.NAME.setValue(
-												this.escalation.name
+												escalationResponse['DATA'].name
 											);
 											this.escalationForm.controls.DESCRIPTION.setValue(
-												this.escalation.description
+												escalationResponse['DATA'].description
 											);
 										},
 										(error: any) => {
@@ -262,11 +270,11 @@ export class EscalationsDetailComponent implements OnInit {
 	public getDisplayNameFromId(id, type, idKey) {
 		const objFound = this[type].find((obj) => obj[idKey] === id);
 
-		if (type === 'usersInitial') {
+		if (type === 'users') {
 			return objFound['EMAIL_ADDRESS'];
-		} else if (type === 'teamsInitial') {
+		} else if (type === 'teams') {
 			return objFound['NAME'];
-		} else if (type === 'schedulesInitial') {
+		} else if (type === 'schedules') {
 			return objFound['name'];
 		} else if (objFound !== undefined && objFound) {
 			return objFound['NAME'];
@@ -285,6 +293,9 @@ export class EscalationsDetailComponent implements OnInit {
 				this.escalationApiService.postEscalation(escalationObj).subscribe(
 					(escalationResponse: any) => {
 						this.router.navigate([`escalations`]);
+						this.bannerMessageService.successNotifications.push({
+							message: this.translateService.instant('SAVED_SUCCESSFULLY'),
+						});
 					},
 					(error: any) => {
 						this.errorMessage = error.error.ERROR;
@@ -292,9 +303,22 @@ export class EscalationsDetailComponent implements OnInit {
 					}
 				);
 			} else {
+				// const escalation = {
+				// 	id: this.escalationId,
+				// 	name: this.escalationForm.value['NAME'],
+				// 	description: this.escalationForm.value['DESCRIPTION'],
+				// 	rules: this.escalation.rules,
+				// };
+				// const escalationPutObj: Escalation = JSON.parse(
+				// 	JSON.stringify(escalation)
+				// );
+
 				this.escalationApiService.putEscalation(escalationObj).subscribe(
 					(escalationResponse: any) => {
 						this.router.navigate([`escalations`]);
+						this.bannerMessageService.successNotifications.push({
+							message: this.translateService.instant('UPDATED_SUCCESSFULLY'),
+						});
 					},
 					(error: any) => {
 						this.errorMessage = error.error.ERROR;

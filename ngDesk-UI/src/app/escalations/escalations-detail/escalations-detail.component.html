@@ -51,14 +51,14 @@
 							<mat-chip-list [disabled]="disableButtons" #teamChipList>
 								<mat-chip *ngFor="let id of rule.escalateTo.teams" [selectable]="true" [removable]="true"
 									(removed)="removeItem(id, ind, 'teams')">
-									{{getDisplayNameFromId(id, 'teamsInitial', 'DATA_ID')}}
+									{{getDisplayNameFromId(id, 'teams', 'DATA_ID')}}
 									<mat-icon matChipRemove>cancel</mat-icon>
 								</mat-chip>
-								<input placeholder="{{'ESCALATE_TO_TEAM' | translate}}" #teamInput [matAutocomplete]="autoTeam"
+								<input placeholder="{{'ESCALATE_TO_TEAM' | translate}}" #teamInput [matAutocomplete]="auto_team"
 									[matChipInputFor]="teamChipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
 									(matChipInputTokenEnd)="resetInput($event)" [formControl]="teamCtrl" (keyup)="onSearch()">
 							</mat-chip-list>
-							<mat-autocomplete #autoTeam="matAutocomplete" (appAutocompleteScroll)="onScrollTeams();" (closed)="autocompleteClosed()"
+							<mat-autocomplete #auto_team="matAutocomplete" (appAutocompleteScroll)="onScrollTeams();" (closed)="autocompleteClosed()"
 								(optionSelected)="selected($event, ind, 'teamInput', 'teams')">
 								<mat-option *ngFor="let team of teams" [value]="team" [disabled]="disableSelectedValues(team.id,ind, 'teams')">
 									{{ team.name }}
@@ -73,14 +73,14 @@
 							<mat-chip-list [disabled]="disableButtons" #chipList>
 								<mat-chip *ngFor="let id of rule.escalateTo.users" [selectable]="true" [removable]="true"
 									(removed)="removeItem(id, ind, 'users')">
-									{{getDisplayNameFromId(id, 'usersInitial', 'DATA_ID')}}
+									{{getDisplayNameFromId(id, 'users', 'DATA_ID')}}
 									<mat-icon matChipRemove>cancel</mat-icon>
 								</mat-chip>
-								<input placeholder="{{'ESCALATE_TO_USERS' | translate}}" #userInput [matAutocomplete]="auto" [matChipInputFor]="chipList"
-									[matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
+								<input placeholder="{{'ESCALATE_TO_USERS' | translate}}" #userInput [matAutocomplete]="auto_users"
+									[matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
 									(matChipInputTokenEnd)="resetInput($event)" [formControl]="userCtrl" (keyup)="onSearchUser()">
 							</mat-chip-list>
-							<mat-autocomplete #auto="matAutocomplete" (appAutocompleteScroll)="onScrollUsers();" (closed)="autocompleteClosed()"
+							<mat-autocomplete #auto_users="matAutocomplete" (appAutocompleteScroll)="onScrollUsers();" (closed)="autocompleteClosed()"
 								(optionSelected)="selected($event, ind, 'userInput', 'users')" (closed)="users = usersInitial">
 								<mat-option *ngFor="let user of users" [value]="user" [disabled]="disableSelectedValues(user.DATA_ID,ind, 'users')">
 									<label *ngIf="user.EMAIL_ADDRESS === null"></label>
@@ -96,15 +96,15 @@
 							<mat-chip-list [disabled]="disableButtons" #scheduleChipList>
 								<mat-chip *ngFor="let id of rule.escalateTo.schedules" [selectable]="true" [removable]="true"
 									(removed)="removeItem(id, ind, 'schedules')">
-									{{getDisplayNameFromId(id, 'schedulesInitial', 'scheduleId')}}
+									{{getDisplayNameFromId(id, 'schedules', 'scheduleId')}}
 									<mat-icon matChipRemove>cancel</mat-icon>
 								</mat-chip>
-								<input placeholder="{{'ESCALATE_TO_SCHEDULES' | translate}}" #scheduleInput [matAutocomplete]="autoSchedule"
+								<input placeholder="{{'ESCALATE_TO_SCHEDULES' | translate}}" #scheduleInput [matAutocomplete]="auto_schedule"
 									[matChipInputFor]="scheduleChipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
 									(matChipInputTokenEnd)="resetInput($event)" [formControl]="scheduleCtrl"
 									(ngModelChange)="filterInputValues($event, 'schedules', schedulesInitial)">
 							</mat-chip-list>
-							<mat-autocomplete #autoSchedule="matAutocomplete" (optionSelected)="selected($event, ind, 'scheduleInput', 'schedules')"
+							<mat-autocomplete #auto_schedule="matAutocomplete" (optionSelected)="selected($event, ind, 'scheduleInput', 'schedules')"
 								(closed)="schedules = schedulesInitial">
 								<mat-option *ngFor="let schedule of schedules" [value]="schedule"
 									[disabled]="disableSelectedValues(schedule.scheduleId, ind, 'schedules')">
