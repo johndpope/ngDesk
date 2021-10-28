@@ -39,9 +39,9 @@ import { ModulesService } from '@src/app/modules/modules.service';
 })
 export class EscalationsDetailComponent implements OnInit {
 	public escalation: Escalation = {
-		NAME: '',
-		DESCRIPTION: '',
-		RULES: [],
+		name: '',
+		description: '',
+		rules: [],
 	} as Escalation;
 	public escalationForm: FormGroup;
 
@@ -155,10 +155,10 @@ export class EscalationsDetailComponent implements OnInit {
 										(escalationResponse: Escalation) => {
 											this.escalation = escalationResponse;
 											this.escalationForm.controls.NAME.setValue(
-												this.escalation.NAME
+												this.escalation.name
 											);
 											this.escalationForm.controls.DESCRIPTION.setValue(
-												this.escalation.DESCRIPTION
+												this.escalation.description
 											);
 										},
 										(error: any) => {
@@ -176,22 +176,22 @@ export class EscalationsDetailComponent implements OnInit {
 	public addRule() {
 		// adds new rule to escalation
 		const escalateTo = {
-			SCHEDULE_IDS: [],
-			USER_IDS: [],
-			TEAM_IDS: [],
+			schedules: [],
+			users: [],
+			teams: [],
 		} as EscalateTo;
 		const escalationRule = {
-			MINS_AFTER: 0,
-			ORDER: this.escalation.RULES.length + 1,
-			ESCALATE_TO: escalateTo,
+			minsAfter: 0,
+			order: this.escalation.rules.length + 1,
+			escalateTo: escalateTo,
 		} as EscalationRule;
-		this.escalation.RULES.push(escalationRule);
+		this.escalation.rules.push(escalationRule);
 	}
 
 	public removeRule(index) {
-		this.escalation.RULES.splice(index, 1);
-		for (let i = 0; i < this.escalation.RULES.length; i++) {
-			this.escalation.RULES[i].ORDER = i + 1;
+		this.escalation.rules.splice(index, 1);
+		for (let i = 0; i < this.escalation.rules.length; i++) {
+			this.escalation.rules[i].order = i + 1;
 		}
 	}
 
@@ -209,10 +209,10 @@ export class EscalationsDetailComponent implements OnInit {
 	// removing uers/teams/schedules from array
 	public removeItem(object: string, ruleIndex, arrayType): void {
 		const index =
-			this.escalation.RULES[ruleIndex].ESCALATE_TO[arrayType].indexOf(object);
+			this.escalation.rules[ruleIndex].escalateTo[arrayType].indexOf(object);
 
 		if (index >= 0 && arrayType) {
-			this.escalation.RULES[ruleIndex].ESCALATE_TO[arrayType].splice(index, 1);
+			this.escalation.rules[ruleIndex].escalateTo[arrayType].splice(index, 1);
 		}
 	}
 
@@ -223,15 +223,15 @@ export class EscalationsDetailComponent implements OnInit {
 		arrayType
 	): void {
 		if (inputType === 'scheduleInput') {
-			this.escalation.RULES[index].ESCALATE_TO[arrayType].push(
+			this.escalation.rules[index].escalateTo[arrayType].push(
 				event.option.value.scheduleId
 			);
 		} else if (event.option.value.DATA_ID) {
-			this.escalation.RULES[index].ESCALATE_TO[arrayType].push(
+			this.escalation.rules[index].escalateTo[arrayType].push(
 				event.option.value.DATA_ID
 			);
 		} else if (event.option.value['name']) {
-			this.escalation.RULES[index].ESCALATE_TO[arrayType].push(
+			this.escalation.rules[index].escalateTo[arrayType].push(
 				event.option.value.id
 			);
 		}
@@ -276,8 +276,8 @@ export class EscalationsDetailComponent implements OnInit {
 	public save() {
 		this.escalationForm.get('NAME').markAsTouched();
 		if (this.escalationForm.valid) {
-			this.escalation.NAME = this.escalationForm.value['NAME'];
-			this.escalation.DESCRIPTION = this.escalationForm.value['DESCRIPTION'];
+			this.escalation.name = this.escalationForm.value['NAME'];
+			this.escalation.description = this.escalationForm.value['DESCRIPTION'];
 			const escalationObj: Escalation = JSON.parse(
 				JSON.stringify(this.escalation)
 			);
@@ -399,8 +399,8 @@ export class EscalationsDetailComponent implements OnInit {
 	}
 
 	public disableSelectedValues(item, ind, arrayType) {
-		if (this.escalation.RULES[ind].ESCALATE_TO[arrayType].length > 0) {
-			if (this.escalation.RULES[ind].ESCALATE_TO[arrayType].includes(item)) {
+		if (this.escalation.rules[ind].escalateTo[arrayType].length > 0) {
+			if (this.escalation.rules[ind].escalateTo[arrayType].includes(item)) {
 				return true;
 			} else {
 				return false;
