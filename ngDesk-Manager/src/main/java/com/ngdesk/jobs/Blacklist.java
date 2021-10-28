@@ -43,7 +43,7 @@ public class Blacklist {
 
 	@Autowired
 	private Environment env;
-	
+
 	@Autowired
 	private RedissonClient redisson;
 
@@ -51,12 +51,12 @@ public class Blacklist {
 	public void executeJob() {
 		log.trace("Enter Blacklist.executeJob()");
 		String subdomain = "";
-		
+
 		try {
-			
+
 			RMap<String, Map<String, List<Timestamp>>> outgoingMails = redisson.getMap("outgoingMails");
 			RMap<String, Map<String, List<Timestamp>>> incomingMails = redisson.getMap("incomingMails");
-			
+
 			for (String companyId : incomingMails.keySet()) {
 				MongoCollection<Document> blacklistCollection = mongoTemplate
 						.getCollection("blacklisted_whitelisted_emails_" + companyId);
@@ -95,6 +95,9 @@ public class Blacklist {
 
 								MongoCollection<Document> usersCollection = mongoTemplate
 										.getCollection("Users_" + companyId);
+								MongoCollection<Document> contactCollection = mongoTemplate
+										.getCollection("Contacts_" + companyId);
+
 								List<Document> adminUsers = usersCollection
 										.find(Filters.and(Filters.eq("ROLE", roleId), Filters.eq("DELETED", false),
 												Filters.or(Filters.eq("EFFECTIVE_TO", null),
@@ -103,19 +106,30 @@ public class Blacklist {
 
 								String subject = "An email has been blocked";
 								for (Document user : adminUsers) {
-									String emailAddress = user.getString("EMAIL_ADDRESS");
-									String firstName = user.getString("FIRST_NAME");
-									String lastName = "";
+									if (user.getString("CONTACT") != null) {
+										Document contacts = (Document) contactCollection
+												.find(Filters.eq("_id", new ObjectId(user.getString("CONTACT"))))
+												.first();
 
-									if (user.containsKey("LAST_NAME") && user.get("LAST_NAME") != null) {
-										lastName = user.getString("LAST_NAME");
+										String lastName = "";
+										String firstName = "";
+										String emailAddress = user.getString("EMAIL_ADDRESS");
+										if (contacts != null) {
+											if (contacts.containsKey("FIRST_NAME")
+													&& contacts.get("FIRST_NAME") != null) {
+												firstName = contacts.get("FIRST_NAME").toString();
+											}
+											if (contacts.containsKey("LAST_NAME")
+													&& contacts.get("LAST_NAME") != null) {
+												lastName = contacts.get("LAST_NAME").toString();
+											}
+										}
+										String body = global.getFile("blacklist-incoming-body.html");
+										body = body.replace("FULL_NAME_REPLACE", firstName + " " + lastName);
+										body = body.replace("FROM_EMAIL_REPLACE", email);
+
+										sendMail.send(emailAddress, "support@ngdesk.com", subject, body);
 									}
-
-									String body = global.getFile("blacklist-incoming-body.html");
-									body = body.replace("FULL_NAME_REPLACE", firstName + " " + lastName);
-									body = body.replace("FROM_EMAIL_REPLACE", email);
-
-									sendMail.send(emailAddress, "support@ngdesk.com", subject, body);
 								}
 							}
 							incomingEmailsToRemove.add(email);
@@ -132,10 +146,10 @@ public class Blacklist {
 							if (timestamps.size() == 0) {
 								incomingEmailsToRemove.add(email);
 							} else {
-								
-								Map<String,List<Timestamp>> userTimestamps = incomingMails.get(companyId);
+
+								Map<String, List<Timestamp>> userTimestamps = incomingMails.get(companyId);
 								userTimestamps.put(email, timestamps);
-								
+
 								incomingMails.put(companyId, userTimestamps);
 							}
 
@@ -221,7 +235,7 @@ public class Blacklist {
 							if (timestamps.size() == 0) {
 								outgoingEmailsToRemove.add(email);
 							} else {
-								
+
 								Map<String, List<Timestamp>> userTimes = outgoingMails.get(companyId);
 								userTimes.put(email, timestamps);
 								outgoingMails.put(companyId, userTimes);
@@ -230,13 +244,13 @@ public class Blacklist {
 						}
 					}
 				}
-				
+
 				Map<String, List<Timestamp>> userTimes = incomingMails.get(companyId);
 				for (String email : incomingEmailsToRemove) {
 					userTimes.remove(email);
 				}
 				incomingMails.put(companyId, userTimes);
-				
+
 				Map<String, List<Timestamp>> userTimestamps = outgoingMails.get(companyId);
 				for (String email : outgoingEmailsToRemove) {
 					userTimestamps.remove(email);
