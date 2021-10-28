@@ -664,9 +664,10 @@
 												[matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
 												(matChipInputTokenEnd)="addEmailList($event)">
 										</mat-chip-list>
-										<mat-autocomplete #emailListsAuto="matAutocomplete" (optionSelected)="selected($event, 'emailList')">
-											<div *ngIf="filteredEmailLists && allEmailLists.length > 0">
-												<mat-option *ngFor="let filteredEmailList of filteredEmailLists | async" [value]="filteredEmailList"
+										<mat-autocomplete (appAutocompleteScroll)="onEmailListScroll()" #emailListsAuto="matAutocomplete"
+											(optionSelected)="selected($event, 'emailList')">
+											<div *ngIf="allEmailLists.length > 0">
+												<mat-option *ngFor="let filteredEmailList of allEmailLists" [value]="filteredEmailList"
 													[disabled]="emailLists.indexOf(filteredEmailList) !== -1">
 													{{filteredEmailList.NAME}}
 												</mat-option>

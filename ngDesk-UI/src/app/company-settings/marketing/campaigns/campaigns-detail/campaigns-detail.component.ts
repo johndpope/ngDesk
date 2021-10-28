@@ -49,6 +49,7 @@ import {
 import tinymce from 'tinymce/tinymce';
 import { v4 as uuid } from 'uuid';
 import { CampaignsDetailService } from './campaigns-detail.service';
+import { EmailListService } from '../../email-lists/email-lists.service';
 
 export interface IMAGE {
 	FILE: any;
@@ -91,8 +92,8 @@ export class CampaignsDetailComponent
 	public campaignId: string;
 	public campaignType: string;
 	public emailLists: any[] = [];
-	public filteredEmailLists: Observable<any[]>;
 	public allEmailLists: any[] = [];
+	public initialAllEmailLists: any[] = [];
 	public emailListsCtrl = new FormControl('', [Validators.required]);
 	public minDate = new Date();
 	public params;
@@ -141,6 +142,7 @@ export class CampaignsDetailComponent
 	private companyInfoSubscription: Subscription;
 	// public teamsScrollSubject = new Subject<any>();
 	public usersScrollSubject = new Subject<any>();
+	public emailListScrollSubject = new Subject<any>();
 	public tempUserInput = '';
 	public usersLength;
 	@ViewChildren('editors') public editors: QueryList<any>;
@@ -175,7 +177,8 @@ export class CampaignsDetailComponent
 		private campaignsService: CampaignsService,
 		private cacheService: CacheService,
 		private dialog: MatDialog,
-		private campaignsDetailService: CampaignsDetailService
+		private campaignsDetailService: CampaignsDetailService,
+		private emailListService: EmailListService
 	) {
 		this.params = {
 			noReplyEmail: `no-reply@${this.usersService.getSubdomain()}.ngdesk.com`,
@@ -302,22 +305,26 @@ export class CampaignsDetailComponent
 								this.allUsers = usersResponse.DATA;
 								this.initializeUsers();
 								this.loadFieldData();
-								this.companiesService.getEmailLists().subscribe(
-									(emailListsData: any) => {
-										this.allEmailLists = emailListsData.EMAIL_LISTS;
-										if (this.campaignId !== 'new') {
-											this.getCampaign();
-										} else {
-											this.elementsLoaded = true;
-											this.campaignLoaded = true;
+								this.emailListService
+									.getAllEmailLists(0, 10, 'DATE_CREATED', 'Asc')
+									.subscribe(
+										(emailListsData: any) => {
+											this.initialAllEmailLists = emailListsData.EMAIL_LISTS;
+											this.allEmailLists = emailListsData.EMAIL_LISTS;
+											this.initializeEmailList();
+											if (this.campaignId !== 'new') {
+												this.getCampaign();
+											} else {
+												this.elementsLoaded = true;
+												this.campaignLoaded = true;
+											}
+										},
+										(emailListsError: any) => {
+											this.bannerMessageService.errorNotifications.push({
+												message: emailListsError.error.ERROR,
+											});
 										}
-									},
-									(emailListsError: any) => {
-										this.bannerMessageService.errorNotifications.push({
-											message: emailListsError.error.ERROR,
-										});
-									}
-								);
+									);
 							},
 							(usersError: any) => {
 								this.bannerMessageService.errorNotifications.push({
@@ -374,6 +381,7 @@ export class CampaignsDetailComponent
 					campaignData.RECIPIENT_LISTS,
 					'emailLists'
 				);
+				console.log(this.emailLists);
 				this.buttonClicks = campaignData.BUTTON_CLICKS;
 				this.campaignLoaded = true;
 				this.elementsLoaded = true;
@@ -411,15 +419,6 @@ export class CampaignsDetailComponent
 	}
 
 	private loadFieldData() {
-		this.filteredEmailLists = this.emailListsCtrl.valueChanges.pipe(
-			startWith(null),
-			map((emailList: any | null) =>
-				emailList
-					? this._filterEmailLists(emailList)
-					: this.allEmailLists.slice()
-			)
-		);
-
 		this.campaignForm
 			.get('SEND_OPTION')
 			.valueChanges.subscribe((sendOption) => {
@@ -837,6 +836,7 @@ export class CampaignsDetailComponent
 				break;
 			}
 			case 'emailLists': {
+				console.log(this.allEmailLists);
 				for (const id of arrayOfIds) {
 					const matchedEmailList = this.allEmailLists.find(
 						(list) => list.EMAIL_LIST_ID === id
@@ -1511,5 +1511,53 @@ export class CampaignsDetailComponent
 				this.dropList.push(`${rowIndex}_${columnIndex}`);
 			});
 		});
+	}
+
+	public initializeEmailList() {
+		this.emailListScrollSubject
+			.pipe(
+				debounceTime(400),
+				distinctUntilChanged(),
+				switchMap(([value, search]) => {
+					let page = 0;
+					if (this.allEmailLists) {
+						page = Math.ceil(this.allEmailLists.length / 10);
+					}
+					return this.emailListService
+						.getAllEmailLists(page, 10, 'DATE_CREATED', 'Asc')
+						.pipe(
+							map((results: any) => {
+								const newlist = this.filterNewEmailLists(
+									results['EMAIL_LISTS']
+								);
+								if (newlist.length > 0) {
+									this.allEmailLists = this.allEmailLists.concat(
+										results.EMAIL_LISTS
+									);
+								}
+								return results.EMAIL_LISTS;
+							})
+						);
+				})
+			)
+			.subscribe();
+	}
+
+	public filterNewEmailLists(data) {
+		const newArr = [];
+		data.forEach((emailList) => {
+			const existingEmailList = this.allEmailLists.find(
+				(currentEmailList) =>
+					currentEmailList.EMAIL_LIST_ID === emailList.EMAIL_LIST_ID
+			);
+			if (!existingEmailList) {
+				newArr.push(emailList);
+			}
+		});
+		return newArr;
+	}
+
+	public onEmailListScroll() {
+		this.emailListScrollSubject.next(['', false]);
 	}
 }
