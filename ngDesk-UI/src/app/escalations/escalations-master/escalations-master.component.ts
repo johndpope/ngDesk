@@ -86,7 +86,7 @@ export class EscalationsMasterComponent implements OnInit {
 				this.customTableService.columnsHeaders = columnsHeaders;
 				this.customTableService.columnsHeadersObj = columnsHeadersObj;
 
-				this.customTableService.sortBy = 'NAME';
+				this.customTableService.sortBy = 'name';
 				this.customTableService.sortOrder = 'asc';
 				this.customTableService.pageIndex = 0;
 				this.customTableService.pageSize = 10;
@@ -104,6 +104,7 @@ export class EscalationsMasterComponent implements OnInit {
 	}
 
 	private getEscalations() {
+		debugger;
 		this.escalationService
 			.getEscalations(
 				this.customTableService.pageIndex,
