@@ -153,20 +153,16 @@ export class EscalationsDetailComponent implements OnInit {
 							);
 
 							if (this.escalationId !== 'new') {
-								this.escalationService
+								this.escalationApiService
 									.getEscalationById(this.escalationId)
 									.subscribe(
 										(escalationResponse: Escalation) => {
-											this.escalation.name = escalationResponse['DATA'].name;
-											this.escalation.description =
-												escalationResponse['DATA'].description;
-
 											this.escalation = escalationResponse;
 											this.escalationForm.controls.NAME.setValue(
-												escalationResponse['DATA'].name
+												this.escalation.name
 											);
 											this.escalationForm.controls.DESCRIPTION.setValue(
-												escalationResponse['DATA'].description
+												this.escalation.description
 											);
 										},
 										(error: any) => {
@@ -205,7 +201,7 @@ export class EscalationsDetailComponent implements OnInit {
 
 	// If input doesn't match in dropdown, reseting the input field
 	public resetInput(event: MatChipInputEvent): void {
-		if (!this.matAutocomplete.isOpen) {
+		if (this.matAutocomplete && !this.matAutocomplete.isOpen) {
 			const input = event.input;
 			// Reset the input value
 			if (input) {
@@ -270,11 +266,11 @@ export class EscalationsDetailComponent implements OnInit {
 	public getDisplayNameFromId(id, type, idKey) {
 		const objFound = this[type].find((obj) => obj[idKey] === id);
 
-		if (type === 'users') {
+		if (type === 'usersInitial') {
 			return objFound['EMAIL_ADDRESS'];
-		} else if (type === 'teams') {
+		} else if (type === 'teamsInitial') {
 			return objFound['NAME'];
-		} else if (type === 'schedules') {
+		} else if (type === 'schedulesInitial') {
 			return objFound['name'];
 		} else if (objFound !== undefined && objFound) {
 			return objFound['NAME'];
@@ -303,16 +299,6 @@ export class EscalationsDetailComponent implements OnInit {
 					}
 				);
 			} else {
-				// const escalation = {
-				// 	id: this.escalationId,
-				// 	name: this.escalationForm.value['NAME'],
-				// 	description: this.escalationForm.value['DESCRIPTION'],
-				// 	rules: this.escalation.rules,
-				// };
-				// const escalationPutObj: Escalation = JSON.parse(
-				// 	JSON.stringify(escalation)
-				// );
-
 				this.escalationApiService.putEscalation(escalationObj).subscribe(
 					(escalationResponse: any) => {
 						this.router.navigate([`escalations`]);

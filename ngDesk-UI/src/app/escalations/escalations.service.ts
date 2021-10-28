@@ -32,7 +32,7 @@ export class EscalationsService {
 		const userModule = modules.find((module) => module.NAME === 'Users');
 
 		const query = `{
-				DATA: getUsers(moduleId: "${userModule.MODULE_ID}", pageNumber: 0, pageSize: 5000) {
+				DATA: getUsers(moduleId: "${userModule.MODULE_ID}", pageNumber: 0, pageSize: 10) {
 					DATA_ID: _id
 					EMAIL_ADDRESS: EMAIL_ADDRESS
 
@@ -127,18 +127,6 @@ export class EscalationsService {
 					}
 				}
 			}
-		}`;
-		return this.http.post(`${this.globals.graphqlUrl}`, query);
-	}
-
-	// Query to fetch all the escalations
-	public getEscalations(pageNumber, pageSize, sortBy, orderBy) {
-		const query = `{
-			DATA: getEscalations(pageNumber: ${pageNumber}, pageSize: ${pageSize}, sortBy:"${sortBy}", orderBy: "${orderBy}"){
-				NAME:name
-				ESCALATION_ID:id
-			}
-			totalElements: getEscalationsCount
 		}`;
 		return this.http.post(`${this.globals.graphqlUrl}`, query);
 	}

@@ -51,7 +51,7 @@
 							<mat-chip-list [disabled]="disableButtons" #teamChipList>
 								<mat-chip *ngFor="let id of rule.escalateTo.teams" [selectable]="true" [removable]="true"
 									(removed)="removeItem(id, ind, 'teams')">
-									{{getDisplayNameFromId(id, 'teams', 'DATA_ID')}}
+									{{getDisplayNameFromId(id, 'teamsInitial', 'DATA_ID')}}
 									<mat-icon matChipRemove>cancel</mat-icon>
 								</mat-chip>
 								<input placeholder="{{'ESCALATE_TO_TEAM' | translate}}" #teamInput [matAutocomplete]="auto_team"
@@ -73,7 +73,7 @@
 							<mat-chip-list [disabled]="disableButtons" #chipList>
 								<mat-chip *ngFor="let id of rule.escalateTo.users" [selectable]="true" [removable]="true"
 									(removed)="removeItem(id, ind, 'users')">
-									{{getDisplayNameFromId(id, 'users', 'DATA_ID')}}
+									{{getDisplayNameFromId(id, 'usersInitial', 'DATA_ID')}}
 									<mat-icon matChipRemove>cancel</mat-icon>
 								</mat-chip>
 								<input placeholder="{{'ESCALATE_TO_USERS' | translate}}" #userInput [matAutocomplete]="auto_users"
@@ -96,7 +96,7 @@
 							<mat-chip-list [disabled]="disableButtons" #scheduleChipList>
 								<mat-chip *ngFor="let id of rule.escalateTo.schedules" [selectable]="true" [removable]="true"
 									(removed)="removeItem(id, ind, 'schedules')">
-									{{getDisplayNameFromId(id, 'schedules', 'scheduleId')}}
+									{{getDisplayNameFromId(id, 'schedulesInitial', 'scheduleId')}}
 									<mat-icon matChipRemove>cancel</mat-icon>
 								</mat-chip>
 								<input placeholder="{{'ESCALATE_TO_SCHEDULES' | translate}}" #scheduleInput [matAutocomplete]="auto_schedule"
