@@ -21,7 +21,8 @@ export class FilterRuleOptionPipe implements PipeTransform {
 					if (
 						(item.FIRST_NAME &&
 							item.FIRST_NAME.toLowerCase().includes(input)) ||
-						(item.LAST_NAME && item.LAST_NAME.toLowerCase().includes(input))
+						(item.LAST_NAME && item.LAST_NAME.toLowerCase().includes(input)) ||
+						item.CONTACT.PRIMARY_DISPLAY_FIELD.toLowerCase().includes(input)
 					) {
 						filteredItems.push(item);
 					} else {
@@ -44,7 +45,10 @@ export class FilterRuleOptionPipe implements PipeTransform {
 
 			case 'schedules': {
 				items.forEach((item) => {
-					if (item.name.toLowerCase().includes(input)) {
+					if (
+						(item.NAME && item.NAME.toLowerCase().includes(input)) ||
+						(item.name && item.name.toLowerCase().includes(input))
+					) {
 						filteredItems.push(item);
 					}
 				});
