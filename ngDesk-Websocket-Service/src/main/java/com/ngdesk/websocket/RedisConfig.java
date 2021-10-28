@@ -18,12 +18,14 @@ import com.ngdesk.websocket.channels.chat.dao.ChatChannelMessage;
 import com.ngdesk.websocket.channels.chat.dao.ChatNotification;
 import com.ngdesk.websocket.channels.chat.dao.ChatStatusMessage;
 import com.ngdesk.websocket.channels.chat.dao.ChatTicketStatusMessage;
+import com.ngdesk.websocket.channels.chat.dao.ChatVisitedPagesNotification;
 import com.ngdesk.websocket.notification.dao.Notification;
 import com.ngdesk.websocket.subscribers.ChatChannelSubscriber;
 import com.ngdesk.websocket.subscribers.ChatNotificationSubscriber;
 import com.ngdesk.websocket.subscribers.ChatSettingsUpdateSubscriber;
 import com.ngdesk.websocket.subscribers.ChatStatusSubscriber;
 import com.ngdesk.websocket.subscribers.ChatTicketStatusSubscriber;
+import com.ngdesk.websocket.subscribers.ChatVisitedPagesSubscriber;
 import com.ngdesk.websocket.subscribers.ModuleNotificationSubscriber;
 import com.ngdesk.websocket.subscribers.NotificationSubscriber;
 
@@ -56,9 +58,12 @@ public class RedisConfig {
 
 	@Autowired
 	ChatNotificationSubscriber chatNotificationSubscriber;
-	
+
 	@Autowired
 	ChatTicketStatusSubscriber chatTicketStatusSubscriber;
+
+	@Autowired
+	ChatVisitedPagesSubscriber chatVisitedPagesSubscriber;
 
 	@Bean
 	public RedisTemplate<String, WorkflowPayload> redisTemplate(LettuceConnectionFactory redisConnectionFactory) {
@@ -101,7 +106,7 @@ public class RedisConfig {
 		redisChatNotificationTemplate.setKeySerializer(new StringRedisSerializer());
 		return redisChatNotificationTemplate;
 	}
-	
+
 	@Bean
 	public RedisTemplate<String, ChatTicketStatusMessage> redisChatTicketStatusTemplate(
 			LettuceConnectionFactory redisConnectionFactory) {
@@ -111,6 +116,27 @@ public class RedisConfig {
 				new Jackson2JsonRedisSerializer<ChatTicketStatusMessage>(ChatTicketStatusMessage.class));
 		redisChatTicketStatusTemplate.setKeySerializer(new StringRedisSerializer());
 		return redisChatTicketStatusTemplate;
+	}
+
+	@Bean
+	public RedisTemplate<String, ChatVisitedPagesNotification> redisChatVisitedPagesTemplate(
+			LettuceConnectionFactory redisConnectionFactory) {
+		RedisTemplate<String, ChatVisitedPagesNotification> redisChatVisitedPagesTemplate = new RedisTemplate<String, ChatVisitedPagesNotification>();
+		redisChatVisitedPagesTemplate.setConnectionFactory(redisConnectionFactory);
+		redisChatVisitedPagesTemplate.setValueSerializer(
+				new Jackson2JsonRedisSerializer<ChatVisitedPagesNotification>(ChatVisitedPagesNotification.class));
+		redisChatVisitedPagesTemplate.setKeySerializer(new StringRedisSerializer());
+		return redisChatVisitedPagesTemplate;
+	}
+
+	@Bean
+	public RedisTemplate<String, Notification> redisNotificationTemplate(
+			LettuceConnectionFactory redisConnectionFactory) {
+		RedisTemplate<String, Notification> redisTemplate = new RedisTemplate<String, Notification>();
+		redisTemplate.setConnectionFactory(redisConnectionFactory);
+		redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<Notification>(Notification.class));
+		redisTemplate.setKeySerializer(new StringRedisSerializer());
+		return redisTemplate;
 	}
 
 	@Bean
@@ -149,10 +175,15 @@ public class RedisConfig {
 	MessageListenerAdapter chatNotificationListener() {
 		return new MessageListenerAdapter(chatNotificationSubscriber);
 	}
-	
+
 	@Bean
 	MessageListenerAdapter chatTicketStatusListener() {
 		return new MessageListenerAdapter(chatTicketStatusSubscriber);
+	}
+
+	@Bean
+	MessageListenerAdapter chatVisitedPagesListener() {
+		return new MessageListenerAdapter(chatVisitedPagesSubscriber);
 	}
 
 	@Bean
@@ -167,17 +198,9 @@ public class RedisConfig {
 		container.addMessageListener(chatChannelListner(), new PatternTopic("chat_channel"));
 		container.addMessageListener(chatNotificationListener(), new PatternTopic("chat_notification"));
 		container.addMessageListener(chatTicketStatusListener(), new PatternTopic("chat_ticket_status"));
-		return container;
-	}
+		container.addMessageListener(chatVisitedPagesListener(), new PatternTopic("chat_visited_pages"));
 
-	@Bean
-	public RedisTemplate<String, Notification> redisNotificationTemplate(
-			LettuceConnectionFactory redisConnectionFactory) {
-		RedisTemplate<String, Notification> redisTemplate = new RedisTemplate<String, Notification>();
-		redisTemplate.setConnectionFactory(redisConnectionFactory);
-		redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<Notification>(Notification.class));
-		redisTemplate.setKeySerializer(new StringRedisSerializer());
-		return redisTemplate;
+		return container;
 	}
 
 }

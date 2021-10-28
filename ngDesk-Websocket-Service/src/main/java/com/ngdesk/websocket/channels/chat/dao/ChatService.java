@@ -52,7 +52,13 @@ public class ChatService {
 	RedisTemplate<String, ChatChannelMessage> redisTemplate;
 
 	@Autowired
+	RedisTemplate<String, ChatTicketStatusMessage> redisTemplateForChatTicketStatusMessage;
+
+	@Autowired
 	RedisTemplate<String, ChatNotification> redisTemplateForChatNotification;
+
+	@Autowired
+	RedisTemplate<String, ChatVisitedPagesNotification> redisTemplateForChatVisitedPagesNotification;
 
 	@Autowired
 	Global global;
@@ -319,7 +325,54 @@ public class ChatService {
 	}
 
 	public void addToChatTicketStatusQueue(ChatTicketStatusMessage chatTicketStatusMessage) {
-		redisTemplate.convertAndSend("chat_ticket_status", chatTicketStatusMessage);
+		redisTemplateForChatTicketStatusMessage.convertAndSend("chat_ticket_status", chatTicketStatusMessage);
 	}
 
+	public void updateChatVistedPages(ChatVisitedPages chatVisitedPages) {
+		String subdomain = chatVisitedPages.getCompanySubdomain();
+		Optional<Company> optionalCompany = companiesRepository.findCompanyBySubdomain(subdomain);
+		if (optionalCompany.isPresent()) {
+			Company company = optionalCompany.get();
+			String companyId = company.getId();
+
+			Optional<Map<String, Object>> optionalChatEntry = moduleEntryRepository
+					.findBySessionUuid(chatVisitedPages.getSessionUUID(), "Chats_" + companyId);
+			Optional<Module> optionalChatModule = modulesRepository.findModuleByName("Chats", "modules_" + companyId);
+
+			if (optionalChatModule.isPresent()) {
+				if (optionalChatEntry.isPresent()) {
+					Map<String, Object> chatEntry = optionalChatEntry.get();
+					Optional<Map<String, Object>> optionalContactEntry = moduleEntryRepository
+							.findById(chatEntry.get("REQUESTOR").toString(), "Contacts_" + companyId);
+					if (optionalContactEntry.isPresent()) {
+						Optional<Map<String, Object>> optionalUserEntry = moduleEntryRepository.findById(
+								optionalContactEntry.get().get("USER").toString(), "Users_" + company.getId());
+						if (optionalUserEntry.isPresent()) {
+							HashMap<String, Object> updateChatEntry = new HashMap<String, Object>();
+							updateChatEntry.put("DATA_ID", chatEntry.get("_id").toString());
+							List<String> visitedPages = new ArrayList<String>();
+							if (chatEntry.get("PAGES_VISITED") != null) {
+								visitedPages = (List<String>) chatEntry.get("PAGES_VISITED");
+							}
+							if (chatVisitedPages.getVisitedPages() != null) {
+								visitedPages.add(chatVisitedPages.getVisitedPages());
+							}
+							updateChatEntry.put("PAGES_VISITED", visitedPages);
+							Map<String, Object> updatedChatEntry = dataProxy.putModuleEntry(updateChatEntry,
+									optionalChatModule.get().getModuleId(), false, companyId,
+									optionalUserEntry.get().get("USER_UUID").toString());
+							List<String> agents = (List<String>) updatedChatEntry.get("AGENTS");
+							ChatVisitedPagesNotification chatVisitedPagesNotification = new ChatVisitedPagesNotification(
+									(List<String>) updatedChatEntry.get("PAGES_VISITED"),
+									chatVisitedPages.getSessionUUID(), agents.get(0), "VISITED_PAGES", companyId);
+
+							redisTemplateForChatVisitedPagesNotification.convertAndSend("chat_visited_pages",
+									chatVisitedPagesNotification);
+
+						}
+					}
+				}
+			}
+		}
+	}
 }

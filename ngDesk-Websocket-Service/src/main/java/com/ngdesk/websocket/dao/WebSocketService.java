@@ -36,6 +36,7 @@ import com.ngdesk.websocket.channels.chat.dao.ChatDiscussionMessage;
 import com.ngdesk.websocket.channels.chat.dao.ChatNotification;
 import com.ngdesk.websocket.channels.chat.dao.ChatStatusMessage;
 import com.ngdesk.websocket.channels.chat.dao.ChatTicketStatusMessage;
+import com.ngdesk.websocket.channels.chat.dao.ChatVisitedPagesNotification;
 import com.ngdesk.websocket.companies.dao.ChatSettingsMessage;
 import com.ngdesk.websocket.companies.dao.Company;
 import com.ngdesk.websocket.companies.dao.DnsRecord;
@@ -577,5 +578,39 @@ public class WebSocketService {
 				});
 			}
 		}
+	}
+
+	public void publishChatVisitedPages(Company company, ChatVisitedPagesNotification chatVisitedPagesNotification) {
+
+		String companyId = company.getId();
+		ObjectMapper mapper = new ObjectMapper();
+
+		if (!sessionService.sessions.containsKey(company.getCompanySubdomain())) {
+			return;
+		}
+
+		ConcurrentHashMap<String, UserSessions> sessions = sessionService.sessions.get(company.getCompanySubdomain());
+
+		Optional<Map<String, Object>> optionalUser = entryRepository
+				.findEntryById(chatVisitedPagesNotification.getUserId(), "Users_" + companyId);
+		if (optionalUser.isPresent()) {
+			ConcurrentLinkedQueue<WebSocketSession> userSessions = sessions
+					.get(chatVisitedPagesNotification.getUserId()).getSessions();
+			userSessions.forEach(session -> {
+				try {
+					String payload = mapper.writeValueAsString(chatVisitedPagesNotification);
+					session.sendMessage(new TextMessage(payload));
+				} catch (JsonProcessingException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+					userSessions.remove(session);
+				}
+			});
+
+		}
+
 	}
 }

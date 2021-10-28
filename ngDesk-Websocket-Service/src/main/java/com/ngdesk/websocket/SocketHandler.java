@@ -47,9 +47,9 @@ import com.ngdesk.websocket.channels.chat.dao.ChatStatusCheck;
 import com.ngdesk.websocket.channels.chat.dao.ChatStatusService;
 import com.ngdesk.websocket.channels.chat.dao.ChatTicket;
 import com.ngdesk.websocket.channels.chat.dao.ChatTicketCreationService;
-import com.ngdesk.websocket.channels.chat.dao.ChatTicketStatusMessage;
 import com.ngdesk.websocket.channels.chat.dao.ChatUser;
 import com.ngdesk.websocket.channels.chat.dao.ChatUserEntryService;
+import com.ngdesk.websocket.channels.chat.dao.ChatVisitedPages;
 import com.ngdesk.websocket.channels.chat.dao.ChatWidgetPayload;
 import com.ngdesk.websocket.channels.chat.dao.SendChatTranscript;
 import com.ngdesk.websocket.dao.WebSocketService;
@@ -397,7 +397,6 @@ public class SocketHandler extends TextWebSocketHandler {
 											try {
 												ChatStatus chatStatus = mapper.readValue(textMessage.getPayload(),
 														ChatStatus.class);
-												System.out.println("chatStatus   " + chatStatus.isAccepting());
 												chatStatusService.updateChatStatus(chatStatus);
 
 											} catch (Exception e6) {
@@ -435,19 +434,19 @@ public class SocketHandler extends TextWebSocketHandler {
 														}
 
 													} catch (Exception e8) {
-														try {
-															SendChatTranscript sendChatTranscript = mapper.readValue(
-																	textMessage.getPayload(), SendChatTranscript.class);
-															ChatTicketStatusMessage chatTicketStatusMessage = new ChatTicketStatusMessage(
-																	user.getCompanyId(),
-																	sendChatTranscript.getSessionUUID(), "CLOSE_CHAT",
-																	"CLOSED", "AGENT_ENDED_THE_CHAT");
-															chatService.addToChatTicketStatusQueue(
-																	chatTicketStatusMessage);
-
-														} catch (Exception e9) {
-															// TODO: handle exception
-														}
+//														try {
+//															SendChatTranscript sendChatTranscript = mapper.readValue(
+//																	textMessage.getPayload(), SendChatTranscript.class);
+//															ChatTicketStatusMessage chatTicketStatusMessage = new ChatTicketStatusMessage(
+//																	user.getCompanyId(),
+//																	sendChatTranscript.getSessionUUID(), "CLOSE_CHAT",
+//																	"CLOSED", "AGENT_ENDED_THE_CHAT");
+//															chatService.addToChatTicketStatusQueue(
+//																	chatTicketStatusMessage);
+//
+//														} catch (Exception e9) {
+//															// TODO: handle exception
+//														}
 													}
 
 												}
@@ -513,7 +512,13 @@ public class SocketHandler extends TextWebSocketHandler {
 											ChatTicket.class);
 									chatTicketCreationService.chatTicketCreation(chatTicket);
 								} catch (Exception e4) {
-
+									try {
+										ChatVisitedPages chatVisitedPages = mapper.readValue(textMessage.getPayload(),
+												ChatVisitedPages.class);
+										chatService.updateChatVistedPages(chatVisitedPages);
+									} catch (Exception e5) {
+										// TODO: handle exception
+									}
 								}
 							}
 						}
