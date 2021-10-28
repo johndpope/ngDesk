@@ -130,4 +130,16 @@ export class EscalationsService {
 		}`;
 		return this.http.post(`${this.globals.graphqlUrl}`, query);
 	}
+
+	// Query to fetch all the escalations
+	public getEscalations(pageNumber, pageSize, sortBy, orderBy) {
+		const query = `{
+				DATA: getEscalations(pageNumber: ${pageNumber}, pageSize: ${pageSize}, sortBy:"${sortBy}", orderBy: "${orderBy}"){
+					NAME:name
+					ESCALATION_ID:id
+				}
+				totalElements: getEscalationsCount
+			}`;
+		return this.http.post(`${this.globals.graphqlUrl}`, query);
+	}
 }
