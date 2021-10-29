@@ -22,10 +22,10 @@ public class EscalationDataFetcher implements DataFetcher<Escalation> {
 
 	@Override
 	public Escalation get(DataFetchingEnvironment environment) throws Exception {
-
 		String companyId = authManager.getUserDetails().getCompanyId();
 		String escalationId = environment.getArgument("escalationId");
-		Optional<Escalation> optionalEscalation = escalationRepository.findById(escalationId, "escalations_"+companyId);
+		Optional<Escalation> optionalEscalation = escalationRepository.findById(escalationId,
+				"escalations_" + companyId);
 		if (optionalEscalation != null) {
 			return optionalEscalation.get();
 		}

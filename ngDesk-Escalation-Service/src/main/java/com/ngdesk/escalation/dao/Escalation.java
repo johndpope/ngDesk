@@ -26,7 +26,6 @@ public class Escalation {
 	private String name;
 
 	@Schema(description = "Description of the escalation", required = false, example = "Escalation to handle ngDesk customer requests")
-	@CustomNotNull(message = "NOT_NULL", values = { "ESCALATION_DESCRIPTION" })
 	private String description;
 
 	@Schema(description = "Escalation Rules", required = true)

@@ -6,5 +6,7 @@ import com.ngdesk.escalation.dao.Escalation;
 
 @Repository
 public interface EscalationRepository extends CustomEscalationRepository, CustomNgdeskRepository<Escalation, String> {
+
+	
 	
 }

@@ -8,7 +8,7 @@ import org.springframework.data.annotation.Id;
 public class Escalation {
 
 	@Id
-	private String esclalationId;
+	private String escalationId;
 
 	private String name;
 
@@ -28,10 +28,10 @@ public class Escalation {
 
 	}
 
-	public Escalation(String esclalationId, String name, String description, List<EscalationRule> rules,
+	public Escalation(String escalationId, String name, String description, List<EscalationRule> rules,
 			Date dateCreated, Date dateUpdated, String lastUpdated, String createdBy) {
 		super();
-		this.esclalationId = esclalationId;
+		this.escalationId = escalationId;
 		this.name = name;
 		this.description = description;
 		this.rules = rules;
@@ -41,12 +41,12 @@ public class Escalation {
 		this.createdBy = createdBy;
 	}
 
-	public String getEsclalationId() {
-		return esclalationId;
+	public String getEscalationId() {
+		return escalationId;
 	}
 
-	public void setEsclalationId(String esclalationId) {
-		this.esclalationId = esclalationId;
+	public void setEscalationId(String escalationId) {
+		this.escalationId = escalationId;
 	}
 
 	public String getName() {

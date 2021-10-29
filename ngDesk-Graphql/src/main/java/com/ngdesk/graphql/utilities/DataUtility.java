@@ -504,7 +504,7 @@ public class DataUtility {
 
 	@Autowired
 	ListFormulaDataFetcher listFormulaDatafetcher;
-	
+
 	@Autowired
 	EscalationDataFetcher escalationDataFetcher;
 
@@ -961,6 +961,12 @@ public class DataUtility {
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getChatPrompt", chatPromptDataFetcher));
 
 		// ESCALATION
+		builder.type("EscalateTo", typeWiring -> typeWiring.dataFetcher("users", relationshipDataFetcher));
+		builder.type("EscalateTo", typeWiring -> typeWiring.dataFetcher("teams", relationshipDataFetcher));
+		builder.type("EscalateTo", typeWiring -> typeWiring.dataFetcher("schedules", schedulesDataFetcher));
+		builder.type("Escalation", typeWiring -> typeWiring.dataFetcher("lastUpdated", entryDataFetcher));
+		builder.type("Escalation", typeWiring -> typeWiring.dataFetcher("createdBy", entryDataFetcher));
+
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getEscalation", escalationDataFetcher));
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getEscalations", escalationsDataFetcher));
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getEscalationsCount", escalationCountDataFetcher));

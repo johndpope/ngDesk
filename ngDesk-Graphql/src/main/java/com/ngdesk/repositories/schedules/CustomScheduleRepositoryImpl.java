@@ -22,8 +22,7 @@ public class CustomScheduleRepositoryImpl implements CustomScheduleRepository {
 	public Optional<Schedule> findScheduleByName(String name, String collection) {
 		return Optional.ofNullable(mongoOperations.findOne(new Query(Criteria.where("NAME").is(name)), Schedule.class));
 	}
-	
-	
+
 	@Override
 	public List<Schedule> findAllSchedules(Pageable pageable, String collectionName) {
 		Query query = new Query();
@@ -31,9 +30,14 @@ public class CustomScheduleRepositoryImpl implements CustomScheduleRepository {
 		return mongoOperations.find(query, Schedule.class, collectionName);
 	}
 
-
 	@Override
 	public int getCount(String collectionName) {
 		return (int) mongoOperations.count(new Query(), collectionName);
+	}
+
+	@Override
+	public List<Schedule> findSchedulesByIds(List<String> scheduleIds, String collectionName) {
+		Query query = new Query(Criteria.where("_id").in(scheduleIds));
+		return mongoOperations.find(query, Schedule.class, collectionName);
 	}
 }

@@ -62,7 +62,7 @@ public class EscalationAPI {
 	@Operation(summary = "Post Escalation", description = "Post a single escalation")
 	public Escalation postEscalation(@Valid @RequestBody Escalation escalation) {
 		escalation.setDateCreated(new Date());
-		escalation.setDateCreated(new Date());
+		escalation.setDateUpdated(new Date());
 		escalation.setLastUpdated(authManager.getUserDetails().getUserId());
 		escalation.setCreatedBy(authManager.getUserDetails().getUserId());
 

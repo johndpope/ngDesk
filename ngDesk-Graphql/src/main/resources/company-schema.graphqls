@@ -941,7 +941,7 @@ type Category{
 
 type Escalation{
 
-   esclalationId: String
+   escalationId: String
    name: String
    description: String
    rules: [EscalationRule]
@@ -961,9 +961,9 @@ type EscalationRule{
 
 type EscalateTo{
 
-  scheduleIds: [String]
-  userIds: [String]
-  teamIds: [String]
+  schedules: [String]
+  users: [String]
+  teams: [String]
 }
 
 type ListFormulaFieldValue{
