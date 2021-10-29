@@ -52,7 +52,7 @@ public class CustomCompanyRepositoryImpl implements CustomCompanyRepository {
 		Assert.notNull(collectionName, "Collection name must not be null");
 	
 		Criteria criteria = new Criteria();
-		criteria.andOperator(Criteria.where("DATE_CREATED").gt(startDate),Criteria.where("DATE_CREATED").lte(endDate));
+		criteria.andOperator(Criteria.where("DATE_CREATED").gt(endDate),Criteria.where("DATE_CREATED").lt(startDate));
 		Query query = new Query(criteria);
 		return Optional.ofNullable(mongoOperations.find(query, Company.class, collectionName));
 	}
