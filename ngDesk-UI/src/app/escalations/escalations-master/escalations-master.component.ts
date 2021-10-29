@@ -104,7 +104,6 @@ export class EscalationsMasterComponent implements OnInit {
 	}
 
 	private getEscalations() {
-		debugger;
 		this.escalationService
 			.getEscalations(
 				this.customTableService.pageIndex,
