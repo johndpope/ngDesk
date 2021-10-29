@@ -38,6 +38,7 @@ public class ChatStatusService {
 					chatStatusMessage.setChatStatus("available");
 					chatStatusMessage.setCompanyId(company.getId());
 					chatStatusMessage.setType("CHAT_STATUS");
+					chatStatusMessage.setUserId(chatStatus.getUserId());
 					sessionMap.put(chatStatus.getUserId(), userSessions);
 					sessionService.sessions.put(company.getCompanySubdomain(), sessionMap);
 
@@ -46,6 +47,7 @@ public class ChatStatusService {
 					chatStatusMessage.setChatStatus("not available");
 					chatStatusMessage.setCompanyId(company.getId());
 					chatStatusMessage.setType("CHAT_STATUS");
+					chatStatusMessage.setUserId(chatStatus.getUserId());
 					sessionMap.put(chatStatus.getUserId(), userSessions);
 					sessionService.sessions.put(company.getCompanySubdomain(), sessionMap);
 
@@ -58,8 +60,8 @@ public class ChatStatusService {
 
 	}
 
-	public void addToQueue(ChatStatusMessage notification) {
-		redisTemplate.convertAndSend("chat_status", notification);
+	public void addToQueue(ChatStatusMessage chatStatusMessage) {
+		redisTemplate.convertAndSend("chat_status", chatStatusMessage);
 	}
 
 	public void publishOnChatStatusCheck(ChatStatusCheck chatStatusCheck) {
@@ -76,6 +78,7 @@ public class ChatStatusService {
 				chatStatusMessage.setChatStatus(userSessions.getChatStatus());
 				chatStatusMessage.setCompanyId(company.getId());
 				chatStatusMessage.setType("CHAT_STATUS");
+				chatStatusMessage.setUserId(chatStatusCheck.getUserId());
 				addToQueue(chatStatusMessage);
 			}
 		}

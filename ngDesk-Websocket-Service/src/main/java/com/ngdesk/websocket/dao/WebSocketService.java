@@ -445,8 +445,9 @@ public class WebSocketService {
 		}
 
 		ConcurrentHashMap<String, UserSessions> sessions = sessionService.sessions.get(company.getCompanySubdomain());
-		for (String userId : sessions.keySet()) {
 
+		if (message.getUserId() != null) {
+			String userId = message.getUserId();
 			Optional<Map<String, Object>> optionalUser = entryRepository.findEntryById(userId, "Users_" + companyId);
 			if (optionalUser.isPresent()) {
 				ConcurrentLinkedQueue<WebSocketSession> userSessions = sessions.get(userId).getSessions();
@@ -463,9 +464,7 @@ public class WebSocketService {
 						userSessions.remove(session);
 					}
 				});
-
 			}
-
 		}
 
 	}

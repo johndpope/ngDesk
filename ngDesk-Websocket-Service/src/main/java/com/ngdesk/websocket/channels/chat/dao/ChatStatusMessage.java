@@ -8,15 +8,18 @@ public class ChatStatusMessage {
 
 	private String chatStatus;
 
+	private String userId;
+
 	public ChatStatusMessage() {
 
 	}
 
-	public ChatStatusMessage(String companyId, String type, String chatStatus) {
+	public ChatStatusMessage(String companyId, String type, String chatStatus, String userId) {
 		super();
 		this.companyId = companyId;
 		this.type = type;
 		this.chatStatus = chatStatus;
+		this.userId = userId;
 	}
 
 	public String getCompanyId() {
@@ -41,6 +44,14 @@ public class ChatStatusMessage {
 
 	public void setChatStatus(String chatStatus) {
 		this.chatStatus = chatStatus;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 }

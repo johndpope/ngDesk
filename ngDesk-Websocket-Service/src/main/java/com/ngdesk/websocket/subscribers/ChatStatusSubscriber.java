@@ -25,10 +25,12 @@ public class ChatStatusSubscriber implements MessageListener {
 	@Override
 	public void onMessage(Message message, byte[] pattern) {
 		try {
-			ChatStatusMessage notification = new ObjectMapper().readValue(message.toString(), ChatStatusMessage.class);
-			Optional<Company> optionalCompany = companiesRepository.findById(notification.getCompanyId(), "companies");
+			ChatStatusMessage chatStatusMessage = new ObjectMapper().readValue(message.toString(),
+					ChatStatusMessage.class);
+			Optional<Company> optionalCompany = companiesRepository.findById(chatStatusMessage.getCompanyId(),
+					"companies");
 			if (optionalCompany.isPresent()) {
-				webSocketService.publishChatStatus(optionalCompany.get(), notification);
+				webSocketService.publishChatStatus(optionalCompany.get(), chatStatusMessage);
 			}
 
 		} catch (Exception e) {
