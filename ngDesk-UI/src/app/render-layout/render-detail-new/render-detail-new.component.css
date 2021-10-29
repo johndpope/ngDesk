@@ -240,11 +240,66 @@
 	word-break: break-all !important;
   }
 
+  ::ng-deep .chat-bg-color {
+	background: rgb(245,245,245);
+  }
+
+  ::ng-deep .chat-textarea .mat-form-field-outline-start {
+	border-radius: 28px 0 0 28px !important;
+	min-width: 28px !important;
+  }
+  
+  ::ng-deep .chat-textarea .mat-form-field-outline-end {
+	border-radius: 0 28px 28px 0 !important;
+  }
+
+  ::ng-deep .chat-bubble {
+	display: inline-block;
+	position: relative;
+	max-width: 500px;
+	height: auto;
+	border: 1px solid #dedede;
+	border-radius: 10px; padding: 10px; word-break: break-word;
+}
+
+.chat-bubble-text{
+	padding: 3em;
+	text-align: left;
+  line-height: 1em;
+}
+
+::ng-deep  .sender.right-top:after{
+	content: ' ';
+	position: absolute;
+	width: 0;
+	height: 0;
+  	left: auto;
+	right: -15px;
+  	top: 15px;
+	bottom: auto;
+	border: 15px solid;
+	border-color: var(--chatSenderBubbleColor) transparent transparent transparent;
+}
+
+::ng-deep  .receiver.left-top:after{
+	content: ' ';
+	position: absolute;
+	width: 0;
+	height: 0;
+  	right: auto;
+	left: -15px;
+  	top: 15px;
+	bottom: auto;
+	border: 15px solid;
+	border-color: var(--chatReceiverBubbleColor) transparent transparent transparent;
+}
 
 
-
-
-
+::ng-deep.mat-chat-list {
+	min-width: 300px;
+	border-radius: 50px !important;
+	margin: 20px
+}
 
 
 

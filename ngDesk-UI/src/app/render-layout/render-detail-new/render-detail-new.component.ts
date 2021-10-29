@@ -223,6 +223,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	public customerDetail: any = {};
 	public chatboxDisabled = false;
 	public closeChatMessage = '';
+	public themeWrapper = document.querySelector('body');
 	constructor(
 		@Optional() @Inject(MAT_DIALOG_DATA) public modalData: any,
 		@Optional()
@@ -3702,6 +3703,14 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	public getChatChannelDetails() {
 		this.chatDataService.getChatChannel().subscribe((chatChannel: any) => {
 			this.chatChannel = chatChannel.CHAT_CHANNEL;
+			this.setSenderColors(
+				this.chatChannel.senderBubbleColor,
+				this.chatChannel.senderTextColor
+			);
+			this.setReceiverColors(
+				this.chatChannel.receiverBubbleColor,
+				this.chatChannel.receiverTextColor
+			);
 		});
 	}
 	// to get Plain text from premade responces
@@ -3823,5 +3832,15 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 		} else {
 			return false;
 		}
+	}
+
+	public setSenderColors(bgColor, textColor) {
+		this.themeWrapper.style.setProperty('--chatSenderBubbleColor', bgColor);
+		this.themeWrapper.style.setProperty('--chatSenderTextColor', textColor);
+	}
+
+	public setReceiverColors(bgColor, textColor) {
+		this.themeWrapper.style.setProperty('--chatReceiverBubbleColor', bgColor);
+		this.themeWrapper.style.setProperty('--chatReceiverTextColor', textColor);
 	}
 }
