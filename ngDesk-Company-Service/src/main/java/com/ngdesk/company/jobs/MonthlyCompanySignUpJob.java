@@ -50,11 +50,7 @@ public class MonthlyCompanySignUpJob {
 		try {
 
 			// RUN ONLY ON PROD
-
-			String environment = env.getProperty("env");
-			System.out.println("environment===" + environment);
-			if (!environment.equalsIgnoreCase("prd") && !environment.equalsIgnoreCase("devnew")) {
-
+			if (!env.getProperty("env").equalsIgnoreCase("prd") && !env.getProperty("env").equalsIgnoreCase("devnew")) {
 				return;
 			}
 
@@ -83,24 +79,19 @@ public class MonthlyCompanySignUpJob {
 
 			// SETTING HTML TABLE
 			String totalDetails = companySignUpservice.getTotalDetails(companyList);
-
 			totalDetails = totalDetails + "</table>";
 			companySignUpservice.sendEmail(totalDetails, emailIds);
-
 			log.trace("Exit DailyCompanySignup.signupCompanies()");
 
 		} catch (Exception e) {
 			e.printStackTrace();
-
 			StringWriter sw = new StringWriter();
 			PrintWriter pw = new PrintWriter(sw);
 			e.printStackTrace(pw);
 			String sStackTrace = sw.toString();
 
-			if (env.getProperty("env").equals("prd")) {
-
+			if (env.getProperty("env").equalsIgnoreCase("prd")) {
 				companySignUpservice.sendErrorMessage(sStackTrace, emailIds);
-
 			}
 		}
 		log.trace("Exit DailyCompanySignup.signupCompanies()");
