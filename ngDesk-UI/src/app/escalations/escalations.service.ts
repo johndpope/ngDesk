@@ -136,7 +136,7 @@ export class EscalationsService {
 		const query = `{
 				DATA: getEscalations(pageNumber: ${pageNumber}, pageSize: ${pageSize}, sortBy:"${sortBy}", orderBy: "${orderBy}"){
 					NAME:name
-					ESCALATION_ID:id
+					ESCALATION_ID:esclalationId
 				}
 				totalElements: getEscalationsCount
 			}`;
