@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 import com.ngdesk.commons.mail.SendMail;
 import com.ngdesk.company.dao.Company;
-import com.ngdesk.company.dao.CompanySignUpservice;
+import com.ngdesk.company.dao.CompanySignUpJobService;
 import com.ngdesk.repositories.CompanyRepository;
 import com.ngdesk.repositories.ModuleEntryRepository;
 
@@ -35,7 +35,7 @@ public class DailyCompanySignupJob {
 	ModuleEntryRepository moduleEntryRepository;
 
 	@Autowired
-	CompanySignUpservice companySignUpservice;
+	CompanySignUpJobService companySignUpservice;
 
 	private final Logger log = LoggerFactory.getLogger(DailyCompanySignupJob.class);
 

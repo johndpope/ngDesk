@@ -18,7 +18,7 @@ import com.ngdesk.repositories.ModuleEntryRepository;
 import com.ngdesk.repositories.RoleRepository;
 
 @Component
-public class CompanySignUpservice {
+public class CompanySignUpJobService {
 	@Autowired
 	ModuleEntryRepository moduleEntryRepository;
 
