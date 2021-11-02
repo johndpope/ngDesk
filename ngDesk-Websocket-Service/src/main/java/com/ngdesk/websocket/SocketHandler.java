@@ -429,7 +429,8 @@ public class SocketHandler extends TextWebSocketHandler {
 															}
 															webSocketService.addDiscussionToChatEntry(
 																	chatDiscussionMessage, subdomain,
-																	chatDiscussionMessage.getAgentDataID(), false);
+																	chatDiscussionMessage.getAgentDataID(), false,
+																	false);
 
 														}
 
@@ -502,7 +503,7 @@ public class SocketHandler extends TextWebSocketHandler {
 										throw new IllegalArgumentException();
 									}
 									webSocketService.addDiscussionToChatEntry(chatDiscussionMessage, subdomain,
-											chatDiscussionMessage.getCustomerDataID(), false);
+											chatDiscussionMessage.getCustomerDataID(), false, true);
 
 								}
 

@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -43,6 +44,7 @@ import com.ngdesk.websocket.companies.dao.DnsRecord;
 import com.ngdesk.websocket.modules.dao.Module;
 import com.ngdesk.websocket.modules.dao.ModuleField;
 import com.ngdesk.websocket.modules.dao.ModuleService;
+import com.ngdesk.websocket.notification.dao.Notification;
 import com.ngdesk.websocket.roles.dao.RolesService;
 
 @Component
@@ -77,6 +79,9 @@ public class WebSocketService {
 
 	@Autowired
 	RabbitTemplate rabbitTemplate;
+
+	@Autowired
+	RedisTemplate<String, Notification> redisTemplate;
 
 	private final Logger log = LoggerFactory.getLogger(WebSocketService.class);
 
@@ -159,7 +164,7 @@ public class WebSocketService {
 	}
 
 	public void addDiscussionToChatEntry(ChatDiscussionMessage chatDiscussionMessage, String subdomain, String userId,
-			boolean isTrigger) {
+			boolean isTrigger, boolean isCustomer) {
 		try {
 
 			DiscussionMessage message = chatDiscussionMessage.getDiscussionMessage();
@@ -224,6 +229,15 @@ public class WebSocketService {
 											&& !message.getMessageType().equals("META_DATA")) {
 										publishDiscussionToUsersInvolved(company, message, entry);
 										publishChatDiscussionNotification(company, chatDiscussionMessage);
+										
+										//NOTIFY THE AGENT 
+										if (isCustomer) {
+											Notification notification = new Notification(company.getId(),
+													message.getModuleId(), message.getDataId(),
+													chatDiscussionMessage.getAgentDataID(), new Date(), new Date(),
+													true, firstName + lastName + " has sent the message");
+											addToNotificationQueue(notification);
+										}
 									}
 								}
 							}
@@ -235,6 +249,10 @@ public class WebSocketService {
 			e.printStackTrace();
 		}
 
+	}
+
+	public void addToNotificationQueue(Notification notification) {
+		redisTemplate.convertAndSend("notification", notification);
 	}
 
 	public void publishChatDiscussionNotification(Company company, ChatDiscussionMessage chatDiscussionMessage) {
