@@ -8,6 +8,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ngdesk.commons.Global;
 import com.ngdesk.commons.mail.SendMail;
@@ -30,62 +32,55 @@ public class CompanySignUpservice {
 	SendMail sendMail;
 
 	public void sendEmail(String table, List<String> emailIds) {
-
-		try {
-
-			for (String emailAddress : emailIds) {
-				String formattedDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-				String from = "support@ngdesk.com";
-				String subject = "List of companies " + formattedDate;
-				String body = global.getFile("daily_company_signup.html");
-				body = body.replace("TABLE_REPLACE", table);
-				sendMail.send(emailAddress, from, subject, body);
-
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		for (String emailAddress : emailIds) {
+			String formattedDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+			String from = "support@ngdesk.com";
+			String subject = "List of companies " + formattedDate;
+			String body = global.getFile("daily_company_signup.html");
+			body = body.replace("TABLE_REPLACE", table);
+			sendMail.send(emailAddress, from, subject, body);
 		}
 	}
 
 	public String buildCompanyDetailsRow(Company company, Map<String, Object> user,
 			Map<String, Object> firstAdminUserContact) {
+
+		String firstName = firstAdminUserContact.get("FIRST_NAME").toString();
+		String lastName = firstAdminUserContact.get("LAST_NAME").toString();
+		ObjectMapper mapper = new ObjectMapper();
+		Phone phone = null;
 		try {
-
-			String firstName = firstAdminUserContact.get("FIRST_NAME").toString();
-			String lastName = firstAdminUserContact.get("LAST_NAME").toString();
-			ObjectMapper mapper = new ObjectMapper();
-			Phone phone = mapper.readValue(mapper.writeValueAsString(firstAdminUserContact.get("PHONE_NUMBER")),
-					Phone.class);
-			UsageType usageType = company.isUsageType();
-
-			if (user != null) {
-				// GET PHONE NUMBER FROM COMPANY
-				String phoneNumber = phone.getDialCode() + phone.getPhoneNumber();
-				Boolean tickets = false;
-				Boolean chat = false;
-				Boolean pager = false;
-				if (usageType != null) {
-					tickets = usageType.isTickets();
-					chat = usageType.isChat();
-					pager = usageType.isPager();
-
-				}
-				// GET DETAILS FROM COMPANY AND USER
-				String detailsRow = "<tr><td>" + company.getCompanyName() + "</td><td>" + company.getCompanySubdomain()
-						+ "</td><td>" + firstName + "</td><td>" + lastName + "</td><td>" + user.get("EMAIL_ADDRESS")
-						+ "</td><td>" + phoneNumber + "</td><td>" + company.getTimezone() + "</td><td>"
-						+ company.getIndustry() + "</td><td>" + (tickets == true ? "Tickets" : "")
-						+ (chat == true && tickets == true ? "/" : "") + (chat == true ? "chat" : "")
-						+ (pager == true && chat == true ? "/" : "")
-						+ (pager == true && tickets == true && chat == false ? "/" : "")
-						+ (pager == true ? "pager" : "") + "</td></tr>";
-				return detailsRow;
-
-			}
-
+			phone = mapper.readValue(mapper.writeValueAsString(firstAdminUserContact.get("PHONE_NUMBER")), Phone.class);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		UsageType usageType = company.isUsageType();
+		if (user != null) {
+			// GET PHONE NUMBER FROM COMPANY
+			String phoneNumber = phone.getDialCode() + phone.getPhoneNumber();
+			Boolean tickets = false;
+			Boolean chat = false;
+			Boolean pager = false;
+			if (usageType != null) {
+				tickets = usageType.isTickets();
+				chat = usageType.isChat();
+				pager = usageType.isPager();
+			}
+			String usageTypeDetails = (chat == true && tickets == true ? "/" : "") + (chat == true ? "chat" : "")
+					+ (pager == true && chat == true ? "/" : "")
+					+ (pager == true && tickets == true && chat == false ? "/" : "") + (pager == true ? "pager" : "");
+
+			// GET DETAILS FROM COMPANY AND USER
+			String detailsRow = "<tr><td>" + company.getCompanyName() + "</td><td>" + company.getCompanySubdomain()
+					+ "</td><td>" + firstName + "</td><td>" + lastName + "</td><td>" + user.get("EMAIL_ADDRESS")
+					+ "</td><td>" + phoneNumber + "</td><td>" + company.getTimezone() + "</td><td>"
+					+ company.getIndustry() + "</td><td>" + (tickets == true ? "Tickets" : "") + usageTypeDetails
+					+ "</td></tr>";
+			return detailsRow;
+
+		}
+
 		return "";
 	}
 
@@ -97,20 +92,16 @@ public class CompanySignUpservice {
 
 	public String getTotalDetails(List<Company> companyList) {
 		String totalDetails = "<table border=1>";
-
 		String header = "<tr><th>Company Name</th><th>Company Subdomain</th><th>First Name</th><th>Last Name</th>"
 				+ "<th>Email Address</th><th>Phone Number</th><th>Timezone</th><th>Industry</th><th>Signed up for Tickets/Pager/Chat</th></tr>";
 		totalDetails = totalDetails + header;
-		System.out.println("Total number of companies" + companyList.size());
-
 		for (Company company : companyList) {
 			String companyId = company.getCompanyId().toString();
 			List<Role> rolesCollection = roleRepository.findAllRolesByCollectionName("roles_" + companyId).get();
-			Role role = rolesCollection.stream().filter(roles -> roles.getName().equalsIgnoreCase("SystemAdmin"))
-					.findFirst().orElse(null);
-			String systemAdminId = role.getId().toString();
+			Role systemAdminRole = rolesCollection.stream()
+					.filter(roles -> roles.getName().equalsIgnoreCase("SystemAdmin")).findFirst().orElse(null);
+			String systemAdminId = systemAdminRole.getId().toString();
 			List<Map<String, Object>> usersCollection = moduleEntryRepository.getAllEntries("Users_" + companyId).get();
-
 			// GET FIRST SYSTEM ADMIN
 			Map<String, Object> firstAdminUser = usersCollection.stream()
 					.filter(users -> users.get("ROLE").toString().equals(systemAdminId)).findFirst().orElse(null);
@@ -119,10 +110,8 @@ public class CompanySignUpservice {
 					.get();
 			Map<String, Object> contactModule = contactCollection.stream()
 					.filter(contacts -> contacts.get("_id").toString().equals(contactId)).findFirst().orElse(null);
-
 			// ADDING INDIVIDUAL ROWS
 			totalDetails = totalDetails + buildCompanyDetailsRow(company, firstAdminUser, contactModule);
-
 		}
 		return totalDetails;
 	}

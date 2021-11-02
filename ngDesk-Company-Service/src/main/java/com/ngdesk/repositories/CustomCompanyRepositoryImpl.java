@@ -50,7 +50,6 @@ public class CustomCompanyRepositoryImpl implements CustomCompanyRepository {
 	@Override
 	public Optional<List<Company>> findAllCompaniesWithStartAndEndDate(String collectionName,Date startDate,Date endDate) {
 		Assert.notNull(collectionName, "Collection name must not be null");
-	
 		Criteria criteria = new Criteria();
 		criteria.andOperator(Criteria.where("DATE_CREATED").gt(endDate),Criteria.where("DATE_CREATED").lt(startDate));
 		Query query = new Query(criteria);

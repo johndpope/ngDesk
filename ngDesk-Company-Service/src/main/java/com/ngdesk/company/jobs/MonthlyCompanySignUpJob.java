@@ -38,7 +38,7 @@ public class MonthlyCompanySignUpJob {
 
 	private final Logger log = LoggerFactory.getLogger(MonthlyCompanySignUpJob.class);
 
-	// @Scheduled(fixedRate = 600000)
+	@Scheduled(fixedRate = 6000)
 
 	// will run at starting of every month
 	@Scheduled(cron = "0 0 0 1 1/1 *")
@@ -54,6 +54,7 @@ public class MonthlyCompanySignUpJob {
 				return;
 			}
 
+			// staring from 1 day of Month(00:00:00) to last day of month(23:59:59)
 			// end of month
 			Calendar calendarStartDate = Calendar.getInstance();
 			calendarStartDate.setTime(new Date());
