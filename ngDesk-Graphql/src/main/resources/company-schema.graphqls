@@ -90,7 +90,6 @@ type Query {
 	getEscalations(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [Escalation]
 	getEscalationsCount: Int
 	getAuthorizedUserForChat: AuthorizedUsersForChat 
-	getEntriesByAgentAndStatus: [Chats]
 	getEmailLists(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [EmailList]
 	getEmailList(id: String): EmailList
 	getEmailListCount: Int

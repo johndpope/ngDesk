@@ -1,7 +1,6 @@
 package com.ngdesk.repositories.chat.channel;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,19 +30,6 @@ public class CustomChatChannelRepositoryImpl implements CustomChatChannelReposit
 		Query query = new Query(criteria.where("NAME").is(name));
 
 		return Optional.ofNullable(mongoOperations.findOne(query, ChatChannel.class, collectionName));
-	}
-
-	@Override
-	public Optional<List<Map<String, Object>>> findEntriesByAgentAndStatus(String agentId, String collectionName) {
-
-		Criteria criteria = new Criteria();
-		criteria.andOperator(criteria.where("AGENTS").in(agentId), criteria.where("EFFECTIVE_TO").is(null),
-				criteria.where("DELETED").is(false));
-		Query query = new Query(criteria);
-
-		return Optional.ofNullable(
-				(mongoOperations.find(query, (Class<Map<String, Object>>) (Class) Map.class, collectionName)));
-
 	}
 
 }

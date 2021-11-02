@@ -27,7 +27,6 @@ import com.ngdesk.graphql.categories.dao.CategoryDataFetcher;
 import com.ngdesk.graphql.channels.email.dao.ChannelDataFetcher;
 import com.ngdesk.graphql.chat.channel.dao.ChatChannelDataFetcher;
 import com.ngdesk.graphql.chat.channel.dao.ChatChannelsDataFetcher;
-import com.ngdesk.graphql.chat.channel.dao.ChatEntryByAgentDataFetcher;
 import com.ngdesk.graphql.chat.channel.dao.ChatPromptDataFetcher;
 import com.ngdesk.graphql.chat.channel.dao.ChatPromptsDataFetcher;
 import com.ngdesk.graphql.company.dao.AuthorizedUsersForChatDataFetcher;
@@ -523,9 +522,6 @@ public class DataUtility {
 	AuthorizedUsersForChatDataFetcher authorizedUsersForChatFetcher;
 
 	@Autowired
-	ChatEntryByAgentDataFetcher chatEntryByAgentDataFetcher;
-
-	@Autowired
 	EmailListDataFetcher emailListDataFetcher;
 
 	@Autowired
@@ -990,9 +986,6 @@ public class DataUtility {
 		builder.type("Query",
 				typeWiring -> typeWiring.dataFetcher("getAuthorizedUserForChat", authorizedUsersForChatFetcher));
 		builder.type("AuthorizedUsersForChat", typeWiring -> typeWiring.dataFetcher("users", relationshipDataFetcher));
-
-		builder.type("Query",
-				typeWiring -> typeWiring.dataFetcher("getEntriesByAgentAndStatus", chatEntryByAgentDataFetcher));
 
 		// EMAIL_LIST
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getEmailList", emailListDataFetcher));
