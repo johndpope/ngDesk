@@ -8,8 +8,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ngdesk.commons.Global;
 import com.ngdesk.commons.mail.SendMail;
@@ -54,7 +52,7 @@ public class CompanySignUpJobService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		UsageType usageType = company.isUsageType();
 		if (user != null) {
 			// GET PHONE NUMBER FROM COMPANY
@@ -78,9 +76,7 @@ public class CompanySignUpJobService {
 					+ company.getIndustry() + "</td><td>" + (tickets == true ? "Tickets" : "") + usageTypeDetails
 					+ "</td></tr>";
 			return detailsRow;
-
 		}
-
 		return "";
 	}
 

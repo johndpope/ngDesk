@@ -38,7 +38,7 @@ public class MonthlyCompanySignUpJob {
 
 	private final Logger log = LoggerFactory.getLogger(MonthlyCompanySignUpJob.class);
 
-	//@Scheduled(fixedRate = 6000)
+	// @Scheduled(fixedRate = 6000)
 	// will run at starting of every month
 	@Scheduled(cron = "0 0 0 1 1/1 *")
 	public void signupCompanies() {
