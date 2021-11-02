@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AppGlobals } from '@src/app/app.globals';
-
+import { AppGlobals } from '../../app.globals';
 @Injectable({
 	providedIn: 'root',
 })
@@ -27,28 +26,38 @@ export class ChatDataService {
         receiverTextColor
         }
     }`;
-		return this.makeGraphQLCall(channelQuery);
+		const url = this.globals.graphqlUrl;
+		return this.makeGraphQLCall(url, channelQuery);
 	}
 
-	public getUsersForAgent() {
-		const requesterQuery = `
-    {
-      getEntriesByAgentAndStatus {
-      REQUESTOR{
-      FULL_NAME
-      USER{
-      EMAIL_ADDRESS
-      }
-      }
-      _id
-      STATUS
-      }
-      }
-      `;
-		return this.makeGraphQLCall(requesterQuery);
+	public getChatsByUserId(moduleID: string, filterConditions: [], search: any) {
+		const query = `{ DATA: getChats( moduleId: "${moduleID}" pageNumber: 0 pageSize: 10 sortBy: "DATE_CREATED" orderBy: "asc" ) { 
+			DATA_ID: _id 
+			STATUS
+			
+			REQUESTOR{
+				FIRST_NAME
+				LAST_NAME
+				DATA_ID: _id 
+				    USER{
+				    EMAIL_ADDRESS
+					
+				    	}
+				    }
+		}
+	}`;
+		let payload: any = {
+			query: query,
+			conditions: filterConditions,
+		};
+		// const url = this.globals.graphqlEmailListsUrl;
+
+		const url =
+			'http://localhost:8443/api/ngdesk-graphql-service-v1/data/condition';
+		return this.makeGraphQLCall(url, payload);
 	}
 
-	private makeGraphQLCall(query) {
-		return this.http.post(`${this.globals.graphqlUrl}`, query);
+	private makeGraphQLCall(url, query) {
+		return this.http.post(`${url}`, query);
 	}
 }

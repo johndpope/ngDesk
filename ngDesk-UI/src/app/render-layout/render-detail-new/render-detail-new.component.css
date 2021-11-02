@@ -296,9 +296,34 @@
 
 
 ::ng-deep.mat-chat-list {
-	min-width: 300px;
-	border-radius: 50px !important;
+	border-radius: 40px !important;
 	margin: 20px
+}
+
+::ng-deep.chat-search{
+	width:100% !important
+}
+
+::ng-deep .chat-search .mat-form-field-outline-start{
+	border-radius: 28px 0 0 28px !important;
+	min-width: 28px !important;
+}
+
+::ng-deep .chat-search .mat-form-field-outline-end {
+	border-radius: 0 20px 20px 0 !important;
+  }
+
+::ng-deep .customer-result{
+	margin: 20px 10px 0px 0px;
+	/* border: 1px solid #68737D; */
+	padding: 15px;
+}
+
+::ng-deep .user-name-logo{
+	border-radius:50%;
+	border: 1px solid #68737D;
+	width: 40px;
+	height: 40px;
 }
 
 

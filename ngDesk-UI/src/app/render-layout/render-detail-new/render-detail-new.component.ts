@@ -215,15 +215,13 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 
 	public isFilterActive: boolean = false;
 	public chatChannel: any = {};
-	public customersForAgent: any = {
-		CHATTING: [],
-		OFFLINE: [],
-	};
+	public customersForAgent: any = [];
 	public currentUserStatus = '';
 	public customerDetail: any = {};
 	public chatboxDisabled = false;
 	public closeChatMessage = '';
 	public themeWrapper = document.querySelector('body');
+	public customerSearch: any = '';
 	constructor(
 		@Optional() @Inject(MAT_DIALOG_DATA) public modalData: any,
 		@Optional()
@@ -3724,27 +3722,33 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	}
 
 	public getCustomerForAgent() {
-		this.customersForAgent.CHATTING = [];
-		this.customersForAgent.OFFLINE = [];
-		this.chatDataService.getUsersForAgent().subscribe((users: any) => {
-			users.getEntriesByAgentAndStatus;
-
-			users.getEntriesByAgentAndStatus.forEach((user) => {
-				this.currentUserStatus = user.STATUS;
-				if (user.STATUS === 'Chatting') {
-					this.customersForAgent.CHATTING.push(user);
-				} else {
-					this.customersForAgent.OFFLINE.push(user);
-				}
+		let filterConditions: any = [
+			// {
+			// 	"condition": "4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
+			// 	"operator": "EQUALS_TO",
+			// 	"conditionValue": "",
+			// 	"requirementType": "All"
+			// 	}
+		];
+		this.chatDataService
+			.getChatsByUserId(this.module['MODULE_ID'], [], this.customerSearch)
+			.subscribe((users: any) => {
+				this.customersForAgent = [];
+				users.DATA.forEach((user) => {
+					if (user.REQUESTOR) {
+						this.customersForAgent.push(user);
+						this.currentUserStatus = user.STATUS;
+					}
+				});
+				console.log(this.customersForAgent);
 			});
-		});
 	}
 
 	public loadUserChatDetails(user) {
 		this.entry['CHAT'] = [];
 		this.entry = {};
 		this.cacheService
-			.getPrerequisiteForDetaiLayout(this.module['MODULE_ID'], user._id)
+			.getPrerequisiteForDetaiLayout(this.module['MODULE_ID'], user.DATA_ID)
 			.subscribe(
 				(userChatDetails: any) => {
 					if (userChatDetails[1].hasOwnProperty('entry')) {
@@ -3752,6 +3756,8 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 					} else {
 						this.entry = userChatDetails[1];
 					}
+					console.log(this.entry);
+					this.currentUserStatus = user.STATUS;
 				},
 				(error) => {
 					console.log(error);
@@ -3769,7 +3775,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 			this.cacheService
 				.getPrerequisiteForDetaiLayout(contactsModule['MODULE_ID'], userID)
 				.subscribe((customerDetails: any) => {
-					console.log(customerDetails);
+					// console.log(customerDetails);
 
 					if (customerDetails[1].hasOwnProperty('entry')) {
 						this.customerDetail = customerDetails[1].entry;
