@@ -26,7 +26,7 @@ export class WebsocketService {
 		private modulesService: ModulesService,
 		private configService: ConfigService,
 		private applicationSetting: ApplicationSettings,
-		private toolbarService: ToolbarService,
+		private toolbarService: ToolbarService
 	) {
 		if (!this.applicationSetting.isMobile()) {
 			this.webSocketUrl =
@@ -43,7 +43,8 @@ export class WebsocketService {
 
 	public initialize() {
 		this.websocket = new WebSocket(
-			`${this.webSocketUrl
+			`${
+				this.webSocketUrl
 			}?authentication_token=${this.usersService.getAuthenticationToken()}`
 		);
 		this.websocket.onopen = (event) => {
@@ -148,10 +149,9 @@ export class WebsocketService {
 
 	public publishChatStatus(payload) {
 		this.websocket.send(JSON.stringify(payload));
-
 	}
 
-	public publishChatStatusCheck(payload){
+	public publishChatStatusCheck(payload) {
 		this.websocket.send(JSON.stringify(payload));
 	}
 }
