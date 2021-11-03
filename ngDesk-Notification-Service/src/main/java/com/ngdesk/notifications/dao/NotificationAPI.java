@@ -1,11 +1,17 @@
 package com.ngdesk.notifications.dao;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.ngdesk.commons.exceptions.NotFoundException;
 import com.ngdesk.commons.managers.AuthManager;
 import com.ngdesk.repositories.NotificationRepository;
 
@@ -47,4 +53,19 @@ public class NotificationAPI {
 
 	}
 
+	@PutMapping("/notification/{notificationId}")
+	public void markNotificationAsRead(@PathVariable String notificationId) {
+		String requestorId = authManager.getUserDetails().getUserId();
+		Optional<Notification> optionalNotification = notificationRepository.findByIdandRequestorId(notificationId,
+				requestorId, "notifications");
+		if (optionalNotification.isEmpty()) {
+			String vars[] = { "NOTIFICATION" };
+			throw new NotFoundException("DAO_NOT_FOUND", vars);
+		}
+		if (optionalNotification != null) {
+			Notification notification = optionalNotification.get();
+			notification.setRead(true);
+			notificationRepository.save(notification, "notifications");
+		}
+	}
 }

@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import com.ngdesk.notifications.dao.Module;
+import com.ngdesk.notifications.dao.Notification;
 
 public class CustomNotificationRepositoryImpl implements CustomNotificationRepository {
 	@Autowired
@@ -39,6 +40,15 @@ public class CustomNotificationRepositoryImpl implements CustomNotificationRepos
 		update.set("read", true);
 		update.set("dateUpdated", new Date());
 		mongoOperations.updateMulti(query, update, collectionName);
+	}
+
+	@Override
+	public Optional<Notification> findByIdandRequestorId(String notificationId, String requestorId,
+			String collectionName) {
+		Criteria criteria = new Criteria();
+		criteria.andOperator(Criteria.where("_id").is(notificationId), Criteria.where("recipientId").is(requestorId));
+		Query query = new Query(criteria);
+		return Optional.ofNullable(mongoOperations.findOne(query, Notification.class, collectionName));
 	}
 
 }
