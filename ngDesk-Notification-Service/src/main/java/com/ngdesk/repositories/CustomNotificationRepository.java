@@ -11,4 +11,6 @@ public interface CustomNotificationRepository {
 	public Optional<Map<String, Object>> findByDataId(String dataId, String collectionName);
 
 	public void markAllNotificationsAsRead(String companyId, String userId, String collectionName);
+
+	public void markNotificationAsRead(String notificationId, String collectionName);
 }

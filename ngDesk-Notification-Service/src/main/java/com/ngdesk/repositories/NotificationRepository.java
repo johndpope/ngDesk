@@ -8,4 +8,6 @@ import com.ngdesk.repositories.CustomNgdeskRepository;
 public interface NotificationRepository
 		extends CustomNotificationRepository, CustomNgdeskRepository<Notification, String> {
 
+	
+
 }

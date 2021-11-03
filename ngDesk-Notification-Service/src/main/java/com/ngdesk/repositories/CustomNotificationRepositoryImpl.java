@@ -41,4 +41,13 @@ public class CustomNotificationRepositoryImpl implements CustomNotificationRepos
 		mongoOperations.updateMulti(query, update, collectionName);
 	}
 
+	@Override
+	public void markNotificationAsRead(String notificationId, String collectionName) {
+		Query query = new Query(Criteria.where("_id").is(notificationId));
+		Update update = new Update();
+		update.set("read", true);
+		update.set("dateUpdated", new Date());
+		mongoOperations.updateFirst(query, update, collectionName);
+	}
+
 }
