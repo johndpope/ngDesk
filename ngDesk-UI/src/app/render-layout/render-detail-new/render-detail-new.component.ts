@@ -66,11 +66,12 @@ import { LoaderService } from '@src/app/custom-components/loader/loader.service'
 import { ApprovalRejectDialogComponent } from './../../dialogs/approval-reject-dialog/approval-reject-dialog.component';
 import { ApprovalRejectInformationDialogComponent } from './../../dialogs/approval-reject-information-dialog/approval-reject-information-dialog.component';
 import { OneToManyDialogComponent } from './../../dialogs/one-to-many-dialog/one-to-many-dialog.component';
-import { indexOf } from 'lodash';
+import { filter, indexOf } from 'lodash';
 import * as _moment from 'moment';
 import * as _momentTimeZone from 'moment-timezone';
 import { MatListOptionCheckboxPosition } from '@angular/material/list';
 import { ChatDataService } from './chat-data.service';
+import { ConditionsService } from '@src/app/custom-components/conditions/conditions.service';
 
 @Component({
 	selector: 'app-render-detail-new',
@@ -221,7 +222,15 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	public chatboxDisabled = false;
 	public closeChatMessage = '';
 	public themeWrapper = document.querySelector('body');
-	public customerSearch: any = '';
+	public fieldsForChatFilter: any = [];
+	public filterField = {
+		FIELD: '',
+		OPERATOR: 'equals to',
+		VALUE: '',
+		REQUIREMENT_TYPE: 'All',
+	};
+	public operators: any = [];
+	public chatFilters = [];
 	constructor(
 		@Optional() @Inject(MAT_DIALOG_DATA) public modalData: any,
 		@Optional()
@@ -348,7 +357,8 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 		private _snackBar: MatSnackBar,
 		private loaderService: LoaderService,
 		public passwordEncryptionDecryptionService: PasswordEncryptionDecryptionService,
-		private chatDataService: ChatDataService
+		private chatDataService: ChatDataService,
+		private conditionsService: ConditionsService
 	) {
 		this.dataMaterialModule = this.renderDetailHelper.dataMaterialModule;
 		this.tinyMceConfig = this.renderDetailHelper.config;
@@ -490,6 +500,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 											this.loadUserDetailsByRequestorId(
 												this.entry['REQUESTOR']['DATA_ID']
 											);
+											this.getChatModuleFields();
 										}
 										this.formulaFields = this.module.FIELDS.filter((field) => {
 											return (
@@ -3722,16 +3733,8 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	}
 
 	public getCustomerForAgent() {
-		let filterConditions: any = [
-			// {
-			// 	"condition": "4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
-			// 	"operator": "EQUALS_TO",
-			// 	"conditionValue": "",
-			// 	"requirementType": "All"
-			// 	}
-		];
 		this.chatDataService
-			.getChatsByUserId(this.module['MODULE_ID'], [], this.customerSearch)
+			.getChatsByUserId(this.module['MODULE_ID'], this.chatFilters)
 			.subscribe((users: any) => {
 				this.customersForAgent = [];
 				users.DATA.forEach((user) => {
@@ -3783,7 +3786,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 						this.customerDetail = customerDetails[1];
 					}
 
-					console.log(this.entry);
+					// console.log(this.entry);
 				});
 		});
 	}
@@ -3848,5 +3851,57 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	public setReceiverColors(bgColor, textColor) {
 		this.themeWrapper.style.setProperty('--chatReceiverBubbleColor', bgColor);
 		this.themeWrapper.style.setProperty('--chatReceiverTextColor', textColor);
+	}
+
+	public getChatModuleFields() {
+		this.fieldsForChatFilter = [];
+		this.module['FIELDS'].filter((field) => {
+			if (
+				field.DATA_TYPE.DISPLAY == 'Date/Time' ||
+				(field.DATA_TYPE.DISPLAY == 'Picklist' && field.NAME == 'STATUS') ||
+				(field.RELATIONSHIP_TYPE == 'Many to One' && field.NAME == 'REQUESTOR')
+			) {
+				this.fieldsForChatFilter.push(field);
+			}
+		});
+	}
+
+	public filterFieldSelection(field) {
+		this.filterField = {
+			FIELD: field,
+			OPERATOR: 'equals to',
+			VALUE: '',
+			REQUIREMENT_TYPE: 'All',
+		};
+		// this.editField = null;
+
+		if (field.RELATIONSHIP_TYPE === 'Many to One') {
+			// this.getRelationshipValues(field);
+			this.filterField.FIELD['RELATION_FIELD_VALUE'] = this.customersForAgent;
+		}
+		this.operators = this.conditionsService.setOperators(field);
+	}
+
+	public applyFilter() {
+		const filterField = {
+			condition: this.filterField.FIELD['FIELD_ID'],
+			operator: this.filterField.OPERATOR,
+			conditionValue: this.filterField.VALUE,
+			requirementType: this.filterField.REQUIREMENT_TYPE,
+		};
+		this.chatFilters.push(filterField);
+		this.getCustomerForAgent();
+		this.isFilterActive = false;
+		this.filterField = {
+			FIELD: '',
+			OPERATOR: 'equals to',
+			VALUE: '',
+			REQUIREMENT_TYPE: 'All',
+		};
+	}
+
+	public removeFilter(index) {
+		this.chatFilters.splice(index, 1);
+		this.getCustomerForAgent();
 	}
 }

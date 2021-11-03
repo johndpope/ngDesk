@@ -30,7 +30,7 @@ export class ChatDataService {
 		return this.makeGraphQLCall(url, channelQuery);
 	}
 
-	public getChatsByUserId(moduleID: string, filterConditions: [], search: any) {
+	public getChatsByUserId(moduleID: string, filterConditions: any) {
 		const query = `{ DATA: getChats( moduleId: "${moduleID}" pageNumber: 0 pageSize: 10 sortBy: "DATE_CREATED" orderBy: "asc" ) { 
 			DATA_ID: _id 
 			STATUS

@@ -2198,15 +2198,15 @@
 	"ATLEAST_ONE_TEAM": "Select atleast one team",
 	"SELECT_MAX_CHATS": "Select maximum number if chats per agents",
 	"SCHEDULES_USER_SEARCH": "Search is based on email address",
-	"TEAMS_WHO_CAN_CHAT":"Teams who can chat",
+	"TEAMS_WHO_CAN_CHAT": "Teams who can chat",
 	"FORMULA_LABEL": "Formula Display Label",
 	"FORMULA_NAME": " Formula System Label",
 	"ADD_FORMULA": "Add Formula",
 	"LIST_FORMULA_CANNOT_BE_DROPPED": "List formula field cannot be dropped to sidebar",
-	"CUSTOMER_DETAILS":"Customer Details",
-	"FULL_NAME":"Full Name",
-	"CHAT_HISTORY":"Chat History",
-	"SAVED_TEMPLATES":"Saved Templates",
+	"CUSTOMER_DETAILS": "Customer Details",
+	"FULL_NAME": "Full Name",
+	"CHAT_HISTORY": "Chat History",
+	"SAVED_TEMPLATES": "Saved Templates",
 	"EDIT_RESTRICTION": "Edit restrictions",
 	"REMOVE_LAYER": "Remove Layer",
 	"MOVE_USER_POSITION_UPWARD": "Move the user position upwards",
@@ -2217,6 +2217,6 @@
 	"CALENDER": "Calender",
 	"START_TIME_CHANGES": "Effective time for changes to take place",
 	"PREVIOUS": "Previous",
-	"PERSONAL_DETAILS":"Personal Details"
+	"PERSONAL_DETAILS": "Personal Details",
+	"AGENT_CHATS": "My Chats"
 }
-
