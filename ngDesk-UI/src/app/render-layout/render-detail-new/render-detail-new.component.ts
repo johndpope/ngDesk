@@ -3661,9 +3661,9 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	public triggerFunction(event, chatmessage) {
 		// enterToSend is checkbox in chat for if "press enter to submit" is preferred
 		// this.fileSizeLimit = true;
-		if (event.shiftKey && event.key === 'Enter') {
+		if (event.keyCode === 16 && event.keyCode === 13) {
 			chatmessage += '\n';
-		} else if (event.key === 'Enter') {
+		} else if (event.keyCode === 13) {
 			this.publishMessages(chatmessage);
 		}
 	}
