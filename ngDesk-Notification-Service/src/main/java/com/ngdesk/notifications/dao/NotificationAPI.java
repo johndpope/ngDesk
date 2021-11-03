@@ -55,15 +55,17 @@ public class NotificationAPI {
 
 	@PutMapping("/notification/{notificationId}")
 	public void markNotificationAsRead(@PathVariable String notificationId) {
-		Optional<Notification> optional = notificationRepository.findById(notificationId, "notifications");
 		String requestorId = authManager.getUserDetails().getUserId();
-		if (optional.isEmpty()) {
+		Optional<Notification> optionalNotification = notificationRepository.findByIdandRequestorId(notificationId,
+				requestorId, "notifications");
+		if (optionalNotification.isEmpty()) {
 			String vars[] = { "NOTIFICATION" };
 			throw new NotFoundException("DAO_NOT_FOUND", vars);
 		}
-		if (requestorId.equals(optional.get().getRecipientId())) {
-			notificationRepository.markNotificationAsRead(notificationId, "notifications");
+		if (optionalNotification != null) {
+			Notification notification = optionalNotification.get();
+			notification.setRead(true);
+			notificationRepository.save(notification, "notifications");
 		}
 	}
-
 }
