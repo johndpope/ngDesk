@@ -52,8 +52,7 @@ export class ChatDataService {
 		};
 		// const url = this.globals.graphqlEmailListsUrl;
 
-		const url =
-			'http://localhost:8443/api/ngdesk-graphql-service-v1/data/condition';
+		const url = this.globals.graphqlEmailListsUrl;
 		return this.makeGraphQLCall(url, payload);
 	}
 
