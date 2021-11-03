@@ -18,21 +18,22 @@ public class CustomDashboardRepositoryImpl implements CustomDashboardRepository 
 	private MongoOperations mongoOperations;
 
 	@Override
-	public Optional<Dashboard> findDashboardByName(String name, String collectionName) {
+	public Optional<Dashboard> findDashboardByName(String name, String role, String collectionName) {
 		Asserts.notNull(name, "Dashboard Name must not be null");
 		Asserts.notNull(collectionName, "Collection Name must not be null");
-		Query query = new Query(Criteria.where("name").is(name));
+		Query query = new Query();
+		query.addCriteria(new Criteria().andOperator(Criteria.where("name").is(name), Criteria.where("role").is(role)));
 		return Optional.ofNullable(mongoOperations.findOne(query, Dashboard.class, collectionName));
 	}
 
 	@Override
-	public Optional<Dashboard> findOtherDashboardsWithDuplicateName(String name, String dashboardId,
+	public Optional<Dashboard> findOtherDashboardsWithDuplicateName(String name, String role, String dashboardId,
 			String collectionName) {
 		Asserts.notNull(name, "Personally Identifiable Information Name must not be null");
 		Asserts.notNull(collectionName, "Collection Name must not be null");
 		Query query = new Query();
-		query.addCriteria(
-				new Criteria().andOperator(Criteria.where("_id").ne(dashboardId), Criteria.where("name").is(name)));
+		query.addCriteria(new Criteria().andOperator(Criteria.where("_id").ne(dashboardId),
+				Criteria.where("name").is(name), Criteria.where("role").is(role)));
 		return Optional.ofNullable(mongoOperations.findOne(query, Dashboard.class, collectionName));
 	}
 

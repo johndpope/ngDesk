@@ -44,16 +44,16 @@ public class DashboardService {
 		}
 	}
 
-	public void duplicateDashboardCheck(String dashboardName) {
-		Optional<Dashboard> optionalDuplicateDashboard = dashboardRepository.findDashboardByName(dashboardName,
+	public void duplicateDashboardCheck(String dashboardName, String role) {
+		Optional<Dashboard> optionalDuplicateDashboard = dashboardRepository.findDashboardByName(dashboardName, role,
 				"dashboards");
 		if (optionalDuplicateDashboard.isPresent()) {
 			throw new BadRequestException("DASHBOARD_NAME_ALREADY_EXISTS", null);
 		}
 	}
 
-	public void duplicateDashboardNameAndIdCheck(String dashboardName, String dashboardId) {
-		Optional<Dashboard> optional = dashboardRepository.findOtherDashboardsWithDuplicateName(dashboardName,
+	public void duplicateDashboardNameAndIdCheck(String dashboardName, String role, String dashboardId) {
+		Optional<Dashboard> optional = dashboardRepository.findOtherDashboardsWithDuplicateName(dashboardName, role,
 				dashboardId, "dashboards");
 		if (optional.isPresent()) {
 			throw new BadRequestException("DASHBOARD_NAME_ALREADY_EXISTS", null);

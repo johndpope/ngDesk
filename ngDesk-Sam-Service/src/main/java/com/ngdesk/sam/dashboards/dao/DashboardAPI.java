@@ -41,14 +41,14 @@ public class DashboardAPI {
 
 	@PostMapping("/dashboard")
 	public Dashboard postDashboard(@Valid @RequestBody Dashboard dashboard) {
-
+		System.out.println("In POST DASHBOARD");
 		String systemAdminId = rolesRepository
 				.findRoleName("SystemAdmin", "roles_" + authManager.getUserDetails().getCompanyId()).get().getId();
 		String userId = authManager.getUserDetails().getRole();
 		if (!systemAdminId.equals(userId)) {
 			throw new ForbiddenException("FORBIDDEN");
 		}
-		dashboardService.duplicateDashboardCheck(dashboard.getName());
+		dashboardService.duplicateDashboardCheck(dashboard.getName(), dashboard.getRole());
 		dashboardService.validateRole(dashboard.getRole(), "roles_" + authManager.getUserDetails().getCompanyId());
 		List<Widget> widgets = dashboard.getWidgets();
 		for (Widget widget : widgets) {
@@ -84,7 +84,7 @@ public class DashboardAPI {
 			throw new NotFoundException("DASHBOARD_NOT_FOUND", null);
 		}
 		Dashboard existingDashboard = optional.get();
-		dashboardService.duplicateDashboardNameAndIdCheck(dashboard.getName(), dashboard.getDashboardId());
+		dashboardService.duplicateDashboardNameAndIdCheck(dashboard.getName(),dashboard.getRole(), dashboard.getDashboardId());
 		dashboardService.validateRole(dashboard.getRole(), "roles_" + authManager.getUserDetails().getCompanyId());
 		List<Widget> widgets = dashboard.getWidgets();
 		dashboardService.validate(widgets);
