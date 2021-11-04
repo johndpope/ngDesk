@@ -185,7 +185,7 @@ public class FindAgentAndAssign {
 									customer.get("USER_UUID").toString());
 							// Notify the agent that You have been assigned a new chat
 							Notification notifyAgent = new Notification(company.getId(), chatModule.getModuleId(),
-									customer.get("_id").toString(), agentUserEntry.get("_id").toString(), new Date(),
+									existingChatEntry.get("_id").toString(), agentUserEntry.get("_id").toString(), new Date(),
 									new Date(), false, "You have been assigned a new chat");
 							redisTemplate.convertAndSend("notification", notifyAgent);
 

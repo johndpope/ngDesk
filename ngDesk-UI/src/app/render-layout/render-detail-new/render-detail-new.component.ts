@@ -82,7 +82,6 @@ import { ConditionsService } from '@src/app/custom-components/conditions/conditi
 export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	@ViewChild(MatSort, { static: true }) private sort: MatSort;
 	@ViewChild(MatPaginator, { static: true }) private paginator: MatPaginator;
-	public mobileTitle: String = ' ';
 	private module;
 	public entry: any = {};
 	public layoutMissingForRole: boolean;
@@ -130,11 +129,8 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 		},
 	};
 	public isComponentLoaded = true;
-	public changeMobileMessageType = false;
 	public titleBarTemplate = '';
-	public formControlsMobile = {};
 	private updateEntrySubscription: Subscription;
-	public showMobileDiscussion = false;
 	public saving = false;
 	imageURL;
 	public pdfSrc = '';
@@ -149,36 +145,6 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	public isAndroidDevice = false;
 	public isIosDevice = false;
 	public previousUrl: string;
-	public isMobileDataLoading = true;
-	public mobileFieldsArray = [];
-	public editMobileFieldsArray = [];
-	public chatsForMobile = [];
-	public relationshipDetailValuesForMobile = {};
-	public mobileMessageTypeOption = [
-		'Messages',
-		'Internal Comments',
-		'Events',
-		'All',
-	];
-	public selectedOptionIndexForMobile = 0;
-	public messageShowTypeForMobile = 'MESSAGE';
-	public sendButtonEnabledForMobile = false;
-	public currentMobileView = 'DetailLayout';
-	public allModulesForMobile = [];
-	public picklistValuesForMobile = {};
-	public relationshipPicklistValuesForMobile = {};
-	public relationshipFieldValue = {};
-	public picklistShowForMobile = true;
-	public showPicklistPickerForMobile = false;
-	public showRelationshipPicker = false;
-	public responseArrayForMobile = [];
-	public entriesArrayForMobile = [];
-	public mobileRelationshipPageMap: Map<String, number> = new Map<
-		String,
-		number
-	>();
-	public currentPickerFieldForMobile = {};
-	public noMobileLayoutPresent = false;
 	public isFileadded: boolean = false;
 	public isImageAdded: boolean = false;
 	public conditionFieldData: any = {
@@ -218,7 +184,11 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	public chatChannel: any = {};
 	public customersForAgent: any = [];
 	public currentUserStatus = '';
-	public customerDetail: any = {};
+	public customerDetail: any = {
+		FIRST_NAME: '',
+		LAST_NAME: '',
+		EMAIL_ADDRESS: '',
+	};
 	public chatboxDisabled = false;
 	public closeChatMessage = '';
 	public themeWrapper = document.querySelector('body');
@@ -466,408 +436,246 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 		this.isAndroidDevice = this.renderDetailHelper.isAndroid();
 		this.isIosDevice = this.renderDetailHelper.isIOS();
 		this.previousUrl = this.route.snapshot.queryParamMap.get('previousUrl');
-		if (typeof window !== 'undefined') {
-			this.cacheService
-				.getPrerequisiteForDetaiLayout(moduleId, dataId)
-				.subscribe(
-					(responseList) => {
-						this.rolesService
-							.getRole(this.userService.user.ROLE)
-							.subscribe((roleResponse) => {
-								this.renderDetailDataSerice
-									.getFieldPermissionValues(
-										moduleId,
-										this.customModulesService.layoutType,
-										dataId
-									)
-									.subscribe((permissions) => {
-										this.customModulesService.disableFieldBasedOnFieldPermission(
-											permissions
-										);
-										if (!this.rolesService.role) {
-											this.rolesService.role = roleResponse;
-										}
-										this.module = responseList[0];
-										this.fetchPasswordField(this.module);
-										if (responseList[1].hasOwnProperty('entry')) {
-											this.entry = responseList[1].entry;
-										} else {
-											this.entry = responseList[1];
-										}
-										if (this.module['NAME'] == 'Chats') {
-											this.getChatChannelDetails();
-											this.getCustomerForAgent();
-											this.loadUserDetailsByRequestorId(
-												this.entry['REQUESTOR']['DATA_ID']
-											);
-											this.getChatModuleFields();
-										}
-										this.formulaFields = this.module.FIELDS.filter((field) => {
-											return (
-												(field.DATA_TYPE.DISPLAY === 'Formula' &&
-													field.FORMULA) ||
-												(field.DATA_TYPE.DISPLAY === 'List Formula' &&
-													field.LIST_FORMULA)
-											);
-										});
-
-										this.currencyExchangeFields = this.module.FIELDS.filter(
-											(field) => {
-												return field.DATA_TYPE.DISPLAY === 'Currency Exchange';
-											}
-										);
-
-										if (dataId === 'new') {
-											this.entry = {};
-										}
-										if (dataId !== 'new') {
-											this.entry['DATA_ID'] = dataId;
-											this.condensePayload();
-										}
-										const attachmentField = this.module.FIELDS.find(
-											(moduleField) =>
-												'File Upload' === moduleField.DATA_TYPE.DISPLAY
-										);
-										if (
-											attachmentField &&
-											this.entry.hasOwnProperty(attachmentField.NAME) &&
-											this.entry[attachmentField.NAME].length !== 0
-										) {
-											this.generalAttachments =
-												this.entry[attachmentField.NAME];
-										}
-
-										const imageAttachmentField = this.module.FIELDS.find(
-											(moduleField) => 'Image' === moduleField.DATA_TYPE.DISPLAY
-										);
-										if (
-											imageAttachmentField &&
-											this.entry.hasOwnProperty(imageAttachmentField.NAME) &&
-											this.entry[imageAttachmentField.NAME].length !== 0
-										) {
-											this.imageAttachments =
-												this.entry[imageAttachmentField.NAME];
-											this.createURLForImagePreview(
-												this.imageAttachments[0].ATTACHMENT_UUID,
-												imageAttachmentField
-											);
-										}
-
-										const receiptAttachmentField = this.module.FIELDS.find(
-											(moduleField) =>
-												'Receipt Capture' === moduleField.DATA_TYPE.DISPLAY
-										);
-										if (
-											receiptAttachmentField &&
-											this.entry.hasOwnProperty(receiptAttachmentField.NAME) &&
-											this.entry[receiptAttachmentField.NAME]
-										) {
-											this.receiptAttachments.push(
-												this.entry[receiptAttachmentField.NAME]
-											);
-										}
-										let conditionFields = [];
-										this.module.FIELDS.map((moduleField) => {
-											if (moduleField.DATA_TYPE.DISPLAY == 'Condition') {
-												conditionFields.push(moduleField);
-											}
-										});
-										if (conditionFields && conditionFields.length > 0) {
-											this.getFieldsForConditionDataType();
-											conditionFields.map((item) => {
-												if (
-													this.entry[item.NAME] &&
-													this.entry.hasOwnProperty('EDITION_CONDITION')
-												) {
-													this.conditionFieldData = this.entry[item.NAME];
-												} else if (
-													this.entry[item.NAME] &&
-													this.entry.hasOwnProperty('VERSION_CONDITION')
-												) {
-													this.conditionFieldData = this.entry[item.NAME];
-												}
-											});
-										}
-										this.viewAccess = this.rolesService.getViewAccess(moduleId);
-										this.editAccess = this.rolesService.getEditAccess(moduleId);
-										this.deleteAccess =
-											this.rolesService.getDeleteAccess(moduleId);
-										if (dataId === 'new') {
-											this.createLayout = true;
-										}
-										this.cacheService
-											.getModulePremadeResponses(moduleId)
-											.subscribe((response) => {
-												this.premadeResponses = response;
-											});
-
-										this.computeAggregationFields();
-										this.toggleSaveOnTitleBar();
-										if (!this.editAccess) {
-											if (this.viewAccess) {
-												this.layout = this.predefinedTemplateService.getLayout(
-													'detail',
-													this.module
-												);
-											}
-										} else {
-											this.layout = this.predefinedTemplateService.getLayout(
-												this.customModulesService.layoutType,
-												this.module
-											);
-										}
-
-										this.customModulesService.clearVariables();
-										this.customModulesService.loadVariablesForModule(
-											this.module,
-											this.entry,
-											this.createLayout
-										);
-
-										if (this.modalData) {
-											if (this.modalData.ENTRY) {
-												this.customModulesService.loadVariablesForModule(
-													this.module,
-													this.modalData.ENTRY,
-													this.createLayout
-												);
-											}
-										}
-										this.entry =
-											this.renderDetailDataSerice.formatChronometerFieldsOnGet(
-												this.entry,
-												this.module
-											);
-
-										for (let i = 0; i < this.module['FIELDS'].length; i++) {
-											this.fieldsMap[this.module['FIELDS'][i].FIELD_ID] =
-												this.module['FIELDS'][i];
-										}
-										this.fieldsMapping();
-
-										this.module['FIELDS'].forEach((field) => {
-											this.evaluateConditions(field.FIELD_ID);
-											if (field.HELP_TEXT !== null && field.HELP_TEXT !== '') {
-												this.hint = true;
-												this.helpTextMap.set(field.FIELD_ID, this.hint);
-											}
-										});
-
-										if (!this.layout) {
-											this.layoutMissingForRole = true;
-										} else {
-											this.initializeLayout(
-												this.customModulesService.layoutType
-											);
-										}
-										// TODO: REMOVE, HARDCODED FOR HALOOCOM QUICK FIX
-										if (this.module.NAME === 'Users' && dataId !== 'new') {
-											const oneToManyFields = this.module.FIELDS.filter(
-												(oneToManyField) =>
-													oneToManyField.NAME === 'TICKETS_REQUESTED' ||
-													oneToManyField.NAME === 'TICKETS_ASSIGNED'
-											);
-											oneToManyFields.forEach((field) => {
-												this.cacheService
-													.getModule(field.MODULE)
-													.subscribe((relatedModule: any) => {
-														const relatedField = relatedModule.FIELDS.find(
-															(moduleField) =>
-																moduleField.FIELD_ID ===
-																field.RELATIONSHIP_FIELD
-														);
-														const search = `${relatedField.NAME}=${dataId}`;
-														this.dataService
-															.getAllData(field.MODULE, search)
-															.subscribe(
-																(response: any) => {
-																	this.entry[field.NAME] = response.content;
-																},
-																(error) => {
-																	console.log(error);
-																}
-															);
-													});
-											});
-										}
-
-										this.route.queryParams.subscribe((params) => {
-											if (
-												params['phone_number'] &&
-												params['phone_number'] != null
-											) {
-												this.customModulesService.loadUserDetails(
-													params['phone_number']
-												);
-											}
-										});
-									});
-							});
-					},
-					(error) => {
-						this.bannerMessageService.errorNotifications.push({
-							message: error.error.ERROR,
-						});
-						this.router.navigate([`render/${moduleId}`]);
-					}
-				);
-		} else {
-			this.cacheService
-				.getPrerequisiteForDetaiLayout(moduleId, dataId)
-				.subscribe(
-					(responseList) => {
-						this.rolesService
-							.getRole(this.userService.user.ROLE)
-							.subscribe((roleResponse) => {
+		this.cacheService.getPrerequisiteForDetaiLayout(moduleId, dataId).subscribe(
+			(responseList) => {
+				this.rolesService
+					.getRole(this.userService.user.ROLE)
+					.subscribe((roleResponse) => {
+						this.renderDetailDataSerice
+							.getFieldPermissionValues(
+								moduleId,
+								this.customModulesService.layoutType,
+								dataId
+							)
+							.subscribe((permissions) => {
+								this.customModulesService.disableFieldBasedOnFieldPermission(
+									permissions
+								);
 								if (!this.rolesService.role) {
 									this.rolesService.role = roleResponse;
 								}
 								this.module = responseList[0];
-								this.mobileTitle = this.module['SINGULAR_NAME'];
-								this.entry = responseList[1];
+								this.fetchPasswordField(this.module);
+								if (responseList[1].hasOwnProperty('entry')) {
+									this.entry = responseList[1].entry;
+								} else {
+									this.entry = responseList[1];
+								}
+								if (this.module['NAME'] == 'Chats') {
+									this.getChatChannelDetails();
+									this.getCustomerForAgent();
+									if (
+										this.entry['REQUESTOR'] &&
+										this.entry['REQUESTOR'] !== ''
+									) {
+										this.loadUserDetailsByRequestorId(
+											this.entry['REQUESTOR']['DATA_ID']
+										);
+										this.getChatModuleFields();
+									}
+								}
+								this.formulaFields = this.module.FIELDS.filter((field) => {
+									return (
+										(field.DATA_TYPE.DISPLAY === 'Formula' && field.FORMULA) ||
+										(field.DATA_TYPE.DISPLAY === 'List Formula' &&
+											field.LIST_FORMULA)
+									);
+								});
+
+								this.currencyExchangeFields = this.module.FIELDS.filter(
+									(field) => {
+										return field.DATA_TYPE.DISPLAY === 'Currency Exchange';
+									}
+								);
+
+								if (dataId === 'new') {
+									this.entry = {};
+								}
+								if (dataId !== 'new') {
+									this.entry['DATA_ID'] = dataId;
+									this.condensePayload();
+								}
+								const attachmentField = this.module.FIELDS.find(
+									(moduleField) =>
+										'File Upload' === moduleField.DATA_TYPE.DISPLAY
+								);
+								if (
+									attachmentField &&
+									this.entry.hasOwnProperty(attachmentField.NAME) &&
+									this.entry[attachmentField.NAME].length !== 0
+								) {
+									this.generalAttachments = this.entry[attachmentField.NAME];
+								}
+
+								const imageAttachmentField = this.module.FIELDS.find(
+									(moduleField) => 'Image' === moduleField.DATA_TYPE.DISPLAY
+								);
+								if (
+									imageAttachmentField &&
+									this.entry.hasOwnProperty(imageAttachmentField.NAME) &&
+									this.entry[imageAttachmentField.NAME].length !== 0
+								) {
+									this.imageAttachments = this.entry[imageAttachmentField.NAME];
+									this.createURLForImagePreview(
+										this.imageAttachments[0].ATTACHMENT_UUID,
+										imageAttachmentField
+									);
+								}
+
+								const receiptAttachmentField = this.module.FIELDS.find(
+									(moduleField) =>
+										'Receipt Capture' === moduleField.DATA_TYPE.DISPLAY
+								);
+								if (
+									receiptAttachmentField &&
+									this.entry.hasOwnProperty(receiptAttachmentField.NAME) &&
+									this.entry[receiptAttachmentField.NAME]
+								) {
+									this.receiptAttachments.push(
+										this.entry[receiptAttachmentField.NAME]
+									);
+								}
+								let conditionFields = [];
+								this.module.FIELDS.map((moduleField) => {
+									if (moduleField.DATA_TYPE.DISPLAY == 'Condition') {
+										conditionFields.push(moduleField);
+									}
+								});
+								if (conditionFields && conditionFields.length > 0) {
+									this.getFieldsForConditionDataType();
+									conditionFields.map((item) => {
+										if (
+											this.entry[item.NAME] &&
+											this.entry.hasOwnProperty('EDITION_CONDITION')
+										) {
+											this.conditionFieldData = this.entry[item.NAME];
+										} else if (
+											this.entry[item.NAME] &&
+											this.entry.hasOwnProperty('VERSION_CONDITION')
+										) {
+											this.conditionFieldData = this.entry[item.NAME];
+										}
+									});
+								}
 								this.viewAccess = this.rolesService.getViewAccess(moduleId);
 								this.editAccess = this.rolesService.getEditAccess(moduleId);
 								this.deleteAccess = this.rolesService.getDeleteAccess(moduleId);
-								let mobileDetailLayout = null;
-								mobileDetailLayout = this.module['EDIT_MOBILE_LAYOUTS'].find(
-									(L) => L.ROLE === this.userService.user.ROLE
-								);
-								this.layout = mobileDetailLayout;
-								if (mobileDetailLayout) {
-									this.metaDataArray = [];
-									this.relationshipDetailValuesForMobile = {};
+								if (dataId === 'new') {
+									this.createLayout = true;
+								}
+								this.cacheService
+									.getModulePremadeResponses(moduleId)
+									.subscribe((response) => {
+										this.premadeResponses = response;
+									});
 
-									if (this.entry.CHAT) {
-										this.chatsForMobile = this.entry.CHAT;
-										// this.message='';
-										this.formControlsMobile['CHAT'] = new FormControl();
-										this.chatsForMobile.forEach((chat) => {
-											let index = this.chatsForMobile.indexOf(chat);
-											if (chat.MESSAGE_TYPE === 'META_DATA') {
-												this.chatsForMobile[index].MESSAGE =
-													chat.MESSAGE.replace(/<\/?[^>]+(>|$)/g, '').replace(
-														/\s\s+/g,
-														' '
-													);
-											} else {
-												this.chatsForMobile[index].MESSAGE =
-													chat.MESSAGE.replace(/<[^>]*>/g, '');
-											}
-										});
-										// this.isloadingData=false;
-									}
-
-									// if (this.entry.MESSAGES) {
-									// 	this.entry.MESSAGES.forEach((message) => {
-									// 		let index = this.entry.MESSAGES.indexOf(message);
-									// 		if (message.MESSAGE_TYPE === 'META_DATA') {
-									// 			this.entry.MESSAGES[index].MESSAGE = message.MESSAGE.replace(
-									// 				/<\/?[^>]+(>|$)/g,
-									// 				''
-									// 			).replace(/\s\s+/g, ' ');
-
-									// 			this.metaDataArray.push(
-									// 				message.MESSAGE.replace(/<\/?[^>]+(>|$)/g, '').replace(
-									// 					/\s\s+/g,
-									// 					' '
-									// 				)
-									// 			);
-									// 		} else {
-									// 			this.entry.MESSAGES[index].MESSAGE = message.MESSAGE.replace(
-									// 				/<[^>]*>/g,
-									// 				''
-									// 			);
-									// 			this.metaDataArray.push(
-									// 				message.MESSAGE.replace(/<[^>]*>/g, '')
-									// 			);
-									// 		}
-									// 	});
-									// }
-
-									if (this.module.NAME !== 'Chats') {
-										this.modulesService
-											.getAllModules()
-											.subscribe((allModules: any) => {
-												this.allModulesForMobile = allModules['MODULES'];
-												for (const fieldId of this.layout.FIELDS) {
-													let index = this.layout.FIELDS.indexOf(fieldId);
-													let fieldData = this.module.FIELDS.find(
-														(F) => F.FIELD_ID === this.layout.FIELDS[index]
-													);
-													this.mobileFieldsArray.push(fieldData);
-
-													if (fieldData.DATA_TYPE.DISPLAY === 'Relationship') {
-														const relationModule =
-															this.allModulesForMobile.find(
-																(module) =>
-																	module.MODULE_ID === fieldData.MODULE
-															);
-
-														this.modulesService
-															.getModuleById(relationModule.MODULE_ID)
-															.subscribe((relationModuleResponse: any) => {
-																this.modulesService
-																	.getEntries(relationModule.MODULE_ID)
-																	.subscribe((entries: any) => {
-																		const primaryDisplayField =
-																			relationModuleResponse.FIELDS.find(
-																				(tempField) =>
-																					tempField.FIELD_ID ===
-																					fieldData.PRIMARY_DISPLAY_FIELD
-																			);
-																		this.relationshipDetailValuesForMobile[
-																			fieldData.NAME
-																		] = new Array();
-
-																		if (
-																			fieldData.DATA_TYPE.BACKEND !== 'String'
-																		) {
-																			this.entry[fieldData.NAME].forEach(
-																				(element) => {
-																					let entry = entries.DATA.filter(
-																						(E) => E.DATA_ID === element.DATA_ID
-																					);
-																					// entry[0][primaryDisplayField.NAME]
-																					this.relationshipDetailValuesForMobile[
-																						fieldData.NAME
-																					].push(
-																						entry[0][primaryDisplayField.NAME]
-																					);
-																				}
-																			);
-																			this.isMobileDataLoading = false;
-																		} else {
-																			let element = this.entry[fieldData.NAME];
-																			let entry = entries.DATA.filter(
-																				(E) => E.DATA_ID === element.DATA_ID
-																			);
-																			this.relationshipDetailValuesForMobile[
-																				fieldData.NAME
-																			].push(
-																				entry[0][primaryDisplayField.NAME]
-																			);
-																			this.isMobileDataLoading = false;
-																		}
-																	});
-															});
-													}
-												}
-											});
+								this.computeAggregationFields();
+								this.toggleSaveOnTitleBar();
+								if (!this.editAccess) {
+									if (this.viewAccess) {
+										this.layout = this.predefinedTemplateService.getLayout(
+											'detail',
+											this.module
+										);
 									}
 								} else {
-									this.noMobileLayoutPresent = true;
+									this.layout = this.predefinedTemplateService.getLayout(
+										this.customModulesService.layoutType,
+										this.module
+									);
 								}
+
+								this.customModulesService.clearVariables();
+								this.customModulesService.loadVariablesForModule(
+									this.module,
+									this.entry,
+									this.createLayout
+								);
+
+								if (this.modalData) {
+									if (this.modalData.ENTRY) {
+										this.customModulesService.loadVariablesForModule(
+											this.module,
+											this.modalData.ENTRY,
+											this.createLayout
+										);
+									}
+								}
+								this.entry =
+									this.renderDetailDataSerice.formatChronometerFieldsOnGet(
+										this.entry,
+										this.module
+									);
+
+								for (let i = 0; i < this.module['FIELDS'].length; i++) {
+									this.fieldsMap[this.module['FIELDS'][i].FIELD_ID] =
+										this.module['FIELDS'][i];
+								}
+								this.fieldsMapping();
+
+								this.module['FIELDS'].forEach((field) => {
+									this.evaluateConditions(field.FIELD_ID);
+									if (field.HELP_TEXT !== null && field.HELP_TEXT !== '') {
+										this.hint = true;
+										this.helpTextMap.set(field.FIELD_ID, this.hint);
+									}
+								});
+
+								if (!this.layout) {
+									this.layoutMissingForRole = true;
+								} else {
+									this.initializeLayout(this.customModulesService.layoutType);
+								}
+								// TODO: REMOVE, HARDCODED FOR HALOOCOM QUICK FIX
+								if (this.module.NAME === 'Users' && dataId !== 'new') {
+									const oneToManyFields = this.module.FIELDS.filter(
+										(oneToManyField) =>
+											oneToManyField.NAME === 'TICKETS_REQUESTED' ||
+											oneToManyField.NAME === 'TICKETS_ASSIGNED'
+									);
+									oneToManyFields.forEach((field) => {
+										this.cacheService
+											.getModule(field.MODULE)
+											.subscribe((relatedModule: any) => {
+												const relatedField = relatedModule.FIELDS.find(
+													(moduleField) =>
+														moduleField.FIELD_ID === field.RELATIONSHIP_FIELD
+												);
+												const search = `${relatedField.NAME}=${dataId}`;
+												this.dataService
+													.getAllData(field.MODULE, search)
+													.subscribe(
+														(response: any) => {
+															this.entry[field.NAME] = response.content;
+														},
+														(error) => {
+															console.log(error);
+														}
+													);
+											});
+									});
+								}
+
+								this.route.queryParams.subscribe((params) => {
+									if (
+										params['phone_number'] &&
+										params['phone_number'] != null
+									) {
+										this.customModulesService.loadUserDetails(
+											params['phone_number']
+										);
+									}
+								});
 							});
-					},
-					(error) => {
-						this.bannerMessageService.errorNotifications.push({
-							message: error.error.ERROR,
-						});
-						this.router.navigate([`render/${moduleId}`]);
-					}
-				);
-		}
-		this.isMobileDataLoading = false;
+					});
+			},
+			(error) => {
+				this.bannerMessageService.errorNotifications.push({
+					message: error.error.ERROR,
+				});
+				this.router.navigate([`render/${moduleId}`]);
+			}
+		);
 	}
 
 	public fetchPasswordField(module) {
@@ -2513,504 +2321,6 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 						}
 					});
 				});
-		}
-	}
-
-	public onMobileBackButton() {
-		if (this.previousUrl != undefined) {
-			this.renderDetailHelper.navigateToSidebar(this.previousUrl);
-		}
-	}
-
-	public setMobileDiscussion() {
-		this.showMobileDiscussion = true;
-	}
-
-	public hideMobileDiscussion() {
-		this.showMobileDiscussion = false;
-	}
-
-	public editMobileEntry() {
-		this.currentMobileView = 'EditLayout';
-		this.relationshipPicklistValuesForMobile = {};
-
-		this.metaDataArray = [];
-		// this.moduleResponse = [];
-		this.editMobileFieldsArray = [];
-		this.relationshipFieldValue = {};
-		// this.detailLayout = false;
-
-		// this.data.MESSAGES[0].MESSAGE_TYPE === 'META_DATA' ?"<TextView style={{color: '#757575', fontWeight: '200'}} text="{{this.data.MESSAGES[0].MESSAGE.message.replace(/<\/?[^>]+(>|$)/g, "").replace(/\s\s+/g, ' ')}}"></TextView>"  : "<HtmlView html={{this.data.MESSAGES[0].MESSAGE}} ></HtmlView>"
-		if (this.entry.MESSAGES) {
-			this.entry.MESSAGES.forEach((message) => {
-				if (message.MESSAGE_TYPE === 'META_DATA') {
-					let obj: any = {};
-					let dataIndex = this.entry.MESSAGES.indexOf(message);
-					this.metaDataArray.push(
-						message.MESSAGE.replace(/<\/?[^>]+(>|$)/g, '').replace(
-							/\s\s+/g,
-							' '
-						)
-					);
-					let length1 = message.MESSAGE.replace(/<\/?[^>]+(>|$)/g, '').replace(
-						/\s\s+/g,
-						' '
-					).length;
-				} else {
-					this.metaDataArray.push('');
-				}
-			});
-		}
-
-		this.setFormControllerForMobile();
-	}
-
-	public setFormControllerForMobile() {
-		let items = [];
-		let listFieldNames = [];
-
-		this.layout = this.module['EDIT_MOBILE_LAYOUTS'].find(
-			(L) => L.ROLE === this.userService.user.ROLE
-		);
-		let obj: any = [];
-
-		for (const fieldId of this.layout.FIELDS) {
-			let index = this.layout.FIELDS.indexOf(fieldId);
-			let fieldData = this.module.FIELDS.find(
-				(F) => F.FIELD_ID === this.layout.FIELDS[index]
-			);
-			if (fieldData.DATA_TYPE.DISPLAY === 'Relationship') {
-				this.formControlsMobile[fieldData.NAME] = new FormControl([]);
-			} else if (fieldData.DATA_TYPE.DISPLAY === 'Phone') {
-				this.formControlsMobile['PHONE_NUMBER'] = new FormControl();
-				this.formControlsMobile['COUNTRY_CODE'] = new FormControl();
-				this.formControlsMobile['DIAL_CODE'] = new FormControl();
-				this.formControlsMobile['COUNTRY_FLAG'] = new FormControl();
-			} else {
-				this.formControlsMobile[fieldData.NAME] = new FormControl();
-			}
-
-			if (fieldData.NOT_EDITABLE) {
-				this.formControlsMobile[fieldData.NAME].disable();
-			}
-
-			this.editMobileFieldsArray.push(fieldData);
-
-			let listItems = [];
-			let fieldName: any;
-			this.picklistValuesForMobile[fieldData.NAME] = new Array();
-			if (fieldData.DATA_TYPE.DISPLAY === 'Picklist') {
-				fieldData.PICKLIST_VALUES.forEach((value) => {
-					this.picklistValuesForMobile[fieldData.NAME].push(value);
-				});
-			}
-
-			if (fieldData.DATA_TYPE.DISPLAY === 'Relationship') {
-				if (this.entry[fieldData.NAME] !== -1) {
-					let relationModuleID;
-					this.allModulesForMobile.forEach((module) => {
-						if (module.MODULE_ID === fieldData.MODULE) {
-							relationModuleID = module.MODULE_ID;
-						}
-					});
-
-					this.modulesService
-						.getModuleById(relationModuleID)
-						.subscribe((relationModuleResponse: any) => {
-							this.responseArrayForMobile[fieldData.NAME] =
-								relationModuleResponse;
-							this.dataService
-								.getAllData(relationModuleID)
-								.subscribe((entries: any) => {
-									this.mobileRelationshipPageMap.set(fieldData['FIELD_ID'], 20);
-									this.entriesArrayForMobile[fieldData.NAME] = entries;
-									const primaryDisplayField =
-										relationModuleResponse.FIELDS.find(
-											(tempField) =>
-												tempField.FIELD_ID === fieldData.PRIMARY_DISPLAY_FIELD
-										);
-									this.relationshipPicklistValuesForMobile[fieldData.NAME] =
-										new Array();
-									entries.content.forEach((value) => {
-										if (
-											!this.relationshipPicklistValuesForMobile[
-												fieldData.NAME
-											].includes(value[primaryDisplayField.NAME])
-										) {
-											this.relationshipPicklistValuesForMobile[
-												fieldData.NAME
-											].push(value[primaryDisplayField.NAME]);
-										}
-									});
-									this.relationshipFieldValue[fieldData.NAME] = new Array();
-									if (fieldData.DATA_TYPE.BACKEND !== 'String') {
-										this.entry[fieldData.NAME].forEach((element) => {
-											let entry = entries.content.filter(
-												(E) => E.DATA_ID === element.DATA_ID
-											);
-
-											listItems.push(entry[0].NAME);
-
-											fieldName = fieldData.NAME;
-											this.relationshipFieldValue[fieldData.NAME].push(
-												entry[0][primaryDisplayField.NAME]
-											);
-										});
-
-										items.push(listItems);
-										listFieldNames.push(fieldName);
-									} else {
-										let field = this.entry[fieldData.NAME];
-										let entry = entries.content.filter(
-											(E) => E.DATA_ID === field
-										);
-
-										this.relationshipFieldValue[fieldData.NAME] = new Array();
-										this.relationshipFieldValue[fieldData.NAME].push(
-											entry[0][primaryDisplayField.NAME]
-										);
-									}
-								});
-						});
-				}
-			}
-			this.isMobileDataLoading = false;
-		}
-	}
-	public showHideField(field, args) {
-		this.showPicklistPickerForMobile = true;
-		this.picklistShowForMobile = true;
-		this.formControlsMobile[field.NAME].markAsTouched();
-		this.renderDetailHelper.disableKeyboard(args);
-		// UIApplication.sharedApplication
-		// .keyWindow
-		// .endEditing(true);
-
-		// utils.ad.dismissSoftInput();
-	}
-
-	public showPicker(field, args) {
-		if (
-			field.DATA_TYPE.DISPLAY === 'Relationship' &&
-			field.DATA_TYPE.BACKEND === 'String'
-		) {
-			this.renderDetailHelper.disableKeyboard(args);
-			this.currentPickerFieldForMobile = field;
-		}
-		if (
-			field.DATA_TYPE.DISPLAY === 'Relationship' &&
-			field.DATA_TYPE.BACKEND === 'Array'
-		) {
-			this.currentPickerFieldForMobile = field;
-			const myTextField = args.object;
-			myTextField.dismissSoftInput();
-		}
-		this.formControlsMobile[field.NAME].valueChanges.subscribe((value) => {
-			let val = [];
-			val = value.split(',');
-
-			this.relationshipFieldValue[field.NAME].forEach((element) => {
-				if (!val.includes(element)) {
-					this.relationshipFieldValue[field.NAME].pop(element);
-				}
-			});
-		});
-
-		this.showRelationshipPicker = true;
-		this.formControlsMobile[field.NAME].markAsTouched();
-	}
-
-	public selectedRelationshipValue(entry, field) {
-		if (!this.relationshipFieldValue[field.NAME].includes(entry)) {
-			if (field.DATA_TYPE.BACKEND !== 'String') {
-				this.relationshipFieldValue[field.NAME].push(entry);
-			} else {
-				this.relationshipFieldValue[field.NAME] = entry;
-			}
-		} else {
-			alert(this.translateService.instant('VALUE_EXISTS'));
-		}
-
-		this.relationshipFieldValue[field.NAME] =
-			this.relationshipFieldValue[field.NAME].slice();
-
-		this.showRelationshipPicker = false;
-
-		this.formControlsMobile[field.NAME].touched = false;
-	}
-
-	public selectedChanged(args, field) {
-		this.picklistShowForMobile = true;
-		const picker = <ListPicker>args.object;
-
-		let value = this.module.FIELDS.filter((F) => F.NAME === field.NAME);
-
-		this.formControlsMobile[field.NAME].setValue(
-			value[0].PICKLIST_VALUES[picker.selectedIndex]
-		);
-
-		this.showPicklistPickerForMobile = false;
-		this.picklistShowForMobile = false;
-
-		this.formControlsMobile[field.NAME].touched = false;
-	}
-
-	public changeMobileMessageDisplay(option, index) {
-		this.selectedOptionIndexForMobile = index;
-		if (option === 'Messages') {
-			this.messageShowTypeForMobile = 'MESSAGE';
-		} else if (option === 'All') {
-			this.messageShowTypeForMobile = 'ALL';
-		} else if (option === 'Internal Comments') {
-			this.messageShowTypeForMobile = 'INTERNAL_COMMENT';
-		} else if (option === 'Events') {
-			this.messageShowTypeForMobile = 'META_DATA';
-		}
-
-		this.changeMobileMessageType = false;
-	}
-
-	public onTextViewFocusMobile() {
-		this.sendButtonEnabledForMobile = true;
-	}
-
-	public onChangeMobileMessageType(args) {
-		this.changeMobileMessageType = !this.changeMobileMessageType;
-	}
-
-	public sendMessageMobile() {
-		this.saving = true;
-		if (this.customModulesService.discussionControls['MESSAGE']) {
-			this.customModulesService.discussionControls['MESSAGE'] =
-				this.customModulesService.discussionControls['MESSAGE'].replace(
-					/\n/g,
-					'<br/>'
-				);
-			const msgObject = {
-				MESSAGE: this.customModulesService.discussionControls['MESSAGE'],
-				ATTACHMENTS: [],
-				SENDER: {
-					FIRST_NAME: this.userService.user.FIRST_NAME,
-					LAST_NAME: this.userService.user.LAST_NAME,
-					USER_UUID: this.userService.user.USER_UUID,
-					ROLE: this.userService.user.ROLE,
-				},
-				MESSAGE_TYPE: 'MESSAGE',
-			};
-			if (this.entry['TIME_SPENT'] === 0) {
-				this.entry['TIME_SPENT'] = '0m';
-			} else if (!isNaN(this.entry['TIME_SPENT'])) {
-				this.entry['TIME_SPENT'] = this.entry['TIME_SPENT'] + 'm';
-			}
-
-			this.entry.MESSAGES.push(msgObject);
-			let payload = JSON.parse(JSON.stringify(this.entry));
-			payload = this.renderDetailDataSerice.formatDiscussion(
-				payload,
-				this.module,
-				this.attachments
-			);
-			this.dataService
-				.putModuleEntry(this.module['MODULE_ID'], payload, false)
-				.subscribe(
-					(response) => {
-						this.bannerMessageService.successNotifications.push({
-							message: this.translateService.instant('UPDATED_SUCCESSFULLY'),
-						});
-						this.saving = false;
-						this.renderDetailHelper.bannerNotification(
-							'MESSAGE_SENT_SUCCESSFULLY'
-						);
-					},
-					(error) => {
-						this.saving = false;
-						this.bannerMessageService.errorNotifications.push({
-							message: error.error.ERROR,
-						});
-					}
-				);
-			this.attachments = [];
-			this.customModulesService.discussionControls['MESSAGE'] = '';
-		}
-	}
-	public preSaveForMobile() {
-		let chronometer = this.module.FIELDS.find(
-			(F) => F.DATA_TYPE.DISPLAY === 'Chronometer'
-		);
-		if (!isNaN(this.entry[chronometer.NAME])) {
-			this.entry[chronometer.NAME] = this.entry[chronometer.NAME] + 'm';
-		}
-		for (const fieldId of this.layout.FIELDS) {
-			let index = this.layout.FIELDS.indexOf(fieldId);
-			let fieldData = this.module.FIELDS.find(
-				(F) => F.FIELD_ID === this.layout.FIELDS[index]
-			);
-
-			if (
-				fieldData.DATA_TYPE.DISPLAY !== 'Discussion' &&
-				fieldData.DATA_TYPE.DISPLAY !== 'Relationship' &&
-				fieldData.DATA_TYPE.DISPLAY !== 'Chronometer' &&
-				fieldData.DATA_TYPE.DISPLAY !== 'Phone'
-			) {
-				this.entry[fieldData.NAME] =
-					this.formControlsMobile[fieldData.NAME].value;
-			} else if (fieldData.DATA_TYPE.DISPLAY === 'Relationship') {
-				const relationModule = this.allModulesForMobile.find(
-					(module) => module.MODULE_ID === fieldData.MODULE
-				);
-
-				const primaryDisplayField = this.responseArrayForMobile[
-					fieldData.NAME
-				].FIELDS.find(
-					(tempField) => tempField.FIELD_ID === fieldData.PRIMARY_DISPLAY_FIELD
-				);
-
-				if (fieldData.DATA_TYPE.BACKEND !== 'String') {
-					let list = [];
-
-					if (this.relationshipFieldValue[fieldData.NAME] !== undefined) {
-						this.relationshipFieldValue[fieldData.NAME].forEach((val) => {
-							list.push(val);
-						});
-
-						if (!fieldData.NOT_EDITABLE) {
-							this.entry[fieldData.NAME] = [];
-							if (list.length > 0) {
-								list.forEach((element) => {
-									let value = this.entriesArrayForMobile[
-										fieldData.NAME
-									].content.find(
-										(D) => D[primaryDisplayField.NAME] === element
-									);
-
-									if (!this.entry[fieldData.NAME].includes(value.DATA_ID)) {
-										this.entry[fieldData.NAME].push(value.DATA_ID);
-									}
-								});
-							}
-						}
-					}
-				} else {
-					if (!fieldData.NOT_EDITABLE) {
-						if (this.formControlsMobile[fieldData.NAME].value) {
-							let value = this.entriesArrayForMobile[
-								fieldData.NAME
-							].content.find(
-								(D) =>
-									D[primaryDisplayField.NAME] ===
-									this.formControlsMobile[fieldData.NAME].value
-							);
-
-							this.entry[fieldData.NAME] = value.DATA_ID;
-						} else {
-							this.entry[fieldData.NAME] = '';
-						}
-					}
-				}
-			} else if (fieldData.DATA_TYPE.DISPLAY === 'Discussion') {
-				let attachments = [];
-
-				if (this.formControlsMobile[fieldData.NAME].value === null) {
-					this.formControlsMobile[fieldData.NAME].setValue(' ');
-				}
-				const msgBody = this.formControlsMobile[fieldData.NAME].value;
-
-				const msgObject = {
-					MESSAGE: msgBody,
-					ATTACHMENTS: JSON.parse(JSON.stringify(attachments)),
-					SENDER: {
-						FIRST_NAME: this.userService.user.FIRST_NAME,
-						LAST_NAME: this.userService.user.LAST_NAME,
-						USER_UUID: this.userService.user.USER_UUID,
-						ROLE: this.userService.user.ROLE,
-					},
-					MESSAGE_TYPE: 'MESSAGE',
-				};
-				// entryToPut[fieldData.NAME] = [msgObject];
-				this.entry[fieldData.NAME].push(msgObject);
-				// this._stompService._stompManagerService.publish({
-				// 	destination: `ngdesk/discussion`,
-				// 	body: JSON.stringify(msgObject),
-				// });
-			}
-			if (fieldData.DATA_TYPE.DISPLAY === 'Chronometer') {
-				this.entry[fieldData.NAME] = '0m';
-			}
-			if (fieldData.DATA_TYPE.DISPLAY === 'Phone') {
-				this.entry[fieldData.NAME].PHONE_NUMBER =
-					this.formControlsMobile['PHONE_NUMBER'].value;
-				this.entry[fieldData.NAME].DIAL_CODE =
-					this.formControlsMobile['DIAL_CODE'].value;
-				this.entry[fieldData.NAME].COUNTRY_FLAG =
-					this.formControlsMobile['DIAL_CODE'].value[2];
-				this.entry[fieldData.NAME].COUNTRY_CODE =
-					this.formControlsMobile['DIAL_CODE'].value[1];
-			}
-		}
-		this.save('return');
-	}
-
-	public onMobileRelationshipFieldLoadMore(
-		args: LoadOnDemandListViewEventData
-	) {
-		const listView: RadListView = args.object;
-		if (
-			this.mobileRelationshipPageMap.get(
-				this.currentPickerFieldForMobile['FIELD_ID']
-			) >= 20
-		) {
-			const OnLoadDemandPageIndex =
-				this.mobileRelationshipPageMap.get(
-					this.currentPickerFieldForMobile['FIELD_ID']
-				) / 20;
-			this.dataService
-				.getAllData(
-					this.currentPickerFieldForMobile['MODULE'],
-					'',
-					OnLoadDemandPageIndex,
-					20
-				)
-				.subscribe(
-					(response: any) => {
-						const that = this;
-						setTimeout(function () {
-							that.mobileRelationshipPageMap.set(
-								that.currentPickerFieldForMobile['FIELD_ID'],
-								that.mobileRelationshipPageMap.get(
-									that.currentPickerFieldForMobile['FIELD_ID']
-								) + 20
-							);
-							response.content.forEach((value) => {
-								const primaryDisplayField = that.responseArrayForMobile[
-									that.currentPickerFieldForMobile['NAME']
-								].FIELDS.find(
-									(tempField) =>
-										tempField.FIELD_ID ===
-										that.currentPickerFieldForMobile['PRIMARY_DISPLAY_FIELD']
-								);
-								if (
-									!that.relationshipPicklistValuesForMobile[
-										that.currentPickerFieldForMobile['NAME']
-									].includes(value[primaryDisplayField.NAME])
-								) {
-									that.relationshipPicklistValuesForMobile[
-										that.currentPickerFieldForMobile['NAME']
-									].push(value[primaryDisplayField.NAME]);
-									args.returnValue = true;
-								}
-							});
-							listView.notifyLoadOnDemandFinished();
-						}, 0);
-					},
-					(error) => {
-						args.returnValue = false;
-						listView.notifyAppendItemsOnDemandFinished(0, true);
-						console.log(error);
-					}
-				);
-		} else {
-			args.returnValue = false;
-			listView.notifyLoadOnDemandFinished(true);
 		}
 	}
 

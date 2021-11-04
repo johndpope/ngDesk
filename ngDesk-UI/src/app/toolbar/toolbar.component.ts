@@ -337,10 +337,6 @@ export class ToolbarComponent implements OnDestroy, OnInit {
 						MESSAGE: null,
 						NOTIFICATION_ID: null,
 					});
-					// TODO: Uncomment and use the notification service new api
-					// console.log(notification);
-					// console.log(this.router.url);
-					// console.log(this.router);
 					if (
 						this.router.url.indexOf(notification.DATA_ID) !== -1 &&
 						this.router.url.indexOf(notification.MODULE_ID) !== -1

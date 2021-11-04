@@ -2218,5 +2218,6 @@
 	"START_TIME_CHANGES": "Effective time for changes to take place",
 	"PREVIOUS": "Previous",
 	"PERSONAL_DETAILS": "Personal Details",
-	"AGENT_CHATS": "My Chats"
+	"AGENT_CHATS": "My Chats",
+	"CHAT_VISITOR": "Visitor"
 }
