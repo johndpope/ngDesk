@@ -3685,27 +3685,32 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 		const linkifyStr = require('linkifyjs/string');
 		messageBody = linkifyStr(messageBody, {});
 		const htmlMsg = `<html> <head></head> <body>${messageBody}</body> </html>`;
-		const msgObj = {
-			agentDataID: this.userService.user.DATA_ID,
-			customerDataID: this.entry.REQUESTOR.DATA_ID,
-			sessionUUID: this.entry.SESSION_UUID,
-			discussionMessage: {
-				ATTACHMENTS: [],
-				COMPANY_SUBDOMAIN: this.userService.getSubdomain(),
-				ENTRY_ID: this.route.snapshot.params['dataId'],
-				MESSAGE: htmlMsg,
-				MESSAGE_ID: '',
-				MESSAGE_TYPE: 'MESSAGE',
-				MODULE_ID: this.module['MODULE_ID'],
-				SENDER: {
-					FIRST_NAME: this.userService.user.FIRST_NAME,
-					LAST_NAME: this.userService.user.LAST_NAME,
-					ROLE: this.userService.user.ROLE,
-					USER_UUID: this.userService.user.USER_UUID,
-				},
-			},
-		};
-		this.websocketService.publishMessage(msgObj);
+		this.renderDetailDataSerice
+			.postAttachments(this.attachments)
+			.subscribe((attachmentResponse: any) => {
+				this.attachments = [];
+				const msgObj = {
+					agentDataID: this.userService.user.DATA_ID,
+					customerDataID: this.entry.REQUESTOR.DATA_ID,
+					sessionUUID: this.entry.SESSION_UUID,
+					discussionMessage: {
+						ATTACHMENTS: JSON.parse(JSON.stringify(attachmentResponse)),
+						COMPANY_SUBDOMAIN: this.userService.getSubdomain(),
+						ENTRY_ID: this.route.snapshot.params['dataId'],
+						MESSAGE: htmlMsg,
+						MESSAGE_ID: '',
+						MESSAGE_TYPE: 'MESSAGE',
+						MODULE_ID: this.module['MODULE_ID'],
+						SENDER: {
+							FIRST_NAME: this.userService.user.FIRST_NAME,
+							LAST_NAME: this.userService.user.LAST_NAME,
+							ROLE: this.userService.user.ROLE,
+							USER_UUID: this.userService.user.USER_UUID,
+						},
+					},
+				};
+				this.websocketService.publishMessage(msgObj);
+			});
 		this.customModulesService.discussionControls['MESSAGE'] = '';
 	}
 
