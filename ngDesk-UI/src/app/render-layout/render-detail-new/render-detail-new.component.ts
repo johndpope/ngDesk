@@ -3748,24 +3748,9 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	}
 
 	public loadUserChatDetails(user) {
-		this.entry['CHAT'] = [];
-		this.entry = {};
-		this.cacheService
-			.getPrerequisiteForDetaiLayout(this.module['MODULE_ID'], user.DATA_ID)
-			.subscribe(
-				(userChatDetails: any) => {
-					if (userChatDetails[1].hasOwnProperty('entry')) {
-						this.entry = userChatDetails[1].entry;
-					} else {
-						this.entry = userChatDetails[1];
-					}
-					console.log(this.entry);
-					this.currentUserStatus = user.STATUS;
-				},
-				(error) => {
-					console.log(error);
-				}
-			);
+		this.router.navigate([
+			`render/${this.module['MODULE_ID']}/edit/${user.DATA_ID}`,
+		]);
 	}
 
 	public loadUserDetailsByRequestorId(userID) {

@@ -296,8 +296,8 @@
 
 
 ::ng-deep.mat-chat-list {
-	border-radius: 40px !important;
-	margin: 20px
+	border-radius: 5px !important;
+	margin: 10px
 }
 
 ::ng-deep.chat-search{

@@ -341,21 +341,15 @@ export class ToolbarComponent implements OnDestroy, OnInit {
 					// console.log(notification);
 					// console.log(this.router.url);
 					// console.log(this.router);
-					// if (
-					// 	this.router.url.indexOf(notification.DATA_ID) !== -1 &&
-					// 	this.router.url.indexOf(notification.MODULE_ID) !== -1
-					// ) {
-					// 	notification.read = true;
-					// 	notification.READ = true;
-					// 	notification.recipientId = this.usersService.user.DATA_ID;
-					// 	notification.dataId = notification.DATA_ID;
-					// 	notification.moduleId = notification.MODULE_ID;
-					// 	notification.id = notification.NOTIFICATION_ID;
-					// 	notification.message = notification.MESSAGE;
-					// 	this.notificationApiService
-					// 		.updateNotification(notification)
-					// 		.subscribe(() => {});
-					// }
+					if (
+						this.router.url.indexOf(notification.DATA_ID) !== -1 &&
+						this.router.url.indexOf(notification.MODULE_ID) !== -1
+					) {
+						notification.READ = true;
+						this.notificationApiService
+							.markNotificationAsRead(notification.NOTIFICATION_ID)
+							.subscribe();
+					}
 					if (notification.READ === false) {
 						this.playAudio();
 					}
