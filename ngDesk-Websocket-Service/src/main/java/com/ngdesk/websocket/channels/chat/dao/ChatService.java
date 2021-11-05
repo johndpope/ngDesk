@@ -212,16 +212,16 @@ public class ChatService {
 	}
 
 	// Send chat transcript to mail
-	public void sendChatTranscript(SendChatTranscript sendChatTranscript) {
+	public void sendChatTranscript(CloseChat closeChat) {
 		try {
-			String subdomain = sendChatTranscript.getSubdomain();
+			String subdomain = closeChat.getSubdomain();
 			Optional<Company> optionalCompany = companiesRepository.findCompanyBySubdomain(subdomain);
 			if (optionalCompany.isPresent()) {
 				Company company = optionalCompany.get();
 				String companyId = company.getId();
 
 				Optional<Map<String, Object>> optionalChatEntry = moduleEntryRepository
-						.findBySessionUuid(sendChatTranscript.getSessionUUID(), "Chats_" + companyId);
+						.findBySessionUuid(closeChat.getSessionUUID(), "Chats_" + companyId);
 
 				if (optionalChatEntry.isPresent()) {
 					Map<String, Object> chatEntry = optionalChatEntry.get();
@@ -229,7 +229,7 @@ public class ChatService {
 					Optional<Map<String, Object>> optionalContactEntry = moduleEntryRepository
 							.findById(chatEntry.get("REQUESTOR").toString(), "Contacts_" + companyId);
 
-					if (sendChatTranscript.getSendTranscript()) {
+					if (closeChat.isSendChatTranscript()) {
 						String messageChat = "";
 						String companyTimezone = "UTC";
 						if (!company.getTimezone().isEmpty()) {
@@ -283,24 +283,49 @@ public class ChatService {
 								sendMail.send(to, from, subject, body);
 								setStatusOffline(company, optionalContactEntry, chatEntry);
 								ChatTicketStatusMessage chatTicketStatusMessage = new ChatTicketStatusMessage(companyId,
-										sendChatTranscript.getSessionUUID(), "CLOSE_SESSION",
-										"CHAT_ENDED_FROM_CHATTING", "CUSTOMER_HAS_ENDED_THE_CHAT");
+										closeChat.getSessionUUID(), "CLOSE_SESSION", "CHAT_ENDED_FROM_CHATTING",
+										"CUSTOMER_HAS_ENDED_THE_CHAT");
 								addToChatTicketStatusQueue(chatTicketStatusMessage);
 
 							}
 						}
 					} else {
-						setStatusOffline(company, optionalContactEntry, chatEntry);
-						ChatTicketStatusMessage chatTicketStatusMessage = new ChatTicketStatusMessage(companyId,
-								sendChatTranscript.getSessionUUID(), "CLOSE_SESSION", "CHAT_ENDED_FROM_CHATTING",
-								"CUSTOMER_HAS_ENDED_THE_CHAT");
-						addToChatTicketStatusQueue(chatTicketStatusMessage);
+						if (closeChat.isAgentCloseChat()) {
+							setStatusBrowsing(company, optionalContactEntry, chatEntry);
+						} else {
+							setStatusOffline(company, optionalContactEntry, chatEntry);
+							ChatTicketStatusMessage chatTicketStatusMessage = new ChatTicketStatusMessage(companyId,
+									closeChat.getSessionUUID(), "CLOSE_SESSION", "CHAT_ENDED_FROM_CHATTING",
+									"CUSTOMER_HAS_ENDED_THE_CHAT");
+							addToChatTicketStatusQueue(chatTicketStatusMessage);
+						}
 					}
 				}
 			}
 		} catch (Exception e) {
 
 		}
+	}
+
+	public void setStatusBrowsing(Company company, Optional<Map<String, Object>> optionalContactEntry,
+			Map<String, Object> chatEntry) {
+
+		Optional<Module> optionalChatModule = modulesRepository.findModuleByName("Chats", "modules_" + company.getId());
+
+		if (optionalChatModule.isPresent()) {
+			if (optionalContactEntry.isPresent()) {
+				Optional<Map<String, Object>> optionalUserEntry = moduleEntryRepository
+						.findById(optionalContactEntry.get().get("USER").toString(), "Users_" + company.getId());
+				if (optionalUserEntry.isPresent()) {
+					HashMap<String, Object> updateChatEntry = new HashMap<String, Object>();
+					updateChatEntry.put("DATA_ID", chatEntry.get("_id").toString());
+					updateChatEntry.put("STATUS", "Browsing");
+					dataProxy.putModuleEntry(updateChatEntry, optionalChatModule.get().getModuleId(), false,
+							company.getId(), optionalUserEntry.get().get("USER_UUID").toString());
+				}
+			}
+		}
+
 	}
 
 	public void setStatusOffline(Company company, Optional<Map<String, Object>> optionalContactEntry,
