@@ -376,6 +376,18 @@ public class Validator {
 						if (optionalRelatedEntry.isEmpty()) {
 							throw new BadRequestException("BASE_TYPE_RELATIONSHIP_ENTRY_INVALID", vars);
 						}
+
+						if (relationshipType.equals("One to One")) {
+							Optional<Map<String, Object>> existingEntries = moduleEntryRepository
+									.findEntriesByVariableForRelationship(
+											moduleService.getCollectionName(module.getName(), companyId), fieldName,
+											entry.get(fieldName).toString(), entry.get("_id").toString());
+
+							if (!existingEntries.isEmpty()) {
+
+								throw new BadRequestException("RELATIONSHIP_FIELD_ALREADY_EXIST_IN_OTHER_ENTRY", vars);
+							}
+						}
 					} else if (relationshipType.equals("Many to Many")) {
 						try {
 							List<String> relatedEntryIds = mapper.readValue(

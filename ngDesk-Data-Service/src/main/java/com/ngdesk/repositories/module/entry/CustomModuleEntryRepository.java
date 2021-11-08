@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -107,5 +108,8 @@ public interface CustomModuleEntryRepository {
 	public void updateOCRToMetadata(String dataId, List<String> receipts, String fieldName, String collectionName);
 
 	public Optional<List<Map<String, Object>>> findAllTeams(List<String> teamIds, String userId, String companyId);
+
+	public Optional<Map<String, Object>> findEntriesByVariableForRelationship(String collectionName,
+			String fieldName,String value ,String id);
 
 }
