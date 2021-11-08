@@ -3144,7 +3144,8 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 		const endChatObj = {
 			sessionUUID: this.entry['SESSION_UUID'],
 			subdomain: this.userService.getSubdomain(),
-			sendTranscript: false,
+			isSendChatTranscript: false,
+			isAgentCloseChat: true,
 		};
 
 		this.websocketService.publishMessage(endChatObj);
