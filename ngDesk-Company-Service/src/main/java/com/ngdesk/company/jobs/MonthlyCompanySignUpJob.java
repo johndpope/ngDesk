@@ -32,9 +32,9 @@ public class MonthlyCompanySignUpJob {
 	@Autowired
 	CompanySignUpJobService companySignUpservice;
 
-	//@Scheduled(fixedRate = 600000)
+	// @Scheduled(fixedRate = 600000)
 	// will run at starting of every month
-	 @Scheduled(cron = "0 0 0 1 1/1 *")
+	@Scheduled(cron = "0 0 0 1 1/1 *")
 	public void signupCompanies() {
 
 		List<String> emailIds = List.of("kumar.mukesh@subscribeit.com", "spencer@allbluesolutions.com",
