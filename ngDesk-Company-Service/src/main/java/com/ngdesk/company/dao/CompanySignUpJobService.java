@@ -80,12 +80,6 @@ public class CompanySignUpJobService {
 		return "";
 	}
 
-	public void sendErrorMessage(String sStackTrace, List<String> emailIds) {
-		for (String emailAddress : emailIds) {
-			sendMail.send(emailAddress, "support@ngdesk.com", "DailyCompanySignup: Stack Trace", sStackTrace);
-		}
-	}
-
 	public String getTotalDetails(List<Company> companyList) {
 		String totalDetails = "<table border=1>";
 		String header = "<tr><th>Company Name</th><th>Company Subdomain</th><th>First Name</th><th>Last Name</th>"
