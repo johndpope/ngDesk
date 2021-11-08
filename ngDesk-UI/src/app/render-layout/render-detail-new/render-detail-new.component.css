@@ -316,6 +316,7 @@
   }
 
 ::ng-deep .customer-result{
+	width: 100%;
 	margin: 20px 10px 0px 0px;
 	/* border: 1px solid #68737D; */
 	padding: 15px;
@@ -326,6 +327,9 @@
 	border: 1px solid #68737D;
 	width: 40px;
 	height: 40px;
+}
+::ng-deep .user-list-borders {
+	border: 1px solid #d9dbdd; border-radius: .25rem;
 }
 
 

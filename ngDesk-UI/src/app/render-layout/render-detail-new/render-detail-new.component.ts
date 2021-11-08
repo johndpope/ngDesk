@@ -8,6 +8,7 @@ import {
 	Optional,
 	ViewChild,
 	ElementRef,
+	HostListener,
 } from '@angular/core';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MatDialog } from '@angular/material/dialog';
@@ -201,6 +202,25 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	};
 	public operators: any = [];
 	public chatFilters = [];
+
+	@HostListener('window:beforeunload', ['$event'])
+	beforeUnloadHandler(event) {
+		if (
+			this.module['NAME'] == 'Chats' &&
+			this.entry &&
+			this.entry.SESSION_UUID
+		) {
+			let onWindowClosePayload: any = {
+				sessionUUID: this.entry.SESSION_UUID,
+				subdomain: this.userService.getSubdomain(),
+				isSendChatTranscript: false,
+				isAgentCloseChat: true,
+			};
+
+			this.websocketService.publishMessage(onWindowClosePayload);
+		}
+	}
+
 	constructor(
 		@Optional() @Inject(MAT_DIALOG_DATA) public modalData: any,
 		@Optional()
@@ -3173,10 +3193,8 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 			VALUE: '',
 			REQUIREMENT_TYPE: 'All',
 		};
-		// this.editField = null;
 
 		if (field.RELATIONSHIP_TYPE === 'Many to One') {
-			// this.getRelationshipValues(field);
 			this.filterField.FIELD['RELATION_FIELD_VALUE'] = this.customersForAgent;
 		}
 		this.operators = this.conditionsService.setOperators(field);
@@ -3203,5 +3221,19 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	public removeFilter(index) {
 		this.chatFilters.splice(index, 1);
 		this.getCustomerForAgent();
+	}
+
+	public getRequestorById(requestorId) {
+		let requestorName;
+		if (this.customersForAgent && this.customersForAgent.length > 0) {
+			this.customersForAgent.find((user) => {
+				if (user.REQUESTOR.DATA_ID === requestorId) {
+					requestorName =
+						user.REQUESTOR.FIRST_NAME + ' ' + user.REQUESTOR.LAST_NAME;
+				}
+			});
+		}
+
+		return requestorName;
 	}
 }
