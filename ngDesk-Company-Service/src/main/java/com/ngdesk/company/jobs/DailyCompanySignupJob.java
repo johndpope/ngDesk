@@ -45,23 +45,23 @@ public class DailyCompanySignupJob {
 		if (!env.getProperty("env").equalsIgnoreCase("prd") && !env.getProperty("env").equalsIgnoreCase("devnew")) {
 			return;
 		}
-		
-		// (11hours(previous day)+13hours(current day)
-		// previous day
-		Date now = new Date();
-		Calendar calendarStartDate = Calendar.getInstance();
-		calendarStartDate.setTime(now);
-		calendarStartDate.add(Calendar.HOUR, 13);
-		Date startDate = calendarStartDate.getTime();
 
+		// (11hours(previous day)+13hours(current day)
 		// current day
+		Date now = new Date();
 		Calendar calendarEndDate = Calendar.getInstance();
 		calendarEndDate.setTime(now);
-		calendarEndDate.add(Calendar.DATE, -1);
 		calendarEndDate.add(Calendar.HOUR, 13);
-		calendarEndDate.add(Calendar.MINUTE, 0);
-		calendarEndDate.add(Calendar.SECOND, 1);
 		Date endDate = calendarEndDate.getTime();
+
+		// previous day
+		Calendar calendarStartDate = Calendar.getInstance();
+		calendarStartDate.setTime(now);
+		calendarStartDate.add(Calendar.DATE, -1);
+		calendarStartDate.add(Calendar.HOUR, 13);
+		calendarStartDate.add(Calendar.MINUTE, 0);
+		calendarStartDate.add(Calendar.SECOND, 1);
+		Date startDate = calendarStartDate.getTime();
 
 		List<Company> companyList = companyRepository
 				.findAllCompaniesWithStartAndEndDate("companies", startDate, endDate).get();

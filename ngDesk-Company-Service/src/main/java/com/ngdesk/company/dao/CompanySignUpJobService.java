@@ -1,6 +1,7 @@
 package com.ngdesk.company.dao;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -57,24 +58,24 @@ public class CompanySignUpJobService {
 		if (user != null) {
 			// GET PHONE NUMBER FROM COMPANY
 			String phoneNumber = phone.getDialCode() + phone.getPhoneNumber();
-			Boolean tickets = false;
-			Boolean chat = false;
-			Boolean pager = false;
-			if (usageType != null) {
-				tickets = usageType.isTickets();
-				chat = usageType.isChat();
-				pager = usageType.isPager();
-			}
-			String usageTypeDetails = (chat == true && tickets == true ? "/" : "") + (chat == true ? "chat" : "")
-					+ (pager == true && chat == true ? "/" : "")
-					+ (pager == true && tickets == true && chat == false ? "/" : "") + (pager == true ? "pager" : "");
 
+			List<String> usageTypeDetails = new ArrayList<String>();
+			if (usageType != null) {
+				if (usageType.isTickets()) {
+					usageTypeDetails.add("Tickets");
+				}
+				if (usageType.isChat()) {
+					usageTypeDetails.add("Chat");
+				}
+				if (usageType.isPager()) {
+					usageTypeDetails.add("Pager");
+				}
+			}
 			// GET DETAILS FROM COMPANY AND USER
 			String detailsRow = "<tr><td>" + company.getCompanyName() + "</td><td>" + company.getCompanySubdomain()
 					+ "</td><td>" + firstName + "</td><td>" + lastName + "</td><td>" + user.get("EMAIL_ADDRESS")
 					+ "</td><td>" + phoneNumber + "</td><td>" + company.getTimezone() + "</td><td>"
-					+ company.getIndustry() + "</td><td>" + (tickets == true ? "Tickets" : "") + usageTypeDetails
-					+ "</td></tr>";
+					+ company.getIndustry() + "</td><td>" + String.join("/", usageTypeDetails) + "</td></tr>";
 			return detailsRow;
 		}
 		return "";
@@ -87,18 +88,17 @@ public class CompanySignUpJobService {
 		totalDetails = totalDetails + header;
 		for (Company company : companyList) {
 			String companyId = company.getCompanyId().toString();
-			List<Role> rolesCollection = roleRepository.findAllRolesByCollectionName("roles_" + companyId).get();
-			Role systemAdminRole = rolesCollection.stream()
-					.filter(roles -> roles.getName().equalsIgnoreCase("SystemAdmin")).findFirst().orElse(null);
+			List<Role> roles = roleRepository.findAllRolesByCollectionName("roles_" + companyId).get();
+			Role systemAdminRole = roles.stream().filter(role -> role.getName().equalsIgnoreCase("SystemAdmin"))
+					.findFirst().orElse(null);
 			String systemAdminId = systemAdminRole.getId().toString();
-			List<Map<String, Object>> usersCollection = moduleEntryRepository.getAllEntries("Users_" + companyId).get();
+			List<Map<String, Object>> users = moduleEntryRepository.getAllEntries("Users_" + companyId).get();
 			// GET FIRST SYSTEM ADMIN
-			Map<String, Object> firstAdminUser = usersCollection.stream()
-					.filter(users -> users.get("ROLE").toString().equals(systemAdminId)).findFirst().orElse(null);
+			Map<String, Object> firstAdminUser = users.stream()
+					.filter(user -> user.get("ROLE").toString().equals(systemAdminId)).findFirst().orElse(null);
 			String contactId = firstAdminUser.get("CONTACT").toString();
-			List<Map<String, Object>> contactCollection = moduleEntryRepository.getAllEntries("Contacts_" + companyId)
-					.get();
-			Map<String, Object> contactModule = contactCollection.stream()
+			List<Map<String, Object>> contact = moduleEntryRepository.getAllEntries("Contacts_" + companyId).get();
+			Map<String, Object> contactModule = contact.stream()
 					.filter(contacts -> contacts.get("_id").toString().equals(contactId)).findFirst().orElse(null);
 			// ADDING INDIVIDUAL ROWS
 			totalDetails = totalDetails + buildCompanyDetailsRow(company, firstAdminUser, contactModule);

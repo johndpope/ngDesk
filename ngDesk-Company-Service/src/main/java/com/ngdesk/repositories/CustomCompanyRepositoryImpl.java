@@ -2,7 +2,6 @@ package com.ngdesk.repositories;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.util.Assert;
 
 import com.ngdesk.company.dao.Company;
-import com.ngdesk.company.module.dao.Module;
 import com.ngdesk.company.uifaillogs.dao.UIFailLog;
 
 public class CustomCompanyRepositoryImpl implements CustomCompanyRepository {
@@ -51,7 +49,7 @@ public class CustomCompanyRepositoryImpl implements CustomCompanyRepository {
 	public Optional<List<Company>> findAllCompaniesWithStartAndEndDate(String collectionName,Date startDate,Date endDate) {
 		Assert.notNull(collectionName, "Collection name must not be null");
 		Criteria criteria = new Criteria();
-		criteria.andOperator(Criteria.where("DATE_CREATED").gt(endDate),Criteria.where("DATE_CREATED").lt(startDate));
+		criteria.andOperator(Criteria.where("DATE_CREATED").gt(startDate),Criteria.where("DATE_CREATED").lt(endDate));
 		Query query = new Query(criteria);
 		return Optional.ofNullable(mongoOperations.find(query, Company.class, collectionName));
 	}
