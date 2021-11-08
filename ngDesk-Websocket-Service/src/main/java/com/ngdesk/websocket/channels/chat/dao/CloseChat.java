@@ -7,15 +7,15 @@ public class CloseChat {
 
 	private String subdomain;
 
-	private boolean isSendChatTranscript;
+	private Boolean isSendChatTranscript;
 
-	private boolean isAgentCloseChat;
+	private Boolean isAgentCloseChat;
 
 	public CloseChat() {
 		super();
 	}
 
-	public CloseChat(String sessionUUID, String subdomain, boolean isSendChatTranscript, boolean isAgentCloseChat) {
+	public CloseChat(String sessionUUID, String subdomain, Boolean isSendChatTranscript, Boolean isAgentCloseChat) {
 		super();
 		this.sessionUUID = sessionUUID;
 		this.subdomain = subdomain;
@@ -39,19 +39,19 @@ public class CloseChat {
 		this.subdomain = subdomain;
 	}
 
-	public boolean isSendChatTranscript() {
+	public Boolean getIsSendChatTranscript() {
 		return isSendChatTranscript;
 	}
 
-	public void setSendChatTranscript(boolean isSendChatTranscript) {
+	public void setIsSendChatTranscript(Boolean isSendChatTranscript) {
 		this.isSendChatTranscript = isSendChatTranscript;
 	}
 
-	public boolean isAgentCloseChat() {
+	public Boolean getIsAgentCloseChat() {
 		return isAgentCloseChat;
 	}
 
-	public void setAgentCloseChat(boolean isAgentCloseChat) {
+	public void setIsAgentCloseChat(Boolean isAgentCloseChat) {
 		this.isAgentCloseChat = isAgentCloseChat;
 	}
 

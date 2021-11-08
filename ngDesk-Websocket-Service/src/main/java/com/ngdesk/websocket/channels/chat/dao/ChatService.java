@@ -229,7 +229,7 @@ public class ChatService {
 					Optional<Map<String, Object>> optionalContactEntry = moduleEntryRepository
 							.findById(chatEntry.get("REQUESTOR").toString(), "Contacts_" + companyId);
 
-					if (closeChat.isSendChatTranscript()) {
+					if (closeChat.getIsSendChatTranscript()) {
 						String messageChat = "";
 						String companyTimezone = "UTC";
 						if (!company.getTimezone().isEmpty()) {
@@ -290,7 +290,7 @@ public class ChatService {
 							}
 						}
 					} else {
-						if (closeChat.isAgentCloseChat()) {
+						if (closeChat.getIsAgentCloseChat()) {
 							setStatusBrowsing(company, optionalContactEntry, chatEntry);
 						} else {
 							setStatusOffline(company, optionalContactEntry, chatEntry);
