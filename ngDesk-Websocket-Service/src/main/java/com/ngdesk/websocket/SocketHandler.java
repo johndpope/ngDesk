@@ -440,12 +440,13 @@ public class SocketHandler extends TextWebSocketHandler {
 															CloseChat closeChat = mapper.readValue(
 																	textMessage.getPayload(), CloseChat.class);
 															chatService.sendChatTranscript(closeChat);
-															ChatTicketStatusMessage chatTicketStatusMessage = new ChatTicketStatusMessage(
-																	user.getCompanyId(), closeChat.getSessionUUID(),
-																	"CLOSE_CHAT", "CLOSED", "AGENT_ENDED_THE_CHAT");
-															chatService.addToChatTicketStatusQueue(
-																	chatTicketStatusMessage);
-
+															if (closeChat.getIsAgentCloseChat()) {
+																ChatTicketStatusMessage chatTicketStatusMessage = new ChatTicketStatusMessage(
+																		user.getCompanyId(), closeChat.getSessionUUID(),
+																		"CLOSE_CHAT", "CLOSED", "AGENT_ENDED_THE_CHAT");
+																chatService.addToChatTicketStatusQueue(
+																		chatTicketStatusMessage);
+															}
 														} catch (Exception e9) {
 															// TODO: handle exception
 														}
