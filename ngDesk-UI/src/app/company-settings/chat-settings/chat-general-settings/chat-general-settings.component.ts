@@ -100,7 +100,7 @@ export class ChatGeneralSettingsComponent implements OnInit {
 					}
 
 					this.teams = filteredTeams;
-					this.initializeScheduleDataScrollSubject();
+					this.initializeChatDataScrollSubject();
 					const query = `{
 						COMPANY: getCompanyDetails {
 						  CHAT_SETTINGS: chatSettings {
@@ -254,7 +254,7 @@ export class ChatGeneralSettingsComponent implements OnInit {
 	}
 
 
-	public initializeScheduleDataScrollSubject() {
+	public initializeChatDataScrollSubject() {
 		this.chatDataScrollSubject
 			.pipe(
 				debounceTime(400),

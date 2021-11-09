@@ -5,7 +5,7 @@ import { AppGlobals } from '../../app.globals';
 	providedIn: 'root',
 })
 export class ChatDataService {
-	constructor(private http: HttpClient, private globals: AppGlobals) {}
+	constructor(private http: HttpClient, private globals: AppGlobals) { }
 
 	// to get chat channel
 
@@ -44,6 +44,12 @@ export class ChatDataService {
 					
 				    	}
 				    }
+					AGENTS{
+		               CONTACT{
+						   FULL_NAME
+					   }
+					}
+					DATE_CREATED
 		}
 	}`;
 		let payload: any = {
