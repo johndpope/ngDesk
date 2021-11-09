@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -269,15 +270,23 @@ public class SocketHandler extends TextWebSocketHandler {
 					ConcurrentHashMap<String, UserSessions> userSessions = sessionService.sessions.get(subdomain);
 					userSessions.get(user.getUserId()).getSessions().remove(session);
 					RMap<Long, Map<String, Object>> usersMap = redisson.getMap("disconnectedUsers");
+					for (Long timeDiff : usersMap.keySet()) {
+						Map<String, Object> userMap = usersMap.get(timeDiff);
+						if (userMap.get("USER_ID").toString() != null) {
+							if (userMap.get("USER_ID").toString().equals(user.getUserId())) {
+								usersMap.remove(timeDiff);
+							}
+						}
+					}
 					Map<String, Object> userMap = new HashMap<String, Object>();
 					userMap.put("USER_ID", user.getUserId());
 					userMap.put("SUBDOMAIN", subdomain);
 					String epochDate = "01/01/1970";
 					Date date = new SimpleDateFormat("dd/MM/yyyy").parse(epochDate);
 					Timestamp epoch = new Timestamp(date.getTime());
-
 					Timestamp today = new Timestamp(new Date().getTime());
-					long currentTimeDiff = today.getTime() - epoch.getTime();
+					long millisec = TimeUnit.MINUTES.toMillis(3);
+					long currentTimeDiff = today.getTime() + millisec - epoch.getTime();
 
 					if (usersMap.containsKey(currentTimeDiff)) {
 						currentTimeDiff += 1;
@@ -288,6 +297,7 @@ public class SocketHandler extends TextWebSocketHandler {
 					if (sessionService.sessions.get(subdomain).size() == 0) {
 						sessionService.sessions.remove(subdomain);
 					}
+
 				}
 
 			} else if (queryParamMap.containsKey("type") && queryParamMap.containsKey("id")) {
@@ -316,13 +326,29 @@ public class SocketHandler extends TextWebSocketHandler {
 				ConcurrentHashMap<String, UserSessions> userSessions = sessionService.sessions.get(subdomain);
 				userSessions.get(sessionUUID).getSessions().remove(session);
 
-				if (sessionService.sessions.get(subdomain).get(sessionUUID).getSessions().size() == 0) {
-					sessionService.sessions.get(subdomain).remove(sessionUUID);
+				RMap<Long, Map<String, Object>> usersMap = redisson.getMap("disconnectedCustomers");
+				for (Long timeDiff : usersMap.keySet()) {
+					Map<String, Object> userMap = usersMap.get(timeDiff);
+					if (userMap.get("SESSION_UUID").toString() != null) {
+						if (userMap.get("SESSION_UUID").toString().equals(sessionUUID)) {
+							usersMap.remove(timeDiff);
+						}
+					}
 				}
 
-				if (sessionService.sessions.get(subdomain).size() == 0) {
-					sessionService.sessions.remove(sessionUUID);
+				Map<String, Object> userMap = new HashMap<String, Object>();
+				userMap.put("SESSION_UUID", sessionUUID);
+				userMap.put("SUBDOMAIN", subdomain);
+				String epochDate = "01/01/1970";
+				Date date = new SimpleDateFormat("dd/MM/yyyy").parse(epochDate);
+				Timestamp epoch = new Timestamp(date.getTime());
+				Timestamp today = new Timestamp(new Date().getTime());
+				long millisec = TimeUnit.MINUTES.toMillis(3);
+				long currentTimeDiff = today.getTime() + millisec - epoch.getTime();
+				if (usersMap.containsKey(currentTimeDiff)) {
+					currentTimeDiff += 1;
 				}
+				usersMap.put(currentTimeDiff, userMap);
 			}
 
 		} catch (Exception e) {

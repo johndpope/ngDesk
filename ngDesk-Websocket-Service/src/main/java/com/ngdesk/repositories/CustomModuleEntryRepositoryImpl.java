@@ -13,7 +13,6 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
-import com.mongodb.client.model.Updates;
 import com.ngdesk.data.dao.DiscussionMessage;
 import com.ngdesk.websocket.companies.dao.Phone;
 
@@ -180,10 +179,20 @@ public class CustomModuleEntryRepositoryImpl implements CustomModuleEntryReposit
 	public Integer findByAgentAndCollectionName(String agentId, String collectionName) {
 		Criteria criteria = new Criteria();
 		criteria.andOperator(Criteria.where("DELETED").is(false), Criteria.where("AGENTS").in(agentId),
-				Criteria.where("STATUS").in("Chatting"), Criteria.where("EFFECTIVE_TO").is(null));
+				Criteria.where("STATUS").is("Chatting"), Criteria.where("EFFECTIVE_TO").is(null));
 		Query query = new Query(criteria);
 		return (int) mongoOperations.count(query, collectionName);
 
+	}
+
+	@Override
+	public Optional<List<Map<String, Object>>> findChatsByAgentId(String agentId, String collectionName) {
+		Criteria criteria = new Criteria();
+		criteria.andOperator(Criteria.where("DELETED").is(false), Criteria.where("AGENTS").in(agentId),
+				Criteria.where("STATUS").ne("Offline"), Criteria.where("EFFECTIVE_TO").is(null));
+		Query query = new Query(criteria);
+		return Optional.ofNullable(
+				mongoOperations.find(query, (Class<Map<String, Object>>) (Class) Map.class, collectionName));
 	}
 
 }
