@@ -41,4 +41,6 @@ public interface CustomModuleEntryRepository {
 
 	public Integer findByAgentAndCollectionName(String agentId, String collectionName);
 
+	public Optional<List<Map<String, Object>>> findChatsByAgentId(String agentId, String collectionName);
+
 }

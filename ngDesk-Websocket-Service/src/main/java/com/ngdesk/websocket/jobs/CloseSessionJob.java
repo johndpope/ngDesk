@@ -31,7 +31,7 @@ import com.ngdesk.websocket.companies.dao.Company;
 import com.ngdesk.websocket.modules.dao.Module;
 
 @Component
-public class SessionsJob {
+public class CloseSessionJob {
 
 	@Autowired
 	RedissonClient redisson;
@@ -56,40 +56,41 @@ public class SessionsJob {
 
 	@Scheduled(fixedRate = 60000)
 	public void run() {
+
 		try {
-			RMap<Long, Map<String, Object>> usersMap = redisson.getMap("disconnectedUsers");
+			RMap<Long, Map<String, Object>> usersMap = redisson.getMap("disconnectedCustomers");
 			String epochDate = "01/01/1970";
 			Date date = new SimpleDateFormat("dd/MM/yyyy").parse(epochDate);
 			Timestamp epoch = new Timestamp(date.getTime());
-
 			Timestamp today = new Timestamp(new Date().getTime());
 			long currentTimeDiff = today.getTime() - epoch.getTime();
-			for (Long timeDiff : usersMap.keySet()) {
 
+			for (Long timeDiff : usersMap.keySet()) {
 				if (currentTimeDiff >= timeDiff) {
 					Map<String, Object> userMap = usersMap.get(timeDiff);
-					String userId = userMap.get("USER_ID").toString();
+					String sessionUUID = userMap.get("SESSION_UUID").toString();
 					String subdomain = userMap.get("SUBDOMAIN").toString();
 					ConcurrentHashMap<String, UserSessions> userSessionsMap = sessionService.sessions.get(subdomain);
-					boolean isUserOffline = false;
-					if (userSessionsMap != null && userSessionsMap.containsKey(userId)) {
-						if (userSessionsMap.get(userId).getSessions() != null) {
-							if (userSessionsMap.get(userId).getSessions().size() == 0) {
+					boolean isCustomerOffline = false;
+					if (userSessionsMap != null && userSessionsMap.containsKey(sessionUUID)) {
+						if (userSessionsMap.get(sessionUUID).getSessions() != null) {
+							if (userSessionsMap.get(sessionUUID).getSessions().size() == 0) {
+								userSessionsMap.remove(sessionUUID);
+								isCustomerOffline = true;
 								usersMap.remove(timeDiff);
-								sessionService.sessions.get(subdomain).remove(userId);
-								isUserOffline = true;
-							} else if (userSessionsMap.get(userId).getSessions().size() > 1) {
+							}
+							if (userSessionsMap.size() == 0) {
+								sessionService.sessions.remove(sessionUUID);
+								isCustomerOffline = true;
 								usersMap.remove(timeDiff);
-
 							}
 
 						}
-
-					}
-					if (isUserOffline) {
-						updateChatEntry(userId, subdomain);
 					}
 
+					if (isCustomerOffline) {
+						updateChatEntry(sessionUUID, subdomain);
+					}
 				}
 			}
 		} catch (Exception e) {
@@ -98,7 +99,7 @@ public class SessionsJob {
 
 	}
 
-	public void updateChatEntry(String userId, String subdomain) {
+	public void updateChatEntry(String sessionUUID, String subdomain) {
 
 		Optional<Company> optionalCompany = companiesRepository.findCompanyBySubdomain(subdomain);
 		if (optionalCompany.isPresent()) {
@@ -106,34 +107,36 @@ public class SessionsJob {
 			String companyId = company.getId();
 			Optional<Module> optionalChatModule = modulesRepository.findModuleByName("Chats", "modules_" + companyId);
 			if (optionalChatModule.isPresent()) {
-				Optional<List<Map<String, Object>>> optionalChatEntries = moduleEntryRepository
-						.findChatsByAgentId(userId, "Chats_" + companyId);
-				Optional<Map<String, Object>> optionalUserAgentEntry = moduleEntryRepository.findById(userId,
-						"Users_" + companyId);
-				if (optionalUserAgentEntry.isPresent()) {
-					Map<String, Object> userAgentEntry = optionalUserAgentEntry.get();
-					String roleId = userAgentEntry.get("ROLE").toString();
-					String userUuid = userAgentEntry.get("USER_UUID").toString();
-					Optional<Map<String, Object>> optionalAgentContactEntry = moduleEntryRepository
-							.findById(userAgentEntry.get("CONTACT").toString(), "Contacts_" + companyId);
-					if (optionalAgentContactEntry.isPresent()) {
-						String firstName = optionalAgentContactEntry.get().get("FIRST_NAME").toString();
-						String LastName = optionalAgentContactEntry.get().get("LAST_NAME").toString();
-						Sender sender = new Sender(firstName, LastName, userUuid, roleId);
-						List<DiscussionMessage> messages = new ArrayList<DiscussionMessage>();
-						String message = global.getFile("metadata_customer_disconnected.html");
-						message = message.replace("NAME_REPLACE", firstName + " " + LastName);
-						DiscussionMessage discussionMessage = new DiscussionMessage(message, new Date(),
-								UUID.randomUUID().toString(), "META_DATA", new ArrayList<MessageAttachment>(), sender,
-								null, null, null);
-						messages.add(discussionMessage);
-						for (Map<String, Object> chatEntry : optionalChatEntries.get()) {
+				Optional<Map<String, Object>> optionalChatEntry = moduleEntryRepository.findBySessionUuid(sessionUUID,
+						"Chats_" + companyId);
+				if (optionalChatEntry.isPresent() && !optionalChatEntry.get().get("STATUS").equals("Offline")) {
+					Map<String, Object> chatEntry = optionalChatEntry.get();
+					String customerId = chatEntry.get("REQUESTOR").toString();
+					Optional<Map<String, Object>> optionalCustomerContactEntry = moduleEntryRepository
+							.findById(customerId, "Contacts_" + companyId);
+					if (optionalCustomerContactEntry.isPresent()) {
+						String firstName = optionalCustomerContactEntry.get().get("FIRST_NAME").toString();
+						String LastName = optionalCustomerContactEntry.get().get("LAST_NAME").toString();
+						Map<String, Object> customerContactEntry = optionalCustomerContactEntry.get();
+						Optional<Map<String, Object>> optionalCustomerUserEntry = moduleEntryRepository
+								.findById(customerContactEntry.get("USER").toString(), "Users_" + companyId);
+						if (optionalCustomerUserEntry.isPresent()) {
+							String roleId = optionalCustomerUserEntry.get().get("ROLE").toString();
+							String userUuid = optionalCustomerUserEntry.get().get("USER_UUID").toString();
 							HashMap<String, Object> entry = new HashMap<String, Object>();
 							entry.put("STATUS", "Offline");
-							entry.put("DATA_ID", chatEntry.get("_id").toString());
+							entry.put("DATA_ID", optionalChatEntry.get().get("_id").toString());
+							Sender sender = new Sender(firstName, LastName, userUuid, roleId);
+							List<DiscussionMessage> messages = new ArrayList<DiscussionMessage>();
+							String message = global.getFile("metadata_customer_disconnected.html");
+							message = message.replace("NAME_REPLACE", firstName + " " + LastName);
+							DiscussionMessage discussionMessage = new DiscussionMessage(message, new Date(),
+									UUID.randomUUID().toString(), "META_DATA", new ArrayList<MessageAttachment>(),
+									sender, null, null, null);
+							messages.add(discussionMessage);
 							entry.put("CHAT", messages);
 							dataProxy.putModuleEntry(entry, optionalChatModule.get().getModuleId(), false, companyId,
-									optionalUserAgentEntry.get().get("USER_UUID").toString());
+									optionalCustomerUserEntry.get().get("USER_UUID").toString());
 						}
 					}
 				}
