@@ -3064,7 +3064,6 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	}
 
 	public loadUserChatDetails(user) {
-		debugger;
 		this.router.navigate([
 			`render/${this.module['MODULE_ID']}/edit/${user.DATA_ID}`,
 		]);
