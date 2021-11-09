@@ -36,7 +36,14 @@ import { AppGlobals } from '@src/app/app.globals';
 
 import { Observable, of, Subject, Subscription } from 'rxjs';
 
-import { concatMap, mergeMap, takeUntil, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import {
+	concatMap,
+	mergeMap,
+	takeUntil,
+	debounceTime,
+	distinctUntilChanged,
+	switchMap,
+} from 'rxjs/operators';
 
 import { DataApiService } from '@ngdesk/data-api';
 import { BannerMessageService } from '@src/app/custom-components/banner-message/banner-message.service';
@@ -464,7 +471,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 									this.entry = responseList[1];
 								}
 								if (this.module['NAME'] == 'Chats') {
-								this.chatHistoryFilter();
+									this.chatHistoryFilter();
 									this.getChatChannelDetails();
 									this.getCustomerForAgent();
 									if (
@@ -1135,7 +1142,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	}
 
 	// START RELATION FUNCTIONS
-	public clearInput(event: any) { }
+	public clearInput(event: any) {}
 
 	public addDataForRelationshipField(field, event, formControlFieldName) {
 		if (
@@ -1228,8 +1235,9 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 					);
 					if (discussionField) {
 						let query = `{
-							entry: get${this.module.NAME.replace(/ /g, '_')}Entry(id: "${this.entry.DATA_ID
-							}") {'${discussionField.NAME}'}}`;
+							entry: get${this.module.NAME.replace(/ /g, '_')}Entry(id: "${
+							this.entry.DATA_ID
+						}") {'${discussionField.NAME}'}}`;
 						query = this.cacheService.buildDiscussionQuery(
 							query,
 							discussionField.NAME
@@ -1883,7 +1891,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 			if (
 				attachments.length > 0 ||
 				this.customModulesService.discussionControls['MESSAGE'].trim().length >
-				0
+					0
 			) {
 				const messagePayload =
 					this.renderDetailDataSerice.buildDiscussionPayload(
@@ -2175,9 +2183,11 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 		attachmentLists.forEach((attachment) => {
 			this.attachmentsList.push({
 				FILE: {
-					url: `https://${this.userService.getSubdomain()}.ngdesk.com/api/ngdesk-data-service-v1/attachments?message_id&module_id=${this.module.MODULE_ID
-						}&data_id=${dataId}&attachment_uuid=${attachment['ATTACHMENT_UUID']
-						}&field_id=${filePreviewField.FIELD_ID}`,
+					url: `https://${this.userService.getSubdomain()}.ngdesk.com/api/ngdesk-data-service-v1/attachments?message_id&module_id=${
+						this.module.MODULE_ID
+					}&data_id=${dataId}&attachment_uuid=${
+						attachment['ATTACHMENT_UUID']
+					}&field_id=${filePreviewField.FIELD_ID}`,
 					httpHeaders: {
 						authentication_token: this.userService.getAuthenticationToken(),
 					},
@@ -2591,7 +2601,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 			}
 		);
 
-		setComment.afterClosed().subscribe((comment) => { });
+		setComment.afterClosed().subscribe((comment) => {});
 	}
 
 	public getcalculatedValuesForFormula() {
@@ -3055,11 +3065,15 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 				this.customersForAgent = [];
 				users.DATA.forEach((user) => {
 					if (user.REQUESTOR) {
+						// debugger;
 						this.customersForAgent.push(user);
 						this.currentUserStatus = user.STATUS;
+						this.customerDetail['EMAIL_ADDRESS'] =
+							user.REQUESTOR.USER.EMAIL_ADDRESS;
+						this.customerDetail.FIRST_NAME = user.REQUESTOR.FIRST_NAME;
+						this.customerDetail.LAST_NAME = user.REQUESTOR.LAST_NAME;
 					}
 				});
-				console.log(this.customersForAgent);
 			});
 	}
 
@@ -3218,13 +3232,12 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 				chatFilters.push(filter);
 			}
 		});
-		this.chatDataService.getChatsByUserId(this.module.MODULE_ID, chatFilters).subscribe((chats: any) => {
-			this.previousChats = chats.DATA;
-		});
-
+		this.chatDataService
+			.getChatsByUserId(this.module.MODULE_ID, chatFilters)
+			.subscribe((chats: any) => {
+				this.previousChats = chats.DATA;
+			});
 	}
-
-	
 
 	public getRequestorById(requestorId) {
 		let requestorName;

@@ -2219,5 +2219,6 @@
 	"PREVIOUS": "Previous",
 	"PERSONAL_DETAILS": "Personal Details",
 	"AGENT_CHATS": "My Chats",
-	"CHAT_VISITOR": "Visitor"
+	"CHAT_VISITOR": "Visitor",
+	"FIVE_ATTACHMENTS_ALLOWED_PER_MESSAGE": "Only 5 attachments are allowed per message"
 }
