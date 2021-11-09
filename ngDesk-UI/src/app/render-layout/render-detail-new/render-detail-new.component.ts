@@ -852,7 +852,6 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 							this.entry,
 							layoutType
 						);
-						console.log(this.entry['CHAT']);
 						this.template = predefinedTemplate;
 					});
 			}
@@ -1248,7 +1247,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 								if (discussionMessages) {
 									this.entry[discussionField.NAME] =
 										discussionMessages.entry[discussionField.NAME];
-									// console.log(this.entry['CHAT']);
+									this.ngAfterContentChecked();
 								}
 							});
 					}
@@ -3065,7 +3064,6 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 				this.customersForAgent = [];
 				users.DATA.forEach((user) => {
 					if (user.REQUESTOR) {
-						// debugger;
 						this.customersForAgent.push(user);
 						this.currentUserStatus = user.STATUS;
 						this.customerDetail['EMAIL_ADDRESS'] =
@@ -3094,22 +3092,18 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 			this.cacheService
 				.getPrerequisiteForDetaiLayout(contactsModule['MODULE_ID'], userID)
 				.subscribe((customerDetails: any) => {
-					// console.log(customerDetails);
 					let customerEmail = this.customerDetail['EMAIL_ADDRESS'];
 					if (customerDetails[1].hasOwnProperty('entry')) {
 						this.customerDetail = customerDetails[1].entry;
 					} else {
 						this.customerDetail = customerDetails[1];
 					}
-
 					if (
 						!this.customerDetail['EMAIL_ADDRESS'] ||
 						this.customerDetail['EMAIL_ADDRESS'] == ''
 					) {
 						this.customerDetail['EMAIL_ADDRESS'] = customerEmail;
 					}
-
-					// console.log(this.entry);
 				});
 		});
 	}
@@ -3258,5 +3252,11 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 		}
 
 		return requestorName;
+	}
+
+	ngAfterContentChecked() {
+		if (this.module && this.module['NAME'] == 'Chats') {
+			this.cd.detectChanges();
+		}
 	}
 }
