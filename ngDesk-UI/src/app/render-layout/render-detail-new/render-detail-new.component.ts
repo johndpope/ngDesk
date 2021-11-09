@@ -3095,11 +3095,18 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 				.getPrerequisiteForDetaiLayout(contactsModule['MODULE_ID'], userID)
 				.subscribe((customerDetails: any) => {
 					// console.log(customerDetails);
-
+					let customerEmail = this.customerDetail['EMAIL_ADDRESS'];
 					if (customerDetails[1].hasOwnProperty('entry')) {
 						this.customerDetail = customerDetails[1].entry;
 					} else {
 						this.customerDetail = customerDetails[1];
+					}
+
+					if (
+						!this.customerDetail['EMAIL_ADDRESS'] ||
+						this.customerDetail['EMAIL_ADDRESS'] == ''
+					) {
+						this.customerDetail['EMAIL_ADDRESS'] = customerEmail;
 					}
 
 					// console.log(this.entry);
