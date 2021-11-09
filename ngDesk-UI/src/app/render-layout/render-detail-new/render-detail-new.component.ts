@@ -202,6 +202,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	public operators: any = [];
 	public chatFilters = [];
 	public previousChats = [];
+
 	constructor(
 		@Optional() @Inject(MAT_DIALOG_DATA) public modalData: any,
 		@Optional()
@@ -2989,11 +2990,11 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	}
 
 	public publishMessages(chatmessage) {
-		// this.chatMessage = this.messageTextBox.nativeElement.value;
 		let messageBody = chatmessage;
 		const linkifyStr = require('linkifyjs/string');
 		messageBody = linkifyStr(messageBody, {});
 		const htmlMsg = `<html> <head></head> <body>${messageBody}</body> </html>`;
+
 		this.renderDetailDataSerice
 			.postAttachments(this.attachments)
 			.subscribe((attachmentResponse: any) => {
@@ -3020,6 +3021,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 				};
 				this.websocketService.publishMessage(msgObj);
 			});
+
 		this.customModulesService.discussionControls['MESSAGE'] = '';
 	}
 
@@ -3125,7 +3127,8 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 		const endChatObj = {
 			sessionUUID: this.entry['SESSION_UUID'],
 			subdomain: this.userService.getSubdomain(),
-			sendTranscript: false,
+			isSendChatTranscript: false,
+			isAgentCloseChat: true,
 		};
 
 		this.websocketService.publishMessage(endChatObj);
@@ -3174,10 +3177,8 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 			VALUE: '',
 			REQUIREMENT_TYPE: 'All',
 		};
-		// this.editField = null;
 
 		if (field.RELATIONSHIP_TYPE === 'Many to One') {
-			// this.getRelationshipValues(field);
 			this.filterField.FIELD['RELATION_FIELD_VALUE'] = this.customersForAgent;
 		}
 		this.operators = this.conditionsService.setOperators(field);
@@ -3225,4 +3226,18 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	}
 
 	
+
+	public getRequestorById(requestorId) {
+		let requestorName;
+		if (this.customersForAgent && this.customersForAgent.length > 0) {
+			this.customersForAgent.find((user) => {
+				if (user.REQUESTOR.DATA_ID === requestorId) {
+					requestorName =
+						user.REQUESTOR.FIRST_NAME + ' ' + user.REQUESTOR.LAST_NAME;
+				}
+			});
+		}
+
+		return requestorName;
+	}
 }

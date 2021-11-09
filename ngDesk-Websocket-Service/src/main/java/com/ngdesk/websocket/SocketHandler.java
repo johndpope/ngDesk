@@ -47,11 +47,12 @@ import com.ngdesk.websocket.channels.chat.dao.ChatStatusCheck;
 import com.ngdesk.websocket.channels.chat.dao.ChatStatusService;
 import com.ngdesk.websocket.channels.chat.dao.ChatTicket;
 import com.ngdesk.websocket.channels.chat.dao.ChatTicketCreationService;
+import com.ngdesk.websocket.channels.chat.dao.ChatTicketStatusMessage;
 import com.ngdesk.websocket.channels.chat.dao.ChatUser;
 import com.ngdesk.websocket.channels.chat.dao.ChatUserEntryService;
 import com.ngdesk.websocket.channels.chat.dao.ChatVisitedPages;
 import com.ngdesk.websocket.channels.chat.dao.ChatWidgetPayload;
-import com.ngdesk.websocket.channels.chat.dao.SendChatTranscript;
+import com.ngdesk.websocket.channels.chat.dao.CloseChat;
 import com.ngdesk.websocket.dao.WebSocketService;
 import com.ngdesk.websocket.graphql.dao.GraphqlProxy;
 import com.ngdesk.websocket.modules.dao.ButtonTypeService;
@@ -435,19 +436,20 @@ public class SocketHandler extends TextWebSocketHandler {
 														}
 
 													} catch (Exception e8) {
-//														try {
-//															SendChatTranscript sendChatTranscript = mapper.readValue(
-//																	textMessage.getPayload(), SendChatTranscript.class);
-//															ChatTicketStatusMessage chatTicketStatusMessage = new ChatTicketStatusMessage(
-//																	user.getCompanyId(),
-//																	sendChatTranscript.getSessionUUID(), "CLOSE_CHAT",
-//																	"CLOSED", "AGENT_ENDED_THE_CHAT");
-//															chatService.addToChatTicketStatusQueue(
-//																	chatTicketStatusMessage);
-//
-//														} catch (Exception e9) {
-//															// TODO: handle exception
-//														}
+														try {
+															CloseChat closeChat = mapper.readValue(
+																	textMessage.getPayload(), CloseChat.class);
+															chatService.sendChatTranscript(closeChat);
+															if (closeChat.getIsAgentCloseChat()) {
+																ChatTicketStatusMessage chatTicketStatusMessage = new ChatTicketStatusMessage(
+																		user.getCompanyId(), closeChat.getSessionUUID(),
+																		"CLOSE_CHAT", "CLOSED", "AGENT_ENDED_THE_CHAT");
+																chatService.addToChatTicketStatusQueue(
+																		chatTicketStatusMessage);
+															}
+														} catch (Exception e9) {
+															// TODO: handle exception
+														}
 													}
 
 												}
@@ -473,9 +475,8 @@ public class SocketHandler extends TextWebSocketHandler {
 				}
 			} else if (queryParamMap.containsKey("sessionUUID") && queryParamMap.containsKey("subdomain")) {
 				try {
-					SendChatTranscript sendChatTranscript = mapper.readValue(textMessage.getPayload(),
-							SendChatTranscript.class);
-					chatService.sendChatTranscript(sendChatTranscript);
+					CloseChat closeChat = mapper.readValue(textMessage.getPayload(), CloseChat.class);
+					chatService.sendChatTranscript(closeChat);
 				} catch (Exception e) {
 
 					try {

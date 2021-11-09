@@ -31,7 +31,7 @@ export class ChatDataService {
 	}
 
 	public getChatsByUserId(moduleID: string, filterConditions: any) {
-		const query = `{ DATA: getChats( moduleId: "${moduleID}" pageNumber: 0 pageSize: 10 sortBy: "DATE_CREATED" orderBy: "asc" ) { 
+		const query = `{ DATA: getChats( moduleId: "${moduleID}" pageNumber: 0 pageSize: 30 sortBy: "DATE_UPDATED" orderBy: "dsc" ) { 
 			DATA_ID: _id 
 			STATUS
 			
@@ -56,8 +56,6 @@ export class ChatDataService {
 			query: query,
 			conditions: filterConditions,
 		};
-		// const url = this.globals.graphqlEmailListsUrl;
-
 		const url = this.globals.graphqlEmailListsUrl;
 		return this.makeGraphQLCall(url, payload);
 	}
