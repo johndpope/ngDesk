@@ -112,7 +112,6 @@ public class Validator {
 		}).collect(Collectors.toList());
 		requiredFields.forEach(field -> {
 			String[] vars = { field.getDisplayLabel() };
-
 			if (entry.get(field.getName()) == null) {
 				throw new BadRequestException("REQUIRED_FIELD_MISSING", vars);
 			} else {
@@ -366,26 +365,29 @@ public class Validator {
 					if (relationshipType.equals("One to One") || relationshipType.equals("Many to One")) {
 
 						String value = entry.get(fieldName).toString();
-						if (value.isBlank() || !ObjectId.isValid(value)) {
+						if ((value.isBlank() || !ObjectId.isValid(value)) && field.getRequired()) {
 							throw new BadRequestException("BASE_TYPE_RELATIONSHIP_ENTRY_INVALID", vars);
 						}
+						if (!value.isBlank()) {
 
-						Optional<Map<String, Object>> optionalRelatedEntry = moduleEntryRepository.findEntryById(
-								entry.get(fieldName).toString(),
-								moduleService.getCollectionName(relatedModule.getName(), companyId));
-						if (optionalRelatedEntry.isEmpty()) {
-							throw new BadRequestException("BASE_TYPE_RELATIONSHIP_ENTRY_INVALID", vars);
-						}
+							Optional<Map<String, Object>> optionalRelatedEntry = moduleEntryRepository.findEntryById(
+									entry.get(fieldName).toString(),
+									moduleService.getCollectionName(relatedModule.getName(), companyId));
+							if (optionalRelatedEntry.isEmpty()) {
+								throw new BadRequestException("BASE_TYPE_RELATIONSHIP_ENTRY_INVALID", vars);
+							}
 
-						if (relationshipType.equals("One to One")) {
-							Optional<Map<String, Object>> existingEntries = moduleEntryRepository
-									.findEntriesByVariableForRelationship(
-											moduleService.getCollectionName(module.getName(), companyId), fieldName,
-											entry.get(fieldName).toString(), entry.get("_id").toString());
+							if (relationshipType.equals("One to One")) {
+								Optional<Map<String, Object>> existingEntries = moduleEntryRepository
+										.findEntriesByVariableForRelationship(
+												moduleService.getCollectionName(module.getName(), companyId), fieldName,
+												entry.get(fieldName).toString(), entry.get("_id").toString());
 
-							if (!existingEntries.isEmpty()) {
+								if (!existingEntries.isEmpty()) {
 
-								throw new BadRequestException("RELATIONSHIP_FIELD_ALREADY_EXIST_IN_OTHER_ENTRY", vars);
+									throw new BadRequestException("RELATIONSHIP_FIELD_ALREADY_EXIST_IN_OTHER_ENTRY",
+											vars);
+								}
 							}
 						}
 					} else if (relationshipType.equals("Many to Many")) {
