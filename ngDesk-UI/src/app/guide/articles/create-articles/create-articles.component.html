@@ -56,7 +56,7 @@
 			<mat-form-field>
 				<mat-label>{{'PUBLISH_IN_SECTION' | translate}}</mat-label>
 				<mat-select formControlName="section" required>
-					<mat-optgroup *ngFor="let category of categories" [label]="category.NAME" [disabled]="category.disabled">
+					<mat-optgroup *ngFor="let category of categories" [label]="category.name" [disabled]="category.disabled">
 						<mat-option *ngFor="let section of category.SECTIONS" [value]="section.sectionId">{{section.name}}</mat-option>
 					</mat-optgroup>
 				</mat-select>
