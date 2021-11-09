@@ -8,7 +8,6 @@ import {
 	Optional,
 	ViewChild,
 	ElementRef,
-	HostListener,
 } from '@angular/core';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MatDialog } from '@angular/material/dialog';
@@ -202,24 +201,6 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	};
 	public operators: any = [];
 	public chatFilters = [];
-
-	@HostListener('window:beforeunload', ['$event'])
-	beforeUnloadHandler(event) {
-		if (
-			this.module['NAME'] == 'Chats' &&
-			this.entry &&
-			this.entry.SESSION_UUID
-		) {
-			let onWindowClosePayload: any = {
-				sessionUUID: this.entry.SESSION_UUID,
-				subdomain: this.userService.getSubdomain(),
-				isSendChatTranscript: false,
-				isAgentCloseChat: true,
-			};
-
-			this.websocketService.publishMessage(onWindowClosePayload);
-		}
-	}
 
 	constructor(
 		@Optional() @Inject(MAT_DIALOG_DATA) public modalData: any,
@@ -3010,11 +2991,11 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	}
 
 	public publishMessages(chatmessage) {
-		// this.chatMessage = this.messageTextBox.nativeElement.value;
 		let messageBody = chatmessage;
 		const linkifyStr = require('linkifyjs/string');
 		messageBody = linkifyStr(messageBody, {});
 		const htmlMsg = `<html> <head></head> <body>${messageBody}</body> </html>`;
+
 		this.renderDetailDataSerice
 			.postAttachments(this.attachments)
 			.subscribe((attachmentResponse: any) => {
@@ -3041,6 +3022,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 				};
 				this.websocketService.publishMessage(msgObj);
 			});
+
 		this.customModulesService.discussionControls['MESSAGE'] = '';
 	}
 
