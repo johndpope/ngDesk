@@ -6,9 +6,9 @@ export class CustomErrorHandler implements ErrorHandler {
 	constructor(private logger: NGXLogger) {}
 
 	public handleError(error: Error) {
-		console.error('custom error handler');
-		console.error(error);
-		this.logger.error(error);
+		// console.error('custom error handler');
+		// console.error(error);
+		//this.logger.error(error);
 
 		const chunkFailedMessage = /Loading chunk [\d]+ failed/;
 

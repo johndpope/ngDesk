@@ -146,7 +146,7 @@
 		</div>
 		<div></div>
 	</div>
-
+	<div *ngIf="!isLoadingTable" style="padding: 10px 10px 10px; color:grey;font-size:small;">*Drag and drop elements from Left to Right</div>
 	<div *ngIf="!isLoadingTable" fxLayout="row" [ngStyle]="{'float':'left', 'width':'80%'}" id="report-table">
 		<div fxLayout="column" *ngIf="displayedColumns.length > 0" class="mat-elevation-z8" [ngStyle]="{'overflow':'auto'}">
 			<table mat-table [dataSource]="dataSource" multiTemplateDataRows [ngStyle]="{'width':'100%'}">
