@@ -40,6 +40,7 @@ import {
 	transferArrayItem,
 } from '@angular/cdk/drag-drop';
 import { ResizeEvent } from 'angular-resizable-element';
+import { param } from 'jquery';
 @Component({
 	selector: 'app-report-detail',
 	templateUrl: './report-detail.component.html',
@@ -706,6 +707,7 @@ export class ReportDetailComponent implements OnInit {
 			});
 		});
 	}
+
 
 	private addDataToField() {
 		this.fieldsInTable.forEach((field) => {
@@ -1624,8 +1626,16 @@ export class ReportDetailComponent implements OnInit {
 			DATA_TYPE: { DISPLAY: 'DROP_HERE' },
 			DISPLAY: 'Drop Here',
 		};
-		this.displayedColumnsObj.push(field1);
-		this.displayedColumns.push('Drop Here');
+		if(field1.DISPLAY_LABLE === 'Drop Here'){
+			
+			this.source.forEach((entry) => {
+				if (!entry[field1.NAME]) {
+					entry[field1.NAME] = 'No Data';
+				}
+			});
+		}
+		this.displayedColumnsObj.unshift(field1);
+		this.displayedColumns.unshift('Drop Here');
 		this.dataSource = new MatTableDataSource<any>(this.source);
 	}
 

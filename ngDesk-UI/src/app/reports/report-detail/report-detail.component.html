@@ -1,6 +1,7 @@
 <app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
 <ng-template #headerTemplateRef>
-	<app-title-bar title="{{'REPORTS' | translate}}" buttonText="{{'SAVE' | translate}}" (buttonRightOnClick)="saveReport()">
+	<app-title-bar title="{{'REPORTS' | translate}}" buttonText="{{'SAVE' | translate}}"
+		(buttonRightOnClick)="saveReport()">
 	</app-title-bar>
 </ng-template>
 <div id="content" class="pad10" style="overflow: auto;">
@@ -14,29 +15,37 @@
 		<mat-spinner *ngIf="isLoadingTable"></mat-spinner>
 	</div>
 
-	<div *ngIf="!isLoadingTable" fxLayout="column" [ngStyle]="{'float':'left','width':'19%', 'margin-right':'1%'}" fxLayoutGap="10px">
+	<div *ngIf="!isLoadingTable" fxLayout="column" [ngStyle]="{'float':'left','width':'19%', 'margin-right':'1%'}"
+		fxLayoutGap="10px">
 		<div [ngStyle]="{'overflow':'auto', 'max-height': '87vh', 'width':'100%'}" class="mat-elevation-z8">
 			<mat-tab-group fxFlex [@.disabled]="true" backgroundColor="primary">
-				<mat-tab fxFlex=" 50" label="Fields">
-					<mat-tab-group fxFlex [@.disabled]="true" backgroundColor="primary" (selectedTabChange)="setDropList($event)">
+				<mat-tab fxFlex="50" label="Fields">
+					<mat-tab-group fxFlex [@.disabled]="true" backgroundColor="primary"
+						(selectedTabChange)="setDropList($event)">
 						<mat-tab fxFlex="50" label="General">
 							<div fxLayout="row" fxLayoutGap="2px">
 								<div fxLayout="column" fxFlex="100">
 									<div class="scroll" style="position: sticky; top: 1vh; overflow-y: auto; max-height: 72vh;
 										margin-left: 5px; border: solid; border-color: #e0e0e0; background: white;" *ngIf="fieldsInList">
-										<div style="width: 18vw; max-width: 100%; min-height: 60px; overflow: hidden;" cdkDropList
-											[cdkDropListConnectedTo]="dropList">
-											<div class="pad10 pointer" *ngFor="let field of fieldsInList" fxLayout="row" fxLayoutAlign=" center"
-												[ngStyle]="{'border-bottom': '1px solid #9e9e9e'}" cdkDrag id="{{field.FIELD_ID}}"
+										<div style="width: 18vw; max-width: 100%; min-height: 60px; overflow: hidden;"
+											cdkDropList [cdkDropListConnectedTo]="dropList">
+											<div class="pad10 pointer" *ngFor="let field of fieldsInList" fxLayout="row"
+												fxLayoutAlign=" center"
+												[ngStyle]="{'border-bottom': '1px solid #9e9e9e'}" cdkDrag
+												id="{{field.FIELD_ID}}"
 												style="padding: 12px 10px; box-sizing: border-box; cursor: move;">
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+													viewBox="0 0 24 24">
 													<path fill="none" d="M0 0h24v24H0V0z" />
 													<path
 														d="M11 18c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zm-2-8c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 4c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
 												</svg>
-												<label class="mat-body pointer" style="cursor:move;">{{ field.DISPLAY_LABEL }}</label>
-												<div *cdkDragPreview class="pad10 pointer" [ngStyle]="{'border-bottom': '1px solid rgba(0,0,0,.12)'}">
-													<div class="mat-body">{{ field.DISPLAY_LABEL }}<span class='mat-caption'> ({{ field.DATA_TYPE.DISPLAY }})</span>
+												<label class="mat-body pointer" style="cursor:move;">{{
+													field.DISPLAY_LABEL }}</label>
+												<div *cdkDragPreview class="pad10 pointer"
+													[ngStyle]="{'border-bottom': '1px solid rgba(0,0,0,.12)'}">
+													<div class="mat-body">{{ field.DISPLAY_LABEL }}<span
+															class='mat-caption'> ({{ field.DATA_TYPE.DISPLAY }})</span>
 													</div>
 												</div>
 											</div>
@@ -48,15 +57,18 @@
 						</mat-tab>
 						<mat-tab fxFlex="50" label="Aggregation">
 
-							<table fxFlex mat-table [dataSource]="relationshipFieldsSource" [ngStyle]="{'width':'100%'}">
+							<table fxFlex mat-table [dataSource]="relationshipFieldsSource"
+								[ngStyle]="{'width':'100%'}">
 								<ng-container matColumnDef="DISPLAY_LABEL">
-									<th mat-header-cell *matHeaderCellDef style="color: white;"> {{'AVAILABLE_COLUMNS' | translate}}
+									<th mat-header-cell *matHeaderCellDef style="color: white;"> {{'AVAILABLE_COLUMNS' |
+										translate}}
 									</th>
 									<td matRipple class="no-wrap" mat-cell *matCellDef="let element" class="pointer">
 										{{element.DISPLAY_LABEL}}
 									</td>
 								</ng-container>
-								<tr mat-row *matRowDef="let row; columns: ['DISPLAY_LABEL'];" (click)="onRelationFieldClick(row)">
+								<tr mat-row *matRowDef="let row; columns: ['DISPLAY_LABEL'];"
+									(click)="onRelationFieldClick(row)">
 								</tr>
 							</table>
 
@@ -65,19 +77,25 @@
 									<div class="scroll" style="position: sticky; top: 1vh; overflow-y: auto; max-height: 72vh;
 											margin-left: 5px; border: solid; border-color: #e0e0e0; background: white;" *ngIf="childFields">
 										<p style="margin: 10px;">{{parentField.DISPLAY_LABEL}}</p>
-										<div style="width: 18vw; max-width: 100%; min-height: 60px; overflow: hidden;" cdkDropList
-											[cdkDropListConnectedTo]="relationDropList">
-											<div class="pad10 pointer" *ngFor="let field of childFields" fxLayout="row" fxLayoutAlign=" center center"
-												[ngStyle]="{'border-bottom': '1px solid #9e9e9e'}" cdkDrag id="{{field.FIELD_ID}}"
+										<div style="width: 18vw; max-width: 100%; min-height: 60px; overflow: hidden;"
+											cdkDropList [cdkDropListConnectedTo]="relationDropList">
+											<div class="pad10 pointer" *ngFor="let field of childFields" fxLayout="row"
+												fxLayoutAlign=" center center"
+												[ngStyle]="{'border-bottom': '1px solid #9e9e9e'}" cdkDrag
+												id="{{field.FIELD_ID}}"
 												style="padding: 12px 10px; box-sizing: border-box; cursor: move;">
-												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+													viewBox="0 0 24 24">
 													<path fill="none" d="M0 0h24v24H0V0z" />
 													<path
 														d="M11 18c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zm-2-8c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 4c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
 												</svg>
-												<label class="mat-body pointer" style="cursor:move;">{{ field.DISPLAY_LABEL }}</label>
-												<div *cdkDragPreview class="pad10 pointer" [ngStyle]="{'border-bottom': '1px solid rgba(0,0,0,.12)'}">
-													<div class="mat-body">{{ field.DISPLAY_LABEL }}<span class='mat-caption'> ({{ field.DATA_TYPE.DISPLAY }})</span>
+												<label class="mat-body pointer" style="cursor:move;">{{
+													field.DISPLAY_LABEL }}</label>
+												<div *cdkDragPreview class="pad10 pointer"
+													[ngStyle]="{'border-bottom': '1px solid rgba(0,0,0,.12)'}">
+													<div class="mat-body">{{ field.DISPLAY_LABEL }}<span
+															class='mat-caption'> ({{ field.DATA_TYPE.DISPLAY }})</span>
 													</div>
 												</div>
 											</div>
@@ -87,11 +105,13 @@
 								</div>
 							</div>
 
-							<div *ngIf="oneToManyFields.length==0 || childFields.length == 0" fxLayout="row" fxLayoutGap="2px">
+							<div *ngIf="oneToManyFields.length==0 || childFields.length == 0" fxLayout="row"
+								fxLayoutGap="2px">
 								<div fxLayout="column" fxFlex="100">
 									<div style=" margin: 5px; border: solid; border-color: #e0e0e0; background: white;">
 										<p style="margin-left: 5px;">{{parentField.DISPLAY_LABEL}}</p>
-										<div style="margin: 10px; text-align: center; font-size: medium;"> No Fields Available </div>
+										<div style="margin: 10px; text-align: center; font-size: medium;"> No Fields
+											Available </div>
 									</div>
 								</div>
 							</div>
@@ -104,38 +124,45 @@
 							<mat-form-field fxFlex [floatLabel]="(filters.length > 0 ) ? 'always' : 'auto'">
 								<mat-select placeholder="{{'ADD_FILTER' | translate}}" [(ngModel)]="filterField.FIELD"
 									(ngModelChange)="filterFieldSelection($event)">
-									<mat-option *ngFor="let field of allFieldsForFilter" [value]="field">{{field.DISPLAY_LABEL}}
+									<mat-option *ngFor="let field of allFieldsForFilter" [value]="field">
+										{{field.DISPLAY_LABEL}}
 									</mat-option>
 								</mat-select>
 							</mat-form-field>
 						</div>
 						<div fxLayout="column" *ngIf="(filterField.FIELD | json) != '{}' && editField == null"
-							[ngStyle]="{'width':'100%', 'border': '1px solid #d9dbdd', 'border-radius': '.25rem', 'margin-top': '-10px'}" class="pad10">
+							[ngStyle]="{'width':'100%', 'border': '1px solid #d9dbdd', 'border-radius': '.25rem', 'margin-top': '-10px'}"
+							class="pad10">
 							<ng-container *ngTemplateOutlet="filterDialog; context:{icon:'close'}"></ng-container>
 						</div>
 						<div class="z9999" [ngStyle]="{'width':'100%'}">
 							<div *ngFor="let filter of filters; let filterIndex = index;">
-								<div class="pointer pad10" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="editField != filterIndex"
-									(click)="editFilter(filterIndex)"
+								<div class="pointer pad10" fxLayout="row" fxLayoutAlign="space-between center"
+									*ngIf="editField != filterIndex" (click)="editFilter(filterIndex)"
 									[ngStyle]="{ 'margin-top': (((filterField.FIELD | json) != '{}' && editField == null) || filterIndex != 0 ) ? '10px' : '-10px'}"
 									style="border: 1px solid #d9dbdd; border-radius: .25rem;">
 									<div fxLayout="column">
 										<mat-label [ngStyle]="{ 'color': 'rgba(0,0,0,.6)', 'font-size': 'smaller'}">
 											{{filter.FIELD.DISPLAY_LABEL}}</mat-label>
 										<span *ngIf="filter.OPERATOR !== 'DAYS_BEFORE_TODAY'"
-											style="font-size: .8125rem; font-weight: 400;">{{filter.OPERATOR | translate}}&nbsp;<span
+											style="font-size: .8125rem; font-weight: 400;">{{filter.OPERATOR |
+											translate}}&nbsp;<span
 												*ngIf="filter.FIELD.NAME !== 'TIME_WINDOW'">{{filter.VALUE |
-												reportFilterFields:filter.FIELD}}</span><span *ngIf="filter.FIELD.NAME === 'TIME_WINDOW'">{{filter.VALUE}}</span></span>
-										<span *ngIf="filter.OPERATOR === 'DAYS_BEFORE_TODAY'" style="font-size: .8125rem; font-weight: 400;">{{filter.OPERATOR |
+												reportFilterFields:filter.FIELD}}</span><span
+												*ngIf="filter.FIELD.NAME === 'TIME_WINDOW'">{{filter.VALUE}}</span></span>
+										<span *ngIf="filter.OPERATOR === 'DAYS_BEFORE_TODAY'"
+											style="font-size: .8125rem; font-weight: 400;">{{filter.OPERATOR |
 											translate}}:&nbsp;{{filter.VALUE}}</span>
 									</div>
-									<mat-icon class="pointer" [ngStyle]="{ 'color': 'rgb(176, 173, 171)'}" (click)="removeFilter(filterIndex)">close
+									<mat-icon class="pointer" [ngStyle]="{ 'color': 'rgb(176, 173, 171)'}"
+										(click)="removeFilter(filterIndex)">close
 									</mat-icon>
 								</div>
 								<div fxLayout="column" *ngIf="editField == filterIndex"
 									[ngStyle]="{'width':'100%', 'border': '1px solid #d9dbdd', 'border-radius': '.25rem', 'margin-top': (filterIndex != 0 ) ? '10px' : '-10px'}"
 									class="pad10">
-									<ng-container *ngTemplateOutlet="filterDialog; context:{icon:'expand_less'}"></ng-container>
+									<ng-container *ngTemplateOutlet="filterDialog; context:{icon:'expand_less'}">
+									</ng-container>
 								</div>
 							</div>
 						</div>
@@ -148,26 +175,32 @@
 	</div>
 
 	<div *ngIf="!isLoadingTable" fxLayout="row" [ngStyle]="{'float':'left', 'width':'80%'}" id="report-table">
-		<div fxLayout="column" *ngIf="displayedColumns.length > 0" class="mat-elevation-z8" [ngStyle]="{'overflow':'auto'}">
+		<div fxLayout="column" *ngIf="displayedColumns.length > 0" class="mat-elevation-z8"
+			[ngStyle]="{'overflow':'auto'}">
 			<table mat-table [dataSource]="dataSource" multiTemplateDataRows [ngStyle]="{'width':'100%'}">
 				<ng-container matColumnDef="{{col.DISPLAY}}" *ngFor="let col of displayedColumnsObj; let j = index">
-					<th mat-header-cell *matHeaderCellDef mwlResizable [enableGhostResize]="true" (resizeEnd)="onResizeEnd($event, col)"
+					<th mat-header-cell *matHeaderCellDef mwlResizable [enableGhostResize]="true"
+						(resizeEnd)="onResizeEnd($event, col)"
 						[resizeEdges]="{bottom: false, right: true, top: false, left: true}">
 						<div fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap="20px">
 							<!-- <div fxLayout="row" fxLayoutGap="20px"> -->
 							<div fxLayout="column" fxLayoutAlign="center center">
 								<div fxLayout="row" fxLayoutAlign="center center" class="col-resSize-{{col.NAME}}">
-									<div *ngIf="col?.DATA_TYPE?.DISPLAY !== 'DROP_HERE'" class="custom-theme-icon-color" fxLayoutAlign="center center">
+									<div *ngIf="col?.DATA_TYPE?.DISPLAY !== 'DROP_HERE'" class="custom-theme-icon-color"
+										fxLayoutAlign="center center">
 										{{col.DISPLAY}} </div>
-									<div *ngIf="col?.DATA_TYPE?.DISPLAY === 'DROP_HERE'" cdkDropList (cdkDropListDropped)="dropField($event)" id='field1'
-										[ngStyle]="{'border': '1px dashed #ccc','border-radius': '5px'}">
-										<div class="mat-caption" style="color:#888;padding:10px;">
-											<span class="custom-theme-icon-color" fxLayoutAlign="center center">Drop Here</span>
+									<div *ngIf="col?.DATA_TYPE?.DISPLAY === 'DROP_HERE'" cdkDropList
+										(cdkDropListDropped)="dropField($event)" id='field1'
+										[ngStyle]="{'border': '1px dashed #ccc','border-radius': '5px'}" style="padding-left:10px;">
+										<div class="mat-caption" style="color:#888;padding:12px;">
+											<span class="custom-theme-icon-color" fxLayoutAlign="center center">Drop
+												Here</span>
 										</div>
 									</div>
 								</div>
 							</div>
-							<div *ngIf="col?.DATA_TYPE?.DISPLAY !== 'DROP_HERE'" fxLayout="column" style="padding-bottom: 5px;">
+							<div *ngIf="col?.DATA_TYPE?.DISPLAY !== 'DROP_HERE'" fxLayout="column"
+								style="padding-bottom: 5px;">
 								<button mat-icon-button [matMenuTriggerFor]="menu" (click)="getOperators(col)">
 									<mat-icon class="custom-theme-icon-color">more_vert</mat-icon>
 								</button>
@@ -177,7 +210,8 @@
 						<mat-menu #menu="matMenu">
 							<div fxLayout="column">
 								<div fxLayout="row" *ngFor="let item of menuItems">
-									<button mat-menu-item fxLayout="column" (click)="actioncFunctions[item.ACTION](j, item.NAME, col)"
+									<button mat-menu-item fxLayout="column"
+										(click)="actioncFunctions[item.ACTION](j, item.NAME, col)"
 										*ngIf="item.NAME != 'FILTER' && (displayedColumnsObj.length != 1 ||(item.NAME != 'MOVE_LEFT' &&  item.NAME != 'MOVE_RIGHT')) && (i != 0 || item.NAME != 'MOVE_LEFT') && (i != displayedColumnsObj.length -1  || item.NAME != 'MOVE_RIGHT')">
 										<div fxLayout="row">
 											<div>
@@ -201,14 +235,18 @@
 								<span *ngIf="!col?.isParentField">
 									{{element[col.NAME]}}
 								</span>
-								<table *ngIf="col?.isParentField && element[col.NAME] && createDynamicDataSource(element[col.NAME]) " style="padding: 10px;"
-									mat-table [dataSource]="createDynamicDataSource(element[col.NAME])" [id]="k +'_'+j" [ngStyle]="{'width':'100%'}">
+								<table
+									*ngIf="col?.isParentField && element[col.NAME] && createDynamicDataSource(element[col.NAME]) "
+									style="padding: 10px;" mat-table
+									[dataSource]="createDynamicDataSource(element[col.NAME])" [id]="k +'_'+j"
+									[ngStyle]="{'width':'100%'}">
 									<ng-container matColumnDef="{{childcol?.DISPLAY}}"
 										*ngFor="let childcol of getChildTableColObj(element[col.NAME],col); let i = index">
 										<div></div>
 										<th mat-header-cell *matHeaderCellDef style="height: 50px;">
 											<div fxLayout="row" fxLayoutAlign="space-between center">
-												<div fxLayout="column" class="custom-theme-icon-color" style=" white-space: nowrap; text-align: center;">
+												<div fxLayout="column" class="custom-theme-icon-color"
+													style=" white-space: nowrap; text-align: center;">
 													{{childcol.DISPLAY}}
 												</div>
 												<div fxLayout="column" style="padding-bottom: 5px;">
@@ -226,7 +264,8 @@
 																<div>
 																	<mat-icon>{{item.ICON}}</mat-icon>
 																</div>
-																<div [ngStyle]="{'min-width': '120px'}">{{item.NAME| translate}}</div>
+																<div [ngStyle]="{'min-width': '120px'}">{{item.NAME|
+																	translate}}</div>
 															</div>
 														</button>
 													</div>
@@ -236,16 +275,21 @@
 										<td mat-cell *matCellDef="let childelement">
 											<ng-container [ngSwitch]="childcol?.DATA_TYPE.DISPLAY">
 												<span *ngSwitchCase="'Date/Time'" fxLayoutAlign="center center">
-													<span *ngIf="childelement[childcol.NAME]"> {{childelement[childcol.NAME] | dateFormat: 'medium'}} </span>
+													<span *ngIf="childelement[childcol.NAME]">
+														{{childelement[childcol.NAME] | dateFormat: 'medium'}} </span>
 													<span *ngIf="!childelement[childcol.NAME]"> No Data </span>
 												</span>
-												<span *ngSwitchDefault fxLayoutAlign="center center">{{childelement[childcol.NAME] || 'No Data'}}</span>
+												<span *ngSwitchDefault
+													fxLayoutAlign="center center">{{childelement[childcol.NAME] || 'No
+													Data'}}</span>
 											</ng-container>
 										</td>
 									</ng-container>
-									<tr class="custom-theme-primary-color" mat-header-row *matHeaderRowDef="getChaildTableColNames(element[col.NAME])"></tr>
+									<tr class="custom-theme-primary-color" mat-header-row
+										*matHeaderRowDef="getChaildTableColNames(element[col.NAME])"></tr>
 									<tr matRipple id="row-{{index}}" mat-row
-										*matRowDef="let row; columns:getChaildTableColNames(element[col.NAME]) ; let index = dataIndex"></tr>
+										*matRowDef="let row; columns:getChaildTableColNames(element[col.NAME]) ; let index = dataIndex">
+									</tr>
 								</table>
 
 								<span
@@ -267,11 +311,12 @@
 
 				</tr>
 			</table>
-			<mat-paginator (page)="pageChanged($event)" [length]="totalRecords" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 20,50]"
-				[pageIndex]="page" showFirstLastButtons>
+			<mat-paginator (page)="pageChanged($event)" [length]="totalRecords" [pageSize]="pageSize"
+				[pageSizeOptions]="[5, 10, 20,50]" [pageIndex]="page" showFirstLastButtons>
 			</mat-paginator>
 		</div>
-		<div fxLayoutAlign="center" fxFlexFill *ngIf="displayedColumns.length === 0" [ngStyle]="{'margin-top':'20%'}" class="mat-h1">
+		<div fxLayoutAlign="center" fxFlexFill *ngIf="displayedColumns.length === 0" [ngStyle]="{'margin-top':'20%'}"
+			class="mat-h1">
 			<div fxLayoutAlign="center center">
 				<mat-icon style="margin:10px">poll</mat-icon>
 			</div>
@@ -286,8 +331,10 @@
 <!--filterbox template  -->
 <ng-template #filterDialog let-icon="icon">
 	<div fxLayoutAlign="space-between center">
-		<label style="font-size: smaller;" [ngStyle]="{ 'color': 'rgba(0,0,0,.6)'}">{{filterField.FIELD.DISPLAY_LABEL}}</label>
-		<mat-icon class="pointer" [ngStyle]="{ 'color': 'rgb(176, 173, 171)'}" (click)="resetFilterField()">{{icon}}</mat-icon>
+		<label style="font-size: smaller;"
+			[ngStyle]="{ 'color': 'rgba(0,0,0,.6)'}">{{filterField.FIELD.DISPLAY_LABEL}}</label>
+		<mat-icon class="pointer" [ngStyle]="{ 'color': 'rgb(176, 173, 171)'}" (click)="resetFilterField()">{{icon}}
+		</mat-icon>
 	</div>
 	<mat-form-field [floatLabel]="'always'" fxFlexOffset="10px">
 		<mat-select placeholder="{{ 'REQUIREMENT_TYPE' | translate}}" [(ngModel)]="filterField.REQUIREMENT_TYPE">
@@ -315,16 +362,19 @@
 	</mat-form-field>
 	<mat-form-field [floatLabel]="'always'"
 		*ngIf="filterField.FIELD.DATA_TYPE.DISPLAY == 'Date/Time' && filterField.OPERATOR !== 'DAYS_BEFORE_TODAY'">
-		<input placeholder="{{ 'VALUE' | translate}}" matInput [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1" [(ngModel)]="filterField.VALUE">
+		<input placeholder="{{ 'VALUE' | translate}}" matInput [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1"
+			[(ngModel)]="filterField.VALUE">
 		<owl-date-time #dt1></owl-date-time>
 	</mat-form-field>
 	<mat-form-field [floatLabel]="'always'"
 		*ngIf="filterField.FIELD.DATA_TYPE.DISPLAY == 'Date' && filterField.OPERATOR !== 'DAYS_BEFORE_TODAY'">
-		<input placeholder="{{ 'VALUE' | translate}}" matInput [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2" [(ngModel)]="filterField.VALUE">
+		<input placeholder="{{ 'VALUE' | translate}}" matInput [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2"
+			[(ngModel)]="filterField.VALUE">
 		<owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
 	</mat-form-field>
 	<mat-form-field [floatLabel]="'always'" *ngIf="filterField.FIELD.DATA_TYPE.DISPLAY == 'Time'">
-		<input placeholder="{{ 'VALUE' | translate}}" matInput [owlDateTimeTrigger]="dt3" [owlDateTime]="dt3" [(ngModel)]="filterField.VALUE">
+		<input placeholder="{{ 'VALUE' | translate}}" matInput [owlDateTimeTrigger]="dt3" [owlDateTime]="dt3"
+			[(ngModel)]="filterField.VALUE">
 		<owl-date-time [pickerType]="'timer'" #dt3></owl-date-time>
 	</mat-form-field>
 
@@ -344,7 +394,8 @@
 			<input type="text" placeholder="days(current_date-20)" matInput [(ngModel)]="filterField.VALUE">
 		</mat-form-field>
 		<span>
-			<mat-icon matTooltip="format: days | months(current_date-daysValue | monthsValue)" class="light-grey-color" style="font-size: 18px;">
+			<mat-icon matTooltip="format: days | months(current_date-daysValue | monthsValue)" class="light-grey-color"
+				style="font-size: 18px;">
 				help_outline</mat-icon>
 		</span>
 	</div>
@@ -378,14 +429,16 @@
 	<div fxLayout='row' fxLayoutAlign="space-between center" fxLayoutGap="20px" style="margin-top: 50px;">
 		<mat-form-field appearance="fill">
 			<mat-label>Show</mat-label>
-			<input matInput type="text" placeholder="Page Size" (input)="onPageSizeChange($event)" [(ngModel)]="customization.pageSize">
+			<input matInput type="text" placeholder="Page Size" (input)="onPageSizeChange($event)"
+				[(ngModel)]="customization.pageSize">
 			<span matSuffix>rows</span>
 		</mat-form-field>
 
 		<mat-form-field appearance="fill">
 			<mat-label> Sort By</mat-label>
 			<mat-select placeholder="Sort By" [(ngModel)]="customization.sortBy">
-				<mat-option *ngFor="let field of sortByFieldsList" [value]="field.NAME">{{field.DISPLAY_LABEL}}</mat-option>
+				<mat-option *ngFor="let field of sortByFieldsList" [value]="field.NAME">{{field.DISPLAY_LABEL}}
+				</mat-option>
 			</mat-select>
 		</mat-form-field>
 
@@ -406,7 +459,8 @@
 
 	<div fxLayout='row' fxLayoutAlign="end end" fxLayoutGap="20px" style="margin-top: 20px;">
 		<button mat-raised-button matDialogClose>{{'CLOSE' | translate}}</button>
-		<button mat-raised-button color="primary" (click)="postReportData()" matDialogClose>{{'APPLY' | translate}}</button>
+		<button mat-raised-button color="primary" (click)="postReportData()" matDialogClose>{{'APPLY' |
+			translate}}</button>
 	</div>
 
 </ng-template>
