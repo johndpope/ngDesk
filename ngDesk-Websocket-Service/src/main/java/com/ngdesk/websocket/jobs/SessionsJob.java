@@ -26,6 +26,8 @@ import com.ngdesk.repositories.ModuleEntryRepository;
 import com.ngdesk.repositories.ModulesRepository;
 import com.ngdesk.websocket.SessionService;
 import com.ngdesk.websocket.UserSessions;
+import com.ngdesk.websocket.channels.chat.dao.ChatService;
+import com.ngdesk.websocket.channels.chat.dao.ChatTicketStatusMessage;
 import com.ngdesk.websocket.channels.chat.dao.DataProxy;
 import com.ngdesk.websocket.companies.dao.Company;
 import com.ngdesk.websocket.modules.dao.Module;
@@ -53,6 +55,9 @@ public class SessionsJob {
 
 	@Autowired
 	Global global;
+
+	@Autowired
+	ChatService chatService;
 
 	@Scheduled(fixedRate = 60000)
 	public void run() {
@@ -118,11 +123,11 @@ public class SessionsJob {
 							.findById(userAgentEntry.get("CONTACT").toString(), "Contacts_" + companyId);
 					if (optionalAgentContactEntry.isPresent()) {
 						String firstName = optionalAgentContactEntry.get().get("FIRST_NAME").toString();
-						String LastName = optionalAgentContactEntry.get().get("LAST_NAME").toString();
-						Sender sender = new Sender(firstName, LastName, userUuid, roleId);
+						String lastName = optionalAgentContactEntry.get().get("LAST_NAME").toString();
+						Sender sender = new Sender(firstName, lastName, userUuid, roleId);
 						List<DiscussionMessage> messages = new ArrayList<DiscussionMessage>();
 						String message = global.getFile("metadata_customer_disconnected.html");
-						message = message.replace("NAME_REPLACE", firstName + " " + LastName);
+						message = message.replace("NAME_REPLACE", firstName + " " + lastName);
 						DiscussionMessage discussionMessage = new DiscussionMessage(message, new Date(),
 								UUID.randomUUID().toString(), "META_DATA", new ArrayList<MessageAttachment>(), sender,
 								null, null, null);
@@ -134,6 +139,11 @@ public class SessionsJob {
 							entry.put("CHAT", messages);
 							dataProxy.putModuleEntry(entry, optionalChatModule.get().getModuleId(), false, companyId,
 									optionalUserAgentEntry.get().get("USER_UUID").toString());
+
+							ChatTicketStatusMessage chatTicketStatusMessage = new ChatTicketStatusMessage(companyId,
+									chatEntry.get("SESSION_UUID").toString(), "CLOSE_CHAT", "CLOSED",
+									"This chat ended by " + firstName + " " + lastName);
+							chatService.addToChatTicketStatusQueue(chatTicketStatusMessage);
 						}
 					}
 				}
