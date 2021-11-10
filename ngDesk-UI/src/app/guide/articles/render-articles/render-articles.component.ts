@@ -223,6 +223,7 @@ export class RenderArticlesComponent implements OnInit {
 						this.getArticle();
 					},
 					(error: any) => {
+						this.loading = false;
 						this.bannerMessageService.errorNotifications.push({
 							message: error.error.ERROR,
 						});
