@@ -91,7 +91,7 @@ public class ArticleAPI {
 	}
 
 	@PostMapping("/articles/{articleId}/comments")
-	public CommentMessage postComments(@RequestBody CommentMessage commentMessages,
+	public CommentMessage postComments(@Valid @RequestBody CommentMessage commentMessages,
 			@PathVariable("articleId") String articleId) {
 		List<CommentMessage> messages = new ArrayList<CommentMessage>();
 		String collectionName = "articles_" + authManager.getUserDetails().getCompanyId();
@@ -111,5 +111,6 @@ public class ArticleAPI {
 				"articles_" + authManager.getUserDetails().getCompanyId());
 
 		return commentMessages;
+
 	}
 }

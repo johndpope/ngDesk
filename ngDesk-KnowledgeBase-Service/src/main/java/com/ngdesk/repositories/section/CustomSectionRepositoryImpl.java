@@ -10,6 +10,8 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
+import com.ngdesk.knowledgebase.section.dao.Section;
+
 @Repository
 public class CustomSectionRepositoryImpl implements CustomSectionRepository {
 
@@ -22,10 +24,18 @@ public class CustomSectionRepositoryImpl implements CustomSectionRepository {
 
 		return Optional.ofNullable(mongoOperations.findOne(query, Map.class, collectionName));
 	}
+
 	@Override
 	public int getCount(String collectionName) {
 		Assert.notNull(collectionName, "The given collectionName must not be null!");
 		Query query = new Query();
 		return (int) mongoOperations.count(query, collectionName);
+	}
+
+	@Override
+	public Optional<Section> validateDuplicateSection(String name, String collectionName) {
+		Query query = new Query(Criteria.where("name").is(name));
+
+		return Optional.ofNullable(mongoOperations.findOne(query, Section.class, collectionName));
 	}
 }
