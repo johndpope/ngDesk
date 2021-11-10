@@ -46,7 +46,16 @@ public class BeforeSaveListner extends AbstractMongoEventListener<Section> {
 		checkValidUser();
 		checkValidLanguageSource(section.getLanguage());
 		checkValidCategory(section.getCategory(), authManager.getUserDetails().getCompanyId());
+		validateDuplicateSection(section);
+	}
 
+	public void validateDuplicateSection(Section section) {
+		Optional<Section> optionalsection = sectionRepository.validateDuplicateSection(section.getName(),
+				"sections_" + authManager.getUserDetails().getCompanyId());
+		if (!optionalsection.isEmpty()) {
+			String[] vars = { "Section", "Name" };
+			throw new BadRequestException("DAO_VARIABLE_ALREADY_EXISTS", vars);
+		}
 	}
 
 	public void checkValidTeam(List<String> visibleTo, String companyId) {

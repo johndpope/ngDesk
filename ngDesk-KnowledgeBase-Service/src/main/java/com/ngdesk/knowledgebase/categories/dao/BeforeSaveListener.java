@@ -17,6 +17,7 @@ import com.ngdesk.repositories.CategoryRepository;
 import com.ngdesk.repositories.ModuleEntryRepository;
 import com.ngdesk.repositories.RolesRepository;
 
+@Component("SaveListener")
 public class BeforeSaveListener extends AbstractMongoEventListener<Category> {
 
 	@Autowired
@@ -37,6 +38,16 @@ public class BeforeSaveListener extends AbstractMongoEventListener<Category> {
 		validateSystemAdmin();
 		validateSourceLanguage(category);
 		validateVisibleTo(category);
+		validateDuplicateCategory(category);
+	}
+
+	public void validateDuplicateCategory(Category category) {
+		Optional<Category> optionalCategory = categoryRepository.validateDuplicateCategory(category.getName(),
+				"categories_" + authManager.getUserDetails().getCompanyId());
+		if (!optionalCategory.isEmpty()) {
+			String[] vars = { "Category", "Name" };
+			throw new BadRequestException("DAO_VARIABLE_ALREADY_EXISTS", vars);
+		}
 	}
 
 	public void validateSystemAdmin() {
