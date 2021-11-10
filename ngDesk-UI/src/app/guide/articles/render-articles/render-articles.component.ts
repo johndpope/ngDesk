@@ -223,9 +223,9 @@ export class RenderArticlesComponent implements OnInit {
 						this.getArticle();
 					},
 					(error: any) => {
-						this.bannerMessageService.errorNotifications.push(
-							error.error.ERROR
-						);
+						this.bannerMessageService.errorNotifications.push({
+							message: error.error.ERROR,
+						});
 					}
 				);
 		} else {
