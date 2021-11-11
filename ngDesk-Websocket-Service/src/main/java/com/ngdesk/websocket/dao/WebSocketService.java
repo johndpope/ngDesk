@@ -38,6 +38,7 @@ import com.ngdesk.websocket.channels.chat.dao.ChatNotification;
 import com.ngdesk.websocket.channels.chat.dao.ChatStatusMessage;
 import com.ngdesk.websocket.channels.chat.dao.ChatTicketStatusMessage;
 import com.ngdesk.websocket.channels.chat.dao.ChatVisitedPagesNotification;
+import com.ngdesk.websocket.channels.chat.dao.FindAgent;
 import com.ngdesk.websocket.companies.dao.ChatSettingsMessage;
 import com.ngdesk.websocket.companies.dao.Company;
 import com.ngdesk.websocket.companies.dao.DnsRecord;
@@ -229,8 +230,8 @@ public class WebSocketService {
 											&& !message.getMessageType().equals("META_DATA")) {
 										publishDiscussionToUsersInvolved(company, message, entry);
 										publishChatDiscussionNotification(company, chatDiscussionMessage);
-										
-										//NOTIFY THE AGENT 
+
+										// NOTIFY THE AGENT
 										if (isCustomer) {
 											Notification notification = new Notification(company.getId(),
 													message.getModuleId(), message.getDataId(),
@@ -627,6 +628,31 @@ public class WebSocketService {
 				}
 			});
 
+		}
+
+	}
+
+	public void publishFindAgentNotification(Company company, FindAgent findAgent) {
+
+		ObjectMapper mapper = new ObjectMapper();
+		if (sessionService.sessions.containsKey(company.getCompanySubdomain())) {
+			ConcurrentHashMap<String, UserSessions> sessions = sessionService.sessions
+					.get(company.getCompanySubdomain());
+			ConcurrentLinkedQueue<WebSocketSession> userSessions = sessions.get(findAgent.getSessionUUID())
+					.getSessions();
+			userSessions.forEach(session -> {
+				try {
+					String payload = mapper.writeValueAsString(findAgent);
+					session.sendMessage(new TextMessage(payload));
+				} catch (JsonProcessingException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+					userSessions.remove(session);
+				}
+			});
 		}
 
 	}

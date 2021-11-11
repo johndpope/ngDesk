@@ -54,6 +54,8 @@ import com.ngdesk.websocket.channels.chat.dao.ChatUserEntryService;
 import com.ngdesk.websocket.channels.chat.dao.ChatVisitedPages;
 import com.ngdesk.websocket.channels.chat.dao.ChatWidgetPayload;
 import com.ngdesk.websocket.channels.chat.dao.CloseChat;
+import com.ngdesk.websocket.channels.chat.dao.FindAgent;
+import com.ngdesk.websocket.channels.chat.dao.FindAgentService;
 import com.ngdesk.websocket.dao.WebSocketService;
 import com.ngdesk.websocket.graphql.dao.GraphqlProxy;
 import com.ngdesk.websocket.modules.dao.ButtonTypeService;
@@ -122,6 +124,9 @@ public class SocketHandler extends TextWebSocketHandler {
 
 	@Autowired
 	ChatTicketCreationService chatTicketCreationService;
+
+	@Autowired
+	FindAgentService findAgentService;
 
 	private static ReentrantLock lock = new ReentrantLock();
 
@@ -500,6 +505,7 @@ public class SocketHandler extends TextWebSocketHandler {
 					logController.addLogToApplication(newLog, subdomain, id);
 				}
 			} else if (queryParamMap.containsKey("sessionUUID") && queryParamMap.containsKey("subdomain")) {
+
 				try {
 					CloseChat closeChat = mapper.readValue(textMessage.getPayload(), CloseChat.class);
 					chatService.sendChatTranscript(closeChat);
@@ -545,7 +551,13 @@ public class SocketHandler extends TextWebSocketHandler {
 												ChatVisitedPages.class);
 										chatService.updateChatVistedPages(chatVisitedPages);
 									} catch (Exception e5) {
-										// TODO: handle exception
+										try {
+											FindAgent findAgent = mapper.readValue(textMessage.getPayload(),
+													FindAgent.class);
+											findAgentService.findAgent(findAgent);
+										} catch (Exception e6) {
+											// TODO: handle exception
+										}
 									}
 								}
 							}

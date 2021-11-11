@@ -19,6 +19,7 @@ import com.ngdesk.websocket.channels.chat.dao.ChatNotification;
 import com.ngdesk.websocket.channels.chat.dao.ChatStatusMessage;
 import com.ngdesk.websocket.channels.chat.dao.ChatTicketStatusMessage;
 import com.ngdesk.websocket.channels.chat.dao.ChatVisitedPagesNotification;
+import com.ngdesk.websocket.channels.chat.dao.FindAgent;
 import com.ngdesk.websocket.notification.dao.Notification;
 import com.ngdesk.websocket.subscribers.ChatChannelSubscriber;
 import com.ngdesk.websocket.subscribers.ChatNotificationSubscriber;
@@ -26,6 +27,7 @@ import com.ngdesk.websocket.subscribers.ChatSettingsUpdateSubscriber;
 import com.ngdesk.websocket.subscribers.ChatStatusSubscriber;
 import com.ngdesk.websocket.subscribers.ChatTicketStatusSubscriber;
 import com.ngdesk.websocket.subscribers.ChatVisitedPagesSubscriber;
+import com.ngdesk.websocket.subscribers.FindAgentSubscriber;
 import com.ngdesk.websocket.subscribers.ModuleNotificationSubscriber;
 import com.ngdesk.websocket.subscribers.NotificationSubscriber;
 
@@ -64,6 +66,9 @@ public class RedisConfig {
 
 	@Autowired
 	ChatVisitedPagesSubscriber chatVisitedPagesSubscriber;
+
+	@Autowired
+	FindAgentSubscriber findAgentSubscriber;
 
 	@Bean
 	public RedisTemplate<String, WorkflowPayload> redisTemplate(LettuceConnectionFactory redisConnectionFactory) {
@@ -140,6 +145,15 @@ public class RedisConfig {
 	}
 
 	@Bean
+	public RedisTemplate<String, FindAgent> redisFindAgentTemplate(LettuceConnectionFactory redisConnectionFactory) {
+		RedisTemplate<String, FindAgent> redisFindAgentTemplate = new RedisTemplate<String, FindAgent>();
+		redisFindAgentTemplate.setConnectionFactory(redisConnectionFactory);
+		redisFindAgentTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<FindAgent>(FindAgent.class));
+		redisFindAgentTemplate.setKeySerializer(new StringRedisSerializer());
+		return redisFindAgentTemplate;
+	}
+
+	@Bean
 	public LettuceConnectionFactory redisConnectionFactory() {
 		RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration(redisHost, redisPort);
 		configuration.setPassword(redisPassword);
@@ -187,6 +201,11 @@ public class RedisConfig {
 	}
 
 	@Bean
+	MessageListenerAdapter findAgentListener() {
+		return new MessageListenerAdapter(findAgentSubscriber);
+	}
+
+	@Bean
 	public RedisMessageListenerContainer redisMessageListenerContainer(
 			LettuceConnectionFactory redisConnectionFactory) {
 		RedisMessageListenerContainer container = new RedisMessageListenerContainer();
@@ -199,6 +218,7 @@ public class RedisConfig {
 		container.addMessageListener(chatNotificationListener(), new PatternTopic("chat_notification"));
 		container.addMessageListener(chatTicketStatusListener(), new PatternTopic("chat_ticket_status"));
 		container.addMessageListener(chatVisitedPagesListener(), new PatternTopic("chat_visited_pages"));
+		container.addMessageListener(findAgentListener(), new PatternTopic("findAgent_notification"));
 
 		return container;
 	}
