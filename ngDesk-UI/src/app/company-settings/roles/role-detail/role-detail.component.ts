@@ -73,7 +73,6 @@ export class RoleDetailComponent implements OnInit {
 				this.modulesService.getModules().subscribe(
 					(modulesResponse: any) => {
 						this.modules = modulesResponse.MODULES;
-						console.log(this.modules);
 						const rolePermissions = [];
 						this.role = roleResponse.DATA;
 						this.role.PERMISSIONS.forEach((permission) => {

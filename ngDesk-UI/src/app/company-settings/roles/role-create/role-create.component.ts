@@ -202,7 +202,6 @@ export class RoleCreateComponent implements OnInit {
 			if (this.roleId !== 'new') {
 				this.roleApiService.putRole(this.role).subscribe(
 					(putResponse: any) => {
-						console.log('putResponse///////////////////', putResponse);
 						this.router.navigate(['company-settings/roles']);
 						this.bannerMessageService.successNotifications.push({
 							message: this.translateService.instant(
@@ -220,7 +219,6 @@ export class RoleCreateComponent implements OnInit {
 				this.role.PERMISSIONS = this.rolePermissions;
 				this.roleApiService.postRole(this.role).subscribe(
 					(postResponse: any) => {
-						console.log('postResponse........', postResponse);
 						this.router.navigate(['company-settings/roles']);
 						this.bannerMessageService.successNotifications.push({
 							message: this.translateService.instant('SAVED_SUCCESSFULLY'),
