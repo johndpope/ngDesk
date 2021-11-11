@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -112,5 +113,8 @@ public interface CustomModuleEntryRepository {
 			String collectionName);
 
 	public Optional<Map<String, Object>> findEntryByVariable(String fieldName, Object value, String collectionName);
+
+	public Optional<Map<String, Object>> findEntriesByVariableForRelationship(String collectionName,
+			String fieldName,String value ,String id);
 
 }

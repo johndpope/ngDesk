@@ -79,6 +79,7 @@ type Query {
 	getChatChannel(name: String): ChatChannel
 	getChatPrompts(channelName: String): [ChatPrompt]
 	getChatPrompt(channelName: String, promptId: String): ChatPrompt
+	getWorkflows(moduleId: String): [Workflow]
 	getKbArticle(articleId:String):Article
 	getAllKbArticles(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String, search: String):[Article]
 	getAllKbArticlesCount(search: String): Int
@@ -93,6 +94,9 @@ type Query {
 	getCsvImportsCount: Int
 	getCsvLogs(csvImportId: String, pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [CsvImportLog]
 	getCsvLogsCount(csvImportId: String): Int
+	getEmailLists(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [EmailList]
+	getEmailList(id: String): EmailList
+	getEmailListCount: Int
 	MODULE_FUNCTIONS_REPLACE
 }
 
@@ -1016,3 +1020,13 @@ type ListFormulaFieldValue{
 
 }
 
+type EmailList{
+	emailListId:String
+	name:String
+	description:String
+	conditions:[Condition]
+	dateCreated:DateTime
+	dateUpdated:DateTime
+	lastUpdatedBy:Users
+	createdBy:Users
+}

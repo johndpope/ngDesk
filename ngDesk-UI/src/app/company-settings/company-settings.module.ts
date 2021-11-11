@@ -61,6 +61,7 @@ import { CamgaignCategoryComponent } from '@src/app/company-settings/marketing/c
 import { CampaignsDetailComponent } from '@src/app/company-settings/marketing/campaigns/campaigns-detail/campaigns-detail.component';
 import { CampaignsMasterComponent } from '@src/app/company-settings/marketing/campaigns/campaigns-master/campaigns-master.component';
 import { CampaignsService } from '@src/app/company-settings/marketing/campaigns/campaigns.service';
+import { EmailListService } from '@src/app/company-settings/marketing/email-lists/email-lists.service';
 import { EmailListsDetailComponent } from '@src/app/company-settings/marketing/email-lists/email-lists-detail/email-lists-detail.component';
 import { EmailListsMasterComponent } from '@src/app/company-settings/marketing/email-lists/email-lists-master/email-lists-master.component';
 import { NormalizationRuleDetailComponent } from '@src/app/company-settings/normalization-rule/normalization-rule-detail/normalization-rule-detail.component';
@@ -218,6 +219,7 @@ import { CsvLogsService } from './file-upload/csv-logs/csv-logs-detail/csv-logs-
 		CurrenciesDetailComponent,
 		CampaignsService,
 		CompanySettingService,
+		EmailListService,
 	],
 	// entryComponents: [
 	// 	SidebarMenuCustomizeDialogComponent,

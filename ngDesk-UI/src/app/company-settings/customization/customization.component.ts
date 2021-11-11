@@ -190,6 +190,7 @@ export class CustomizationComponent implements OnInit {
 	}
 
 	public save() {
+		this.saveEvent.emit();
 		const overlayContainerClasses =
 			this.overlayContainer.getContainerElement().classList;
 		const themeClassesToRemove = Array.from(overlayContainerClasses).filter(

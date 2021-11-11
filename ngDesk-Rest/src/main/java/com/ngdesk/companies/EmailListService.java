@@ -7,17 +7,17 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.redisson.api.RMap;
@@ -31,7 +31,6 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -45,8 +44,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
-import com.mongodb.client.model.Projections;
-import com.mongodb.client.model.Sorts;
 import com.ngdesk.Authentication;
 import com.ngdesk.Global;
 import com.ngdesk.campaigns.Address;
@@ -61,7 +58,6 @@ import com.ngdesk.exceptions.ForbiddenException;
 import com.ngdesk.exceptions.InternalErrorException;
 import com.ngdesk.modules.fields.Field;
 import com.ngdesk.modules.rules.Condition;
-import com.ngdesk.resources.MongoUtils;
 import com.ngdesk.roles.RoleService;
 
 @RestController
@@ -86,470 +82,6 @@ public class EmailListService {
 	@Value("${email.host}")
 	private String host;
 
-	@GetMapping("/companies/email_lists")
-	public ResponseEntity<Object> getEmailLists(HttpServletRequest request,
-			@RequestParam(value = "authentication_token", required = false) String uuid,
-			@RequestParam(value = "search", required = false) String search,
-			@RequestParam(value = "page_size", required = false) String pageSize,
-			@RequestParam(value = "page", required = false) String page,
-			@RequestParam(value = "sort", required = false) String sort,
-			@RequestParam(value = "order", required = false) String order) {
-
-		int totalSize = 0;
-		JSONObject resultObject = new JSONObject();
-		JSONArray emailLists = new JSONArray();
-
-		try {
-			log.trace("Enter EmailListService.getEmailLists()");
-			if (request.getHeader("authentication_token") != null) {
-				uuid = request.getHeader("authentication_token").toString();
-			}
-
-			JSONObject user = auth.getUserDetails(uuid);
-			String userRole = user.getString("ROLE");
-			String companyId = user.getString("COMPANY_ID");
-
-			if (!roleService.isSystemAdmin(userRole, companyId)) {
-				throw new ForbiddenException("FORBIDDEN");
-			}
-
-			MongoCollection<Document> emailListsCollection = mongoTemplate.getCollection("email_lists_" + companyId);
-
-			int lowerLimit = 0;
-			int pgSize = 100;
-			int pg = 1;
-			int skip = 0;
-			totalSize = (int) emailListsCollection.countDocuments();
-
-			if (pageSize != null && page != null) {
-				pgSize = Integer.valueOf(pageSize);
-				pg = Integer.valueOf(page);
-
-				if (pgSize <= 0) {
-					throw new BadRequestException("INVALID_PAGE_SIZE");
-				} else if (pg <= 0) {
-					throw new BadRequestException("INVALID_PAGE_NUMBER");
-				} else {
-					skip = (pg - 1) * pgSize;
-				}
-			}
-
-			List<Document> emailListsDoc = null;
-			Document filter = MongoUtils.createFilter(search);
-
-			if (sort != null && order != null) {
-
-				if (order.equalsIgnoreCase("asc")) {
-					emailListsDoc = (List<Document>) emailListsCollection.find(filter)
-							.sort(Sorts.orderBy(Sorts.ascending(sort))).skip(skip).limit(pgSize)
-							.into(new ArrayList<Document>());
-				} else if (order.equalsIgnoreCase("desc")) {
-					emailListsDoc = (List<Document>) emailListsCollection.find(filter)
-							.sort(Sorts.orderBy(Sorts.descending(sort))).skip(skip).limit(pgSize)
-							.into(new ArrayList<Document>());
-				} else {
-					throw new BadRequestException("INVALID_SORT_ORDER");
-				}
-
-			} else {
-				emailListsDoc = (List<Document>) emailListsCollection.find(filter).skip(skip).limit(pgSize)
-						.into(new ArrayList<Document>());
-			}
-
-			for (Document emailList : emailListsDoc) {
-				String emailListId = emailList.remove("_id").toString();
-				emailList.put("EMAIL_LIST_ID", emailListId);
-				emailLists.put(emailList);
-			}
-			resultObject.put("EMAIL_LISTS", emailLists);
-			resultObject.put("TOTAL_RECORDS", emailListsCollection.countDocuments());
-			log.trace("Exit EmailListService.getEmailLists()");
-
-			return new ResponseEntity<>(resultObject.toString(), Global.postHeaders, HttpStatus.OK);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		throw new InternalErrorException("INTERNAL_ERROR");
-	}
-
-	@GetMapping("/companies/email_list/{id}")
-	public EmailList getEmailList(HttpServletRequest request,
-			@RequestParam(value = "authentication_token", required = false) String uuid,
-			@PathVariable("id") String id) {
-		try {
-			log.trace("Enter EmailListService.getEmailList()");
-			if (request.getHeader("authentication_token") != null) {
-				uuid = request.getHeader("authentication_token").toString();
-			}
-
-			JSONObject user = auth.getUserDetails(uuid);
-			String userRole = user.getString("ROLE");
-			String companyId = user.getString("COMPANY_ID");
-
-			if (!roleService.isSystemAdmin(userRole, companyId)) {
-				throw new ForbiddenException("FORBIDDEN");
-			}
-
-			if (!ObjectId.isValid(id)) {
-				throw new BadRequestException("EMAIL_LIST_NOT_FOUND");
-			}
-
-			MongoCollection<Document> emailListsCollection = mongoTemplate.getCollection("email_lists_" + companyId);
-			Document emailList = emailListsCollection.find(Filters.eq("_id", new ObjectId(id))).first();
-			if (emailList == null) {
-				throw new BadRequestException("EMAIL_LIST_NOT_FOUND");
-			}
-			String emailListId = emailList.remove("_id").toString();
-			emailList.put("EMAIL_LIST_ID", emailListId);
-			EmailList emailListObject = new ObjectMapper().readValue(emailList.toJson(), EmailList.class);
-			log.trace("Exit EmailListService.getEmailList()");
-
-			return emailListObject;
-		} catch (JSONException e) {
-			e.printStackTrace();
-		} catch (JsonParseException e) {
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		throw new InternalErrorException("INTERNAL_ERROR");
-	}
-
-	@PostMapping("/companies/email_list/{module_id}/data")
-	public ResponseEntity<Object> getEmailListData(HttpServletRequest request,
-			@RequestParam(value = "authentication_token", required = false) String uuid,
-			@RequestParam(value = "company_id", required = false) String companyId,
-			@RequestParam(value = "page_size", required = false) String pageSize,
-			@RequestParam(value = "page", required = false) String page,
-			@RequestParam(value = "sort", required = false) String sort,
-			@RequestParam(value = "order", required = false) String order,
-			@RequestParam(value = "search", required = false) String search, @PathVariable("module_id") String moduleId,
-			@RequestBody @Valid EmailList emailList) {
-
-		JSONArray dataList = new JSONArray();
-		int totalSize = 0;
-		JSONObject resultObj = new JSONObject();
-		List<Document> documents = new ArrayList<Document>();
-		String role = null;
-		JSONObject user = null;
-		try {
-			if (request.getHeader("authentication_token") != null) {
-				uuid = request.getHeader("authentication_token");
-			}
-
-			user = auth.getUserDetails(uuid);
-			String userId = user.getString("USER_ID");
-			companyId = user.getString("COMPANY_ID");
-			role = user.getString("ROLE");
-			boolean isSystemAdmin = false;
-
-			if (companyId != null && companyId.length() > 0) {
-				String moduleCollectionName = "modules_" + companyId;
-				MongoCollection<Document> moduleCollection = mongoTemplate.getCollection(moduleCollectionName);
-				if (!ObjectId.isValid(moduleId)) {
-					throw new BadRequestException("INVALID_MODULE_ID");
-				}
-				Document module = moduleCollection.find(Filters.eq("_id", new ObjectId(moduleId))).first();
-				if (module != null) {
-
-					List<Document> fields = (List<Document>) module.get("FIELDS");
-					Map<String, String> fieldsMap = new HashMap<String, String>();
-					Map<String, Document> relationFields = new HashMap<String, Document>();
-
-					for (Document field : fields) {
-						String fieldId = field.getString("FIELD_ID");
-						String fieldName = field.getString("NAME");
-						fieldsMap.put(fieldId, fieldName);
-
-						Document dataType = (Document) field.get("DATA_TYPE");
-						String displayDataType = dataType.getString("DISPLAY");
-
-						if (displayDataType.equals("Relationship")) {
-							if (field.getString("RELATIONSHIP_TYPE").equals("One to One")
-									|| field.getString("RELATIONSHIP_TYPE").equals("Many to One")) {
-								relationFields.put(fieldName, field);
-							}
-						}
-					}
-
-					if (role != null) {
-						if (!roleService.isSystemAdmin(role, companyId)) {
-							if (!roleService.isAuthorizedForRecord(role, "GET", moduleId, companyId)) {
-								throw new ForbiddenException("FORBIDDEN");
-							}
-						} else {
-							isSystemAdmin = true;
-						}
-					}
-
-					String moduleName = module.getString("NAME");
-					String collectionName = moduleName.replaceAll("\\s+", "_") + "_" + companyId;
-					MongoCollection<Document> dataCollection = mongoTemplate.getCollection(collectionName);
-
-					int lowerLimit = 0;
-					int pgSize = (int) dataCollection.countDocuments();
-					int pg = 1;
-					int skip = 0;
-
-					if (pageSize != null && page != null) {
-						pgSize = Integer.valueOf(pageSize);
-						pg = Integer.valueOf(page);
-
-						// CALCULATION TO FIND HOW MANY DOCUMENTS TO SKIP
-						skip = (pg - 1) * pgSize;
-					}
-
-					boolean isMobileLayout = false;
-
-					List<String> showFieldNames = new ArrayList<String>();
-					List<Condition> emailListConditions = new ArrayList<Condition>();
-					emailListConditions = emailList.getConditions();
-
-					List<Bson> allFilters = new ArrayList<Bson>();
-					List<Bson> anyFilters = new ArrayList<Bson>();
-
-					allFilters = generateAllFilter(emailListConditions, moduleId, allFilters, companyId, user);
-					anyFilters = generateAnyFilter(emailListConditions, moduleId, anyFilters, companyId, user);
-					allFilters.add(Filters.eq("DELETED", false));
-					if (moduleName.equals("Users")) {
-						List<String> emails = new ArrayList<String>();
-						emails.add("ghost@ngdesk.com");
-						emails.add("system@ngdesk.com");
-						allFilters.add(Filters.nin("EMAIL_ADDRESS", emails));
-					}
-					Bson sortFilter = null;
-					List<String> userIds = new ArrayList<String>();
-					userIds.add(userId);
-
-					if (!isSystemAdmin) {
-						String userCollectionName = "Users_" + companyId;
-						MongoCollection<Document> userCollection = mongoTemplate.getCollection(userCollectionName);
-						ArrayList<Document> userDocuments = userCollection.find(Filters.eq("REPORTS_TO", userId))
-								.into(new ArrayList<Document>());
-
-						if (userDocuments != null) {
-							for (Document userDoc : userDocuments) {
-								String id = userDoc.getObjectId("_id").toString();
-								if (!userIds.contains(id)) {
-									userIds.add(id);
-								}
-							}
-
-						}
-					}
-
-					HashSet<String> teamIds = new HashSet<String>();
-
-					String teamCollectionName = "Teams_" + companyId;
-					MongoCollection<Document> teamsCollection = mongoTemplate.getCollection(teamCollectionName);
-					List<Document> teamDocuments = teamsCollection.find(Filters.in("USERS", userIds))
-							.into(new ArrayList<Document>());
-					for (Document teamDoc : teamDocuments) {
-						String id = teamDoc.getObjectId("_id").toString();
-						teamIds.add(id);
-					}
-					if (sort != null && order != null) {
-						if (order.equalsIgnoreCase("asc")) {
-							sortFilter = Sorts.ascending(sort);
-						} else if (order.equalsIgnoreCase("desc")) {
-							sortFilter = Sorts.descending(sort);
-						}
-					}
-
-					if (allFilters.size() != 0 && anyFilters.size() != 0) {
-						if (isSystemAdmin || moduleName.equals("Teams")) {
-							totalSize = (int) dataCollection
-									.countDocuments(Filters.and(Filters.and(allFilters), Filters.or(anyFilters)));
-							if (!isMobileLayout) {
-								documents = dataCollection
-										.find(Filters.and(Filters.and(allFilters), Filters.or(anyFilters)))
-										.sort(sortFilter).skip(skip).limit(pgSize)
-										.projection(Projections.include(showFieldNames))
-										.projection(Projections.exclude("META_DATA")).into(new ArrayList<Document>());
-							} else {
-								documents = dataCollection
-										.find(Filters.and(Filters.and(allFilters), Filters.or(anyFilters)))
-										.sort(sortFilter).skip(skip).limit(pgSize)
-										.projection(Projections.include(showFieldNames))
-										.projection(Projections.exclude("META_DATA")).into(new ArrayList<Document>());
-							}
-						} else {
-							totalSize = (int) dataCollection.countDocuments(Filters.and(Filters.and(allFilters),
-									Filters.or(anyFilters), Filters.in("TEAMS", teamIds)));
-
-							if (!isMobileLayout) {
-								documents = dataCollection
-										.find(Filters.and(Filters.and(allFilters), Filters.or(anyFilters),
-												Filters.in("TEAMS", teamIds)))
-										.sort(sortFilter).skip(skip).limit(pgSize)
-										.projection(Projections.include(showFieldNames))
-										.projection(Projections.exclude("META_DATA")).into(new ArrayList<Document>());
-							} else {
-								documents = dataCollection
-										.find(Filters.and(Filters.and(allFilters), Filters.or(anyFilters),
-												Filters.in("TEAMS", teamIds)))
-										.sort(sortFilter).skip(skip).limit(pgSize)
-										.projection(Projections.include(showFieldNames))
-										.projection(Projections.exclude("META_DATA")).into(new ArrayList<Document>());
-							}
-
-						}
-
-					} else if (allFilters.size() == 0 && anyFilters.size() != 0) {
-						if (isSystemAdmin || moduleName.equals("Teams")) {
-							totalSize = (int) dataCollection.countDocuments(Filters.or(anyFilters));
-							if (!isMobileLayout) {
-								documents = dataCollection.find(Filters.or(anyFilters)).sort(sortFilter).skip(skip)
-										.limit(pgSize).projection(Projections.include(showFieldNames))
-										.projection(Projections.exclude("META_DATA")).into(new ArrayList<Document>());
-							} else {
-								documents = dataCollection.find(Filters.or(anyFilters)).sort(sortFilter).skip(skip)
-										.limit(pgSize).projection(Projections.include(showFieldNames))
-										.projection(Projections.exclude("META_DATA")).into(new ArrayList<Document>());
-							}
-
-						} else {
-							totalSize = (int) dataCollection
-									.countDocuments(Filters.and(Filters.or(anyFilters), Filters.in("TEAMS", teamIds)));
-							if (!isMobileLayout) {
-								documents = dataCollection
-										.find(Filters.and(Filters.or(anyFilters), Filters.in("TEAMS", teamIds)))
-										.skip(skip).limit(pgSize).sort(sortFilter)
-										.projection(Projections.include(showFieldNames))
-										.projection(Projections.exclude("META_DATA")).into(new ArrayList<Document>());
-							} else {
-								documents = dataCollection
-										.find(Filters.and(Filters.or(anyFilters), Filters.in("TEAMS", teamIds)))
-										.sort(sortFilter).skip(skip).limit(pgSize)
-										.projection(Projections.include(showFieldNames))
-										.projection(Projections.exclude("META_DATA")).into(new ArrayList<Document>());
-							}
-
-						}
-					} else if (anyFilters.size() == 0 && allFilters.size() != 0) {
-
-						if (isSystemAdmin || moduleName.equals("Teams")) {
-							totalSize = (int) dataCollection.countDocuments(Filters.and(allFilters));
-							if (!isMobileLayout) {
-								documents = dataCollection.find(Filters.and(allFilters)).sort(sortFilter).skip(skip)
-										.limit(pgSize).projection(Projections.include(showFieldNames))
-										.projection(Projections.exclude("META_DATA")).into(new ArrayList<Document>());
-							} else {
-
-								documents = dataCollection.find(Filters.and(allFilters)).sort(sortFilter).skip(skip)
-										.limit(pgSize).projection(Projections.include(showFieldNames))
-										.projection(Projections.exclude("META_DATA")).into(new ArrayList<Document>());
-							}
-
-						} else {
-							totalSize = (int) dataCollection
-									.countDocuments(Filters.and(Filters.and(allFilters), Filters.in("TEAMS", teamIds)));
-							if (!isMobileLayout) {
-								documents = dataCollection
-										.find(Filters.and(Filters.and(allFilters), Filters.in("TEAMS", teamIds)))
-										.skip(skip).limit(pgSize).sort(sortFilter)
-										.projection(Projections.include(showFieldNames))
-										.projection(Projections.exclude("META_DATA")).into(new ArrayList<Document>());
-							} else {
-								documents = dataCollection
-										.find(Filters.and(Filters.and(allFilters), Filters.in("TEAMS", teamIds)))
-										.skip(skip).limit(pgSize).sort(sortFilter)
-										.projection(Projections.include(showFieldNames))
-										.projection(Projections.exclude("META_DATA")).into(new ArrayList<Document>());
-							}
-
-						}
-					} else if (anyFilters.size() == 0 && allFilters.size() == 0) {
-
-						if (isSystemAdmin || moduleName.equals("Teams")) {
-
-							totalSize = (int) dataCollection.countDocuments();
-
-							if (!isMobileLayout) {
-
-								documents = dataCollection.find().sort(sortFilter).skip(skip).limit(pgSize)
-										.projection(Projections.include(showFieldNames))
-										.projection(Projections.exclude("META_DATA")).into(new ArrayList<Document>());
-							} else {
-								documents = dataCollection.find().sort(sortFilter).skip(skip).limit(pgSize)
-										.projection(Projections.include(showFieldNames))
-										.projection(Projections.exclude("META_DATA")).into(new ArrayList<Document>());
-							}
-
-						} else {
-							totalSize = (int) dataCollection.countDocuments(Filters.in("TEAMS", teamIds));
-							if (!isMobileLayout) {
-								documents = dataCollection.find(Filters.in("TEAMS", teamIds)).sort(sortFilter)
-										.skip(skip).limit(pgSize).projection(Projections.include(showFieldNames))
-										.projection(Projections.exclude("META_DATA")).into(new ArrayList<Document>());
-							} else {
-								documents = dataCollection.find(Filters.in("TEAMS", teamIds)).sort(sortFilter)
-										.skip(skip).limit(pgSize).projection(Projections.include(showFieldNames))
-										.projection(Projections.exclude("META_DATA")).into(new ArrayList<Document>());
-							}
-
-						}
-					}
-					if (documents != null) {
-
-						for (Document document : documents) {
-							for (String fieldName : showFieldNames) {
-								if (relationFields.containsKey(fieldName) && document.containsKey(fieldName)) {
-									String value = document.getString(fieldName);
-									Document fieldDoc = relationFields.get(fieldName);
-									String primaryDisplayField = fieldDoc.getString("PRIMARY_DISPLAY_FIELD");
-									Document relationModule = moduleCollection
-											.find(Filters.eq("_id", new ObjectId(fieldDoc.getString("MODULE"))))
-											.first();
-									List<Document> relationModuleFields = (List<Document>) relationModule.get("FIELDS");
-									String relationModuleName = relationModule.getString("NAME");
-
-									MongoCollection<Document> relationEntries = mongoTemplate
-											.getCollection(relationModuleName + "_" + companyId);
-
-									if (new ObjectId().isValid(value)) {
-										Document entryDoc = relationEntries.find(Filters.eq("_id", new ObjectId(value)))
-												.first();
-
-										for (Document relationField : relationModuleFields) {
-											if (relationField.getString("FIELD_ID").equals(primaryDisplayField)) {
-												document.put(fieldName,
-														entryDoc.getString(relationField.getString("NAME")));
-												break;
-											}
-										}
-									}
-								}
-							}
-
-							String dataId = document.getObjectId("_id").toString();
-							document.remove("_id");
-							JSONObject data = new JSONObject(document.toJson().toString());
-							data.put("DATA_ID", dataId);
-							if (moduleName.equals("Users")) {
-								data.remove("PASSWORD");
-							}
-							dataList.put(data);
-						}
-					}
-				} else {
-					throw new ForbiddenException("MODULE_DOES_NOT_EXIST");
-				}
-			} else {
-				throw new ForbiddenException("COMPANY_INVALID");
-			}
-			resultObj.put("DATA", dataList);
-			resultObj.put("TOTAL_RECORDS", totalSize);
-			return new ResponseEntity<>(resultObj.toString(), Global.postHeaders, HttpStatus.OK);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		throw new InternalErrorException("INTERNAL_ERROR");
-	}
-
 	@PostMapping("/companies/email_list")
 	public EmailList postEmailList(HttpServletRequest request,
 			@RequestParam(value = "authentication_token", required = false) String uuid,
@@ -565,8 +97,6 @@ public class EmailListService {
 			String userId = user.getString("USER_ID");
 			String name = emailLists.getName();
 
-			emailLists.setDateCreated(new Timestamp(new Date().getTime()));
-			emailLists.setDateUpdated(new Timestamp(new Date().getTime()));
 			emailLists.setCreatedBy(userId);
 			emailLists.setLastUpdatedBy(userId);
 
@@ -610,9 +140,11 @@ public class EmailListService {
 			if (global.isExists("NAME", name, collectionName)) {
 				throw new BadRequestException("EMAIL_LIST_ALREADY_EXISTS");
 			}
-
 			String json = new ObjectMapper().writeValueAsString(emailLists);
 			Document emailList = Document.parse(json);
+			emailList.remove("EMAIL_LIST_ID");
+			emailList.put("DATE_CREATED", new Date());
+			emailList.put("DATE_UPDATED", new Date());
 			emailListsCollection.insertOne(emailList);
 			emailLists.setEmailListId(emailList.getObjectId("_id").toString());
 
@@ -674,7 +206,7 @@ public class EmailListService {
 				}
 
 			}
-			emailLists.setDateUpdated(new Timestamp(new Date().getTime()));
+
 			emailLists.setLastUpdatedBy(userId);
 
 			MongoCollection<Document> emailListsCollection = mongoTemplate.getCollection("email_lists_" + companyId);
@@ -685,6 +217,8 @@ public class EmailListService {
 
 			String json = new ObjectMapper().writeValueAsString(emailLists);
 			Document updateEmailList = Document.parse(json);
+			updateEmailList.remove("EMAIL_LIST_ID");
+			updateEmailList.append("DATE_UPDATED", new Date());
 			emailListsCollection.findOneAndReplace(Filters.eq("_id", new ObjectId(id)), updateEmailList);
 			log.trace("Exit EmailListService.putEmailList()");
 

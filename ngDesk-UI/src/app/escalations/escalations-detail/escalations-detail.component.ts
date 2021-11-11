@@ -31,6 +31,7 @@ import {
 	switchMap,
 } from 'rxjs/operators';
 import { ModulesService } from '@src/app/modules/modules.service';
+import { NavigateToSchedulesService } from '../../navigateToEscalation.service';
 
 @Component({
 	selector: 'app-escalations-detail',
@@ -62,7 +63,6 @@ export class EscalationsDetailComponent implements OnInit {
 	public userCtrl = new FormControl();
 	public teamCtrl = new FormControl();
 	public scheduleCtrl = new FormControl();
-
 	private escalationId: string;
 
 	@ViewChild('teamInput') public teamInput: ElementRef<HTMLInputElement>;
@@ -85,7 +85,8 @@ export class EscalationsDetailComponent implements OnInit {
 		private cacheService: CacheService,
 		private http: HttpClient,
 		private globals: AppGlobals,
-		private modulesService: ModulesService
+		private modulesService: ModulesService,
+		private navigateToSchedulesService: NavigateToSchedulesService,
 	) {}
 
 	public ngOnInit() {
@@ -133,11 +134,15 @@ export class EscalationsDetailComponent implements OnInit {
 						.subscribe((responseList) => {
 							this.editAccess = responseList[0];
 							this.schedules = responseList[1].SCHEDULES;
-
+							this.schedules = this.schedules.sort((a, b) =>
+								a.name.localeCompare(b.name)
+							);
 							this.schedulesInitial = JSON.parse(
 								JSON.stringify(responseList[1].SCHEDULES)
 							);
-
+							this.schedulesInitial = this.schedulesInitial.sort((a, b) =>
+								a.name.localeCompare(b.name)
+							);
 							this.usersInitial = JSON.parse(JSON.stringify(responseList[2]));
 
 							this.teamsInitial = JSON.parse(
@@ -266,6 +271,13 @@ export class EscalationsDetailComponent implements OnInit {
 			return objFound['name'];
 		} else if (objFound !== undefined && objFound) {
 			return objFound['NAME'];
+		}
+	}
+
+	public createSchedules() {		
+		if (this.schedulesInitial.length === 0) {
+				this.navigateToSchedulesService.navigateToSchedules = true;
+		 		this.router.navigate([`schedules/new`])
 		}
 	}
 

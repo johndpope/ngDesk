@@ -810,7 +810,8 @@ public class DataService {
 
 			for (DiscussionMessage message : messages) {
 				try {
-					message.setMessage(StringEscapeUtils.unescapeJava(message.getMessage()));
+					message.setMessage(message.getMessage());
+//					message.setMessage(StringEscapeUtils.unescapeJava(message.getMessage()));
 				} catch (Exception e) {
 					// org.apache.commons.lang.exception.NestableRuntimeException: Unable to parse
 					// unicode value: /</s
@@ -885,45 +886,43 @@ public class DataService {
 
 	private String escapeUtilsAndUnicode(String messageString) {
 		// IF NOT A UNICODE CHARACTER, REPLACING BACKSLASH WITH FRONTSLASH
-		Pattern backslashUPattern = Pattern.compile("(\\\\)u[a-zA-Z]+");
-		Matcher backslashUMatcher = backslashUPattern.matcher(messageString);
-		while (backslashUMatcher.find()) {
-			messageString = messageString.replace(backslashUMatcher.group(0),
-					backslashUMatcher.group(0).replace("\\", "/"));
-		}
-		Pattern backslashTPattern = Pattern.compile("(\\\\)t[a-zA-Z]+");
-		Matcher backslashTMatcher = backslashTPattern.matcher(messageString);
-		while (backslashTMatcher.find()) {
-			messageString = messageString.replace(backslashTMatcher.group(0),
-					backslashTMatcher.group(0).replace("\\", "///"));
-		}
+//		Pattern backslashUPattern = Pattern.compile("(\\\\)u[a-zA-Z]+");
+//		Matcher backslashUMatcher = backslashUPattern.matcher(messageString);
+//		while (backslashUMatcher.find()) {
+//			messageString = messageString.replace(backslashUMatcher.group(0),
+//					backslashUMatcher.group(0).replace("\\", "/"));
+//		}
+//		Pattern backslashTPattern = Pattern.compile("(\\\\)t[a-zA-Z]+");
+//		Matcher backslashTMatcher = backslashTPattern.matcher(messageString);
+//		while (backslashTMatcher.find()) {
+//			messageString = messageString.replace(backslashTMatcher.group(0),
+//					backslashTMatcher.group(0).replace("\\", "///"));
+//		}
 
 		// QUOTES ARE ESCAPED, AND GREEK CHARACTERS ARE CONVERTED TO UNICODE ESCAPES
 		String escapedMessage = new UnicodeUnescaper().translate(messageString);
 
-		escapedMessage = StringEscapeUtils.unescapeJava(escapedMessage).replaceAll("\n", "");
-
-		// IF NOT A UNICODE CHARACTER, REPLACING FRONTSLASH WITH BACKSLASH
-		Pattern frontslashUPattern = Pattern.compile("(\\/)u");
-		Matcher frontslashUMatcher = frontslashUPattern.matcher(escapedMessage);
-		while (frontslashUMatcher.find()) {
-			escapedMessage = escapedMessage.replace(frontslashUMatcher.group(0),
-					frontslashUMatcher.group(0).replace("/", "\\"));
-		}
-		Pattern frontslashTPattern = Pattern.compile("(\\///)t");
-		Matcher frontslashTMatcher = frontslashTPattern.matcher(escapedMessage);
-		while (frontslashTMatcher.find()) {
-			escapedMessage = escapedMessage.replace(frontslashTMatcher.group(0),
-					frontslashTMatcher.group(0).replace("///", "\\"));
-		}
-
-		// REPLACING DOUBLE SLASH WITH SINGLE SLASH
-		Pattern doubleslashPattern = Pattern.compile("(\\\\\\\\)");
-		Matcher doubleslashMatcher = doubleslashPattern.matcher(escapedMessage);
-		while (doubleslashMatcher.find()) {
-			escapedMessage = escapedMessage.replace(doubleslashMatcher.group(0),
-					doubleslashMatcher.group(0).replace("\\\\", "\\"));
-		}
+//		// IF NOT A UNICODE CHARACTER, REPLACING FRONTSLASH WITH BACKSLASH
+//		Pattern frontslashUPattern = Pattern.compile("(\\/)u");
+//		Matcher frontslashUMatcher = frontslashUPattern.matcher(escapedMessage);
+//		while (frontslashUMatcher.find()) {
+//			escapedMessage = escapedMessage.replace(frontslashUMatcher.group(0),
+//					frontslashUMatcher.group(0).replace("/", "\\"));
+//		}
+//		Pattern frontslashTPattern = Pattern.compile("(\\///)t");
+//		Matcher frontslashTMatcher = frontslashTPattern.matcher(escapedMessage);
+//		while (frontslashTMatcher.find()) {
+//			escapedMessage = escapedMessage.replace(frontslashTMatcher.group(0),
+//					frontslashTMatcher.group(0).replace("///", "\\"));
+//		}
+//
+//		// REPLACING DOUBLE SLASH WITH SINGLE SLASH
+//		Pattern doubleslashPattern = Pattern.compile("(\\\\\\\\)");
+//		Matcher doubleslashMatcher = doubleslashPattern.matcher(escapedMessage);
+//		while (doubleslashMatcher.find()) {
+//			escapedMessage = escapedMessage.replace(doubleslashMatcher.group(0),
+//					doubleslashMatcher.group(0).replace("\\\\", "\\"));
+//		}
 
 		return escapedMessage;
 
@@ -1724,7 +1723,7 @@ public class DataService {
 						});
 						payload.put(relationshipField.getName(), relationshipValues);
 					} catch (MismatchedInputException e) {
-						e.printStackTrace();
+//						e.printStackTrace();
 					}
 				}
 			} catch (JsonMappingException e) {

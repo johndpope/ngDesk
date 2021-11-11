@@ -1,6 +1,7 @@
 package com.ngdesk.module.layouts.list.dao;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -146,6 +147,72 @@ public class ListLayoutService {
 
 	}
 
+	public void getFieldValidate(String moduleId, List<String> fieldId) {
+
+		Optional<Module> optionalModule = moduleRepository.findById(moduleId,
+				"modules_" + authManager.getUserDetails().getCompanyId());
+		Module module = optionalModule.get();
+
+		List<ModuleField> allFields = module.getFields();
+		List<ModuleField> relationshipField = allFields.stream()
+				.filter(field -> field.getDataType().getDisplay().equalsIgnoreCase("RelationShip"))
+				.collect(Collectors.toList());
+
+		if (relationshipField != null) {
+
+			for (String fields : fieldId) {
+				if (!fields.contains(".")) {
+
+					Optional<ModuleField> fieldsId = allFields.stream()
+							.filter(field -> field.getFieldId().equals(fields)).findFirst();
+					ModuleField field = fieldsId.get();
+					return ;
+
+				} else {
+					validateFields(fields, moduleId);
+				}
+			}
+		}
+	}
+
+	public String validateFields(String field, String moduleId) {
+		if (field == null) {
+			return "";
+		} else if (!field.contains(".")) {
+			System.out.println("fields contains dot" + field);
+			validateAndGetModuleField(field, moduleId);
+
+			return "";
+		} else if (field.contains(".")) {
+			List<String> parseField = Arrays.asList(field.split("."));
+			String firstField = parseField.remove(0);
+			String joinParseFields = String.join(".", parseField);
+			ModuleField moduleField = validateAndGetModuleField(firstField, moduleId);
+			
+			if (moduleField.getDataType().getDisplay().equalsIgnoreCase("RelationShip")) {
+				throw new BadRequestException("RELATIONSHIP_FIELD_NESTED_ERROR", null);
+			}
+			return validateFields(joinParseFields, moduleField.getModule());
+		}
+		return "";
+	}
+
+	public ModuleField validateAndGetModuleField(String field, String moduleId) {
+
+		Optional<Module> fieldModule = moduleRepository.findById(moduleId,
+				"modules_" + authManager.getUserDetails().getCompanyId());
+		if (fieldModule.isEmpty()) {
+			throw new BadRequestException("MODULE_NOT_FOUND", null);
+		}
+		Module module = fieldModule.get();
+		Optional<ModuleField> optionalField = module.getFields().stream()
+				.filter(fields -> fields.getFieldId().equals(field)).findFirst();
+		if (optionalField.isEmpty()) {
+			throw new BadRequestException("FIELD_NOT_FOUND", null);
+		}
+		return optionalField.get();
+	}
+
 	public void isDefault(ListLayout listLayout, String moduleId, Module module) {
 
 		List<ListLayout> layouts = module.getListLayout();
@@ -178,7 +245,6 @@ public class ListLayoutService {
 
 	}
 
-	
 	public void isValidConditions(ListLayout listLayout, Module module) {
 		List<ModuleField> allFields = module.getFields();
 		List<Condition> conditions = listLayout.getConditions();
@@ -186,7 +252,7 @@ public class ListLayoutService {
 			for (Condition conditionField : conditions) {
 				Optional<ModuleField> fields = allFields.stream()
 						.filter(field -> field.getFieldId().equals(conditionField.getCondition())).findFirst();
-						
+
 				if (fields.isEmpty()) {
 					throw new BadRequestException("INVALID_CONDITION", null);
 
