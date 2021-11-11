@@ -173,10 +173,10 @@ public class CsvImportJob {
 									inputMessage.remove("CREATED_BY");
 								}
 
-								String phoneNumber = "";
+								// String phoneNumber = "";
 
+								String accountId = null;
 								if (moduleName.equals("Users") || moduleName.equals("Contacts")) {
-									String accountId = null;
 									try {
 										accountId = csvImportService.getAccountId(moduleName, inputMessage, companyId,
 												modules, globalTeamId, userUuid, csvDocument, i);
@@ -187,10 +187,6 @@ public class CsvImportJob {
 									}
 
 									if (moduleName.equals("Users")) {
-										if (inputMessage.containsKey("PHONE_NUMBER")) {
-											phoneNumber = inputMessage.get("PHONE_NUMBER").toString();
-											inputMessage.remove("PHONE_NUMBER");
-										}
 										if (inputMessage.containsKey("DEFAULT_CONTACT_METHOD")) {
 											if (inputMessage.get("DEFAULT_CONTACT_METHOD") == null || inputMessage
 													.get("DEFAULT_CONTACT_METHOD").toString().equals("")) {
@@ -218,7 +214,7 @@ public class CsvImportJob {
 								try {
 									if (moduleName.equalsIgnoreCase("Users")) {
 										userModuleService.handleUserModule(inputMessage, modules, userUuid, module,
-												company, globalTeam, phoneNumber);
+												company, globalTeam, accountId);
 									} else if (moduleName.equals("Accounts")) {
 										if (!csvImportService.accountExists(inputMessage.get("ACCOUNT_NAME").toString(),
 												companyId)) {

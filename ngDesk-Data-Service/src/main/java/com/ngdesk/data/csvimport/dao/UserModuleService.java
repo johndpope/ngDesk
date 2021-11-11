@@ -42,7 +42,7 @@ public class UserModuleService {
 	RolesRepository rolesRepository;
 
 	public Map<String, Object> handleUserModule(Map<String, Object> inputMessage, List<Module> modules, String userUuid,
-			Module module, Company company, Map<String, Object> globalTeam, String phoneNumber) {
+			Module module, Company company, Map<String, Object> globalTeam, String accountId) {
 
 		Map<String, Object> entry = new HashMap<String, Object>();
 		String companyId = company.getCompanyId();
@@ -118,7 +118,7 @@ public class UserModuleService {
 					String firstName = names[0].trim();
 					String lastName = "";
 					if (names.length > 1) {
-						lastName = names[1].trim();
+						lastName = names[1].trim(); 
 					}
 
 					Module userModule = modules.stream().filter(mod -> mod.getName().equals("Users")).findFirst()
@@ -138,14 +138,13 @@ public class UserModuleService {
 						return null;
 					}
 
-					Map<String, Object> contactEntry = csvImportService.createContact(firstName, lastName,
-							inputMessage.get("ACCOUNT").toString(), new Phone("us", "+1", phoneNumber, "us.svg"),
-							contactModule, companyId, globalTeamId, userId, userUuid);
+					Phone phone = new Phone("us", "+1", "", "us.svg");
+					Map<String, Object> contactEntry = csvImportService.createContact(firstName, lastName, accountId,
+							phone, contactModule, companyId, globalTeamId, userId, userUuid);
 
 					HashMap<String, Object> team = new HashMap<String, Object>();
-					team.put("NAME", inputMessage.get("FIRST_NAME") + " " + inputMessage.get("LAST_NAME"));
-					team.put("DESCRIPTION", "Personal team for " + inputMessage.get("FIRST_NAME") + " "
-							+ inputMessage.get("LAST_NAME"));
+					team.put("NAME", firstName + " " + lastName);
+					team.put("DESCRIPTION", "Personal team for " + firstName + " " + lastName);
 
 					List<Relationship> users = new ArrayList<Relationship>();
 					String primaryDisplayFieldValue = csvImportService
@@ -183,6 +182,7 @@ public class UserModuleService {
 						userUuid);
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			String errorMessage = csvImportService.formatErrorMessage(e.getMessage());
 			throw new InternalErrorException(errorMessage);
 		}
