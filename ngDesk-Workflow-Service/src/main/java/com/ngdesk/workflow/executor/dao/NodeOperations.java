@@ -99,7 +99,7 @@ public class NodeOperations {
 	 * Replaces variables in a path and returns value
 	 */
 	public String getValue(WorkflowExecutionInstance instance, Module module, Map<String, Object> inputMessage,
-			String path) {
+			String path, List<String> replaceValues) {
 		try {
 			ObjectMapper mapper = new ObjectMapper();
 			Company company = instance.getCompany();
@@ -171,7 +171,7 @@ public class NodeOperations {
 					relatedEntry.put("DATA_ID", dataId);
 
 					if (path.split("\\.").length > 1) {
-						return getValue(instance, relatedModule, relatedEntry, path.split(section + "\\.")[1]);
+						return getValue(instance, relatedModule, relatedEntry, path.split(section + "\\.")[1], null);
 					}
 					return mapper.writeValueAsString(relatedEntry);
 				}
@@ -186,14 +186,14 @@ public class NodeOperations {
 					isLatestMessage = true;
 				}
 
-				return getDiscussionMessage(company, isLatestMessage, inputMessage, instance, section);
+				return getDiscussionMessage(company, isLatestMessage, inputMessage, instance, section, replaceValues);
 			} else {
 				if (path.split("\\.").length > 1) {
 					if (inputMessage.get(section) == null) {
 						return "";
 					}
 					Map<String, Object> newMap = (Map<String, Object>) inputMessage.get(section);
-					return getValue(instance, module, newMap, path.split(section + "\\.")[1]);
+					return getValue(instance, module, newMap, path.split(section + "\\.")[1], null);
 				} else {
 					if (inputMessage.get(section) == null) {
 						return "";
@@ -283,7 +283,7 @@ public class NodeOperations {
 	 * include meta data The returning message includes attachments if any
 	 */
 	private String getDiscussionMessage(Company company, boolean isLatestMessage, Map<String, Object> inputMessage,
-			WorkflowExecutionInstance instance, String section) {
+			WorkflowExecutionInstance instance, String section, List<String> replaceValues) {
 		try {
 			String discussionMessageBody = global.getFile("reply-above.html");
 			discussionMessageBody = discussionMessageBody.replaceAll("REPLY_ABOVE_REPLACE",
@@ -299,7 +299,7 @@ public class NodeOperations {
 				DiscussionMessage message = messages.get(i);
 				Sender sender = message.getSender();
 
-				discussionMessageBody += getFormattedHtmlMessage(message, sender, company.getCompanyName());
+				discussionMessageBody += getFormattedHtmlMessage(message, sender, company.getCompanyName(), replaceValues);
 
 				discussionMessageBody = addAttachmentsToDiscussionMessageBody(message.getAttachments(),
 						company.getCompanySubdomain(), instance, discussionMessageBody, message.getMessageId());
@@ -355,7 +355,7 @@ public class NodeOperations {
 	/*
 	 * This function is used to generate a html message for each discussion message
 	 */
-	private String getFormattedHtmlMessage(DiscussionMessage message, Sender sender, String companyName) {
+	private String getFormattedHtmlMessage(DiscussionMessage message, Sender sender, String companyName, List<String> replaceValues) {
 		String messageBody = message.getMessage();
 		Pattern pattern = Pattern.compile("<body>(.*?)<\\/body>");
 		Matcher matcher = pattern.matcher(messageBody);
@@ -378,10 +378,13 @@ public class NodeOperations {
 			senderLastName = sender.getLastName();
 		}
 
-		messageHtml = messageHtml.replaceAll("FIRST_NAME", sender.getFirstName());
-		messageHtml = messageHtml.replaceAll("LAST_NAME", senderLastName);
-		messageHtml = messageHtml.replaceAll("COMPANY_NAME", Matcher.quoteReplacement(companyName));
-		messageHtml = messageHtml.replaceAll("DATE_AND_TIME", formattedDateCreated);
+//		messageHtml = messageHtml.replaceAll("FIRST_NAME", sender.getFirstName());
+//		messageHtml = messageHtml.replaceAll("LAST_NAME", senderLastName);
+//		messageHtml = messageHtml.replaceAll("COMPANY_NAME", Matcher.quoteReplacement(companyName));
+//		messageHtml = messageHtml.replaceAll("DATE_AND_TIME", formattedDateCreated);
+		messageHtml = messageHtml.replaceAll("FIRST_REPLACE", replaceValues.get(0));
+		messageHtml = messageHtml.replaceAll("SECOND_REPLACE", replaceValues.get(1));
+		messageHtml = messageHtml.replaceAll("THIRD_REPLACE", replaceValues.get(2));
 		messageHtml = messageHtml.replaceAll("MESSAGE_REPLACE", Matcher.quoteReplacement(messageBody));
 
 		return messageHtml;
@@ -520,7 +523,7 @@ public class NodeOperations {
 	/*
 	 * Checks if a field belongs to a certain data type returns true / false
 	 */
-	private boolean isDataType(Module module, String fieldName, String dataType) {
+	public boolean isDataType(Module module, String fieldName, String dataType) {
 
 		ModuleField field = module.getFields().stream().filter(moduleField -> moduleField.getName().equals(fieldName))
 				.findFirst().orElse(null);
@@ -758,12 +761,12 @@ public class NodeOperations {
 				Boolean conditionToEvaluate = null;
 				if (condition.indexOf("==") != -1) {
 					path = condition.split("==")[0].split("(?i)inputMessage\\.")[1].trim();
-					value = getValue(instance, instance.getModule(), instance.getEntry(), path);
+					value = getValue(instance, instance.getModule(), instance.getEntry(), path, null);
 					givenValue = condition.split("==")[1].trim();
 					conditionToEvaluate = value.equals(givenValue);
 				} else if (condition.indexOf("!=") != -1) {
 					path = condition.split("!=")[0].split("(?i)inputMessage\\.")[1].trim();
-					value = getValue(instance, instance.getModule(), instance.getEntry(), path);
+					value = getValue(instance, instance.getModule(), instance.getEntry(), path, null);
 					givenValue = condition.split("!=")[1].trim();
 					if (givenValue.equals("''")) {
 						givenValue = "";

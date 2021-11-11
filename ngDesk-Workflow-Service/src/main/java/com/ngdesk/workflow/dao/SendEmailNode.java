@@ -155,7 +155,7 @@ public class SendEmailNode extends Node {
 			Matcher matcherTo = pattern.matcher(toAddress);
 			if (matcherTo.find()) {
 				String path = matcherTo.group(1).split("(?i)inputMessage\\.")[1];
-				String toValue = nodeOperations.getValue(instance, instance.getModule(), entry, path);
+				String toValue = nodeOperations.getValue(instance, instance.getModule(), entry, path, null);
 				if (toValue != null) {
 					toAddress = toAddress.replaceAll("\\{\\{" + matcherTo.group(1) + "\\}\\}", toValue);
 				}
@@ -165,7 +165,7 @@ public class SendEmailNode extends Node {
 			Matcher matcherFrom = pattern.matcher(from);
 			if (matcherFrom.find()) {
 				String path = matcherFrom.group(1).split("(?i)inputMessage\\.")[1];
-				String fromValue = nodeOperations.getValue(instance, instance.getModule(), entry, path);
+				String fromValue = nodeOperations.getValue(instance, instance.getModule(), entry, path, null);
 
 				if (fromValue != null) {
 					from = from.replaceAll("\\{\\{" + matcherFrom.group(1) + "\\}\\}", fromValue);
@@ -176,7 +176,7 @@ public class SendEmailNode extends Node {
 			Matcher matcherSubject = pattern.matcher(subject);
 			while (matcherSubject.find()) {
 				String path = matcherSubject.group(1).split("(?i)inputMessage\\.")[1];
-				String value = nodeOperations.getValue(instance, instance.getModule(), entry, path);
+				String value = nodeOperations.getValue(instance, instance.getModule(), entry, path, null);
 				if (value != null) {
 					subject = subject.replaceAll("\\{\\{" + matcherSubject.group(1) + "\\}\\}",
 							Matcher.quoteReplacement(value));
@@ -185,14 +185,35 @@ public class SendEmailNode extends Node {
 
 			// BODY
 			Matcher matcherBody = pattern.matcher(body);
+			List<String> replaceValues = new ArrayList<String>();
 			while (matcherBody.find()) {
 				String path = matcherBody.group(1).split("(?i)inputMessage\\.")[1];
-				String value = nodeOperations.getValue(instance, instance.getModule(), entry, path);
+//				String value = nodeOperations.getValue(instance, instance.getModule(), entry, path, null);
+//				if (value != null) {
+//					body = body.replaceAll("\\{\\{" + matcherBody.group(1) + "\\}\\}", Matcher.quoteReplacement(value));
+//				}
 
-				if (value != null) {
-					body = body.replaceAll("\\{\\{" + matcherBody.group(1) + "\\}\\}", Matcher.quoteReplacement(value));
+				String section = path.split("\\.")[0];
+				boolean bool = nodeOperations.isDataType(module, section, "Discussion");
+				if(bool == false) {
+					String value = nodeOperations.getValue(instance, instance.getModule(), entry, path, null);
+					if (value != null) {
+						replaceValues.add(value);
+						body = body.replaceAll("\\{\\{" + matcherBody.group(1) + "\\}\\}", "");
+					}
 				}
 			}
+			
+			Matcher matcherBody2 = pattern.matcher(body);
+			while (matcherBody2.find()) {
+				String path = matcherBody2.group(1).split("(?i)inputMessage\\.")[1];
+				String value = nodeOperations.getValue(instance, instance.getModule(), entry, path, replaceValues);
+				if (value != null) {
+					body = body.replaceAll("\\{\\{" + matcherBody2.group(1) + "\\}\\}", Matcher.quoteReplacement(value));
+				}
+			}
+			System.out.println(replaceValues);
+			System.out.println("body:\n"+body);
 
 			List<String> toEmails = new ArrayList<String>();
 

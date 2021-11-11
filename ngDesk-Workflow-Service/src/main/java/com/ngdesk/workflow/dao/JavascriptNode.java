@@ -102,7 +102,7 @@ public class JavascriptNode extends Node {
 
 		while (matcher.find()) {
 			String path = matcher.group(1).split("(?i)inputMessage\\.")[1];
-			String value = nodeOperations.getValue(instance, instance.getModule(), entryClone, path);
+			String value = nodeOperations.getValue(instance, instance.getModule(), entryClone, path, null);
 
 			// NEEDS TO BE DOUBLE ESCAPED
 			if (value != null) {

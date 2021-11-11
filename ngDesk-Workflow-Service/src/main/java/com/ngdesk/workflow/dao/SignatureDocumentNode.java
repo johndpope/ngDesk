@@ -179,7 +179,7 @@ public class SignatureDocumentNode extends Node {
 				Matcher matcherTo = pattern.matcher(toAddress);
 				if (matcherTo.find()) {
 					String path = matcherTo.group(1).split("(?i)inputMessage\\.")[1];
-					String toValue = nodeOperations.getValue(instance, instance.getModule(), entry, path);
+					String toValue = nodeOperations.getValue(instance, instance.getModule(), entry, path, null);
 					if (toValue != null) {
 						toAddress = toAddress.replaceAll("\\{\\{" + matcherTo.group(1) + "\\}\\}", toValue);
 					} else {
@@ -190,7 +190,7 @@ public class SignatureDocumentNode extends Node {
 				Matcher matcherFrom = pattern.matcher(fromAddress);
 				if (matcherFrom.find()) {
 					String path = matcherFrom.group(1).split("(?i)inputMessage\\.")[1];
-					String fromValue = nodeOperations.getValue(instance, instance.getModule(), entry, path);
+					String fromValue = nodeOperations.getValue(instance, instance.getModule(), entry, path, null);
 					if (fromValue != null) {
 						fromAddress = fromAddress.replaceAll("\\{\\{" + matcherFrom.group(1) + "\\}\\}", fromValue);
 					}
@@ -200,7 +200,7 @@ public class SignatureDocumentNode extends Node {
 				Matcher matcherSubject = pattern.matcher(subject);
 				while (matcherSubject.find()) {
 					String path = matcherSubject.group(1).split("(?i)inputMessage\\.")[1];
-					String value = nodeOperations.getValue(instance, instance.getModule(), entry, path);
+					String value = nodeOperations.getValue(instance, instance.getModule(), entry, path, null);
 					if (value != null) {
 						subject = subject.replaceAll("\\{\\{" + matcherSubject.group(1) + "\\}\\}",
 								Matcher.quoteReplacement(value));
@@ -227,7 +227,7 @@ public class SignatureDocumentNode extends Node {
 						Matcher matcherBody = pattern.matcher(message);
 						while (matcherBody.find()) {
 							String path = matcherBody.group(1).split("(?i)inputMessage\\.")[1];
-							String value = nodeOperations.getValue(instance, instance.getModule(), entry, path);
+							String value = nodeOperations.getValue(instance, instance.getModule(), entry, path, null);
 							if (value != null) {
 								message = message.replaceAll("\\{\\{" + matcherBody.group(1) + "\\}\\}",
 										Matcher.quoteReplacement(value));
@@ -296,7 +296,7 @@ public class SignatureDocumentNode extends Node {
 										String row = "<tr>";
 										for (String name : relatedFieldNames) {
 											String value = nodeOperations.getValue(instance, relatedModule,
-													relatedEntry, name);
+													relatedEntry, name, null);
 											if (nonRelatedFieldValues.get(name) != null) {
 												value += nonRelatedFieldValues.get(name);
 											}

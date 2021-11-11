@@ -119,7 +119,7 @@ public class SendSmsNode extends Node {
 				Matcher matcherBody = pattern.matcher(body);
 				while (matcherBody.find()) {
 					String path = matcherBody.group(1).split("(?i)inputMessage\\.")[1];
-					String value = nodeOperations.getValue(instance, instance.getModule(), entry, path);
+					String value = nodeOperations.getValue(instance, instance.getModule(), entry, path, null);
 					if (value != null) {
 						body = body.replaceAll("\\{\\{" + matcherBody.group(1) + "\\}\\}",
 								Matcher.quoteReplacement(value));

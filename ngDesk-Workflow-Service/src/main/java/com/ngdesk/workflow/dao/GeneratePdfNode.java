@@ -140,7 +140,7 @@ public class GeneratePdfNode extends Node {
 					Matcher matcherBody = pattern.matcher(message);
 					while (matcherBody.find()) {
 						String path = matcherBody.group(1).split("(?i)inputMessage\\.")[1];
-						String value = nodeOperations.getValue(instance, instance.getModule(), entry, path);
+						String value = nodeOperations.getValue(instance, instance.getModule(), entry, path, null);
 						if (value != null) {
 							message = message.replaceAll("\\{\\{" + matcherBody.group(1) + "\\}\\}",
 									Matcher.quoteReplacement(value));
@@ -219,7 +219,7 @@ public class GeneratePdfNode extends Node {
 										}
 
 										String value = nodeOperations.getValue(instance, relatedModule, relatedEntry,
-												name);
+												name, null);
 										if (nonRelatedFieldValues.get(name) != null) {
 											value += nonRelatedFieldValues.get(name);
 										}
@@ -256,7 +256,7 @@ public class GeneratePdfNode extends Node {
 						Matcher matcherBody2 = pattern.matcher(fileName);
 						while (matcherBody2.find()) {
 							String path = matcherBody2.group(1).split("(?i)inputMessage\\.")[1];
-							String value = nodeOperations.getValue(instance, instance.getModule(), entry, path);
+							String value = nodeOperations.getValue(instance, instance.getModule(), entry, path, null);
 							if (value != null) {
 								fileName = fileName.replaceAll("\\{\\{" + matcherBody2.group(1) + "\\}\\}",
 										Matcher.quoteReplacement(value));
