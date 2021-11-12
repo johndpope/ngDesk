@@ -2,7 +2,7 @@ import { ScheduleLayer } from '@src/app/models/schedule-layer';
 
 export class Schedule {
 	constructor(
-		private name: string,
+		public name: string,
 		private description: string,
 		public timezone: string,
 		public layers: ScheduleLayer[],

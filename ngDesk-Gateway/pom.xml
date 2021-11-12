@@ -17,7 +17,6 @@
 
 
 
-
 	<properties>
 		<java.version>11</java.version>
 		<spring-cloud.version>Hoxton.SR8</spring-cloud.version>
@@ -106,7 +105,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<image>
-						<name>ngdesk/ngdesk-gateway:latest</name>
+						<name>ngdesk/gateway:latest</name>
 					</image>
 					<layers>
 						<enabled>true</enabled>

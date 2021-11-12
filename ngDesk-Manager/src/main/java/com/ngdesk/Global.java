@@ -334,7 +334,7 @@ public class Global {
 			Sender sender = new Sender(user.getString("FIRST_NAME"), user.getString("LAST_NAME"),
 					user.getString("USER_UUID"), custolerRoleId);
 
-			message.put("MESSAGE", StringEscapeUtils.escapeJava(value));
+			message.put("MESSAGE", value);
 			message.put("DATE_CREATED", new Date());
 			message.put("SENDER", sender);
 			message.put("MESSAGE_TYPE", messageType);

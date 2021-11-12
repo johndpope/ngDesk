@@ -1,5 +1,6 @@
 package com.ngdesk.repositories;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -51,7 +52,7 @@ public class CustomModuleEntryRepositoryImpl implements CustomModuleEntryReposit
 
 		Update update = new Update();
 		update.addToSet(discussionFieldName, message);
-
+		update.set("DATE_UPDATED", new Date());
 		mongoOperations.updateFirst(query, update, collectionName);
 
 	}
@@ -173,5 +174,4 @@ public class CustomModuleEntryRepositoryImpl implements CustomModuleEntryReposit
 				Criteria.where("EFFECTIVE_TO").is(null));
 		return Optional.ofNullable(mongoOperations.findOne(new Query(criteria), Map.class, collectionName));
 	}
-
 }

@@ -9,6 +9,7 @@ import org.apache.commons.lang.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
 import org.springframework.cloud.gateway.support.NotFoundException;
 import org.springframework.http.HttpStatus;
@@ -40,6 +41,9 @@ public class JsonExceptionHandler implements ErrorWebExceptionHandler {
 
 	@Autowired
 	Prometheus prometheus;
+	
+	@Value("${jwt.secret}")
+	private String jwtSecret;
 
 	private static final Logger log = LoggerFactory.getLogger(JsonExceptionHandler.class);
 	/**
@@ -125,7 +129,7 @@ public class JsonExceptionHandler implements ErrorWebExceptionHandler {
 			String subdomain = "";
 			if (request.getHeaders().containsKey("authentication_token")) {
 				String jwt = exchange.getRequest().getHeaders().get("authentication_token").get(0);
-				Claims claims = Jwts.parser().setSigningKey(AuthFilter.Config.getSigningKey()).parseClaimsJws(jwt)
+				Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(jwt)
 						.getBody();
 				subdomain = claims.get("SUBDOMAIN").toString();
 				Map<String, Object> userMap = new ObjectMapper().readValue(claims.get("USER").toString(), Map.class);

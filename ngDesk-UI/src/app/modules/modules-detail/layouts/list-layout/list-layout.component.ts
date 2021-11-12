@@ -198,6 +198,7 @@ export class ListLayoutComponent implements OnInit {
 										field.DATA_TYPE.DISPLAY !== 'Date' &&
 										field.DATA_TYPE.DISPLAY !== 'Date/Time' &&
 										field.DATA_TYPE.DISPLAY !== 'Time' &&
+										field.DATA_TYPE.DISPLAY !== 'List Formula' &&
 										field.NAME !== 'DELETED' &&
 										field.NAME !== 'CHANNEL' &&
 										field.NAME !== 'TIME_WINDOW' &&
@@ -226,7 +227,8 @@ export class ListLayoutComponent implements OnInit {
 								field.DATA_TYPE.DISPLAY !== 'File Preview' &&
 								field.DATA_TYPE.DISPLAY !== 'PDF' &&
 								field.DATA_TYPE.DISPLAY !== 'Receipt Capture' &&
-								field.DATA_TYPE.DISPLAY !== 'Password'
+								field.DATA_TYPE.DISPLAY !== 'Password' &&
+								field.DATA_TYPE.DISPLAY !== 'List Formula' 
 						);
 						let modulesList = [];
 

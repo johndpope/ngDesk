@@ -378,7 +378,7 @@ public class UpdateEntry extends Node {
 							String environment = env.getProperty("env");
 							if (environment.equals("prd")) {
 								sendMail.send("spencer@allbluesolutions.com", "support@ngdesk.com", subject, body);
-								sendMail.send("shashank@allbluesolutions.com", "support@ngdesk.com", subject, body);
+								sendMail.send("sharath.satish@allbluesolutions.com", "support@ngdesk.com", subject, body);
 							}
 						}
 					}

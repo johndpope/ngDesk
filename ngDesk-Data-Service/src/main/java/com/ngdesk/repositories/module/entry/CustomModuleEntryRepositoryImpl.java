@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 import org.apache.http.util.Asserts;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -1250,6 +1251,15 @@ public class CustomModuleEntryRepositoryImpl implements CustomModuleEntryReposit
 		criteria.andOperator(Criteria.where("DELETED").is(false), Criteria.where("EFFECTIVE_TO").is(null));
 		return mongoOperations.find(new Query(criteria).with(pageable), (Class<Map<String, Object>>) (Class) Map.class,
 				collectionName);
+	}
+
+	@Override
+	public Optional<Map<String, Object>> findEntriesByVariableForRelationship(String collectionName, String fieldName,
+			String value, String id) {
+		Criteria criteria = new Criteria();
+		criteria.andOperator(Criteria.where("DELETED").is(false), Criteria.where("EFFECTIVE_TO").is(null),
+				Criteria.where("_id").ne(id), Criteria.where(fieldName).is(value));
+		return Optional.ofNullable(mongoOperations.findOne(new Query(criteria), Map.class, collectionName));
 	}
 
 	private AggregationOperation lookupForAggregation(String parentCollectionName, String fieldInChild,

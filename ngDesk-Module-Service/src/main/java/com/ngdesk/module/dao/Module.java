@@ -42,17 +42,18 @@ public class Module {
 	private String parentModule;
 
 	@Schema(description = "Description of the module", required = false, example = "Module to handle books")
-	@CustomNotNull(message = "NOT_NULL", values = { "MODULE_DESCRIPTION" })
 	@Field("DESCRIPTION")
 	@JsonProperty("DESCRIPTION")
 	private String description;
 
 	@Field("SINGULAR_NAME")
 	@JsonProperty("SINGULAR_NAME")
+	@CustomNotEmpty(message = "DAO_VARIABLE_REQUIRED", values = { "SINGULAR_NAME" })
 	private String singular;
 
 	@Field("PLURAL_NAME")
 	@JsonProperty("PLURAL_NAME")
+	@CustomNotEmpty(message = "DAO_VARIABLE_REQUIRED", values = { "PLURAL_NAME" })
 	private String plural;
 
 	@JsonProperty("VALIDATIONS")
