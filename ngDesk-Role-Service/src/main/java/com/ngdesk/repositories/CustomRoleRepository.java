@@ -10,4 +10,6 @@ import com.ngdesk.role.dao.Role;
 public interface CustomRoleRepository {
 
 	public Optional<Role> findRoleByName(String name, String collectionName);
+
+	public Optional<Role> findRoleByNameAndRoleId(String name, String roleId, String collectionName);
 }

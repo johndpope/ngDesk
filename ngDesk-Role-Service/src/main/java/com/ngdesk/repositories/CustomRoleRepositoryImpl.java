@@ -22,4 +22,11 @@ public class CustomRoleRepositoryImpl implements CustomRoleRepository {
 				mongoOperations.findOne(new Query(Criteria.where("NAME").is(name)), Role.class, collectionName));
 	}
 
+	@Override
+	public Optional<Role> findRoleByNameAndRoleId(String name, String roleId, String collectionName) {
+		Criteria criteria = new Criteria();
+		criteria.andOperator(Criteria.where("NAME").is(name), Criteria.where("_id").ne(roleId));
+		return Optional.ofNullable(mongoOperations.findOne(new Query(criteria), Role.class, collectionName));
+	}
+
 }

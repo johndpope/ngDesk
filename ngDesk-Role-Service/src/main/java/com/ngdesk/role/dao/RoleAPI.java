@@ -34,7 +34,6 @@ public class RoleAPI {
 	@PostMapping("/roles")
 	public Role postRole(@Valid @RequestBody Role role) {
 		String companyId = authManager.getUserDetails().getCompanyId();
-		findDuplicateName(role);
 		return roleRepository.save(role, "roles_" + companyId);
 
 	}
@@ -62,16 +61,6 @@ public class RoleAPI {
 		if (optionalRole.isEmpty()) {
 			String vars[] = { "ROLE" };
 			throw new NotFoundException("DAO_NOT_FOUND", vars);
-		}
-	}
-
-	public void findDuplicateName(Role role) {
-		String companyId = authManager.getUserDetails().getCompanyId();
-		String collectionName = "roles_" + companyId;
-		Optional<Role> optionalRole = roleRepository.findRoleByName(role.getName(), collectionName);
-		if (optionalRole.isPresent()) {
-			String[] variables = { "ROLE", "NAME" };
-			throw new BadRequestException("DAO_VARIABLE_ALREADY_EXISTS", variables);
 		}
 	}
 }

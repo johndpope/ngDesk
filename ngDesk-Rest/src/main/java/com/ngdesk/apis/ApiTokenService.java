@@ -171,8 +171,8 @@ public class ApiTokenService {
 
 	@PostMapping("/api/tokens")
 	public ResponseEntity<Object> generateToken(HttpServletRequest request,
-			@RequestParam(value="authentication_token", required=false) String uuid, @RequestParam("user_id") String userId,
-			@RequestParam("name") String name) {
+			@RequestParam(value = "authentication_token", required = false) String uuid,
+			@RequestParam("user_id") String userId, @RequestParam("name") String name) {
 
 		try {
 			if (request != null && request.getHeader("authentication_token") != null) {
@@ -237,7 +237,7 @@ public class ApiTokenService {
 		userDocument.remove("PASSWORD");
 		userDocument.put("DATA_ID", userId);
 		userDocument.remove("META_DATA");
-		
+
 		JSONObject apiKey = new JSONObject();
 		apiKey.put("COMPANY_ID", companyId);
 		apiKey.put("NAME", name);
