@@ -31,7 +31,7 @@ public class CustomCsvImportRepositoryImpl implements CustomCsvImportRepository 
 	}
 
 	@Override
-	public void updateEntry(String dataId, String variable, String value, String collectionName) {
+	public void updateEntry(String dataId, String variable, Object value, String collectionName) {
 		Update update = new Update();
 		update.set(variable, value);
 		mongoOperations.updateFirst(new Query(Criteria.where("_id").is(dataId)), update, collectionName);

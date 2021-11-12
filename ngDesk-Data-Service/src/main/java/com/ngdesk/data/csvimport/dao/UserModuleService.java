@@ -20,6 +20,7 @@ import com.ngdesk.data.modules.dao.Module;
 import com.ngdesk.data.modules.dao.ModuleService;
 import com.ngdesk.data.roles.dao.Role;
 import com.ngdesk.data.sam.dao.DataProxy;
+import com.ngdesk.repositories.csvimport.CsvImportRepository;
 import com.ngdesk.repositories.module.entry.ModuleEntryRepository;
 import com.ngdesk.repositories.roles.RolesRepository;
 
@@ -41,14 +42,18 @@ public class UserModuleService {
 	@Autowired
 	RolesRepository rolesRepository;
 
+	@Autowired
+	CsvImportRepository csvImportRepository;
+
 	public Map<String, Object> handleUserModule(Map<String, Object> inputMessage, List<Module> modules, String userUuid,
 			Module module, Company company, Map<String, Object> globalTeam, String accountId) {
 
 		Map<String, Object> entry = new HashMap<String, Object>();
 		String companyId = company.getCompanyId();
 		String globalTeamId = globalTeam.get("_id").toString();
-		Optional<Map<String, Object>> optionalUser = moduleEntryRepository.findEntryByFieldName("EMAIL_ADDRESS",
-				inputMessage.get("EMAIL_ADDRESS"), moduleService.getCollectionName("Users", companyId));
+		Optional<Map<String, Object>> optionalUser = moduleEntryRepository.findEntryByFieldNameForDeleted(
+				"EMAIL_ADDRESS", inputMessage.get("EMAIL_ADDRESS"),
+				moduleService.getCollectionName("Users", companyId));
 
 		HashMap<String, Object> userEntry = new HashMap<String, Object>();
 		boolean isDeleted = false;
@@ -82,11 +87,26 @@ public class UserModuleService {
 					return null;
 				}
 				Module teamsModule = optionalTeamsModule.get();
+
+				Optional<Module> optionalContactModule = modules.stream()
+						.filter(mod -> mod.getName().equals("Contacts")).findFirst();
+				if (optionalContactModule.isEmpty()) {
+					return null;
+				}
+				Module contactModule = optionalContactModule.get();
+
 				String userId = "";
 
 				if (optionalUser.isPresent()) {
 					userId = userEntry.get("_id").toString();
-					String teamName = userEntry.get("FIRST_NAME") + " " + userEntry.get("LAST_NAME");
+					String contactId = userEntry.get("CONTACT").toString();
+					Optional<Map<String, Object>> optionalContactEntry = moduleEntryRepository.findById(contactId,
+							moduleService.getCollectionName("Contacts", companyId));
+					if (optionalContactEntry.isEmpty()) {
+						return null;
+					}
+					Map<String, Object> contactEntry = optionalContactEntry.get();
+					String teamName = contactEntry.get("FULL_NAME").toString();
 
 					Optional<Map<String, Object>> optionalPersonalTeam = moduleEntryRepository
 							.findTeamsByVariableForIsPersonal("NAME", teamName,
@@ -95,22 +115,31 @@ public class UserModuleService {
 						return null;
 					}
 					Map<String, Object> personalTeam = optionalPersonalTeam.get();
-					personalTeam.put("DELETED", false);
-					userEntry.put("DELETED", false);
 
-					updateUsersInTeamsEntry(Arrays.asList().toString(), userId, teamsModule, companyId, personalTeam,
-							userUuid);
+					csvImportRepository.updateEntry(contactId, "DELETED", false,
+							moduleService.getCollectionName("Contacts", companyId));
+
+					csvImportRepository.updateEntry(userId, "DELETED", false,
+							moduleService.getCollectionName("Users", companyId));
 
 					List<String> existingTeams = mapper.readValue(mapper.writeValueAsString(userEntry.get("TEAMS")),
 							mapper.getTypeFactory().constructCollectionType(List.class, String.class));
 					if (!existingTeams.contains(personalTeam.get("_id").toString())) {
 						existingTeams.add(personalTeam.get("_id").toString());
+
+						List<Relationship> teams = csvImportService.getListRelationshipValue("TEAMS", module, companyId,
+								existingTeams);
+
+						HashMap<String, Object> updateUser = new HashMap<String, Object>();
+						updateUser.put("TEAMS", teams);
+						updateUser.put("DATA_ID", userId);
+
+						entry = dataAPI.putModuleEntry(updateUser, module.getModuleId(), true, companyId, userUuid,
+								false);
 					}
 
-					List<Relationship> teams = csvImportService.getListRelationshipValue("TEAMS", module, companyId,
-							existingTeams);
-					userEntry.put("TEAMS", teams);
-					entry = dataAPI.putModuleEntry(userEntry, module.getModuleId(), true, companyId, userUuid, false);
+					updateUsersInTeamsEntry(Arrays.asList().toString(), userId, teamsModule, companyId, personalTeam,
+							userUuid);
 				} else {
 					String userEmailAddress = inputMessage.get("EMAIL_ADDRESS").toString();
 					String[] splitEmail = userEmailAddress.split("@");
@@ -118,7 +147,7 @@ public class UserModuleService {
 					String firstName = names[0].trim();
 					String lastName = "";
 					if (names.length > 1) {
-						lastName = names[1].trim(); 
+						lastName = names[1].trim();
 					}
 
 					Module userModule = modules.stream().filter(mod -> mod.getName().equals("Users")).findFirst()
@@ -131,12 +160,6 @@ public class UserModuleService {
 							false, company.getCompanySubdomain(), "alarm_classic", 0,
 							inputMessage.get("ROLE").toString(), false, globalTeamId, userUuid, userModule);
 					userId = userEntry.get("DATA_ID").toString();
-
-					Module contactModule = modules.stream().filter(mod -> mod.getName().equals("Contacts")).findFirst()
-							.orElse(null);
-					if (contactModule == null) {
-						return null;
-					}
 
 					Phone phone = new Phone("us", "+1", "", "us.svg");
 					Map<String, Object> contactEntry = csvImportService.createContact(firstName, lastName, accountId,
@@ -175,8 +198,8 @@ public class UserModuleService {
 					entry = dataAPI.putModuleEntry(userEntry, module.getModuleId(), true, companyId, userUuid, false);
 				}
 
-				updateUsersInTeamsEntry(globalTeam.get("USERS").toString(), userId, teamsModule, companyId, globalTeam,
-						userUuid);
+				csvImportRepository.addToEntrySet(globalTeamId, "USERS", userId,
+						moduleService.getCollectionName("Teams", companyId));
 
 				updateUsersInTeamsEntry(roleTeam.get("USERS").toString(), userId, teamsModule, companyId, roleTeam,
 						userUuid);
@@ -193,12 +216,16 @@ public class UserModuleService {
 			Map<String, Object> entry, String userUuid) {
 
 		HashMap<String, Object> mapEntry = new HashMap<String, Object>();
-		mapEntry.putAll(entry);
-		List<String> users = csvImportService.parseString(value);
+		mapEntry.put("DATA_ID", entry.get("_id").toString());
+		mapEntry.put("NAME", entry.get("NAME").toString());
+		List<String> users = new ArrayList<String>();
+		users.addAll(csvImportService.parseString(value));
+		users.add(userId);
+		users.removeIf(item -> item.isEmpty());
 
 		List<Relationship> usersRelationship = csvImportService.getListRelationshipValue("USERS", teamsModule,
 				companyId, users);
-		entry.put("USERS", usersRelationship);
+		mapEntry.put("USERS", usersRelationship);
 		try {
 			dataAPI.putModuleEntry(mapEntry, teamsModule.getModuleId(), true, companyId, userUuid, false);
 		} catch (Exception e) {

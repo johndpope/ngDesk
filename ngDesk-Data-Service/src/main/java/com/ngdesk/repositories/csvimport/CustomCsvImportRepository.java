@@ -10,7 +10,7 @@ public interface CustomCsvImportRepository {
 
 	public Optional<List<CsvImport>> findEntriesByVariable(String variable, String value, String collectionName);
 
-	public void updateEntry(String dataId, String variable, String value, String collectionName);
+	public void updateEntry(String dataId, String variable, Object value, String collectionName);
 
 	public void updateEntry(String dataId, Map<String, Object> entry, String collectionName);
 

@@ -117,4 +117,6 @@ public interface CustomModuleEntryRepository {
 	public Optional<Map<String, Object>> findEntriesByVariableForRelationship(String collectionName,
 			String fieldName,String value ,String id);
 
+	public Optional<Map<String, Object>> findEntryByFieldNameForDeleted(String fieldName, Object value, String collectionName);
+
 }

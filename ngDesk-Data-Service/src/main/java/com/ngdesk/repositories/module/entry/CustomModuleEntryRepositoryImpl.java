@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 
 import org.apache.http.util.Asserts;
 import org.bson.Document;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -1426,7 +1425,7 @@ public class CustomModuleEntryRepositoryImpl implements CustomModuleEntryReposit
 		Assert.notNull(collectionName, "The given collectionName must not be null!");
 
 		Criteria criteria = new Criteria();
-		criteria.andOperator(Criteria.where("DELETED").is(true), Criteria.where("IS_PERSONAL").is(true),
+		criteria.andOperator(Criteria.where("DELETED").is(false), Criteria.where("IS_PERSONAL").is(true),
 				Criteria.where(fieldName).is(value));
 
 		return Optional.ofNullable(mongoOperations.findOne(new Query(criteria), Map.class, collectionName));
@@ -1445,4 +1444,15 @@ public class CustomModuleEntryRepositoryImpl implements CustomModuleEntryReposit
 		return Optional.ofNullable(mongoOperations.findOne(new Query(criteria), Map.class, collectionName));
 	}
 
+	@Override
+	public Optional<Map<String, Object>> findEntryByFieldNameForDeleted(String fieldName, Object value,
+			String collectionName) {
+		Assert.notNull(value, "The given value must not be null!");
+		Assert.notNull(collectionName, "The given collectionName must not be null!");
+
+		Query query = new Query();
+		query.addCriteria(Criteria.where(fieldName).is(value));
+
+		return Optional.ofNullable(mongoOperations.findOne(query, Map.class, collectionName));
+	}
 }

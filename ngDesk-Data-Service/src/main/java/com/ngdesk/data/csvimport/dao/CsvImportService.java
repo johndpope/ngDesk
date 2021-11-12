@@ -286,8 +286,11 @@ public class CsvImportService {
 			List<String> entryIds) {
 		List<Relationship> relationshipList = new ArrayList<Relationship>();
 		for (String entryId : entryIds) {
-			Relationship relationship = new Relationship(entryId,
-					getPrimaryDisplayFieldValue(fieldname, module, companyId, entryId).toString());
+			String value = null;
+			if (getPrimaryDisplayFieldValue(fieldname, module, companyId, entryId) != null) {
+				value = getPrimaryDisplayFieldValue(fieldname, module, companyId, entryId).toString();
+			}
+			Relationship relationship = new Relationship(entryId, value);
 			relationshipList.add(relationship);
 		}
 		return relationshipList;
