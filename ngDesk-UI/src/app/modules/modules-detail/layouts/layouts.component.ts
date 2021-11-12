@@ -202,11 +202,9 @@ export class LayoutsComponent implements OnInit {
 				let i = 0;
 				this.navigationOfLayout.forEach((element) => {
 					if (this.module.NAME === 'Chats') {
-						console.log('element  ', element);
 						if (
 							element.NAME === 'MOBILE_LIST_LAYOUT' ||
-							element.NAME === 'WEB_LIST_LAYOUT' ||
-							element.NAME === 'WEB_EDIT_LAYOUT'
+							element.NAME === 'WEB_LIST_LAYOUT' 
 						) {
 							this.matCardFirstRow.push(element);
 							i++;
