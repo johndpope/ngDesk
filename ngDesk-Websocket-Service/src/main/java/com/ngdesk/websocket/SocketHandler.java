@@ -41,6 +41,8 @@ import com.ngdesk.data.dao.SingleWorkflowPayload;
 import com.ngdesk.repositories.RolesRepository;
 import com.ngdesk.websocket.approval.dao.Approval;
 import com.ngdesk.websocket.approval.dao.ApprovalService;
+import com.ngdesk.websocket.channels.chat.dao.AgentAvailability;
+import com.ngdesk.websocket.channels.chat.dao.AgentAvailabilityService;
 import com.ngdesk.websocket.channels.chat.dao.ChatDiscussionMessage;
 import com.ngdesk.websocket.channels.chat.dao.ChatService;
 import com.ngdesk.websocket.channels.chat.dao.ChatStatus;
@@ -54,8 +56,6 @@ import com.ngdesk.websocket.channels.chat.dao.ChatUserEntryService;
 import com.ngdesk.websocket.channels.chat.dao.ChatVisitedPages;
 import com.ngdesk.websocket.channels.chat.dao.ChatWidgetPayload;
 import com.ngdesk.websocket.channels.chat.dao.CloseChat;
-import com.ngdesk.websocket.channels.chat.dao.FindAgent;
-import com.ngdesk.websocket.channels.chat.dao.FindAgentService;
 import com.ngdesk.websocket.dao.WebSocketService;
 import com.ngdesk.websocket.graphql.dao.GraphqlProxy;
 import com.ngdesk.websocket.modules.dao.ButtonTypeService;
@@ -126,7 +126,7 @@ public class SocketHandler extends TextWebSocketHandler {
 	ChatTicketCreationService chatTicketCreationService;
 
 	@Autowired
-	FindAgentService findAgentService;
+	AgentAvailabilityService agentAvailabilityService;
 
 	private static ReentrantLock lock = new ReentrantLock();
 
@@ -552,9 +552,9 @@ public class SocketHandler extends TextWebSocketHandler {
 										chatService.updateChatVistedPages(chatVisitedPages);
 									} catch (Exception e5) {
 										try {
-											FindAgent findAgent = mapper.readValue(textMessage.getPayload(),
-													FindAgent.class);
-											findAgentService.findAgent(findAgent);
+											AgentAvailability agentAvailability = mapper
+													.readValue(textMessage.getPayload(), AgentAvailability.class);
+											agentAvailabilityService.agentAvailability(agentAvailability);
 										} catch (Exception e6) {
 											// TODO: handle exception
 										}

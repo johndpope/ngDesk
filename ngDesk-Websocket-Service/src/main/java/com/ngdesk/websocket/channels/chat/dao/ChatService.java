@@ -49,9 +49,6 @@ public class ChatService {
 	ModuleEntryRepository entryRepository;
 
 	@Autowired
-	RedisTemplate<String, ChatChannelMessage> redisTemplate;
-
-	@Autowired
 	RedisTemplate<String, ChatTicketStatusMessage> redisTemplateForChatTicketStatusMessage;
 
 	@Autowired
@@ -87,9 +84,7 @@ public class ChatService {
 							Optional<ChatChannel> optionalChatChannel = chatChannelRepository
 									.findChannelByName(pageLoad.getChannelName(), "channels_chat_" + companyId);
 							if (optionalChatChannel.isPresent()) {
-								ChatChannelMessage chatChannelMessage = new ChatChannelMessage(companyId,
-										pageLoad.getSessionUUID(), optionalChatChannel.get(), "CHAT_CHANNEL");
-								addToChatChannelQueue(chatChannelMessage);
+
 								HashMap<String, Object> entry = (HashMap<String, Object>) mapper
 										.readValue(mapper.writeValueAsString(pageLoad), Map.class);
 								entry.put("CHANNEL", optionalChatChannel.get().getChannelId());
@@ -128,10 +123,6 @@ public class ChatService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	public void addToChatChannelQueue(ChatChannelMessage chatChannelMessage) {
-		redisTemplate.convertAndSend("chat_channel", chatChannelMessage);
 	}
 
 	public void addToChatNotificationQueue(ChatNotification message) {
