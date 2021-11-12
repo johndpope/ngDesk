@@ -1,6 +1,6 @@
 package com.ngdesk.websocket.channels.chat.dao;
 
-public class FindAgent {
+public class AgentAvailability {
 
 	public String sessionUUID;
 
@@ -8,17 +8,21 @@ public class FindAgent {
 
 	public String type;
 
+	public String channelName;
+
 	public Boolean isAgentAvailable;
 
-	public FindAgent() {
+	public AgentAvailability() {
 		super();
 	}
 
-	public FindAgent(String sessionUUID, String companySubdomain, String type, Boolean isAgentAvailable) {
+	public AgentAvailability(String sessionUUID, String companySubdomain, String type, String channelName,
+			Boolean isAgentAvailable) {
 		super();
 		this.sessionUUID = sessionUUID;
 		this.companySubdomain = companySubdomain;
 		this.type = type;
+		this.channelName = channelName;
 		this.isAgentAvailable = isAgentAvailable;
 	}
 
@@ -44,6 +48,14 @@ public class FindAgent {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getChannelName() {
+		return channelName;
+	}
+
+	public void setChannelName(String channelName) {
+		this.channelName = channelName;
 	}
 
 	public Boolean getIsAgentAvailable() {

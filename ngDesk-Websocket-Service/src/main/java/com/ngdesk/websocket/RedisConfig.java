@@ -14,20 +14,20 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import com.ngdesk.data.dao.WorkflowPayload;
+import com.ngdesk.websocket.channels.chat.dao.AgentAvailability;
 import com.ngdesk.websocket.channels.chat.dao.ChatChannelMessage;
 import com.ngdesk.websocket.channels.chat.dao.ChatNotification;
 import com.ngdesk.websocket.channels.chat.dao.ChatStatusMessage;
 import com.ngdesk.websocket.channels.chat.dao.ChatTicketStatusMessage;
 import com.ngdesk.websocket.channels.chat.dao.ChatVisitedPagesNotification;
-import com.ngdesk.websocket.channels.chat.dao.FindAgent;
 import com.ngdesk.websocket.notification.dao.Notification;
+import com.ngdesk.websocket.subscribers.AgentAvailabilitySubscriber;
 import com.ngdesk.websocket.subscribers.ChatChannelSubscriber;
 import com.ngdesk.websocket.subscribers.ChatNotificationSubscriber;
 import com.ngdesk.websocket.subscribers.ChatSettingsUpdateSubscriber;
 import com.ngdesk.websocket.subscribers.ChatStatusSubscriber;
 import com.ngdesk.websocket.subscribers.ChatTicketStatusSubscriber;
 import com.ngdesk.websocket.subscribers.ChatVisitedPagesSubscriber;
-import com.ngdesk.websocket.subscribers.FindAgentSubscriber;
 import com.ngdesk.websocket.subscribers.ModuleNotificationSubscriber;
 import com.ngdesk.websocket.subscribers.NotificationSubscriber;
 
@@ -68,7 +68,7 @@ public class RedisConfig {
 	ChatVisitedPagesSubscriber chatVisitedPagesSubscriber;
 
 	@Autowired
-	FindAgentSubscriber findAgentSubscriber;
+	AgentAvailabilitySubscriber agentAvailabilitySubscriber;
 
 	@Bean
 	public RedisTemplate<String, WorkflowPayload> redisTemplate(LettuceConnectionFactory redisConnectionFactory) {
@@ -145,12 +145,14 @@ public class RedisConfig {
 	}
 
 	@Bean
-	public RedisTemplate<String, FindAgent> redisFindAgentTemplate(LettuceConnectionFactory redisConnectionFactory) {
-		RedisTemplate<String, FindAgent> redisFindAgentTemplate = new RedisTemplate<String, FindAgent>();
-		redisFindAgentTemplate.setConnectionFactory(redisConnectionFactory);
-		redisFindAgentTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<FindAgent>(FindAgent.class));
-		redisFindAgentTemplate.setKeySerializer(new StringRedisSerializer());
-		return redisFindAgentTemplate;
+	public RedisTemplate<String, AgentAvailability> redisAgentAvailabilityTemplate(
+			LettuceConnectionFactory redisConnectionFactory) {
+		RedisTemplate<String, AgentAvailability> redisAgentAvailabilityTemplate = new RedisTemplate<String, AgentAvailability>();
+		redisAgentAvailabilityTemplate.setConnectionFactory(redisConnectionFactory);
+		redisAgentAvailabilityTemplate
+				.setValueSerializer(new Jackson2JsonRedisSerializer<AgentAvailability>(AgentAvailability.class));
+		redisAgentAvailabilityTemplate.setKeySerializer(new StringRedisSerializer());
+		return redisAgentAvailabilityTemplate;
 	}
 
 	@Bean
@@ -201,8 +203,9 @@ public class RedisConfig {
 	}
 
 	@Bean
-	MessageListenerAdapter findAgentListener() {
-		return new MessageListenerAdapter(findAgentSubscriber);
+	MessageListenerAdapter agentAvailabilityListener() {
+		return new MessageListenerAdapter(agentAvailabilitySubscriber);
+
 	}
 
 	@Bean
@@ -218,7 +221,7 @@ public class RedisConfig {
 		container.addMessageListener(chatNotificationListener(), new PatternTopic("chat_notification"));
 		container.addMessageListener(chatTicketStatusListener(), new PatternTopic("chat_ticket_status"));
 		container.addMessageListener(chatVisitedPagesListener(), new PatternTopic("chat_visited_pages"));
-		container.addMessageListener(findAgentListener(), new PatternTopic("findAgent_notification"));
+		container.addMessageListener(agentAvailabilityListener(), new PatternTopic("agentAvailability_notification"));
 
 		return container;
 	}

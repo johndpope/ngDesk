@@ -153,6 +153,17 @@
 			},
 			"MODULE": "CHANGE_REQUEST_REPLACE",
 			"FIELD_PERMISSIONS": []
+		},
+		{
+			"MODULE_PERMISSIONS": {
+				"DELETE": "None",
+				"ACCESS_TYPE": "Not Set",
+				"EDIT": "All",
+				"VIEW": "All",
+				"ACCESS": "Enabled"
+			},
+			"MODULE": "CHATS_REPLACE",
+			"FIELD_PERMISSIONS": []
 		}
 	],
 	"DESCRIPTION": "This is for the default Crm modules",

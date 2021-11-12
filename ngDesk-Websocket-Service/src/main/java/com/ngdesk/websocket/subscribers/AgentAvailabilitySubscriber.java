@@ -9,12 +9,12 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ngdesk.repositories.CompaniesRepository;
-import com.ngdesk.websocket.channels.chat.dao.FindAgent;
+import com.ngdesk.websocket.channels.chat.dao.AgentAvailability;
 import com.ngdesk.websocket.companies.dao.Company;
 import com.ngdesk.websocket.dao.WebSocketService;
 
 @Component
-public class FindAgentSubscriber implements MessageListener {
+public class AgentAvailabilitySubscriber implements MessageListener {
 
 	@Autowired
 	WebSocketService webSocketService;
@@ -25,11 +25,12 @@ public class FindAgentSubscriber implements MessageListener {
 	@Override
 	public void onMessage(Message message, byte[] pattern) {
 		try {
-			FindAgent findAgent = new ObjectMapper().readValue(message.toString(), FindAgent.class);
+			AgentAvailability agentAvailability = new ObjectMapper().readValue(message.toString(),
+					AgentAvailability.class);
 			Optional<Company> optionalCompany = companiesRepository
-					.findCompanyBySubdomain(findAgent.getCompanySubdomain());
+					.findCompanyBySubdomain(agentAvailability.getCompanySubdomain());
 			if (optionalCompany.isPresent()) {
-				webSocketService.publishFindAgentNotification(optionalCompany.get(), findAgent);
+				webSocketService.publishAgentAvailabilityNotification(optionalCompany.get(), agentAvailability);
 
 			}
 
