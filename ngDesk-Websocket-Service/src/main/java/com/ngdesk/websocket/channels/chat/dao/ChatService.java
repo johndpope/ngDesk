@@ -84,7 +84,6 @@ public class ChatService {
 							Optional<ChatChannel> optionalChatChannel = chatChannelRepository
 									.findChannelByName(pageLoad.getChannelName(), "channels_chat_" + companyId);
 							if (optionalChatChannel.isPresent()) {
-
 								HashMap<String, Object> entry = (HashMap<String, Object>) mapper
 										.readValue(mapper.writeValueAsString(pageLoad), Map.class);
 								entry.put("CHANNEL", optionalChatChannel.get().getChannelId());
@@ -100,7 +99,6 @@ public class ChatService {
 									chatEntry = dataProxy.postModuleEntry(entry, optionalChatModule.get().getModuleId(),
 											false, companyId, user.get("USER_UUID").toString());
 									chatNotification.setType("CHAT_NOTIFICATION");
-
 								} else {
 									entry.put("DATA_ID", optionalChatEntry.get().get("_id").toString());
 									chatEntry = dataProxy.putModuleEntry(entry, optionalChatModule.get().getModuleId(),
@@ -109,9 +107,8 @@ public class ChatService {
 									AgentDetails agentDetails = getAgentDetails(optionalChatEntry.get(), companyId);
 									chatNotification.setAgentDetails(agentDetails);
 									if (agentDetails != null && agentDetails.getAgentDataId() != null) {
-										chatNotification.setStatus("Chatting");
+										chatNotification.setStatus(chatEntry.get("STATUS").toString());
 									}
-
 								}
 								chatNotification.setEntry(chatEntry);
 								addToChatNotificationQueue(chatNotification);
