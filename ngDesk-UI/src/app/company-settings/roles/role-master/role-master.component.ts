@@ -46,7 +46,7 @@ export class RoleMasterComponent implements OnInit {
 	public ngOnInit() {
 		const roleId = this.usersService.user.ROLE;
 
-		this.rolesService.getRoleById(roleId).subscribe(
+		this.rolesService.getRole(roleId).subscribe(
 			(roleResponse: any) => {
 				// enable or disable actions depending on role permission
 				this.customTableService.isLoading = true;
@@ -68,7 +68,7 @@ export class RoleMasterComponent implements OnInit {
 				columnsHeaders.push(this.translateService.instant('DESCRIPTION'));
 				this.rolesActions.actions =
 					this.customTableService.checkPermissionsForActions(
-						roleResponse,
+						roleResponse.DATA,
 						this.rolesActions,
 						'Roles'
 					);
