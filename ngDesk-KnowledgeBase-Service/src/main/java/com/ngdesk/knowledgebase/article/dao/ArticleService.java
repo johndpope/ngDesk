@@ -155,9 +155,13 @@ public class ArticleService {
 				} else if (key.equalsIgnoreCase("comments")) {
 					String commentConverted = "";
 					List<CommentMessage> allComment = article.getComments();
-					for (int i = 0; i < allComment.size(); i++) {
-						CommentMessage message = allComment.get(i);
-						commentConverted += Jsoup.parse(message.getMessage()).text();
+					if (allComment != null) {
+						for (int i = 0; i < allComment.size(); i++) {
+							CommentMessage message = allComment.get(i);
+							if (message != null) {
+								commentConverted += Jsoup.parse(message.getMessage()).text();
+							}
+						}
 					}
 					entryMap.put("INPUT", commentConverted);
 					entryMap.put("FIELD_NAME", key);

@@ -10,5 +10,7 @@ public interface CustomSectionRepository {
 
 	public int getCount(String collectionName);
 
-	public Optional<Section> validateDuplicateSection(String name, String string);
+	public Optional<Section> validateDuplicateSection(String name, String collectionName);
+
+	Optional<Section> validateDuplicateSectionBySectionId(String sectionId, String name, String collectionName);
 }

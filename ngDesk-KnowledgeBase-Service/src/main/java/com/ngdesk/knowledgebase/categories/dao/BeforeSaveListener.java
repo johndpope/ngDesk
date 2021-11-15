@@ -42,11 +42,20 @@ public class BeforeSaveListener extends AbstractMongoEventListener<Category> {
 	}
 
 	public void validateDuplicateCategory(Category category) {
-		Optional<Category> optionalCategory = categoryRepository.validateDuplicateCategory(category.getName(),
-				"categories_" + authManager.getUserDetails().getCompanyId());
-		if (!optionalCategory.isEmpty()) {
-			String[] vars = { "Category", "Name" };
-			throw new BadRequestException("DAO_VARIABLE_ALREADY_EXISTS", vars);
+		if (category.getCategoryId() == null) {
+			Optional<Category> optionalCategory = categoryRepository.validateDuplicateCategory(category.getName(),
+					"categories_" + authManager.getUserDetails().getCompanyId());
+			if (!optionalCategory.isEmpty()) {
+				String[] vars = { "Category", "Name" };
+				throw new BadRequestException("DAO_VARIABLE_ALREADY_EXISTS", vars);
+			}
+		} else {
+			Optional<Category> optionalCategory = categoryRepository.validateDuplicateCategoryByCategoryId(category.getCategoryId(),category.getName(),
+					"categories_" + authManager.getUserDetails().getCompanyId());
+			if (!optionalCategory.isEmpty()) {
+				String[] vars = { "Category", "Name" };
+				throw new BadRequestException("DAO_VARIABLE_ALREADY_EXISTS", vars);
+			}
 		}
 	}
 

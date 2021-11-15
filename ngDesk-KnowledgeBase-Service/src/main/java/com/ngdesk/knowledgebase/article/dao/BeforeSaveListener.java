@@ -71,11 +71,19 @@ public class BeforeSaveListener extends AbstractMongoEventListener<Article> {
 	// validate if the values in visible to are valid Teams in mongoDB
 	private void ValidateVisibleTo(Article article) {
 		String collectionName = "Teams_" + authManager.getUserDetails().getCompanyId();
+		Optional<Section> optionalSection = sectionRepository.findById(article.getSection(),
+				"sections_" + authManager.getUserDetails().getCompanyId());
 		for (String teamId : article.getVisibleTo()) {
 			Optional<Map<String, Object>> teamExist = moduleEntryRepository.findEntryById(teamId, collectionName);
 			if (teamExist.isEmpty()) {
 				String[] vars = { "TEAM" };
 				throw new NotFoundException("DAO_NOT_FOUND", vars);
+			}
+		}
+		List<String> sectionVisibleTo = optionalSection.get().getVisibleTo();
+		for (String visibleTo : article.getVisibleTo()) {
+			if (!sectionVisibleTo.contains(visibleTo)) {
+				throw new BadRequestException("TEAM_MUST_BE_SAME_AS_PARENT", null);
 			}
 		}
 	}

@@ -9,7 +9,6 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
-import com.ngdesk.commons.models.Dashboard;
 import com.ngdesk.knowledgebase.categories.dao.Category;
 
 @Repository
@@ -28,5 +27,13 @@ public class CustomCategoryRepositoryImpl implements CustomCategoryRepository {
 	public Optional<Category> validateDuplicateCategory(String name, String collectionName) {
 		Query query = new Query(Criteria.where("name").is(name));
 		return Optional.ofNullable(mongoOperations.findOne(query, Category.class, collectionName));
+	}
+
+	@Override
+	public Optional<Category> validateDuplicateCategoryByCategoryId(String categoryId, String name,
+			String collectionName) {
+		Criteria criteria = new Criteria();
+		criteria.andOperator(Criteria.where("name").is(name), Criteria.where("_id").ne(categoryId));
+		return Optional.ofNullable(mongoOperations.findOne(new Query(criteria), Category.class, collectionName));
 	}
 }

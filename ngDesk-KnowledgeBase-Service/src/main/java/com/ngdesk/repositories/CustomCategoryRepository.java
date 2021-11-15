@@ -11,5 +11,7 @@ public interface CustomCategoryRepository {
 
 	public int getCount(String collectionName);
 
-	public Optional<Category> validateDuplicateCategory(String name, String string);
+	public Optional<Category> validateDuplicateCategory(String name, String collectionName);
+
+	Optional<Category> validateDuplicateCategoryByCategoryId(String categoryId, String name, String collectionName);
 }

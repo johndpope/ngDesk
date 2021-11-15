@@ -21,7 +21,8 @@
 	"INVALID_VISIBLE_TO": " The team you are trying to access may have been deleted, please try again",
 	"VISIBLE_TO_INVALID": "Visible to cannot be blank",
 	"VISIBLE_TO": " Visible to",
-	"MESSAGE":"Message"
+	"MESSAGE":"Message",
+	"TEAM_MUST_BE_SAME_AS_PARENT":"Visibility must be same as parent"
 
 }
 

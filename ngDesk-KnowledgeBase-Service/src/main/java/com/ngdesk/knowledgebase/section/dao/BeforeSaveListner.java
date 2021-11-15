@@ -50,11 +50,21 @@ public class BeforeSaveListner extends AbstractMongoEventListener<Section> {
 	}
 
 	public void validateDuplicateSection(Section section) {
-		Optional<Section> optionalsection = sectionRepository.validateDuplicateSection(section.getName(),
-				"sections_" + authManager.getUserDetails().getCompanyId());
-		if (!optionalsection.isEmpty()) {
-			String[] vars = { "Section", "Name" };
-			throw new BadRequestException("DAO_VARIABLE_ALREADY_EXISTS", vars);
+		if (section.getSectionId() == null) {
+			Optional<Section> optionalsection = sectionRepository.validateDuplicateSection(section.getName(),
+					"sections_" + authManager.getUserDetails().getCompanyId());
+			if (optionalsection.isPresent()) {
+				String[] vars = { "Section", "Name" };
+				throw new BadRequestException("DAO_VARIABLE_ALREADY_EXISTS", vars);
+			}
+		} else {
+			Optional<Section> optionalsection = sectionRepository.validateDuplicateSectionBySectionId(
+					section.getSectionId(), section.getName(),
+					"sections_" + authManager.getUserDetails().getCompanyId());
+			if (optionalsection.isPresent()) {
+				String[] vars = { "Section", "Name" };
+				throw new BadRequestException("DAO_VARIABLE_ALREADY_EXISTS", vars);
+			}
 		}
 	}
 

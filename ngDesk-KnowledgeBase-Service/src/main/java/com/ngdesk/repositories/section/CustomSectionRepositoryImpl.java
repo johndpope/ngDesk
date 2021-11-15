@@ -38,4 +38,11 @@ public class CustomSectionRepositoryImpl implements CustomSectionRepository {
 
 		return Optional.ofNullable(mongoOperations.findOne(query, Section.class, collectionName));
 	}
+
+	@Override
+	public Optional<Section> validateDuplicateSectionBySectionId(String sectionId, String name, String collectionName) {
+		Criteria criteria = new Criteria();
+		criteria.andOperator(Criteria.where("name").is(name), Criteria.where("_id").ne(sectionId));
+		return Optional.ofNullable(mongoOperations.findOne(new Query(criteria), Section.class, collectionName));
+	}
 }
