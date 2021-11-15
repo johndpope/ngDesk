@@ -88,9 +88,9 @@
 				<label class="mat-body" *ngIf="filteredArticles.length == 0">{{ 'NO_RESULTS_FOR' | translate }}
 					"{{ search }}"</label>
 				<div *ngFor="let article of filteredArticles">
-					<a style="color: #3f51b5;" class="link mat-h3 pointer" (click)="redirect(article, 'Articles')">{{ article.TITLE }}</a>
+					<a style="color: #3f51b5;" class="link mat-h3 pointer" (click)="redirect(article, 'Articles')">{{ article.title }}</a>
 					<div class="mat-body" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
-						{{ article.BODY }}
+						{{ article.body }}
 					</div>
 					<br />
 					<mat-divider></mat-divider><br />

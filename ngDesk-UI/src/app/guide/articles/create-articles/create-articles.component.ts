@@ -166,11 +166,11 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 											.subscribe(
 												(articleResponse: any) => {
 													this.guideService
-														.getkbSections(articleResponse['DATA'].SECTION)
+														.getkbSections(articleResponse['DATA'].section)
 														.subscribe(
 															(sectionResponse: any) => {
 																this.filterInputValues(
-																	articleResponse['DATA'].AUTHOR
+																	articleResponse['DATA'].author
 																);
 																this.teams = this.transformObjects(
 																	this.convertToArr(
@@ -190,28 +190,28 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 																);
 																this.articleForm = this.formBuilder.group({
 																	articleId: [
-																		articleResponse['DATA'].ARTICLE_ID,
+																		articleResponse['DATA'].articleId,
 																	],
 																	title: [
-																		articleResponse['DATA'].TITLE,
+																		articleResponse['DATA'].title,
 																		Validators.required,
 																	],
 																	body: [
-																		articleResponse['DATA'].BODY,
+																		articleResponse['DATA'].body,
 																		Validators.required,
 																	],
 																	publish: [
-																		articleResponse['DATA'].PUBLISH,
+																		articleResponse['DATA'].publish,
 																		Validators.required,
 																	],
 																	sourceLanguage: [
-																		articleResponse['DATA'].SOURCE_LANGUAGE,
+																		articleResponse['DATA'].sourceLanguage,
 																		Validators.required,
 																	],
 																	visibleTo: [
 																		this.transformObjects(
 																			this.convertToArr(
-																				articleResponse['DATA'].VISIBLE_TO,
+																				articleResponse['DATA'].visibleTo,
 																				'_id'
 																			),
 																			this.teamsInitial,
@@ -220,28 +220,28 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 																		Validators.required,
 																	],
 																	section: [
-																		articleResponse['DATA'].SECTION,
+																		articleResponse['DATA'].section,
 																		Validators.required,
 																	],
 																	openForComments: [
-																		articleResponse['DATA'].OPEN_FOR_COMMENTS,
+																		articleResponse['DATA'].openForComments,
 																		Validators.required,
 																	],
 																	author: [
-																		articleResponse['DATA'].AUTHOR,
+																		articleResponse['DATA'].author,
 																		Validators.required,
 																	],
-																	labels: [articleResponse['DATA'].LABELS],
-																	comments: [articleResponse.COMMENTS],
-																	createdBy: [articleResponse.CREATED_BY],
-																	dateCreated: [articleResponse.DATE_CREATED],
-																	dateUpdated: [articleResponse.DATE_UPDATED],
+																	labels: [articleResponse['DATA'].labels],
+																	comments: [articleResponse.comments],
+																	createdBy: [articleResponse.createdBy],
+																	dateCreated: [articleResponse.dateCreated],
+																	dateUpdated: [articleResponse.dateUpdated],
 																	lastUpdatedBy: [
-																		articleResponse.LAST_UPDATED_BY,
+																		articleResponse.lastUpdatedBy,
 																	],
-																	order: [articleResponse['DATA'].ORDER],
+																	order: [articleResponse['DATA'].order],
 																	attachments: [
-																		articleResponse['DATA'].ATTACHMENTS || [],
+																		articleResponse['DATA'].attachments || [],
 																	],
 																});
 
@@ -517,6 +517,7 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 				// articleObj['author'] = articleObj['author'].DATA_ID;
 				this.articleApiService.postArticle(articleObj).subscribe(
 					(article: any) => {
+						console.log('article.............', article);
 						//	this.companiesService.trackEvent('Added a new article');
 						this.navigateTo(article, 'post');
 					},
@@ -528,6 +529,7 @@ export class CreateArticlesComponent implements OnInit, OnDestroy {
 				//	articleObj['author'] = articleObj['author']._id;
 				this.articleApiService.putArticle(articleObj).subscribe(
 					(article: any) => {
+						console.log('Updatearticle.......', article);
 						this.navigateTo(article, 'PUT');
 					},
 					(error: any) => {

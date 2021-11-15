@@ -65,14 +65,14 @@ export class RenderSectionComponent implements OnInit {
 					(categoryResponse: any) => {
 						this.category = this.convertCategory(categoryResponse);
 						this.guideService
-							.getArticlesBySectionId(this.section['SECTION_ID'])
+							.getArticlesBySectionId(this.section['sectionId'])
 							.subscribe(
 								(articlesResponse: any) => {
 									this.articles = this.sortByOrder(
 										articlesResponse.getArticlesBySectionId.filter(
 											(article) =>
-												article.PUBLISH === true &&
-												article.SECTION === this.section['sectionId']
+												article.publish === true &&
+												article.section === this.section['sectionId']
 										)
 									);
 									this.isLoading = false;

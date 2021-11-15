@@ -39,7 +39,7 @@ export class ArrangeSectionsComponent implements OnInit {
 										// for each section, add its articles
 										section['ARTICLES'] =
 											articlesResponse.getArticlesBySectionId.filter(
-												(article) => article.SECTION === section.sectionId
+												(article) => article.section === section.sectionId
 											);
 										this.sections.push(section);
 										// waits until all sections with articles are loaded before sorting

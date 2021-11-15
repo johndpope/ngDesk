@@ -17,16 +17,16 @@
 					</mat-label>
 					<div class="mat-body" style="border: 1px transparent; border-radius: 4px; overflow: hidden" matRipple matRippleColor="primary"
 						*ngFor="let articleObj of sectionArticles; let i=index;"
-						(click)="navigate(['guide','articles',articleObj.SECTION,articleObj.TITLE])"
-						[ngStyle]="{ 'background-color': (articleObj.ARTICLE_ID == article.ARTICLE_ID) ? 'var(--primaryColor)' : 'white', 'color': (articleObj.ARTICLE_ID == article.ARTICLE_ID) ? 'white' : 'black'}">
+						(click)="navigate(['guide','articles',articleObj.section,articleObj.title])"
+						[ngStyle]="{ 'background-color': (articleObj.articleId == article.articleId) ? 'var(--primaryColor)' : 'white', 'color': (articleObj.articleId == article.articleId) ? 'white' : 'black'}">
 						<label [appHighlight]="{BACKGROUND: 'var(--primaryColor)', TEXT: '#ffff'}" fxFlex
-							class="pad10 pointer">&nbsp;{{articleObj.TITLE}}</label>
+							class="pad10 pointer">&nbsp;{{articleObj.title}}</label>
 					</div>
 				</div>
 				<div fxLayout="column" fxFlex="80" [ngStyle]="{'padding': '20px'}" fxLayoutGap="20px" *ngIf="!loading">
 					<div>
 						<div>
-							<mat-label class="mat-h1">{{article.TITLE}}</mat-label>
+							<mat-label class="mat-h1">{{article.title}}</mat-label>
 						</div>
 						<span fxFlex="1 1 auto"></span>
 						<button mat-raised-button color="primary" *ngIf="hasEditAccess"
@@ -37,16 +37,16 @@
 						</button>
 						<div fxLayout="column" fxLayoutGap="5px">
 							<div>
-								<mat-label class="mat-h4">{{article.AUTHOR}}</mat-label>
+								<mat-label class="mat-h4">{{article.author}}</mat-label>
 							</div>
 							<div>
-								<mat-label class="mat-caption">{{article.DATE_CREATED | dateFormat: 'medium'}}</mat-label>
+								<mat-label class="mat-caption">{{article.dateCreated | dateFormat: 'medium'}}</mat-label>
 							</div>
 						</div>
 					</div>
-					<div style="overflow: auto;" [innerHTML]="article.BODY | allowStyles"></div>
+					<div style="overflow: auto;" [innerHTML]="article.body | allowStyles"></div>
 					<div fxLayout="row wrap" fxLayoutGap="10px" class="pointer">
-						<div *ngFor="let attachment of article['ATTACHMENTS']" fxLayoutAlign="start center"
+						<div *ngFor="let attachment of article['attachments']" fxLayoutAlign="start center"
 							[ngStyle]="{'color': '#1f73b7', 'border-radius': '5px'}">
 							<a [ngStyle]="{'color': '#1f73b7', 'text-decoration': 'none'}" class="mat-body" fxLayout="row" fxLayoutGap="10px"
 								fxLayoutAlign="center center" target="blank" download="attachment.fileName"
@@ -56,23 +56,23 @@
 					</div>
 					<mat-divider></mat-divider><label class="mat-h2">{{'COMMENTS' | translate}}</label>
 					<mat-divider></mat-divider>
-					<div fxLayout="column" *ngFor="let comment of article.COMMENTS" fxLayoutGap="20px">
+					<div fxLayout="column" *ngFor="let comment of article.comments" fxLayoutGap="20px">
 						<div fxLayout="row" fxLayoutGap="20px"><button mat-fab disabled>
 								<mat-icon>person</mat-icon>
 							</button>
 							<div fxLayout="column" fxLayoutGap="5px">
 								<div>
-									<mat-label class="mat-h4">{{comment.SENDER}}</mat-label>
+									<mat-label class="mat-h4">{{comment.sender}}</mat-label>
 								</div>
 								<div>
-									<mat-label class="mat-caption">{{comment.DATE_CREATED | dateFormat: 'medium'}}</mat-label>
+									<mat-label class="mat-caption">{{comment.dateCreated | dateFormat: 'medium'}}</mat-label>
 								</div>
 							</div>
 						</div>
-						<div class="mat-body"><span [innerHtml]="comment.MESSAGE"></span></div>
+						<div class="mat-body"><span [innerHtml]="comment.message"></span></div>
 						<mat-divider></mat-divider>
-					</div><span *ngIf="!article.OPEN_FOR_COMMENTS" class="mat-body">{{'ARTICLE_CLOSED_FOR_COMMENTS' | translate}}</span>
-					<div fxLayout="column" *ngIf="article.OPEN_FOR_COMMENTS && hasCommentAccess">
+					</div><span *ngIf="!article.openForComments" class="mat-body">{{'ARTICLE_CLOSED_FOR_COMMENTS' | translate}}</span>
+					<div fxLayout="column" *ngIf="article.openForComments && hasCommentAccess">
 						<div fxLayoutGap="20px"><button mat-fab disabled>
 								<mat-icon>person</mat-icon>
 							</button>

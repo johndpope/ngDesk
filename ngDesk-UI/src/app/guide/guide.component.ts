@@ -125,7 +125,7 @@ export class GuideComponent implements OnInit {
 					console.log('response', response);
 					this.filteredArticles = response.DATA;
 					this.filteredArticles.forEach((article) => {
-						article.BODY = article.BODY.replace(/<[^>]+>/g, '');
+						article.body = article.body.replace(/<[^>]+>/g, '');
 					});
 					this.isLoading = false;
 				},
@@ -139,11 +139,11 @@ export class GuideComponent implements OnInit {
 
 	private sortByOrder(array): any[] {
 		array.sort((n1, n2) => {
-			if (n1.ORDER > n2.ORDER) {
+			if (n1.order > n2.order) {
 				return 1;
 			}
 
-			if (n1.ORDER < n2.ORDER) {
+			if (n1.order < n2.order) {
 				return -1;
 			}
 
@@ -177,8 +177,8 @@ export class GuideComponent implements OnInit {
 					this.router.navigate([
 						'guide',
 						'articles',
-						object.SECTION,
-						object.TITLE,
+						object.section,
+						object.title,
 					]);
 					break;
 				}
@@ -189,7 +189,7 @@ export class GuideComponent implements OnInit {
 					this.router.navigate([
 						'guide',
 						'categories',
-						object.CATEGORY_ID,
+						object.categoryId,
 						'detail',
 					]);
 					break;
@@ -207,8 +207,8 @@ export class GuideComponent implements OnInit {
 					this.router.navigate([
 						'guide',
 						'articles',
-						object.SECTION,
-						object.TITLE,
+						object.section,
+						object.title,
 					]);
 					break;
 				}

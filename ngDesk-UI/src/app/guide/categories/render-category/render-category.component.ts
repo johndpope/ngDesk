@@ -80,8 +80,8 @@ export class RenderCategoryComponent implements OnInit {
 											section['ARTICLES'] = this.sortByOrder(
 												articlesResponse.getArticlesBySectionId.filter(
 													(article) =>
-														article.PUBLISH === true &&
-														article.SECTION === section.sectionId
+														article.publish === true &&
+														article.section === section.sectionId
 												)
 											);
 											if (index === this.sections.length - 1) {
@@ -143,7 +143,7 @@ export class RenderCategoryComponent implements OnInit {
 			}
 
 			case 'Articles': {
-				this.navigate([`guide`, `articles`, obj.SECTION, obj.TITLE]);
+				this.navigate([`guide`, `articles`, obj.section, obj.title]);
 				break;
 			}
 		}

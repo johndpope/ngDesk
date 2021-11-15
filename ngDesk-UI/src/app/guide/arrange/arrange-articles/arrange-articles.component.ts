@@ -42,7 +42,7 @@ export class ArrangeArticlesComponent implements OnInit {
 										console.log('articlesResponse', articlesResponse);
 										this.articles =
 											articlesResponse.getArticlesBySectionId.filter(
-												(article) => article.SECTION === this.section.sectionId
+												(article) => article.section === this.section.sectionId
 											);
 										this.articles.sort((n1, n2) => {
 											if (n1.ORDER > n2.ORDER) {

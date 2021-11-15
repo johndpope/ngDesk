@@ -250,15 +250,15 @@ _id
 	public getKbArticleById(articleId) {
 		let query = '';
 		query = `{
-				DATA:	getKbArticle(articleId: "${articleId}") {
-					ARTICLE_ID: articleId
-					TITLE: title
-					BODY: body
-				 VISIBLE_TO: visibleTo
+				DATA:	getKbArticle(articleId: "${articleId}") { 
+					articleId
+					title
+					body
+				    visibleTo
 				 {
 							 _id
 				 }
-					AUTHOR: author
+				 author
 						{
 							DATA_ID: _id
 
@@ -267,24 +267,24 @@ _id
 									LAST_NAME
 										 }
 						}
-						OPEN_FOR_COMMENTS: openForComments
-						SOURCE_LANGUAGE: sourceLanguage
-						ATTACHMENTS:attachments{
+						openForComments
+						sourceLanguage
+						attachments{
 							
 	hash
 	attachmentUuid
 	fileName
 					
 						}
-						LABELS: labels
-						ORDER: order
-						SECTION: section
-						PUBLISH: publish
-						COMMENTS: comments
+					labels
+					order
+					section
+					publish
+					comments
 						{
-							MESSAGE_ID:messageId
-							DATE_CREATED:dateCreated
-							SENDER: sender
+							messageId
+							dateCreated
+							sender
 							{
 								_id
 
@@ -293,14 +293,14 @@ _id
 									LAST_NAME
 										 }
 						}
-							MESSAGE : message
+						message
 						}
-						DATE_CREATED: dateCreated
-						DATE_UPDATED:	dateUpdated
-						LAST_UPDATED_BY:lastUpdatedBy {
+						dateCreated
+						dateUpdated
+						lastUpdatedBy {
 							_id
 						}
-						CREATED_BY: createdBy {
+						createdBy {
 							_id
 						}
 				}
@@ -353,14 +353,14 @@ _id
 			  sortBy: null
 			  orderBy: null
 			) {
-				ARTICLE_ID: articleId
-				TITLE: title
-				BODY: body
-			 VISIBLE_TO: visibleTo
+				articleId
+				title
+				body
+				visibleTo
 			 {
 						 _id
 			 }
-				AUTHOR: author
+			 author
 					{
 							_id
 							
@@ -371,17 +371,17 @@ _id
 
 							
 					}
-					OPEN_FOR_COMMENTS: openForComments
-					SOURCE_LANGUAGE: sourceLanguage
-					LABELS: labels
-					ORDER: order
-					SECTION: section
-					PUBLISH: publish
-					COMMENTS: comments
+					openForComments
+					sourceLanguage
+					labels
+					order
+					section
+					publish
+					comments
 					{
-							MESSAGE_ID:messageId
-							DATE_CREATED:dateCreated
-							SENDER: sender
+						messageId
+						dateCreated
+						sender
 							{
 								_id
 
@@ -390,15 +390,15 @@ _id
 									LAST_NAME
 										 }
 						}
-							MESSAGE : message
+						message
 
 					}
-					DATE_CREATED: dateCreated
-					DATE_UPDATED:	dateUpdated
-					LAST_UPDATED_BY:lastUpdatedBy {
+					dateCreated
+					dateUpdated
+					lastUpdatedBy {
 						_id
 					}
-					CREATED_BY: createdBy {
+					createdBy {
 						_id
 					}
 			}
@@ -414,14 +414,14 @@ _id
 			DATA:	getAllKbArticles(
 				pageNumber: null, pageSize: null, sortBy: null, orderBy: null, search: "${search}"
 			) {
-			ARTICLE_ID: articleId
-			TITLE: title
-			BODY: body
-		 VISIBLE_TO: visibleTo
+		 articleId
+		 title
+		 body
+		 visibleTo
 		 {
 					 _id
 		 }
-			AUTHOR: author
+			 author
 				{
 						_id
 
@@ -430,22 +430,22 @@ _id
 							LAST_NAME
 								 }
 				}
-				OPEN_FOR_COMMENTS: openForComments
-				SOURCE_LANGUAGE: sourceLanguage
-				LABELS: labels
-				ORDER: order
-				SECTION: section
-				PUBLISH: publish
-				COMMENTS: comments
+				 openForComments
+				 sourceLanguage
+				labels
+				order
+				 section
+				publish
+				 comments
 				{
 						messageId
 				}
-				DATE_CREATED: dateCreated
-				DATE_UPDATED:	dateUpdated
-				LAST_UPDATED_BY:lastUpdatedBy {
+				dateCreated
+				dateUpdated
+				lastUpdatedBy {
 					_id
 				}
-				CREATED_BY: createdBy {
+			 createdBy {
 					_id
 				}
 			}
@@ -455,40 +455,42 @@ _id
 			DATA:	getAllKbArticles(
 				pageNumber: ${pageNumber}, pageSize: ${pageSize}, sortBy: "${sortBy}", orderBy: "${orderBy}",search: null
 			) {
-			ARTICLE_ID: articleId
-			TITLE: title
-			BODY: body
-		 VISIBLE_TO: visibleTo
+				 articleId
+			 title
+			 body
+		 visibleTo
 		 {
 					 _id
 		 }
-			AUTHOR: author
+			 author
 				{
 						_id
-
 						CONTACT{
 							FIRST_NAME
 							LAST_NAME
 								 }
+
+						
 				}
-				OPEN_FOR_COMMENTS: openForComments
-				SOURCE_LANGUAGE: sourceLanguage
-				LABELS: labels
-				ORDER: order
-				SECTION: section
-				PUBLISH: publish
-				COMMENTS: comments
+
+				attachments{
+							
+					hash
+					attachmentUuid
+					fileName
+									
+										}
+				 openForComments
+				 sourceLanguage
+				 labels
+				 order
+			    section
+				publish
+				 comments
 				{
 						messageId
 				}
-				DATE_CREATED: dateCreated
-				DATE_UPDATED:	dateUpdated
-				LAST_UPDATED_BY:lastUpdatedBy {
-					_id
-				}
-				CREATED_BY: createdBy {
-					_id
-				}
+				dateCreated
 			}
 			}`;
 		}

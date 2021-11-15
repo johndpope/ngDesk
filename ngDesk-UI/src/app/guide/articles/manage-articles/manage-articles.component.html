@@ -14,8 +14,8 @@
 				(rowClickedEvent)="rowClicked($event)" (sortData)="sortData();customTableService.isLoading = true"
 				(pageChangeEmit)="pageChangeEmit($event);customTableService.isLoading = true">
 				<ng-template #columnTemplateRef let-element="element" let-col="col">
-					<span *ngIf="col.NAME === 'DATE_CREATED'">{{element[col.NAME] | dateFormat: 'medium'}}</span>
-					<span *ngIf="col.NAME !== 'DATE_CREATED'">{{element[col.NAME] | booleanToYesNo}}</span>
+					<span *ngIf="col.NAME === 'dateCreated'">{{element[col.NAME] | dateFormat: 'medium'}}</span>
+					<span *ngIf="col.NAME !== 'dateCreated'">{{element[col.NAME] | booleanToYesNo}}</span>
 				</ng-template>
 			</app-custom-table>
 		</div>

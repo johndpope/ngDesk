@@ -55,7 +55,7 @@
 						<div *ngIf="section['ARTICLES']" fxLayoutGap="20px">
 							<div *ngFor="let article of section['ARTICLES']; last as last">
 								<mat-list-item> <a class="section-heading link pointer" fxFlexFill
-										(click)="viewDetail(article, 'Articles')">{{article.TITLE}}</a>
+										(click)="viewDetail(article, 'Articles')">{{article.title}}</a>
 									<mat-divider [inset]="true" *ngIf="!last"></mat-divider>
 								</mat-list-item>
 							</div>

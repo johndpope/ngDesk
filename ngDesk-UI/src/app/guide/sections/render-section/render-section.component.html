@@ -52,8 +52,8 @@
 				<div *ngIf="articles.length > 0">
 					<div *ngFor="let article of articles; last as last">
 						<mat-list-item>
-							<a class="section-heading link pointer" (click)="navigate(['guide', 'articles', article.SECTION, article.TITLE])">
-								{{article.TITLE}}
+							<a class="section-heading link pointer" (click)="navigate(['guide', 'articles', article.section, article.title])">
+								{{article.title}}
 							</a>
 							<mat-divider [inset]="true" *ngIf="!last"></mat-divider>
 						</mat-list-item>

@@ -8,7 +8,7 @@
 	<div fxLayout="row" style="min-height: calc(100vh - 55px);">
 		<div fxLayout="column" fxFlex="80" [ngStyle]="{'padding': '20px'}">
 			<div fxLayout="column" class="pad10" fxFlexFill>
-				<div><a fxFlexOffset="10" [routerLink]="['','guide', 'articles', 'manage', articleForm.value.SECTION]"
+				<div><a fxFlexOffset="10" [routerLink]="['','guide', 'articles', 'manage', articleForm.value.section]"
 						class="mat-body">{{'MANAGE_ARTICLES' | translate}}</a></div>
 				<mat-error fxLayoutAlign="center" class="mat-body">{{errorMessage}}</mat-error> <label fxLayoutAlign="center"
 					class="mat-body green-color">{{successMessage}}</label>

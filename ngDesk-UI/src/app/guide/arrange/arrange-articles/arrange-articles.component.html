@@ -27,18 +27,18 @@
 					*ngFor="let article of articles;let i = index" [ngStyle]="{'cursor': 'move'}" cdkDrag>
 					<!-- TODO: drag indicator icon not available, might need to update material icons -->
 					<mat-icon [ngStyle]="{'cursor': 'move'}">reorder</mat-icon>
-					<label fxFlex [ngStyle]="{'cursor': 'move'}">{{article.TITLE}}</label>
+					<label fxFlex [ngStyle]="{'cursor': 'move'}">{{article.title}}</label>
 					<div fxLayoutAlign="end center">
 						<button mat-icon-button [matMenuTriggerFor]="moreOptionsMenu">
 							<mat-icon>more_vertical</mat-icon>
 						</button>
 						<mat-menu #moreOptionsMenu="matMenu">
 							<button mat-menu-item
-								[routerLink]="['','guide', 'articles', 'detail', article.ARTICLE_ID]">{{'EDIT_ARTICLE' | translate}}</button>
+								[routerLink]="['','guide', 'articles', 'detail', article.articleId]">{{'EDIT_ARTICLE' | translate}}</button>
 							<button mat-menu-item *ngIf="articles.length > 1 && i !== 0"
 								(click)="sendToTop(i, articles)">{{'SEND_TO_TOP' | translate}}</button>
-							<button mat-menu-item *ngIf="article.PUBLISH === true"
-								[routerLink]="['','guide', 'articles', section.sectionId, article.TITLE]">{{'VIEW_IN_GUIDE' | translate}}</button>
+							<button mat-menu-item *ngIf="article.publish === true"
+								[routerLink]="['','guide', 'articles', section.sectionId, article.title]">{{'VIEW_IN_GUIDE' | translate}}</button>
 						</mat-menu>
 					</div>
 				</div>

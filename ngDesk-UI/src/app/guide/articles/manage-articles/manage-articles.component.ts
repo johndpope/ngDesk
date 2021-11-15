@@ -40,14 +40,27 @@ export class ManageArticlesComponent implements OnInit {
 		});
 		this.translateService.get('PUBLISH').subscribe((enableValue: string) => {
 			this.articleActions[enableValue] = (article) => {
-				this.updateArticle(article, true);
+				const articleObj = JSON.parse(JSON.stringify(article));
+				articleObj['author'] = articleObj['author']._id;
+				articleObj['visibleTo'] = this.transformIds(
+					articleObj['visibleTo'],
+					'_id'
+				);
+				this.updateArticle(articleObj, true);
 			};
 			this.articleActions.actions[1].NAME = enableValue;
 		});
 
 		this.translateService.get('UNPUBLISH').subscribe((disableValue: string) => {
 			this.articleActions[disableValue] = (article) => {
-				this.updateArticle(article, false);
+				const articleObj = JSON.parse(JSON.stringify(article));
+				articleObj['author'] = articleObj['author']._id;
+				articleObj['visibleTo'] = this.transformIds(
+					articleObj['visibleTo'],
+					'_id'
+				);
+
+				this.updateArticle(articleObj, false);
 			};
 			this.articleActions.actions[2].NAME = disableValue;
 		});
@@ -58,12 +71,12 @@ export class ManageArticlesComponent implements OnInit {
 		const columnsHeaders: string[] = [];
 		const columnsHeadersObj: { DISPLAY: string; NAME: string }[] = [];
 		columnsHeadersObj.push(
-			{ DISPLAY: this.translateService.instant('TITLE'), NAME: 'TITLE' },
+			{ DISPLAY: this.translateService.instant('TITLE'), NAME: 'title' },
 			{
 				DISPLAY: this.translateService.instant('DATE_CREATED'),
-				NAME: 'DATE_CREATED',
+				NAME: 'dateCreated',
 			},
-			{ DISPLAY: this.translateService.instant('PUBLISH'), NAME: 'PUBLISH' }
+			{ DISPLAY: this.translateService.instant('PUBLISH'), NAME: 'publish' }
 		);
 
 		columnsHeaders.push(this.translateService.instant('TITLE'));
@@ -76,16 +89,24 @@ export class ManageArticlesComponent implements OnInit {
 		columnsHeaders.push(this.translateService.instant('ACTION'));
 		this.customTableService.columnsHeaders = columnsHeaders;
 		this.customTableService.columnsHeadersObj = columnsHeadersObj;
-		this.customTableService.sortBy = 'TITLE';
+		this.customTableService.sortBy = 'title';
 		this.customTableService.sortOrder = 'asc';
 		this.customTableService.pageIndex = 0;
 		this.customTableService.pageSize = 10;
 		this.customTableService.activeSort = {
 			ORDER_BY: 'asc',
 			SORT_BY: this.translateService.instant('TITLE'),
-			NAME: 'TITLE',
+			NAME: 'title',
 		};
 		this.getArticles();
+	}
+
+	private transformIds(arr, key) {
+		const arrWithIds = [];
+		for (const obj of arr) {
+			arrWithIds.push(obj[key]);
+		}
+		return arrWithIds;
 	}
 
 	private getArticles() {
@@ -101,7 +122,7 @@ export class ManageArticlesComponent implements OnInit {
 					this.guideService
 						.getAllKbArticlesCount()
 						.subscribe((responseCount: any) => {
-							console.log('responseCount', responseCount);
+							console.log('responseCount...........', responseCount);
 							this.customTableService.setTableDataSource(
 								response.DATA,
 								responseCount.DATA
@@ -138,7 +159,7 @@ export class ManageArticlesComponent implements OnInit {
 		// EVENT AFTER MODAL DIALOG IS CLOSED
 		dialogRef.afterClosed().subscribe((result) => {
 			if (result === this.translateService.instant('DELETE')) {
-				this.articleApiService.deleteArticle(article.ARTICLE_ID).subscribe(
+				this.articleApiService.deleteArticle(article.articleId).subscribe(
 					(response: any) => {
 						this.getArticles();
 					},
@@ -153,12 +174,14 @@ export class ManageArticlesComponent implements OnInit {
 	}
 
 	private updateArticle(article, publish) {
-		article.PUBLISH = publish;
-		article.replace(/"([^"]+)":/g, function ($0, $1) {
-			return '"' + $1.toLowerCase() + '":';
-		});
+		article.publish = publish;
+		// article.replace(/"([^"]+)":/g, function ($0, $1) {
+		// 	return '"' + $1.toLowerCase() + '":';
+		// });
+		console.log('article.......', article);
 		this.articleApiService.putArticle(article).subscribe(
 			(response: any) => {
+				console.log('response..........', response);
 				this.getArticles();
 			},
 			(error: any) => {
@@ -186,11 +209,11 @@ export class ManageArticlesComponent implements OnInit {
 			this.router.navigate([
 				'guide',
 				'articles',
-				rowData.SECTION,
-				rowData.TITLE,
+				rowData.section,
+				rowData.title,
 			]);
 		} else {
-			this.router.navigate([`guide/articles/detail/${rowData.ARTICLE_ID}`]);
+			this.router.navigate([`guide/articles/detail/${rowData.articleId}`]);
 		}
 	}
 }

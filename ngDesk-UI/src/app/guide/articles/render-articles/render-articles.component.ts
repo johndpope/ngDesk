@@ -58,7 +58,7 @@ export class RenderArticlesComponent implements OnInit {
 	public ngOnInit() {
 		this.route.params.subscribe((params) => {
 			this.loading = true;
-			this.article['TITLE'] = this.route.snapshot.params['articleName'];
+			this.article['title'] = this.route.snapshot.params['articleName'];
 			this.sectionId = this.route.snapshot.params['sectionId'];
 			this.getArticle();
 			this.hasCommentAccess = this.usersService.getAuthenticationToken()
@@ -74,20 +74,20 @@ export class RenderArticlesComponent implements OnInit {
 			(articlesResponse: any) => {
 				this.sectionArticles = articlesResponse.getArticlesBySectionId
 					.filter(
-						(article) => article.PUBLISH && article.SECTION === this.sectionId
+						(article) => article.publish && article.section === this.sectionId
 					)
-					.sort((a: { ORDER: number }, b: { ORDER: number }) => {
-						return a.ORDER - b.ORDER;
+					.sort((a: { order: number }, b: { order: number }) => {
+						return a.order - b.order;
 					});
 
 				// find article in section articles
 				const articleMatchedByTitle = this.sectionArticles.find(
-					(art) => art.TITLE === this.article['TITLE']
+					(art) => art.title === this.article['title']
 				);
 
 				// need to make get individual article call for returning attachments with uuid
 				this.guideService
-					.getKbArticleById(articleMatchedByTitle.ARTICLE_ID)
+					.getKbArticleById(articleMatchedByTitle.articleId)
 					.subscribe(
 						(articleResponse: any) => {
 							this.article = articleResponse.DATA;
@@ -153,21 +153,21 @@ export class RenderArticlesComponent implements OnInit {
 	}
 
 	public downloadAttachment(uuid) {
-		return `${this.globals.baseRestUrl}/attachments?attachment_uuid=${uuid}&entry_id=${this.article['ARTICLE_ID']}`;
+		return `${this.globals.baseRestUrl}/attachments?attachment_uuid=${uuid}&entry_id=${this.article['articleId']}`;
 	}
 
 	private getAuthorName(): void {
 		let user = this.article;
 		this.article[
-			'AUTHOR'
-		] = `${user['AUTHOR'].CONTACT.FIRST_NAME} ${user['AUTHOR'].CONTACT.LAST_NAME}`;
+			'author'
+		] = `${user['author'].CONTACT.FIRST_NAME} ${user['author'].CONTACT.LAST_NAME}`;
 
-		if (this.article['COMMENTS'] !== null) {
-			this.article['COMMENTS'].forEach((comment) => {
+		if (this.article['comments'] !== null) {
+			this.article['comments'].forEach((comment) => {
 				// comment.sender = JSON.parse(comment.sender);
-				user = comment.SENDER;
+				user = comment.sender;
 				// if user exists set the name else set anonymous
-				comment.SENDER = user
+				comment.sender = user
 					? `${user['CONTACT'].FIRST_NAME} ${user['CONTACT'].LAST_NAME}`
 					: this.translateService.instant('ANONYMOUS_USER');
 			});
@@ -216,7 +216,7 @@ export class RenderArticlesComponent implements OnInit {
 		if (this.comment['message'] !== undefined) {
 			this.loading = true;
 			this.articleApiService
-				.postComments(this.article['ARTICLE_ID'], this.comment)
+				.postComments(this.article['articleId'], this.comment)
 				.subscribe(
 					(response: any) => {
 						this.comment['message'] = '';
@@ -244,7 +244,7 @@ export class RenderArticlesComponent implements OnInit {
 			'guide',
 			'articles',
 			'detail',
-			this.article['ARTICLE_ID'],
+			this.article['articleId'],
 		]);
 	}
 
