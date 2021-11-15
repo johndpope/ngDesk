@@ -473,7 +473,8 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 								if (this.module['NAME'] == 'Chats') {
 									this.chatHistoryFilter();
 									this.getChatChannelDetails();
-									this.getCustomerForAgent();
+								//	this.getCustomerForAgent();
+									this.getChatsForAgent();
 									if (
 										this.entry['REQUESTOR'] &&
 										this.entry['REQUESTOR'] !== ''
@@ -3258,5 +3259,35 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 		if (this.module && this.module['NAME'] == 'Chats') {
 			this.cd.detectChanges();
 		}
+	}
+
+	public getChatsForAgent(){
+		let chatFilters = [];
+		this.module.FIELDS.filter((field) => {
+			if (field.NAME === 'AGENTS') {
+				const filter = {
+					condition: field.FIELD_ID,
+					operator: 'EQUALS_TO',
+					conditionValue: this.userService.user.DATA_ID,
+					requirementType: 'All',
+				};
+				chatFilters.push(filter);
+			}
+		});
+		this.chatDataService
+			.getChatsByUserId(this.module.MODULE_ID, chatFilters)
+			.subscribe((chats: any) => {
+				this.customersForAgent = [];
+				chats.DATA.forEach((user) => {
+					if (user.REQUESTOR) {
+						this.customersForAgent.push(user);
+						this.currentUserStatus = user.STATUS;
+						this.customerDetail['EMAIL_ADDRESS'] =
+							user.REQUESTOR.USER.EMAIL_ADDRESS;
+						this.customerDetail.FIRST_NAME = user.REQUESTOR.FIRST_NAME;
+						this.customerDetail.LAST_NAME = user.REQUESTOR.LAST_NAME;
+					}
+				});
+			});
 	}
 }
