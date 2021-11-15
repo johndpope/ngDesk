@@ -220,10 +220,19 @@ export class DashboardsRenderComponent implements OnInit {
 				}
 			});
 		}
+
 		if (isSet) {
-			this.dashboard = this.dashboards.find(
+			let dashboard = this.dashboards.find(
 				(f) => f.dashboardId === this.dashboardId
 			);
+			if (dashboard) {
+				this.dashboard = dashboard;
+			} else {
+				this.dashboard = this.dashboards.find(
+					(f) => f.name === 'Default (Admin)'
+				);
+				this.dashboardId = this.dashboard.dashboardId;
+			}
 		}
 	}
 
