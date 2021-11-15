@@ -18,4 +18,15 @@ export class CampaignsDetailService {
 			}`;
 		return this.http.post(`${this.globals.graphqlUrl}`, query);
 	}
+
+	public getUserByyId(userId) {
+		let query = '';
+		query = `{
+				DATA: getUsersEntry(id:"${userId}") {
+					DATA_ID: _id
+					EMAIL_ADDRESS: EMAIL_ADDRESS
+				}
+			}`;
+		return this.http.post(`${this.globals.graphqlUrl}`, query);
+	}
 }

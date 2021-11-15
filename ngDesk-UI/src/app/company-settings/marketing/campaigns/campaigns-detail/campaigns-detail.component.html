@@ -645,7 +645,7 @@
 										<mat-autocomplete (closed)="userAutocompleteClosed()" (appAutocompleteScroll)="onUsersScroll()"
 											#usersAuto="matAutocomplete" (optionSelected)="selected($event, 'users')">
 											<mat-option *ngFor="let filteredUser of allUsers" [value]="filteredUser"
-												[disabled]="disabledCheck(filteredUser, usersDisable,'users')">
+												[disabled]="disableOption(filteredUser,users,'DATA_ID')">
 												{{filteredUser.EMAIL_ADDRESS}}
 											</mat-option>
 										</mat-autocomplete>
@@ -668,7 +668,7 @@
 											(optionSelected)="selected($event, 'emailList')">
 											<div *ngIf="allEmailLists.length > 0">
 												<mat-option *ngFor="let filteredEmailList of allEmailLists" [value]="filteredEmailList"
-													[disabled]="emailLists.indexOf(filteredEmailList) !== -1">
+													[disabled]="disableOption(filteredEmailList,emailLists,'EMAIL_LIST_ID')">
 													{{filteredEmailList.NAME}}
 												</mat-option>
 											</div>

@@ -381,7 +381,6 @@ export class CampaignsDetailComponent
 					campaignData.RECIPIENT_LISTS,
 					'emailLists'
 				);
-				console.log(this.emailLists);
 				this.buttonClicks = campaignData.BUTTON_CLICKS;
 				this.campaignLoaded = true;
 				this.elementsLoaded = true;
@@ -831,17 +830,28 @@ export class CampaignsDetailComponent
 			case 'users': {
 				for (const id of arrayOfIds) {
 					const matchedUser = this.allUsers.find((user) => user.DATA_ID === id);
-					newList.push(matchedUser);
+					if (matchedUser) {
+						newList.push(matchedUser);
+					} else {
+						this.campaignsDetailService.getUserByyId(id).subscribe((user) => {
+							newList.push(user['DATA']);
+						});
+					}
 				}
 				break;
 			}
 			case 'emailLists': {
-				console.log(this.allEmailLists);
 				for (const id of arrayOfIds) {
 					const matchedEmailList = this.allEmailLists.find(
 						(list) => list.EMAIL_LIST_ID === id
 					);
-					newList.push(matchedEmailList);
+					if (matchedEmailList) {
+						newList.push(matchedEmailList);
+					} else {
+						this.emailListService.getEmailList(id).subscribe((emailList) => {
+							newList.push(emailList['EMAIL_LIST']);
+						});
+					}
 				}
 				break;
 			}
@@ -1559,5 +1569,13 @@ export class CampaignsDetailComponent
 
 	public onEmailListScroll() {
 		this.emailListScrollSubject.next(['', false]);
+	}
+
+	public disableOption(option, array, type) {
+		const item = array.find((val) => val[type] === option[type]);
+		if (item) {
+			return true;
+		}
+		return false;
 	}
 }
