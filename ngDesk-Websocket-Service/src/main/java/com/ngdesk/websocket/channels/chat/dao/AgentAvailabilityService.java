@@ -48,20 +48,13 @@ public class AgentAvailabilityService {
 					.get(company.getCompanySubdomain());
 
 			String userId = null;
+			Boolean isAgentAvailable = false;
 
 			for (String key : sessionMap.keySet()) {
 				userId = key;
 				Optional<Map<String, Object>> optionalUserEntry = entryRepository.findById(userId,
 						"Users_" + companyId);
 				if (optionalUserEntry.isPresent()) {
-					Optional<ChatChannel> optionalChatChannel = chatChannelRepository
-							.findChannelByName(agentAvailability.getChannelName(), "channels_chat_" + companyId);
-					if (optionalChatChannel.isPresent()) {
-						ChatChannelMessage chatChannelMessage = new ChatChannelMessage(companyId,
-								agentAvailability.getSessionUUID(), optionalChatChannel.get(), "CHAT_CHANNEL");
-						addToChatChannelQueue(chatChannelMessage);
-
-					}
 
 					Integer chatEntries = entryRepository.findByAgentAndCollectionName(userId.toString(),
 							"Chats_" + company.getId());
@@ -70,22 +63,34 @@ public class AgentAvailabilityService {
 
 					if (chatEntries < company.getChatSettings().getMaxChatPerAgent() && chatStatus != null
 							&& chatStatus.equalsIgnoreCase("available")) {
-						AgentAvailability agentAvailable = new AgentAvailability(agentAvailability.getSessionUUID(),
-								company.getCompanySubdomain(), "AgentAvailability", agentAvailability.getChannelName(),
-								true);
-						addToAgentAvailabilityQueue(agentAvailable);
 
-					} else {
-						AgentAvailability agentAvailable = new AgentAvailability(agentAvailability.getSessionUUID(),
-								company.getCompanySubdomain(), "AgentAvailability", agentAvailability.getChannelName(),
-								false);
-						addToAgentAvailabilityQueue(agentAvailable);
+						isAgentAvailable = true;
 
 					}
-
 				}
 
 			}
+			if (!isAgentAvailable) {
+				AgentAvailability agentAvailable = new AgentAvailability(agentAvailability.getSessionUUID(),
+						company.getCompanySubdomain(), "AgentAvailability", agentAvailability.getChannelName(), false);
+				addToAgentAvailabilityQueue(agentAvailable);
+
+			} else {
+				AgentAvailability agentAvailable = new AgentAvailability(agentAvailability.getSessionUUID(),
+						company.getCompanySubdomain(), "AgentAvailability", agentAvailability.getChannelName(), true);
+				addToAgentAvailabilityQueue(agentAvailable);
+
+			}
+
+			Optional<ChatChannel> optionalChatChannel = chatChannelRepository
+					.findChannelByName(agentAvailability.getChannelName(), "channels_chat_" + companyId);
+			if (optionalChatChannel.isPresent()) {
+				ChatChannelMessage chatChannelMessage = new ChatChannelMessage(companyId,
+						agentAvailability.getSessionUUID(), optionalChatChannel.get(), "CHAT_CHANNEL");
+				addToChatChannelQueue(chatChannelMessage);
+
+			}
+
 		}
 
 	}
