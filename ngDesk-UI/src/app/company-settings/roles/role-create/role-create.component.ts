@@ -9,6 +9,7 @@ import { ModulesService } from 'src/app/modules/modules.service';
 import { RolesService } from '../roles-old.service';
 import { RolesValidationService } from '../roles-validation.service';
 import { RoleApiService } from '@ngdesk/role-api';
+import { LoaderService } from '@src/app/custom-components/loader/loader.service';
 
 @Component({
 	selector: 'app-role-create',
@@ -45,7 +46,8 @@ export class RoleCreateComponent implements OnInit {
 		private route: ActivatedRoute,
 		private modulesService: ModulesService,
 		private translateService: TranslateService,
-		private roleApiService: RoleApiService
+		private roleApiService: RoleApiService,
+		private loaderService: LoaderService
 	) {}
 
 	public ngOnInit() {
@@ -196,6 +198,8 @@ export class RoleCreateComponent implements OnInit {
 	}
 
 	public saveRole() {
+		this.loaderService.isLoading = false;
+		this.roleForm.markAllAsTouched();
 		if (this.roleForm.valid) {
 			this.role.NAME = this.roleForm.controls.NAME.value;
 			this.role.DESCRIPTION = this.roleForm.value['DESCRIPTION'];
