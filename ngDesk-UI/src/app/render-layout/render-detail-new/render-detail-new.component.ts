@@ -79,6 +79,7 @@ import * as _momentTimeZone from 'moment-timezone';
 import { MatListOptionCheckboxPosition } from '@angular/material/list';
 import { ChatDataService } from './chat-data.service';
 import { ConditionsService } from '@src/app/custom-components/conditions/conditions.service';
+import { id } from '@swimlane/ngx-charts/release/utils';
 
 @Component({
 	selector: 'app-render-detail-new',
@@ -361,6 +362,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 		});
 		this.reloadEntryOnUpdate();
 		this.isZoomCreated();
+
 	}
 
 	private resetVariables() {
@@ -473,7 +475,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 								if (this.module['NAME'] == 'Chats') {
 									this.chatHistoryFilter();
 									this.getChatChannelDetails();
-								//	this.getCustomerForAgent();
+									this.onUpdateOfChatEntry();
 									this.getChatsForAgent();
 									if (
 										this.entry['REQUESTOR'] &&
@@ -1142,7 +1144,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	}
 
 	// START RELATION FUNCTIONS
-	public clearInput(event: any) {}
+	public clearInput(event: any) { }
 
 	public addDataForRelationshipField(field, event, formControlFieldName) {
 		if (
@@ -1235,9 +1237,8 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 					);
 					if (discussionField) {
 						let query = `{
-							entry: get${this.module.NAME.replace(/ /g, '_')}Entry(id: "${
-							this.entry.DATA_ID
-						}") {'${discussionField.NAME}'}}`;
+							entry: get${this.module.NAME.replace(/ /g, '_')}Entry(id: "${this.entry.DATA_ID
+							}") {'${discussionField.NAME}'}}`;
 						query = this.cacheService.buildDiscussionQuery(
 							query,
 							discussionField.NAME
@@ -1891,7 +1892,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 			if (
 				attachments.length > 0 ||
 				this.customModulesService.discussionControls['MESSAGE'].trim().length >
-					0
+				0
 			) {
 				const messagePayload =
 					this.renderDetailDataSerice.buildDiscussionPayload(
@@ -2183,11 +2184,9 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 		attachmentLists.forEach((attachment) => {
 			this.attachmentsList.push({
 				FILE: {
-					url: `https://${this.userService.getSubdomain()}.ngdesk.com/api/ngdesk-data-service-v1/attachments?message_id&module_id=${
-						this.module.MODULE_ID
-					}&data_id=${dataId}&attachment_uuid=${
-						attachment['ATTACHMENT_UUID']
-					}&field_id=${filePreviewField.FIELD_ID}`,
+					url: `https://${this.userService.getSubdomain()}.ngdesk.com/api/ngdesk-data-service-v1/attachments?message_id&module_id=${this.module.MODULE_ID
+						}&data_id=${dataId}&attachment_uuid=${attachment['ATTACHMENT_UUID']
+						}&field_id=${filePreviewField.FIELD_ID}`,
 					httpHeaders: {
 						authentication_token: this.userService.getAuthenticationToken(),
 					},
@@ -2601,7 +2600,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 			}
 		);
 
-		setComment.afterClosed().subscribe((comment) => {});
+		setComment.afterClosed().subscribe((comment) => { });
 	}
 
 	public getcalculatedValuesForFormula() {
@@ -3067,8 +3066,6 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 					if (user.REQUESTOR) {
 						this.customersForAgent.push(user);
 						this.currentUserStatus = user.STATUS;
-						this.customerDetail['EMAIL_ADDRESS'] =
-							user.REQUESTOR.USER.EMAIL_ADDRESS;
 						this.customerDetail.FIRST_NAME = user.REQUESTOR.FIRST_NAME;
 						this.customerDetail.LAST_NAME = user.REQUESTOR.LAST_NAME;
 					}
@@ -3093,16 +3090,15 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 			this.cacheService
 				.getPrerequisiteForDetaiLayout(contactsModule['MODULE_ID'], userID)
 				.subscribe((customerDetails: any) => {
-					let customerEmail = this.customerDetail['EMAIL_ADDRESS'];
+					let customerEmail = '';
+
 					if (customerDetails[1].hasOwnProperty('entry')) {
 						this.customerDetail = customerDetails[1].entry;
 					} else {
 						this.customerDetail = customerDetails[1];
 					}
-					if (
-						!this.customerDetail['EMAIL_ADDRESS'] ||
-						this.customerDetail['EMAIL_ADDRESS'] == ''
-					) {
+					if (customerDetails[1].entry.USER) {
+						customerEmail = customerDetails[1].entry.USER.PRIMARY_DISPLAY_FIELD;
 						this.customerDetail['EMAIL_ADDRESS'] = customerEmail;
 					}
 				});
@@ -3221,6 +3217,8 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 		this.chatFilters.splice(index, 1);
 		this.getCustomerForAgent();
 	}
+
+	// To get the chat history of the requestor
 	public chatHistoryFilter() {
 		let chatFilters = [];
 		this.module.FIELDS.filter((field) => {
@@ -3261,7 +3259,8 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	public getChatsForAgent(){
+	// To get chats of a particular agent
+	public getChatsForAgent() {
 		let chatFilters = [];
 		this.module.FIELDS.filter((field) => {
 			if (field.NAME === 'AGENTS') {
@@ -3282,12 +3281,27 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 					if (user.REQUESTOR) {
 						this.customersForAgent.push(user);
 						this.currentUserStatus = user.STATUS;
-						this.customerDetail['EMAIL_ADDRESS'] =
-							user.REQUESTOR.USER.EMAIL_ADDRESS;
 						this.customerDetail.FIRST_NAME = user.REQUESTOR.FIRST_NAME;
 						this.customerDetail.LAST_NAME = user.REQUESTOR.LAST_NAME;
 					}
 				});
 			});
+	}
+
+	// To update left sidebar of chats and visited pages
+	public onUpdateOfChatEntry() {
+		this.websocketService.chatEntryUpdated.subscribe((response: any) => {
+			if (response.MESSAGE && response.MESSAGE === 'You have been assigned a new chat') {
+				this.getChatsForAgent();
+
+			}
+		});
+		this.websocketService.visitedPagesUpdated.subscribe((response: any) => {
+			if (response.TYPE && response.TYPE === 'VISITED_PAGES') {
+				if (this.entry && this.entry['PAGES_VISITED']) {
+					this.entry['PAGES_VISITED'] = response.PAGES;
+				}
+			}
+		});
 	}
 }

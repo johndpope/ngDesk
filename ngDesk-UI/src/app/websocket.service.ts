@@ -19,6 +19,8 @@ export class WebsocketService {
 	private pingInterval: any;
 	private webSocketUrl;
 	public logNotification: BehaviorSubject<string> = new BehaviorSubject('');
+	public chatEntryUpdated: BehaviorSubject<any> = new BehaviorSubject({});
+	public visitedPagesUpdated: BehaviorSubject<any> = new BehaviorSubject({});
 
 	constructor(
 		private usersService: UsersService,
@@ -43,8 +45,7 @@ export class WebsocketService {
 
 	public initialize() {
 		this.websocket = new WebSocket(
-			`${
-				this.webSocketUrl
+			`${this.webSocketUrl
 			}?authentication_token=${this.usersService.getAuthenticationToken()}`
 		);
 		this.websocket.onopen = (event) => {
@@ -80,6 +81,11 @@ export class WebsocketService {
 				this.toolbarService.updateShowAcceptChat();
 			} else if (message.type === 'CHAT_STATUS') {
 				this.toolbarService.updateChatStatus(message.chatStatus);
+			} else if (message.type === 'VISITED_PAGES') {
+				this.visitedPagesUpdated.next({
+					TYPE: message.type,
+					PAGES: message.visitedPages,
+				});
 			} else {
 				this.updateData(message);
 			}
@@ -119,6 +125,13 @@ export class WebsocketService {
 				MESSAGE: message.message,
 				NOTIFICATION_ID: message.id,
 			});
+			this.chatEntryUpdated.next({
+				READ: message.read,
+				DATA_ID: message.dataId,
+				MODULE_ID: message.moduleId,
+				MESSAGE: message.message,
+				NOTIFICATION_ID: message.id,
+			});
 		}
 		// RESET THE NOTIFICATION
 		this.cacheService.entryUpdated.next({
@@ -133,6 +146,7 @@ export class WebsocketService {
 			MESSAGE: null,
 			NOTIFICATION_ID: null,
 		});
+
 	}
 
 	public publishMessage(message) {

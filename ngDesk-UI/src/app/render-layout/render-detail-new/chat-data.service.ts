@@ -39,10 +39,10 @@ export class ChatDataService {
 				FIRST_NAME
 				LAST_NAME
 				DATA_ID: _id 
-				    USER{
+				    
 				    EMAIL_ADDRESS
 					
-				    	}
+				
 				    }
 					AGENTS{
 		               CONTACT{
