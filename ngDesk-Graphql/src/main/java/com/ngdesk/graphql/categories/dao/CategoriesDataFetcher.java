@@ -51,7 +51,7 @@ public class CategoriesDataFetcher implements DataFetcher<List<Category>> {
 		}
 		Sort sort = null;
 		if (sortBy == null) {
-			sort = Sort.by("DATE_CREATED");
+			sort = Sort.by("dateCreated");
 		} else {
 			sort = Sort.by(sortBy);
 		}
