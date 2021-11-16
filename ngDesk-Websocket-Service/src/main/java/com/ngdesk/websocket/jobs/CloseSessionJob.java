@@ -116,7 +116,7 @@ public class CloseSessionJob {
 							.findById(customerId, "Contacts_" + companyId);
 					if (optionalCustomerContactEntry.isPresent()) {
 						String firstName = optionalCustomerContactEntry.get().get("FIRST_NAME").toString();
-						String LastName = optionalCustomerContactEntry.get().get("LAST_NAME").toString();
+						String lastName = optionalCustomerContactEntry.get().get("LAST_NAME").toString();
 						Map<String, Object> customerContactEntry = optionalCustomerContactEntry.get();
 						Optional<Map<String, Object>> optionalCustomerUserEntry = moduleEntryRepository
 								.findById(customerContactEntry.get("USER").toString(), "Users_" + companyId);
@@ -126,10 +126,10 @@ public class CloseSessionJob {
 							HashMap<String, Object> entry = new HashMap<String, Object>();
 							entry.put("STATUS", "Offline");
 							entry.put("DATA_ID", optionalChatEntry.get().get("_id").toString());
-							Sender sender = new Sender(firstName, LastName, userUuid, roleId);
+							Sender sender = new Sender(firstName, lastName, userUuid, roleId);
 							List<DiscussionMessage> messages = new ArrayList<DiscussionMessage>();
 							String message = global.getFile("metadata_customer_disconnected.html");
-							message = message.replace("NAME_REPLACE", firstName + " " + LastName);
+							message = message.replace("NAME_REPLACE", firstName + " " + lastName);
 							DiscussionMessage discussionMessage = new DiscussionMessage(message, new Date(),
 									UUID.randomUUID().toString(), "META_DATA", new ArrayList<MessageAttachment>(),
 									sender, null, null, null);
