@@ -1,17 +1,10 @@
 package com.ngdesk.websocket.channels.chat.dao;
 
-import javax.validation.constraints.NotNull;
-
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import javax.validation.Valid;
 
 public class ChatChannelSettings {
-
-	@JsonProperty("BUSINESS_RULES")
-	@Field("BUSINESS_RULES")
-	private BusinessRules businessRules;
 
 	@JsonProperty("ENABLE_FAQS")
 	@Field("ENABLE_FAQS")
@@ -28,21 +21,11 @@ public class ChatChannelSettings {
 	public ChatChannelSettings() {
 	}
 
-	public ChatChannelSettings(BusinessRules businessRules, boolean enable, boolean preSurveyRequired,
-			BotSettings botSettings) {
+	public ChatChannelSettings(boolean enable, boolean preSurveyRequired, BotSettings botSettings) {
 		super();
-		this.businessRules = businessRules;
 		this.enable = enable;
 		this.preSurveyRequired = preSurveyRequired;
 		this.botSettings = botSettings;
-	}
-
-	public BusinessRules getBusinessRules() {
-		return businessRules;
-	}
-
-	public void setBusinessRules(BusinessRules businessRules) {
-		this.businessRules = businessRules;
 	}
 
 	public boolean isEnable() {

@@ -111,32 +111,34 @@ public class CloseSessionJob {
 						"Chats_" + companyId);
 				if (optionalChatEntry.isPresent() && !optionalChatEntry.get().get("STATUS").equals("Offline")) {
 					Map<String, Object> chatEntry = optionalChatEntry.get();
-					String customerId = chatEntry.get("REQUESTOR").toString();
-					Optional<Map<String, Object>> optionalCustomerContactEntry = moduleEntryRepository
-							.findById(customerId, "Contacts_" + companyId);
-					if (optionalCustomerContactEntry.isPresent()) {
-						String firstName = optionalCustomerContactEntry.get().get("FIRST_NAME").toString();
-						String lastName = optionalCustomerContactEntry.get().get("LAST_NAME").toString();
-						Map<String, Object> customerContactEntry = optionalCustomerContactEntry.get();
-						Optional<Map<String, Object>> optionalCustomerUserEntry = moduleEntryRepository
-								.findById(customerContactEntry.get("USER").toString(), "Users_" + companyId);
-						if (optionalCustomerUserEntry.isPresent()) {
-							String roleId = optionalCustomerUserEntry.get().get("ROLE").toString();
-							String userUuid = optionalCustomerUserEntry.get().get("USER_UUID").toString();
-							HashMap<String, Object> entry = new HashMap<String, Object>();
-							entry.put("STATUS", "Offline");
-							entry.put("DATA_ID", optionalChatEntry.get().get("_id").toString());
-							Sender sender = new Sender(firstName, lastName, userUuid, roleId);
-							List<DiscussionMessage> messages = new ArrayList<DiscussionMessage>();
-							String message = global.getFile("metadata_customer_disconnected.html");
-							message = message.replace("NAME_REPLACE", firstName + " " + lastName);
-							DiscussionMessage discussionMessage = new DiscussionMessage(message, new Date(),
-									UUID.randomUUID().toString(), "META_DATA", new ArrayList<MessageAttachment>(),
-									sender, null, null, null);
-							messages.add(discussionMessage);
-							entry.put("CHAT", messages);
-							dataProxy.putModuleEntry(entry, optionalChatModule.get().getModuleId(), false, companyId,
-									optionalCustomerUserEntry.get().get("USER_UUID").toString());
+					if (chatEntry.get("REQUESTOR") != null) {
+						String customerId = chatEntry.get("REQUESTOR").toString();
+						Optional<Map<String, Object>> optionalCustomerContactEntry = moduleEntryRepository
+								.findById(customerId, "Contacts_" + companyId);
+						if (optionalCustomerContactEntry.isPresent()) {
+							String firstName = optionalCustomerContactEntry.get().get("FIRST_NAME").toString();
+							String lastName = optionalCustomerContactEntry.get().get("LAST_NAME").toString();
+							Map<String, Object> customerContactEntry = optionalCustomerContactEntry.get();
+							Optional<Map<String, Object>> optionalCustomerUserEntry = moduleEntryRepository
+									.findById(customerContactEntry.get("USER").toString(), "Users_" + companyId);
+							if (optionalCustomerUserEntry.isPresent()) {
+								String roleId = optionalCustomerUserEntry.get().get("ROLE").toString();
+								String userUuid = optionalCustomerUserEntry.get().get("USER_UUID").toString();
+								HashMap<String, Object> entry = new HashMap<String, Object>();
+								entry.put("STATUS", "Offline");
+								entry.put("DATA_ID", optionalChatEntry.get().get("_id").toString());
+								Sender sender = new Sender(firstName, lastName, userUuid, roleId);
+								List<DiscussionMessage> messages = new ArrayList<DiscussionMessage>();
+								String message = global.getFile("metadata_customer_disconnected.html");
+								message = message.replace("NAME_REPLACE", firstName + " " + lastName);
+								DiscussionMessage discussionMessage = new DiscussionMessage(message, new Date(),
+										UUID.randomUUID().toString(), "META_DATA", new ArrayList<MessageAttachment>(),
+										sender, null, null, null);
+								messages.add(discussionMessage);
+								entry.put("CHAT", messages);
+								dataProxy.putModuleEntry(entry, optionalChatModule.get().getModuleId(), false,
+										companyId, optionalCustomerUserEntry.get().get("USER_UUID").toString());
+							}
 						}
 					}
 				}

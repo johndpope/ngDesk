@@ -1,8 +1,5 @@
 package com.ngdesk.websocket.companies.dao;
 
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.fasterxml.jackson.annotation.JsonProperty;

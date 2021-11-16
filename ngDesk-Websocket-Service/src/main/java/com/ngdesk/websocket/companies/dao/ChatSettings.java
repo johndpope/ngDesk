@@ -2,8 +2,6 @@ package com.ngdesk.websocket.companies.dao;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.fasterxml.jackson.annotation.JsonProperty;

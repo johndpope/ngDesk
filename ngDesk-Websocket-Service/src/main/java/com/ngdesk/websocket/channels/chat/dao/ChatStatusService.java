@@ -39,21 +39,15 @@ public class ChatStatusService {
 					chatStatusMessage.setCompanyId(company.getId());
 					chatStatusMessage.setType("CHAT_STATUS");
 					chatStatusMessage.setUserId(chatStatus.getUserId());
-					sessionMap.put(chatStatus.getUserId(), userSessions);
-					sessionService.sessions.put(company.getCompanySubdomain(), sessionMap);
-
 				} else {
 					userSessions.setChatStatus("not available");
 					chatStatusMessage.setChatStatus("not available");
 					chatStatusMessage.setCompanyId(company.getId());
 					chatStatusMessage.setType("CHAT_STATUS");
 					chatStatusMessage.setUserId(chatStatus.getUserId());
-					sessionMap.put(chatStatus.getUserId(), userSessions);
-					sessionService.sessions.put(company.getCompanySubdomain(), sessionMap);
-
 				}
 				sessionMap.put(chatStatus.getUserId(), userSessions);
-				sessionService.sessions.put(chatStatus.getSubdomain(), sessionMap);
+				sessionService.sessions.put(company.getCompanySubdomain(), sessionMap);
 				addToQueue(chatStatusMessage);
 			}
 		}
