@@ -7,13 +7,14 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ngdesk.commons.annotations.CustomNotEmpty;
 import com.ngdesk.commons.annotations.CustomNotNull;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-
+@Component
 public class MenuItem {
 
 	@Schema(description = "Route of the menu item", required = true, example = "schedules")

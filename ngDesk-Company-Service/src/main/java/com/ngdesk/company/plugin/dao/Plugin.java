@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ngdesk.commons.annotations.CustomNotEmpty;
 import com.ngdesk.commons.annotations.CustomNotNull;
