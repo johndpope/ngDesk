@@ -84,10 +84,9 @@
 						<tr mat-row *matRowDef="let row; columns: ['NAME'];" (click)="setListLayout(row)"></tr>
 					</table>
 				</div>
-				<span fxFlex="10px"></span>
-				<div fxFlex style="margin-right: 20px;">
-					<app-custom-table class="pad10" [templateRef]="columnTemplateRef" (pageChangeEmit)="onPageChange($event)"
-						(sortData)="onPageChange($event)" (rowClickedEvent)="rowClicked($event)" noRecordsMessage="No {{recordName}} found">
+				<div fxFlex style="padding:10px 10px 0 0;">
+					<app-custom-table [templateRef]="columnTemplateRef" (pageChangeEmit)="onPageChange($event)" (sortData)="onPageChange($event)"
+						(rowClickedEvent)="rowClicked($event)" noRecordsMessage="No {{recordName}} found">
 						<ng-template #columnTemplateRef let-element="element" let-col="col">
 							<span *ngIf="specialDataTypes.indexOf(col.DATA_TYPE) === -1 && col.NAME === 'CHANNEL' && element[col.NAME] === null">--</span>
 							<span *ngIf="specialDataTypes.indexOf(col.DATA_TYPE) === -1 && col.NAME === 'CHANNEL' && element[col.NAME] !== null">

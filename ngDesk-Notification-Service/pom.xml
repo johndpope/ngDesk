@@ -13,7 +13,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ngDesk-Notification-Service</name>
 	<description>Microservice for Notification</description>
-	
+
 	<properties>
 		<java.version>11</java.version>
 		<spring-cloud.version>Hoxton.SR8</spring-cloud.version>
@@ -138,7 +138,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<image>
-						<name>gitlab.bluemsp.com:5050/ngdesk/ngdesk/notification:latest</name>
+						<name>ngdesk/notification:latest</name>
 					</image>
 					<layers>
 						<enabled>true</enabled>

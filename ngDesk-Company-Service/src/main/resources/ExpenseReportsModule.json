@@ -695,7 +695,15 @@
       "AGGREGATION_TYPE": "sum",
       "AGGREGATION_FIELD": "9cb39714-c5e9-46a2-bcdd-cb0fd8f9402c",
       "AGGREGATION_RELATED_FIELD": "35165eff-fbb5-44be-85aa-8c6eb95fb8c5",
-      "CONDITIONS": [],
+      "CONDITIONS": [
+      	{
+      	  "REQUIREMENT_TYPE": "All",
+          "CONDITION": "38313213-763f-421a-bd12-824ed0411a61",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION_VALUE": "Cash Advance"
+      	}
+      
+      ],
       "DATE_CREATED": "DATE_REPLACE",
       "DATE_UPDATED": "DATE_REPLACE",
       "CREATED_BY": "CREATED_BY_REPLACE",
@@ -862,7 +870,7 @@
       "CREATED_BY": "CREATED_BY_REPLACE",
       "MESSAGES": null,
       "INTERNAL": false,
-      "NOT_EDITABLE": true,
+      "NOT_EDITABLE": false,
       "GROUP_ID": null,
       "IS_LIST_TEXT_UNIQUE": false,
       "WORKFLOW": null,

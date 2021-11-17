@@ -11,7 +11,6 @@ import com.ngdesk.commons.models.OrderBy;
 import com.ngdesk.graphql.modules.dao.Condition;
 import com.ngdesk.graphql.modules.dao.Module;
 import com.ngdesk.graphql.modules.dao.ModuleField;
-import com.ngdesk.graphql.reports.dao.Report;
 
 public interface CustomModuleEntryRepository {
 

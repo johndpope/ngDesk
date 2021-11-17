@@ -47,9 +47,9 @@ public class ReportApi {
 			@Parameter(description = "Report ID", required = true) @RequestParam("report_id") String id) {
 		String companyId = authManager.getUserDetails().getCompanyId();
 		String collectionName = "reports_" + companyId;
-		Optional<Report> optional = reportRepository.findById(id, collectionName);
+		Optional<Report> optionalReport = reportRepository.findById(id, collectionName);
 
-		if (optional.isEmpty()) {
+		if (optionalReport.isEmpty()) {
 			throw new NotFoundException("REPORT_NOT_FOUND", null);
 		}
 		reportRepository.deleteById(id, "reports_" + authManager.getUserDetails().getCompanyId());
@@ -75,13 +75,13 @@ public class ReportApi {
 		String companyId = authManager.getUserDetails().getCompanyId();
 		String userId = authManager.getUserDetails().getUserId();
 		String collectionName = "reports_" + companyId;
-		Optional<Report> optional = reportRepository.findById(report.getReportId(), collectionName);
+		Optional<Report> optionalReport = reportRepository.findById(report.getReportId(), collectionName);
 
-		if (optional.isEmpty()) {
+		if (optionalReport.isEmpty()) {
 			throw new NotFoundException("DAO_NOT_FOUND", null);
 		}
 
-		Report existingReport = optional.get();
+		Report existingReport = optionalReport.get();
 		report.setDateCreated(existingReport.getDateCreated());
 		report.setCreatedBy(existingReport.getCreatedBy());
 		report.setDateUpdated(new Date());

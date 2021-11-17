@@ -139,6 +139,7 @@ export class ConditionsComponent implements OnInit {
 				this.roles = rolesResponse.ROLES.filter(
 					(role) => role.NAME !== 'Public'
 				);
+				this.roles = this.roles.sort((a, b) => a.NAME.localeCompare(b.NAME));
 			},
 			(error: any) => {
 				console.log(error);
@@ -152,7 +153,9 @@ export class ConditionsComponent implements OnInit {
 				response.CHANNELS.forEach((element) => {
 					this.channels.push({ value: element.ID, viewValue: element.NAME });
 				});
-
+				this.channels = this.channels.sort((a, b) =>
+					a.viewValue.localeCompare(b.viewValue)
+				);
 				// set conditions from formgroup directive
 				this.CONDITIONS = this.fgd.control.get('CONDITIONS') as FormArray;
 				// TODO: remove get Modules and getModuleById  call and pass the fields from the parent
@@ -240,7 +243,9 @@ export class ConditionsComponent implements OnInit {
 				// field.DATA_TYPE.DISPLAY !== 'Approval' &&
 				field.DATA_TYPE.DISPLAY !== 'File Upload' &&
 				field.DATA_TYPE.DISPLAY !== 'PDF' &&
-				field.DATA_TYPE.DISPLAY !== 'Password'
+				field.DATA_TYPE.DISPLAY !== 'Password' &&
+				field.RELATIONSHIP_TYPE !== 'One to Many' &&
+				field.DATA_TYPE.DISPLAY !== 'List Formula'
 		);
 		if (this.parentName === 'dashboardsComponent') {
 			fields = fields.filter(
@@ -362,6 +367,9 @@ export class ConditionsComponent implements OnInit {
 						this.rolesService.getRoles().subscribe((rolesResponse: any) => {
 							this.roles = rolesResponse.ROLES.filter(
 								(role) => role.NAME !== 'Public'
+							);
+							this.roles = this.roles.sort((a, b) =>
+								a.NAME.localeCompare(b.NAME)
 							);
 							const role = this.roles.find(
 								(foundRole) =>

@@ -22,7 +22,7 @@ export class SchedulesDetailService {
 	) {}
 
 	public weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-	public rotationTypes = ['Weekly', 'Daily'];
+	public rotationTypes = ['Daily', 'Weekly'];
 	public colors = [
 		{
 			borderColor: '#006700',
