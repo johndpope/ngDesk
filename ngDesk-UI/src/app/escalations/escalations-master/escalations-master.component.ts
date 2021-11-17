@@ -102,31 +102,6 @@ export class EscalationsMasterComponent implements OnInit {
 		);
 	}
 
-	// private getEscalations() {
-	// 	const sort = [
-	// 		this.customTableService.sortBy + ',' + this.customTableService.sortOrder
-	// 	];
-	// 	this.escalationApiService
-	// 		.getEscalations(
-	// 			this.customTableService.pageIndex,
-	// 			this.customTableService.pageSize,
-	// 			sort
-	// 		)
-	// 		.subscribe(
-	// 			(data: any) => {
-	// 				this.customTableService.setTableDataSource(
-	// 					data.content,
-	// 					data.totalElements
-	// 				);
-	// 			},
-	// 			(error: any) => {
-	// 				this.bannerMessageService.errorNotifications.push({
-	// 					message: error.error.ERROR
-	// 				});
-	// 			}
-	// 		);
-	// }
-
 	// Fetching all the schedules based on page numebr and page size.
 	public getEscalations() {
 		const sortBy = this.customTableService.sortBy;
