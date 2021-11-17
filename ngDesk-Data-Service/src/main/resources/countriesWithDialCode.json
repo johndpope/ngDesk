@@ -1,0 +1,1462 @@
+{
+  "COUNTRIES": [
+    {
+      "DIAL_CODE": "93",
+      "COUNTRY_NAME": "Afghanistan (‫افغانستان‬‎)",
+      "COUNTRY_CODE": "af",
+      "COUNTRY_FLAG": "af.svg"
+    },
+    {
+      "DIAL_CODE": "355",
+      "COUNTRY_NAME": "Albania (Shqipëri)",
+      "COUNTRY_CODE": "al",
+      "COUNTRY_FLAG": "al.svg"
+    },
+    {
+      "DIAL_CODE": "213",
+      "COUNTRY_NAME": "Algeria (‫الجزائر‬‎)",
+      "COUNTRY_CODE": "dz",
+      "COUNTRY_FLAG": "dz.svg"
+    },
+    {
+      "DIAL_CODE": "1684",
+      "COUNTRY_NAME": "American Samoa",
+      "COUNTRY_CODE": "as",
+      "COUNTRY_FLAG": "as.svg"
+    },
+    {
+      "DIAL_CODE": "376",
+      "COUNTRY_NAME": "Andorra",
+      "COUNTRY_CODE": "ad",
+      "COUNTRY_FLAG": "ad.svg"
+    },
+    {
+      "DIAL_CODE": "244",
+      "COUNTRY_NAME": "Angola",
+      "COUNTRY_CODE": "ao",
+      "COUNTRY_FLAG": "ao.svg"
+    },
+    {
+      "DIAL_CODE": "1264",
+      "COUNTRY_NAME": "Anguilla",
+      "COUNTRY_CODE": "ai",
+      "COUNTRY_FLAG": "ai.svg"
+    },
+    {
+      "DIAL_CODE": "1268",
+      "COUNTRY_NAME": "Antigua and Barbuda",
+      "COUNTRY_CODE": "ag",
+      "COUNTRY_FLAG": "ag.svg"
+    },
+    {
+      "DIAL_CODE": "54",
+      "COUNTRY_NAME": "Argentina",
+      "COUNTRY_CODE": "ar",
+      "COUNTRY_FLAG": "ar.svg"
+    },
+    {
+      "DIAL_CODE": "374",
+      "COUNTRY_NAME": "Armenia (Հայաստան)",
+      "COUNTRY_CODE": "am",
+      "COUNTRY_FLAG": "am.svg"
+    },
+    {
+      "DIAL_CODE": "297",
+      "COUNTRY_NAME": "Aruba",
+      "COUNTRY_CODE": "aw",
+      "COUNTRY_FLAG": "aw.svg"
+    },
+    {
+      "DIAL_CODE": "61",
+      "COUNTRY_NAME": "Australia",
+      "COUNTRY_CODE": "au",
+      "COUNTRY_FLAG": "au.svg"
+    },
+    {
+      "DIAL_CODE": "43",
+      "COUNTRY_NAME": "Austria (Österreich)",
+      "COUNTRY_CODE": "at",
+      "COUNTRY_FLAG": "at.svg"
+    },
+    {
+      "DIAL_CODE": "994",
+      "COUNTRY_NAME": "Azerbaijan (Azərbaycan)",
+      "COUNTRY_CODE": "az",
+      "COUNTRY_FLAG": "az.svg"
+    },
+    {
+      "DIAL_CODE": "1242",
+      "COUNTRY_NAME": "Bahamas",
+      "COUNTRY_CODE": "bs",
+      "COUNTRY_FLAG": "bs.svg"
+    },
+    {
+      "DIAL_CODE": "973",
+      "COUNTRY_NAME": "Bahrain (‫البحرين‬‎)",
+      "COUNTRY_CODE": "bh",
+      "COUNTRY_FLAG": "bh.svg"
+    },
+    {
+      "DIAL_CODE": "880",
+      "COUNTRY_NAME": "Bangladesh (বাংলাদেশ)",
+      "COUNTRY_CODE": "bd",
+      "COUNTRY_FLAG": "bd.svg"
+    },
+    {
+      "DIAL_CODE": "1246",
+      "COUNTRY_NAME": "Barbados",
+      "COUNTRY_CODE": "bb",
+      "COUNTRY_FLAG": "bb.svg"
+    },
+    {
+      "DIAL_CODE": "375",
+      "COUNTRY_NAME": "Belarus (Беларусь)",
+      "COUNTRY_CODE": "by",
+      "COUNTRY_FLAG": "by.svg"
+    },
+    {
+      "DIAL_CODE": "32",
+      "COUNTRY_NAME": "Belgium (België)",
+      "COUNTRY_CODE": "be",
+      "COUNTRY_FLAG": "be.svg"
+    },
+    {
+      "DIAL_CODE": "501",
+      "COUNTRY_NAME": "Belize",
+      "COUNTRY_CODE": "bz",
+      "COUNTRY_FLAG": "bz.svg"
+    },
+    {
+      "DIAL_CODE": "229",
+      "COUNTRY_NAME": "Benin (Bénin)",
+      "COUNTRY_CODE": "bj",
+      "COUNTRY_FLAG": "bj.svg"
+    },
+    {
+      "DIAL_CODE": "1441",
+      "COUNTRY_NAME": "Bermuda",
+      "COUNTRY_CODE": "bm",
+      "COUNTRY_FLAG": "bm.svg"
+    },
+    {
+      "DIAL_CODE": "975",
+      "COUNTRY_NAME": "Bhutan (འབྲུག)",
+      "COUNTRY_CODE": "bt",
+      "COUNTRY_FLAG": "bt.svg"
+    },
+    {
+      "DIAL_CODE": "591",
+      "COUNTRY_NAME": "Bolivia",
+      "COUNTRY_CODE": "bo",
+      "COUNTRY_FLAG": "bo.svg"
+    },
+    {
+      "DIAL_CODE": "387",
+      "COUNTRY_NAME": "Bosnia and Herzegovina (Босна и Херцеговина)",
+      "COUNTRY_CODE": "ba",
+      "COUNTRY_FLAG": "ba.svg"
+    },
+    {
+      "DIAL_CODE": "267",
+      "COUNTRY_NAME": "Botswana",
+      "COUNTRY_CODE": "bw",
+      "COUNTRY_FLAG": "bw.svg"
+    },
+    {
+      "DIAL_CODE": "55",
+      "COUNTRY_NAME": "Brazil (Brasil)",
+      "COUNTRY_CODE": "br",
+      "COUNTRY_FLAG": "br.svg"
+    },
+    {
+      "DIAL_CODE": "246",
+      "COUNTRY_NAME": "British Indian Ocean Territory",
+      "COUNTRY_CODE": "io",
+      "COUNTRY_FLAG": "io.svg"
+    },
+    {
+      "DIAL_CODE": "1284",
+      "COUNTRY_NAME": "British Virgin Islands",
+      "COUNTRY_CODE": "vg",
+      "COUNTRY_FLAG": "vg.svg"
+    },
+    {
+      "DIAL_CODE": "673",
+      "COUNTRY_NAME": "Brunei",
+      "COUNTRY_CODE": "bn",
+      "COUNTRY_FLAG": "bn.svg"
+    },
+    {
+      "DIAL_CODE": "359",
+      "COUNTRY_NAME": "Bulgaria (България)",
+      "COUNTRY_CODE": "bg",
+      "COUNTRY_FLAG": "bg.svg"
+    },
+    {
+      "DIAL_CODE": "226",
+      "COUNTRY_NAME": "Burkina Faso",
+      "COUNTRY_CODE": "bf",
+      "COUNTRY_FLAG": "bf.svg"
+    },
+    {
+      "DIAL_CODE": "257",
+      "COUNTRY_NAME": "Burundi (Uburundi)",
+      "COUNTRY_CODE": "bi",
+      "COUNTRY_FLAG": "bi.svg"
+    },
+    {
+      "DIAL_CODE": "855",
+      "COUNTRY_NAME": "Cambodia (កម្ពុជា)",
+      "COUNTRY_CODE": "kh",
+      "COUNTRY_FLAG": "kh.svg"
+    },
+    {
+      "DIAL_CODE": "237",
+      "COUNTRY_NAME": "Cameroon (Cameroun)",
+      "COUNTRY_CODE": "cm",
+      "COUNTRY_FLAG": "cm.svg"
+    },
+    {
+      "DIAL_CODE": "1",
+      "COUNTRY_NAME": "Canada",
+      "COUNTRY_CODE": "ca",
+      "COUNTRY_FLAG": "ca.svg"
+    },
+    {
+      "DIAL_CODE": "238",
+      "COUNTRY_NAME": "Cape Verde (Kabu Verdi)",
+      "COUNTRY_CODE": "cv",
+      "COUNTRY_FLAG": "cv.svg"
+    },
+    {
+      "DIAL_CODE": "599",
+      "COUNTRY_NAME": "Caribbean Netherlands",
+      "COUNTRY_CODE": "bq",
+      "COUNTRY_FLAG": "bq.svg"
+    },
+    {
+      "DIAL_CODE": "1345",
+      "COUNTRY_NAME": "Cayman Islands",
+      "COUNTRY_CODE": "ky",
+      "COUNTRY_FLAG": "ky.svg"
+    },
+    {
+      "DIAL_CODE": "236",
+      "COUNTRY_NAME": "Central African Republic (République centrafricaine)",
+      "COUNTRY_CODE": "cf",
+      "COUNTRY_FLAG": "cf.svg"
+    },
+    {
+      "DIAL_CODE": "235",
+      "COUNTRY_NAME": "Chad (Tchad)",
+      "COUNTRY_CODE": "td",
+      "COUNTRY_FLAG": "td.svg"
+    },
+    {
+      "DIAL_CODE": "56",
+      "COUNTRY_NAME": "Chile",
+      "COUNTRY_CODE": "cl",
+      "COUNTRY_FLAG": "cl.svg"
+    },
+    {
+      "DIAL_CODE": "86",
+      "COUNTRY_NAME": "China (中国)",
+      "COUNTRY_CODE": "cn",
+      "COUNTRY_FLAG": "cn.svg"
+    },
+    {
+      "DIAL_CODE": "61",
+      "COUNTRY_NAME": "Christmas Island",
+      "COUNTRY_CODE": "cx",
+      "COUNTRY_FLAG": "cx.svg"
+    },
+    {
+      "DIAL_CODE": "61",
+      "COUNTRY_NAME": "Cocos (Keeling) Islands",
+      "COUNTRY_CODE": "cc",
+      "COUNTRY_FLAG": "cc.svg"
+    },
+    {
+      "DIAL_CODE": "57",
+      "COUNTRY_NAME": "Colombia",
+      "COUNTRY_CODE": "co",
+      "COUNTRY_FLAG": "co.svg"
+    },
+    {
+      "DIAL_CODE": "269",
+      "COUNTRY_NAME": "Comoros (‫جزر القمر‬‎)",
+      "COUNTRY_CODE": "km",
+      "COUNTRY_FLAG": "km.svg"
+    },
+    {
+      "DIAL_CODE": "243",
+      "COUNTRY_NAME": "Congo (DRC) (Jamhuri ya Kidemokrasia ya Kongo)",
+      "COUNTRY_CODE": "cd",
+      "COUNTRY_FLAG": "cd.svg"
+    },
+    {
+      "DIAL_CODE": "242",
+      "COUNTRY_NAME": "Congo (Republic) (Congo-Brazzaville)",
+      "COUNTRY_CODE": "cg",
+      "COUNTRY_FLAG": "cg.svg"
+    },
+    {
+      "DIAL_CODE": "682",
+      "COUNTRY_NAME": "Cook Islands",
+      "COUNTRY_CODE": "ck",
+      "COUNTRY_FLAG": "ck.svg"
+    },
+    {
+      "DIAL_CODE": "506",
+      "COUNTRY_NAME": "Costa Rica",
+      "COUNTRY_CODE": "cr",
+      "COUNTRY_FLAG": "cr.svg"
+    },
+    {
+      "DIAL_CODE": "225",
+      "COUNTRY_NAME": "Côte d’Ivoire",
+      "COUNTRY_CODE": "ci",
+      "COUNTRY_FLAG": "ci.svg"
+    },
+    {
+      "DIAL_CODE": "385",
+      "COUNTRY_NAME": "Croatia (Hrvatska)",
+      "COUNTRY_CODE": "hr",
+      "COUNTRY_FLAG": "hr.svg"
+    },
+    {
+      "DIAL_CODE": "53",
+      "COUNTRY_NAME": "Cuba",
+      "COUNTRY_CODE": "cu",
+      "COUNTRY_FLAG": "cu.svg"
+    },
+    {
+      "DIAL_CODE": "599",
+      "COUNTRY_NAME": "Curaçao",
+      "COUNTRY_CODE": "cw",
+      "COUNTRY_FLAG": "cw.svg"
+    },
+    {
+      "DIAL_CODE": "357",
+      "COUNTRY_NAME": "Cyprus (Κύπρος)",
+      "COUNTRY_CODE": "cy",
+      "COUNTRY_FLAG": "cy.svg"
+    },
+    {
+      "DIAL_CODE": "420",
+      "COUNTRY_NAME": "Czech Republic (Česká republika)",
+      "COUNTRY_CODE": "cz",
+      "COUNTRY_FLAG": "cz.svg"
+    },
+    {
+      "DIAL_CODE": "45",
+      "COUNTRY_NAME": "Denmark (Danmark)",
+      "COUNTRY_CODE": "dk",
+      "COUNTRY_FLAG": "dk.svg"
+    },
+    {
+      "DIAL_CODE": "253",
+      "COUNTRY_NAME": "Djibouti",
+      "COUNTRY_CODE": "dj",
+      "COUNTRY_FLAG": "dj.svg"
+    },
+    {
+      "DIAL_CODE": "1767",
+      "COUNTRY_NAME": "Dominica",
+      "COUNTRY_CODE": "dm",
+      "COUNTRY_FLAG": "dm.svg"
+    },
+    {
+      "DIAL_CODE": "1",
+      "COUNTRY_NAME": "Dominican Republic (República Dominicana)",
+      "COUNTRY_CODE": "do",
+      "COUNTRY_FLAG": "do.svg"
+    },
+    {
+      "DIAL_CODE": "593",
+      "COUNTRY_NAME": "Ecuador",
+      "COUNTRY_CODE": "ec",
+      "COUNTRY_FLAG": "ec.svg"
+    },
+    {
+      "DIAL_CODE": "20",
+      "COUNTRY_NAME": "Egypt (‫مصر‬‎)",
+      "COUNTRY_CODE": "eg",
+      "COUNTRY_FLAG": "eg.svg"
+    },
+    {
+      "DIAL_CODE": "503",
+      "COUNTRY_NAME": "El Salvador",
+      "COUNTRY_CODE": "sv",
+      "COUNTRY_FLAG": "sv.svg"
+    },
+    {
+      "DIAL_CODE": "240",
+      "COUNTRY_NAME": "Equatorial Guinea (Guinea Ecuatorial)",
+      "COUNTRY_CODE": "gq",
+      "COUNTRY_FLAG": "gq.svg"
+    },
+    {
+      "DIAL_CODE": "291",
+      "COUNTRY_NAME": "Eritrea",
+      "COUNTRY_CODE": "er",
+      "COUNTRY_FLAG": "er.svg"
+    },
+    {
+      "DIAL_CODE": "372",
+      "COUNTRY_NAME": "Estonia (Eesti)",
+      "COUNTRY_CODE": "ee",
+      "COUNTRY_FLAG": "ee.svg"
+    },
+    {
+      "DIAL_CODE": "251",
+      "COUNTRY_NAME": "Ethiopia",
+      "COUNTRY_CODE": "et",
+      "COUNTRY_FLAG": "et.svg"
+    },
+    {
+      "DIAL_CODE": "500",
+      "COUNTRY_NAME": "Falkland Islands (Islas Malvinas)",
+      "COUNTRY_CODE": "fk",
+      "COUNTRY_FLAG": "fk.svg"
+    },
+    {
+      "DIAL_CODE": "298",
+      "COUNTRY_NAME": "Faroe Islands (Føroyar)",
+      "COUNTRY_CODE": "fo",
+      "COUNTRY_FLAG": "fo.svg"
+    },
+    {
+      "DIAL_CODE": "679",
+      "COUNTRY_NAME": "Fiji",
+      "COUNTRY_CODE": "fj",
+      "COUNTRY_FLAG": "fj.svg"
+    },
+    {
+      "DIAL_CODE": "358",
+      "COUNTRY_NAME": "Finland (Suomi)",
+      "COUNTRY_CODE": "fi",
+      "COUNTRY_FLAG": "fi.svg"
+    },
+    {
+      "DIAL_CODE": "33",
+      "COUNTRY_NAME": "France",
+      "COUNTRY_CODE": "fr",
+      "COUNTRY_FLAG": "fr.svg"
+    },
+    {
+      "DIAL_CODE": "594",
+      "COUNTRY_NAME": "French Guiana (Guyane française)",
+      "COUNTRY_CODE": "gf",
+      "COUNTRY_FLAG": "gf.svg"
+    },
+    {
+      "DIAL_CODE": "689",
+      "COUNTRY_NAME": "French Polynesia (Polynésie française)",
+      "COUNTRY_CODE": "pf",
+      "COUNTRY_FLAG": "pf.svg"
+    },
+    {
+      "DIAL_CODE": "241",
+      "COUNTRY_NAME": "Gabon",
+      "COUNTRY_CODE": "ga",
+      "COUNTRY_FLAG": "ga.svg"
+    },
+    {
+      "DIAL_CODE": "220",
+      "COUNTRY_NAME": "Gambia",
+      "COUNTRY_CODE": "gm",
+      "COUNTRY_FLAG": "gm.svg"
+    },
+    {
+      "DIAL_CODE": "995",
+      "COUNTRY_NAME": "Georgia (საქართველო)",
+      "COUNTRY_CODE": "ge",
+      "COUNTRY_FLAG": "ge.svg"
+    },
+    {
+      "DIAL_CODE": "49",
+      "COUNTRY_NAME": "Germany (Deutschland)",
+      "COUNTRY_CODE": "de",
+      "COUNTRY_FLAG": "de.svg"
+    },
+    {
+      "DIAL_CODE": "233",
+      "COUNTRY_NAME": "Ghana (Gaana)",
+      "COUNTRY_CODE": "gh",
+      "COUNTRY_FLAG": "gh.svg"
+    },
+    {
+      "DIAL_CODE": "350",
+      "COUNTRY_NAME": "Gibraltar",
+      "COUNTRY_CODE": "gi",
+      "COUNTRY_FLAG": "gi.svg"
+    },
+    {
+      "DIAL_CODE": "30",
+      "COUNTRY_NAME": "Greece (Ελλάδα)",
+      "COUNTRY_CODE": "gr",
+      "COUNTRY_FLAG": "gr.svg"
+    },
+    {
+      "DIAL_CODE": "299",
+      "COUNTRY_NAME": "Greenland (Kalaallit Nunaat)",
+      "COUNTRY_CODE": "gl",
+      "COUNTRY_FLAG": "gl.svg"
+    },
+    {
+      "DIAL_CODE": "1473",
+      "COUNTRY_NAME": "Grenada",
+      "COUNTRY_CODE": "gd",
+      "COUNTRY_FLAG": "gd.svg"
+    },
+    {
+      "DIAL_CODE": "590",
+      "COUNTRY_NAME": "Guadeloupe",
+      "COUNTRY_CODE": "gp",
+      "COUNTRY_FLAG": "gp.svg"
+    },
+    {
+      "DIAL_CODE": "1671",
+      "COUNTRY_NAME": "Guam",
+      "COUNTRY_CODE": "gu",
+      "COUNTRY_FLAG": "gu.svg"
+    },
+    {
+      "DIAL_CODE": "502",
+      "COUNTRY_NAME": "Guatemala",
+      "COUNTRY_CODE": "gt",
+      "COUNTRY_FLAG": "gt.svg"
+    },
+    {
+      "DIAL_CODE": "44",
+      "COUNTRY_NAME": "Guernsey",
+      "COUNTRY_CODE": "gg",
+      "COUNTRY_FLAG": "gg.svg"
+    },
+    {
+      "DIAL_CODE": "224",
+      "COUNTRY_NAME": "Guinea (Guinée)",
+      "COUNTRY_CODE": "gn",
+      "COUNTRY_FLAG": "gn.svg"
+    },
+    {
+      "DIAL_CODE": "245",
+      "COUNTRY_NAME": "Guinea-Bissau (Guiné Bissau)",
+      "COUNTRY_CODE": "gw",
+      "COUNTRY_FLAG": "gw.svg"
+    },
+    {
+      "DIAL_CODE": "592",
+      "COUNTRY_NAME": "Guyana",
+      "COUNTRY_CODE": "gy",
+      "COUNTRY_FLAG": "gy.svg"
+    },
+    {
+      "DIAL_CODE": "509",
+      "COUNTRY_NAME": "Haiti",
+      "COUNTRY_CODE": "ht",
+      "COUNTRY_FLAG": "ht.svg"
+    },
+    {
+      "DIAL_CODE": "504",
+      "COUNTRY_NAME": "Honduras",
+      "COUNTRY_CODE": "hn",
+      "COUNTRY_FLAG": "hn.svg"
+    },
+    {
+      "DIAL_CODE": "852",
+      "COUNTRY_NAME": "Hong Kong (香港)",
+      "COUNTRY_CODE": "hk",
+      "COUNTRY_FLAG": "hk.svg"
+    },
+    {
+      "DIAL_CODE": "36",
+      "COUNTRY_NAME": "Hungary (Magyarország)",
+      "COUNTRY_CODE": "hu",
+      "COUNTRY_FLAG": "hu.svg"
+    },
+    {
+      "DIAL_CODE": "354",
+      "COUNTRY_NAME": "Iceland (Ísland)",
+      "COUNTRY_CODE": "is",
+      "COUNTRY_FLAG": "is.svg"
+    },
+    {
+      "DIAL_CODE": "91",
+      "COUNTRY_NAME": "India (भारत)",
+      "COUNTRY_CODE": "in",
+      "COUNTRY_FLAG": "in.svg"
+    },
+    {
+      "DIAL_CODE": "62",
+      "COUNTRY_NAME": "Indonesia",
+      "COUNTRY_CODE": "id",
+      "COUNTRY_FLAG": "id.svg"
+    },
+    {
+      "DIAL_CODE": "98",
+      "COUNTRY_NAME": "Iran (‫ایران‬‎)",
+      "COUNTRY_CODE": "ir",
+      "COUNTRY_FLAG": "ir.svg"
+    },
+    {
+      "DIAL_CODE": "964",
+      "COUNTRY_NAME": "Iraq (‫العراق‬‎)",
+      "COUNTRY_CODE": "iq",
+      "COUNTRY_FLAG": "iq.svg"
+    },
+    {
+      "DIAL_CODE": "353",
+      "COUNTRY_NAME": "Ireland",
+      "COUNTRY_CODE": "ie",
+      "COUNTRY_FLAG": "ie.svg"
+    },
+    {
+      "DIAL_CODE": "44",
+      "COUNTRY_NAME": "Isle of Man",
+      "COUNTRY_CODE": "im",
+      "COUNTRY_FLAG": "im.svg"
+    },
+    {
+      "DIAL_CODE": "972",
+      "COUNTRY_NAME": "Israel (‫ישראל‬‎)",
+      "COUNTRY_CODE": "il",
+      "COUNTRY_FLAG": "il.svg"
+    },
+    {
+      "DIAL_CODE": "39",
+      "COUNTRY_NAME": "Italy (Italia)",
+      "COUNTRY_CODE": "it",
+      "COUNTRY_FLAG": "it.svg"
+    },
+    {
+      "DIAL_CODE": "1",
+      "COUNTRY_NAME": "Jamaica",
+      "COUNTRY_CODE": "jm",
+      "COUNTRY_FLAG": "jm.svg"
+    },
+    {
+      "DIAL_CODE": "81",
+      "COUNTRY_NAME": "Japan (日本)",
+      "COUNTRY_CODE": "jp",
+      "COUNTRY_FLAG": "jp.svg"
+    },
+    {
+      "DIAL_CODE": "44",
+      "COUNTRY_NAME": "Jersey",
+      "COUNTRY_CODE": "je",
+      "COUNTRY_FLAG": "je.svg"
+    },
+    {
+      "DIAL_CODE": "962",
+      "COUNTRY_NAME": "Jordan (‫الأردن‬‎)",
+      "COUNTRY_CODE": "jo",
+      "COUNTRY_FLAG": "jo.svg"
+    },
+    {
+      "DIAL_CODE": "7",
+      "COUNTRY_NAME": "Kazakhstan (Казахстан)",
+      "COUNTRY_CODE": "kz",
+      "COUNTRY_FLAG": "kz.svg"
+    },
+    {
+      "DIAL_CODE": "254",
+      "COUNTRY_NAME": "Kenya",
+      "COUNTRY_CODE": "ke",
+      "COUNTRY_FLAG": "ke.svg"
+    },
+    {
+      "DIAL_CODE": "686",
+      "COUNTRY_NAME": "Kiribati",
+      "COUNTRY_CODE": "ki",
+      "COUNTRY_FLAG": "ki.svg"
+    },
+    {
+      "DIAL_CODE": "383",
+      "COUNTRY_NAME": "Kosovo",
+      "COUNTRY_CODE": "xk",
+      "COUNTRY_FLAG": "xk.svg"
+    },
+    {
+      "DIAL_CODE": "965",
+      "COUNTRY_NAME": "Kuwait (‫الكويت‬‎)",
+      "COUNTRY_CODE": "kw",
+      "COUNTRY_FLAG": "kw.svg"
+    },
+    {
+      "DIAL_CODE": "996",
+      "COUNTRY_NAME": "Kyrgyzstan (Кыргызстан)",
+      "COUNTRY_CODE": "kg",
+      "COUNTRY_FLAG": "kg.svg"
+    },
+    {
+      "DIAL_CODE": "856",
+      "COUNTRY_NAME": "Laos (ລາວ)",
+      "COUNTRY_CODE": "la",
+      "COUNTRY_FLAG": "la.svg"
+    },
+    {
+      "DIAL_CODE": "371",
+      "COUNTRY_NAME": "Latvia (Latvija)",
+      "COUNTRY_CODE": "lv",
+      "COUNTRY_FLAG": "lv.svg"
+    },
+    {
+      "DIAL_CODE": "961",
+      "COUNTRY_NAME": "Lebanon (‫لبنان‬‎)",
+      "COUNTRY_CODE": "lb",
+      "COUNTRY_FLAG": "lb.svg"
+    },
+    {
+      "DIAL_CODE": "266",
+      "COUNTRY_NAME": "Lesotho",
+      "COUNTRY_CODE": "ls",
+      "COUNTRY_FLAG": "ls.svg"
+    },
+    {
+      "DIAL_CODE": "231",
+      "COUNTRY_NAME": "Liberia",
+      "COUNTRY_CODE": "lr",
+      "COUNTRY_FLAG": "lr.svg"
+    },
+    {
+      "DIAL_CODE": "218",
+      "COUNTRY_NAME": "Libya (‫ليبيا‬‎)",
+      "COUNTRY_CODE": "ly",
+      "COUNTRY_FLAG": "ly.svg"
+    },
+    {
+      "DIAL_CODE": "423",
+      "COUNTRY_NAME": "Liechtenstein",
+      "COUNTRY_CODE": "li",
+      "COUNTRY_FLAG": "li.svg"
+    },
+    {
+      "DIAL_CODE": "370",
+      "COUNTRY_NAME": "Lithuania (Lietuva)",
+      "COUNTRY_CODE": "lt",
+      "COUNTRY_FLAG": "lt.svg"
+    },
+    {
+      "DIAL_CODE": "352",
+      "COUNTRY_NAME": "Luxembourg",
+      "COUNTRY_CODE": "lu",
+      "COUNTRY_FLAG": "lu.svg"
+    },
+    {
+      "DIAL_CODE": "853",
+      "COUNTRY_NAME": "Macau (澳門)",
+      "COUNTRY_CODE": "mo",
+      "COUNTRY_FLAG": "mo.svg"
+    },
+    {
+      "DIAL_CODE": "389",
+      "COUNTRY_NAME": "Macedonia (FYROM) (Македонија)",
+      "COUNTRY_CODE": "mk",
+      "COUNTRY_FLAG": "mk.svg"
+    },
+    {
+      "DIAL_CODE": "261",
+      "COUNTRY_NAME": "Madagascar (Madagasikara)",
+      "COUNTRY_CODE": "mg",
+      "COUNTRY_FLAG": "mg.svg"
+    },
+    {
+      "DIAL_CODE": "265",
+      "COUNTRY_NAME": "Malawi",
+      "COUNTRY_CODE": "mw",
+      "COUNTRY_FLAG": "mw.svg"
+    },
+    {
+      "DIAL_CODE": "60",
+      "COUNTRY_NAME": "Malaysia",
+      "COUNTRY_CODE": "my",
+      "COUNTRY_FLAG": "my.svg"
+    },
+    {
+      "DIAL_CODE": "960",
+      "COUNTRY_NAME": "Maldives",
+      "COUNTRY_CODE": "mv",
+      "COUNTRY_FLAG": "mv.svg"
+    },
+    {
+      "DIAL_CODE": "223",
+      "COUNTRY_NAME": "Mali",
+      "COUNTRY_CODE": "ml",
+      "COUNTRY_FLAG": "ml.svg"
+    },
+    {
+      "DIAL_CODE": "356",
+      "COUNTRY_NAME": "Malta",
+      "COUNTRY_CODE": "mt",
+      "COUNTRY_FLAG": "mt.svg"
+    },
+    {
+      "DIAL_CODE": "692",
+      "COUNTRY_NAME": "Marshall Islands",
+      "COUNTRY_CODE": "mh",
+      "COUNTRY_FLAG": "mh.svg"
+    },
+    {
+      "DIAL_CODE": "596",
+      "COUNTRY_NAME": "Martinique",
+      "COUNTRY_CODE": "mq",
+      "COUNTRY_FLAG": "mq.svg"
+    },
+    {
+      "DIAL_CODE": "222",
+      "COUNTRY_NAME": "Mauritania (‫موريتانيا‬‎)",
+      "COUNTRY_CODE": "mr",
+      "COUNTRY_FLAG": "mr.svg"
+    },
+    {
+      "DIAL_CODE": "230",
+      "COUNTRY_NAME": "Mauritius (Moris)",
+      "COUNTRY_CODE": "mu",
+      "COUNTRY_FLAG": "mu.svg"
+    },
+    {
+      "DIAL_CODE": "262",
+      "COUNTRY_NAME": "Mayotte",
+      "COUNTRY_CODE": "yt",
+      "COUNTRY_FLAG": "yt.svg"
+    },
+    {
+      "DIAL_CODE": "52",
+      "COUNTRY_NAME": "Mexico (México)",
+      "COUNTRY_CODE": "mx",
+      "COUNTRY_FLAG": "mx.svg"
+    },
+    {
+      "DIAL_CODE": "691",
+      "COUNTRY_NAME": "Micronesia",
+      "COUNTRY_CODE": "fm",
+      "COUNTRY_FLAG": "fm.svg"
+    },
+    {
+      "DIAL_CODE": "373",
+      "COUNTRY_NAME": "Moldova (Republica Moldova)",
+      "COUNTRY_CODE": "md",
+      "COUNTRY_FLAG": "md.svg"
+    },
+    {
+      "DIAL_CODE": "377",
+      "COUNTRY_NAME": "Monaco",
+      "COUNTRY_CODE": "mc",
+      "COUNTRY_FLAG": "mc.svg"
+    },
+    {
+      "DIAL_CODE": "976",
+      "COUNTRY_NAME": "Mongolia (Монгол)",
+      "COUNTRY_CODE": "mn",
+      "COUNTRY_FLAG": "mn.svg"
+    },
+    {
+      "DIAL_CODE": "382",
+      "COUNTRY_NAME": "Montenegro (Crna Gora)",
+      "COUNTRY_CODE": "me",
+      "COUNTRY_FLAG": "me.svg"
+    },
+    {
+      "DIAL_CODE": "1664",
+      "COUNTRY_NAME": "Montserrat",
+      "COUNTRY_CODE": "ms",
+      "COUNTRY_FLAG": "ms.svg"
+    },
+    {
+      "DIAL_CODE": "212",
+      "COUNTRY_NAME": "Morocco (‫المغرب‬‎)",
+      "COUNTRY_CODE": "ma",
+      "COUNTRY_FLAG": "ma.svg"
+    },
+    {
+      "DIAL_CODE": "258",
+      "COUNTRY_NAME": "Mozambique (Moçambique)",
+      "COUNTRY_CODE": "mz",
+      "COUNTRY_FLAG": "mz.svg"
+    },
+    {
+      "DIAL_CODE": "95",
+      "COUNTRY_NAME": "Myanmar (Burma) (မြန်မာ)",
+      "COUNTRY_CODE": "mm",
+      "COUNTRY_FLAG": "mm.svg"
+    },
+    {
+      "DIAL_CODE": "264",
+      "COUNTRY_NAME": "Namibia (Namibië)",
+      "COUNTRY_CODE": "na",
+      "COUNTRY_FLAG": "na.svg"
+    },
+    {
+      "DIAL_CODE": "674",
+      "COUNTRY_NAME": "Nauru",
+      "COUNTRY_CODE": "nr",
+      "COUNTRY_FLAG": "nr.svg"
+    },
+    {
+      "DIAL_CODE": "977",
+      "COUNTRY_NAME": "Nepal (नेपाल)",
+      "COUNTRY_CODE": "np",
+      "COUNTRY_FLAG": "np.svg"
+    },
+    {
+      "DIAL_CODE": "31",
+      "COUNTRY_NAME": "Netherlands (Nederland)",
+      "COUNTRY_CODE": "nl",
+      "COUNTRY_FLAG": "nl.svg"
+    },
+    {
+      "DIAL_CODE": "687",
+      "COUNTRY_NAME": "New Caledonia (Nouvelle-Calédonie)",
+      "COUNTRY_CODE": "nc",
+      "COUNTRY_FLAG": "nc.svg"
+    },
+    {
+      "DIAL_CODE": "64",
+      "COUNTRY_NAME": "New Zealand",
+      "COUNTRY_CODE": "nz",
+      "COUNTRY_FLAG": "nz.svg"
+    },
+    {
+      "DIAL_CODE": "505",
+      "COUNTRY_NAME": "Nicaragua",
+      "COUNTRY_CODE": "ni",
+      "COUNTRY_FLAG": "ni.svg"
+    },
+    {
+      "DIAL_CODE": "227",
+      "COUNTRY_NAME": "Niger (Nijar)",
+      "COUNTRY_CODE": "ne",
+      "COUNTRY_FLAG": "ne.svg"
+    },
+    {
+      "DIAL_CODE": "234",
+      "COUNTRY_NAME": "Nigeria",
+      "COUNTRY_CODE": "ng",
+      "COUNTRY_FLAG": "ng.svg"
+    },
+    {
+      "DIAL_CODE": "683",
+      "COUNTRY_NAME": "Niue",
+      "COUNTRY_CODE": "nu",
+      "COUNTRY_FLAG": "nu.svg"
+    },
+    {
+      "DIAL_CODE": "672",
+      "COUNTRY_NAME": "Norfolk Island",
+      "COUNTRY_CODE": "nf",
+      "COUNTRY_FLAG": "nf.svg"
+    },
+    {
+      "DIAL_CODE": "850",
+      "COUNTRY_NAME": "North Korea (조선 민주주의 인민 공화국)",
+      "COUNTRY_CODE": "kp",
+      "COUNTRY_FLAG": "kp.svg"
+    },
+    {
+      "DIAL_CODE": "1670",
+      "COUNTRY_NAME": "Northern Mariana Islands",
+      "COUNTRY_CODE": "mp",
+      "COUNTRY_FLAG": "mp.svg"
+    },
+    {
+      "DIAL_CODE": "47",
+      "COUNTRY_NAME": "Norway (Norge)",
+      "COUNTRY_CODE": "no",
+      "COUNTRY_FLAG": "no.svg"
+    },
+    {
+      "DIAL_CODE": "968",
+      "COUNTRY_NAME": "Oman (‫عُمان‬‎)",
+      "COUNTRY_CODE": "om",
+      "COUNTRY_FLAG": "om.svg"
+    },
+    {
+      "DIAL_CODE": "92",
+      "COUNTRY_NAME": "Pakistan (‫پاکستان‬‎)",
+      "COUNTRY_CODE": "pk",
+      "COUNTRY_FLAG": "pk.svg"
+    },
+    {
+      "DIAL_CODE": "680",
+      "COUNTRY_NAME": "Palau",
+      "COUNTRY_CODE": "pw",
+      "COUNTRY_FLAG": "pw.svg"
+    },
+    {
+      "DIAL_CODE": "970",
+      "COUNTRY_NAME": "Palestine (‫فلسطين‬‎)",
+      "COUNTRY_CODE": "ps",
+      "COUNTRY_FLAG": "ps.svg"
+    },
+    {
+      "DIAL_CODE": "507",
+      "COUNTRY_NAME": "Panama (Panamá)",
+      "COUNTRY_CODE": "pa",
+      "COUNTRY_FLAG": "pa.svg"
+    },
+    {
+      "DIAL_CODE": "675",
+      "COUNTRY_NAME": "Papua New Guinea",
+      "COUNTRY_CODE": "pg",
+      "COUNTRY_FLAG": "pg.svg"
+    },
+    {
+      "DIAL_CODE": "595",
+      "COUNTRY_NAME": "Paraguay",
+      "COUNTRY_CODE": "py",
+      "COUNTRY_FLAG": "py.svg"
+    },
+    {
+      "DIAL_CODE": "51",
+      "COUNTRY_NAME": "Peru (Perú)",
+      "COUNTRY_CODE": "pe",
+      "COUNTRY_FLAG": "pe.svg"
+    },
+    {
+      "DIAL_CODE": "63",
+      "COUNTRY_NAME": "Philippines",
+      "COUNTRY_CODE": "ph",
+      "COUNTRY_FLAG": "ph.svg"
+    },
+    {
+      "DIAL_CODE": "48",
+      "COUNTRY_NAME": "Poland (Polska)",
+      "COUNTRY_CODE": "pl",
+      "COUNTRY_FLAG": "pl.svg"
+    },
+    {
+      "DIAL_CODE": "351",
+      "COUNTRY_NAME": "Portugal",
+      "COUNTRY_CODE": "pt",
+      "COUNTRY_FLAG": "pt.svg"
+    },
+    {
+      "DIAL_CODE": "1",
+      "COUNTRY_NAME": "Puerto Rico",
+      "COUNTRY_CODE": "pr",
+      "COUNTRY_FLAG": "pr.svg"
+    },
+    {
+      "DIAL_CODE": "974",
+      "COUNTRY_NAME": "Qatar (‫قطر‬‎)",
+      "COUNTRY_CODE": "qa",
+      "COUNTRY_FLAG": "qa.svg"
+    },
+    {
+      "DIAL_CODE": "262",
+      "COUNTRY_NAME": "Réunion (La Réunion)",
+      "COUNTRY_CODE": "re",
+      "COUNTRY_FLAG": "re.svg"
+    },
+    {
+      "DIAL_CODE": "40",
+      "COUNTRY_NAME": "Romania (România)",
+      "COUNTRY_CODE": "ro",
+      "COUNTRY_FLAG": "ro.svg"
+    },
+    {
+      "DIAL_CODE": "7",
+      "COUNTRY_NAME": "Russia (Россия)",
+      "COUNTRY_CODE": "ru",
+      "COUNTRY_FLAG": "ru.svg"
+    },
+    {
+      "DIAL_CODE": "250",
+      "COUNTRY_NAME": "Rwanda",
+      "COUNTRY_CODE": "rw",
+      "COUNTRY_FLAG": "rw.svg"
+    },
+    {
+      "DIAL_CODE": "590",
+      "COUNTRY_NAME": "Saint Barthélemy",
+      "COUNTRY_CODE": "bl",
+      "COUNTRY_FLAG": "bl.svg"
+    },
+    {
+      "DIAL_CODE": "290",
+      "COUNTRY_NAME": "Saint Helena",
+      "COUNTRY_CODE": "sh",
+      "COUNTRY_FLAG": "sh.svg"
+    },
+    {
+      "DIAL_CODE": "1869",
+      "COUNTRY_NAME": "Saint Kitts and Nevis",
+      "COUNTRY_CODE": "kn",
+      "COUNTRY_FLAG": "kn.svg"
+    },
+    {
+      "DIAL_CODE": "1758",
+      "COUNTRY_NAME": "Saint Lucia",
+      "COUNTRY_CODE": "lc",
+      "COUNTRY_FLAG": "lc.svg"
+    },
+    {
+      "DIAL_CODE": "590",
+      "COUNTRY_NAME": "Saint Martin (Saint-Martin (partie française))",
+      "COUNTRY_CODE": "mf",
+      "COUNTRY_FLAG": "mf.svg"
+    },
+    {
+      "DIAL_CODE": "508",
+      "COUNTRY_NAME": "Saint Pierre and Miquelon (Saint-Pierre-et-Miquelon)",
+      "COUNTRY_CODE": "pm",
+      "COUNTRY_FLAG": "pm.svg"
+    },
+    {
+      "DIAL_CODE": "1784",
+      "COUNTRY_NAME": "Saint Vincent and the Grenadines",
+      "COUNTRY_CODE": "vc",
+      "COUNTRY_FLAG": "vc.svg"
+    },
+    {
+      "DIAL_CODE": "685",
+      "COUNTRY_NAME": "Samoa",
+      "COUNTRY_CODE": "ws",
+      "COUNTRY_FLAG": "ws.svg"
+    },
+    {
+      "DIAL_CODE": "378",
+      "COUNTRY_NAME": "San Marino",
+      "COUNTRY_CODE": "sm",
+      "COUNTRY_FLAG": "sm.svg"
+    },
+    {
+      "DIAL_CODE": "239",
+      "COUNTRY_NAME": "São Tomé and Príncipe (São Tomé e Príncipe)",
+      "COUNTRY_CODE": "st",
+      "COUNTRY_FLAG": "st.svg"
+    },
+    {
+      "DIAL_CODE": "966",
+      "COUNTRY_NAME": "Saudi Arabia (‫المملكة العربية السعودية‬‎)",
+      "COUNTRY_CODE": "sa",
+      "COUNTRY_FLAG": "sa.svg"
+    },
+    {
+      "DIAL_CODE": "221",
+      "COUNTRY_NAME": "Senegal (Sénégal)",
+      "COUNTRY_CODE": "sn",
+      "COUNTRY_FLAG": "sn.svg"
+    },
+    {
+      "DIAL_CODE": "381",
+      "COUNTRY_NAME": "Serbia (Србија)",
+      "COUNTRY_CODE": "rs",
+      "COUNTRY_FLAG": "rs.svg"
+    },
+    {
+      "DIAL_CODE": "248",
+      "COUNTRY_NAME": "Seychelles",
+      "COUNTRY_CODE": "sc",
+      "COUNTRY_FLAG": "sc.svg"
+    },
+    {
+      "DIAL_CODE": "232",
+      "COUNTRY_NAME": "Sierra Leone",
+      "COUNTRY_CODE": "sl",
+      "COUNTRY_FLAG": "sl.svg"
+    },
+    {
+      "DIAL_CODE": "65",
+      "COUNTRY_NAME": "Singapore",
+      "COUNTRY_CODE": "sg",
+      "COUNTRY_FLAG": "sg.svg"
+    },
+    {
+      "DIAL_CODE": "1721",
+      "COUNTRY_NAME": "Sint Maarten",
+      "COUNTRY_CODE": "sx",
+      "COUNTRY_FLAG": "sx.svg"
+    },
+    {
+      "DIAL_CODE": "421",
+      "COUNTRY_NAME": "Slovakia (Slovensko)",
+      "COUNTRY_CODE": "sk",
+      "COUNTRY_FLAG": "sk.svg"
+    },
+    {
+      "DIAL_CODE": "386",
+      "COUNTRY_NAME": "Slovenia (Slovenija)",
+      "COUNTRY_CODE": "si",
+      "COUNTRY_FLAG": "si.svg"
+    },
+    {
+      "DIAL_CODE": "677",
+      "COUNTRY_NAME": "Solomon Islands",
+      "COUNTRY_CODE": "sb",
+      "COUNTRY_FLAG": "sb.svg"
+    },
+    {
+      "DIAL_CODE": "252",
+      "COUNTRY_NAME": "Somalia (Soomaaliya)",
+      "COUNTRY_CODE": "so",
+      "COUNTRY_FLAG": "so.svg"
+    },
+    {
+      "DIAL_CODE": "27",
+      "COUNTRY_NAME": "South Africa",
+      "COUNTRY_CODE": "za",
+      "COUNTRY_FLAG": "za.svg"
+    },
+    {
+      "DIAL_CODE": "82",
+      "COUNTRY_NAME": "South Korea (대한민국)",
+      "COUNTRY_CODE": "kr",
+      "COUNTRY_FLAG": "kr.svg"
+    },
+    {
+      "DIAL_CODE": "211",
+      "COUNTRY_NAME": "South Sudan (‫جنوب السودان‬‎)",
+      "COUNTRY_CODE": "ss",
+      "COUNTRY_FLAG": "ss.svg"
+    },
+    {
+      "DIAL_CODE": "34",
+      "COUNTRY_NAME": "Spain (España)",
+      "COUNTRY_CODE": "es",
+      "COUNTRY_FLAG": "es.svg"
+    },
+    {
+      "DIAL_CODE": "94",
+      "COUNTRY_NAME": "Sri Lanka (ශ්‍රී ලංකාව)",
+      "COUNTRY_CODE": "lk",
+      "COUNTRY_FLAG": "lk.svg"
+    },
+    {
+      "DIAL_CODE": "249",
+      "COUNTRY_NAME": "Sudan (‫السودان‬‎)",
+      "COUNTRY_CODE": "sd",
+      "COUNTRY_FLAG": "sd.svg"
+    },
+    {
+      "DIAL_CODE": "597",
+      "COUNTRY_NAME": "Suriname",
+      "COUNTRY_CODE": "sr",
+      "COUNTRY_FLAG": "sr.svg"
+    },
+    {
+      "DIAL_CODE": "47",
+      "COUNTRY_NAME": "Svalbard and Jan Mayen",
+      "COUNTRY_CODE": "sj",
+      "COUNTRY_FLAG": "sj.svg"
+    },
+    {
+      "DIAL_CODE": "268",
+      "COUNTRY_NAME": "Swaziland",
+      "COUNTRY_CODE": "sz",
+      "COUNTRY_FLAG": "sz.svg"
+    },
+    {
+      "DIAL_CODE": "46",
+      "COUNTRY_NAME": "Sweden (Sverige)",
+      "COUNTRY_CODE": "se",
+      "COUNTRY_FLAG": "se.svg"
+    },
+    {
+      "DIAL_CODE": "41",
+      "COUNTRY_NAME": "Switzerland (Schweiz)",
+      "COUNTRY_CODE": "ch",
+      "COUNTRY_FLAG": "ch.svg"
+    },
+    {
+      "DIAL_CODE": "963",
+      "COUNTRY_NAME": "Syria (‫سوريا‬‎)",
+      "COUNTRY_CODE": "sy",
+      "COUNTRY_FLAG": "sy.svg"
+    },
+    {
+      "DIAL_CODE": "886",
+      "COUNTRY_NAME": "Taiwan (台灣)",
+      "COUNTRY_CODE": "tw",
+      "COUNTRY_FLAG": "tw.svg"
+    },
+    {
+      "DIAL_CODE": "992",
+      "COUNTRY_NAME": "Tajikistan",
+      "COUNTRY_CODE": "tj",
+      "COUNTRY_FLAG": "tj.svg"
+    },
+    {
+      "DIAL_CODE": "255",
+      "COUNTRY_NAME": "Tanzania",
+      "COUNTRY_CODE": "tz",
+      "COUNTRY_FLAG": "tz.svg"
+    },
+    {
+      "DIAL_CODE": "66",
+      "COUNTRY_NAME": "Thailand (ไทย)",
+      "COUNTRY_CODE": "th",
+      "COUNTRY_FLAG": "th.svg"
+    },
+    {
+      "DIAL_CODE": "670",
+      "COUNTRY_NAME": "Timor-Leste",
+      "COUNTRY_CODE": "tl",
+      "COUNTRY_FLAG": "tl.svg"
+    },
+    {
+      "DIAL_CODE": "228",
+      "COUNTRY_NAME": "Togo",
+      "COUNTRY_CODE": "tg",
+      "COUNTRY_FLAG": "tg.svg"
+    },
+    {
+      "DIAL_CODE": "690",
+      "COUNTRY_NAME": "Tokelau",
+      "COUNTRY_CODE": "tk",
+      "COUNTRY_FLAG": "tk.svg"
+    },
+    {
+      "DIAL_CODE": "676",
+      "COUNTRY_NAME": "Tonga",
+      "COUNTRY_CODE": "to",
+      "COUNTRY_FLAG": "to.svg"
+    },
+    {
+      "DIAL_CODE": "1868",
+      "COUNTRY_NAME": "Trinidad and Tobago",
+      "COUNTRY_CODE": "tt",
+      "COUNTRY_FLAG": "tt.svg"
+    },
+    {
+      "DIAL_CODE": "216",
+      "COUNTRY_NAME": "Tunisia (‫تونس‬‎)",
+      "COUNTRY_CODE": "tn",
+      "COUNTRY_FLAG": "tn.svg"
+    },
+    {
+      "DIAL_CODE": "90",
+      "COUNTRY_NAME": "Turkey (Türkiye)",
+      "COUNTRY_CODE": "tr",
+      "COUNTRY_FLAG": "tr.svg"
+    },
+    {
+      "DIAL_CODE": "993",
+      "COUNTRY_NAME": "Turkmenistan",
+      "COUNTRY_CODE": "tm",
+      "COUNTRY_FLAG": "tm.svg"
+    },
+    {
+      "DIAL_CODE": "1649",
+      "COUNTRY_NAME": "Turks and Caicos Islands",
+      "COUNTRY_CODE": "tc",
+      "COUNTRY_FLAG": "tc.svg"
+    },
+    {
+      "DIAL_CODE": "688",
+      "COUNTRY_NAME": "Tuvalu",
+      "COUNTRY_CODE": "tv",
+      "COUNTRY_FLAG": "tv.svg"
+    },
+    {
+      "DIAL_CODE": "1340",
+      "COUNTRY_NAME": "U.S. Virgin Islands",
+      "COUNTRY_CODE": "vi",
+      "COUNTRY_FLAG": "vi.svg"
+    },
+    {
+      "DIAL_CODE": "256",
+      "COUNTRY_NAME": "Uganda",
+      "COUNTRY_CODE": "ug",
+      "COUNTRY_FLAG": "ug.svg"
+    },
+    {
+      "DIAL_CODE": "380",
+      "COUNTRY_NAME": "Ukraine (Україна)",
+      "COUNTRY_CODE": "ua",
+      "COUNTRY_FLAG": "ua.svg"
+    },
+    {
+      "DIAL_CODE": "971",
+      "COUNTRY_NAME": "United Arab Emirates (‫الإمارات العربية المتحدة‬‎)",
+      "COUNTRY_CODE": "ae",
+      "COUNTRY_FLAG": "ae.svg"
+    },
+    {
+      "DIAL_CODE": "44",
+      "COUNTRY_NAME": "United Kingdom",
+      "COUNTRY_CODE": "gb",
+      "COUNTRY_FLAG": "gb.svg"
+    },
+    {
+      "DIAL_CODE": "1",
+      "COUNTRY_NAME": "United States",
+      "COUNTRY_CODE": "us",
+      "COUNTRY_FLAG": "us.svg"
+    },
+    {
+      "DIAL_CODE": "598",
+      "COUNTRY_NAME": "Uruguay",
+      "COUNTRY_CODE": "uy",
+      "COUNTRY_FLAG": "uy.svg"
+    },
+    {
+      "DIAL_CODE": "998",
+      "COUNTRY_NAME": "Uzbekistan (Oʻzbekiston)",
+      "COUNTRY_CODE": "uz",
+      "COUNTRY_FLAG": "uz.svg"
+    },
+    {
+      "DIAL_CODE": "678",
+      "COUNTRY_NAME": "Vanuatu",
+      "COUNTRY_CODE": "vu",
+      "COUNTRY_FLAG": "vu.svg"
+    },
+    {
+      "DIAL_CODE": "39",
+      "COUNTRY_NAME": "Vatican City (Città del Vaticano)",
+      "COUNTRY_CODE": "va",
+      "COUNTRY_FLAG": "va.svg"
+    },
+    {
+      "DIAL_CODE": "58",
+      "COUNTRY_NAME": "Venezuela",
+      "COUNTRY_CODE": "ve",
+      "COUNTRY_FLAG": "ve.svg"
+    },
+    {
+      "DIAL_CODE": "84",
+      "COUNTRY_NAME": "Vietnam (Việt Nam)",
+      "COUNTRY_CODE": "vn",
+      "COUNTRY_FLAG": "vn.svg"
+    },
+    {
+      "DIAL_CODE": "681",
+      "COUNTRY_NAME": "Wallis and Futuna (Wallis-et-Futuna)",
+      "COUNTRY_CODE": "wf",
+      "COUNTRY_FLAG": "wf.svg"
+    },
+    {
+      "DIAL_CODE": "212",
+      "COUNTRY_NAME": "Western Sahara (‫الصحراء الغربية‬‎)",
+      "COUNTRY_CODE": "eh",
+      "COUNTRY_FLAG": "eh.svg"
+    },
+    {
+      "DIAL_CODE": "967",
+      "COUNTRY_NAME": "Yemen (‫اليمن‬‎)",
+      "COUNTRY_CODE": "ye",
+      "COUNTRY_FLAG": "ye.svg"
+    },
+    {
+      "DIAL_CODE": "260",
+      "COUNTRY_NAME": "Zambia",
+      "COUNTRY_CODE": "zm",
+      "COUNTRY_FLAG": "zm.svg"
+    },
+    {
+      "DIAL_CODE": "263",
+      "COUNTRY_NAME": "Zimbabwe",
+      "COUNTRY_CODE": "zw",
+      "COUNTRY_FLAG": "zw.svg"
+    },
+    {
+      "DIAL_CODE": "358",
+      "COUNTRY_NAME": "Åland Islands",
+      "COUNTRY_CODE": "ax",
+      "COUNTRY_FLAG": "ax.svg"
+    }
+  ]
+}

@@ -31,6 +31,11 @@ import com.ngdesk.graphql.chat.channel.dao.ChatPromptDataFetcher;
 import com.ngdesk.graphql.chat.channel.dao.ChatPromptsDataFetcher;
 import com.ngdesk.graphql.company.dao.Company;
 import com.ngdesk.graphql.company.dao.CompanyDataFetcher;
+import com.ngdesk.graphql.csvimport.dao.CsvImportCountFetcher;
+import com.ngdesk.graphql.csvimport.dao.CsvImportDataFetcher;
+import com.ngdesk.graphql.csvimport.dao.CsvImportsDataFetcher;
+import com.ngdesk.graphql.csvimport.dao.CsvLogCountFetcher;
+import com.ngdesk.graphql.csvimport.dao.CsvLogsDataFetcher;
 import com.ngdesk.graphql.currency.dao.CurrenciesDataFetcher;
 import com.ngdesk.graphql.currency.dao.CurrencyDataFetcher;
 import com.ngdesk.graphql.dashboards.dao.AdvancedPieChartValueFetcher;
@@ -472,7 +477,6 @@ public class DataUtility {
 	ChatPromptsDataFetcher chatPromptsDataFetcher;
 
 	@Autowired
-
 	ArticleDataFetcher articleDataFetcher;
 
 	@Autowired
@@ -516,6 +520,21 @@ public class DataUtility {
 
 	@Autowired
 	EscalationsCountDataFetcher escalationCountDataFetcher;
+	
+	@Autowired
+	CsvImportCountFetcher csvImportCountFetcher;
+	
+	@Autowired
+	CsvImportDataFetcher csvImportDataFetcher;
+	
+	@Autowired
+	CsvImportsDataFetcher csvImportsDataFetcher;
+	
+	@Autowired
+	CsvLogsDataFetcher csvLogsDataFetcher;
+	
+	@Autowired
+	CsvLogCountFetcher csvLogCountFetcher;
 
 	@Autowired
 	EmailListDataFetcher emailListDataFetcher;
@@ -976,6 +995,14 @@ public class DataUtility {
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getEscalation", escalationDataFetcher));
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getEscalations", escalationsDataFetcher));
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getEscalationsCount", escalationCountDataFetcher));
+		
+		// CSV IMPORT
+		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getCsvImport", csvImportDataFetcher));
+		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getCsvImports", csvImportsDataFetcher));
+		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getCsvImportsCount", csvImportCountFetcher));
+		builder.type("CsvImport", typeWiring -> typeWiring.dataFetcher("createdBy", entryDataFetcher));
+		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getCsvLogs", csvLogsDataFetcher));
+		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getCsvLogsCount", csvLogCountFetcher));
 
 		// EMAIL_LIST
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getEmailList", emailListDataFetcher));

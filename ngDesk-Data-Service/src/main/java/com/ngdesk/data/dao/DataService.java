@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.text.translate.UnicodeUnescaper;
 import org.apache.http.util.Asserts;
@@ -295,15 +294,16 @@ public class DataService {
 			while (matcher.find()) {
 				String path = matcher.group(1).split("(?i)inputMessage\\.")[1];
 				String[] fields = path.split("\\.");
+
 				if (!customOperators.contains(fields[0])) {
 					ModuleField moduleField = moduleFields.stream().filter(field -> field.getName().equals(fields[0]))
 							.findFirst().orElse(null);
-					if (moduleField!= null && moduleField.getDataType().getDisplay().equals("Formula")) {
+					if (moduleField != null && moduleField.getDataType().getDisplay().equals("Formula")) {
 						String updatedFormula = getFormulaRecursively(moduleField, moduleFields,
 								moduleField.getFormula(), entry);
 						formula = formula.replaceAll("\\{\\{" + matcher.group(1) + "\\}\\}",
 								"(" + updatedFormula + ")");
-					} else if (moduleField!= null && moduleField.getDataType().getDisplay().equals("List Formula")) {
+					} else if (moduleField != null && moduleField.getDataType().getDisplay().equals("List Formula")) {
 						List<ListFormulaField> listFormulas = moduleField.getListFormula();
 						String updatedListFormula = "";
 						List<String> listOfFormulas = new ArrayList<String>();
