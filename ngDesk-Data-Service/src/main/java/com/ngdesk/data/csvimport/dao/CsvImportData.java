@@ -3,13 +3,13 @@ package com.ngdesk.data.csvimport.dao;
 import java.util.List;
 
 public class CsvImportData {
-
+	
 	private String file;
-
+	
 	private String fileType;
-
+	
 	private String fileName;
-
+	
 	private List<CsvHeaders> headers;
 
 	public CsvImportData() {

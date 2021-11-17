@@ -1,10 +1,16 @@
 package com.ngdesk.data.csvimport.dao;
 
 import java.util.Date;
+
 import java.util.List;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.Id;
 
+@NotEmpty(message = "CSV_IMPORT_REQUIRED")
+@NotNull(message = "NOT_NULL")
 public class CsvImport {
 
 	@Id
