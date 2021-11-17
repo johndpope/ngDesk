@@ -22,6 +22,7 @@ import {
 	debounceTime,
 	distinctUntilChanged,
 	map,
+	mergeMap,
 	switchMap,
 } from 'rxjs/operators';
 import { RenderLayoutService } from '../../render-layout/render-layout.service';
@@ -717,82 +718,88 @@ export class ConditionsComponent implements OnInit {
 		// Temporary fix
 		// TODO: need to figure out where the conditions are changed.
 		const currentConditions = this.conditions;
-		this.modulesService.getModuleById(field.MODULE).subscribe(
-			(module: any) => {
-				const primaryDisplayField = module.FIELDS.find(
-					(fieldName) => fieldName.FIELD_ID === field.PRIMARY_DISPLAY_FIELD
-				);
-				field['RELATION_FIELD_NAME'] = primaryDisplayField.NAME;
-				if (primaryDisplayField) {
-					this.conditionsService
-						.buildQueryToGetRelationshipData(module, 0, primaryDisplayField, '')
-						.subscribe(
-							(entriesResponse: any) => {
-								// TODO: remove this when we stop using {{CURRENT_USER}} as condotion value for relationship fields
-								this.modulesService
-									.getModuleByName('Users')
-									.subscribe((userResponse: any) => {
-										this.modulesService
-											.getModuleByName('Contacts')
-											.subscribe((contactResponse: any) => {
-												if (
-													(this.parentName === 'listLayoutComponent' ||
-														this.parentName === 'roleLayoutComponent' ||
-														this.parentName === 'dashboardsComponent') &&
-													(userResponse.MODULE_ID === field.MODULE ||
-														contactResponse.MODULE_ID === field.MODULE)
-												) {
-													entriesResponse.DATA.push({
-														PRIMARY_DISPLAY_FIELD: '{{CURRENT_USER}}',
-														DATA_ID: '{{CURRENT_USER}}',
-													});
-												}
+		this.modulesService
+			.getModuleById(field.MODULE)
+			.pipe(
+				mergeMap((module: any) => {
+					const primaryDisplayField = module.FIELDS.find(
+						(fieldName) => fieldName.FIELD_ID === field.PRIMARY_DISPLAY_FIELD
+					);
+					field['RELATION_FIELD_NAME'] = primaryDisplayField.NAME;
+					if (primaryDisplayField) {
+						return this.conditionsService
+							.buildQueryToGetRelationshipData(
+								module,
+								0,
+								primaryDisplayField,
+								''
+							)
+							.pipe(
+								mergeMap((entriesResponse: any) => {
+									// TODO: remove this when we stop using {{CURRENT_USER}} as condotion value for relationship fields
+									return this.modulesService.getModuleByName('Users').pipe(
+										mergeMap((userResponse: any) => {
+											return this.modulesService
+												.getModuleByName('Contacts')
+												.pipe(
+													map((contactResponse: any) => {
+														if (
+															(this.parentName === 'listLayoutComponent' ||
+																this.parentName === 'roleLayoutComponent' ||
+																this.parentName === 'dashboardsComponent') &&
+															(userResponse.MODULE_ID === field.MODULE ||
+																contactResponse.MODULE_ID === field.MODULE)
+														) {
+															entriesResponse.DATA.push({
+																PRIMARY_DISPLAY_FIELD: '{{CURRENT_USER}}',
+																DATA_ID: '{{CURRENT_USER}}',
+															});
+														}
 
-												if (field.DATA_TYPE.DISPLAY === 'Custom') {
-													entriesResponse.DATA.push({
-														PRIMARY_DISPLAY_FIELD: '{{REQUESTOR}}',
-														DATA_ID: '{{REQUESTOR}}',
-													});
-												}
+														if (field.DATA_TYPE.DISPLAY === 'Custom') {
+															entriesResponse.DATA.push({
+																PRIMARY_DISPLAY_FIELD: '{{REQUESTOR}}',
+																DATA_ID: '{{REQUESTOR}}',
+															});
+														}
 
-												entriesResponse.DATA.forEach((entry) => {
-													entry['PRIMARY_DISPLAY_FIELD'] =
-														entry['PRIMARY_DISPLAY_FIELD'];
-												});
-												if (
-													type === 'setValue' &&
-													field.DATA_TYPE.DISPLAY === 'Relationship'
-												) {
-													this.CONDITIONS['controls'][index]['controls'][
-														'CONDITION_VALUE'
-													].setValue(
-														entriesResponse.DATA.find(
-															(entry) =>
-																entry.DATA_ID ===
-																currentConditions[index].conditionValue
-														)
-													);
-													this.getRelationshipEntries(field);
-												} else {
-													this.autocompleteValuesInitial[field.NAME] =
-														entriesResponse.DATA;
-													this.autocompleteValuesFiltered[field.NAME] =
-														entriesResponse.DATA;
-												}
-											});
-									});
-							},
-							(error) => {
-								console.log(error);
-							}
-						);
-				}
-			},
-
-			(error) => {
-				console.log(error);
-			}
-		);
+														entriesResponse.DATA.forEach((entry) => {
+															entry['PRIMARY_DISPLAY_FIELD'] =
+																entry['PRIMARY_DISPLAY_FIELD'];
+														});
+														if (
+															type === 'setValue' &&
+															field.DATA_TYPE.DISPLAY === 'Relationship'
+														) {
+															this.CONDITIONS['controls'][index]['controls'][
+																'CONDITION_VALUE'
+															].setValue(
+																entriesResponse.DATA.find(
+																	(entry) =>
+																		entry.DATA_ID ===
+																		currentConditions[index].conditionValue
+																)
+															);
+															this.getRelationshipEntries(field);
+														} else {
+															this.autocompleteValuesInitial[field.NAME] =
+																entriesResponse.DATA;
+															this.autocompleteValuesFiltered[field.NAME] =
+																entriesResponse.DATA;
+														}
+													})
+												);
+										})
+									);
+								})
+							);
+					}
+					(error: any) => {
+						console.log(error);
+					};
+				})
+			)
+			.subscribe();
 	}
 
 	public transformConditions(conditions?) {
