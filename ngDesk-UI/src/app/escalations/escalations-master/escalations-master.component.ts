@@ -108,15 +108,8 @@ export class EscalationsMasterComponent implements OnInit {
 		const orderBy = this.customTableService.sortOrder;
 		const page = this.customTableService.pageIndex;
 		const pageSize = this.customTableService.pageSize;
-		const query = `{
-			escalations: getEscalations(pageNumber: ${page}, pageSize: ${pageSize}, sortBy: "${sortBy}", orderBy: "${orderBy}") {
-				name
-				escalationId
-			}
-			totalCount: getEscalationsCount
-		}`;
 
-		this.escalationService.getAllEscalations(query).subscribe(
+		this.escalationService.getAllEscalations(page, pageSize, sortBy, orderBy).subscribe(
 			(escalationsResponse: any) => {
 				this.customTableService.setTableDataSource(
 					escalationsResponse.escalations,
