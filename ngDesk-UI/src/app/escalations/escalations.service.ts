@@ -95,11 +95,6 @@ export class EscalationsService {
 		return this.http.post(`${this.globals.graphqlUrl}`, query);
 	}
 
-	// Calling graphql call to fetch list of schedules
-	public getAllEscalations(query) {
-		return this.http.post(`${this.globals.graphqlUrl}`, query);
-	}
-
 	// Calling graphql call to fetch an escalation
 	public getEscalation(escalationId) {
 		const query = `{
@@ -123,4 +118,18 @@ export class EscalationsService {
 		
 		return this.http.post(`${this.globals.graphqlUrl}`, query);
 	}
+
+	// Calling graphql call to fetch list of escalations
+	public getAllEscalations(page, pageSize, sortBy, orderBy) {
+		const query = `{
+			escalations: getEscalations(pageNumber: ${page}, pageSize: ${pageSize}, sortBy: "${sortBy}", orderBy: "${orderBy}") {
+				name
+				escalationId
+			}
+			totalCount: getEscalationsCount
+		}`;
+
+		return this.http.post(`${this.globals.graphqlUrl}`, query);
+	}
+
 }
