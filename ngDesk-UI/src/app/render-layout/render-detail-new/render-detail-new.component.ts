@@ -208,7 +208,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 		REQUIREMENT_TYPE: 'All',
 	};
 	public operators: any = [];
-	public chatFilters = [];
+	// public chatFilters = [];
 	public previousChats = [];
 
 	constructor(
@@ -362,7 +362,6 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 		});
 		this.reloadEntryOnUpdate();
 		this.isZoomCreated();
-
 	}
 
 	private resetVariables() {
@@ -473,6 +472,20 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 									this.entry = responseList[1];
 								}
 								if (this.module['NAME'] == 'Chats') {
+									if (this.chatDataService.chatFilters.length === 0) {
+										this.module.FIELDS.filter((field) => {
+											if (field.NAME === 'AGENTS') {
+												const filter = {
+													condition: field.FIELD_ID,
+													operator: 'EQUALS_TO',
+													conditionValue: this.userService.user.DATA_ID,
+													requirementType: 'All',
+												};
+												this.chatDataService.chatFilters.push(filter);
+											}
+										});
+									}
+
 									this.chatHistoryFilter();
 									this.getChatChannelDetails();
 									this.onUpdateOfChatEntry();
@@ -1144,7 +1157,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	}
 
 	// START RELATION FUNCTIONS
-	public clearInput(event: any) { }
+	public clearInput(event: any) {}
 
 	public addDataForRelationshipField(field, event, formControlFieldName) {
 		if (
@@ -1237,8 +1250,9 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 					);
 					if (discussionField) {
 						let query = `{
-							entry: get${this.module.NAME.replace(/ /g, '_')}Entry(id: "${this.entry.DATA_ID
-							}") {'${discussionField.NAME}'}}`;
+							entry: get${this.module.NAME.replace(/ /g, '_')}Entry(id: "${
+							this.entry.DATA_ID
+						}") {'${discussionField.NAME}'}}`;
 						query = this.cacheService.buildDiscussionQuery(
 							query,
 							discussionField.NAME
@@ -1892,7 +1906,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 			if (
 				attachments.length > 0 ||
 				this.customModulesService.discussionControls['MESSAGE'].trim().length >
-				0
+					0
 			) {
 				const messagePayload =
 					this.renderDetailDataSerice.buildDiscussionPayload(
@@ -2184,9 +2198,11 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 		attachmentLists.forEach((attachment) => {
 			this.attachmentsList.push({
 				FILE: {
-					url: `https://${this.userService.getSubdomain()}.ngdesk.com/api/ngdesk-data-service-v1/attachments?message_id&module_id=${this.module.MODULE_ID
-						}&data_id=${dataId}&attachment_uuid=${attachment['ATTACHMENT_UUID']
-						}&field_id=${filePreviewField.FIELD_ID}`,
+					url: `https://${this.userService.getSubdomain()}.ngdesk.com/api/ngdesk-data-service-v1/attachments?message_id&module_id=${
+						this.module.MODULE_ID
+					}&data_id=${dataId}&attachment_uuid=${
+						attachment['ATTACHMENT_UUID']
+					}&field_id=${filePreviewField.FIELD_ID}`,
 					httpHeaders: {
 						authentication_token: this.userService.getAuthenticationToken(),
 					},
@@ -2600,7 +2616,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 			}
 		);
 
-		setComment.afterClosed().subscribe((comment) => { });
+		setComment.afterClosed().subscribe((comment) => {});
 	}
 
 	public getcalculatedValuesForFormula() {
@@ -2997,7 +3013,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 			this.publishMessages(chatmessage);
 		}
 	}
-
+	/** Publish message from Agent Side */
 	public publishMessages(chatmessage) {
 		let messageBody = chatmessage;
 		const linkifyStr = require('linkifyjs/string');
@@ -3050,29 +3066,21 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	// to get Plain text from premade responces
 	// using for chats
 	public convertHTMLToPlainText() {
-		let tempHtml = document.createElement('div');
+		// let text = this.customModulesService.discussionControls['MESSAGE'].replace(
+		// 	/<[^>]+>/gm,
+		// 	''
+		// );
+		// text = text.replace(/&nbsp;/g, '\n');
+
+		// this.customModulesService.discussionControls['MESSAGE'] = text;
+		let tempHtml = document.createElement('p');
 		tempHtml.innerHTML =
 			this.customModulesService.discussionControls['MESSAGE'];
 		this.customModulesService.discussionControls['MESSAGE'] =
 			tempHtml.innerText || tempHtml.textContent;
 	}
 
-	public getCustomerForAgent() {
-		this.chatDataService
-			.getChatsByUserId(this.module['MODULE_ID'], this.chatFilters)
-			.subscribe((users: any) => {
-				this.customersForAgent = [];
-				users.DATA.forEach((user) => {
-					if (user.REQUESTOR) {
-						this.customersForAgent.push(user);
-						this.currentUserStatus = user.STATUS;
-						this.customerDetail.FIRST_NAME = user.REQUESTOR.FIRST_NAME;
-						this.customerDetail.LAST_NAME = user.REQUESTOR.LAST_NAME;
-					}
-				});
-			});
-	}
-
+	/** Called on click of custmer card  */
 	public loadUserChatDetails(user) {
 		this.router.navigate([
 			`render/${this.module['MODULE_ID']}/edit/${user.DATA_ID}`,
@@ -3080,6 +3088,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 		this.chatHistoryFilter();
 	}
 
+	/** to get custmer details from contacts */
 	public loadUserDetailsByRequestorId(userID) {
 		this.modulesService.getAllModules().subscribe((allModules: any) => {
 			this.allModules = allModules['MODULES'];
@@ -3105,6 +3114,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 		});
 	}
 
+	/** Called when Agent Closes the session, Sends a webSocket call to notify customer  */
 	public closeSession() {
 		this.chatboxDisabled = true;
 
@@ -3145,6 +3155,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 		this.websocketService.publishMessage(endChatObj);
 	}
 
+	/** to display Session closed Message For Agent */
 	public vlidateCloseSessionMessage(message) {
 		const ClosedMessage =
 			' Session has been closed by ' +
@@ -3157,6 +3168,8 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 			return false;
 		}
 	}
+	/** Setting Chat bubble and Chat test Color to gloal styles  */
+	/** using in css file for top right and left edges */
 
 	public setSenderColors(bgColor, textColor) {
 		this.themeWrapper.style.setProperty('--chatSenderBubbleColor', bgColor);
@@ -3167,7 +3180,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 		this.themeWrapper.style.setProperty('--chatReceiverBubbleColor', bgColor);
 		this.themeWrapper.style.setProperty('--chatReceiverTextColor', textColor);
 	}
-
+	/** To Get Fields for Chat Filter */
 	public getChatModuleFields() {
 		this.fieldsForChatFilter = [];
 		this.module['FIELDS'].filter((field) => {
@@ -3181,6 +3194,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 		});
 	}
 
+	/** to get Operators and Values on field Selection */
 	public filterFieldSelection(field) {
 		this.filterField = {
 			FIELD: field,
@@ -3195,6 +3209,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 		this.operators = this.conditionsService.setOperators(field);
 	}
 
+	/** Filter to get Chats For Agent  */
 	public applyFilter() {
 		const filterField = {
 			condition: this.filterField.FIELD['FIELD_ID'],
@@ -3202,8 +3217,8 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 			conditionValue: this.filterField.VALUE,
 			requirementType: this.filterField.REQUIREMENT_TYPE,
 		};
-		this.chatFilters.push(filterField);
-		this.getCustomerForAgent();
+		this.chatDataService.chatFilters.push(filterField);
+		this.getChatsForAgent();
 		this.isFilterActive = false;
 		this.filterField = {
 			FIELD: '',
@@ -3212,10 +3227,10 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 			REQUIREMENT_TYPE: 'All',
 		};
 	}
-
+	/** Removes Chat Filter from Chat Data Service  */
 	public removeFilter(index) {
-		this.chatFilters.splice(index, 1);
-		this.getCustomerForAgent();
+		this.chatDataService.chatFilters.splice(index, 1);
+		this.getChatsForAgent();
 	}
 
 	// To get the chat history of the requestor
@@ -3239,6 +3254,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 			});
 	}
 
+	/** To Display Requester in chat filter */
 	public getRequestorById(requestorId) {
 		let requestorName;
 		if (this.customersForAgent && this.customersForAgent.length > 0) {
@@ -3249,7 +3265,6 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 				}
 			});
 		}
-
 		return requestorName;
 	}
 
@@ -3261,20 +3276,8 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 
 	// To get chats of a particular agent
 	public getChatsForAgent() {
-		let chatFilters = [];
-		this.module.FIELDS.filter((field) => {
-			if (field.NAME === 'AGENTS') {
-				const filter = {
-					condition: field.FIELD_ID,
-					operator: 'EQUALS_TO',
-					conditionValue: this.userService.user.DATA_ID,
-					requirementType: 'All',
-				};
-				chatFilters.push(filter);
-			}
-		});
 		this.chatDataService
-			.getChatsByUserId(this.module.MODULE_ID, chatFilters)
+			.getChatsByUserId(this.module.MODULE_ID, this.chatDataService.chatFilters)
 			.subscribe((chats: any) => {
 				this.customersForAgent = [];
 				chats.DATA.forEach((user) => {
@@ -3291,9 +3294,11 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	// To update left sidebar of chats and visited pages
 	public onUpdateOfChatEntry() {
 		this.websocketService.chatEntryUpdated.subscribe((response: any) => {
-			if (response.MESSAGE && response.MESSAGE === 'You have been assigned a new chat') {
+			if (
+				response.MESSAGE &&
+				response.MESSAGE === 'You have been assigned a new chat'
+			) {
 				this.getChatsForAgent();
-
 			}
 		});
 		this.websocketService.visitedPagesUpdated.subscribe((response: any) => {

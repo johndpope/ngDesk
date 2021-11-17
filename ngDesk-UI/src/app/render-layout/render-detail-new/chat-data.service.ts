@@ -5,7 +5,9 @@ import { AppGlobals } from '../../app.globals';
 	providedIn: 'root',
 })
 export class ChatDataService {
-	constructor(private http: HttpClient, private globals: AppGlobals) { }
+	constructor(private http: HttpClient, private globals: AppGlobals) {}
+
+	chatFilters: any = [];
 
 	// to get chat channel
 
