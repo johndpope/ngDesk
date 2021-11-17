@@ -32,7 +32,7 @@
 			]
 		},
 		{
-			"NAME": "Software Asset Management",
+			"NAME": "SAM",
 			"TIERS": [
 				{
 					"NAME": "free",

@@ -1,6 +1,7 @@
 package com.ngdesk.company.sidebar.dao;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -23,8 +24,6 @@ public class SidebarService {
 	@Autowired
 	Global global;
 
-	
-
 	@Autowired
 	ModuleService moduleService;
 
@@ -34,39 +33,6 @@ public class SidebarService {
 	@SuppressWarnings("unlikely-arg-type")
 	public void postDefaultSidebar(Company company, Map<String, String> rolesMap) {
 
-//		try {
-//			String defaultsidebarJson = global.getFile("default-sidebar.json");
-//			if (company.getCompanySubdomain().equals("ngdesk-sam")) {
-//				defaultsidebarJson = global.getFile("sidebar-sam.json");
-//			} else if (company.getCompanySubdomain().equals("ngdesk-crm")) {
-//				defaultsidebarJson = global.getFile("sidebar-crm.json");
-//			} else if (company.getPlugins().contains("Expenses")) {
-//				defaultsidebarJson = global.getFile("sidebar-expenses.json");
-//			}
-//
-//			for (String name : moduleService.modulesMap.keySet()) {
-//				String moduleId = moduleService.modulesMap.get(name).toString();
-//				name = name.toUpperCase().replaceAll("\\s+", "_");
-//				defaultsidebarJson = defaultsidebarJson.replaceAll(name.toUpperCase() + "_ID_REPLACE", moduleId);
-//			}
-//
-//			for (String name : rolesMap.keySet()) {
-//				String roleId = rolesMap.get(name);
-//				name = name.toUpperCase().replaceAll("\\s+", "_");
-//				defaultsidebarJson = defaultsidebarJson.replaceAll(name + "_ROLE_REPLACE", roleId);
-//			}
-//
-//			Sidebar sidebar = new ObjectMapper().readValue(defaultsidebarJson, Sidebar.class);
-//			CustomSidebar customSidebar = new CustomSidebar();
-//			customSidebar.setCompanyId(company.getCompanyId());
-//			customSidebar.setSidebar(sidebar);
-//
-//			sidebarRepository.save(customSidebar, "companies_sidebar");
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			throw new BadRequestException("SIDEBAR_POST_FAILED", null);
-//		}
 		try {
 			String sidebarJson = global.getFile("sidebar.json");
 			for (String name : rolesMap.keySet()) {
@@ -80,24 +46,17 @@ public class SidebarService {
 				sidebarJson = sidebarJson.replaceAll(name.toUpperCase() + "_ID_REPLACE", moduleId);
 			}
 			Sidebar sidebar = new ObjectMapper().readValue(sidebarJson, Sidebar.class);
-			List<String> menuItemsToBeRemoved = new ArrayList<String>();
-			List<Menu> menuItem = sidebar.getSidebarMenu();
 			List<String> userPlugins = company.getPlugins();
-			String[] pluginNames = new String[] { "Ticketing", "CRM", "Expenses", "Software Asset Management", "Chats",
-					"Change Requests", "Pager", "Human Resource Management" };
-			for (String pluginName : pluginNames) {
-				if (!(userPlugins.contains(pluginName))) {
 
-					menuItemsToBeRemoved.add(pluginName);
-				}
-			}
-			for (String menuItemToBeRemoved : menuItemsToBeRemoved) {
-				if (menuItem.contains(menuItemToBeRemoved)) {
-					menuItem.remove(menuItemToBeRemoved);					
-				}
-			}
-			sidebar.setSidebarMenu(menuItem);
+			sidebar = removeUnwantedMenuItemsForSystemAdmin(rolesMap, sidebar, userPlugins);
 
+			if (!userPlugins.contains("Expenses")) {
+				sidebar = removeMenusOfExpensesRoles(sidebar);
+			}
+
+			if (!userPlugins.contains("Chats")) {
+				sidebar = removeChatsForAgent(rolesMap, sidebar);
+			}
 			CustomSidebar customSidebar = new CustomSidebar();
 			customSidebar.setCompanyId(company.getCompanyId());
 			customSidebar.setSidebar(sidebar);
@@ -108,4 +67,69 @@ public class SidebarService {
 			throw new BadRequestException("SIDEBAR_POST_FAILED", null);
 		}
 	}
+
+	public Sidebar removeUnwantedMenuItemsForSystemAdmin(Map<String, String> rolesMap, Sidebar sidebar,
+			List<String> userPlugins) {
+		String systemAdminRoleId = rolesMap.get("SystemAdmin");
+		List<String> menuNamesToBeRemoved = new ArrayList<String>();
+		String plugins[] = { "CRM", "Expenses", "SAM", "Chats", "Change Requests", "Human Resource Management" };
+		for (String plugin : plugins) {
+			if (!userPlugins.contains(plugin)) {
+				menuNamesToBeRemoved.add(plugin);
+			}
+		}
+		if (sidebar.getSidebarMenu() != null) {
+			for (Menu menu : sidebar.getSidebarMenu()) {
+				List<MenuItem> menuItemsToBeRemoved = new ArrayList<MenuItem>();
+				if (menu.getRole().equals(systemAdminRoleId)) {
+					if (menu.getMenuItems() != null) {
+						for (MenuItem menuItem : menu.getMenuItems()) {
+							if (menuItem.getName() != null && menuNamesToBeRemoved.contains(menuItem.getName())) {
+								menuItemsToBeRemoved.add(menuItem);
+
+							}
+						}
+					}
+				}
+				menu.getMenuItems().removeAll(menuItemsToBeRemoved);
+			}
+		}
+		return sidebar;
+	}
+
+	public Sidebar removeMenusOfExpensesRoles(Sidebar sidebar) {
+		String rolesToBeRemoved[] = { "ACCOUNTANT_ROLE_REPLACE", "SPENDER_ROLE_REPLACE",
+				"ACCOUNTING_MANAGER_ROLE_REPLACE" };
+		List<Menu> menusToBeRemoved = new ArrayList<Menu>();
+		for (Menu menu : sidebar.getSidebarMenu()) {
+			if (Arrays.asList(rolesToBeRemoved).contains(menu.getRole())) {
+				menusToBeRemoved.add(menu);
+			}
+		}
+		sidebar.getSidebarMenu().removeAll(menusToBeRemoved);
+
+		return sidebar;
+	}
+
+	public Sidebar removeChatsForAgent(Map<String, String> rolesMap, Sidebar sidebar) {
+		String agentRoleId = rolesMap.get("Agent");
+		if (sidebar.getSidebarMenu() != null) {
+			for (Menu menu : sidebar.getSidebarMenu()) {
+				List<MenuItem> menuItemsToBeRemoved = new ArrayList<MenuItem>();
+				if (menu.getRole().equals(agentRoleId)) {
+					if (menu.getMenuItems() != null) {
+						for (MenuItem menuItem : menu.getMenuItems()) {
+							if (menuItem.getName() != null && menuItem.getName().equals("Chats")) {
+								menuItemsToBeRemoved.add(menuItem);
+
+							}
+						}
+					}
+				}
+				menu.getMenuItems().removeAll(menuItemsToBeRemoved);
+			}
+		}
+		return sidebar;
+	}
+
 }

@@ -443,6 +443,17 @@
               "NAME": "SCHEDULES"
             }
           ]
+        },
+        {
+          "ROUTE": "CHAT_ID_REPLACE",
+          "ORDER": 6,
+          "MODULE": "CHAT_ID_REPLACE",
+          "IS_MODULE": true,
+          "PATH_PARAMETER": "",
+          "ICON": "chat",
+          "EDITABLE": true,
+          "NAME": "Chats",
+          "SUB_MENU_ITEMS": []
         }
       ]
     },
