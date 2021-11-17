@@ -520,19 +520,19 @@ public class DataUtility {
 
 	@Autowired
 	EscalationsCountDataFetcher escalationCountDataFetcher;
-	
+
 	@Autowired
 	CsvImportCountFetcher csvImportCountFetcher;
-	
+
 	@Autowired
 	CsvImportDataFetcher csvImportDataFetcher;
-	
+
 	@Autowired
 	CsvImportsDataFetcher csvImportsDataFetcher;
-	
+
 	@Autowired
 	CsvLogsDataFetcher csvLogsDataFetcher;
-	
+
 	@Autowired
 	CsvLogCountFetcher csvLogCountFetcher;
 
@@ -995,7 +995,10 @@ public class DataUtility {
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getEscalation", escalationDataFetcher));
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getEscalations", escalationsDataFetcher));
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getEscalationsCount", escalationCountDataFetcher));
-		
+
+		builder.type("Escalation", typeWiring -> typeWiring.dataFetcher("createdBy", entryDataFetcher));
+		builder.type("Escalation", typeWiring -> typeWiring.dataFetcher("lastUpdatedBy", entryDataFetcher));
+
 		// CSV IMPORT
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getCsvImport", csvImportDataFetcher));
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getCsvImports", csvImportsDataFetcher));

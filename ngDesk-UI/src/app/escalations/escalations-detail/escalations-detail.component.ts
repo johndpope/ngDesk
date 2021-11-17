@@ -124,7 +124,6 @@ export class EscalationsDetailComponent implements OnInit {
 			});
 
 		this.escalationForm = this.formBuilder.group({});
-
 		this.escalationId = this.route.snapshot.params['escalationId'];
 		this.companyInfoSubscription =
 			this.cacheService.companyInfoSubject.subscribe((dataStored) => {
@@ -150,11 +149,10 @@ export class EscalationsDetailComponent implements OnInit {
 							);
 
 							if (this.escalationId !== 'new') {
-								this.escalationApiService
-									.getEscalationById(this.escalationId)
-									.subscribe(
+								this.escalationService
+									.getEscalation(this.escalationId).subscribe(
 										(escalationResponse: Escalation) => {
-											this.escalation = escalationResponse;
+											this.escalation = escalationResponse['escalation'];
 											this.escalationForm.controls.NAME.setValue(
 												this.escalation.NAME
 											);

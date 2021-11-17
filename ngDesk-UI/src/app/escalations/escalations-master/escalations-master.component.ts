@@ -9,6 +9,7 @@ import { CustomTableService } from '@src/app/custom-table/custom-table.service';
 import { ConfirmDialogComponent } from '@src/app/dialogs/confirm-dialog/confirm-dialog.component';
 import { RolesService } from '@src/app/roles/roles.service';
 import { UsersService } from '@src/app/users/users.service';
+import { EscalationsService } from '../escalations.service';
 
 @Component({
 	selector: 'app-escalations-master',
@@ -32,7 +33,8 @@ export class EscalationsMasterComponent implements OnInit {
 		public customTableService: CustomTableService,
 		private rolesService: RolesService,
 		private usersService: UsersService,
-		private escalationApiService: EscalationApiService
+		private escalationApiService: EscalationApiService,
+		public escalationService: EscalationsService
 	) {
 		// needs to subscribe here to get the translation once the actual file is loaded
 		// if using instant outside it wont get the trasnlation.
@@ -69,7 +71,7 @@ export class EscalationsMasterComponent implements OnInit {
 				// only if there are actions to be shown. Actions are based on permissions
 				columnsHeadersObj.push({
 					DISPLAY: this.translateService.instant('NAME'),
-					NAME: 'NAME'
+					NAME: 'name'
 				});
 				columnsHeaders.push(this.translateService.instant('NAME'));
 				if (this.escalationsActions.actions.length > 0) {
@@ -83,7 +85,7 @@ export class EscalationsMasterComponent implements OnInit {
 				this.customTableService.columnsHeaders = columnsHeaders;
 				this.customTableService.columnsHeadersObj = columnsHeadersObj;
 
-				this.customTableService.sortBy = 'NAME';
+				this.customTableService.sortBy = 'name';
 				this.customTableService.sortOrder = 'asc';
 				this.customTableService.pageIndex = 0;
 				this.customTableService.pageSize = 10;
@@ -100,29 +102,33 @@ export class EscalationsMasterComponent implements OnInit {
 		);
 	}
 
-	private getEscalations() {
-		const sort = [
-			this.customTableService.sortBy + ',' + this.customTableService.sortOrder
-		];
-		this.escalationApiService
-			.getEscalations(
-				this.customTableService.pageIndex,
-				this.customTableService.pageSize,
-				sort
-			)
-			.subscribe(
-				(data: any) => {
-					this.customTableService.setTableDataSource(
-						data.content,
-						data.totalElements
-					);
-				},
-				(error: any) => {
-					this.bannerMessageService.errorNotifications.push({
-						message: error.error.ERROR
-					});
-				}
-			);
+	// Fetching all the schedules based on page numebr and page size.
+	public getEscalations() {
+		const sortBy = this.customTableService.sortBy;
+		const orderBy = this.customTableService.sortOrder;
+		const page = this.customTableService.pageIndex;
+		const pageSize = this.customTableService.pageSize;
+		const query = `{
+			escalations: getEscalations(pageNumber: ${page}, pageSize: ${pageSize}, sortBy: "${sortBy}", orderBy: "${orderBy}") {
+				name
+				escalationId
+			}
+			totalCount: getEscalationsCount
+		}`;
+
+		this.escalationService.getAllEscalations(query).subscribe(
+			(escalationsResponse: any) => {
+				this.customTableService.setTableDataSource(
+					escalationsResponse.escalations,
+					escalationsResponse.totalCount
+				);
+			},
+			(error: any) => {
+				this.bannerMessageService.errorNotifications.push({
+					message: error.error.ERROR,
+				});
+			}
+		);
 	}
 
 	private deleteEscalation(escalation) {
@@ -145,11 +151,11 @@ export class EscalationsMasterComponent implements OnInit {
 		dialogRef.afterClosed().subscribe(result => {
 			if (result === this.translateService.instant('DELETE')) {
 				this.escalationApiService
-					.deleteEscalation(escalation.ESCALATION_ID)
+					.deleteEscalation(escalation.escalationId)
 					.subscribe(
-						(escalationResponse: any) => {
+						(escalationsResponse: any) => {
 							this.companiesService.trackEvent(`Deleted Escalation`, {
-								ESCALATION_ID: escalation.ESCALATION_ID
+								ESCALATION_ID: escalation.escalationId
 							});
 							this.getEscalations();
 						},
@@ -165,7 +171,7 @@ export class EscalationsMasterComponent implements OnInit {
 
 	public rowClicked(rowData): void {
 		// clicking on table row will redirect to escalation detail
-		this.router.navigate([`escalations/${rowData.ESCALATION_ID}`]);
+		this.router.navigate([`escalations/${rowData.escalationId}`]);
 	}
 
 	public newEscalation(): void {
