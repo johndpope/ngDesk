@@ -67,22 +67,13 @@ export class GuideComponent implements OnInit {
 
 		this.guideService.getKbCategories().subscribe(
 			(categoriesResponse: any) => {
-				if (
-					this.roleName &&
+				if (this.roleName) {
+					this.categories = this.sortByOrder(categoriesResponse.DATA);
+					this.filteredCategories = this.sortByOrder(categoriesResponse.DATA);
+				} else if (
 					this.roleName !== 'SystemAdmin' &&
 					this.roleName !== 'Agent'
 				) {
-					this.categories = this.sortByOrder(
-						categoriesResponse.DATA.filter(
-							(category) => category.isDraft === false
-						)
-					);
-					this.filteredCategories = this.sortByOrder(
-						categoriesResponse.DATA.filter(
-							(category) => category.isDraft === false
-						)
-					);
-				} else {
 					this.categories = this.sortByOrder(categoriesResponse.DATA);
 					this.filteredCategories = this.sortByOrder(categoriesResponse.DATA);
 				}
