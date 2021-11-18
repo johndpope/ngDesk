@@ -3007,7 +3007,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	public triggerFunction(event, chatmessage) {
 		// enterToSend is checkbox in chat for if "press enter to submit" is preferred
 		// this.fileSizeLimit = true;
-		if (event.keyCode === 16 && event.keyCode === 13) {
+		if (event.shiftKey && event.keyCode === 13) {
 			chatmessage += '\n';
 		} else if (event.keyCode === 13) {
 			this.publishMessages(chatmessage);
@@ -3016,10 +3016,10 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	/** Publish message from Agent Side */
 	public publishMessages(chatmessage) {
 		let messageBody = chatmessage;
-		const linkifyStr = require('linkifyjs/string');
-		messageBody = linkifyStr(messageBody, {});
+		messageBody = messageBody.replace(/(\r\n|\r|\n)/g, '<br>');
+		// const linkifyStr = require('linkifyjs/string');
+		// messageBody = linkifyStr(messageBody, {});
 		const htmlMsg = `<html> <head></head> <body>${messageBody}</body> </html>`;
-
 		this.renderDetailDataSerice
 			.postAttachments(this.attachments)
 			.subscribe((attachmentResponse: any) => {
@@ -3066,18 +3066,23 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	// to get Plain text from premade responces
 	// using for chats
 	public convertHTMLToPlainText() {
-		// let text = this.customModulesService.discussionControls['MESSAGE'].replace(
-		// 	/<[^>]+>/gm,
-		// 	''
-		// );
-		// text = text.replace(/&nbsp;/g, '\n');
+		// to remove HTML tags
+		let text = this.customModulesService.discussionControls['MESSAGE'].replace(
+			/<[^>]+>/gm,
+			''
+		);
+		// to add line breaks
+		text = text.replace(/&nbsp;/g, '\n');
+		// to remove empty lines
+		text = text.replace(/(^[ \t]*\n)/gm, '');
+		this.customModulesService.discussionControls['MESSAGE'] = text;
 
-		// this.customModulesService.discussionControls['MESSAGE'] = text;
-		let tempHtml = document.createElement('p');
-		tempHtml.innerHTML =
-			this.customModulesService.discussionControls['MESSAGE'];
-		this.customModulesService.discussionControls['MESSAGE'] =
-			tempHtml.innerText || tempHtml.textContent;
+		// let tempHtml = document.createElement('p');
+		// tempHtml.innerHTML = this.customModulesService.discussionControls[
+		// 	'MESSAGE'
+		// ].replace(/(^[ \t]*\n)/gm, '');
+		// this.customModulesService.discussionControls['MESSAGE'] =
+		// 	tempHtml.innerText || tempHtml.textContent;
 	}
 
 	/** Called on click of custmer card  */
