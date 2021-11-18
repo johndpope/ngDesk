@@ -146,7 +146,11 @@ export class RenderArticlesComponent implements OnInit {
 			this.roleService
 				.getRole(this.usersService.user.ROLE)
 				.subscribe((response: any) => {
-					if (response.NAME === 'SystemAdmin') {
+					if (
+						response.NAME === 'SystemAdmin' ||
+						response.NAME === 'Agent' ||
+						response.NAME === 'Customers'
+					) {
 						this.hasEditAccess = true;
 					}
 				});

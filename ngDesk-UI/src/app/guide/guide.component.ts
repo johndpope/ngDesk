@@ -74,8 +74,16 @@ export class GuideComponent implements OnInit {
 					this.roleName !== 'SystemAdmin' &&
 					this.roleName !== 'Agent'
 				) {
-					this.categories = this.sortByOrder(categoriesResponse.DATA);
-					this.filteredCategories = this.sortByOrder(categoriesResponse.DATA);
+					this.categories = this.sortByOrder(
+						categoriesResponse.DATA.filter(
+							(category) => category.isDraft === false
+						)
+					);
+					this.filteredCategories = this.sortByOrder(
+						categoriesResponse.DATA.filter(
+							(category) => category.isDraft === false
+						)
+					);
 				}
 				this.isLoading = false;
 			},
@@ -159,7 +167,7 @@ export class GuideComponent implements OnInit {
 					this.router.navigate([
 						'guide',
 						'sections',
-						object.SECTION_ID,
+						object.sectionId,
 						'detail',
 					]);
 					break;
@@ -189,7 +197,7 @@ export class GuideComponent implements OnInit {
 					this.router.navigate([
 						'guide',
 						'sections',
-						object.SECTION_ID,
+						object.sectionId,
 						'detail',
 					]);
 					break;
