@@ -12,18 +12,24 @@ public class AgentAvailability {
 
 	public Boolean isAgentAvailable;
 
+	public Boolean isBussinessHoursEnabled;
+
+	public String message;
+
 	public AgentAvailability() {
 		super();
 	}
 
 	public AgentAvailability(String sessionUUID, String companySubdomain, String type, String channelName,
-			Boolean isAgentAvailable) {
+			Boolean isAgentAvailable, Boolean isBussinessHoursEnabled, String message) {
 		super();
 		this.sessionUUID = sessionUUID;
 		this.companySubdomain = companySubdomain;
 		this.type = type;
 		this.channelName = channelName;
 		this.isAgentAvailable = isAgentAvailable;
+		this.isBussinessHoursEnabled = isBussinessHoursEnabled;
+		this.message = message;
 	}
 
 	public String getSessionUUID() {
@@ -64,6 +70,22 @@ public class AgentAvailability {
 
 	public void setIsAgentAvailable(Boolean isAgentAvailable) {
 		this.isAgentAvailable = isAgentAvailable;
+	}
+
+	public Boolean getIsBussinessHoursEnabled() {
+		return isBussinessHoursEnabled;
+	}
+
+	public void setIsBussinessHoursEnabled(Boolean isBussinessHoursEnabled) {
+		this.isBussinessHoursEnabled = isBussinessHoursEnabled;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 }

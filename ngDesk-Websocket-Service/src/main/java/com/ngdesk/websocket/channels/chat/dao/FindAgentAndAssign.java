@@ -24,6 +24,7 @@ import com.ngdesk.repositories.ModuleEntryRepository;
 import com.ngdesk.repositories.ModulesRepository;
 import com.ngdesk.websocket.SessionService;
 import com.ngdesk.websocket.UserSessions;
+import com.ngdesk.websocket.companies.dao.ChatBusinessRules;
 import com.ngdesk.websocket.companies.dao.Company;
 import com.ngdesk.websocket.dao.WebSocketService;
 import com.ngdesk.websocket.modules.dao.DataType;
@@ -56,6 +57,9 @@ public class FindAgentAndAssign {
 	DataProxy dataProxy;
 
 	@Autowired
+	AgentAvailabilityService agentAvailabilityService;
+
+	@Autowired
 	RedisTemplate<String, ChatNotification> redisTemplateForChatNotification;
 
 	public void assignChatToAgent(Company company, ChatUser chatUser, Map<String, Object> customer) {
@@ -71,6 +75,9 @@ public class FindAgentAndAssign {
 		Map<String, Object> agentUserEntry = null;
 		List<String> agentsWhoCanChat = new ArrayList<String>();
 
+		ChatBusinessRules businessRules = company.getChatSettings().getChatBusinessRules();
+		Boolean hasRestriction = company.getChatSettings().getHasRestrictions();
+
 		for (String key : sessionMap.keySet()) {
 			userId = key;
 			Optional<Map<String, Object>> optionalUserEntry = entryRepository.findById(userId, "Users_" + companyId);
@@ -79,9 +86,18 @@ public class FindAgentAndAssign {
 						"Chats_" + company.getId());
 				UserSessions userSessions = sessionMap.get(key);
 				String chatStatus = userSessions.getChatStatus();
-				if (chatEntries < company.getChatSettings().getMaxChatPerAgent() && chatStatus != null
-						&& chatStatus.equalsIgnoreCase("available")) {
-					agentsWhoCanChat.add(key);
+				if (hasRestriction == null || !hasRestriction) {
+					if (chatEntries < company.getChatSettings().getMaxChatPerAgent() && chatStatus != null
+							&& chatStatus.equalsIgnoreCase("available")) {
+						agentsWhoCanChat.add(key);
+					}
+				} else if (hasRestriction) {
+					Boolean isBussinessRulesActive = agentAvailabilityService
+							.validateBusinessRulesForAgentAssign(company, businessRules);
+					if (chatEntries < company.getChatSettings().getMaxChatPerAgent() && chatStatus != null
+							&& chatStatus.equalsIgnoreCase("available") && isBussinessRulesActive) {
+						agentsWhoCanChat.add(key);
+					}
 				}
 			}
 		}
@@ -185,8 +201,8 @@ public class FindAgentAndAssign {
 									customer.get("USER_UUID").toString());
 							// Notify the agent that You have been assigned a new chat
 							Notification notifyAgent = new Notification(company.getId(), chatModule.getModuleId(),
-									existingChatEntry.get("_id").toString(), agentUserEntry.get("_id").toString(), new Date(),
-									new Date(), false, "You have been assigned a new chat");
+									existingChatEntry.get("_id").toString(), agentUserEntry.get("_id").toString(),
+									new Date(), new Date(), false, "You have been assigned a new chat");
 							redisTemplate.convertAndSend("notification", notifyAgent);
 
 							AgentDetails agentDetails = new AgentDetails(companyId, agentFirstName, agentLastName,
