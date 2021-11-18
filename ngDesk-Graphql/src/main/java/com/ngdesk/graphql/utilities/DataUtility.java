@@ -1029,6 +1029,8 @@ public class DataUtility {
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getCampaigns", campaignsDataFetcher));
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getCampaign", campaignDataFetcher));
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getCampaignCount", campaignCountDataFetcher));
+		builder.type("Campaigns", typeWiring -> typeWiring.dataFetcher("createdBy", entryDataFetcher));
+		builder.type("Campaigns", typeWiring -> typeWiring.dataFetcher("lastUpdatedBy", entryDataFetcher));
 
 		for (Module module : modules) {
 			String name = "get" + module.getName().replaceAll("\\s+", "_");
