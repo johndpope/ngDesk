@@ -109,7 +109,14 @@ public interface CustomModuleEntryRepository {
 
 	public Optional<List<Map<String, Object>>> findAllTeams(List<String> teamIds, String userId, String companyId);
 
+	public Optional<Map<String, Object>> findTeamsByVariableForIsPersonal(String fieldName, String value,
+			String collectionName);
+
+	public Optional<Map<String, Object>> findEntryByVariable(String fieldName, Object value, String collectionName);
+
 	public Optional<Map<String, Object>> findEntriesByVariableForRelationship(String collectionName,
 			String fieldName,String value ,String id);
+
+	public Optional<Map<String, Object>> findEntryByFieldNameForDeleted(String fieldName, Object value, String collectionName);
 
 }

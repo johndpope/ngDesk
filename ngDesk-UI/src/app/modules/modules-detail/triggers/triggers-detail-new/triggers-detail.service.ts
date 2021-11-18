@@ -23,6 +23,7 @@ import { HtmlTemplateApiService } from '@ngdesk/module-api';
 import { HttpClient } from '@angular/common/http';
 import { AppGlobals } from '@src/app/app.globals';
 import { ModulesService } from '@src/app/modules/modules.service';
+import { EscalationsService } from '../../../../escalations/escalations.service';
 
 @Injectable({
 	providedIn: 'root',
@@ -50,7 +51,8 @@ export class TriggersDetailService {
 		private htmlTemplateApiService: HtmlTemplateApiService,
 		private http: HttpClient,
 		private globals: AppGlobals,
-		private modulesService: ModulesService
+		private modulesService: ModulesService,
+		public escalationService: EscalationsService
 	) {}
 
 	public initializeUsers() {
@@ -206,9 +208,10 @@ export class TriggersDetailService {
 		}
 		const moduleResponse = this.cacheService.getModule(moduleId);
 
-		const escalationResponse = this.escalationApiService.getEscalations().pipe(
+		const escalationResponse = this.escalationService.getAllEscalations(0, 10, 'name', 'asc').
+		pipe(
 			map((response) => {
-				return response['content'];
+				return response['escalations'];
 			}),
 			catchError((error) => of([]))
 		);
