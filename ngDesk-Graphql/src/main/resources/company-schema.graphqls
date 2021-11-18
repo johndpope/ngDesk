@@ -1069,7 +1069,7 @@ type ButtonClick{
 	clickedBy: [ClickedBy] 
 }
      
- type ClickedBy{
+type ClickedBy{
 	emailAddress: String
 	companyId: String
 	clicks: Int
@@ -1096,21 +1096,15 @@ type Row{
 	settings: RowSettings
 }
 
-
-
 type Column{
 	type: String
 	settings: ColumnSettings
 	width: Float
 }
 
-
-
 type RowSettings{
 	columnLayout: String
 }
-
-
 
 type ColumnSettings{
 	id: String
@@ -1137,10 +1131,3 @@ type ColumnSettings{
 	height: Int
 	alternateText: String
 }
-	  
-	  
- 
-    
-     
-     
-

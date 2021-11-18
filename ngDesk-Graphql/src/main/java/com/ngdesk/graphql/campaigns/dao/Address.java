@@ -1,9 +1,5 @@
 package com.ngdesk.graphql.campaigns.dao;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-
 import org.springframework.data.mongodb.core.mapping.Field;
 
 public class Address {
@@ -36,13 +32,8 @@ public class Address {
 
 	}
 
-	public Address(
-			@NotNull(message = "COMPANY_NAME_NOT_NULL") @Size(min = 1, max = 63, message = "COMPANY_NAME_NOT_EMPTY") @Pattern(regexp = "([A-Za-z0-9\\-]+)", message = "INVALID_COMPANY_NAME") String companyName,
-			@NotNull(message = "ADDRESS_1_NOT_NULL") @Size(min = 1, message = "ADDRESS_1_NOT_EMPTY") @Pattern(regexp = "([A-Za-z0-9]+)", message = "INVALID_ADDRESS_1") String address1,
-			String address2,
-			@NotNull(message = "CITY_NOT_NULL") @Size(min = 1, message = "CITY_NOT_EMPTY") @Pattern(regexp = "([A-Za-z]+)", message = "INVALID_CITY") String city,
-			@NotNull(message = "STATE_NOT_NULL") @Size(min = 1, message = "STATE_NOT_EMPTY") @Pattern(regexp = "([A-Za-z]+)", message = "INVALID_STATE") String state,
-			String zipCode, String country, String phone) {
+	public Address(String companyName, String address1, String address2, String city, String state, String zipCode,
+			String country, String phone) {
 		super();
 		this.companyName = companyName;
 		this.address1 = address1;

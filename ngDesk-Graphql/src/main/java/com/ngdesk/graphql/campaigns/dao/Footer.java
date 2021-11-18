@@ -1,8 +1,5 @@
 package com.ngdesk.graphql.campaigns.dao;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-
 import org.springframework.data.mongodb.core.mapping.Field;
 
 public class Footer {
@@ -17,8 +14,7 @@ public class Footer {
 
 	}
 
-	public Footer(@NotNull(message = "ADDRESS_NOT_NULL") Address address,
-			@NotNull(message = "FOOTER_ALIGNMENT_NOT_NULL") @Pattern(regexp = "flex-start|center|flex-end", message = "FOOTER_ALIGNMENT_INVALID") String alignment) {
+	public Footer(Address address, String alignment) {
 		super();
 		this.address = address;
 		this.alignment = alignment;
