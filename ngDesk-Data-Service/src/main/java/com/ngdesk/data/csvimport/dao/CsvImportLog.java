@@ -1,9 +1,13 @@
 package com.ngdesk.data.csvimport.dao;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 public class CsvImportLog {
-
+	
+	@Schema(required = true,description = "Shows the line number of error in csv file")
 	private int lineNumber;
-
+	
+	@Schema(required = true,description = "Shows the error message in csv file")
 	private String errorMessage;
 
 	public CsvImportLog() {
