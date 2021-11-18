@@ -2,14 +2,16 @@ package com.ngdesk.graphql.campaigns.dao;
 
 import java.util.List;
 
+import org.springframework.data.mongodb.core.mapping.Field;
+
 public class ButtonClick {
-
+	@Field("BUTTON_ID")
 	private String buttonId;
-
+	@Field("LINK")
 	private String link;
-
+	@Field("TOTAL_CLICKS")
 	private int totalClicks;
-
+	@Field("CLICKED_BY")
 	private List<ClickedBy> clickedBy;
 
 	public ButtonClick() {

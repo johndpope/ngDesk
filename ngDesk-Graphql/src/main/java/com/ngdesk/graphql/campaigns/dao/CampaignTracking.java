@@ -1,11 +1,13 @@
 package com.ngdesk.graphql.campaigns.dao;
 
+import org.springframework.data.mongodb.core.mapping.Field;
+
 public class CampaignTracking {
-
+	@Field("EMAIL_ADDRESS")
 	private String emailAddress;
-
+	@Field("COMPANY_ID")
 	private String companyId;
-
+	
 	public CampaignTracking() {
 
 	}

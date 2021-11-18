@@ -1,17 +1,19 @@
 package com.ngdesk.graphql.campaigns.dao;
 
+import org.springframework.data.mongodb.core.mapping.Field;
+
 public class Column {
-
+	@Field("TYPE")
 	private String type;
-
+	@Field("SETTINGS")
 	private ColumnSettings settings;
-
-	private Double width;
+	@Field("WIDTH")
+	private Float width;
 
 	public Column() {
 	}
 
-	public Column(String type, ColumnSettings settings, Double width) {
+	public Column(String type, ColumnSettings settings, Float width) {
 		super();
 		this.type = type;
 		this.settings = settings;
@@ -34,11 +36,11 @@ public class Column {
 		this.settings = settings;
 	}
 
-	public Double getWidth() {
+	public Float getWidth() {
 		return width;
 	}
 
-	public void setWidth(Double width) {
+	public void setWidth(Float width) {
 		this.width = width;
 	}
 

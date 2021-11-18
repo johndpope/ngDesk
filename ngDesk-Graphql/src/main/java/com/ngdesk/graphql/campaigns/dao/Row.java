@@ -2,10 +2,12 @@ package com.ngdesk.graphql.campaigns.dao;
 
 import java.util.List;
 
+import org.springframework.data.mongodb.core.mapping.Field;
+
 public class Row {
-
+	@Field("COLUMNS")
 	private List<Column> columns;
-
+	@Field("SETTINGS")
 	private RowSettings settings;
 
 	public Row() {

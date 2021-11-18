@@ -17,6 +17,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ngdesk.graphql.approval.dao.ApprovalDeniedDataFetcher;
 import com.ngdesk.graphql.approval.dao.ApprovalOngoingDataFetcher;
+import com.ngdesk.graphql.campaigns.dao.CampaignsDataFetcher;
 import com.ngdesk.graphql.catalogue.dao.CatalogueCountDataFetcher;
 import com.ngdesk.graphql.catalogue.dao.CatalogueDataFetcher;
 import com.ngdesk.graphql.catalogue.dao.CatalogueFormDataFetcher;
@@ -544,6 +545,9 @@ public class DataUtility {
 
 	@Autowired
 	EmailListCountFetcher emailListCountFetcher;
+	
+	@Autowired
+	CampaignsDataFetcher campaignsDataFetcher;
 
 	public GraphQL createGraphQlObject(Company company) throws IOException {
 		try {
@@ -1010,6 +1014,8 @@ public class DataUtility {
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getEmailListCount", emailListCountFetcher));
 		builder.type("EmailList", typeWiring -> typeWiring.dataFetcher("createdBy", entryDataFetcher));
 		builder.type("EmailList", typeWiring -> typeWiring.dataFetcher("lastUpdatedBy", entryDataFetcher));
+		
+		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getCampaigns", campaignsDataFetcher));
 
 		for (Module module : modules) {
 			String name = "get" + module.getName().replaceAll("\\s+", "_");

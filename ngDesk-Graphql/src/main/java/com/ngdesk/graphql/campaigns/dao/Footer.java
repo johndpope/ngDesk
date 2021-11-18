@@ -3,10 +3,12 @@ package com.ngdesk.graphql.campaigns.dao;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import org.springframework.data.mongodb.core.mapping.Field;
+
 public class Footer {
-
+	@Field("ADDRESS")
 	private Address address;
-
+	@Field("ALIGNMENT")
 	private String alignment;
 
 	public Footer() {

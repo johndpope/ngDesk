@@ -2,52 +2,54 @@ package com.ngdesk.graphql.campaigns.dao;
 
 import java.util.List;
 
+import org.springframework.data.mongodb.core.mapping.Field;
+
 public class ColumnSettings {
-
+	@Field("ID")
 	private String id;
-
+	@Field("TEXT")
 	private String text;
-
+	@Field("TEXT_COLOR")
 	private String textColor;
-
+	@Field("FONT_FAMILY")
 	private String fontFamily;
-
+	@Field("FONT_SIZE")
 	private Integer fontSize;
-
+	@Field("FONT_WEIGHT")
 	private String fontWeight;
-
+	@Field("FONT_UNDER_LINE")
 	private String fontUnderline;
-
+	@Field("FONT_ITALICS")
 	private String fontItalics;
-
+	@Field("FONT_STYLING")
 	private List<String> fontStyling;
-
+	@Field("BACKGROUND_COLOR")
 	private String backgroundColor;
-
+	@Field("ALIGNMENT")
 	private String alignment;
-
+	@Field("HAS_FULL_WIDTH")
 	private Boolean hasFullWidth;
-
+	@Field("LINK_TO")
 	private String linkTo;
-
+	@Field("LINK_VALUE")
 	private String linkValue;
-
+	@Field("CORNER_RADIUS")
 	private Integer cornerRadius;
-
+	@Field("HAS_BORDER")
 	private Boolean hasBorder;
-
+	@Field("BORDER_WIDTH")
 	private Integer borderWidth;
-
+	@Field("BORDER_COLOR")
 	private String borderColor;
-
+	@Field("FILE")
 	private String file;
-
+	@Field("FILE_NAME")
 	private String fileName;
-
+	@Field("WIDTH")
 	private Integer width;
-
+	@Field("HEIGHT")
 	private Integer height;
-
+	@Field("ALTERNATE_TEXT")
 	private String alternateText;
 
 	public ColumnSettings() {

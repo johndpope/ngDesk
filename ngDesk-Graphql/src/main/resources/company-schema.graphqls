@@ -97,6 +97,7 @@ type Query {
 	getEmailLists(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [EmailList]
 	getEmailList(id: String): EmailList
 	getEmailListCount: Int
+	getCampaigns(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [Campaigns]
 	MODULE_FUNCTIONS_REPLACE
 }
 
@@ -1030,3 +1031,114 @@ type EmailList{
 	lastUpdatedBy:Users
 	createdBy:Users
 }
+
+type Campaigns{
+   campaignId:String
+   name:String
+   description:String
+   sendOption:String
+   subject:String
+   body:String
+   rows:[Row]
+   campaignType:String
+   sendDate:DateTime
+   recipientUsers:[String]
+   recipientLists:[String]
+   previewUser:String
+   status:String
+   tracking:[CampaignTracking]
+   buttonClicks:[ButtonClick]
+   footer:Footer
+   dateCreated:DateTime
+   dateUpdated:DateTime
+   lastUpdatedBy:String
+   createdBy:String
+   }
+   
+type CampaignTracking  {
+   emailAddress:String
+   companyId:String 
+   }
+   
+type ButtonClick{ 
+     buttonId:String
+     link:String
+     totalClicks:Int
+     clickedBy:[ClickedBy] 
+     }
+     
+ type  ClickedBy{
+      emailAddress:String
+	  companyId:String
+	  clicks:Int
+	  }
+	  
+type Footer{
+ address:Address
+ alignment:String
+}
+
+type Address{
+  companyName:String
+  address1:String
+  address2:String
+  city:String
+  state:String
+  zipCode:String
+  country:String
+  phone:String	
+}
+
+type Row{
+columns: [Column]
+settings: RowSettings
+}
+
+
+
+type Column{
+type: String
+settings: ColumnSettings
+width: Float
+}
+
+
+
+type RowSettings{
+columnLayout: String
+}
+
+
+
+type ColumnSettings{
+id: String
+text: String
+textColor: String
+fontFamily: String
+fontSize: Int
+fontWeight: String
+fontUnderline: String
+fontItalics: String
+fontStyling: [String]
+backgroundColor: String
+alignment: String
+hasFullWidth: Boolean
+linkTo: String
+linkValue: String
+cornerRadius: Int
+hasBorder: Boolean
+borderWidth: Int
+borderColor: String
+file: String
+fileName: String
+width:Int
+height:Int
+alternateText: String
+}
+	  
+	  
+ 
+    
+     
+     
+

@@ -2,8 +2,10 @@ package com.ngdesk.graphql.campaigns.dao;
 
 import javax.validation.constraints.Pattern;
 
-public class RowSettings {
+import org.springframework.data.mongodb.core.mapping.Field;
 
+public class RowSettings {
+	@Field("COLUMN_LAYOUT")
 	private String columnLayout;
 
 	public RowSettings() {

@@ -1,72 +1,65 @@
 package com.ngdesk.graphql.campaigns.dao;
 
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Field;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Campaigns {
 
 	@Id
 	private String campaignId;
-
+	@Field("NAME")
 	private String name;
-
+	@Field("DESCRIPTION")
 	private String description;
-
+	@Field("SEND_OPTION")
 	private String sendOption;
-
+	@Field("SUBJECT")
 	private String subject;
-
+	@Field("BODY")
 	private String body;
-
+	@Field("ROWS")
 	private List<Row> rows;
-
+	@Field("CAMPAIGN_TYPE")
 	private String campaignType;
-
-	private Timestamp sendDate;
-
+	@Field("SEND_DATE")
+	private Date sendDate;
+	@Field("RECIPIENT_USERS")
 	private List<String> recipientUsers;
-
+	@Field("RECIPIENT_LIST")
 	private List<String> recipientLists;
-
+	@Field("PREVIEW_USER")
 	private String previewUser;
-
+	@Field("STATUS")
 	private String status;
-
+	@Field("TRACKING")
 	private List<CampaignTracking> tracking;
-
+	@Field("BUTTON_CLICKS")
 	private List<ButtonClick> buttonClicks;
-
+	@Field("FOOTER")
 	private Footer footer;
-
-	private Timestamp dateCreated;
-
-	private Timestamp dateUpdated;
-
+	@Field("DATE_CREATED")
+	private Date dateCreated;
+	@Field("DATE_UPDATED")
+	private Date dateUpdated;
+	@Field("LAST_UPDATED_BY")
 	private String lastUpdatedBy;
-
+	@Field("CREATED_BY")
 	private String createdBy;
 
 	public Campaigns() {
 	}
 
-	public Campaigns(String campaignId,
-			@NotNull(message = "CAMPAIGN_NAME_NOT_NULL") @Size(min = 1, message = "CAMPAIGN_NAME_NOT_EMPTY") String name,
-			String description,
-			@NotNull(message = "SEND_OPTION_NOT_NULL") @Size(min = 1, message = "SEND_OPTION_NOT_EMPTY") @Pattern(regexp = "Send now|Send later", message = "SEND_OPTION_INVALID") String sendOption,
-			@NotNull(message = "SUBJECT_NOT_NULL") @Size(min = 1, message = "SUBJECT_NOT_EMPTY") String subject,
-			String body, @NotNull(message = "ROWS_NOT_NULL") @Size(min = 1, message = "ROWS_NOT_EMPTY") List<Row> rows,
-			@NotNull(message = "CAMPAIGN_TYPE_NOT_NULL") @Size(min = 1, message = "CAMPAIGN_TYPE_NOT_EMPTY") @Pattern(regexp = "Plain|Simple|Welcome", message = "CAMPAIGN_TYPE_INVALID") String campaignType,
-			Timestamp sendDate, List<String> recipientUsers, List<String> recipientLists, String previewUser,
-			@Pattern(regexp = "Draft|Processing|Sent|Scheduled", message = "CAMPAIGN_STATUS_INVALID") String status,
-			List<CampaignTracking> tracking, List<ButtonClick> buttonClicks,
-			@NotNull(message = "FOOTER_NOT_NULL") Footer footer, Timestamp dateCreated, Timestamp dateUpdated,
-			String lastUpdatedBy, String createdBy) {
+	public Campaigns(String campaignId, String name, String description, String sendOption, String subject, String body,
+			List<Row> rows, String campaignType, Date sendDate, List<String> recipientUsers,
+			List<String> recipientLists, String previewUser, String status, List<CampaignTracking> tracking,
+			List<ButtonClick> buttonClicks, Footer footer, Date dateCreated, Date dateUpdated, String lastUpdatedBy,
+			String createdBy) {
 		super();
 		this.campaignId = campaignId;
 		this.name = name;
@@ -154,11 +147,11 @@ public class Campaigns {
 		this.campaignType = campaignType;
 	}
 
-	public Timestamp getSendDate() {
+	public Date getSendDate() {
 		return sendDate;
 	}
 
-	public void setSendDate(Timestamp sendDate) {
+	public void setSendDate(Date sendDate) {
 		this.sendDate = sendDate;
 	}
 
@@ -218,19 +211,19 @@ public class Campaigns {
 		this.footer = footer;
 	}
 
-	public Timestamp getDateCreated() {
+	public Date getDateCreated() {
 		return dateCreated;
 	}
 
-	public void setDateCreated(Timestamp dateCreated) {
+	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
 
-	public Timestamp getDateUpdated() {
+	public Date getDateUpdated() {
 		return dateUpdated;
 	}
 
-	public void setDateUpdated(Timestamp dateUpdated) {
+	public void setDateUpdated(Date dateUpdated) {
 		this.dateUpdated = dateUpdated;
 	}
 
