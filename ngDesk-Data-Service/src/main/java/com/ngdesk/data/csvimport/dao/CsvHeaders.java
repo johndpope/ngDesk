@@ -1,14 +1,13 @@
 package com.ngdesk.data.csvimport.dao;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 
 public class CsvHeaders {
-	
-	@Schema(required = false,accessMode = AccessMode.READ_ONLY,description = "Field id")
+
+	@Schema(required = false, description = "Field id")
 	private String fieldId;
-	
-	@Schema(required = true,description = "Name of the header")
+
+	@Schema(required = false, description = "Name of the header")
 	private String headerName;
 
 	public CsvHeaders() {
