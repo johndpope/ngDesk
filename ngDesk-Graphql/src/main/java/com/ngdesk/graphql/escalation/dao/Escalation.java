@@ -11,34 +11,26 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Escalation {
 
 	@Id
-	@JsonProperty("ESCALATION_ID")
-	private String esclalationId;
+	private String escalationId;
 
 	@Field("NAME")
-	@JsonProperty("NAME")
 	private String name;
 
-	@JsonProperty("DESCRIPTION")
 	@Field("DESCRIPTION")
 	private String description;
 
-	@JsonProperty("RULES")
 	@Field("RULES")
 	private List<EscalationRule> rules;
 
-	@JsonProperty("DATE_CREATED")
 	@Field("DATE_CREATED")
 	private Date dateCreated;
 
-	@JsonProperty("DATE_UPDATED")
 	@Field("DATE_UPDATED")
 	private Date dateUpdated;
 
-	@JsonProperty("LAST_UPDATED_BY")
 	@Field("LAST_UPDATED_BY")
-	private String lastUpdated;
+	private String lastUpdatedBy;
 
-	@JsonProperty("CREATED_BY")
 	@Field("CREATED_BY")
 	private String createdBy;
 
@@ -46,25 +38,25 @@ public class Escalation {
 
 	}
 
-	public Escalation(String esclalationId, String name, String description, List<EscalationRule> rules,
-			Date dateCreated, Date dateUpdated, String lastUpdated, String createdBy) {
+	public Escalation(String escalationId, String name, String description, List<EscalationRule> rules,
+			Date dateCreated, Date dateUpdated, String lastUpdatedBy, String createdBy) {
 		super();
-		this.esclalationId = esclalationId;
+		this.escalationId = escalationId;
 		this.name = name;
 		this.description = description;
 		this.rules = rules;
 		this.dateCreated = dateCreated;
 		this.dateUpdated = dateUpdated;
-		this.lastUpdated = lastUpdated;
+		this.lastUpdatedBy = lastUpdatedBy;
 		this.createdBy = createdBy;
 	}
 
 	public String getEsclalationId() {
-		return esclalationId;
+		return escalationId;
 	}
 
-	public void setEsclalationId(String esclalationId) {
-		this.esclalationId = esclalationId;
+	public void setEsclalationId(String escalationId) {
+		this.escalationId = escalationId;
 	}
 
 	public String getName() {
@@ -107,12 +99,12 @@ public class Escalation {
 		this.dateUpdated = dateUpdated;
 	}
 
-	public String getLastUpdated() {
-		return lastUpdated;
+	public String getLastUpdatedBy() {
+		return lastUpdatedBy;
 	}
 
-	public void setLastUpdated(String lastUpdated) {
-		this.lastUpdated = lastUpdated;
+	public void setLastUpdatedBy(String lastUpdatedBy) {
+		this.lastUpdatedBy = lastUpdatedBy;
 	}
 
 	public String getCreatedBy() {

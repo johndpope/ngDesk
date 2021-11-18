@@ -107,7 +107,7 @@ export class SchedulesMasterComponent implements OnInit {
 		const page = this.customTableService.pageIndex;
 		const pageSize = this.customTableService.pageSize;
 		const query = `{
-			schedules: getSchedules(pageNumber: ${page}, pageSize: ${pageSize}) {
+			schedules: getSchedules(pageNumber: ${page}, pageSize: ${pageSize}, sortBy: "${sortBy}", orderBy: "${orderBy}") {
 				name
 				scheduleId: id
 			}
@@ -116,7 +116,6 @@ export class SchedulesMasterComponent implements OnInit {
 
 		this.schedulesService.getAllSchedules(query).subscribe(
 			(schedulesResponse: any) => {
-				console.log(schedulesResponse);
 				this.customTableService.setTableDataSource(
 					schedulesResponse.schedules,
 					schedulesResponse.totalCount
