@@ -58,13 +58,15 @@ export class WebsocketService {
 		};
 
 		this.websocket.onclose = (event) => {
-			console.log(
-				' websocket connection closed, Attempting to reconnect in 1 seconds...'
-			);
 			clearInterval(this.pingInterval);
-			setTimeout(() => {
-				this.initialize();
-			}, 1 * 1000);
+			if (event.code !== 1000 && event.reason !== 'Logout') {
+				console.log(
+					' websocket connection closed, Attempting to reconnect in 1 seconds...'
+				);
+				setTimeout(() => {
+					this.initialize();
+				}, 1 * 1000);
+			}
 		};
 
 		this.websocket.onerror = (event) => {
@@ -93,7 +95,7 @@ export class WebsocketService {
 	}
 
 	public disconnect() {
-		this.websocket.close();
+		this.websocket.close(1000, 'Logout');
 	}
 
 	public addLogsToApplication(message) {
