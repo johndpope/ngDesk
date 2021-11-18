@@ -14,6 +14,7 @@ import com.ngdesk.graphql.campaigns.dao.Campaigns;
 
 @Repository
 public class CustomCampaignsRepositoryImpl implements CustomCampaignsRepository {
+
 	@Autowired
 	private MongoOperations mongoOperations;
 
@@ -27,7 +28,6 @@ public class CustomCampaignsRepositoryImpl implements CustomCampaignsRepository 
 
 	@Override
 	public Optional<Campaigns> findCampaignById(String id, String collectionName) {
-		Criteria criteria = new Criteria();
 		Query query = new Query(Criteria.where("_id").is(id));
 		return Optional.ofNullable(mongoOperations.findOne(query, Campaigns.class, collectionName));
 

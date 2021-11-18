@@ -64,7 +64,7 @@ public class CampaignsDataFetcher implements DataFetcher<List<Campaigns>> {
 		if (campaignsLists.isPresent() && roleService.isSystemAdmin(authManager.getUserDetails().getRole())) {
 			return campaignsLists.get();
 		}
-		
+
 		return null;
 	}
 

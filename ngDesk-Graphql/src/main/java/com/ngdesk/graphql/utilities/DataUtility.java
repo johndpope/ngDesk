@@ -549,10 +549,10 @@ public class DataUtility {
 	EmailListCountFetcher emailListCountFetcher;
 
 	@Autowired
-	CampaignsDataFetcher campaignsDataFetcher;
+	CampaignDataFetcher campaignDataFetcher;
 
 	@Autowired
-	CampaignDataFetcher campaignDataFetcher;
+	CampaignsDataFetcher campaignsDataFetcher;
 
 	@Autowired
 	CampaignCountDataFetcher campaignCountDataFetcher;
@@ -1023,6 +1023,7 @@ public class DataUtility {
 		builder.type("EmailList", typeWiring -> typeWiring.dataFetcher("createdBy", entryDataFetcher));
 		builder.type("EmailList", typeWiring -> typeWiring.dataFetcher("lastUpdatedBy", entryDataFetcher));
 
+		// CAMPAIGNS
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getCampaigns", campaignsDataFetcher));
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getCampaign", campaignDataFetcher));
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getCampaignCount", campaignCountDataFetcher));

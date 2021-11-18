@@ -6,49 +6,65 @@ import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class Campaigns {
 
 	@Id
 	private String campaignId;
+
 	@Field("NAME")
 	private String name;
+
 	@Field("DESCRIPTION")
 	private String description;
+
 	@Field("SEND_OPTION")
 	private String sendOption;
+
 	@Field("SUBJECT")
 	private String subject;
+
 	@Field("BODY")
 	private String body;
+
 	@Field("ROWS")
 	private List<Row> rows;
+
 	@Field("CAMPAIGN_TYPE")
 	private String campaignType;
+
 	@Field("SEND_DATE")
 	private Date sendDate;
+
 	@Field("RECIPIENT_USERS")
 	private List<String> recipientUsers;
+
 	@Field("RECIPIENT_LIST")
 	private List<String> recipientLists;
+
 	@Field("PREVIEW_USER")
 	private String previewUser;
+
 	@Field("STATUS")
 	private String status;
+
 	@Field("TRACKING")
 	private List<CampaignTracking> tracking;
+
 	@Field("BUTTON_CLICKS")
 	private List<ButtonClick> buttonClicks;
+
 	@Field("FOOTER")
 	private Footer footer;
+
 	@Field("DATE_CREATED")
 	private Date dateCreated;
+
 	@Field("DATE_UPDATED")
 	private Date dateUpdated;
+
 	@Field("LAST_UPDATED_BY")
 	private String lastUpdatedBy;
+
 	@Field("CREATED_BY")
 	private String createdBy;
 

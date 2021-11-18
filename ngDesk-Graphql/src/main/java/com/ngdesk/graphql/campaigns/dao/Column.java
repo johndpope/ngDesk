@@ -3,10 +3,13 @@ package com.ngdesk.graphql.campaigns.dao;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 public class Column {
+
 	@Field("TYPE")
 	private String type;
+
 	@Field("SETTINGS")
 	private ColumnSettings settings;
+
 	@Field("WIDTH")
 	private Float width;
 

@@ -5,6 +5,7 @@ import javax.validation.constraints.Pattern;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 public class RowSettings {
+
 	@Field("COLUMN_LAYOUT")
 	private String columnLayout;
 

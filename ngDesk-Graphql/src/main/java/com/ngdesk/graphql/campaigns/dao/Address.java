@@ -7,20 +7,28 @@ import javax.validation.constraints.Size;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 public class Address {
+
 	@Field("COMPANY_NAME")
 	private String companyName;
+
 	@Field("ADDRESS_1")
 	private String address1;
+
 	@Field("ADDRESS_2")
 	private String address2;
+
 	@Field("CITY")
 	private String city;
+
 	@Field("STATE")
 	private String state;
+
 	@Field("ZIP_CODE")
 	private String zipCode;
+
 	@Field("COUNTRY")
 	private String country;
+
 	@Field("PHONE")
 	private String phone;
 
