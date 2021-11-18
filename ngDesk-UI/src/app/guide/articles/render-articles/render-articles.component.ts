@@ -103,7 +103,8 @@ export class RenderArticlesComponent implements OnInit {
 										if (
 											this.usersService.getAuthenticationToken() &&
 											(this.roleName === 'SystemAdmin' ||
-												this.roleName === 'Agent')
+												this.roleName === 'Agent' ||
+												this.roleName === 'Customers')
 										) {
 											this.getAuthorName();
 										} else if (this.article === undefined) {
