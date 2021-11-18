@@ -1,14 +1,17 @@
 package com.ngdesk.repositories.campaigns;
+
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 import com.ngdesk.graphql.campaigns.dao.Campaigns;
+
 @Repository
 public class CustomCampaignsRepositoryImpl implements CustomCampaignsRepository {
 	@Autowired
@@ -21,8 +24,19 @@ public class CustomCampaignsRepositoryImpl implements CustomCampaignsRepository 
 		return Optional.ofNullable(mongoOperations.find(query, Campaigns.class, collectionName));
 
 	}
-		
-		
+
+	@Override
+	public Optional<Campaigns> findCampaignById(String id, String collectionName) {
+		Criteria criteria = new Criteria();
+		Query query = new Query(Criteria.where("_id").is(id));
+		return Optional.ofNullable(mongoOperations.findOne(query, Campaigns.class, collectionName));
+
 	}
 
+	@Override
+	public Integer findCampaignsCount(String collectionName) {
 
+		return (int) mongoOperations.count(new Query(), collectionName);
+	}
+
+}

@@ -98,6 +98,8 @@ type Query {
 	getEmailList(id: String): EmailList
 	getEmailListCount: Int
 	getCampaigns(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [Campaigns]
+	getCampaign(id: String): Campaigns
+	getCampaignCount: Int
 	MODULE_FUNCTIONS_REPLACE
 }
 
