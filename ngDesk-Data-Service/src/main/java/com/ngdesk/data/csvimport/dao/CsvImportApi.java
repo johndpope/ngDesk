@@ -13,6 +13,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -60,7 +62,7 @@ public class CsvImportApi {
 	@Operation(summary = "Post imported csv data", description = "Post imported csv data")
 	public CsvImport importFromCsv(
 			@Parameter(description = "Module ID", required = true) @PathVariable("module_id") String moduleId,
-			@RequestBody CsvImport csvImport) {
+			@RequestBody @Valid CsvImport csvImport) {
 
 		if (authManager.getUserDetails().getRole() != null) {
 			if (!roleService.isSystemAdmin(authManager.getUserDetails().getRole())) {
@@ -95,7 +97,7 @@ public class CsvImportApi {
 	@Operation(summary = "Post csvheaders", description = "Post csvheaders")
 	public List<String> generateCsvHeaders(
 			@Parameter(description = "Module ID", required = true) @PathVariable("module_id") String moduleId,
-			@RequestBody CsvImportData csvImportData) {
+			@RequestBody @Valid CsvImportData csvImportData) {
 		InputStream is = null;
 		BufferedReader br = null;
 		String file = csvImportData.getFile();
@@ -149,7 +151,7 @@ public class CsvImportApi {
 			String[] headersArray = Arrays.stream(list.get(0)).map(String::trim).toArray(String[]::new);
 			headers = Arrays.asList(headersArray);
 			boolean bool = headers.stream().anyMatch(header -> (header == null || header.equals("")));
-			if(bool) {
+			if (bool) {
 				throw new BadRequestException("HEADER_CANNOT_BE_EMPTY", null);
 			}
 		} else {

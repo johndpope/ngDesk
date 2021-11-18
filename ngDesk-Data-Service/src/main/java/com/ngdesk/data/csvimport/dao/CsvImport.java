@@ -1,16 +1,16 @@
 package com.ngdesk.data.csvimport.dao;
 
 import java.util.Date;
-
 import java.util.List;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.Valid;
 
 import org.springframework.data.annotation.Id;
 
-@NotEmpty(message = "CSV_IMPORT_REQUIRED")
-@NotNull(message = "NOT_NULL")
+import com.ngdesk.commons.annotations.CustomNotNull;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
 public class CsvImport {
 
 	@Id
@@ -18,6 +18,9 @@ public class CsvImport {
 
 	private String status;
 
+	@Schema(required = true, description = "Import csv data", example = "csv-import-data")
+	@CustomNotNull(message = "NOT_NULL", values = { "CSV_IMPORT_DATA" })
+	@Valid
 	private CsvImportData csvImportData;
 
 	private String moduleId;
@@ -28,6 +31,8 @@ public class CsvImport {
 
 	private String name;
 
+	@Schema(required = true, description = "Format of csv file", example = "csv-format")
+	@CustomNotNull(message = "NOT_NULL", values = { "CSV_FORMAT" })
 	private CsvFormat csvFormat;
 
 	private int completedCount;
