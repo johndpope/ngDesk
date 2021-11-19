@@ -43,8 +43,8 @@
               margin-left: 5px; border: solid; border-color: #e0e0e0; background: white;">
 					<div style="width: 18vw; max-width: 100%; min-height: 50px; overflow: hidden;" *ngIf="module" cdkDropList
 						[cdkDropListConnectedTo]="this.dropList">
-						<div class="pad10 pointer" *ngFor="let field of module.FIELDS; let last = last;" cdkDrag id="{{field.FIELD_ID}}"
-							fxLayout="row" fxLayoutAlign=" center" [ngStyle]="{'border-bottom': last ? '' : '1px solid #9e9e9e'}"
+						<div class="pad10 pointer" *ngFor="let field of module.FIELDS; let last = last;" cdkDrag id="{{field.FIELD_ID}}" fxLayout="row"
+							fxLayoutAlign=" center" [ngStyle]="{'border-bottom': last ? '' : '1px solid #9e9e9e'}"
 							style="padding: 12px 10px; box-sizing: border-box;cursor: move;">
 							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
 								<path fill="none" d="M0 0h24v24H0V0z" />
@@ -80,8 +80,7 @@
 						<div fxLayout="row" fxLayoutGap="20px">
 							<div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
 								<mat-checkbox [(ngModel)]="customLayout.collapse">Collapsed?</mat-checkbox>
-								<button mat-icon-button style="border-radius: 20px;" *ngIf="i!==0" (click)="removeLayout(i)"
-									matTooltip="Remove Panel">
+								<button mat-icon-button style="border-radius: 20px;" *ngIf="i!==0" (click)="removeLayout(i)" matTooltip="Remove Panel">
 									<mat-icon>close</mat-icon>
 								</button>
 							</div>
@@ -99,8 +98,7 @@
 					</div>
 				</div>
 				<div style="margin: 12px;" fxLayoutAlign="center center">
-					<button mat-raised-button fxFlex fxLayoutAlign="center center" style="cursor: pointer; height: 5vh;"
-						(click)="newLayout()">
+					<button mat-raised-button fxFlex fxLayoutAlign="center center" style="cursor: pointer; height: 5vh;" (click)="newLayout()">
 						<div class="icon-height">
 							<mat-icon style="vertical-align: middle;">add</mat-icon> Add a new panel
 						</div>
@@ -122,9 +120,8 @@
 							</mat-panel-title>
 						</mat-expansion-panel-header>
 						<div fxLayout="row">
-							<mat-form-field fxFlex="25" floatLabel="always">
-								<input matInput [(ngModel)]="workflow" placeholder="{{'WORKFLOW' | translate}}"
-									[matAutocomplete]="infinite_workflow">
+							<mat-form-field *ngIf="workflows.length > 0" fxFlex="25" floatLabel="always">
+								<input matInput [(ngModel)]="workflow" placeholder="{{'WORKFLOW' | translate}}" [matAutocomplete]="infinite_workflow">
 								<mat-autocomplete #infinite_workflow="matAutocomplete" (appAutocompleteScroll)="onScrollWorkflow()"
 									[displayWith]="displayWorkflowName">
 									<mat-option *ngFor="let workflow of workflows" [value]="workflow">
@@ -133,6 +130,17 @@
 								</mat-autocomplete>
 								<mat-hint>{{'WORKFLOW_HINT' | translate}}</mat-hint>
 							</mat-form-field>
+
+							<div *ngIf="workflows.length === 0" fxLayout="column" fxLayoutGap="10px">
+								<div fxLayout="row" fxLayoutGap="5px">
+									<a (click)="createNewWorkflow()"
+										style="cursor: pointer; text-decoration: underline;color: blue;">{{'WORKFLOW_BUTTON'|translate}}</a>
+									<mat-icon class="light-grey-color" style="transform: scale(0.8);line-height :17px;"
+										matTooltip="{{'WORKFLOW_FOR_FORM' | translate}}">
+										help_outline</mat-icon>
+								</div>
+								<mat-hint>{{'WORKFLOW_HINT' | translate}}</mat-hint>
+							</div>
 						</div>
 					</mat-expansion-panel>
 					<mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)">
@@ -144,7 +152,7 @@
 						<div fxLayout="row">
 							<div fxLayout="column" fxLayoutGap=10px>
 								<label class="mat-body-strong">{{"FIELD_STYLE" | translate}}</label>
-								<mat-radio-group fxLayout="column" [(ngModel)]="layoutStyle">
+								<mat-radio-group fxLayout="column" fxLayoutGap=5px [(ngModel)]="layoutStyle">
 									<mat-radio-button class="example-radio-button" value="fill">
 										{{"FILL" | translate}}
 									</mat-radio-button>
@@ -180,8 +188,7 @@
 						</mat-expansion-panel-header>
 						<div class="pad10" fxLayout="row" fxFlex="100">
 							<div fxLayout="column" fxLayoutGap=10px>
-								<button mat-raised-button fxLayoutAlign="center center" style="height:48px;border-radius: 5px;"
-									(click)="fileInput.click()">
+								<button mat-raised-button fxLayoutAlign="center center" style="height:48px;border-radius: 5px;" (click)="fileInput.click()">
 									<div fxLayout="row" style="height:48px;">
 										<div fxLayoutAlign="center center">
 											<label class="mat-h4" style="margin: 0px;cursor: pointer; font-weight:500;">Select Image</label>
@@ -203,15 +210,12 @@
 
 							<div fxFlex style="width: 50px;" fxLayoutAlign="center center">
 								<div style="width: 200px; cursor: pointer;">
-									<div class="mat-elevation-z2" [appHighlight]="{BACKGROUND: 'ghostWhite'}" fxLayout="column"
-										style="border-radius: 5px;">
-										<div fxLayoutAlign="center center" class="custom-theme-offset-background-Color"
-											style="height: 140px;">
+									<div class="mat-elevation-z2" [appHighlight]="{BACKGROUND: 'ghostWhite'}" fxLayout="column" style="border-radius: 5px;">
+										<div fxLayoutAlign="center center" class="custom-theme-offset-background-Color" style="height: 140px;">
 											<mat-icon *ngIf="!image">assignment</mat-icon>
 											<img *ngIf="image" width=140px height=140px [src]="image">
 										</div>
-										<div fxFlex="50" fxLayoutAlign="start start" fxLayout="column" style="padding: 10px;"
-											fxLayoutGap="5px">
+										<div fxFlex="50" fxLayoutAlign="start start" fxLayout="column" style="padding: 10px;" fxLayoutGap="5px">
 											<div class="mat-body-strong" style="font-size: 15px; word-break: break-word;">
 												{{forms.value.name}}
 											</div>

@@ -490,7 +490,11 @@ export class DetailLayoutComponent implements OnInit {
 	public drop(event: CdkDragDrop<string[]>, div: string) {
 		let hasSection = false;
 		const fieldId = event.item.element.nativeElement.id;
-		if (this.fieldsMap[fieldId].NOT_EDITABLE && div === 'SIDE_BAR') {
+		if (
+			this.fieldsMap[fieldId].NOT_EDITABLE &&
+			div === 'SIDE_BAR' &&
+			this.layoutType != 'create_layouts'
+		) {
 			this.bannerMessageService.errorNotifications.push({
 				message: this.translateService.instant('NOT_EDITABLE_FIELDS'),
 			});
@@ -552,7 +556,7 @@ export class DetailLayoutComponent implements OnInit {
 
 	public newLayout() {
 		if (this.customLayout.indexOf('<mat-spinner></mat-spinner>') === -1) {
-			this.loadNewGridAndView(null);
+			this.loadNewGridAndView(null, 'new Panel');
 		}
 	}
 
@@ -1107,7 +1111,7 @@ export class DetailLayoutComponent implements OnInit {
 			.join(' ');
 	}
 
-	public loadNewGridAndView(value) {
+	public loadNewGridAndView(value, layoutType?) {
 		this.rowSize = 10;
 		if (this.customLayouts.length === 0) {
 			this.module.FIELDS = JSON.parse(JSON.stringify(this.fields));
@@ -1117,6 +1121,14 @@ export class DetailLayoutComponent implements OnInit {
 		let displayType = 'Panel';
 		let grids = [[]];
 		let settings = null;
+		if (layoutType === 'new Panel') {
+			this.discussionEncountered = false;
+			this.ImageEncountered = false;
+			this.receiptEncountered = false;
+			this.filePreviewEncountered = false;
+			this.listFormulaEncountered = false;
+			this.conditionEncountered = false;
+		}
 		if (value) {
 			this.rowSize = value.GRIDS.length;
 			grids = value.GRIDS.map((grids: any[]) => {

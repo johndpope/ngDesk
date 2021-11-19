@@ -951,7 +951,7 @@
     "CREATED_BY" : "CREATED_BY_REPLACE",
     "MESSAGES" : null,
     "INTERNAL" : false,
-    "NOT_EDITABLE" : true,
+    "NOT_EDITABLE" : false,
     "GROUP_ID" : null,
     "IS_LIST_TEXT_UNIQUE" : false,
     "WORKFLOW" : null,

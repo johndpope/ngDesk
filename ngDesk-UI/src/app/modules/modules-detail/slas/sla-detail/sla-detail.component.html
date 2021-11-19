@@ -141,13 +141,24 @@
 	<div fxLayout="column" fxLayoutAlign="start" fxLayoutGap='5px'>
 		<div fxLayoutGap='5px'><label class="mat-h1 light-grey-color">{{'WORKFLOW'|translate}}</label>
 		</div>
-		<mat-form-field *ngIf="workflows.length > 0" style="width: 20%;">
-			<mat-select placeholder="{{'WORKFLOWS' | translate}}" formControlName="WORKFLOW">
-				<mat-option *ngFor="let workflow of workflows " [value]="workflow.WORKFLOW_ID">
+		<div *ngIf="workflows.length > 0" fxLayout="row" fxLayoutGap='10px' fxFlex = 50>
+			<mat-form-field  style="width: 20%;">
+				<mat-label>{{'WORKFLOWS' | translate}}</mat-label>
+				<input
+					   matInput
+					   [formControl]="workflow"
+					   [matAutocomplete]="auto">
+				<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+				  <mat-option *ngFor="let workflow of filteredWorkflows | async" [value]="workflow">
 					{{workflow.NAME}}
-				</mat-option>
-			</mat-select>
-		</mat-form-field>
+				  </mat-option>
+				</mat-autocomplete>
+			  </mat-form-field>
+			<div *ngIf="slaForm.get('workflow').value" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+				<button (click)="navigateToWorkflow()" mat-raised-button color="primary"> {{'VIEW_EDIT_WORKFLOW' | translate}} </button>
+			</div>
+			</div>
+	
 		<div *ngIf="workflows.length === 0" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
 			<a (click)="createNewWorkflow()" class="mat-caption"
 				style="cursor: pointer; text-decoration: underline;color: blue;">{{'WORKFLOW_BUTTON'|translate}}</a>

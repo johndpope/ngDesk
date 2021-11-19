@@ -19,6 +19,7 @@ export class ConditionsDialogComponent implements OnInit {
 	public moduleId: string = '';
 	public moduleFields: Field[] = [];
 	public parentComponent = '';
+	public isLoading = true;
 	constructor(
 		private dialogRef: MatDialogRef<ConditionsDialogComponent>,
 		private formBuilder: FormBuilder,
@@ -30,7 +31,7 @@ export class ConditionsDialogComponent implements OnInit {
 		this.conditionsForm = this.formBuilder.group({
 			CONDITIONS: this.formBuilder.array([]),
 		});
-		this.parentComponent = this.data.PARENT_COMPONENT
+		this.parentComponent = this.data.PARENT_COMPONENT;
 		if (this.data.CONDITIONS) {
 			this.conditions = this.getConditions(this.data.CONDITIONS);
 		}
@@ -40,11 +41,12 @@ export class ConditionsDialogComponent implements OnInit {
 			.getModuleById(this.moduleId)
 			.subscribe((moduleResponse: any) => {
 				this.moduleFields = moduleResponse.FIELDS;
+				this.isLoading = false;
 			});
 	}
 
 	private getConditions(conditions: any[]): Condition[] {
-		if(this.parentComponent==='fieldCreator'){
+		if (this.parentComponent === 'fieldCreator') {
 			return conditions.map(
 				(condition) =>
 					new Condition(
@@ -54,34 +56,34 @@ export class ConditionsDialogComponent implements OnInit {
 						condition.REQUIREMENT_TYPE === 'All' ? 'All' : 'Any'
 					)
 			);
-		}else {
-		return conditions.map(
-			(condition) =>
-				new Condition(
-					condition.condition,
-					condition.value,
-					condition.operator,
-					condition.requirementType === 'All' ? 'All' : 'Any'
-				)
-		);
+		} else {
+			return conditions.map(
+				(condition) =>
+					new Condition(
+						condition.condition,
+						condition.value,
+						condition.operator,
+						condition.requirementType === 'All' ? 'All' : 'Any'
+					)
+			);
 		}
 	}
 
 	public saveData() {
 		this.conditions = this.conditionsComponent.transformConditions();
-		if(this.parentComponent==='dashboardsComponent'){
+		if (this.parentComponent === 'dashboardsComponent') {
 			const allConditions = [];
 			this.conditions.forEach((condition) => {
-			const newCondition = {
-				condition: condition.CONDITION,
-				value: condition.CONDITION_VALUE,
-				operator: condition.OPERATOR,
-				requirementType: condition.REQUIREMENT_TYPE,
-			};
-			allConditions.push(newCondition);
-		});
-		this.dialogRef.close(allConditions);
-	    } else {
+				const newCondition = {
+					condition: condition.CONDITION,
+					value: condition.CONDITION_VALUE,
+					operator: condition.OPERATOR,
+					requirementType: condition.REQUIREMENT_TYPE,
+				};
+				allConditions.push(newCondition);
+			});
+			this.dialogRef.close(allConditions);
+		} else {
 			this.dialogRef.close(this.conditions);
 		}
 	}

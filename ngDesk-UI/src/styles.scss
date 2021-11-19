@@ -462,7 +462,12 @@ div[class^='CELL_'] {
 
 .custom-tooltip {
 	word-break: break-word;
-  }
+}
+
+.cdk-global-overlay-wrapper {
+	overflow: auto;
+	pointer-events: auto;  
+}
 
 .module-detail-mat-icon {
 	.mat-icon-button {
