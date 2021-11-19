@@ -46,6 +46,7 @@ export class RelationshipService {
 						}']" *ngFor="let entry of context.customModulesService.relationFieldFilteredEntries['${
 				field.NAME
 			}']"
+            matTooltip="{{entry['PRIMARY_DISPLAY_FIELD']}}"
              [value]="entry">{{entry['PRIMARY_DISPLAY_FIELD']}}
             </mat-option>
           </mat-autocomplete>

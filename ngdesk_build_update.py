@@ -74,6 +74,20 @@ def build_ngdesk():
     company_name = input("Enter your company name: ")
     domain = input("Enter the domain you will use to access the website: ")
     password = get_valid_password()
+    
+    if path.isdir('/ngdesk') == False:
+        os.mkdir('/ngdesk')
+    if path.isdir('/ngdesk/mongodb') == False:
+        os.mkdir('/ngdesk/mongodb')
+        os.chmod('/ngdesk/mongodb', stat.S_IRWXG)
+        os.chmod('/ngdesk/mongodb', stat.S_IRWXU)
+        os.chown('/ngdesk/mongodb', 999, 999)
+    if path.isdir('/ngdesk/elasticsearch') == False:
+        os.mkdir('/ngdesk/elasticsearch')
+        os.chmod('/ngdesk/elasticsearch', stat.S_IRWXG)
+    if path.isdir('/ngdesk/nginx') == False:
+        os.mkdir('/ngdesk/nginx')
+        os.chmod('/ngdesk/nginx', stat.S_IRWXG)
 
     cert_gen(domain)
 

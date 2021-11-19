@@ -8,4 +8,5 @@ public interface CustomModuleEntryRepository {
 
 	public Optional<List<Map<String, Object>>> findAllTeams(String collectionName);
 
+	public Optional<List<Map<String, Object>>> getAllEntries(String collectionName);
 }

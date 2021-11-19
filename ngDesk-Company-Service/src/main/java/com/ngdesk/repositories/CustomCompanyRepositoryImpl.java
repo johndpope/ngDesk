@@ -1,5 +1,8 @@
 package com.ngdesk.repositories;
 
+
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +44,15 @@ public class CustomCompanyRepositoryImpl implements CustomCompanyRepository {
 	public void createCollection(String collectionName) {
 
 		mongoOperations.createCollection(collectionName);
+	}
+	
+	@Override
+	public Optional<List<Company>> findAllCompaniesWithStartAndEndDate(String collectionName,Date startDate,Date endDate) {
+		Assert.notNull(collectionName, "Collection name must not be null");
+		Criteria criteria = new Criteria();
+		criteria.andOperator(Criteria.where("DATE_CREATED").gt(startDate),Criteria.where("DATE_CREATED").lt(endDate));
+		Query query = new Query(criteria);
+		return Optional.ofNullable(mongoOperations.find(query, Company.class, collectionName));
 	}
 
 }
