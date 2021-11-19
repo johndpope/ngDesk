@@ -19,9 +19,9 @@
 							<div fxLayout="row" fxLayoutGap="4%">
 								<div fxLayout="column" fxFlex="90" fxFlexAlign="center" class="trim-info" matTooltip="{{moduleName}}">
 									{{ moduleName | truncate : 10 }} {{ 'MODULE' | translate}}</div>
-								<div fxLayout="column" *ngIf="showSideNav" fxFlex="10">
+								<div class="module-detail-mat-icon" fxLayout="column" *ngIf="showSideNav" fxFlex="10">
 									<button mat-icon-button [ngStyle]="{'border': (showSideNav) ? '1px solid white' : '1px solid #3f51b5'}"
-										(click)="showSideNav = !showSideNav" style="border-radius: 3px;height: 30px;">
+										(click)="showSideNav = !showSideNav" style="border-radius: 3px;">
 										<mat-icon class="custom-theme-icon-color" style="margin-bottom: 15px;font-size: 20px;">
 											keyboard_arrow_left</mat-icon>
 									</button>
@@ -37,7 +37,7 @@
 				<tr mat-row *matRowDef="let row; columns: ['NAME'];" [routerLink]="row.PATH" [appHighlight]="{BACKGROUND: '#ececec'}"></tr>
 			</table>
 		</div>
-		<div>
+		<div class="module-detail-mat-icon">
 			<button mat-icon-button *ngIf="!showSideNav"
 				[ngStyle]="{'border': (showSideNav) ? '1px solid white' : '1px solid #3f51b5', 'margin-left' : (showSideNav) ? '-48px' : '0px'}"
 				(click)="showSideNav = !showSideNav" style="border-radius: 3px;height: 30px;">

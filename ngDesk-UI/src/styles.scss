@@ -463,3 +463,9 @@ div[class^='CELL_'] {
 .custom-tooltip {
 	word-break: break-word;
   }
+
+.module-detail-mat-icon {
+	.mat-icon-button {
+		height: 30px !important;
+	}
+}
