@@ -153,7 +153,7 @@ public class AgentAvailabilityService {
 
 			cal.setTime(dateFormat.parse(startTime));
 			int startHour = cal.get(Calendar.HOUR_OF_DAY);
-
+			int startMinute = cal.get(Calendar.MINUTE);
 			cal.setTime(dateFormat.parse(endTime));
 
 			int endHour = cal.get(Calendar.HOUR_OF_DAY);
@@ -163,6 +163,8 @@ public class AgentAvailabilityService {
 			case "Day":
 				if (currentHour >= startHour && currentHour <= endHour) {
 					if ((currentHour == endHour) && (currentMinutes > endMinute)) {
+						return false;
+					} else if ((currentHour == startHour) && (currentMinutes < startMinute)) {
 						return false;
 					}
 					return true;
