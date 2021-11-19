@@ -393,5 +393,5 @@
   "FIELD_CANNOT_BE_LOOPED":" ${1} field you are trying to access cannot be looped",
   "MIXED_FORMULA_TYPES" : "Formulas must be of type string or number, cannot have combination of both",
   "INVALID_PRIMARY_DISPLAY_FIELD": "The type of ${1} primary display field selected isn't valid, please select a valid primary display field",
-  "DAO_VARIABLE_CANNOT_BE_GIVEN":"The module name ${1} you are trying to give is restricted, Please try with different module name"
+  "MODULE_NAME_IS_RESTRICTED":"The module name ${1} you are trying to give is restricted, Please try with different module name"
 }

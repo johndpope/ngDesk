@@ -228,7 +228,7 @@ public class ModuleService {
 				"Escalation", "Escalations", "Currencies");
 		if (list.contains(moduleName)) {
 			String[] vars = { moduleName };
-			throw new BadRequestException("DAO_VARIABLE_CANNOT_BE_GIVEN", vars);
+			throw new BadRequestException("MODULE_NAME_IS_RESTRICTED", vars);
 		}
 		
 	
