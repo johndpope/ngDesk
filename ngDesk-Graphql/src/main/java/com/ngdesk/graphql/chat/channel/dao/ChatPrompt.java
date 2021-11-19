@@ -19,9 +19,6 @@ public class ChatPrompt {
 	@Field("CONDITIONS")
 	private List<Condition> conditions;
 
-	@Field("WORKFLOW")
-	private ChatChannelWorkflow workflow;
-
 	@Field("DATE_UPDATED")
 	private Date dateUpdated;
 
@@ -36,13 +33,12 @@ public class ChatPrompt {
 	}
 
 	public ChatPrompt(String promptName, String promptdescription, String promptId, List<Condition> conditions,
-			ChatChannelWorkflow workflow, Date dateUpdated, String lastUpdatedBy, String runTrigger) {
+			Date dateUpdated, String lastUpdatedBy, String runTrigger) {
 		super();
 		this.promptName = promptName;
 		this.promptdescription = promptdescription;
 		this.promptId = promptId;
 		this.conditions = conditions;
-		this.workflow = workflow;
 		this.dateUpdated = dateUpdated;
 		this.lastUpdatedBy = lastUpdatedBy;
 		this.runTrigger = runTrigger;
@@ -78,14 +74,6 @@ public class ChatPrompt {
 
 	public void setConditions(List<Condition> conditions) {
 		this.conditions = conditions;
-	}
-
-	public ChatChannelWorkflow getWorkflow() {
-		return workflow;
-	}
-
-	public void setWorkflow(ChatChannelWorkflow workflow) {
-		this.workflow = workflow;
 	}
 
 	public Date getDateUpdated() {

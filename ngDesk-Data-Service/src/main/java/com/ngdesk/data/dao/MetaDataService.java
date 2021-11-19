@@ -284,7 +284,6 @@ public class MetaDataService {
 
 		List<String> fieldsToIgnore = new ArrayList<String>();
 		fieldsToIgnore.addAll(Arrays.asList(fieldNames));
-
 		List<ModuleField> payloadFields = module.getFields().stream()
 				.filter(field -> field.getDataType().getDisplay().equals("Date/Time")
 						|| field.getDataType().getDisplay().equals("Date")
@@ -300,17 +299,19 @@ public class MetaDataService {
 
 		payloadFields.forEach(field -> {
 			String fieldName = field.getName();
-			if ((entry.get(fieldName) != null)) {
-				String dateString = entry.get(fieldName).toString();
-				try {
+			if (entry != null) {
+				if ((entry.get(fieldName) != null)) {
+					String dateString = entry.get(fieldName).toString();
+					try {
 
-					Long l = Long.parseLong(dateString);
+						Long l = Long.parseLong(dateString);
 
-					Date date = new Date(l);
-					entry.put(fieldName, date);
+						Date date = new Date(l);
+						entry.put(fieldName, date);
 
-				} catch (Exception e) {
-					e.printStackTrace();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		});

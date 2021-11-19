@@ -31,6 +31,7 @@ import org.springframework.data.mongodb.core.aggregation.SkipOperation;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
 import com.ngdesk.commons.exceptions.BadRequestException;
@@ -43,6 +44,7 @@ import com.ngdesk.data.modules.dao.ModuleField;
 import com.ngdesk.data.modules.dao.ModuleService;
 import com.ngdesk.data.roles.dao.RolesService;
 
+@Repository
 public class CustomModuleEntryRepositoryImpl implements CustomModuleEntryRepository {
 
 	@Autowired
@@ -1252,6 +1254,15 @@ public class CustomModuleEntryRepositoryImpl implements CustomModuleEntryReposit
 				collectionName);
 	}
 
+	@Override
+	public Optional<Map<String, Object>> findEntriesByVariableForRelationship(String collectionName, String fieldName,
+			String value, String id) {
+		Criteria criteria = new Criteria();
+		criteria.andOperator(Criteria.where("DELETED").is(false), Criteria.where("EFFECTIVE_TO").is(null),
+				Criteria.where("_id").ne(id), Criteria.where(fieldName).is(value));
+		return Optional.ofNullable(mongoOperations.findOne(new Query(criteria), Map.class, collectionName));
+	}
+
 	private AggregationOperation lookupForAggregation(String parentCollectionName, String fieldInChild,
 			String fieldInParent, String outputName) {
 
@@ -1407,4 +1418,41 @@ public class CustomModuleEntryRepositoryImpl implements CustomModuleEntryReposit
 
 	}
 
+	@Override
+	public Optional<Map<String, Object>> findTeamsByVariableForIsPersonal(String fieldName, String value,
+			String collectionName) {
+		Assert.notNull(value, "The given value must not be null!");
+		Assert.notNull(collectionName, "The given collectionName must not be null!");
+
+		Criteria criteria = new Criteria();
+		criteria.andOperator(Criteria.where("DELETED").is(false), Criteria.where("IS_PERSONAL").is(true),
+				Criteria.where(fieldName).is(value));
+
+		return Optional.ofNullable(mongoOperations.findOne(new Query(criteria), Map.class, collectionName));
+	}
+
+	@Override
+	public Optional<Map<String, Object>> findEntryByVariable(String fieldName, Object value, String collectionName) {
+		Assert.notNull(value, "The given value must not be null!");
+		Assert.notNull(collectionName, "The given collectionName must not be null!");
+
+		Pattern pattern = Pattern.compile("^" + value.toString().trim() + "$", Pattern.CASE_INSENSITIVE);
+		Criteria criteria = new Criteria();
+		criteria.andOperator(Criteria.where("DELETED").is(false), Criteria.where(fieldName).regex(pattern),
+				Criteria.where("EFFECTIVE_TO").is(null));
+
+		return Optional.ofNullable(mongoOperations.findOne(new Query(criteria), Map.class, collectionName));
+	}
+
+	@Override
+	public Optional<Map<String, Object>> findEntryByFieldNameForDeleted(String fieldName, Object value,
+			String collectionName) {
+		Assert.notNull(value, "The given value must not be null!");
+		Assert.notNull(collectionName, "The given collectionName must not be null!");
+
+		Query query = new Query();
+		query.addCriteria(Criteria.where(fieldName).is(value));
+
+		return Optional.ofNullable(mongoOperations.findOne(query, Map.class, collectionName));
+	}
 }

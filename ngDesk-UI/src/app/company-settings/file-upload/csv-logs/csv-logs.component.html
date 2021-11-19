@@ -11,8 +11,8 @@
 				noRecordsMessage="{{'NO_IMPORTS_FOUND' | translate}}" (sortData)="sortData($event);customTableService.isLoading = true"
 				(pageChangeEmit)="pageChangeEmit($event);customTableService.isLoading = true">
 				<ng-template #columnTemplateRef let-element="element" let-col="col">
-					<span *ngIf="col.NAME === 'DATE_CREATED'">{{element[col.NAME] | dateFormat: 'medium'}}</span>
-					<span *ngIf="col.NAME !== 'DATE_CREATED'">{{element[col.NAME]}}</span>
+					<span *ngIf="col.NAME === 'dateCreated'">{{element[col.NAME] | date: 'MMM d, y, h:mm a'}}</span>
+					<span *ngIf="col.NAME !== 'dateCreated'">{{element[col.NAME]}}</span>
 				</ng-template>
 			</app-custom-table>
 		</div>
