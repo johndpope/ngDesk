@@ -25,15 +25,12 @@ public class NotificationAPI {
 	NotificationService notificationService;
 
 	@Autowired
-
 	private NotificationRepository notificationRepository;
 
 	@PutMapping("/notification")
-
 	public Notification updateNotification(@Valid @RequestBody Notification notification)
 
 	{
-
 		return notificationService.updateNotification(notification);
 	}
 
@@ -67,5 +64,16 @@ public class NotificationAPI {
 			notification.setRead(true);
 			notificationRepository.save(notification, "notifications");
 		}
+	}
+
+	@PutMapping("/notificationsByModule")
+	public void makeNotificationsRead(@RequestBody Notification notification) {
+		notificationService.checkValidUserId(notification.getRecipientId(), "Users_" + notification.getCompanyId());
+		String moduleName = notificationService.checkValidModuleId(notification.getModuleId(),
+				"modules_" + notification.getCompanyId());
+		notificationService.checkValidDataId(notification.getDataId(),
+				moduleName.replaceAll("\\s+", "_") + "_" + notification.getCompanyId());
+		notificationRepository.markNotificationsRead(notification, "notifications");
+
 	}
 }
