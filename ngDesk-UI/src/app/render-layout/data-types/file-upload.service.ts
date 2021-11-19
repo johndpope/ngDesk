@@ -10,11 +10,7 @@ export class FileUploadService {
 		const attachFiles = `<div style ="padding-right:20px; padding-bottom:20px;" fxFlex="100" fxLayoutGap="10px" fxLayout="row">
     <div fxLayoutAlign="center center">
     <mat-icon *ngIf="context.helpTextMap.get('${field.FIELD_ID}')" style="padding-right:8px"  
-<<<<<<< HEAD
-    class="color-primary"  matTooltip="${field.HELP_TEXT}">help_outline</mat-icon>
-=======
         class="color-primary"  matTooltip="${field.HELP_TEXT}" matTooltipPosition="right">help_outline</mat-icon>
->>>>>>> main
       <button mat-raised-button fxLayoutAlign="center center" (click)="fileInput.click()" style="cursor: pointer; height:48px;border-radius: 5px;">
         <div fxLayout="row" style="height:48px;">
           <div fxLayoutAlign="center center">
@@ -26,7 +22,7 @@ export class FileUploadService {
               attach_file</mat-icon><input hidden type="file" #fileInput (change)="context.onFileChangeForGeneral($event)">
           </div>
         </div>
-      </button>
+      </button> 
     </div>`;
 		const downloadLink = ` <a 
     [ngStyle]="{'color': '#1f73b7', 'text-decoration': 'none'}"
