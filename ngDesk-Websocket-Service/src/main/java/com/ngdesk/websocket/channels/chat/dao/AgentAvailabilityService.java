@@ -55,9 +55,10 @@ public class AgentAvailabilityService {
 					.get(company.getCompanySubdomain());
 			String userId = null;
 			Boolean isAgentAvailable = false;
+			Boolean isBusinessHoursActive = null;
 			ChatBusinessRules businessRules = company.getChatSettings().getChatBusinessRules();
 			Boolean hasRestriction = company.getChatSettings().getHasRestrictions();
-			String message = "Business Hours is inActive";
+			String message = null;
 			for (String key : sessionMap.keySet()) {
 				userId = key;
 				Optional<Map<String, Object>> optionalUserEntry = entryRepository.findById(userId,
@@ -73,16 +74,18 @@ public class AgentAvailabilityService {
 							isAgentAvailable = true;
 						}
 					} else if (hasRestriction) {
+						isBusinessHoursActive = validateBusinessRulesForAgentAssign(company, businessRules);
 						if (chatEntries < company.getChatSettings().getMaxChatPerAgent() && chatStatus != null
-								&& chatStatus.equalsIgnoreCase("available")
-								&& validateBusinessRulesForAgentAssign(company, businessRules)) {
-							message = "Business Hours is Active";
+								&& chatStatus.equalsIgnoreCase("available") && isBusinessHoursActive) {
 							isAgentAvailable = true;
 						}
 					}
 				}
 			}
 
+			if (isBusinessHoursActive != null && !isBusinessHoursActive) {
+				message = "Inactive";
+			}
 			if (!isAgentAvailable) {
 				AgentAvailability agentAvailable = new AgentAvailability(agentAvailability.getSessionUUID(),
 						company.getCompanySubdomain(), "AgentAvailability", agentAvailability.getChannelName(), false,
