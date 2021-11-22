@@ -27,6 +27,8 @@ import javax.crypto.spec.SecretKeySpec;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.text.translate.UnicodeUnescaper;
 import org.apache.http.util.Asserts;
+import org.bson.BsonDocument;
+import org.bson.BsonMaximumSizeExceededException;
 import org.bson.types.ObjectId;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
@@ -854,6 +856,11 @@ public class DataService {
 			payload.put(discussionField.getName(), existingMessages);
 			return payload;
 
+		} catch (BsonMaximumSizeExceededException e) {
+			String[] var = { module.getName() };
+
+			throw new BadRequestException("SIZE_EXCEEDED", var);
+
 		} catch (JsonMappingException e) {
 			throw new BadRequestException("BASE_TYPE_DISCUSSION_FORMAT_INVALID", vars);
 		} catch (JsonProcessingException e) {
@@ -960,9 +967,18 @@ public class DataService {
 					}
 
 					Attachment newAttachment = new Attachment(null, hash, file, attachment.getAttachmentUuid());
-					attachmentsRepository.save(newAttachment,
-							"attachments_" + authManager.getUserDetails().getCompanyId());
-					attachment.setHash(hash);
+					try {
+						attachmentsRepository.save(newAttachment,
+								"attachments_" + authManager.getUserDetails().getCompanyId());
+
+						attachment.setHash(hash);
+					} catch (BsonMaximumSizeExceededException e) {
+						String[] var = { module.getName() };
+
+						throw new BadRequestException("ATTACHMENT_SIZE_EXCEEDED", var);
+
+					}
+
 				} else {
 
 					attachment.setHash(optionalAttachment.get().getHash());
