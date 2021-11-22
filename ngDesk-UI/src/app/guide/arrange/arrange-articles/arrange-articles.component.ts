@@ -1,6 +1,7 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { map, mergeMap } from 'rxjs/operators';
 
 import { Category } from '../../../models/category';
 import { Section } from '../../../models/section';
@@ -24,53 +25,60 @@ export class ArrangeArticlesComponent implements OnInit {
 		private guideService: GuideService
 	) {
 		this.sectionId = this.route.snapshot.params['sectionId'];
-		this.guideService.getkbSections(this.sectionId).subscribe(
-			(sectionsResponse: any) => {
-				console.log('sectionsResponse', sectionsResponse);
+		this.guideService
+			.getkbSections(this.sectionId)
+			.pipe(
+				mergeMap((sectionsResponse: any) => {
+					console.log('sectionsResponse', sectionsResponse);
 
-				this.section = this.convertSection(sectionsResponse);
-				this.guideService
-					.getKbCategoryById(sectionsResponse.DATA.category.categoryId)
-					.subscribe(
-						(categoryResponse: any) => {
-							console.log('categoryResponse', categoryResponse);
-							this.category = this.convertCategory(categoryResponse);
-							this.guideService
-								.getArticlesBySectionId(this.section.sectionId)
-								.subscribe(
-									(articlesResponse: any) => {
-										console.log('articlesResponse', articlesResponse);
-										this.articles =
-											articlesResponse.getArticlesBySectionId.filter(
-												(article) => article.section === this.section.sectionId
-											);
-										this.articles.sort((n1, n2) => {
-											if (n1.ORDER > n2.ORDER) {
-												return 1;
-											}
+					this.section = this.convertSection(sectionsResponse);
+					return this.guideService
+						.getKbCategoryById(sectionsResponse.DATA.category.categoryId)
+						.pipe(
+							mergeMap((categoryResponse: any) => {
+								console.log('categoryResponse', categoryResponse);
+								this.category = this.convertCategory(categoryResponse);
+								return this.guideService
+									.getArticlesBySectionId(this.section.sectionId)
+									.pipe(
+										map((articlesResponse: any) => {
+											console.log('articlesResponse', articlesResponse);
+											this.articles =
+												articlesResponse.getArticlesBySectionId.filter(
+													(article) =>
+														article.section === this.section.sectionId
+												);
+											this.articles.sort((n1, n2) => {
+												if (n1.ORDER > n2.ORDER) {
+													return 1;
+												}
 
-											if (n1.ORDER < n2.ORDER) {
-												return -1;
-											}
+												if (n1.ORDER < n2.ORDER) {
+													return -1;
+												}
 
-											return 0;
-										});
-										this.isLoading = false;
-									},
-									(articlesError: any) => {
-										console.log(articlesError);
-									}
-								);
-						},
-						(categoryError: any) => {
-							console.log(categoryError);
-						}
-					);
-			},
-			(sectionsError: any) => {
-				console.log(sectionsError);
-			}
-		);
+												return 0;
+											});
+											this.isLoading = false;
+
+											(articlesError: any) => {
+												console.log(articlesError);
+											};
+
+											(categoryError: any) => {
+												console.log(categoryError);
+											};
+
+											(sectionsError: any) => {
+												console.log(sectionsError);
+											};
+										})
+									);
+							})
+						);
+				})
+			)
+			.subscribe();
 	}
 
 	public ngOnInit() {}

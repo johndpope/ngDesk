@@ -7,6 +7,7 @@ import { Section } from '../../../models/section';
 import { UsersService } from '../../../users/users.service';
 import { GuideService } from '../../guide.service';
 import { RolesService } from '@src/app/roles/roles.service';
+import { map, mergeMap } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-render-section',
@@ -56,41 +57,49 @@ export class RenderSectionComponent implements OnInit {
 		}
 
 		const sectionId = this.route.snapshot.params['sectionId'];
-		this.guideService.getkbSections(sectionId).subscribe(
-			(sectionResponse: any) => {
-				this.section = this.convertSection(sectionResponse);
-				console.log('	this.section=====', this.section);
-				console.log('	this.section[CATEGORY]=====', this.section['CATEGORY']);
-				this.guideService.getKbCategoryById(this.section['CATEGORY']).subscribe(
-					(categoryResponse: any) => {
-						this.category = this.convertCategory(categoryResponse);
-						this.guideService
-							.getArticlesBySectionId(this.section['sectionId'])
-							.subscribe(
-								(articlesResponse: any) => {
-									this.articles = this.sortByOrder(
-										articlesResponse.getArticlesBySectionId.filter(
-											(article) =>
-												article.publish === true &&
-												article.section === this.section['sectionId']
-										)
+		this.guideService
+			.getkbSections(sectionId)
+			.pipe(
+				mergeMap((sectionResponse: any) => {
+					this.section = this.convertSection(sectionResponse);
+					console.log('	this.section=====', this.section);
+					console.log('	this.section[CATEGORY]=====', this.section['CATEGORY']);
+					return this.guideService
+						.getKbCategoryById(this.section['CATEGORY'])
+						.pipe(
+							mergeMap((categoryResponse: any) => {
+								this.category = this.convertCategory(categoryResponse);
+								return this.guideService
+									.getArticlesBySectionId(this.section['sectionId'])
+									.pipe(
+										map((articlesResponse: any) => {
+											this.articles = this.sortByOrder(
+												articlesResponse.getArticlesBySectionId.filter(
+													(article) =>
+														article.publish === true &&
+														article.section === this.section['sectionId']
+												)
+											);
+											this.isLoading = false;
+
+											(articlesError: any) => {
+												console.log(articlesError);
+
+												(categoryError: any) => {
+													console.log(categoryError);
+												};
+
+												(sectionError: any) => {
+													console.log(sectionError);
+												};
+											};
+										})
 									);
-									this.isLoading = false;
-								},
-								(articlesError: any) => {
-									console.log(articlesError);
-								}
-							);
-					},
-					(categoryError: any) => {
-						console.log(categoryError);
-					}
-				);
-			},
-			(sectionError: any) => {
-				console.log(sectionError);
-			}
-		);
+							})
+						);
+				})
+			)
+			.subscribe();
 	}
 
 	private sortByOrder(array): any[] {

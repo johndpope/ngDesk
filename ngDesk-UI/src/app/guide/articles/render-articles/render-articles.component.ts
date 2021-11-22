@@ -10,6 +10,7 @@ import { UsersService } from '../../../users/users.service';
 import { GuideService } from '../../guide.service';
 import { RolesService } from 'src/app/roles/roles.service';
 import { ArticleApiService, CommentMessage } from '@ngdesk/knowledgebase-api';
+import { map, mergeMap } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-render-articles',
@@ -70,67 +71,74 @@ export class RenderArticlesComponent implements OnInit {
 
 	private getArticle() {
 		// get article sections
-		this.guideService.getArticlesBySectionId(this.sectionId).subscribe(
-			(articlesResponse: any) => {
-				this.sectionArticles = articlesResponse.getArticlesBySectionId
-					.filter(
-						(article) => article.publish && article.section === this.sectionId
-					)
-					.sort((a: { order: number }, b: { order: number }) => {
-						return a.order - b.order;
-					});
+		this.guideService
+			.getArticlesBySectionId(this.sectionId)
+			.pipe(
+				mergeMap((articlesResponse: any) => {
+					this.sectionArticles = articlesResponse.getArticlesBySectionId
+						.filter(
+							(article) => article.publish && article.section === this.sectionId
+						)
+						.sort((a: { order: number }, b: { order: number }) => {
+							return a.order - b.order;
+						});
 
-				// find article in section articles
-				const articleMatchedByTitle = this.sectionArticles.find(
-					(art) => art.title === this.article['title']
-				);
-
-				// need to make get individual article call for returning attachments with uuid
-				this.guideService
-					.getKbArticleById(articleMatchedByTitle.articleId)
-					.subscribe(
-						(articleResponse: any) => {
-							this.article = articleResponse.DATA;
-							const userRole = this.usersService.user['ROLE'];
-							//if user is logged in
-							if (userRole !== undefined) {
-								this.roleService
-									.getRole(userRole)
-									.subscribe((response: any) => {
-										this.roleName = response.NAME;
-										// if admin or agent is logged in, get names from users module call
-										// else, comments cannot be added just viewed
-										if (
-											this.usersService.getAuthenticationToken() &&
-											(this.roleName === 'SystemAdmin' ||
-												this.roleName === 'Agent' ||
-												this.roleName === 'Customers')
-										) {
-											this.getAuthorName();
-										} else if (this.article === undefined) {
-											this.isPublicArticle = false;
-											this.loading = false;
-											return;
-										} else {
-											this.loading = false;
-										}
-									});
-							} else {
-								//if user is logged out
-								this.loading = false;
-							}
-						},
-						(articleError: any) => {
-							this.bannerMessageService.errorNotifications.push(
-								articleError.error.ERROR
-							);
-						}
+					// find article in section articles
+					const articleMatchedByTitle = this.sectionArticles.find(
+						(art) => art.title === this.article['title']
 					);
-			},
-			(error: any) => {
-				this.bannerMessageService.errorNotifications.push(error.error.ERROR);
-			}
-		);
+
+					// need to make get individual article call for returning attachments with uuid
+					return this.guideService
+						.getKbArticleById(articleMatchedByTitle.articleId)
+						.pipe(
+							mergeMap((articleResponse: any) => {
+								this.article = articleResponse.DATA;
+								const userRole = this.usersService.user['ROLE'];
+								//if user is logged in
+								if (userRole !== undefined) {
+									return this.roleService.getRole(userRole).pipe(
+										map((response: any) => {
+											this.roleName = response.NAME;
+											// if admin or agent is logged in, get names from users module call
+											// else, comments cannot be added just viewed
+											if (
+												this.usersService.getAuthenticationToken() &&
+												(this.roleName === 'SystemAdmin' ||
+													this.roleName === 'Agent' ||
+													this.roleName === 'Customers')
+											) {
+												this.getAuthorName();
+											} else if (this.article === undefined) {
+												this.isPublicArticle = false;
+												this.loading = false;
+												return;
+											} else {
+												this.loading = false;
+											}
+										})
+									);
+								} else {
+									//if user is logged out
+									this.loading = false;
+								}
+
+								(articleError: any) => {
+									this.bannerMessageService.errorNotifications.push(
+										articleError.error.ERROR
+									);
+
+									(error: any) => {
+										this.bannerMessageService.errorNotifications.push(
+											error.error.ERROR
+										);
+									};
+								};
+							})
+						);
+				})
+			)
+			.subscribe();
 	}
 
 	public checkEditAccess() {
