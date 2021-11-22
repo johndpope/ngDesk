@@ -55,9 +55,10 @@ public class AgentAvailabilityService {
 					.get(company.getCompanySubdomain());
 			String userId = null;
 			Boolean isAgentAvailable = false;
+			Boolean isBusinessHoursActive = null;
 			ChatBusinessRules businessRules = company.getChatSettings().getChatBusinessRules();
 			Boolean hasRestriction = company.getChatSettings().getHasRestrictions();
-			String message = "Business Hours is inActive";
+			String message = null;
 			for (String key : sessionMap.keySet()) {
 				userId = key;
 				Optional<Map<String, Object>> optionalUserEntry = entryRepository.findById(userId,
@@ -73,16 +74,18 @@ public class AgentAvailabilityService {
 							isAgentAvailable = true;
 						}
 					} else if (hasRestriction) {
+						isBusinessHoursActive = validateBusinessRulesForAgentAssign(company, businessRules);
 						if (chatEntries < company.getChatSettings().getMaxChatPerAgent() && chatStatus != null
-								&& chatStatus.equalsIgnoreCase("available")
-								&& validateBusinessRulesForAgentAssign(company, businessRules)) {
-							message = "Business Hours is Active";
+								&& chatStatus.equalsIgnoreCase("available") && isBusinessHoursActive) {
 							isAgentAvailable = true;
 						}
 					}
 				}
 			}
 
+			if (isBusinessHoursActive != null && !isBusinessHoursActive) {
+				message = "Inactive";
+			}
 			if (!isAgentAvailable) {
 				AgentAvailability agentAvailable = new AgentAvailability(agentAvailability.getSessionUUID(),
 						company.getCompanySubdomain(), "AgentAvailability", agentAvailability.getChannelName(), false,
@@ -150,7 +153,7 @@ public class AgentAvailabilityService {
 
 			cal.setTime(dateFormat.parse(startTime));
 			int startHour = cal.get(Calendar.HOUR_OF_DAY);
-
+			int startMinute = cal.get(Calendar.MINUTE);
 			cal.setTime(dateFormat.parse(endTime));
 
 			int endHour = cal.get(Calendar.HOUR_OF_DAY);
@@ -160,6 +163,8 @@ public class AgentAvailabilityService {
 			case "Day":
 				if (currentHour >= startHour && currentHour <= endHour) {
 					if ((currentHour == endHour) && (currentMinutes > endMinute)) {
+						return false;
+					} else if ((currentHour == startHour) && (currentMinutes < startMinute)) {
 						return false;
 					}
 					return true;

@@ -103,6 +103,7 @@ import { FieldPermissionComponent } from './roles/field-permission/field-permiss
 import { CatalogueDetailComponent } from './catalogues/catalogue-detail/catalogue-detail.component';
 import { CatalogueMasterComponent } from './catalogues/catalogue-master/catalogue-master.component';
 import { AccountLevelAccessComponent } from './account-level-access/account-level-access.component';
+import { CsvLogsService } from './file-upload/csv-logs/csv-logs-detail/csv-logs-detail.service';
 
 @NgModule({
 	imports: [
@@ -214,6 +215,7 @@ import { AccountLevelAccessComponent } from './account-level-access/account-leve
 		ApiService,
 		ImportService,
 		AgentService,
+		CsvLogsService,
 		CurrenciesDetailComponent,
 		CampaignsService,
 		CompanySettingService,

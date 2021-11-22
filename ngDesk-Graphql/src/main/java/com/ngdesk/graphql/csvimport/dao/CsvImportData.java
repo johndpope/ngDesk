@@ -1,30 +1,22 @@
-package com.ngdesk.modules.importcsv;
+package com.ngdesk.graphql.csvimport.dao;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class CsvImportData {
 
-	@JsonProperty("FILE")
 	private String file;
 
-	@JsonProperty("FILE_TYPE")
 	private String fileType;
 
-	@JsonProperty("FILE_NAME")
 	private String fileName;
 
-	@JsonProperty("HEADERS")
-	private Map<String, String> headers = new HashMap<String, String>();
+	private List<CsvHeaders> headers;
 
-	CsvImportData() {
+	public CsvImportData() {
+
 	}
 
-	public CsvImportData(String file, String fileType, String fileName, Map<String, String> headers) {
+	public CsvImportData(String file, String fileType, String fileName, List<CsvHeaders> headers) {
 		super();
 		this.file = file;
 		this.fileType = fileType;
@@ -56,11 +48,11 @@ public class CsvImportData {
 		this.fileName = fileName;
 	}
 
-	public Map<String, String> getHeaders() {
+	public List<CsvHeaders> getHeaders() {
 		return headers;
 	}
 
-	public void setHeaders(Map<String, String> headers) {
+	public void setHeaders(List<CsvHeaders> headers) {
 		this.headers = headers;
 	}
 

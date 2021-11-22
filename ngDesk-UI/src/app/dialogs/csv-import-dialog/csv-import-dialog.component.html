@@ -24,6 +24,66 @@
 				</mat-form-field>
 			</div>
 		</div>
+		<div fxLayout="row" *ngIf="dateTimeField" fxFlex="100">
+			<div fxLayout="column" fxFlex="40">
+				<mat-label style="margin-top:9%;font-family:Roboto, Helvetica Neue, sans-serif">
+					Select date/time field format:</mat-label>
+			</div>
+			<div fxLayout="column" fxFlex="60">
+				<mat-form-field>
+					<mat-select placeholder="date/time format" [(ngModel)]="selectedDateTimeFormat">
+						<mat-option *ngFor="let separator of dateTimeFormat" [value]="separator">
+							{{separator}}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</div>
+		</div>
+		<div fxLayout="row" *ngIf="dateField" fxFlex="100">
+			<div fxLayout="column" fxFlex="40">
+				<mat-label style="margin-top:9%;font-family:Roboto, Helvetica Neue, sans-serif">
+					Select date field format:</mat-label>
+			</div>
+			<div fxLayout="column" fxFlex="60">
+				<mat-form-field>
+					<mat-select placeholder="date format" [(ngModel)]="selectedDate">
+						<mat-option *ngFor="let separator of dateFormat" [value]="separator">
+							{{separator}}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</div>
+		</div>
+		<div fxLayout="row" *ngIf="timeField" fxFlex="100">
+			<div fxLayout="column" fxFlex="40">
+				<mat-label style="margin-top:9%;font-family:Roboto, Helvetica Neue, sans-serif">
+					Select time field format:</mat-label>
+			</div>
+			<div fxLayout="column" fxFlex="60">
+				<mat-form-field fxFlex="60">
+					<mat-select placeholder="time format" [(ngModel)]="selectedTimeFormat">
+						<mat-option *ngFor="let separator of timeFormat" [value]="separator">
+							{{separator}}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</div>
+		</div>
+		<div fxLayout="row" *ngIf="phoneField" fxFlex="100">
+			<div fxLayout="column" fxFlex="40">
+				<mat-label style="margin-top:9%;font-family:Roboto, Helvetica Neue, sans-serif">
+					Select phone field format:</mat-label>
+			</div>
+			<div fxLayout="column" fxFlex="60">
+				<mat-form-field>
+					<mat-select placeholder="Select separator" [(ngModel)]="selectedSeparator">
+						<mat-option *ngFor="let separator of separators" [value]="separator">
+							{{separator}}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</div>
+		</div>
 	</div>
 </div>
 

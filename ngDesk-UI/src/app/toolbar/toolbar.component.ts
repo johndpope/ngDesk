@@ -136,7 +136,7 @@ export class ToolbarComponent implements OnDestroy, OnInit {
 					if (!this.authToken) {
 						this.enableSignup =
 							this.cacheService.companyData['COMPANY_ENROLLMENT'][
-								'ENABLE_SIGNUPS'
+							'ENABLE_SIGNUPS'
 							];
 					} else {
 						this.toolbarService.updateShowAcceptChat();
@@ -448,14 +448,12 @@ export class ToolbarComponent implements OnDestroy, OnInit {
 	public openEntry(notification) {
 		notification['id'] = notification.notificationId;
 		notification.read = true;
-		this.notificationApiService
-			.updateNotification(notification)
-			.subscribe(() => {
-				this.notificationSubscription();
-				this.router.navigate([
-					`render/${notification.moduleId}/edit/${notification.dataId}`,
-				]);
-			});
+		this.notificationApiService.makeNotificationsRead(notification).subscribe(() => {
+			this.notificationSubscription();
+			this.router.navigate([
+				`render/${notification.moduleId}/edit/${notification.dataId}`,
+			]);
+		});
 	}
 
 	public readAll() {

@@ -5,6 +5,13 @@ import { CsvImportDialogComponent } from 'src/app/dialogs/csv-import-dialog/csv-
 import { ModulesService } from 'src/app/modules/modules.service';
 import { read, utils } from 'xlsx';
 import { Router } from '@angular/router';
+import { CsvLogsService } from './csv-logs/csv-logs-detail/csv-logs-detail.service';
+import {
+	CsvImportData,
+	DataApiService,
+	CsvImportApiService,
+} from '@ngdesk/data-api';
+import { BannerMessageService } from '@src/app/custom-components/banner-message/banner-message.service';
 
 @Component({
 	selector: 'app-file-upload',
@@ -21,19 +28,20 @@ export class FileUploadComponent implements OnInit {
 	public unmatchedFields: any = [];
 	public rowObject: [];
 	public headers: [];
-	public csvImportData = {
-		FILE: '',
-		FILE_TYPE: '',
-		FILE_NAME: '',
-		HEADERS: {},
+	public csvImportData: CsvImportData = {
+		file: '',
+		fileType: '',
+		fileName: '',
+		headers: [],
 	};
-
 	constructor(
 		private modulesService: ModulesService,
 		private translateService: TranslateService,
 		private dialog: MatDialog,
 		public dialogRef: MatDialogRef<FileUploadComponent>,
-		private router: Router
+		private router: Router,
+		private csvImportApiService: CsvImportApiService,
+		public bannerMessageService: BannerMessageService
 	) {}
 
 	public ngOnInit() {
@@ -59,15 +67,12 @@ export class FileUploadComponent implements OnInit {
 			reader.onload = () => {
 				const data: any = reader.result;
 				this.csvImportData = {
-					FILE: data.split('base64,')[1],
-					FILE_TYPE: fileType,
-					FILE_NAME: fileNAme,
-					HEADERS: {},
+					file: data.split('base64,')[1],
+					fileType: fileType,
+					fileName: fileNAme,
+					headers: [],
 				};
 			};
-		} else {
-			this.errorMessage =
-				'This file is not supported, Please try to upload a csv file';
 		}
 	}
 
@@ -87,30 +92,38 @@ export class FileUploadComponent implements OnInit {
 			this.errorMessage = 'Please Select a file to upload';
 		} else {
 			const moduleId = this.selectedModule.MODULE_ID;
-			this.modulesService
-				.getCsvHeaders(moduleId, this.csvImportData)
-				.subscribe((response: any) => {
-					this.headers = response;
-					const csvData = {
-						HEADERS: this.headers,
-						MODULE: this.selectedModule,
-						CSV_IMPORT_DATA: this.csvImportData,
-					};
-					const dialogRef = this.dialog.open(CsvImportDialogComponent, {
-						data: {
-							csvData: csvData,
-							dialogTitle: this.translateService.instant('IMPORT_FROM_CSV'),
-							buttonText: this.translateService.instant('IMPORT'),
-							action: this.translateService.instant('IMPORT'),
-							closeDialog: this.translateService.instant('CANCEL'),
-							executebuttonColor: 'warn',
-						},
-					});
-					dialogRef.afterClosed().subscribe((result) => {
-						this.onNoClick();
-						this.dialogRef.close({ data: result });
-					});
-				});
+			this.csvImportApiService
+				.generateCsvHeaders(moduleId, this.csvImportData)
+				.subscribe(
+					(response: any) => {
+						this.headers = response;
+						const csvData = {
+							HEADERS: this.headers,
+							MODULE: this.selectedModule,
+							CSV_IMPORT_DATA: this.csvImportData,
+						};
+						const dialogRef = this.dialog.open(CsvImportDialogComponent, {
+							data: {
+								csvData: csvData,
+								dialogTitle: this.translateService.instant('IMPORT_FROM_CSV'),
+								buttonText: this.translateService.instant('IMPORT'),
+								action: this.translateService.instant('IMPORT'),
+								closeDialog: this.translateService.instant('CANCEL'),
+								executebuttonColor: 'warn',
+							},
+						});
+						dialogRef.afterClosed().subscribe((result) => {
+							this.onNoClick();
+							this.dialogRef.close({ data: result });
+						});
+					},
+					(error) => {
+						console.error(error);
+						this.bannerMessageService.errorNotifications.push({
+							message: error.error.ERROR,
+						});
+					}
+				);
 		}
 	}
 

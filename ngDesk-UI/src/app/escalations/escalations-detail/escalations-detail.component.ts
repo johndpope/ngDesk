@@ -31,6 +31,7 @@ import {
 	switchMap,
 } from 'rxjs/operators';
 import { ModulesService } from '@src/app/modules/modules.service';
+import { NavigateToSchedulesService } from '../../navigateToEscalation.service';
 
 @Component({
 	selector: 'app-escalations-detail',
@@ -62,7 +63,6 @@ export class EscalationsDetailComponent implements OnInit {
 	public userCtrl = new FormControl();
 	public teamCtrl = new FormControl();
 	public scheduleCtrl = new FormControl();
-
 	private escalationId: string;
 
 	@ViewChild('teamInput') public teamInput: ElementRef<HTMLInputElement>;
@@ -85,7 +85,8 @@ export class EscalationsDetailComponent implements OnInit {
 		private cacheService: CacheService,
 		private http: HttpClient,
 		private globals: AppGlobals,
-		private modulesService: ModulesService
+		private modulesService: ModulesService,
+		private navigateToSchedulesService: NavigateToSchedulesService,
 	) {}
 
 	public ngOnInit() {
@@ -123,7 +124,6 @@ export class EscalationsDetailComponent implements OnInit {
 			});
 
 		this.escalationForm = this.formBuilder.group({});
-
 		this.escalationId = this.route.snapshot.params['escalationId'];
 		this.companyInfoSubscription =
 			this.cacheService.companyInfoSubject.subscribe((dataStored) => {
@@ -149,11 +149,10 @@ export class EscalationsDetailComponent implements OnInit {
 							);
 
 							if (this.escalationId !== 'new') {
-								this.escalationApiService
-									.getEscalationById(this.escalationId)
-									.subscribe(
+								this.escalationService
+									.getEscalation(this.escalationId).subscribe(
 										(escalationResponse: Escalation) => {
-											this.escalation = escalationResponse;
+											this.escalation = escalationResponse['escalation'];
 											this.escalationForm.controls.NAME.setValue(
 												this.escalation.NAME
 											);
@@ -270,6 +269,13 @@ export class EscalationsDetailComponent implements OnInit {
 			return objFound['name'];
 		} else if (objFound !== undefined && objFound) {
 			return objFound['NAME'];
+		}
+	}
+
+	public createSchedules() {		
+		if (this.schedulesInitial.length === 0) {
+				this.navigateToSchedulesService.navigateToSchedules = true;
+		 		this.router.navigate([`schedules/new`])
 		}
 	}
 

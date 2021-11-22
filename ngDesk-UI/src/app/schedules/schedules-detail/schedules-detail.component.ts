@@ -36,6 +36,9 @@ import {
 	switchMap,
 } from 'rxjs/operators';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { EscalationsService } from '../../escalations/escalations.service';
+import { NavigateToSchedulesService } from '../../navigateToEscalation.service';
+
 
 @Component({
 	selector: 'app-schedules-detail',
@@ -66,6 +69,8 @@ export class SchedulesDetailComponent implements OnInit, OnDestroy {
 	public companyInfoSubscription: Subscription;
 	public tempUserInput = '';
 	public separatorKeysCodes: number[] = [ENTER, COMMA];
+	public escalationId: string;
+	public paramValue: string;
 	@ViewChild('search') public searchTextBox: ElementRef;
 	public scheduleDataScrollSubject = new Subject<any>();
 	get userFilter(): string {
@@ -93,7 +98,8 @@ export class SchedulesDetailComponent implements OnInit, OnDestroy {
 		private loaderService: LoaderService,
 		private cacheService: CacheService,
 		private schedulesService: SchedulesService,
-		private dataService: DataApiService
+		private dataService: DataApiService,
+		private navigateToSchedulesService: NavigateToSchedulesService
 	) {}
 
 	public ngOnInit() {
@@ -837,7 +843,12 @@ export class SchedulesDetailComponent implements OnInit, OnDestroy {
 						this.companiesService.trackEvent(`Created Schedule`, {
 							SCHEDULE_ID: response.SCHEDULE_ID,
 						});
-						this.router.navigate(['schedules']);
+						if (this.navigateToSchedulesService.navigateToSchedules) {
+							this.navigateToSchedulesService.navigateToSchedules = false;							
+							return this.router.navigate([`escalations/new`])
+						} else {
+							return this.router.navigate(['schedules']);
+						}
 					},
 					(error) => {
 						this.bannerMessageService.errorNotifications.push({
