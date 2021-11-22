@@ -37,7 +37,7 @@
     "@angular/platform-browser-dynamic": "12.2.10",
     "@angular/router": "12.2.10",
     "@clientio/rappid": "file:./rappid/rappid-3.2.0.tgz",
-    "@danielmoncada/angular-datetime-picker": "^9.4.2",
+    "@danielmoncada/angular-datetime-picker": "^12.2.0",
     "@nativescript/angular": "~12.2.0",
     "@nativescript/core": "~7.0.0",
     "@nativescript/firebase": "rc",
