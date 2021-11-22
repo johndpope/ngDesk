@@ -64,7 +64,7 @@
 		"@swimlane/ngx-charts": "^19.1.0",
 		"@types/googlemaps": "^3.38.1",
 		"acorn": "^6.1.1",
-		"angular-gridster2": "^8.4.2",
+		"angular-gridster2": "^13.0.0",
 		"angular2-uuid": "^1.1.1",
 		"backbone": "1.4.0",
 		"canvg-rappid": "1.0.3",
@@ -111,7 +111,7 @@
 		"zone.js": "~0.11.4"
 	},
 	"devDependencies": {
-		"@angular-devkit/build-angular": "^12.2.10",
+		"@angular-devkit/build-angular": "^13.0.3",
 		"@angular/cli": "12.2.10",
 		"@angular/compiler-cli": "^12.2.10",
 		"@angular/language-service": "12.2.10",
@@ -120,7 +120,7 @@
 		"@nativescript/schematics": "~1.0.0",
 		"@nativescript/types": "~7.0.0",
 		"@nativescript/webpack": "~3.0.0",
-		"@ngtools/webpack": "^12.2.10",
+		"@ngtools/webpack": "^13.0.3",
 		"@types/backbone": "1.4.1",
 		"@types/dagre": "^0.7.43",
 		"@types/jasmine": "~3.6.0",
