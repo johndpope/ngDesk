@@ -1,1372 +1,1365 @@
 {
-	"NAME": "Chats",
-	"DESCRIPTION": "A module for chats",
-	"SINGULAR_NAME": "Chat",
-	"PLURAL_NAME": "Chats",
-	"FIELDS": [
-		{
-			"DISPLAY_LABEL": "Source Type",
-			"FIELD_ID": "509d5c20-9ce2-416a-9c9e-a1d9a0d12129",
-			"INTERNAL": true,
-			"REQUIRED": false,
-			"NOT_EDITABLE": true,
-			"DATA_TYPE": {
-				"DISPLAY": "Picklist",
-				"BACKEND": "String"
-			},
-			"PICKLIST_VALUES": [
-				"chat",
-				"email",
-				"facebook",
-				"mobile",
-				"sms",
-				"twitter",
-				"web",
-				"whatsapp"
-			],
-			"NAME": "SOURCE_TYPE",
-			"DEFAULT_VALUE": "web"
-		},
-		{
-			"DISPLAY_LABEL": "Chat",
-			"FIELD_ID": "d637c126-457c-4984-8c30-8f245b234248",
-			"REQUIRED": false,
-			"INTERNAL": true,
-			"NOT_EDITABLE": false,
-			"DATA_TYPE": {
-				"DISPLAY": "Discussion",
-				"BACKEND": "String"
-			},
-			"NAME": "CHAT"
-		},
-		{
-			"DISPLAY_LABEL": "Referrer",
-			"FIELD_ID": "cc861047-0ee9-49cb-8d33-67d53addbb49",
-			"REQUIRED": false,
-			"INTERNAL": true,
-			"NOT_EDITABLE": false,
-			"DATA_TYPE": {
-				"DISPLAY": "Text",
-				"BACKEND": "String"
-			},
-			"NAME": "REFERRER"
-		},
-		{
-			"DISPLAY_LABEL": "IP Address",
-			"FIELD_ID": "b4258f11-8ced-473b-adb9-8a4f2c8c1080",
-			"REQUIRED": false,
-			"INTERNAL": true,
-			"NOT_EDITABLE": false,
-			"DATA_TYPE": {
-				"DISPLAY": "Text",
-				"BACKEND": "String"
-			},
-			"NAME": "IP_ADDRESS"
-		},
-		{
-			"DISPLAY_LABEL": "Browser",
-			"FIELD_ID": "26fc37c0-b77d-46d2-a665-38c94288b771",
-			"REQUIRED": false,
-			"INTERNAL": true,
-			"NOT_EDITABLE": false,
-			"DATA_TYPE": {
-				"DISPLAY": "Text",
-				"BACKEND": "String"
-			},
-			"NAME": "BROWSER"
-		},
-		{
-			"DISPLAY_LABEL": "Platform",
-			"FIELD_ID": "11a5dc92-8168-11e9-bc42-526af7764f64",
-			"REQUIRED": false,
-			"INTERNAL": true,
-			"NOT_EDITABLE": false,
-			"DATA_TYPE": {
-				"DISPLAY": "Text",
-				"BACKEND": "String"
-			},
-			"NAME": "PLATFORM"
-		},
-		{
-			"DATE_CREATED": "DATE_CREATED_REPLACE",
-			"DATE_UPDATED": "DATE_REPLACE",
-			"AUTO_NUMBER_GENERATION": true,
-			"DATA_TYPE": {
-				"DISPLAY": "Auto Number",
-				"BACKEND": "Integer"
-			},
-			"FIELD_ID": "1eb6118f-4afc-4d32-bcec-738f69955f04",
-			"REQUIRED": true,
-			"NOT_EDITABLE": true,
-			"NAME": "CHAT_ID",
-			"AUTO_NUMBER_STARTING_NUMBER": 1,
-			"DISPLAY_LABEL": "Chat ID",
-			"PREFIX": "",
-			"SUFFIX": "",
-			"NUMERIC_FORMAT": ""
-		},
-		{
-			"DISPLAY_LABEL": "URL",
-			"FIELD_ID": "11a5da1c-8168-11e9-bc42-526af7764f64",
-			"REQUIRED": false,
-			"INTERNAL": true,
-			"NOT_EDITABLE": false,
-			"DATA_TYPE": {
-				"DISPLAY": "Text",
-				"BACKEND": "String"
-			},
-			"NAME": "URL"
-		},
-		{
-			"DATE_CREATED": "DATE_CREATED_REPLACE",
-			"FIELD_ID": "4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
-			"DATE_UPDATED": "DATE_REPLACE",
-			"REQUIRED": false,
-			"RELATIONSHIP_FIELD": "23207a42-5123-434b-a116-49096ec1ad4f",
-			"NAME": "REQUESTOR",
-			"MODULE": "CONTACTS_MODULE_REPLACE",
-			"DISPLAY_LABEL": "Requestor",
-			"INTERNAL": true,
-			"RELATIONSHIP_TYPE": "Many to One",
-			"PRIMARY_DISPLAY_FIELD": "1abb3787-2ead-49ee-88cc-da911717c38d",
-			"NOT_EDITABLE": false,
-			"DATA_TYPE": {
-				"DISPLAY": "Relationship",
-				"BACKEND": "String"
-			},
-			"DEFAULT_VALUE": null
-		},
-		{
-			"DEFAULT_VALUE": "",
-			"DATE_CREATED": null,
-			"HELP_TEXT": "",
-			"DATE_UPDATED": null,
-			"LENGTH": 0,
-			"PICKLIST_GLOBAL_LIST": null,
-			"ORDER": 0,
-			"PICKLIST_VALUES": null,
-			"MESSAGES": null,
-			"INTERNAL": true,
-			"GEOLOCATION_LATITUDE_LONGTITUDE": null,
-			"DECIMAL_PLACES": 0,
-			"AUTO_NUMBER_GENERATION": false,
-			"DATA_TYPE": {
-				"DISPLAY": "Text",
-				"BACKEND": "String"
-			},
-			"TYPE": 0,
-			"MASK_CHARACTER": null,
-			"PICKLIST": null,
-			"PICKLIST_RESTRICT": false,
-			"LAST_UPDATED_BY": "",
-			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
-			"FIELD_ID": "a29dfa3c-f1c5-4d7f-a54f-6c41199b4d86",
-			"MAX_SIZE": 100,
-			"REQUIRED": false,
-			"MASK_TYPE": null,
-			"NOT_EDITABLE": true,
-			"PICKLIST_USE_FIRST_VALUE": false,
-			"FORMULA": null,
-			"NAME": "DATA_ID",
-			"AUTO_NUMBER_STARTING_NUMBER": 0,
-			"MODULE": null,
-			"VISIBILITY": true,
-			"DISPLAY_LABEL": "Data ID",
-			"EXAMPLE": null
-		},
-		{
-			"DISPLAY_LABEL": "Session UUID",
-			"FIELD_ID": "da26e0fa-7f57-4a60-b0d1-5bcd860c59f7",
-			"REQUIRED": false,
-			"INTERNAL": true,
-			"NOT_EDITABLE": true,
-			"DATA_TYPE": {
-				"DISPLAY": "Text",
-				"BACKEND": "String"
-			},
-			"NAME": "SESSION_UUID"
-		},
-		{
-			"DISPLAY_LABEL": "Channel",
-			"FIELD_ID": "1e9db082-b23a-4840-b7ba-b8a5e755bfd5",
-			"REQUIRED": true,
-			"INTERNAL": true,
-			"NOT_EDITABLE": true,
-			"DATA_TYPE": {
-				"DISPLAY": "Text",
-				"BACKEND": "String"
-			},
-			"NAME": "CHANNEL"
-		},
-		{
-			"DISPLAY_LABEL": "Country",
-			"FIELD_ID": "0e1835cd-40eb-4114-8e6e-8ff2957d70a6",
-			"REQUIRED": false,
-			"INTERNAL": true,
-			"NOT_EDITABLE": false,
-			"DATA_TYPE": {
-				"DISPLAY": "Text",
-				"BACKEND": "String"
-			},
-			"NAME": "COUNTRY"
-		},
-		{
-			"DISPLAY_LABEL": "Device Type",
-			"FIELD_ID": "e6529099-0a6e-4ea9-a0c0-43c7ff061abb",
-			"REQUIRED": false,
-			"INTERNAL": true,
-			"NOT_EDITABLE": false,
-			"DATA_TYPE": {
-				"DISPLAY": "Text",
-				"BACKEND": "String"
-			},
-			"NAME": "DEVICE_TYPE"
-		},
-		{
-			"DISPLAY_LABEL": "Operating System",
-			"FIELD_ID": "c7a0d20c-98d7-47ec-8be2-e7a71e28b5be",
-			"REQUIRED": false,
-			"INTERNAL": true,
-			"NOT_EDITABLE": false,
-			"DATA_TYPE": {
-				"DISPLAY": "Text",
-				"BACKEND": "String"
-			},
-			"NAME": "OS"
-		},
-		{
-			"DISPLAY_LABEL": "User Agent",
-			"FIELD_ID": "11a5d788-8168-11e9-bc42-526af7764f64",
-			"REQUIRED": false,
-			"INTERNAL": true,
-			"NOT_EDITABLE": false,
-			"DATA_TYPE": {
-				"DISPLAY": "Text",
-				"BACKEND": "String"
-			},
-			"NAME": "USER_AGENT"
-		},
-		{
-			"DISPLAY_LABEL": "Host Name",
-			"FIELD_ID": "11a5ddbe-8168-11e9-bc42-526af7764f64",
-			"REQUIRED": false,
-			"INTERNAL": true,
-			"NOT_EDITABLE": false,
-			"DATA_TYPE": {
-				"DISPLAY": "Text",
-				"BACKEND": "String"
-			},
-			"NAME": "HOST_NAME"
-		},
-		{
-			"DISPLAY_LABEL": "No. Of Visits",
-			"FIELD_ID": "9a7365b6-92f5-46bb-91ec-b42f80a621df",
-			"REQUIRED": false,
-			"INTERNAL": true,
-			"NOT_EDITABLE": false,
-			"DATA_TYPE": {
-				"DISPLAY": "Number",
-				"BACKEND": "Integer"
-			},
-			"NAME": "NO_OF_VISITS",
-			"PREFIX": "",
-			"SUFFIX": "",
-			"NUMERIC_FORMAT": ""
-		},
-		{
-			"PICKLIST_VALUES": [
-				"Browsing",
-				"Chatting",
-				"Offline"
-			],
-			"DISPLAY_LABEL": "Status",
-			"FIELD_ID": "31ab05b2-071b-480c-8529-80f406be2366",
-			"REQUIRED": false,
-			"INTERNAL": true,
-			"NOT_EDITABLE": false,
-			"DATA_TYPE": {
-				"DISPLAY": "Picklist",
-				"BACKEND": "String"
-			},
-			"NAME": "STATUS"
-		},
-		{
-			"FIELD_ID": "ff830c05-137e-4db8-9cca-896ba798e2e9",
-			"NAME": "EFFECTIVE_TO",
-			"DISPLAY_LABEL": "Effective to",
-			"HELP_TEXT": "",
-			"DEFAULT_VALUE": null,
-			"LENGTH": 0,
-			"DECIMAL_PLACES": 0,
-			"MAX_SIZE": 0,
-			"MASK_TYPE": null,
-			"MASK_CHARACTER": null,
-			"EXAMPLE": null,
-			"RELATIONSHIP_TYPE": null,
-			"AUTO_NUMBER_GENERATION": false,
-			"AUTO_NUMBER_STARTING_NUMBER": 0,
-			"GEOLOCATION_LATITUDE_LONGTITUDE": null,
-			"PICKLIST": null,
-			"PICKLIST_GLOBAL_LIST": null,
-			"PICKLIST_VALUES": [],
-			"PICKLIST_USE_FIRST_VALUE": false,
-			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
-			"PICKLIST_RESTRICT": true,
-			"PRIMARY_DISPLAY_FIELD": null,
-			"RELATIONSHIP_FIELD": null,
-			"FORMULA": null,
-			"MODULE": null,
-			"VISIBILITY": false,
-			"REQUIRED": false,
-			"DATA_TYPE": {
-				"DISPLAY": "Date/Time",
-				"BACKEND": "Date"
-			},
-			"ORDER": 0,
-			"TYPE": 0,
-			"DATE_CREATED": null,
-			"DATE_UPDATED": null,
-			"LAST_UPDATED_BY": null,
-			"CREATED_BY": null,
-			"MESSAGES": null,
-			"INTERNAL": true,
-			"NOT_EDITABLE": true,
-			"GROUP_ID": null,
-			"IS_LIST_TEXT_UNIQUE": false
-		},
-		{
-			"FIELD_ID": "9f980d82-a86e-421a-ae73-8617f3c14786",
-			"NAME": "EFFECTIVE_FROM",
-			"DISPLAY_LABEL": "Effective from",
-			"HELP_TEXT": "",
-			"DEFAULT_VALUE": null,
-			"LENGTH": 0,
-			"DECIMAL_PLACES": 0,
-			"MAX_SIZE": 0,
-			"MASK_TYPE": null,
-			"MASK_CHARACTER": null,
-			"EXAMPLE": null,
-			"RELATIONSHIP_TYPE": null,
-			"AUTO_NUMBER_GENERATION": false,
-			"AUTO_NUMBER_STARTING_NUMBER": 0,
-			"GEOLOCATION_LATITUDE_LONGTITUDE": null,
-			"PICKLIST": null,
-			"PICKLIST_GLOBAL_LIST": null,
-			"PICKLIST_VALUES": [],
-			"PICKLIST_USE_FIRST_VALUE": false,
-			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
-			"PICKLIST_RESTRICT": true,
-			"PRIMARY_DISPLAY_FIELD": null,
-			"RELATIONSHIP_FIELD": null,
-			"FORMULA": null,
-			"MODULE": null,
-			"VISIBILITY": false,
-			"REQUIRED": false,
-			"DATA_TYPE": {
-				"DISPLAY": "Date/Time",
-				"BACKEND": "Date"
-			},
-			"ORDER": 0,
-			"TYPE": 0,
-			"DATE_CREATED": null,
-			"DATE_UPDATED": null,
-			"LAST_UPDATED_BY": null,
-			"CREATED_BY": null,
-			"MESSAGES": null,
-			"INTERNAL": true,
-			"NOT_EDITABLE": true,
-			"GROUP_ID": null,
-			"IS_LIST_TEXT_UNIQUE": false
-		},
-		{
-			"DISPLAY_LABEL": "Time On Page",
-			"FIELD_ID": "ea7e5183-df8c-49e3-843d-602fd80b8130",
-			"REQUIRED": false,
-			"INTERNAL": true,
-			"NOT_EDITABLE": false,
-			"DATA_TYPE": {
-				"DISPLAY": "Chronometer",
-				"BACKEND": "Integer"
-			},
-			"NAME": "TIME_ON_PAGE",
-			"PREFIX": "",
-			"SUFFIX": "",
-			"NUMERIC_FORMAT": ""
-		},
-		{
-			"DISPLAY_LABEL": "Date Created",
-			"FIELD_ID": "3a5ce38f-f052-43fc-bae9-25c15323b8c0",
-			"REQUIRED": false,
-			"INTERNAL": true,
-			"NOT_EDITABLE": true,
-			"DATA_TYPE": {
-				"DISPLAY": "Date/Time",
-				"BACKEND": "Date"
-			},
-			"NAME": "DATE_CREATED"
-		},
-		{
-			"REQUIRED": false,
-			"DISPLAY_LABEL": "Date Updated",
-			"FIELD_ID": "65d670bb-38c1-4a6b-9686-606e6d4ba0e6",
-			"INTERNAL": true,
-			"NOT_EDITABLE": true,
-			"DATA_TYPE": {
-				"DISPLAY": "Date/Time",
-				"BACKEND": "Date"
-			},
-			"NAME": "DATE_UPDATED"
-		},
-		{
-			"MODULE": "USERS_MODULE_REPLACE",
-			"FIELD_ID": "5f06d3a6-ef30-48ec-ae1a-4a3621bec62f",
-			"DISPLAY_LABEL": "Last Updated by",
-			"RELATIONSHIP_FIELD": "",
-			"REQUIRED": false,
-			"RELATIONSHIP_TYPE": "Many to One",
-			"INTERNAL": true,
-			"PRIMARY_DISPLAY_FIELD": "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
-			"NOT_EDITABLE": true,
-			"DATA_TYPE": {
-				"DISPLAY": "Relationship",
-				"BACKEND": "String"
-			},
-			"NAME": "LAST_UPDATED_BY"
-		},
-		{
-			"MODULE": "USERS_MODULE_REPLACE",
-			"DISPLAY_LABEL": "Created by",
-			"FIELD_ID": "8baae298-bce0-4536-b68c-6a698957dbd0",
-			"RELATIONSHIP_TYPE": "Many to One",
-			"RELATIONSHIP_FIELD": "",
-			"INTERNAL": true,
-			"PRIMARY_DISPLAY_FIELD": "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
-			"NOT_EDITABLE": true,
-			"DATA_TYPE": {
-				"DISPLAY": "Relationship",
-				"BACKEND": "String"
-			},
-			"NAME": "CREATED_BY",
-			"REQUIRED": false
-		},
-		{
-			"MODULE": "USERS_MODULE_REPLACE",
-			"DISPLAY_LABEL": "Agents",
-			"RELATIONSHIP_FIELD": "",
-			"FIELD_ID": "08c272b5-3fd6-4d11-8410-c5caa89fb9a3",
-			"RELATIONSHIP_TYPE": "Many to Many",
-			"INTERNAL": true,
-			"PRIMARY_DISPLAY_FIELD": "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
-			"NOT_EDITABLE": false,
-			"DATA_TYPE": {
-				"DISPLAY": "Relationship",
-				"BACKEND": "Array"
-			},
-			"NAME": "AGENTS",
-			"REQUIRED": false
-		},
-		{
-			"MODULE": "TEAMS_MODULE_REPLACE",
-			"DISPLAY_LABEL": "Teams",
-			"FIELD_ID": "a10030b3-50ac-4493-a911-13fa14b6eb34",
-			"RELATIONSHIP_FIELD": "",
-			"INTERNAL": true,
-			"RELATIONSHIP_TYPE": "Many to Many",
-			"REQUIRED": true,
-			"PRIMARY_DISPLAY_FIELD": "b1c48961-43e0-4071-b30c-0f7be5daa7a9",
-			"NOT_EDITABLE": false,
-			"DATA_TYPE": {
-				"DISPLAY": "Relationship",
-				"BACKEND": "Array"
-			},
-			"DEFAULT_VALUE": "GLOBAL_TEAM_REPLACE",
-			"NAME": "TEAMS"
-		},
-		{
-			"DISPLAY_LABEL": "Deleted",
-			"FIELD_ID": "62118137-d361-468d-bb54-dbd3e457a3ab",
-			"INTERNAL": true,
-			"REQUIRED": false,
-			"NOT_EDITABLE": true,
-			"DATA_TYPE": {
-				"DISPLAY": "Checkbox",
-				"BACKEND": "Boolean"
-			},
-			"NAME": "DELETED"
-		},
-		{
-			"DISPLAY_LABEL": "Pages Visited",
-			"FIELD_ID": "27139cdf-d2d1-4cdf-a6fa-569d97498a17",
-			"INTERNAL": true,
-			"REQUIRED": false,
-			"NOT_EDITABLE": false,
-			"DATA_TYPE": {
-				"DISPLAY": "List Text",
-				"BACKEND": "Array"
-			},
-			"NAME": "PAGES_VISITED",
-			"IS_LIST_TEXT_UNIQUE": true
-		},
-		{
-			"DISPLAY_LABEL": "City",
-			"FIELD_ID": "ab758684-4e01-48b7-868d-3670468f21d6",
-			"REQUIRED": false,
-			"INTERNAL": false,
-			"NOT_EDITABLE": false,
-			"DATA_TYPE": {
-				"DISPLAY": "Text",
-				"BACKEND": "String"
-			},
-			"NAME": "CITY"
-		},
-		{
-			"FIELD_ID": "8da60851-0356-4c93-b901-58c895369e82",
-			"NAME": "APPROVAL",
-			"DISPLAY_LABEL": "Approval",
-			"HELP_TEXT": "",
-			"DEFAULT_VALUE": null,
-			"LENGTH": 0,
-			"DECIMAL_PLACES": 0,
-			"MAX_SIZE": 0,
-			"MASK_TYPE": null,
-			"MASK_CHARACTER": null,
-			"EXAMPLE": null,
-			"RELATIONSHIP_TYPE": null,
-			"AUTO_NUMBER_GENERATION": false,
-			"AUTO_NUMBER_STARTING_NUMBER": 0,
-			"GEOLOCATION_LATITUDE_LONGTITUDE": null,
-			"PICKLIST": null,
-			"PICKLIST_GLOBAL_LIST": null,
-			"PICKLIST_VALUES": [],
-			"PICKLIST_USE_FIRST_VALUE": false,
-			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
-			"PICKLIST_RESTRICT": true,
-			"PRIMARY_DISPLAY_FIELD": null,
-			"RELATIONSHIP_FIELD": null,
-			"FORMULA": null,
-			"MODULE": null,
-			"VISIBILITY": false,
-			"REQUIRED": false,
-			"DATA_TYPE": {
-				"DISPLAY": "Approval",
-				"BACKEND": "Approval"
-			},
-			"ORDER": 0,
-			"TYPE": 0,
-			"DATE_CREATED": null,
-			"DATE_UPDATED": null,
-			"LAST_UPDATED_BY": null,
-			"CREATED_BY": null,
-			"MESSAGES": null,
-			"INTERNAL": true,
-			"NOT_EDITABLE": false,
-			"GROUP_ID": null,
-			"IS_LIST_TEXT_UNIQUE": false
-		},
-		{
-			"FIELD_ID": "ec928c4f-f1f6-424d-b120-7e7747360ff2",
-			"NAME": "TIME_WINDOW",
-			"DISPLAY_LABEL": "Time Window",
-			"HELP_TEXT": "",
-			"DATA_TYPE": {
-				"DISPLAY": "Time Window",
-				"BACKEND": "Timestamp"
-			},
-			"VISIBILITY": false,
-			"REQUIRED": false,
-			"INTERNAL": true,
-			"NOT_EDITABLE": true,
-			"MAX_SIZE": 0,
-			"AUTO_NUMBER_STARTING_NUMBER": 0,
-			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
-			"PICKLIST_USE_FIRST_VALUE": false,
-			"PICKLIST_VALUES": [],
-			"DATE_CREATED": "DATE_REPLACE",
-			"DATE_UPDATED": "DATE_REPLACE",
-			"CREATED_BY": "CREATED_BY_REPLACE",
-			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
-		},
-		{
-			"FIELD_ID": "4024c953-87aa-4d4e-97ae-2a467b83db3a",
-			"NAME": "PDFS",
-			"DISPLAY_LABEL": "PDFS",
-			"HELP_TEXT": "",
-			"DEFAULT_VALUE": null,
-			"MAX_SIZE": 0,
-			"MASK_TYPE": null,
-			"MASK_CHARACTER": null,
-			"EXAMPLE": null,
-			"RELATIONSHIP_TYPE": null,
-			"AUTO_NUMBER_GENERATION": false,
-			"AUTO_NUMBER_STARTING_NUMBER": 0,
-			"GEOLOCATION_LATITUDE_LONGTITUDE": null,
-			"PICKLIST": null,
-			"PICKLIST_GLOBAL_LIST": null,
-			"PICKLIST_VALUES": [],
-			"PICKLIST_USE_FIRST_VALUE": false,
-			"PICKLIST_DISPLAY_ALPHABETICALLY": false,
-			"PICKLIST_RESTRICT": true,
-			"PRIMARY_DISPLAY_FIELD": null,
-			"RELATIONSHIP_FIELD": null,
-			"FORMULA": null,
-			"MODULE": null,
-			"VISIBILITY": false,
-			"REQUIRED": false,
-			"DATA_TYPE": {
-				"DISPLAY": "PDF",
-				"BACKEND": "BLOB"
-			},
-			"ORDER": 0,
-			"TYPE": 0,
-			"DATE_CREATED": "DATE_REPLACE",
-			"LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
-			"CREATED_BY": "CREATED_BY_REPLACE",
-			"MESSAGES": null,
-			"INTERNAL": false,
-			"NOT_EDITABLE": true,
-			"GROUP_ID": null,
-			"IS_LIST_TEXT_UNIQUE": false,
-			"WORKFLOW": null,
-			"DATA_FILTER": null,
-			"AGGREGATION_TYPE": null,
-			"AGGREGATION_FIELD": null,
-			"AGGREGATION_RELATED_FIELD": null,
-			"INHERITANCE_MAPPING": null,
-			"UNIQUE": false,
-			"DATE_UPDATED": "DATE_REPLACE"
-		}
-	],
-	"CREATE_LAYOUTS": [],
-	"DETAIL_LAYOUTS": [],
-	"CHAT_BOTS": [],
-	"EDIT_LAYOUTS": [
-		{
-			"LAYOUT_STYLE": "outline",
-			"ROLE": "SYSTEMADMIN_ROLE_REPLACE",
-			"DATE_CREATED": "DATE_CREATED_REPLACE",
-			"CUSTOM_LAYOUT": null,
-			"PREDEFINED_TEMPLATE": [
-				{
-					"ID": "SIDE_BAR",
-					"FIELDS": [],
-					"FIELD_STYLE": "EDITABLE"
-				},
-				{
-					"ID": "HEADER",
-					"FIELDS": [
-						{
-							"FIELD_ID": "1eb6118f-4afc-4d32-bcec-738f69955f04"
-						},
-						{
-							"FIELD_ID": "4221fbf9-3ee6-41ca-a19c-ca276ed92a11"
-						}
-					],
-					"FIELD_STYLE": "NON_EDITABLE_PILLS"
-				},
-				{
-					"ID": "TECHNOLOGY_SECTION",
-					"FIELDS": [
-						{
-							"FIELD_ID": "b4258f11-8ced-473b-adb9-8a4f2c8c1080"
-						},
-						{
-							"FIELD_ID": "11a5dc92-8168-11e9-bc42-526af7764f64"
-						},
-						{
-							"FIELD_ID": "26fc37c0-b77d-46d2-a665-38c94288b771"
-						},
-						{
-							"FIELD_ID": "11a5d788-8168-11e9-bc42-526af7764f64"
-						}
-					],
-					"FIELD_STYLE": "LABELS_WITH_TITLE"
-				}
-			],
-			"DATE_UPDATED": "DATE_REPLACE",
-			"DESCRIPTION": "",
-			"LAYOUT_ID": "cb5c6f56-c29b-4034-ad67-6f739459b770",
-			"NAME": "Chats for Admins"
-		},
-		{
-			"LAYOUT_STYLE": "outline",
-			"ROLE": "AGENT_ROLE_REPLACE",
-			"DATE_CREATED": "DATE_CREATED_REPLACE",
-			"CUSTOM_LAYOUT": null,
-			"PREDEFINED_TEMPLATE": [
-				{
-					"ID": "SIDE_BAR",
-					"FIELDS": [],
-					"FIELD_STYLE": "EDITABLE"
-				},
-				{
-					"ID": "HEADER",
-					"FIELDS": [
-						{
-							"FIELD_ID": "1eb6118f-4afc-4d32-bcec-738f69955f04"
-						},
-						{
-							"FIELD_ID": "4221fbf9-3ee6-41ca-a19c-ca276ed92a11"
-						}
-					],
-					"FIELD_STYLE": "NON_EDITABLE_PILLS"
-				},
-				{
-					"ID": "TECHNOLOGY_SECTION",
-					"FIELDS": [
-						{
-							"FIELD_ID": "b4258f11-8ced-473b-adb9-8a4f2c8c1080"
-						},
-						{
-							"FIELD_ID": "11a5dc92-8168-11e9-bc42-526af7764f64"
-						},
-						{
-							"FIELD_ID": "26fc37c0-b77d-46d2-a665-38c94288b771"
-						},
-						{
-							"FIELD_ID": "11a5d788-8168-11e9-bc42-526af7764f64"
-						}
-					],
-					"FIELD_STYLE": "LABELS_WITH_TITLE"
-				}
-			],
-			"DATE_UPDATED": "DATE_REPLACE",
-			"DESCRIPTION": "",
-			"LAYOUT_ID": "3bac2700-7c40-41cb-b211-9114ef698b83",
-			"NAME": "Chats for Agents"
-		},
-		{
-			"LAYOUT_STYLE": "outline",
-			"ROLE": "SALES_ROLE_REPLACE",
-			"DATE_CREATED": "DATE_CREATED_REPLACE",
-			"CUSTOM_LAYOUT": null,
-			"PREDEFINED_TEMPLATE": [
-				{
-					"ID": "SIDE_BAR",
-					"FIELDS": [],
-					"FIELD_STYLE": "EDITABLE"
-				},
-				{
-					"ID": "HEADER",
-					"FIELDS": [
-						{
-							"FIELD_ID": "1eb6118f-4afc-4d32-bcec-738f69955f04"
-						},
-						{
-							"FIELD_ID": "4221fbf9-3ee6-41ca-a19c-ca276ed92a11"
-						}
-					],
-					"FIELD_STYLE": "NON_EDITABLE_PILLS"
-				},
-				{
-					"ID": "TECHNOLOGY_SECTION",
-					"FIELDS": [
-						{
-							"FIELD_ID": "b4258f11-8ced-473b-adb9-8a4f2c8c1080"
-						},
-						{
-							"FIELD_ID": "11a5dc92-8168-11e9-bc42-526af7764f64"
-						},
-						{
-							"FIELD_ID": "26fc37c0-b77d-46d2-a665-38c94288b771"
-						},
-						{
-							"FIELD_ID": "11a5d788-8168-11e9-bc42-526af7764f64"
-						}
-					],
-					"FIELD_STYLE": "LABELS_WITH_TITLE"
-				}
-			],
-			"DATE_UPDATED": "DATE_REPLACE",
-			"DESCRIPTION": "",
-			"LAYOUT_ID": "cb5c6f56-c29b-4034-ad67-6f739459b770",
-			"NAME": "Chats for Sales"
-		}
-	],
-	"CREATE_MOBILE_LAYOUTS": [],
-	"DETAIL_MOBILE_LAYOUTS": [],
-	"EDIT_MOBILE_LAYOUTS": [],
-	"LIST_MOBILE_LAYOUTS": [
-		{
-			"ROLE": "SYSTEMADMIN_ROLE_REPLACE",
-			"ORDER_BY": {
-				"ORDER": "Desc",
-				"COLUMN": "4221fbf9-3ee6-41ca-a19c-ca276ed92a11"
-			},
-			"DESCRIPTION": "Chatting",
-			"IS_DEFAULT": true,
-			"CONDITIONS": [
-				{
-					"REQUIREMENT_TYPE": "Any",
-					"CONDITION": "31ab05b2-071b-480c-8529-80f406be2366",
-					"OPERATOR": "EQUALS_TO",
-					"CONDITION_VALUE": "Chatting"
-				}
-			],
-			"LAYOUT_ID": "577f5b74-b464-42d9-a5d2-80e7c31d2ba2",
-			"NAME": "Chatting",
-			"FIELDS": [
-				"4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
-				"0e1835cd-40eb-4114-8e6e-8ff2957d70a6"
-			]
-		},
-		{
-			"ROLE": "AGENT_ROLE_REPLACE",
-			"ORDER_BY": {
-				"ORDER": "Desc",
-				"COLUMN": "4221fbf9-3ee6-41ca-a19c-ca276ed92a11"
-			},
-			"DESCRIPTION": "Chatting",
-			"IS_DEFAULT": true,
-			"CONDITIONS": [
-				{
-					"REQUIREMENT_TYPE": "Any",
-					"CONDITION": "31ab05b2-071b-480c-8529-80f406be2366",
-					"OPERATOR": "EQUALS_TO",
-					"CONDITION_VALUE": "Chatting"
-				}
-			],
-			"LAYOUT_ID": "dd1442f7-7286-46db-a649-1221c7ad5c4e",
-			"NAME": "Chatting",
-			"FIELDS": [
-				"4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
-				"0e1835cd-40eb-4114-8e6e-8ff2957d70a6"
-			]
-		},
-		{
-			"ROLE": "SALES_ROLE_REPLACE",
-			"ORDER_BY": {
-				"ORDER": "Desc",
-				"COLUMN": "4221fbf9-3ee6-41ca-a19c-ca276ed92a11"
-			},
-			"DESCRIPTION": "Chatting",
-			"IS_DEFAULT": true,
-			"CONDITIONS": [
-				{
-					"REQUIREMENT_TYPE": "Any",
-					"CONDITION": "31ab05b2-071b-480c-8529-80f406be2366",
-					"OPERATOR": "EQUALS_TO",
-					"CONDITION_VALUE": "Chatting"
-				}
-			],
-			"LAYOUT_ID": "577f5b74-b464-42d9-a5d2-80e7c31d2ba2",
-			"NAME": "Chatting",
-			"FIELDS": [
-				"4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
-				"0e1835cd-40eb-4114-8e6e-8ff2957d70a6"
-			]
-		},
-		{
-			"ROLE": "SYSTEMADMIN_ROLE_REPLACE",
-			"ORDER_BY": {
-				"ORDER": "Desc",
-				"COLUMN": "1eb6118f-4afc-4d32-bcec-738f69955f04"
-			},
-			"DESCRIPTION": "Online if browsing or chatting",
-			"IS_DEFAULT": false,
-			"CONDITIONS": [
-				{
-					"REQUIREMENT_TYPE": "Any",
-					"CONDITION": "31ab05b2-071b-480c-8529-80f406be2366",
-					"OPERATOR": "EQUALS_TO",
-					"CONDITION_VALUE": "Browsing"
-				},
-				{
-					"REQUIREMENT_TYPE": "Any",
-					"CONDITION": "31ab05b2-071b-480c-8529-80f406be2366",
-					"OPERATOR": "EQUALS_TO",
-					"CONDITION_VALUE": "Chatting"
-				}
-			],
-			"LAYOUT_ID": "9c13b43c-4fc7-4792-b570-0926e9efe46f",
-			"NAME": "Online",
-			"FIELDS": [
-				"1eb6118f-4afc-4d32-bcec-738f69955f04",
-				"31ab05b2-071b-480c-8529-80f406be2366"
-			]
-		},
-		{
-			"ROLE": "SALES_ROLE_REPLACE",
-			"ORDER_BY": {
-				"ORDER": "Desc",
-				"COLUMN": "1eb6118f-4afc-4d32-bcec-738f69955f04"
-			},
-			"DESCRIPTION": "Online if browsing or chatting",
-			"IS_DEFAULT": false,
-			"CONDITIONS": [
-				{
-					"REQUIREMENT_TYPE": "Any",
-					"CONDITION": "31ab05b2-071b-480c-8529-80f406be2366",
-					"OPERATOR": "EQUALS_TO",
-					"CONDITION_VALUE": "Browsing"
-				},
-				{
-					"REQUIREMENT_TYPE": "Any",
-					"CONDITION": "31ab05b2-071b-480c-8529-80f406be2366",
-					"OPERATOR": "EQUALS_TO",
-					"CONDITION_VALUE": "Chatting"
-				}
-			],
-			"LAYOUT_ID": "9c13b43c-4fc7-4792-b570-0926e9efe46f",
-			"NAME": "Online",
-			"FIELDS": [
-				"1eb6118f-4afc-4d32-bcec-738f69955f04",
-				"31ab05b2-071b-480c-8529-80f406be2366"
-			]
-		},
-		{
-			"ROLE": "AGENT_ROLE_REPLACE",
-			"ORDER_BY": {
-				"ORDER": "Desc",
-				"COLUMN": "9d3c5936-21d8-44cd-b523-6732c9386650"
-			},
-			"DESCRIPTION": "Online if browsing or chatting",
-			"IS_DEFAULT": false,
-			"CONDITIONS": [
-				{
-					"REQUIREMENT_TYPE": "Any",
-					"CONDITION": "31ab05b2-071b-480c-8529-80f406be2366",
-					"OPERATOR": "EQUALS_TO",
-					"CONDITION_VALUE": "Browsing"
-				},
-				{
-					"REQUIREMENT_TYPE": "Any",
-					"CONDITION": "31ab05b2-071b-480c-8529-80f406be2366",
-					"OPERATOR": "EQUALS_TO",
-					"CONDITION_VALUE": "Chatting"
-				}
-			],
-			"LAYOUT_ID": "5722e8ca-0292-410d-81ab-cbd2351648e6",
-			"NAME": "Online",
-			"FIELDS": [
-				"1eb6118f-4afc-4d32-bcec-738f69955f04",
-				"31ab05b2-071b-480c-8529-80f406be2366"
-			]
-		},
-		{
-			"ROLE": "SYSTEMADMIN_ROLE_REPLACE",
-			"ORDER_BY": {
-				"ORDER": "Desc",
-				"COLUMN": "4221fbf9-3ee6-41ca-a19c-ca276ed92a11"
-			},
-			"DESCRIPTION": "Chats with Requestors",
-			"IS_DEFAULT": false,
-			"CONDITIONS": [
-				{
-					"REQUIREMENT_TYPE": "All",
-					"OPERATOR": "EXISTS",
-					"CONDITION": "4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
-					"CONDITION_VALUE": ""
-				}
-			],
-			"LAYOUT_ID": "2e889f06-bc1f-403f-8333-689d385e8c53",
-			"NAME": "Chats with Requestors",
-			"FIELDS": [
-				"4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
-				"3a5ce38f-f052-43fc-bae9-25c15323b8c0"
-			]
-		},
-		{
-			"ROLE": "AGENT_ROLE_REPLACE",
-			"ORDER_BY": {
-				"ORDER": "Desc",
-				"COLUMN": "4221fbf9-3ee6-41ca-a19c-ca276ed92a11"
-			},
-			"DESCRIPTION": "Chats with Requestors",
-			"IS_DEFAULT": false,
-			"CONDITIONS": [
-				{
-					"REQUIREMENT_TYPE": "All",
-					"OPERATOR": "EXISTS",
-					"CONDITION": "4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
-					"CONDITION_VALUE": ""
-				}
-			],
-			"LAYOUT_ID": "088d73ed-024d-4503-8f3d-4338adcc7cbb",
-			"NAME": "Chats with Requestors",
-			"FIELDS": [
-				"4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
-				"3a5ce38f-f052-43fc-bae9-25c15323b8c0"
-			]
-		},
-		{
-			"ROLE": "SALES_ROLE_REPLACE",
-			"ORDER_BY": {
-				"ORDER": "Desc",
-				"COLUMN": "4221fbf9-3ee6-41ca-a19c-ca276ed92a11"
-			},
-			"DESCRIPTION": "Chats with Requestors",
-			"IS_DEFAULT": false,
-			"CONDITIONS": [
-				{
-					"REQUIREMENT_TYPE": "All",
-					"OPERATOR": "EXISTS",
-					"CONDITION": "4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
-					"CONDITION_VALUE": ""
-				}
-			],
-			"LAYOUT_ID": "2e889f06-bc1f-403f-8333-689d385e8c53",
-			"NAME": "Chats with Requestors",
-			"FIELDS": [
-				"4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
-				"3a5ce38f-f052-43fc-bae9-25c15323b8c0"
-			]
-		}
-	],
-	"LIST_LAYOUTS": [
-		{
-			"LAYOUT_ID": "5b86bfc9-f906-42ad-91ff-658d8804f35c",
-			"NAME": "Online",
-			"DESCRIPTION": "",
-			"ID": "",
-			"ROLE": "SYSTEMADMIN_ROLE_REPLACE",
-			"ORDER_BY": {
-				"COLUMN": "3a5ce38f-f052-43fc-bae9-25c15323b8c0",
-				"ORDER": "Desc"
-			},
-			"COLUMN_SHOW": {
-				"FIELDS": [
-					"1eb6118f-4afc-4d32-bcec-738f69955f04",
-					"4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
-					"31ab05b2-071b-480c-8529-80f406be2366",
-					"3a5ce38f-f052-43fc-bae9-25c15323b8c0",
-					"0e1835cd-40eb-4114-8e6e-8ff2957d70a6"
-				]
-			},
-			"CONDITIONS": [
-				{
-					"REQUIREMENT_TYPE": "All",
-					"CONDITION": "08c272b5-3fd6-4d11-8410-c5caa89fb9a3",
-					"OPERATOR": "CONTAINS",
-					"CONDITION_VALUE": "{{CURRENT_USER}}"
-				},
-				{
-					"REQUIREMENT_TYPE": "Any",
-					"CONDITION": "31ab05b2-071b-480c-8529-80f406be2366",
-					"OPERATOR": "EQUALS_TO",
-					"CONDITION_VALUE": "Browsing"
-				},
-				{
-					"REQUIREMENT_TYPE": "Any",
-					"CONDITION": "31ab05b2-071b-480c-8529-80f406be2366",
-					"OPERATOR": "EQUALS_TO",
-					"CONDITION_VALUE": "Chatting"
-				}
-			],
-			"IS_DEFAULT": true
-		},
-		{
-			"LAYOUT_ID": "b27e14c9-bd44-4f02-8791-e1aac5cce9ba",
-			"NAME": "Online",
-			"DESCRIPTION": "",
-			"ID": "",
-			"ROLE": "AGENT_ROLE_REPLACE",
-			"ORDER_BY": {
-				"COLUMN": "3a5ce38f-f052-43fc-bae9-25c15323b8c0",
-				"ORDER": "Desc"
-			},
-			"COLUMN_SHOW": {
-				"FIELDS": [
-					"1eb6118f-4afc-4d32-bcec-738f69955f04",
-					"4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
-					"31ab05b2-071b-480c-8529-80f406be2366",
-					"3a5ce38f-f052-43fc-bae9-25c15323b8c0",
-					"0e1835cd-40eb-4114-8e6e-8ff2957d70a6"
-				]
-			},
-			"CONDITIONS": [
-				{
-					"REQUIREMENT_TYPE": "All",
-					"CONDITION": "08c272b5-3fd6-4d11-8410-c5caa89fb9a3",
-					"OPERATOR": "CONTAINS",
-					"CONDITION_VALUE": "{{CURRENT_USER}}"
-				},
-				{
-					"REQUIREMENT_TYPE": "Any",
-					"CONDITION": "31ab05b2-071b-480c-8529-80f406be2366",
-					"OPERATOR": "EQUALS_TO",
-					"CONDITION_VALUE": "Browsing"
-				},
-				{
-					"REQUIREMENT_TYPE": "Any",
-					"CONDITION": "31ab05b2-071b-480c-8529-80f406be2366",
-					"OPERATOR": "EQUALS_TO",
-					"CONDITION_VALUE": "Chatting"
-				}
-			],
-			"IS_DEFAULT": true
-		},
-		{
-			"LAYOUT_ID": "5b86bfc9-f906-42ad-91ff-658d8804f35c",
-			"NAME": "Online",
-			"DESCRIPTION": "",
-			"ID": "",
-			"ROLE": "SALES_ROLE_REPLACE",
-			"ORDER_BY": {
-				"COLUMN": "3a5ce38f-f052-43fc-bae9-25c15323b8c0",
-				"ORDER": "Desc"
-			},
-			"COLUMN_SHOW": {
-				"FIELDS": [
-					"1eb6118f-4afc-4d32-bcec-738f69955f04",
-					"4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
-					"31ab05b2-071b-480c-8529-80f406be2366",
-					"3a5ce38f-f052-43fc-bae9-25c15323b8c0",
-					"0e1835cd-40eb-4114-8e6e-8ff2957d70a6"
-				]
-			},
-			"CONDITIONS": [
-				{
-					"REQUIREMENT_TYPE": "All",
-					"CONDITION": "08c272b5-3fd6-4d11-8410-c5caa89fb9a3",
-					"OPERATOR": "CONTAINS",
-					"CONDITION_VALUE": "{{CURRENT_USER}}"
-				},
-				{
-					"REQUIREMENT_TYPE": "Any",
-					"CONDITION": "31ab05b2-071b-480c-8529-80f406be2366",
-					"OPERATOR": "EQUALS_TO",
-					"CONDITION_VALUE": "Browsing"
-				},
-				{
-					"REQUIREMENT_TYPE": "Any",
-					"CONDITION": "31ab05b2-071b-480c-8529-80f406be2366",
-					"OPERATOR": "EQUALS_TO",
-					"CONDITION_VALUE": "Chatting"
-				}
-			],
-			"IS_DEFAULT": true
-		},
-		{
-			"LAYOUT_ID": "36aeff9d-14ce-48e7-9b01-d1966e9f20db",
-			"NAME": "Chatting",
-			"DESCRIPTION": "",
-			"ID": "",
-			"ROLE": "SYSTEMADMIN_ROLE_REPLACE",
-			"ORDER_BY": {
-				"COLUMN": "3a5ce38f-f052-43fc-bae9-25c15323b8c0",
-				"ORDER": "Asc"
-			},
-			"COLUMN_SHOW": {
-				"FIELDS": [
-					"1eb6118f-4afc-4d32-bcec-738f69955f04",
-					"4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
-					"31ab05b2-071b-480c-8529-80f406be2366",
-					"3a5ce38f-f052-43fc-bae9-25c15323b8c0",
-					"0e1835cd-40eb-4114-8e6e-8ff2957d70a6"
-				]
-			},
-			"CONDITIONS": [
-				{
-					"REQUIREMENT_TYPE": "All",
-					"CONDITION": "08c272b5-3fd6-4d11-8410-c5caa89fb9a3",
-					"OPERATOR": "CONTAINS",
-					"CONDITION_VALUE": "{{CURRENT_USER}}"
-				},
-				{
-					"REQUIREMENT_TYPE": "All",
-					"CONDITION": "31ab05b2-071b-480c-8529-80f406be2366",
-					"OPERATOR": "EQUALS_TO",
-					"CONDITION_VALUE": "Chatting"
-				}
-			],
-			"IS_DEFAULT": false
-		},
-		{
-			"LAYOUT_ID": "b1e700f4-a5ae-444f-9829-5ae825c4bacf",
-			"NAME": "Chatting",
-			"DESCRIPTION": "",
-			"ID": "",
-			"ROLE": "AGENT_ROLE_REPLACE",
-			"ORDER_BY": {
-				"COLUMN": "3a5ce38f-f052-43fc-bae9-25c15323b8c0",
-				"ORDER": "Asc"
-			},
-			"COLUMN_SHOW": {
-				"FIELDS": [
-					"1eb6118f-4afc-4d32-bcec-738f69955f04",
-					"4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
-					"31ab05b2-071b-480c-8529-80f406be2366",
-					"3a5ce38f-f052-43fc-bae9-25c15323b8c0",
-					"0e1835cd-40eb-4114-8e6e-8ff2957d70a6"
-				]
-			},
-			"CONDITIONS": [
-				{
-					"REQUIREMENT_TYPE": "All",
-					"CONDITION": "08c272b5-3fd6-4d11-8410-c5caa89fb9a3",
-					"OPERATOR": "CONTAINS",
-					"CONDITION_VALUE": "{{CURRENT_USER}}"
-				},
-				{
-					"REQUIREMENT_TYPE": "All",
-					"CONDITION": "31ab05b2-071b-480c-8529-80f406be2366",
-					"OPERATOR": "EQUALS_TO",
-					"CONDITION_VALUE": "Chatting"
-				}
-			],
-			"IS_DEFAULT": false
-		},
-		{
-			"LAYOUT_ID": "36aeff9d-14ce-48e7-9b01-d1966e9f20db",
-			"NAME": "Chatting",
-			"DESCRIPTION": "",
-			"ID": "",
-			"ROLE": "SALES_ROLE_REPLACE",
-			"ORDER_BY": {
-				"COLUMN": "3a5ce38f-f052-43fc-bae9-25c15323b8c0",
-				"ORDER": "Asc"
-			},
-			"COLUMN_SHOW": {
-				"FIELDS": [
-					"1eb6118f-4afc-4d32-bcec-738f69955f04",
-					"4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
-					"31ab05b2-071b-480c-8529-80f406be2366",
-					"3a5ce38f-f052-43fc-bae9-25c15323b8c0",
-					"0e1835cd-40eb-4114-8e6e-8ff2957d70a6"
-				]
-			},
-			"CONDITIONS": [
-				{
-					"REQUIREMENT_TYPE": "All",
-					"CONDITION": "08c272b5-3fd6-4d11-8410-c5caa89fb9a3",
-					"OPERATOR": "CONTAINS",
-					"CONDITION_VALUE": "{{CURRENT_USER}}"
-				},
-				{
-					"REQUIREMENT_TYPE": "All",
-					"CONDITION": "31ab05b2-071b-480c-8529-80f406be2366",
-					"OPERATOR": "EQUALS_TO",
-					"CONDITION_VALUE": "Chatting"
-				}
-			],
-			"IS_DEFAULT": false
-		},
-		{
-			"LAYOUT_ID": "d4a77024-fb2c-4885-8ec8-6480b4fc84fe",
-			"NAME": "Chats with Requestors",
-			"DESCRIPTION": "",
-			"ID": "",
-			"ROLE": "SYSTEMADMIN_ROLE_REPLACE",
-			"ORDER_BY": {
-				"COLUMN": "3a5ce38f-f052-43fc-bae9-25c15323b8c0",
-				"ORDER": "Desc"
-			},
-			"COLUMN_SHOW": {
-				"FIELDS": [
-					"1eb6118f-4afc-4d32-bcec-738f69955f04",
-					"4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
-					"3a5ce38f-f052-43fc-bae9-25c15323b8c0",
-					"31ab05b2-071b-480c-8529-80f406be2366",
-					"0e1835cd-40eb-4114-8e6e-8ff2957d70a6"
-				]
-			},
-			"CONDITIONS": [
-				{
-					"REQUIREMENT_TYPE": "All",
-					"CONDITION": "08c272b5-3fd6-4d11-8410-c5caa89fb9a3",
-					"OPERATOR": "CONTAINS",
-					"CONDITION_VALUE": "{{CURRENT_USER}}"
-				},
-				{
-					"REQUIREMENT_TYPE": "All",
-					"OPERATOR": "EXISTS",
-					"CONDITION": "4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
-					"CONDITION_VALUE": ""
-				}
-			],
-			"IS_DEFAULT": false,
-			"DATE_CREATED": "DATE_CREATED_REPLACE",
-			"DATE_UPDATED": null,
-			"LAST_UPDATED_BY": null,
-			"CREATED_BY": "5d1ee9174f374f383cf261d7"
-		},
-		{
-			"LAYOUT_ID": "0d697475-a292-46c4-82b2-b520d65b4564",
-			"NAME": "Chats with Requestors",
-			"DESCRIPTION": "",
-			"ID": "",
-			"ROLE": "AGENT_ROLE_REPLACE",
-			"ORDER_BY": {
-				"COLUMN": "3a5ce38f-f052-43fc-bae9-25c15323b8c0",
-				"ORDER": "Desc"
-			},
-			"COLUMN_SHOW": {
-				"FIELDS": [
-					"1eb6118f-4afc-4d32-bcec-738f69955f04",
-					"4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
-					"31ab05b2-071b-480c-8529-80f406be2366",
-					"3a5ce38f-f052-43fc-bae9-25c15323b8c0",
-					"0e1835cd-40eb-4114-8e6e-8ff2957d70a6"
-				]
-			},
-			"CONDITIONS": [
-				{
-					"REQUIREMENT_TYPE": "All",
-					"CONDITION": "08c272b5-3fd6-4d11-8410-c5caa89fb9a3",
-					"OPERATOR": "CONTAINS",
-					"CONDITION_VALUE": "{{CURRENT_USER}}"
-				},
-				{
-					"REQUIREMENT_TYPE": "All",
-					"OPERATOR": "EXISTS",
-					"CONDITION": "4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
-					"CONDITION_VALUE": ""
-				}
-			],
-			"IS_DEFAULT": false,
-			"DATE_CREATED": "DATE_CREATED_REPLACE",
-			"DATE_UPDATED": null,
-			"LAST_UPDATED_BY": null,
-			"CREATED_BY": "5d1ee9174f374f383cf261d7"
-		},
-		{
-			"LAYOUT_ID": "d4a77024-fb2c-4885-8ec8-6480b4fc84fe",
-			"NAME": "Chats with Requestors",
-			"DESCRIPTION": "",
-			"ID": "",
-			"ROLE": "SALES_ROLE_REPLACE",
-			"ORDER_BY": {
-				"COLUMN": "3a5ce38f-f052-43fc-bae9-25c15323b8c0",
-				"ORDER": "Desc"
-			},
-			"COLUMN_SHOW": {
-				"FIELDS": [
-					"1eb6118f-4afc-4d32-bcec-738f69955f04",
-					"4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
-					"3a5ce38f-f052-43fc-bae9-25c15323b8c0",
-					"31ab05b2-071b-480c-8529-80f406be2366",
-					"0e1835cd-40eb-4114-8e6e-8ff2957d70a6"
-				]
-			},
-			"CONDITIONS": [
-				{
-					"REQUIREMENT_TYPE": "All",
-					"CONDITION": "08c272b5-3fd6-4d11-8410-c5caa89fb9a3",
-					"OPERATOR": "CONTAINS",
-					"CONDITION_VALUE": "{{CURRENT_USER}}"
-				},
-				{
-					"REQUIREMENT_TYPE": "All",
-					"OPERATOR": "EXISTS",
-					"CONDITION": "4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
-					"CONDITION_VALUE": ""
-				}
-			],
-			"IS_DEFAULT": false,
-			"DATE_CREATED": "DATE_CREATED_REPLACE",
-			"DATE_UPDATED": null,
-			"LAST_UPDATED_BY": null,
-			"CREATED_BY": "5d1ee9174f374f383cf261d7"
-		}
-	],
-	"SETTINGS": {
-		"PERMISSIONS": {
-			"CHAT": [
-				"ADMIN_TEAM_REPLACE",
-				"AGENT_TEAM_REPLACE"
-			]
-		}
-	},
-	"WORKFLOWS": [],
-	"VALIDATIONS": []
+  "NAME": "Chats",
+  "DESCRIPTION": "A module for chats",
+  "SINGULAR_NAME": "Chat",
+  "PLURAL_NAME": "Chats",
+  "FIELDS": [
+    {
+      "DISPLAY_LABEL": "Source Type",
+      "FIELD_ID": "509d5c20-9ce2-416a-9c9e-a1d9a0d12129",
+      "INTERNAL": true,
+      "REQUIRED": false,
+      "NOT_EDITABLE": true,
+      "DATA_TYPE": {
+        "DISPLAY": "Picklist",
+        "BACKEND": "String"
+      },
+      "PICKLIST_VALUES": [
+        "chat",
+        "email",
+        "facebook",
+        "mobile",
+        "sms",
+        "twitter",
+        "web",
+        "whatsapp"
+      ],
+      "NAME": "SOURCE_TYPE",
+      "DEFAULT_VALUE": "web"
+    },
+    {
+      "DISPLAY_LABEL": "Chat",
+      "FIELD_ID": "d637c126-457c-4984-8c30-8f245b234248",
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Discussion",
+        "BACKEND": "String"
+      },
+      "NAME": "CHAT"
+    },
+    {
+      "DISPLAY_LABEL": "Referrer",
+      "FIELD_ID": "cc861047-0ee9-49cb-8d33-67d53addbb49",
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "NAME": "REFERRER"
+    },
+    {
+      "DISPLAY_LABEL": "IP Address",
+      "FIELD_ID": "b4258f11-8ced-473b-adb9-8a4f2c8c1080",
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "NAME": "IP_ADDRESS"
+    },
+    {
+      "DISPLAY_LABEL": "Browser",
+      "FIELD_ID": "26fc37c0-b77d-46d2-a665-38c94288b771",
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "NAME": "BROWSER"
+    },
+    {
+      "DISPLAY_LABEL": "Platform",
+      "FIELD_ID": "11a5dc92-8168-11e9-bc42-526af7764f64",
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "NAME": "PLATFORM"
+    },
+    {
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "AUTO_NUMBER_GENERATION": true,
+      "DATA_TYPE": {
+        "DISPLAY": "Auto Number",
+        "BACKEND": "Integer"
+      },
+      "FIELD_ID": "1eb6118f-4afc-4d32-bcec-738f69955f04",
+      "REQUIRED": true,
+      "NOT_EDITABLE": true,
+      "NAME": "CHAT_ID",
+      "AUTO_NUMBER_STARTING_NUMBER": 1,
+      "DISPLAY_LABEL": "Chat ID",
+      "PREFIX": "",
+      "SUFFIX": "",
+      "NUMERIC_FORMAT": ""
+    },
+    {
+      "DISPLAY_LABEL": "URL",
+      "FIELD_ID": "11a5da1c-8168-11e9-bc42-526af7764f64",
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "NAME": "URL"
+    },
+    {
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "FIELD_ID": "4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "REQUIRED": false,
+      "RELATIONSHIP_FIELD": "23207a42-5123-434b-a116-49096ec1ad4f",
+      "NAME": "REQUESTOR",
+      "MODULE": "CONTACTS_MODULE_REPLACE",
+      "DISPLAY_LABEL": "Requestor",
+      "INTERNAL": true,
+      "RELATIONSHIP_TYPE": "Many to One",
+      "PRIMARY_DISPLAY_FIELD": "1abb3787-2ead-49ee-88cc-da911717c38d",
+      "NOT_EDITABLE": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "String"
+      },
+      "DEFAULT_VALUE": null
+    },
+    {
+      "DEFAULT_VALUE": "",
+      "DATE_CREATED": null,
+      "HELP_TEXT": "",
+      "DATE_UPDATED": null,
+      "LENGTH": 0,
+      "PICKLIST_GLOBAL_LIST": null,
+      "ORDER": 0,
+      "PICKLIST_VALUES": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "DECIMAL_PLACES": 0,
+      "AUTO_NUMBER_GENERATION": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "TYPE": 0,
+      "MASK_CHARACTER": null,
+      "PICKLIST": null,
+      "PICKLIST_RESTRICT": false,
+      "LAST_UPDATED_BY": "",
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "FIELD_ID": "a29dfa3c-f1c5-4d7f-a54f-6c41199b4d86",
+      "MAX_SIZE": 100,
+      "REQUIRED": false,
+      "MASK_TYPE": null,
+      "NOT_EDITABLE": true,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "FORMULA": null,
+      "NAME": "DATA_ID",
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "MODULE": null,
+      "VISIBILITY": true,
+      "DISPLAY_LABEL": "Data ID",
+      "EXAMPLE": null
+    },
+    {
+      "DISPLAY_LABEL": "Session UUID",
+      "FIELD_ID": "da26e0fa-7f57-4a60-b0d1-5bcd860c59f7",
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "NAME": "SESSION_UUID"
+    },
+    {
+      "DISPLAY_LABEL": "Channel",
+      "FIELD_ID": "1e9db082-b23a-4840-b7ba-b8a5e755bfd5",
+      "REQUIRED": true,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "NAME": "CHANNEL"
+    },
+    {
+      "DISPLAY_LABEL": "Country",
+      "FIELD_ID": "0e1835cd-40eb-4114-8e6e-8ff2957d70a6",
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "NAME": "COUNTRY"
+    },
+    {
+      "DISPLAY_LABEL": "Device Type",
+      "FIELD_ID": "e6529099-0a6e-4ea9-a0c0-43c7ff061abb",
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "NAME": "DEVICE_TYPE"
+    },
+    {
+      "DISPLAY_LABEL": "Operating System",
+      "FIELD_ID": "c7a0d20c-98d7-47ec-8be2-e7a71e28b5be",
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "NAME": "OS"
+    },
+    {
+      "DISPLAY_LABEL": "User Agent",
+      "FIELD_ID": "11a5d788-8168-11e9-bc42-526af7764f64",
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "NAME": "USER_AGENT"
+    },
+    {
+      "DISPLAY_LABEL": "Host Name",
+      "FIELD_ID": "11a5ddbe-8168-11e9-bc42-526af7764f64",
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "NAME": "HOST_NAME"
+    },
+    {
+      "DISPLAY_LABEL": "No. Of Visits",
+      "FIELD_ID": "9a7365b6-92f5-46bb-91ec-b42f80a621df",
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Number",
+        "BACKEND": "Integer"
+      },
+      "NAME": "NO_OF_VISITS",
+      "PREFIX": "",
+      "SUFFIX": "",
+      "NUMERIC_FORMAT": ""
+    },
+    {
+      "PICKLIST_VALUES": ["Browsing", "Chatting", "Offline"],
+      "DISPLAY_LABEL": "Status",
+      "FIELD_ID": "31ab05b2-071b-480c-8529-80f406be2366",
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Picklist",
+        "BACKEND": "String"
+      },
+      "NAME": "STATUS"
+    },
+    {
+      "FIELD_ID": "ff830c05-137e-4db8-9cca-896ba798e2e9",
+      "NAME": "EFFECTIVE_TO",
+      "DISPLAY_LABEL": "Effective to",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "LENGTH": 0,
+      "DECIMAL_PLACES": 0,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": null,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": [],
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": true,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "RELATIONSHIP_FIELD": null,
+      "FORMULA": null,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Date/Time",
+        "BACKEND": "Date"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": null,
+      "DATE_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false
+    },
+    {
+      "FIELD_ID": "9f980d82-a86e-421a-ae73-8617f3c14786",
+      "NAME": "EFFECTIVE_FROM",
+      "DISPLAY_LABEL": "Effective from",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "LENGTH": 0,
+      "DECIMAL_PLACES": 0,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": null,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": [],
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": true,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "RELATIONSHIP_FIELD": null,
+      "FORMULA": null,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Date/Time",
+        "BACKEND": "Date"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": null,
+      "DATE_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false
+    },
+    {
+      "DISPLAY_LABEL": "Time On Page",
+      "FIELD_ID": "ea7e5183-df8c-49e3-843d-602fd80b8130",
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Chronometer",
+        "BACKEND": "Integer"
+      },
+      "NAME": "TIME_ON_PAGE",
+      "PREFIX": "",
+      "SUFFIX": "",
+      "NUMERIC_FORMAT": ""
+    },
+    {
+      "DISPLAY_LABEL": "Date Created",
+      "FIELD_ID": "3a5ce38f-f052-43fc-bae9-25c15323b8c0",
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "DATA_TYPE": {
+        "DISPLAY": "Date/Time",
+        "BACKEND": "Date"
+      },
+      "NAME": "DATE_CREATED"
+    },
+    {
+      "REQUIRED": false,
+      "DISPLAY_LABEL": "Date Updated",
+      "FIELD_ID": "65d670bb-38c1-4a6b-9686-606e6d4ba0e6",
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "DATA_TYPE": {
+        "DISPLAY": "Date/Time",
+        "BACKEND": "Date"
+      },
+      "NAME": "DATE_UPDATED"
+    },
+    {
+      "MODULE": "USERS_MODULE_REPLACE",
+      "FIELD_ID": "5f06d3a6-ef30-48ec-ae1a-4a3621bec62f",
+      "DISPLAY_LABEL": "Last Updated by",
+      "RELATIONSHIP_FIELD": "",
+      "REQUIRED": false,
+      "RELATIONSHIP_TYPE": "Many to One",
+      "INTERNAL": true,
+      "PRIMARY_DISPLAY_FIELD": "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+      "NOT_EDITABLE": true,
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "String"
+      },
+      "NAME": "LAST_UPDATED_BY"
+    },
+    {
+      "MODULE": "USERS_MODULE_REPLACE",
+      "DISPLAY_LABEL": "Created by",
+      "FIELD_ID": "8baae298-bce0-4536-b68c-6a698957dbd0",
+      "RELATIONSHIP_TYPE": "Many to One",
+      "RELATIONSHIP_FIELD": "",
+      "INTERNAL": true,
+      "PRIMARY_DISPLAY_FIELD": "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+      "NOT_EDITABLE": true,
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "String"
+      },
+      "NAME": "CREATED_BY",
+      "REQUIRED": false
+    },
+    {
+      "MODULE": "USERS_MODULE_REPLACE",
+      "DISPLAY_LABEL": "Agents",
+      "RELATIONSHIP_FIELD": "",
+      "FIELD_ID": "08c272b5-3fd6-4d11-8410-c5caa89fb9a3",
+      "RELATIONSHIP_TYPE": "Many to Many",
+      "INTERNAL": true,
+      "PRIMARY_DISPLAY_FIELD": "cb3a9d64-0b46-43f0-8452-6038429e6bcc",
+      "NOT_EDITABLE": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "Array"
+      },
+      "NAME": "AGENTS",
+      "REQUIRED": false
+    },
+    {
+      "MODULE": "TEAMS_MODULE_REPLACE",
+      "DISPLAY_LABEL": "Teams",
+      "FIELD_ID": "a10030b3-50ac-4493-a911-13fa14b6eb34",
+      "RELATIONSHIP_FIELD": "",
+      "INTERNAL": true,
+      "RELATIONSHIP_TYPE": "Many to Many",
+      "REQUIRED": true,
+      "PRIMARY_DISPLAY_FIELD": "b1c48961-43e0-4071-b30c-0f7be5daa7a9",
+      "NOT_EDITABLE": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Relationship",
+        "BACKEND": "Array"
+      },
+      "DEFAULT_VALUE": "GLOBAL_TEAM_REPLACE",
+      "NAME": "TEAMS"
+    },
+    {
+      "DISPLAY_LABEL": "Deleted",
+      "FIELD_ID": "62118137-d361-468d-bb54-dbd3e457a3ab",
+      "INTERNAL": true,
+      "REQUIRED": false,
+      "NOT_EDITABLE": true,
+      "DATA_TYPE": {
+        "DISPLAY": "Checkbox",
+        "BACKEND": "Boolean"
+      },
+      "NAME": "DELETED"
+    },
+    {
+      "DISPLAY_LABEL": "Pages Visited",
+      "FIELD_ID": "27139cdf-d2d1-4cdf-a6fa-569d97498a17",
+      "INTERNAL": true,
+      "REQUIRED": false,
+      "NOT_EDITABLE": false,
+      "DATA_TYPE": {
+        "DISPLAY": "List Text",
+        "BACKEND": "Array"
+      },
+      "NAME": "PAGES_VISITED",
+      "IS_LIST_TEXT_UNIQUE": true
+    },
+    {
+      "DISPLAY_LABEL": "City",
+      "FIELD_ID": "ab758684-4e01-48b7-868d-3670468f21d6",
+      "REQUIRED": false,
+      "INTERNAL": false,
+      "NOT_EDITABLE": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Text",
+        "BACKEND": "String"
+      },
+      "NAME": "CITY"
+    },
+    {
+      "FIELD_ID": "8da60851-0356-4c93-b901-58c895369e82",
+      "NAME": "APPROVAL",
+      "DISPLAY_LABEL": "Approval",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "LENGTH": 0,
+      "DECIMAL_PLACES": 0,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": null,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": [],
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": true,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "RELATIONSHIP_FIELD": null,
+      "FORMULA": null,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "DATA_TYPE": {
+        "DISPLAY": "Approval",
+        "BACKEND": "Approval"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": null,
+      "DATE_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null,
+      "MESSAGES": null,
+      "INTERNAL": true,
+      "NOT_EDITABLE": false,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false
+    },
+    {
+      "FIELD_ID": "ec928c4f-f1f6-424d-b120-7e7747360ff2",
+      "NAME": "TIME_WINDOW",
+      "DISPLAY_LABEL": "Time Window",
+      "HELP_TEXT": "",
+      "DATA_TYPE": {
+        "DISPLAY": "Time Window",
+        "BACKEND": "Timestamp"
+      },
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "INTERNAL": true,
+      "NOT_EDITABLE": true,
+      "MAX_SIZE": 0,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_VALUES": [],
+      "DATE_CREATED": "DATE_REPLACE",
+      "DATE_UPDATED": "DATE_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE"
+    },
+    {
+      "FIELD_ID": "4024c953-87aa-4d4e-97ae-2a467b83db3a",
+      "NAME": "PDFS",
+      "DISPLAY_LABEL": "PDFS",
+      "HELP_TEXT": "",
+      "DEFAULT_VALUE": null,
+      "MAX_SIZE": 0,
+      "MASK_TYPE": null,
+      "MASK_CHARACTER": null,
+      "EXAMPLE": null,
+      "RELATIONSHIP_TYPE": null,
+      "AUTO_NUMBER_GENERATION": false,
+      "AUTO_NUMBER_STARTING_NUMBER": 0,
+      "GEOLOCATION_LATITUDE_LONGTITUDE": null,
+      "PICKLIST": null,
+      "PICKLIST_GLOBAL_LIST": null,
+      "PICKLIST_VALUES": [],
+      "PICKLIST_USE_FIRST_VALUE": false,
+      "PICKLIST_DISPLAY_ALPHABETICALLY": false,
+      "PICKLIST_RESTRICT": true,
+      "PRIMARY_DISPLAY_FIELD": null,
+      "RELATIONSHIP_FIELD": null,
+      "FORMULA": null,
+      "MODULE": null,
+      "VISIBILITY": false,
+      "REQUIRED": false,
+      "DATA_TYPE": {
+        "DISPLAY": "PDF",
+        "BACKEND": "BLOB"
+      },
+      "ORDER": 0,
+      "TYPE": 0,
+      "DATE_CREATED": "DATE_REPLACE",
+      "LAST_UPDATED_BY": "LAST_UPDATED_BY_REPLACE",
+      "CREATED_BY": "CREATED_BY_REPLACE",
+      "MESSAGES": null,
+      "INTERNAL": false,
+      "NOT_EDITABLE": true,
+      "GROUP_ID": null,
+      "IS_LIST_TEXT_UNIQUE": false,
+      "WORKFLOW": null,
+      "DATA_FILTER": null,
+      "AGGREGATION_TYPE": null,
+      "AGGREGATION_FIELD": null,
+      "AGGREGATION_RELATED_FIELD": null,
+      "INHERITANCE_MAPPING": null,
+      "UNIQUE": false,
+      "DATE_UPDATED": "DATE_REPLACE"
+    }
+  ],
+  "CREATE_LAYOUTS": [],
+  "DETAIL_LAYOUTS": [],
+  "CHAT_BOTS": [],
+  "EDIT_LAYOUTS": [
+    {
+      "LAYOUT_STYLE": "outline",
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "CUSTOM_LAYOUT": null,
+      "PREDEFINED_TEMPLATE": [
+        {
+          "ID": "SIDE_BAR",
+          "FIELDS": [],
+          "FIELD_STYLE": "EDITABLE"
+        },
+        {
+          "ID": "HEADER",
+          "FIELDS": [
+            {
+              "FIELD_ID": "1eb6118f-4afc-4d32-bcec-738f69955f04"
+            },
+            {
+              "FIELD_ID": "4221fbf9-3ee6-41ca-a19c-ca276ed92a11"
+            }
+          ],
+          "FIELD_STYLE": "NON_EDITABLE_PILLS"
+        },
+        {
+          "ID": "TECHNOLOGY_SECTION",
+          "FIELDS": [
+            {
+              "FIELD_ID": "b4258f11-8ced-473b-adb9-8a4f2c8c1080"
+            },
+            {
+              "FIELD_ID": "11a5dc92-8168-11e9-bc42-526af7764f64"
+            },
+            {
+              "FIELD_ID": "26fc37c0-b77d-46d2-a665-38c94288b771"
+            },
+            {
+              "FIELD_ID": "11a5d788-8168-11e9-bc42-526af7764f64"
+            }
+          ],
+          "FIELD_STYLE": "LABELS_WITH_TITLE"
+        }
+      ],
+      "DATE_UPDATED": "DATE_REPLACE",
+      "DESCRIPTION": "",
+      "LAYOUT_ID": "cb5c6f56-c29b-4034-ad67-6f739459b770",
+      "NAME": "Chats for Admins"
+    },
+    {
+      "LAYOUT_STYLE": "outline",
+      "ROLE": "AGENT_ROLE_REPLACE",
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "CUSTOM_LAYOUT": null,
+      "PREDEFINED_TEMPLATE": [
+        {
+          "ID": "SIDE_BAR",
+          "FIELDS": [],
+          "FIELD_STYLE": "EDITABLE"
+        },
+        {
+          "ID": "HEADER",
+          "FIELDS": [
+            {
+              "FIELD_ID": "1eb6118f-4afc-4d32-bcec-738f69955f04"
+            },
+            {
+              "FIELD_ID": "4221fbf9-3ee6-41ca-a19c-ca276ed92a11"
+            }
+          ],
+          "FIELD_STYLE": "NON_EDITABLE_PILLS"
+        },
+        {
+          "ID": "TECHNOLOGY_SECTION",
+          "FIELDS": [
+            {
+              "FIELD_ID": "b4258f11-8ced-473b-adb9-8a4f2c8c1080"
+            },
+            {
+              "FIELD_ID": "11a5dc92-8168-11e9-bc42-526af7764f64"
+            },
+            {
+              "FIELD_ID": "26fc37c0-b77d-46d2-a665-38c94288b771"
+            },
+            {
+              "FIELD_ID": "11a5d788-8168-11e9-bc42-526af7764f64"
+            }
+          ],
+          "FIELD_STYLE": "LABELS_WITH_TITLE"
+        }
+      ],
+      "DATE_UPDATED": "DATE_REPLACE",
+      "DESCRIPTION": "",
+      "LAYOUT_ID": "3bac2700-7c40-41cb-b211-9114ef698b83",
+      "NAME": "Chats for Agents"
+    },
+    {
+      "LAYOUT_STYLE": "outline",
+      "ROLE": "SALES_ROLE_REPLACE",
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "CUSTOM_LAYOUT": null,
+      "PREDEFINED_TEMPLATE": [
+        {
+          "ID": "SIDE_BAR",
+          "FIELDS": [],
+          "FIELD_STYLE": "EDITABLE"
+        },
+        {
+          "ID": "HEADER",
+          "FIELDS": [
+            {
+              "FIELD_ID": "1eb6118f-4afc-4d32-bcec-738f69955f04"
+            },
+            {
+              "FIELD_ID": "4221fbf9-3ee6-41ca-a19c-ca276ed92a11"
+            }
+          ],
+          "FIELD_STYLE": "NON_EDITABLE_PILLS"
+        },
+        {
+          "ID": "TECHNOLOGY_SECTION",
+          "FIELDS": [
+            {
+              "FIELD_ID": "b4258f11-8ced-473b-adb9-8a4f2c8c1080"
+            },
+            {
+              "FIELD_ID": "11a5dc92-8168-11e9-bc42-526af7764f64"
+            },
+            {
+              "FIELD_ID": "26fc37c0-b77d-46d2-a665-38c94288b771"
+            },
+            {
+              "FIELD_ID": "11a5d788-8168-11e9-bc42-526af7764f64"
+            }
+          ],
+          "FIELD_STYLE": "LABELS_WITH_TITLE"
+        }
+      ],
+      "DATE_UPDATED": "DATE_REPLACE",
+      "DESCRIPTION": "",
+      "LAYOUT_ID": "3c249714-a185-4678-bbf3-6a4ea03dbfbe",
+      "NAME": "Chats for Sales"
+    }
+  ],
+  "CREATE_MOBILE_LAYOUTS": [],
+  "DETAIL_MOBILE_LAYOUTS": [],
+  "EDIT_MOBILE_LAYOUTS": [],
+  "LIST_MOBILE_LAYOUTS": [
+    {
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "4221fbf9-3ee6-41ca-a19c-ca276ed92a11"
+      },
+      "DESCRIPTION": "Chatting",
+      "IS_DEFAULT": true,
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "CONDITION": "31ab05b2-071b-480c-8529-80f406be2366",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION_VALUE": "Chatting"
+        }
+      ],
+      "LAYOUT_ID": "577f5b74-b464-42d9-a5d2-80e7c31d2ba2",
+      "NAME": "Chatting",
+      "FIELDS": [
+        "4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
+        "0e1835cd-40eb-4114-8e6e-8ff2957d70a6"
+      ]
+    },
+    {
+      "ROLE": "AGENT_ROLE_REPLACE",
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "4221fbf9-3ee6-41ca-a19c-ca276ed92a11"
+      },
+      "DESCRIPTION": "Chatting",
+      "IS_DEFAULT": true,
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "CONDITION": "31ab05b2-071b-480c-8529-80f406be2366",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION_VALUE": "Chatting"
+        }
+      ],
+      "LAYOUT_ID": "dd1442f7-7286-46db-a649-1221c7ad5c4e",
+      "NAME": "Chatting",
+      "FIELDS": [
+        "4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
+        "0e1835cd-40eb-4114-8e6e-8ff2957d70a6"
+      ]
+    },
+    {
+      "ROLE": "SALES_ROLE_REPLACE",
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "4221fbf9-3ee6-41ca-a19c-ca276ed92a11"
+      },
+      "DESCRIPTION": "Chatting",
+      "IS_DEFAULT": true,
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "CONDITION": "31ab05b2-071b-480c-8529-80f406be2366",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION_VALUE": "Chatting"
+        }
+      ],
+      "LAYOUT_ID": "7dcb945d-00f8-4ffe-8c7c-6e2e0941d6c2",
+      "NAME": "Chatting",
+      "FIELDS": [
+        "4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
+        "0e1835cd-40eb-4114-8e6e-8ff2957d70a6"
+      ]
+    },
+    {
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "1eb6118f-4afc-4d32-bcec-738f69955f04"
+      },
+      "DESCRIPTION": "Online if browsing or chatting",
+      "IS_DEFAULT": false,
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "CONDITION": "31ab05b2-071b-480c-8529-80f406be2366",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION_VALUE": "Browsing"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "CONDITION": "31ab05b2-071b-480c-8529-80f406be2366",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION_VALUE": "Chatting"
+        }
+      ],
+      "LAYOUT_ID": "9c13b43c-4fc7-4792-b570-0926e9efe46f",
+      "NAME": "Online",
+      "FIELDS": [
+        "1eb6118f-4afc-4d32-bcec-738f69955f04",
+        "31ab05b2-071b-480c-8529-80f406be2366"
+      ]
+    },
+    {
+      "ROLE": "SALES_ROLE_REPLACE",
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "1eb6118f-4afc-4d32-bcec-738f69955f04"
+      },
+      "DESCRIPTION": "Online if browsing or chatting",
+      "IS_DEFAULT": false,
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "CONDITION": "31ab05b2-071b-480c-8529-80f406be2366",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION_VALUE": "Browsing"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "CONDITION": "31ab05b2-071b-480c-8529-80f406be2366",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION_VALUE": "Chatting"
+        }
+      ],
+      "LAYOUT_ID": "8eb98f4a-516f-471a-99e9-cd9b2f647363",
+      "NAME": "Online",
+      "FIELDS": [
+        "1eb6118f-4afc-4d32-bcec-738f69955f04",
+        "31ab05b2-071b-480c-8529-80f406be2366"
+      ]
+    },
+    {
+      "ROLE": "AGENT_ROLE_REPLACE",
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "9d3c5936-21d8-44cd-b523-6732c9386650"
+      },
+      "DESCRIPTION": "Online if browsing or chatting",
+      "IS_DEFAULT": false,
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "CONDITION": "31ab05b2-071b-480c-8529-80f406be2366",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION_VALUE": "Browsing"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "CONDITION": "31ab05b2-071b-480c-8529-80f406be2366",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION_VALUE": "Chatting"
+        }
+      ],
+      "LAYOUT_ID": "5722e8ca-0292-410d-81ab-cbd2351648e6",
+      "NAME": "Online",
+      "FIELDS": [
+        "1eb6118f-4afc-4d32-bcec-738f69955f04",
+        "31ab05b2-071b-480c-8529-80f406be2366"
+      ]
+    },
+    {
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "4221fbf9-3ee6-41ca-a19c-ca276ed92a11"
+      },
+      "DESCRIPTION": "Chats with Requestors",
+      "IS_DEFAULT": false,
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "OPERATOR": "EXISTS",
+          "CONDITION": "4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
+          "CONDITION_VALUE": ""
+        }
+      ],
+      "LAYOUT_ID": "2e889f06-bc1f-403f-8333-689d385e8c53",
+      "NAME": "Chats with Requestors",
+      "FIELDS": [
+        "4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
+        "3a5ce38f-f052-43fc-bae9-25c15323b8c0"
+      ]
+    },
+    {
+      "ROLE": "AGENT_ROLE_REPLACE",
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "4221fbf9-3ee6-41ca-a19c-ca276ed92a11"
+      },
+      "DESCRIPTION": "Chats with Requestors",
+      "IS_DEFAULT": false,
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "OPERATOR": "EXISTS",
+          "CONDITION": "4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
+          "CONDITION_VALUE": ""
+        }
+      ],
+      "LAYOUT_ID": "088d73ed-024d-4503-8f3d-4338adcc7cbb",
+      "NAME": "Chats with Requestors",
+      "FIELDS": [
+        "4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
+        "3a5ce38f-f052-43fc-bae9-25c15323b8c0"
+      ]
+    },
+    {
+      "ROLE": "SALES_ROLE_REPLACE",
+      "ORDER_BY": {
+        "ORDER": "Desc",
+        "COLUMN": "4221fbf9-3ee6-41ca-a19c-ca276ed92a11"
+      },
+      "DESCRIPTION": "Chats with Requestors",
+      "IS_DEFAULT": false,
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "OPERATOR": "EXISTS",
+          "CONDITION": "4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
+          "CONDITION_VALUE": ""
+        }
+      ],
+      "LAYOUT_ID": "edc7bdf0-4274-4931-862d-699fd74164e4",
+      "NAME": "Chats with Requestors",
+      "FIELDS": [
+        "4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
+        "3a5ce38f-f052-43fc-bae9-25c15323b8c0"
+      ]
+    }
+  ],
+  "LIST_LAYOUTS": [
+    {
+      "LAYOUT_ID": "5b86bfc9-f906-42ad-91ff-658d8804f35c",
+      "NAME": "Online",
+      "DESCRIPTION": "",
+      "ID": "",
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "ORDER_BY": {
+        "COLUMN": "3a5ce38f-f052-43fc-bae9-25c15323b8c0",
+        "ORDER": "Desc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "1eb6118f-4afc-4d32-bcec-738f69955f04",
+          "4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
+          "31ab05b2-071b-480c-8529-80f406be2366",
+          "3a5ce38f-f052-43fc-bae9-25c15323b8c0",
+          "0e1835cd-40eb-4114-8e6e-8ff2957d70a6"
+        ]
+      },
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "CONDITION": "08c272b5-3fd6-4d11-8410-c5caa89fb9a3",
+          "OPERATOR": "CONTAINS",
+          "CONDITION_VALUE": "{{CURRENT_USER}}"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "CONDITION": "31ab05b2-071b-480c-8529-80f406be2366",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION_VALUE": "Browsing"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "CONDITION": "31ab05b2-071b-480c-8529-80f406be2366",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION_VALUE": "Chatting"
+        }
+      ],
+      "IS_DEFAULT": true
+    },
+    {
+      "LAYOUT_ID": "b27e14c9-bd44-4f02-8791-e1aac5cce9ba",
+      "NAME": "Online",
+      "DESCRIPTION": "",
+      "ID": "",
+      "ROLE": "AGENT_ROLE_REPLACE",
+      "ORDER_BY": {
+        "COLUMN": "3a5ce38f-f052-43fc-bae9-25c15323b8c0",
+        "ORDER": "Desc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "1eb6118f-4afc-4d32-bcec-738f69955f04",
+          "4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
+          "31ab05b2-071b-480c-8529-80f406be2366",
+          "3a5ce38f-f052-43fc-bae9-25c15323b8c0",
+          "0e1835cd-40eb-4114-8e6e-8ff2957d70a6"
+        ]
+      },
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "CONDITION": "08c272b5-3fd6-4d11-8410-c5caa89fb9a3",
+          "OPERATOR": "CONTAINS",
+          "CONDITION_VALUE": "{{CURRENT_USER}}"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "CONDITION": "31ab05b2-071b-480c-8529-80f406be2366",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION_VALUE": "Browsing"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "CONDITION": "31ab05b2-071b-480c-8529-80f406be2366",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION_VALUE": "Chatting"
+        }
+      ],
+      "IS_DEFAULT": true
+    },
+    {
+      "LAYOUT_ID": "2efe390c-6281-4d6f-99e1-66078ce17e3e",
+      "NAME": "Online",
+      "DESCRIPTION": "",
+      "ID": "",
+      "ROLE": "SALES_ROLE_REPLACE",
+      "ORDER_BY": {
+        "COLUMN": "3a5ce38f-f052-43fc-bae9-25c15323b8c0",
+        "ORDER": "Desc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "1eb6118f-4afc-4d32-bcec-738f69955f04",
+          "4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
+          "31ab05b2-071b-480c-8529-80f406be2366",
+          "3a5ce38f-f052-43fc-bae9-25c15323b8c0",
+          "0e1835cd-40eb-4114-8e6e-8ff2957d70a6"
+        ]
+      },
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "CONDITION": "08c272b5-3fd6-4d11-8410-c5caa89fb9a3",
+          "OPERATOR": "CONTAINS",
+          "CONDITION_VALUE": "{{CURRENT_USER}}"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "CONDITION": "31ab05b2-071b-480c-8529-80f406be2366",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION_VALUE": "Browsing"
+        },
+        {
+          "REQUIREMENT_TYPE": "Any",
+          "CONDITION": "31ab05b2-071b-480c-8529-80f406be2366",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION_VALUE": "Chatting"
+        }
+      ],
+      "IS_DEFAULT": true
+    },
+    {
+      "LAYOUT_ID": "36aeff9d-14ce-48e7-9b01-d1966e9f20db",
+      "NAME": "Chatting",
+      "DESCRIPTION": "",
+      "ID": "",
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "ORDER_BY": {
+        "COLUMN": "3a5ce38f-f052-43fc-bae9-25c15323b8c0",
+        "ORDER": "Asc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "1eb6118f-4afc-4d32-bcec-738f69955f04",
+          "4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
+          "31ab05b2-071b-480c-8529-80f406be2366",
+          "3a5ce38f-f052-43fc-bae9-25c15323b8c0",
+          "0e1835cd-40eb-4114-8e6e-8ff2957d70a6"
+        ]
+      },
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "CONDITION": "08c272b5-3fd6-4d11-8410-c5caa89fb9a3",
+          "OPERATOR": "CONTAINS",
+          "CONDITION_VALUE": "{{CURRENT_USER}}"
+        },
+        {
+          "REQUIREMENT_TYPE": "All",
+          "CONDITION": "31ab05b2-071b-480c-8529-80f406be2366",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION_VALUE": "Chatting"
+        }
+      ],
+      "IS_DEFAULT": false
+    },
+    {
+      "LAYOUT_ID": "b1e700f4-a5ae-444f-9829-5ae825c4bacf",
+      "NAME": "Chatting",
+      "DESCRIPTION": "",
+      "ID": "",
+      "ROLE": "AGENT_ROLE_REPLACE",
+      "ORDER_BY": {
+        "COLUMN": "3a5ce38f-f052-43fc-bae9-25c15323b8c0",
+        "ORDER": "Asc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "1eb6118f-4afc-4d32-bcec-738f69955f04",
+          "4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
+          "31ab05b2-071b-480c-8529-80f406be2366",
+          "3a5ce38f-f052-43fc-bae9-25c15323b8c0",
+          "0e1835cd-40eb-4114-8e6e-8ff2957d70a6"
+        ]
+      },
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "CONDITION": "08c272b5-3fd6-4d11-8410-c5caa89fb9a3",
+          "OPERATOR": "CONTAINS",
+          "CONDITION_VALUE": "{{CURRENT_USER}}"
+        },
+        {
+          "REQUIREMENT_TYPE": "All",
+          "CONDITION": "31ab05b2-071b-480c-8529-80f406be2366",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION_VALUE": "Chatting"
+        }
+      ],
+      "IS_DEFAULT": false
+    },
+    {
+      "LAYOUT_ID": "36aeff9d-14ce-48e7-9b01-d1966e9f20db",
+      "NAME": "Chatting",
+      "DESCRIPTION": "",
+      "ID": "",
+      "ROLE": "SALES_ROLE_REPLACE",
+      "ORDER_BY": {
+        "COLUMN": "3a5ce38f-f052-43fc-bae9-25c15323b8c0",
+        "ORDER": "Asc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "1eb6118f-4afc-4d32-bcec-738f69955f04",
+          "4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
+          "31ab05b2-071b-480c-8529-80f406be2366",
+          "3a5ce38f-f052-43fc-bae9-25c15323b8c0",
+          "0e1835cd-40eb-4114-8e6e-8ff2957d70a6"
+        ]
+      },
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "CONDITION": "08c272b5-3fd6-4d11-8410-c5caa89fb9a3",
+          "OPERATOR": "CONTAINS",
+          "CONDITION_VALUE": "{{CURRENT_USER}}"
+        },
+        {
+          "REQUIREMENT_TYPE": "All",
+          "CONDITION": "31ab05b2-071b-480c-8529-80f406be2366",
+          "OPERATOR": "EQUALS_TO",
+          "CONDITION_VALUE": "Chatting"
+        }
+      ],
+      "IS_DEFAULT": false
+    },
+    {
+      "LAYOUT_ID": "d4a77024-fb2c-4885-8ec8-6480b4fc84fe",
+      "NAME": "Chats with Requestors",
+      "DESCRIPTION": "",
+      "ID": "",
+      "ROLE": "SYSTEMADMIN_ROLE_REPLACE",
+      "ORDER_BY": {
+        "COLUMN": "3a5ce38f-f052-43fc-bae9-25c15323b8c0",
+        "ORDER": "Desc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "1eb6118f-4afc-4d32-bcec-738f69955f04",
+          "4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
+          "3a5ce38f-f052-43fc-bae9-25c15323b8c0",
+          "31ab05b2-071b-480c-8529-80f406be2366",
+          "0e1835cd-40eb-4114-8e6e-8ff2957d70a6"
+        ]
+      },
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "CONDITION": "08c272b5-3fd6-4d11-8410-c5caa89fb9a3",
+          "OPERATOR": "CONTAINS",
+          "CONDITION_VALUE": "{{CURRENT_USER}}"
+        },
+        {
+          "REQUIREMENT_TYPE": "All",
+          "OPERATOR": "EXISTS",
+          "CONDITION": "4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
+          "CONDITION_VALUE": ""
+        }
+      ],
+      "IS_DEFAULT": false,
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "DATE_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": "5d1ee9174f374f383cf261d7"
+    },
+    {
+      "LAYOUT_ID": "0d697475-a292-46c4-82b2-b520d65b4564",
+      "NAME": "Chats with Requestors",
+      "DESCRIPTION": "",
+      "ID": "",
+      "ROLE": "AGENT_ROLE_REPLACE",
+      "ORDER_BY": {
+        "COLUMN": "3a5ce38f-f052-43fc-bae9-25c15323b8c0",
+        "ORDER": "Desc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "1eb6118f-4afc-4d32-bcec-738f69955f04",
+          "4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
+          "31ab05b2-071b-480c-8529-80f406be2366",
+          "3a5ce38f-f052-43fc-bae9-25c15323b8c0",
+          "0e1835cd-40eb-4114-8e6e-8ff2957d70a6"
+        ]
+      },
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "CONDITION": "08c272b5-3fd6-4d11-8410-c5caa89fb9a3",
+          "OPERATOR": "CONTAINS",
+          "CONDITION_VALUE": "{{CURRENT_USER}}"
+        },
+        {
+          "REQUIREMENT_TYPE": "All",
+          "OPERATOR": "EXISTS",
+          "CONDITION": "4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
+          "CONDITION_VALUE": ""
+        }
+      ],
+      "IS_DEFAULT": false,
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "DATE_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": "5d1ee9174f374f383cf261d7"
+    },
+    {
+      "LAYOUT_ID": "d4a77024-fb2c-4885-8ec8-6480b4fc84fe",
+      "NAME": "Chats with Requestors",
+      "DESCRIPTION": "",
+      "ID": "",
+      "ROLE": "SALES_ROLE_REPLACE",
+      "ORDER_BY": {
+        "COLUMN": "3a5ce38f-f052-43fc-bae9-25c15323b8c0",
+        "ORDER": "Desc"
+      },
+      "COLUMN_SHOW": {
+        "FIELDS": [
+          "1eb6118f-4afc-4d32-bcec-738f69955f04",
+          "4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
+          "3a5ce38f-f052-43fc-bae9-25c15323b8c0",
+          "31ab05b2-071b-480c-8529-80f406be2366",
+          "0e1835cd-40eb-4114-8e6e-8ff2957d70a6"
+        ]
+      },
+      "CONDITIONS": [
+        {
+          "REQUIREMENT_TYPE": "All",
+          "CONDITION": "08c272b5-3fd6-4d11-8410-c5caa89fb9a3",
+          "OPERATOR": "CONTAINS",
+          "CONDITION_VALUE": "{{CURRENT_USER}}"
+        },
+        {
+          "REQUIREMENT_TYPE": "All",
+          "OPERATOR": "EXISTS",
+          "CONDITION": "4221fbf9-3ee6-41ca-a19c-ca276ed92a11",
+          "CONDITION_VALUE": ""
+        }
+      ],
+      "IS_DEFAULT": false,
+      "DATE_CREATED": "DATE_CREATED_REPLACE",
+      "DATE_UPDATED": null,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": "5d1ee9174f374f383cf261d7"
+    }
+  ],
+  "SETTINGS": {
+    "PERMISSIONS": {
+      "CHAT": ["ADMIN_TEAM_REPLACE", "AGENT_TEAM_REPLACE"]
+    }
+  },
+  "WORKFLOWS": [],
+  "VALIDATIONS": []
 }
