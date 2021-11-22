@@ -33,7 +33,7 @@ import com.ngdesk.websocket.companies.dao.Company;
 import com.ngdesk.websocket.modules.dao.Module;
 
 @Component
-public class SessionsJob {
+public class AgentSessionExpiry {
 
 	@Autowired
 	RedissonClient redisson;

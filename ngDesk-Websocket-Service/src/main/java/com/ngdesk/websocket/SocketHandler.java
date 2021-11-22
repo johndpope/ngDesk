@@ -290,7 +290,7 @@ public class SocketHandler extends TextWebSocketHandler {
 					Date date = new SimpleDateFormat("dd/MM/yyyy").parse(epochDate);
 					Timestamp epoch = new Timestamp(date.getTime());
 					Timestamp today = new Timestamp(new Date().getTime());
-					long millisec = TimeUnit.MINUTES.toMillis(3);
+					long millisec = TimeUnit.MINUTES.toMillis(1);
 					long currentTimeDiff = today.getTime() + millisec - epoch.getTime();
 
 					if (usersMap.containsKey(currentTimeDiff)) {
