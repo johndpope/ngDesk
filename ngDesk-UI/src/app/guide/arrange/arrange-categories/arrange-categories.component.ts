@@ -1,5 +1,6 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
+import { map, mergeMap } from 'rxjs/operators';
 
 import { GuideService } from '../../guide.service';
 
@@ -17,49 +18,58 @@ export class ArrangeCategoriesComponent implements OnInit {
 
 	constructor(private guideService: GuideService) {
 		// get all CATEGORIES
-		this.guideService.getKbCategories().subscribe(
-			(categoriesResponse: any) => {
-				console.log('categoriesResponse', categoriesResponse);
-				categoriesResponse.DATA.forEach((category) => {
-					this.guideService
-						.getKbSectionByCategoryId(category.categoryId)
-						.subscribe(
-							(sectionsResponse: any) => {
-								console.log('sectionsResponse', sectionsResponse);
-								// for each category, add its sections
-								category['SECTIONS'] = sectionsResponse.DATA;
-								this.categories.push(category);
-								// waits until all categories are loaded to sort by order
-								if (this.categories.length === categoriesResponse.DATA.length) {
-									this.categories.sort((n1, n2) => {
-										if (n1.ORDER > n2.ORDER) {
-											return 1;
-										}
+		this.guideService
+			.getKbCategories()
+			.pipe(
+				mergeMap((categoriesResponse) => {
+					console.log('categoriesResponse', categoriesResponse);
+					return categoriesResponse['DATA'].forEach((category) => {
+						return this.guideService
+							.getKbSectionByCategoryId(category.categoryId)
+							.pipe(
+								map((sectionsResponse: any) => {
+									console.log('sectionsResponse', sectionsResponse);
+									// for each category, add its sections
+									category['SECTIONS'] = sectionsResponse.DATA;
+									this.categories.push(category);
+									// waits until all categories are loaded to sort by order
+									if (
+										this.categories.length === categoriesResponse['DATA'].length
+									) {
+										this.categories.sort((n1, n2) => {
+											if (n1.ORDER > n2.ORDER) {
+												return 1;
+											}
 
-										if (n1.ORDER < n2.ORDER) {
-											return -1;
-										}
+											if (n1.ORDER < n2.ORDER) {
+												return -1;
+											}
 
-										return 0;
-									});
-									this.isLoading = false;
-								}
-							},
-							(sectionsError: any) => {
-								console.log(sectionsError);
-								this.isLoading = false;
-							}
-						);
-				});
-				if (categoriesResponse.DATA.length === 0) {
-					this.isLoading = false;
-				}
-			},
-			(categoriesError: any) => {
-				console.log(categoriesError);
-				this.isLoading = false;
-			}
-		);
+											return 0;
+										});
+										this.isLoading = false;
+									}
+									// else {
+									// 	this.isLoading = false;
+									// 	return sectionsResponse;
+									// }
+									(sectionsError: any) => {
+										console.log(sectionsError);
+										this.isLoading = false;
+									};
+									if (categoriesResponse['DATA'].length === 0) {
+										this.isLoading = false;
+									}
+									(categoriesError: any) => {
+										console.log(categoriesError);
+										this.isLoading = false;
+									};
+								})
+							);
+					});
+				})
+			)
+			.subscribe();
 	}
 
 	public ngOnInit() {}
