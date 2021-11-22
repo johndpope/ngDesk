@@ -43,7 +43,7 @@
     "@nativescript/firebase": "rc",
     "@nativescript/schematics": "^1.0.0",
     "@nativescript/theme": "~2.2.1",
-    "@nebular/theme": "^6.2.1",
+    "@nebular/theme": "^8.0.0",
     "@ngdesk/auth-api": "file:ngdesk-swagger/auth-api/dist/ngdesk-auth-api-1.0.0.tgz",
     "@ngdesk/company-api": "file:ngdesk-swagger/company-api/dist/ngdesk-company-api-1.0.0.tgz",
     "@ngdesk/data-api": "file:ngdesk-swagger/data-api/dist/ngdesk-data-api-1.0.0.tgz",
