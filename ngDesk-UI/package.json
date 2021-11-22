@@ -94,7 +94,6 @@
     "nativescript-websockets": "^1.5.5",
     "ng2-charts": "^2.3.0",
     "ng2-pdf-viewer": "^6.3.2",
-    "ng2-translate": "^5.0.0",
     "ngx-build-plus": "12.2.0",
     "ngx-cookie-service": "^10.0.0",
     "ngx-logger": "^3.3.13",
