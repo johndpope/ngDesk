@@ -61,7 +61,7 @@
     "@ngx-translate/http-loader": "^4.0.0",
     "@nstudio/nativescript-checkbox": "^1.0.0",
     "@stomp/ng2-stompjs": "^7.2.0",
-    "@swimlane/ngx-charts": "^12.1.0",
+    "@swimlane/ngx-charts": "^19.1.0",
     "@types/googlemaps": "^3.38.1",
     "acorn": "^6.1.1",
     "angular-gridster2": "^8.4.2",
