@@ -43,7 +43,7 @@ public class NotificationService {
 		Optional<Map<String, Object>> optionalNotification = notificationRepository.findByDataId(dataId,
 				collectionName);
 		if (optionalNotification.isEmpty()) {
-			String vars[] = { "NOTIFICATION" };
+			String vars[] = { "NOT_VALID_DATA_ID" };
 
 			throw new NotFoundException("DAO_NOT_FOUND", vars);
 

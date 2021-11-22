@@ -12,8 +12,7 @@ public class GlobalPreFilter implements GlobalFilter {
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-		if (!exchange.getRequest().getURI().getHost().contains("haloocom")
-				&& !exchange.getRequest().getURI().toString().contains("outlook")
+		if (!exchange.getRequest().getURI().toString().contains("outlook")
 				&& !exchange.getRequest().getURI().toString().contains("forms-widget")) {
 			exchange.getResponse().getHeaders().add("X-Frame-Options", "DENY");
 		}

@@ -19,7 +19,7 @@ public class ScheduleJobForReportCsv {
 	@Scheduled(fixedRate = 60 * 1000)
 	public void schedule() {
 
-		File directoryPath = new File("/opt/ngdesk/reports/");
+		File directoryPath = new File("/opt/");
 		File filesList[] = directoryPath.listFiles();
 		if (filesList != null) {
 			for (File file : filesList) {

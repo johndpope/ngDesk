@@ -13,15 +13,17 @@
 	<artifactId>ngDesk-Config-Server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ngDesk-Config-Server</name>
-	<description>Application to store configs</description>
-
-
-
+	<description>Application to store configs</description>	
+	
 	<properties>
 		<java.version>11</java.version>
 		<spring-cloud.version>Hoxton.SR8</spring-cloud.version>
 	</properties>
 
+	
+	
+	
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
@@ -66,7 +68,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<image>
-						<name>gitlab.bluemsp.com:5050/ngdesk/ngdesk-config-server:latest</name>
+						<name>ngdesk/config-server:latest</name>
 					</image>
 					<layers>
 						<enabled>true</enabled>

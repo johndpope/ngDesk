@@ -3,13 +3,37 @@
 	<app-title-bar class="light-grey-color" title="{{'CSV_LOGS' | translate}}">
 	</app-title-bar>
 </ng-template>
-<div fxLayout="row" fxLayoutAlign="center">
-	<mat-card fxFlex="70" style="margin-top: 20px;">
+<div fxLayoutAlign="center" style="padding: 20px;">
+	<div fxlayout="column" class="mat-elevation-z2" fxFlex="70" style="padding-top: 20px;border-radius: 4px">
 		<div fxLayout="row" fxLayoutAlign="center">
 			<mat-label class="mat-h2">{{fileName}}</mat-label>
 		</div>
-		<div class="mat-h3" *ngFor="let log of logs" fxLayoutAlign="center">{{'ON_LINE_NUMBER' | translate}} {{log.LINE_NUMBER}} :
-			{{log.ERROR_MESSAGE}}</div>
-		<div class="mat-h3" *ngIf="logs.length === 0" fxLayoutAlign="center">{{'NO_ERROR_LOGS_FOUND' | translate}}</div>
-	</mat-card>
+		<div class="mat-h3" fxLayoutAlign="center center" fxLayout="row" fxLayoutGap="50px">
+			<button mat-raised-button>
+				Lines completed : {{completedCount ? completedCount: 0}}
+			</button>
+			<button mat-raised-button (click)="displayLogTable()">
+				Lines Failed : {{failedCount ? failedCount: 0}}
+			</button>
+		</div>
+
+		<div *ngIf="logTable" fxLayout="column" fxLayoutGap="10px" class="pad10">
+			<div fxLayout="row">
+				<div fxFlex>
+					<app-custom-table [templateRef]="columnTemplateRef" noRecordsMessage="{{'NO_LOGS_FOUND' | translate}}"
+						(pageChangeEmit)="pageChangeEmit($event);customTableService.isLoading = true">
+						<ng-template #columnTemplateRef let-element="element" let-col="col">
+							{{element[col.NAME]}}
+						</ng-template>
+					</app-custom-table>
+				</div>
+			</div>
+		</div>
+		<div class="mat-body" *ngIf="logTable" fxLayout="column" fxLayoutGap="10px" class="pad10">
+			<div fxLayout="row" fxLayoutGap="5px">
+				<div style="font-weight: 700;"> Note : </div>
+				<div> {{'NOTE_FOR_FAILED_LINES' | translate}}</div>
+			</div>
+		</div>
+	</div>
 </div>

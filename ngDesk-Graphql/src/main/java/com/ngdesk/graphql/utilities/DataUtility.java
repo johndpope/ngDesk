@@ -31,6 +31,11 @@ import com.ngdesk.graphql.chat.channel.dao.ChatPromptDataFetcher;
 import com.ngdesk.graphql.chat.channel.dao.ChatPromptsDataFetcher;
 import com.ngdesk.graphql.company.dao.Company;
 import com.ngdesk.graphql.company.dao.CompanyDataFetcher;
+import com.ngdesk.graphql.csvimport.dao.CsvImportCountFetcher;
+import com.ngdesk.graphql.csvimport.dao.CsvImportDataFetcher;
+import com.ngdesk.graphql.csvimport.dao.CsvImportsDataFetcher;
+import com.ngdesk.graphql.csvimport.dao.CsvLogCountFetcher;
+import com.ngdesk.graphql.csvimport.dao.CsvLogsDataFetcher;
 import com.ngdesk.graphql.currency.dao.CurrenciesDataFetcher;
 import com.ngdesk.graphql.currency.dao.CurrencyDataFetcher;
 import com.ngdesk.graphql.dashboards.dao.AdvancedPieChartValueFetcher;
@@ -47,6 +52,9 @@ import com.ngdesk.graphql.datatypes.DateTime;
 import com.ngdesk.graphql.discoverymap.dao.DiscoveryMapDataFetcher;
 import com.ngdesk.graphql.discoverymap.dao.DiscoveryMapsDataFetcher;
 import com.ngdesk.graphql.discoverymap.dao.UnApprovedDiscoveryMapsDataFetcher;
+import com.ngdesk.graphql.emailList.dao.EmailListCountFetcher;
+import com.ngdesk.graphql.emailList.dao.EmailListDataFetcher;
+import com.ngdesk.graphql.emailList.dao.EmailListsDataFetcher;
 import com.ngdesk.graphql.enterprisesearch.dao.EnterpriseSearchCountFetcher;
 import com.ngdesk.graphql.enterprisesearch.dao.EnterpriseSearchDataFetcher;
 import com.ngdesk.graphql.enterprisesearch.dao.EnterpriseSearchesDataFetcher;
@@ -77,6 +85,7 @@ import com.ngdesk.graphql.modules.data.dao.DistinctEntryValuesFetcher;
 import com.ngdesk.graphql.modules.data.dao.EntryDataFetcher;
 import com.ngdesk.graphql.modules.data.dao.FormulaDataFetcher;
 import com.ngdesk.graphql.modules.data.dao.IndividualEntryFetcher;
+import com.ngdesk.graphql.modules.data.dao.ListFormulaDataFetcher;
 import com.ngdesk.graphql.modules.data.dao.OneToManyCountDataFetcher;
 import com.ngdesk.graphql.modules.data.dao.OneToManyDataFetcher;
 import com.ngdesk.graphql.modules.data.dao.OneToManyUnmappedCountDataFetcher;
@@ -128,6 +137,7 @@ import com.ngdesk.graphql.userplugin.dao.UserPluginsByStatusDataFetcher;
 import com.ngdesk.graphql.workflow.NodeDataFetcher;
 import com.ngdesk.graphql.workflow.NodesExecutedDataFetcher;
 import com.ngdesk.graphql.workflow.StageDataFetcher;
+import com.ngdesk.graphql.workflow.WorkflowEntriesDataFetcher;
 import com.ngdesk.graphql.workflow.WorkflowEntryDataFetcher;
 import com.ngdesk.graphql.workflow.WorkflowInstanceDataFetcher;
 import com.ngdesk.graphql.workflow.WorkflowInstanceFetcher;
@@ -467,7 +477,6 @@ public class DataUtility {
 	ChatPromptsDataFetcher chatPromptsDataFetcher;
 
 	@Autowired
-
 	ArticleDataFetcher articleDataFetcher;
 
 	@Autowired
@@ -486,6 +495,9 @@ public class DataUtility {
 	SectionsCountFetcher sectionsCountFetcher;
 
 	@Autowired
+	WorkflowEntriesDataFetcher workflowEntriesDataFetcher;
+
+	@Autowired
 	SectionCategoryDataFetcher sectionCategoryDataFetcher;
 
 	@Autowired
@@ -498,6 +510,9 @@ public class DataUtility {
 	CategoriesCountDataFetcher categoriesCountDataFetcher;
 
 	@Autowired
+	ListFormulaDataFetcher listFormulaDatafetcher;
+
+	@Autowired
 	EscalationDataFetcher escalationDataFetcher;
 
 	@Autowired
@@ -505,6 +520,30 @@ public class DataUtility {
 
 	@Autowired
 	EscalationsCountDataFetcher escalationCountDataFetcher;
+
+	@Autowired
+	CsvImportCountFetcher csvImportCountFetcher;
+
+	@Autowired
+	CsvImportDataFetcher csvImportDataFetcher;
+
+	@Autowired
+	CsvImportsDataFetcher csvImportsDataFetcher;
+
+	@Autowired
+	CsvLogsDataFetcher csvLogsDataFetcher;
+
+	@Autowired
+	CsvLogCountFetcher csvLogCountFetcher;
+
+	@Autowired
+	EmailListDataFetcher emailListDataFetcher;
+
+	@Autowired
+	EmailListsDataFetcher emailListsDataFetcher;
+
+	@Autowired
+	EmailListCountFetcher emailListCountFetcher;
 
 	public GraphQL createGraphQlObject(Company company) throws IOException {
 		try {
@@ -649,6 +688,10 @@ public class DataUtility {
 
 						} else if (field.getDataType().getDisplay().equals("Receipt Capture")) {
 							schemaMap.put(field.getName(), "MessageAttachment");
+
+						} else if (field.getDataType().getDisplay().equals("List Formula")) {
+
+							schemaMap.put(field.getName(), "[ListFormulaFieldValue]");
 
 						} else {
 							switch (field.getDataType().getBackend()) {
@@ -817,7 +860,6 @@ public class DataUtility {
 		builder.type("Section", typeWiring -> typeWiring.dataFetcher("createdBy", entryDataFetcher));
 		builder.type("Section", typeWiring -> typeWiring.dataFetcher("lastUpdatedBy", entryDataFetcher));
 
-		
 		// ARTICLE
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getKbArticle", articleDataFetcher));
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getAllKbArticles", articlesDataFetcher));
@@ -825,7 +867,7 @@ public class DataUtility {
 		builder.type("Article", typeWiring -> typeWiring.dataFetcher("createdBy", entryDataFetcher));
 		builder.type("Article", typeWiring -> typeWiring.dataFetcher("lastUpdatedBy", entryDataFetcher));
 		builder.type("Article", typeWiring -> typeWiring.dataFetcher("author", entryDataFetcher));
-		
+
 		// Notification
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getNotification", notificationDataFetcher));
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getNotifications", notificationsDataFetcher));
@@ -890,6 +932,7 @@ public class DataUtility {
 
 		// MODULE FIELDS
 		builder.type("ModuleField", typeWiring -> typeWiring.dataFetcher("primaryDisplayField", fieldDataFetcher));
+//		builder.type("ModuleField", typeWiring -> typeWiring.dataFetcher("module", moduleDataFetcher));
 		builder.type("ModuleField", typeWiring -> typeWiring.dataFetcher("relationshipField", fieldDataFetcher));
 		builder.type("ModuleField", typeWiring -> typeWiring.dataFetcher("aggregationRelatedField", fieldDataFetcher));
 		builder.type("ModuleField", typeWiring -> typeWiring.dataFetcher("createdBy", entryDataFetcher));
@@ -917,8 +960,9 @@ public class DataUtility {
 		builder.type("Sender", typeWiring -> typeWiring.dataFetcher("ROLE", roleDataFetcher));
 
 		// WORKFLOW
-		builder.type("Workflow", typeWiring -> typeWiring.dataFetcher("getWorkflow", workflowEntryDataFetcher));
-		builder.type("Workflow", typeWiring -> typeWiring.dataFetcher("module", moduleDataFetcher));
+		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getWorkflow", workflowEntryDataFetcher));
+		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getWorkflows", workflowEntriesDataFetcher));
+		builder.type("Workflow", typeWiring -> typeWiring.dataFetcher("module", roleLayoutModuleDataFetcher));
 		builder.type("Workflow", typeWiring -> typeWiring.dataFetcher("createdBy", entryDataFetcher));
 		builder.type("Workflow", typeWiring -> typeWiring.dataFetcher("lastUpdated", entryDataFetcher));
 
@@ -951,6 +995,24 @@ public class DataUtility {
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getEscalation", escalationDataFetcher));
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getEscalations", escalationsDataFetcher));
 		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getEscalationsCount", escalationCountDataFetcher));
+
+		builder.type("Escalation", typeWiring -> typeWiring.dataFetcher("createdBy", entryDataFetcher));
+		builder.type("Escalation", typeWiring -> typeWiring.dataFetcher("lastUpdatedBy", entryDataFetcher));
+
+		// CSV IMPORT
+		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getCsvImport", csvImportDataFetcher));
+		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getCsvImports", csvImportsDataFetcher));
+		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getCsvImportsCount", csvImportCountFetcher));
+		builder.type("CsvImport", typeWiring -> typeWiring.dataFetcher("createdBy", entryDataFetcher));
+		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getCsvLogs", csvLogsDataFetcher));
+		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getCsvLogsCount", csvLogCountFetcher));
+
+		// EMAIL_LIST
+		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getEmailList", emailListDataFetcher));
+		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getEmailLists", emailListsDataFetcher));
+		builder.type("Query", typeWiring -> typeWiring.dataFetcher("getEmailListCount", emailListCountFetcher));
+		builder.type("EmailList", typeWiring -> typeWiring.dataFetcher("createdBy", entryDataFetcher));
+		builder.type("EmailList", typeWiring -> typeWiring.dataFetcher("lastUpdatedBy", entryDataFetcher));
 
 		for (Module module : modules) {
 			String name = "get" + module.getName().replaceAll("\\s+", "_");
@@ -1012,13 +1074,16 @@ public class DataUtility {
 					} else if (field.getDataType().getDisplay().equals("Workflow Stages")) {
 						builder.type(module.getName().replaceAll("\\s+", "_"),
 								typeWiring -> typeWiring.dataFetcher(field.getName(), workflowInstancesDataFetcher));
+					} else if (field.getDataType().getDisplay().equals("List Formula")) {
+						builder.type(module.getName().replaceAll("\\s+", "_"),
+								typeWiring -> typeWiring.dataFetcher(field.getName(), listFormulaDatafetcher));
 					}
 				}
 
 			});
 
 		}
-	
+
 		return builder.build();
 	}
 

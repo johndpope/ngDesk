@@ -79,6 +79,7 @@ type Query {
 	getChatChannel(name: String): ChatChannel
 	getChatPrompts(channelName: String): [ChatPrompt]
 	getChatPrompt(channelName: String, promptId: String): ChatPrompt
+	getWorkflows(moduleId: String): [Workflow]
 	getKbArticle(articleId:String):Article
 	getAllKbArticles(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String, search: String):[Article]
 	getAllKbArticlesCount(search: String): Int
@@ -88,6 +89,14 @@ type Query {
 	getEscalation(escalationId: String): Escalation
 	getEscalations(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [Escalation]
 	getEscalationsCount: Int
+	getCsvImport(csvImportId: String): CsvImport
+	getCsvImports(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [CsvImport]
+	getCsvImportsCount: Int
+	getCsvLogs(csvImportId: String, pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [CsvImportLog]
+	getCsvLogsCount(csvImportId: String): Int
+	getEmailLists(pageNumber: Int, pageSize: Int, sortBy: String, orderBy: String): [EmailList]
+	getEmailList(id: String): EmailList
+	getEmailListCount: Int
 	MODULE_FUNCTIONS_REPLACE
 }
 
@@ -264,7 +273,7 @@ type ModuleField {
 	relationshipType: String
 	primaryDisplayField: ModuleField
 	relationshipField: ModuleField
-	module: Module
+	module: String
 	dataType: DataType
 	visibility: Boolean
 	required: Boolean
@@ -597,18 +606,19 @@ type CatalogueForm{
    moduleId:String
    formId:Form
 }
+
 type ApprovalDetails {
-status: String
-deniedBy: [DeniedBy]
-approvedBy: [String]
-teamsWhoCanApprove:[String]
-approvers:[String]
-displayButton: Boolean
+	status: String
+	deniedBy: [DeniedBy]
+	approvedBy: [String]
+	teamsWhoCanApprove:[String]
+	approvers:[String]
+	displayButton: Boolean
 }
 
 type DeniedBy{
-deniedUser:Users
-deniedComments: String
+	deniedUser:Users
+	deniedComments: String
 }
  
 type Report {
@@ -938,10 +948,9 @@ type Category{
     visibleTo: [Teams]
 }
 
-
 type Escalation{
 
-   esclalationId: String
+   escalationId: String
    name: String
    description: String
    rules: [EscalationRule]
@@ -966,3 +975,58 @@ type EscalateTo{
   teamIds: [String]
 }
 
+type CsvImport{
+   csvImportId: String
+   status: String
+   csvImportData: CsvImportData
+   moduleId: String
+   logs: [CsvImportLog]
+   companyId: String
+   name: String
+   csvFormat: CsvFormat
+   completedCount: Int
+   failedCount: Int
+   dateCreated: DateTime
+   createdBy: Users
+}
+
+type CsvImportData{
+   file: String
+   fileType: String
+   fileName: String
+   headers: [CsvHeaders]
+}
+
+type CsvHeaders{
+   fieldId: String
+   headerName: String
+}
+
+type CsvImportLog{
+   lineNumber: Int
+   errorMessage: String
+}
+
+type CsvFormat{
+   separator: String
+   dateFormat: String
+   timeFormat: String
+   dateTimeFormat: String
+}
+
+type ListFormulaFieldValue{
+    FORMULA_NAME: String
+	VALUE: String
+
+}
+
+type EmailList{
+	emailListId:String
+	name:String
+	description:String
+	conditions:[Condition]
+	dateCreated:DateTime
+	dateUpdated:DateTime
+	lastUpdatedBy:Users
+	createdBy:Users
+}

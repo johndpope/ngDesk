@@ -12,6 +12,8 @@ import { Condition } from '../../../../models/condition';
 import { EmailList } from '../../../../models/email-list';
 import { ModulesService } from '../../../../modules/modules.service';
 import { UsersService } from '../../../../users/users.service';
+import { EmailListService } from '@src/app/company-settings/marketing/email-lists/email-lists.service';
+import { RolesService } from '@src/app/roles/roles.service';
 
 @Component({
 	selector: 'app-email-lists-detail',
@@ -32,6 +34,8 @@ export class EmailListsDetailComponent implements OnInit {
 	public channels: any = [];
 	public fieldlist: any;
 	public fieldId: any;
+	public roleFieldId: any;
+	public usersModule: any;
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -43,7 +47,9 @@ export class EmailListsDetailComponent implements OnInit {
 		private companiesService: CompaniesService,
 		private router: Router,
 		private route: ActivatedRoute,
-		private channelsService: ChannelsService
+		private channelsService: ChannelsService,
+		private emailListService: EmailListService,
+		private rolesService: RolesService
 	) {}
 
 	public ngOnInit() {
@@ -85,7 +91,7 @@ export class EmailListsDetailComponent implements OnInit {
 		this.customTableService.columnsHeaders = columnsHeaders;
 		this.customTableService.columnsHeadersObj = columnsHeadersObj;
 
-		this.customTableService.sortBy = 'FIRST_NAME';
+		this.customTableService.sortBy = 'DATE_CREATED';
 		this.customTableService.sortOrder = 'asc';
 		this.customTableService.pageIndex = 0;
 		this.customTableService.pageSize = 10;
@@ -97,8 +103,9 @@ export class EmailListsDetailComponent implements OnInit {
 		this.setDatasource(0, 10);
 
 		if (emailListId !== 'new') {
-			this.companiesService.getEmailListById(emailListId).subscribe(
+			this.emailListService.getEmailList(emailListId).subscribe(
 				(emailListResponse: any) => {
+					emailListResponse = emailListResponse.EMAIL_LIST;
 					this.emailList = this.convertEmailList(emailListResponse);
 					this.emailListForm.get('NAME').setValue(emailListResponse.NAME);
 					this.emailListForm
@@ -115,6 +122,7 @@ export class EmailListsDetailComponent implements OnInit {
 			this.modulesService
 				.getModuleByName('Users')
 				.subscribe((modulesResponse: any) => {
+					this.usersModule = modulesResponse;
 					this.moduleId = modulesResponse.MODULE_ID;
 					this.fields = modulesResponse.FIELDS.filter(
 						(field) => field.NAME !== 'PASSWORD'
@@ -128,6 +136,7 @@ export class EmailListsDetailComponent implements OnInit {
 		const conditions: Condition[] = [];
 		this.modulesService.getModuleByName('Users').subscribe(
 			(modulesResponse: any) => {
+				this.usersModule = modulesResponse;
 				this.moduleId = modulesResponse.MODULE_ID;
 				this.fields = modulesResponse.FIELDS.filter(
 					(field) => field.NAME !== 'PASSWORD'
@@ -139,6 +148,9 @@ export class EmailListsDetailComponent implements OnInit {
 						this.fieldlist.forEach((element) => {
 							if (element.NAME === 'CHANNEL') {
 								this.fieldId = element.FIELD_ID;
+							}
+							if (element.NAME === 'ROLE') {
+								this.roleFieldId = element.FIELD_ID;
 							}
 						});
 						this.channelsService.getAllChannels(this.moduleId).subscribe(
@@ -164,6 +176,19 @@ export class EmailListsDetailComponent implements OnInit {
 												);
 											}
 										});
+									} else if (condition.CONDITION === this.roleFieldId) {
+										this.rolesService
+											.getRoleById(condition.CONDITION_VALUE)
+											.subscribe((response: any) => {
+												conditions.push(
+													new Condition(
+														condition.CONDITION,
+														response,
+														condition.OPERATOR,
+														condition.REQUIREMENT_TYPE
+													)
+												);
+											});
 									} else {
 										conditions.push(
 											new Condition(
@@ -211,7 +236,10 @@ export class EmailListsDetailComponent implements OnInit {
 					(condition) =>
 						condition.CONDITION === '' ||
 						condition.OPERATOR === '' ||
-						condition.CONDITION_VALUE === ''
+						condition.CONDITION_VALUE === '' ||
+						condition.CONDITION === null ||
+						condition.OPERATOR === null ||
+						condition.CONDITION_VALUE === null
 				);
 				if (
 					incompleteFound === undefined &&
@@ -234,40 +262,60 @@ export class EmailListsDetailComponent implements OnInit {
 	}
 
 	private getEmailListData() {
-		this.emailList[
-			'CONDITIONS'
-		] = this.conditionsComponent.transformConditions();
+		this.emailList['CONDITIONS'] =
+			this.conditionsComponent.transformConditions();
+		this.emailList['CONDITIONS'] = this.transformCondition(
+			this.emailList['CONDITIONS']
+		);
 		const sortBy = this.customTableService.sortBy;
 		const orderBy = this.customTableService.sortOrder;
 		const page = this.customTableService.pageIndex;
 		const pageSize = this.customTableService.pageSize;
-
-		this.emailList['CONDITIONS'].forEach((condition) => {
-			if (condition['OPERATOR'] !== undefined) {
-				this.companiesService
-					.getAllEmailListData(
-						this.emailList,
-						this.moduleId,
-						sortBy,
-						orderBy,
-						page + 1,
-						pageSize
-					)
-					.subscribe(
-						(emailListData: any) => {
+		this.emailListService
+			.getAllEntriesWithConditions(
+				this.usersModule,
+				page,
+				pageSize,
+				sortBy,
+				orderBy,
+				this.emailList['CONDITIONS']
+			)
+			.subscribe(
+				(emailListData: any) => {
+					if (emailListData[0].DATA !== null) {
+						if (emailListData[1].TOTAL_RECORDS > 0) {
+							emailListData[0].DATA.forEach((element) => {
+								element['FIRST_NAME'] = element.CONTACT.FIRST_NAME;
+								element['LAST_NAME'] = element.CONTACT.LAST_NAME;
+							});
 							this.isLoading = false;
-							this.allEmailListData = emailListData.EMAIL_LISTS;
+							this.allEmailListData = emailListData[0].DATA;
 							this.customTableService.setTableDataSource(
-								emailListData.DATA,
-								emailListData.TOTAL_RECORDS
+								emailListData[0].DATA,
+								emailListData[1].TOTAL_RECORDS
 							);
-						},
-						(emailListError: any) => {
-							this.bannerMessageService.errorNotifications.push({});
+						} else {
+							this.allEmailListData = [];
 						}
-					);
-			}
+					}
+				},
+				(emailListError: any) => {
+					this.bannerMessageService.errorNotifications.push({});
+				}
+			);
+	}
+
+	private transformCondition(conditions) {
+		let transformedConditions = [];
+		conditions.forEach((element) => {
+			let conditionObject = {};
+			conditionObject['condition'] = element['CONDITION'];
+			conditionObject['operator'] = element['OPERATOR'];
+			conditionObject['conditionValue'] = element['CONDITION_VALUE'];
+			conditionObject['requirementType'] = element['REQUIREMENT_TYPE'];
+			transformedConditions.push(conditionObject);
 		});
+		return transformedConditions;
 	}
 
 	private setDatasource(pageIndex, pageSize) {
@@ -285,7 +333,8 @@ export class EmailListsDetailComponent implements OnInit {
 		if (this.emailListForm.valid) {
 			this.emailList.name = this.emailListForm.get('NAME').value;
 			this.emailList.description = this.emailListForm.get('DESCRIPTION').value;
-			this.emailList.conditions = this.conditionsComponent.transformConditions();
+			this.emailList.conditions =
+				this.conditionsComponent.transformConditions();
 			const emailListId = this.route.snapshot.params['emailListId'];
 			if (emailListId !== 'new') {
 				this.companiesService.putEmailList(this.emailList).subscribe(

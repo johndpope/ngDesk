@@ -218,7 +218,12 @@ export class SearchBarComponent implements OnChanges {
 	private isValidSearchField(field): boolean {
 		if (
 			field.DATA_TYPE.DISPLAY === 'File Upload' ||
-			field.DATA_TYPE.DISPLAY === 'Password'
+			field.DATA_TYPE.DISPLAY === 'Password' ||
+			field.NAME === 'CHANNEL' ||
+			field.NAME === 'EFFECTIVE_TO' ||
+			field.NAME === 'EFFECTIVE_FROM' ||
+			field.NAME === 'POST_ID' ||
+			field.NAME === 'DATA_ID'
 		) {
 			return false;
 		} else if (field.DATA_TYPE.DISPLAY === 'Relationship') {
