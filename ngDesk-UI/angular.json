@@ -88,18 +88,6 @@
 			  "browserTarget": "ngDesk-Angular:build"
 			}
 		  },
-		  "lint": {
-			"builder": "@angular-devkit/build-angular:tslint",
-			"options": {
-				"exclude": [
-					"**/node_modules/**"
-				],
-				"tsConfig": [
-					"src/tsconfig.app.json",
-					"src/tsconfig.spec.json"
-				]
-			}
-		},
 		  "test": {
 			"builder": "ngx-build-plus:karma",
 			"options": {
