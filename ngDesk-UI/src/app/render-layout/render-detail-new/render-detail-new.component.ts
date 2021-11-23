@@ -1904,6 +1904,9 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 						} else if (saveButtonValue === 'continue') {
 							this.saving = false;
 							this.loaderService.isLoading2 = false;
+							this.bannerMessageService.successNotifications.push({
+								message: this.translateService.instant('UPDATED_SUCCESSFULLY'),
+							});
 							this.router.navigate([
 								`render/${this.route.snapshot.params.moduleId}/edit/${response.DATA_ID}`,
 							]);
@@ -1924,6 +1927,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 						});
 					}
 				);
+			this.loaderService.isLoading2 = false;
 		} else {
 			this.dataService
 				.putModuleEntry(this.module['MODULE_ID'], payload, false)
