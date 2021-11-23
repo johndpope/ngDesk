@@ -141,8 +141,8 @@ export class DashboardsRenderComponent implements OnInit {
 							}
 						});
 					});
-				});
 			});
+		});
 	}
 
 	public graphqlQuery(query: string) {
@@ -228,9 +228,7 @@ export class DashboardsRenderComponent implements OnInit {
 			if (dashboard) {
 				this.dashboard = dashboard;
 			} else {
-				this.dashboard = this.dashboards.find(
-					(f) => f.name === 'Default (Admin)'
-				);
+				this.dashboard = this.dashboards[0];
 				this.dashboardId = this.dashboard.dashboardId;
 			}
 		}
