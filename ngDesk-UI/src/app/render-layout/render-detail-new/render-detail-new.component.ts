@@ -8,6 +8,7 @@ import {
 	Optional,
 	ViewChild,
 	ElementRef,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MatDialog } from '@angular/material/dialog';
@@ -86,6 +87,7 @@ import { id } from '@swimlane/ngx-charts/release/utils';
 	templateUrl: './render-detail-new.component.html',
 	styleUrls: ['./render-detail-new.component.css'],
 	providers: [MatDialogHelper, RenderDetailHelper],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	@ViewChild(MatSort, { static: true }) private sort: MatSort;
