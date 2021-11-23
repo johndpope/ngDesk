@@ -16,7 +16,7 @@ import { MatTabGroup } from '@angular/material/tabs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
-import { shareReplay } from 'rxjs/operators';
+import { merge, mergeMap, map, shareReplay } from 'rxjs/operators';
 
 import { BannerMessageService } from '@src/app/custom-components/banner-message/banner-message.service';
 import { ConditionsComponent } from '@src/app/custom-components/conditions/conditions.component';
@@ -309,7 +309,7 @@ export class ChatGettingStartedComponent implements OnDestroy, OnInit {
 						this.chatChannel.SETTINGS.BUSINESS_RULES.RESTRICTIONS[0]
 							.START_DAY === null &&
 						this.chatChannel.SETTINGS.BUSINESS_RULES.RESTRICTIONS[0].END_DAY ===
-							null &&
+						null &&
 						this.chatChannel.SETTINGS.BUSINESS_RULES.ACTIVE === true
 					) {
 						this.chatBusinessRule.RESTRICTION_TYPE = 'Day';
@@ -318,7 +318,7 @@ export class ChatGettingStartedComponent implements OnDestroy, OnInit {
 						this.chatChannel.SETTINGS.BUSINESS_RULES.RESTRICTIONS[0]
 							.START_DAY !== null &&
 						this.chatChannel.SETTINGS.BUSINESS_RULES.RESTRICTIONS[0].END_DAY !==
-							null &&
+						null &&
 						this.chatChannel.SETTINGS.BUSINESS_RULES.ACTIVE === true
 					) {
 						this.chatBusinessRule.RESTRICTION_TYPE = 'Week';
@@ -484,54 +484,51 @@ export class ChatGettingStartedComponent implements OnDestroy, OnInit {
 		this.chatChannel.SETTINGS.BUSINESS_RULES = this.chatBusinessRule;
 		const botSettings: BotSettings = { BOT_ENABLED: false, CHAT_BOT: null };
 		this.chatChannel.SETTINGS.BOT_SETTINGS = botSettings;
-		this.chatChannelApiService
-			.updateChatChannel(this.chatChannel.NAME, this.chatChannel)
-			.subscribe(
-				(response: any) => {
-					this.companiesService
-						.getAllGettingStarted()
-						.subscribe((gettingStarted: any) => {
-							this.companiesService
-								.getUsageType(this.usersService.getSubdomain())
-								.subscribe((usage: any) => {
-									if (
-										gettingStarted.GETTING_STARTED[1].COMPLETED === false &&
-										usage.USAGE_TYPE.CHAT
-									) {
-										this.companiesService
-											.putGettingStarted(gettingStarted.GETTING_STARTED[1])
-											.subscribe(
-												(put: any) => {},
-												(errorResponse: any) => {
-													console.log(errorResponse);
-												}
-											);
 
-										this.bannerMessageService.successNotifications.push({
-											message: this.translateService.instant(
-												'SAVE_CHAT_CHANNEL_CUSTOMIZATION'
-											),
-										});
-									} else {
-										this.bannerMessageService.successNotifications.push({
-											message: this.translateService.instant(
-												'SAVE_CHAT_CHANNEL_CUSTOMIZATION'
-											),
-										});
-									}
-								});
-						});
-					this.companiesService.trackEvent(`Updated Channel`, {
-						CHANNEL_ID: response.CHANNEL_ID,
-						MODULE_ID: response.MODULE,
-					});
-				},
-				(error: any) => {
-					this.bannerMessageService.errorNotifications.push({
-						message: error.error.ERROR,
-					});
-				}
-			);
+		this.chatChannelApiService.updateChatChannel(this.chatChannel.NAME, this.chatChannel).pipe(
+			mergeMap((response: any) => {
+				return this.companiesService
+					.getAllGettingStarted().pipe(
+						mergeMap((gettingStarted: any) => {
+							return this.companiesService
+								.getUsageType(this.usersService.getSubdomain()).pipe(
+									mergeMap((usage: any) => {
+										return this.companiesService
+											.putGettingStarted(gettingStarted.GETTING_STARTED[1]).pipe(
+												map((put: any) => {
+													return {
+														responseData: response,
+														gettingStartedData: gettingStarted,
+														usageData: usage,
+														putData: put
+													};
+												})
+											)
+
+									})
+								)
+						})
+					)
+			})
+		).subscribe((finalResponse) => {
+				this.bannerMessageService.successNotifications.push({
+					message: this.translateService.instant(
+						'SAVE_CHAT_CHANNEL_CUSTOMIZATION'
+					),
+				});
+			
+			this.companiesService.trackEvent(`Updated Channel`, {
+				CHANNEL_ID: finalResponse['responseData'].CHANNEL_ID,
+				MODULE_ID: finalResponse['responseData'].MODULE,
+			});
+		},
+		(error: any) => {
+		
+			this.bannerMessageService.errorNotifications.push({
+				message: error.error.ERROR,
+			});
+			console.log(error.ERROR);
+		});
 	}
 
 	public pageChangeEmit(event) {
