@@ -270,10 +270,6 @@ public class ChatService {
 								String body = chatTranscipt;
 								sendMail.send(to, from, subject, body);
 								setStatusOffline(company, optionalContactEntry, chatEntry);
-								ChatTicketStatusMessage chatTicketStatusMessage = new ChatTicketStatusMessage(companyId,
-										closeChat.getSessionUUID(), "CLOSE_SESSION", "CHAT_ENDED_FROM_CHATTING",
-										"CUSTOMER_HAS_ENDED_THE_CHAT");
-								addToChatTicketStatusQueue(chatTicketStatusMessage);
 
 							}
 						}
@@ -282,10 +278,6 @@ public class ChatService {
 							setStatusBrowsing(company, optionalContactEntry, chatEntry);
 						} else {
 							setStatusOffline(company, optionalContactEntry, chatEntry);
-							ChatTicketStatusMessage chatTicketStatusMessage = new ChatTicketStatusMessage(companyId,
-									closeChat.getSessionUUID(), "CLOSE_SESSION", "CHAT_ENDED_FROM_CHATTING",
-									"CUSTOMER_HAS_ENDED_THE_CHAT");
-							addToChatTicketStatusQueue(chatTicketStatusMessage);
 						}
 					}
 				}
