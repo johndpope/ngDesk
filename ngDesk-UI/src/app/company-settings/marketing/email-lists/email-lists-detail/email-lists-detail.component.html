@@ -18,13 +18,18 @@
 			</div>
 		</div>
 		<div fxLayoutAlign="center center" fxFlex="60" fxLayout="column" fxLayout.xs="row" fxFlex.xs="60"
-			*ngIf="emailListForm.value.CONDITIONS.length === 0">
+			*ngIf="allEmailListData.length === 0 && emailListForm.value.CONDITIONS.length === 0">
 			<h3 class="mat-h3">
 				Please set the conditions to get list of users
 			</h3>
-
 		</div>
-		<div *ngIf="emailListForm.value.CONDITIONS.length > 0" class="pad10" fxFlex="60" fxLayout="column" fxLayout.xs="row" fxFlex.xs="60">
+		<div fxLayoutAlign="center center" fxFlex="60" fxLayout="column" fxLayout.xs="row" fxFlex.xs="60"
+			*ngIf="allEmailListData.length === 0 && emailListForm.value.CONDITIONS.length > 0">
+			<h3 class="mat-h3">
+				Please select appropriate conditions to get list of users
+			</h3>
+		</div>
+		<div *ngIf="allEmailListData.length > 0" class="pad10" fxFlex="60" fxLayout="column" fxLayout.xs="row" fxFlex.xs="60">
 			<div fxFlex>
 				<app-custom-table [templateRef]="columnTemplateRef" (sortData)="sortData();customTableService.isLoading = true"
 					(pageChangeEmit)="pageChangeEmit($event);customTableService.isLoading = true">

@@ -46,6 +46,7 @@ export class RelationshipService {
 						}']" *ngFor="let entry of context.customModulesService.relationFieldFilteredEntries['${
 				field.NAME
 			}']"
+            matTooltip="{{entry['PRIMARY_DISPLAY_FIELD']}}"
              [value]="entry">{{entry['PRIMARY_DISPLAY_FIELD']}}
             </mat-option>
           </mat-autocomplete>
@@ -54,9 +55,9 @@ export class RelationshipService {
 					}'] && context.customModulesService.layoutType ==='edit'" matSuffix style="cursor: pointer;display: inline-block;"
 (click)="context.navigateTorelationEntry('${field.MODULE}', 
 context.fieldsMap['${field.FIELD_ID}']) ;" color="primary">link</mat-icon>
-            <button [disabled]="!context.editAccess || context.fieldsMap['${
+            <button [disabled]="!context.editAccess || (context.fieldsMap['${
 							field.FIELD_ID
-						}'].NOT_EDITABLE || context.customModulesService.fieldsDisableMap['${
+						}'].NOT_EDITABLE && !context.createLayout) || context.customModulesService.fieldsDisableMap['${
 				field.FIELD_ID
 			}']" 
             matSuffix style="cursor: pointer;display: inline-block;padding: 0px;border: none;background: none;"
@@ -91,11 +92,11 @@ context.fieldsMap['${field.FIELD_ID}']) ;" color="primary">link</mat-icon>
 			<mat-chip-list  [disabled]="!context.editAccess || context.fieldsMap['${field.FIELD_ID}'].NOT_EDITABLE || context.customModulesService.fieldsDisableMap['${field.FIELD_ID}']" #${field.NAME}ChipList
 			[required]="context.fieldsMap['${field.FIELD_ID}'].REQUIRED">
               <mat-chip *ngFor="let entry of context.entry['${field.NAME}']" [selectable]='true'
-                    [removable]=true (removed)="context.remove(entry, '${field.NAME}')" >
+                    [removable]=true (removed)="context.remove(entry, '${field.NAME}', trigautoTipDoc)" >
                     {{entry.PRIMARY_DISPLAY_FIELD}}
                     <mat-icon matChipRemove>cancel</mat-icon>
               </mat-chip>
-              <input #${field.NAME}Input [matAutocomplete]="${field.NAME}_auto"
+              <input #${field.NAME}Input [matAutocomplete]="${field.NAME}_auto" #trigautoTipDoc ="matAutocompleteTrigger"
                     [matChipInputFor]="${field.NAME}ChipList" [matChipInputSeparatorKeyCodes]="context.separatorKeysCodes"
                     [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="context.customModulesService.resetInput($event)"
                     [formControl]="context.customModulesService.formControls['${fieldControlName}']">

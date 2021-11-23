@@ -331,9 +331,6 @@ public class RenewCertificateJob {
 						"Internal Error: Stack Trace", sStackTrace, host);
 				sendEmailToSpencer.sendEmail();
 
-				SendEmail sendEmailToShashank = new SendEmail("shashank.shankaranand@allbluesolutions.com",
-						"support@ngdesk.com", "Internal Error: Stack Trace", sStackTrace, host);
-				sendEmailToShashank.sendEmail();
 			}
 
 		}

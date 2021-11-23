@@ -1,6 +1,7 @@
 package com.ngdesk.companies;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -8,48 +9,47 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.springframework.data.annotation.Id;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ngdesk.modules.rules.Condition;
 
 public class EmailList {
-	
+
 	@JsonProperty("EMAIL_LIST_ID")
 	private String emailListId;
 
 	@JsonProperty("NAME")
 	@NotNull(message = "EMAIL_LIST_NAME_NOT_NULL")
 	private String name;
-	
+
 	@JsonProperty("DESCRIPTION")
 	private String description;
-	
+
 	@JsonProperty("CONDITIONS")
 	@Valid
 	private List<Condition> conditions;
 
 	@JsonProperty("DATE_CREATED")
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-	private Timestamp dateCreated;
-	
+	private Date dateCreated;
+
 	@JsonProperty("DATE_UPDATED")
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-	private Timestamp dateUpdated;
+	private Date dateUpdated;
 
 	@JsonProperty("LAST_UPDATED_BY")
 	private String lastUpdatedBy;
 
 	@JsonProperty("CREATED_BY")
 	private String createdBy;
-	
+
 	public EmailList() {
-		
+
 	}
 
-	public EmailList(String emailListId,
-			@NotNull(message = "EMAIL_LIST_NAME_NOT_NULL") String name,
-			String description, @Valid List<Condition> conditions, Timestamp dateCreated,
-			Timestamp dateUpdated, String lastUpdatedBy, String createdBy) {
+	public EmailList(String emailListId, @NotNull(message = "EMAIL_LIST_NAME_NOT_NULL") String name, String description,
+			@Valid List<Condition> conditions, Date dateCreated, Date dateUpdated, String lastUpdatedBy,
+			String createdBy) {
 		super();
 		this.emailListId = emailListId;
 		this.name = name;
@@ -93,19 +93,19 @@ public class EmailList {
 		this.conditions = conditions;
 	}
 
-	public Timestamp getDateCreated() {
+	public Date getDateCreated() {
 		return dateCreated;
 	}
 
-	public void setDateCreated(Timestamp dateCreated) {
-		this.dateCreated = dateCreated;
-	}
-
-	public Timestamp getDateUpdated() {
+	public Date getDateUpdated() {
 		return dateUpdated;
 	}
 
-	public void setDateUpdated(Timestamp dateUpdated) {
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	public void setDateUpdated(Date dateUpdated) {
 		this.dateUpdated = dateUpdated;
 	}
 

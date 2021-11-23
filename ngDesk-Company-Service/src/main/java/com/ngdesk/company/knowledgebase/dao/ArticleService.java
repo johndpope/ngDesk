@@ -73,7 +73,6 @@ public class ArticleService {
 
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw new BadRequestException("ARTICLE_POST_ELASTIC_ERROR", null);
 		} 
 	}
 }
