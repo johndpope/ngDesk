@@ -210,6 +210,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	public operators: any = [];
 	// public chatFilters = [];
 	public previousChats = [];
+	public textEditorConfig = config;
 
 	constructor(
 		@Optional() @Inject(MAT_DIALOG_DATA) public modalData: any,
@@ -472,6 +473,9 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 									this.entry = responseList[1];
 								}
 								if (this.module['NAME'] == 'Chats') {
+									/** Setting tiny emc setting for Chat */
+									this.textEditorConfig['forced_root_block'] = '';
+									this.textEditorConfig['height'] = 150;
 									if (this.chatDataService.chatFilters.length === 0) {
 										this.module.FIELDS.filter((field) => {
 											if (field.NAME === 'AGENTS') {
@@ -1452,10 +1456,6 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 					(response: any) => {
 						this.customModulesService.discussionControls['MESSAGE'] +=
 							response.MESSAGE;
-
-						if (this.module['NAME'] == 'Chats') {
-							this.convertHTMLToPlainText();
-						}
 					},
 					(error: any) => {
 						console.log(error);
@@ -1464,9 +1464,6 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 		} else {
 			this.customModulesService.discussionControls['MESSAGE'] +=
 				premadeResponse.MESSAGE;
-		}
-		if (this.module['NAME'] == 'Chats') {
-			this.convertHTMLToPlainText();
 		}
 	}
 
@@ -3016,9 +3013,6 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	/** Publish message from Agent Side */
 	public publishMessages(chatmessage) {
 		let messageBody = chatmessage;
-		messageBody = messageBody.replace(/(\r\n|\r|\n)/g, '<br>');
-		// const linkifyStr = require('linkifyjs/string');
-		// messageBody = linkifyStr(messageBody, {});
 		const htmlMsg = `<html> <head></head> <body>${messageBody}</body> </html>`;
 		this.renderDetailDataSerice
 			.postAttachments(this.attachments)
@@ -3062,27 +3056,6 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 				this.chatChannel.receiverTextColor
 			);
 		});
-	}
-	// to get Plain text from premade responces
-	// using for chats
-	public convertHTMLToPlainText() {
-		// to remove HTML tags
-		let text = this.customModulesService.discussionControls['MESSAGE'].replace(
-			/<[^>]+>/gm,
-			''
-		);
-		// to add line breaks
-		text = text.replace(/&nbsp;/g, '\n');
-		// to remove empty lines
-		text = text.replace(/(^[ \t]*\n)/gm, '');
-		this.customModulesService.discussionControls['MESSAGE'] = text;
-
-		// let tempHtml = document.createElement('p');
-		// tempHtml.innerHTML = this.customModulesService.discussionControls[
-		// 	'MESSAGE'
-		// ].replace(/(^[ \t]*\n)/gm, '');
-		// this.customModulesService.discussionControls['MESSAGE'] =
-		// 	tempHtml.innerText || tempHtml.textContent;
 	}
 
 	/** Called on click of custmer card  */
