@@ -1332,7 +1332,6 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 			// to set disabled and enabled content
 			trigger.openPanel();
 			trigger.closePanel();
-
 		}
 	}
 
@@ -1902,6 +1901,12 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 							this.router.navigate([
 								`render/${this.route.snapshot.params.moduleId}`,
 							]);
+						} else if (saveButtonValue === 'continue') {
+							this.saving = false;
+							this.loaderService.isLoading2 = false;
+							this.router.navigate([
+								`render/${this.route.snapshot.params.moduleId}/edit/${response.DATA_ID}`,
+							]);
 						} else if (saveButtonValue === 'saveFromDialog') {
 							this.closeCreateOneToManyDialog();
 							this.saving = true;
@@ -1913,6 +1918,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 						}
 					},
 					(error) => {
+						this.loaderService.isLoading2 = false;
 						this.bannerMessageService.errorNotifications.push({
 							message: error.error.ERROR,
 						});
