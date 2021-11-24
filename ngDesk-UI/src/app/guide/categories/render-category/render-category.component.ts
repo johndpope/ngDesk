@@ -6,6 +6,7 @@ import { Category } from '../../../models/category';
 import { UsersService } from '../../../users/users.service';
 import { GuideService } from '../../guide.service';
 import { RolesService } from '@src/app/roles/roles.service';
+import { map, mergeMap } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-render-category',
@@ -55,57 +56,64 @@ export class RenderCategoryComponent implements OnInit {
 		}
 
 		const categoryId = this.route.snapshot.params['categoryId'];
-		this.guideService.getKbCategoryById(categoryId).subscribe(
-			(categoryResponse: any) => {
-				console.log('categoryResponse', categoryResponse);
-				this.category = this.convertCategory(categoryResponse);
-				console.log('this.category', this.category);
+		return this.guideService
+			.getKbCategoryById(categoryId)
+			.pipe(
+				mergeMap((categoryResponse: any) => {
+					console.log('categoryResponse', categoryResponse);
+					this.category = this.convertCategory(categoryResponse);
+					console.log('this.category', this.category);
 
-				this.guideService
-					.getKbSectionByCategoryId(this.category.categoryId)
-					.subscribe(
-						(sectionsResponse: any) => {
-							console.log('sectionsResponse', sectionsResponse);
-							this.sections = this.sortByOrder(sectionsResponse.DATA);
-							this.sections.forEach((section, index) => {
-								section['ARTICLES'] = [];
-								//	debugger;
-								this.guideService
-									.getArticlesBySectionId(
-										sectionsResponse.DATA[index].sectionId
-									)
-									.subscribe(
-										(articlesResponse: any) => {
-											console.log('articlesResponse', articlesResponse);
-											section['ARTICLES'] = this.sortByOrder(
-												articlesResponse.getArticlesBySectionId.filter(
-													(article) =>
-														article.publish === true &&
-														article.section === section.sectionId
-												)
-											);
-											if (index === this.sections.length - 1) {
-												this.isLoading = false;
-											}
-										},
-										(articlesError: any) => {
-											this.isLoading = false;
-										}
-									);
-							});
-							if (this.sections.length === 0) {
-								this.isLoading = false;
-							}
-						},
-						(sectionsError: any) => {
-							this.isLoading = false;
-						}
-					);
-			},
-			(categoryError: any) => {
-				this.isLoading = false;
-			}
-		);
+					return this.guideService
+						.getKbSectionByCategoryId(this.category.categoryId)
+						.pipe(
+							map((sectionsResponse: any) => {
+								console.log('sectionsResponse', sectionsResponse);
+								this.sections = this.sortByOrder(sectionsResponse.DATA);
+								this.sections.forEach((section, index) => {
+									section['ARTICLES'] = [];
+									//	debugger;
+									return this.guideService
+										.getArticlesBySectionId(
+											sectionsResponse.DATA[index].sectionId
+										)
+										.pipe(
+											map((articlesResponse: any) => {
+												console.log('articlesResponse', articlesResponse);
+												section['ARTICLES'] = this.sortByOrder(
+													articlesResponse.getArticlesBySectionId.filter(
+														(article) =>
+															article.publish === true &&
+															article.section === section.sectionId
+													)
+												);
+												if (index === this.sections.length - 1) {
+													this.isLoading = false;
+												}
+												(articlesError: any) => {
+													console.log(articlesError);
+													this.isLoading = false;
+												};
+											})
+										)
+										.subscribe();
+								});
+								if (this.sections.length === 0) {
+									this.isLoading = false;
+								}
+								(sectionsError: any) => {
+									console.log(sectionsError);
+									this.isLoading = false;
+								};
+								(categoryError: any) => {
+									console.log(categoryError);
+									this.isLoading = false;
+								};
+							})
+						);
+				})
+			)
+			.subscribe();
 	}
 
 	private sortByOrder(array): any[] {
