@@ -1,6 +1,7 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { map, mergeMap } from 'rxjs/operators';
 
 import { Category } from '../../../models/category';
 import { GuideService } from '../../guide.service';
@@ -23,62 +24,70 @@ export class ArrangeSectionsComponent implements OnInit {
 	) {
 		this.categoryId = this.route.snapshot.params['categoryId'];
 		// get category
-		this.guideService.getKbCategoryById(this.categoryId).subscribe(
-			(categoryResponse: any) => {
-				this.category = this.convertCategory(categoryResponse);
-				// get all sections in this category
-				this.guideService.getKbSectionByCategoryId(this.categoryId).subscribe(
-					(sectionsResponse: any) => {
-						sectionsResponse.DATA.forEach((section, index) => {
-							console.log('sectionsResponse', sectionsResponse);
-							this.guideService
-								.getArticlesBySectionId(section.sectionId)
-								.subscribe(
-									(articlesResponse: any) => {
-										console.log('articlesResponse', articlesResponse);
-										// for each section, add its articles
-										section['ARTICLES'] =
-											articlesResponse.getArticlesBySectionId.filter(
-												(article) => article.section === section.sectionId
-											);
-										this.sections.push(section);
-										// waits until all sections with articles are loaded before sorting
-										if (sectionsResponse.DATA.length === this.sections.length) {
-											this.sections.sort((n1, n2) => {
-												if (n1.ORDER > n2.ORDER) {
-													return 1;
-												}
+		this.guideService
+			.getKbCategoryById(this.categoryId)
+			.pipe(
+				mergeMap((categoryResponse: any) => {
+					this.category = this.convertCategory(categoryResponse);
+					// get all sections in this category
+					return this.guideService
+						.getKbSectionByCategoryId(this.categoryId)
+						.pipe(
+							map((sectionsResponse: any) => {
+								sectionsResponse.DATA.forEach((section, index) => {
+									console.log('sectionsResponse', sectionsResponse);
+									this.guideService
+										.getArticlesBySectionId(section.sectionId)
+										.pipe(
+											map((articlesResponse: any) => {
+												console.log('articlesResponse', articlesResponse);
+												// for each section, add its articles
+												section['ARTICLES'] =
+													articlesResponse.getArticlesBySectionId.filter(
+														(article) => article.section === section.sectionId
+													);
+												this.sections.push(section);
+												// waits until all sections with articles are loaded before sorting
+												if (
+													sectionsResponse.DATA.length === this.sections.length
+												) {
+													this.sections.sort((n1, n2) => {
+														if (n1.ORDER > n2.ORDER) {
+															return 1;
+														}
 
-												if (n1.ORDER < n2.ORDER) {
-													return -1;
-												}
+														if (n1.ORDER < n2.ORDER) {
+															return -1;
+														}
 
-												return 0;
-											});
-											this.isLoading = false;
-										}
-									},
-									(articlesError: any) => {
-										console.log(articlesError);
-										this.isLoading = false;
-									}
-								);
-						});
-						if (sectionsResponse.DATA.length === 0) {
-							this.isLoading = false;
-						}
-					},
-					(sectionsError: any) => {
-						console.log(sectionsError);
-						this.isLoading = false;
-					}
-				);
-			},
-			(categoryError: any) => {
-				console.log(categoryError);
-				this.isLoading = false;
-			}
-		);
+														return 0;
+													});
+													this.isLoading = false;
+												}
+												(articlesError: any) => {
+													console.log(articlesError);
+													this.isLoading = false;
+												};
+											})
+										)
+										.subscribe();
+								});
+								if (sectionsResponse.DATA.length === 0) {
+									this.isLoading = false;
+								}
+								(sectionsError: any) => {
+									console.log(sectionsError);
+									this.isLoading = false;
+								};
+								(categoryError: any) => {
+									console.log(categoryError);
+									this.isLoading = false;
+								};
+							})
+						);
+				})
+			)
+			.subscribe();
 	}
 
 	public ngOnInit() {}

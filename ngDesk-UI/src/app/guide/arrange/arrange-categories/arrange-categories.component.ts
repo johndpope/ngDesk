@@ -1,6 +1,6 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
-import { map, mergeMap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 import { GuideService } from '../../guide.service';
 
@@ -21,10 +21,10 @@ export class ArrangeCategoriesComponent implements OnInit {
 		this.guideService
 			.getKbCategories()
 			.pipe(
-				mergeMap((categoriesResponse) => {
+				map((categoriesResponse: any) => {
 					console.log('categoriesResponse', categoriesResponse);
-					return categoriesResponse['DATA'].forEach((category) => {
-						return this.guideService
+					categoriesResponse.DATA.forEach((category) => {
+						this.guideService
 							.getKbSectionByCategoryId(category.categoryId)
 							.pipe(
 								map((sectionsResponse: any) => {
@@ -34,7 +34,7 @@ export class ArrangeCategoriesComponent implements OnInit {
 									this.categories.push(category);
 									// waits until all categories are loaded to sort by order
 									if (
-										this.categories.length === categoriesResponse['DATA'].length
+										this.categories.length === categoriesResponse.DATA.length
 									) {
 										this.categories.sort((n1, n2) => {
 											if (n1.ORDER > n2.ORDER) {
@@ -49,24 +49,21 @@ export class ArrangeCategoriesComponent implements OnInit {
 										});
 										this.isLoading = false;
 									}
-									// else {
-									// 	this.isLoading = false;
-									// 	return sectionsResponse;
-									// }
 									(sectionsError: any) => {
 										console.log(sectionsError);
 										this.isLoading = false;
 									};
-									if (categoriesResponse['DATA'].length === 0) {
-										this.isLoading = false;
-									}
-									(categoriesError: any) => {
-										console.log(categoriesError);
-										this.isLoading = false;
-									};
 								})
-							);
+							)
+							.subscribe();
 					});
+					if (categoriesResponse.DATA.length === 0) {
+						this.isLoading = false;
+					}
+					(categoriesError: any) => {
+						console.log(categoriesError);
+						this.isLoading = false;
+					};
 				})
 			)
 			.subscribe();
