@@ -201,6 +201,7 @@
           "ICON": "web_asset",
           "EDITABLE": false,
           "NAME": "SAM",
+          "PATH_PARAMETER": "",
           "SUB_MENU_ITEMS": [
             {
               "ROUTE": "APPLICATIONS_ID_REPLACE",
