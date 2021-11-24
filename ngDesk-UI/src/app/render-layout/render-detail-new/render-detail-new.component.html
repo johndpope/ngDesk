@@ -3,15 +3,10 @@
 	<div *ngIf="modalData === null && module" fxLayout="row" style="width: 100%;">
 		<app-title-bar *ngIf=" !showSaveOnTitleBar" style="min-width: 100%" [templateRef]="approvalFieldTemplate"
 			[buttonsTemplateRef]="titleBarTemplateRef" title="{{ module.SINGULAR_NAME }}"></app-title-bar>
-		<app-title-bar *ngIf=" editAccess && showSaveOnTitleBar && createLayout" style="min-width: 100%"
-			[buttonsTemplateRef]="titleBarTemplateRef" [templateRef]="approvalFieldTemplate" title="{{ module.SINGULAR_NAME }}"
-			buttonText="{{'SAVE' | translate}}" (buttonRightOnClick)="save('return')">
-		</app-title-bar>
-		<app-title-bar *ngIf=" editAccess && showSaveOnTitleBar && !createLayout" style="min-width: 100%"
-			[buttonsTemplateRef]="titleBarTemplateRef" [templateRef]="approvalFieldTemplate" title="{{ module.SINGULAR_NAME }}"
-			buttonText="{{'SAVE_AND_RETURN' | translate}}" (buttonRightOnClick)="save('return')" buttonText3="{{'EVENTS' | translate}}"
-			buttonText2="{{'SAVE_AND_CONTINUE' | translate}}" (buttonRightOnClick2)="save('continue')" enableButton2=true
-			(buttonRightOnClick3)="events()" enableButton3=true>
+		<app-title-bar *ngIf=" editAccess && showSaveOnTitleBar" style="min-width: 100%" [buttonsTemplateRef]="titleBarTemplateRef"
+			[templateRef]="approvalFieldTemplate" title="{{ module.SINGULAR_NAME }}" buttonText="{{'SAVE_AND_RETURN' | translate}}"
+			(buttonRightOnClick)="save('return')" buttonText3="{{'EVENTS' | translate}}" buttonText2="{{'SAVE_AND_CONTINUE' | translate}}"
+			(buttonRightOnClick2)="save('continue')" enableButton2=true (buttonRightOnClick3)="events()" enableButton3=true>
 		</app-title-bar>
 	</div>
 </ng-template>

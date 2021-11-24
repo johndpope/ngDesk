@@ -214,101 +214,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	constructor(
 		@Optional() @Inject(MAT_DIALOG_DATA) public modalData: any,
 		@Optional()
-		private renderDetailDialogRef: MatDialogRef<RenderDetailNewComponent>, // public computeAggregateFieldsFromOneToMany(fieldData) {
-		// 	if (this.customModulesService.layoutType === 'edit') {
-		// 		this.entry[fieldData.NAME] = [];
-		// 	}
-		// 	this.cacheService.getModule(fieldData.MODULE).subscribe((response: any) => {
-		// 		this.module.FIELDS.forEach((field) => {
-		// 			if (
-		// 				field.DATA_TYPE.DISPLAY === 'Aggregate' &&
-		// 				this.entry.hasOwnProperty(fieldData.NAME) &&
-		// 				field.AGGREGATION_FIELD === fieldData.FIELD_ID
-		// 			) {
-		// 				const aggregationField = response['FIELDS'].find(
-		// 					(fieldInRelated) =>
-		// 						fieldInRelated.FIELD_ID === field.AGGREGATION_RELATED_FIELD
-		// 				);
-		// 				this.entry[field.NAME] = 0;
-		// 				this.customModulesService.oneToManyFields[
-		// 					fieldData.FIELD_ID
-		// 				].DATA.forEach((element) => {
-		// 					if (field.AGGREGATION_TYPE === 'sum') {
-		// 						let currentStatus;
-		// 						let overAllStatus;
-		// 						let hasAll = false;
-		// 						if (field.CONDITIONS && field.CONDITIONS.length > 0) {
-		// 							field.CONDITIONS.forEach((condition) => {
-
-		// 								const requirementType = condition.REQUIREMENT_TYPE;
-		// 								const fieldRelated = response['FIELDS'].find(
-		// 									(fieldInRelated) =>
-		// 										fieldInRelated.FIELD_ID === condition.CONDITION
-		// 								);
-		// 								currentStatus =
-		// 									this.customModulesService.fieldConditionEvaluation(
-		// 										condition,
-		// 										fieldRelated,
-		// 										element
-		// 									);
-		// 								if (requirementType === 'All') {
-		// 									hasAll = true;
-		// 								}
-		// 								if (overAllStatus === undefined) {
-		// 									overAllStatus = currentStatus;
-		// 								} else if (currentStatus === false && hasAll) {
-		// 									overAllStatus = false;
-		// 								} else if (currentStatus === true && !hasAll) {
-		// 									overAllStatus = true;
-		// 								} else if (currentStatus === true && hasAll) {
-		// 									overAllStatus = true;
-		// 								} else if (currentStatus === false && !hasAll) {
-		// 									overAllStatus = overAllStatus;
-		// 								}
-
-		// 							});
-		// 						} else {
-		// 							overAllStatus = true;
-		// 						}
-		// 						if (overAllStatus) {
-		// 							if (
-		// 								element[aggregationField.NAME] === undefined ||
-		// 								element[aggregationField.NAME] === null
-		// 							) {
-		// 								element[aggregationField.NAME] = 0;
-		// 							}
-
-		// 							this.entry[field.NAME] =
-		// 								parseFloat(this.entry[field.NAME]) +
-		// 								parseFloat(element[aggregationField.NAME]);
-
-		// 							this.entry[field.NAME] = (Math.round(this.entry[field.NAME] * 100) / 100);
-
-		// 						}
-		// 						//  else {
-		// 						// 	element[aggregationField.NAME] = 0;
-		// 						// }
-
-		// 					} else {
-		// 						if (
-		// 							element[aggregationField.NAME] === undefined ||
-		// 							element[aggregationField.NAME] === null
-		// 						) {
-		// 							element[aggregationField.NAME] = 0;
-		// 						}
-
-		// 						this.entry[field.NAME] = parseFloat(
-		// 							element[aggregationField.NAME]
-		// 						);
-
-		// 						this.entry[field.NAME] = (Math.round(this.entry[field.NAME] * 100) / 100);
-
-		// 					}
-		// 				});
-		// 			}
-		// 		});
-		// 	});
-		// }
+		private renderDetailDialogRef: MatDialogRef<RenderDetailNewComponent>,
 		private bannerMessageService: BannerMessageService,
 		private cacheService: CacheService,
 		private cd: ChangeDetectorRef,
@@ -376,8 +282,9 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 		this.panels = [];
 		this.showTabs = false;
 		this.gridLayout = false;
-		this.saving = false;
 		this.showSaveOnTitleBar = false;
+		this.createLayout = false;
+		this.saving = false;
 
 		this.workflowTemplate = '';
 		this.workflows = {};
@@ -1332,7 +1239,6 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 			// to set disabled and enabled content
 			trigger.openPanel();
 			trigger.closePanel();
-
 		}
 	}
 
@@ -1902,6 +1808,15 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 							this.router.navigate([
 								`render/${this.route.snapshot.params.moduleId}`,
 							]);
+						} else if (saveButtonValue === 'continue') {
+							this.saving = false;
+							this.loaderService.isLoading2 = false;
+							this.bannerMessageService.successNotifications.push({
+								message: this.translateService.instant('UPDATED_SUCCESSFULLY'),
+							});
+							this.router.navigate([
+								`render/${this.route.snapshot.params.moduleId}/edit/${response.DATA_ID}`,
+							]);
 						} else if (saveButtonValue === 'saveFromDialog') {
 							this.closeCreateOneToManyDialog();
 							this.saving = true;
@@ -1913,11 +1828,13 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 						}
 					},
 					(error) => {
+						this.loaderService.isLoading2 = false;
 						this.bannerMessageService.errorNotifications.push({
 							message: error.error.ERROR,
 						});
 					}
 				);
+			this.loaderService.isLoading2 = false;
 		} else {
 			this.dataService
 				.putModuleEntry(this.module['MODULE_ID'], payload, false)
