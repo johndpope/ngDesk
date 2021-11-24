@@ -1161,7 +1161,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	}
 
 	// START RELATION FUNCTIONS
-	public clearInput(event: any) {}
+	public clearInput(event: any) { }
 
 	public addDataForRelationshipField(field, event, formControlFieldName) {
 		if (
@@ -1254,9 +1254,8 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 					);
 					if (discussionField) {
 						let query = `{
-							entry: get${this.module.NAME.replace(/ /g, '_')}Entry(id: "${
-							this.entry.DATA_ID
-						}") {'${discussionField.NAME}'}}`;
+							entry: get${this.module.NAME.replace(/ /g, '_')}Entry(id: "${this.entry.DATA_ID
+							}") {'${discussionField.NAME}'}}`;
 						query = this.cacheService.buildDiscussionQuery(
 							query,
 							discussionField.NAME
@@ -1903,7 +1902,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 			if (
 				attachments.length > 0 ||
 				this.customModulesService.discussionControls['MESSAGE'].trim().length >
-					0
+				0
 			) {
 				const messagePayload =
 					this.renderDetailDataSerice.buildDiscussionPayload(
@@ -2195,11 +2194,9 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 		attachmentLists.forEach((attachment) => {
 			this.attachmentsList.push({
 				FILE: {
-					url: `https://${this.userService.getSubdomain()}.ngdesk.com/api/ngdesk-data-service-v1/attachments?message_id&module_id=${
-						this.module.MODULE_ID
-					}&data_id=${dataId}&attachment_uuid=${
-						attachment['ATTACHMENT_UUID']
-					}&field_id=${filePreviewField.FIELD_ID}`,
+					url: `https://${this.userService.getSubdomain()}.ngdesk.com/api/ngdesk-data-service-v1/attachments?message_id&module_id=${this.module.MODULE_ID
+						}&data_id=${dataId}&attachment_uuid=${attachment['ATTACHMENT_UUID']
+						}&field_id=${filePreviewField.FIELD_ID}`,
 					httpHeaders: {
 						authentication_token: this.userService.getAuthenticationToken(),
 					},
@@ -2613,7 +2610,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 			}
 		);
 
-		setComment.afterClosed().subscribe((comment) => {});
+		setComment.afterClosed().subscribe((comment) => { });
 	}
 
 	public getcalculatedValuesForFormula() {
@@ -3012,36 +3009,38 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	}
 	/** Publish message from Agent Side */
 	public publishMessages(chatmessage) {
-		let messageBody = chatmessage;
-		const htmlMsg = `<html> <head></head> <body>${messageBody}</body> </html>`;
-		this.renderDetailDataSerice
-			.postAttachments(this.attachments)
-			.subscribe((attachmentResponse: any) => {
-				this.attachments = [];
-				const msgObj = {
-					agentDataID: this.userService.user.DATA_ID,
-					customerDataID: this.entry.REQUESTOR.DATA_ID,
-					sessionUUID: this.entry.SESSION_UUID,
-					discussionMessage: {
-						ATTACHMENTS: JSON.parse(JSON.stringify(attachmentResponse)),
-						COMPANY_SUBDOMAIN: this.userService.getSubdomain(),
-						ENTRY_ID: this.route.snapshot.params['dataId'],
-						MESSAGE: htmlMsg,
-						MESSAGE_ID: '',
-						MESSAGE_TYPE: 'MESSAGE',
-						MODULE_ID: this.module['MODULE_ID'],
-						SENDER: {
-							FIRST_NAME: this.userService.user.FIRST_NAME,
-							LAST_NAME: this.userService.user.LAST_NAME,
-							ROLE: this.userService.user.ROLE,
-							USER_UUID: this.userService.user.USER_UUID,
+		if (chatmessage.length > 0) {
+			let messageBody = chatmessage;
+			const htmlMsg = `<html> <head></head> <body>${messageBody}</body> </html>`;
+			this.renderDetailDataSerice
+				.postAttachments(this.attachments)
+				.subscribe((attachmentResponse: any) => {
+					this.attachments = [];
+					const msgObj = {
+						agentDataID: this.userService.user.DATA_ID,
+						customerDataID: this.entry.REQUESTOR.DATA_ID,
+						sessionUUID: this.entry.SESSION_UUID,
+						discussionMessage: {
+							ATTACHMENTS: JSON.parse(JSON.stringify(attachmentResponse)),
+							COMPANY_SUBDOMAIN: this.userService.getSubdomain(),
+							ENTRY_ID: this.route.snapshot.params['dataId'],
+							MESSAGE: htmlMsg,
+							MESSAGE_ID: '',
+							MESSAGE_TYPE: 'MESSAGE',
+							MODULE_ID: this.module['MODULE_ID'],
+							SENDER: {
+								FIRST_NAME: this.userService.user.FIRST_NAME,
+								LAST_NAME: this.userService.user.LAST_NAME,
+								ROLE: this.userService.user.ROLE,
+								USER_UUID: this.userService.user.USER_UUID,
+							},
 						},
-					},
-				};
-				this.websocketService.publishMessage(msgObj);
-			});
+					};
+					this.websocketService.publishMessage(msgObj);
+				});
 
-		this.customModulesService.discussionControls['MESSAGE'] = '';
+			this.customModulesService.discussionControls['MESSAGE'] = '';
+		}
 	}
 
 	public getChatChannelDetails() {
