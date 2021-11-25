@@ -204,45 +204,15 @@
           "PATH_PARAMETER": "",
           "SUB_MENU_ITEMS": [
             {
-              "ROUTE": "APPLICATIONS_ID_REPLACE",
-              "ORDER": 0,
-              "MODULE": "APPLICATIONS_ID_REPLACE",
-              "IS_MODULE": true,
-              "PATH_PARAMETER": "",
-              "ICON": "arrow_upward",
-              "EDITABLE": false,
-              "NAME": "Applications"
-            },
-            {
               "ROUTE": "ASSETS_ID_REPLACE",
-              "ORDER": 1,
+              "ORDER": 0,
               "MODULE": "ASSETS_ID_REPLACE",
               "IS_MODULE": true,
               "PATH_PARAMETER": "",
               "ICON": "build",
               "EDITABLE": false,
               "NAME": "Assets"
-            },
-            {
-              "ROUTE": "DISCOVERED SOFTWARE_ID_REPLACE",
-              "ORDER": 2,
-              "MODULE": "DISCOVERED SOFTWARE_ID_REPLACE",
-              "IS_MODULE": true,
-              "PATH_PARAMETER": "",
-              "ICON": "cloud",
-              "EDITABLE": false,
-              "NAME": "Software"
-            },
-            {
-              "ROUTE": "LICENSES_ID_REPLACE",
-              "ORDER": 3,
-              "MODULE": "LICENSES_ID_REPLACE",
-              "IS_MODULE": true,
-              "PATH_PARAMETER": "",
-              "ICON": "gavel",
-              "EDITABLE": false,
-              "NAME": "Licenses"
-            }
+            }           
           ]
         },
         {
