@@ -491,7 +491,11 @@ export class DetailLayoutComponent implements OnInit {
 	public drop(event: CdkDragDrop<string[]>, div: string) {
 		let hasSection = false;
 		const fieldId = event.item.element.nativeElement.id;
-		if (div === 'SIDE_BAR' && this.layoutType != 'create_layouts') {
+		if (
+			this.fieldsMap[fieldId].NOT_EDITABLE &&
+			div === 'SIDE_BAR' &&
+			this.layoutType != 'create_layouts'
+		) {
 			this.bannerMessageService.errorNotifications.push({
 				message: this.translateService.instant('NOT_EDITABLE_FIELDS'),
 			});
