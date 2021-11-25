@@ -144,7 +144,7 @@ export class RenderArticlesComponent implements OnInit {
 			this.usersService.user['TEAMS'].forEach((team, index) => {
 				this.section['managedBy'].forEach((managedBy) => {
 					if (managedBy['_id'] === team) {
-						this.hasEditAccess = false;
+						this.hasEditAccess = true;
 					}
 				});
 			});
