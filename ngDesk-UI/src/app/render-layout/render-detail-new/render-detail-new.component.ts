@@ -476,6 +476,11 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 									/** Setting tiny emc setting for Chat */
 									this.textEditorConfig['forced_root_block'] = '';
 									this.textEditorConfig['height'] = 150;
+									this.textEditorConfig['setup'] = (editor) => {
+										editor.on('keyup', () => {
+											this.triggerFunction(event, editor);
+										});
+									};
 									if (this.chatDataService.chatFilters.length === 0) {
 										this.module.FIELDS.filter((field) => {
 											if (field.NAME === 'AGENTS') {
@@ -1161,7 +1166,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	}
 
 	// START RELATION FUNCTIONS
-	public clearInput(event: any) { }
+	public clearInput(event: any) {}
 
 	public addDataForRelationshipField(field, event, formControlFieldName) {
 		if (
@@ -1254,8 +1259,9 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 					);
 					if (discussionField) {
 						let query = `{
-							entry: get${this.module.NAME.replace(/ /g, '_')}Entry(id: "${this.entry.DATA_ID
-							}") {'${discussionField.NAME}'}}`;
+							entry: get${this.module.NAME.replace(/ /g, '_')}Entry(id: "${
+							this.entry.DATA_ID
+						}") {'${discussionField.NAME}'}}`;
 						query = this.cacheService.buildDiscussionQuery(
 							query,
 							discussionField.NAME
@@ -1902,7 +1908,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 			if (
 				attachments.length > 0 ||
 				this.customModulesService.discussionControls['MESSAGE'].trim().length >
-				0
+					0
 			) {
 				const messagePayload =
 					this.renderDetailDataSerice.buildDiscussionPayload(
@@ -2194,9 +2200,11 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 		attachmentLists.forEach((attachment) => {
 			this.attachmentsList.push({
 				FILE: {
-					url: `https://${this.userService.getSubdomain()}.ngdesk.com/api/ngdesk-data-service-v1/attachments?message_id&module_id=${this.module.MODULE_ID
-						}&data_id=${dataId}&attachment_uuid=${attachment['ATTACHMENT_UUID']
-						}&field_id=${filePreviewField.FIELD_ID}`,
+					url: `https://${this.userService.getSubdomain()}.ngdesk.com/api/ngdesk-data-service-v1/attachments?message_id&module_id=${
+						this.module.MODULE_ID
+					}&data_id=${dataId}&attachment_uuid=${
+						attachment['ATTACHMENT_UUID']
+					}&field_id=${filePreviewField.FIELD_ID}`,
 					httpHeaders: {
 						authentication_token: this.userService.getAuthenticationToken(),
 					},
@@ -2610,7 +2618,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 			}
 		);
 
-		setComment.afterClosed().subscribe((comment) => { });
+		setComment.afterClosed().subscribe((comment) => {});
 	}
 
 	public getcalculatedValuesForFormula() {
@@ -2998,13 +3006,17 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 
 	// chat related code
 
-	public triggerFunction(event, chatmessage) {
+	public triggerFunction(event, editor) {
 		// enterToSend is checkbox in chat for if "press enter to submit" is preferred
 		// this.fileSizeLimit = true;
+
 		if (event.shiftKey && event.keyCode === 13) {
-			chatmessage += '\n';
+			this.customModulesService.discussionControls['MESSAGE'] += '\n';
 		} else if (event.keyCode === 13) {
-			this.publishMessages(chatmessage);
+			this.publishMessages(
+				this.customModulesService.discussionControls['MESSAGE']
+			);
+			editor.setContent('');
 		}
 	}
 	/** Publish message from Agent Side */
