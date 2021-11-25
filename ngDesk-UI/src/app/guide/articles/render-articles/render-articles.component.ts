@@ -142,7 +142,6 @@ export class RenderArticlesComponent implements OnInit {
 	public checkEditAccess() {
 		if (this.usersService.getAuthenticationToken()) {
 			this.usersService.user['TEAMS'].forEach((team, index) => {
-				this.hasEditAccess = true;
 				this.section['managedBy'].forEach((managedBy) => {
 					if (managedBy['_id'] === team) {
 						this.hasEditAccess = false;
@@ -152,11 +151,7 @@ export class RenderArticlesComponent implements OnInit {
 			this.roleService
 				.getRole(this.usersService.user.ROLE)
 				.subscribe((response: any) => {
-					if (
-						response.NAME === 'SystemAdmin' ||
-						response.NAME === 'Agent' ||
-						response.NAME === 'Customers'
-					) {
+					if (response.NAME === 'SystemAdmin') {
 						this.hasEditAccess = true;
 					}
 				});
