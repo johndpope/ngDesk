@@ -101,6 +101,7 @@ public class ChatService {
 									chatNotification.setType("CHAT_NOTIFICATION");
 								} else {
 									entry.put("DATA_ID", optionalChatEntry.get().get("_id").toString());
+									entry.put("STATUS", "Browsing");
 									chatEntry = dataProxy.putModuleEntry(entry, optionalChatModule.get().getModuleId(),
 											false, companyId, user.get("USER_UUID").toString());
 									chatNotification.setType("CHAT_NOTIFICATION");

@@ -3227,7 +3227,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 	public chatHistoryFilter() {
 		let chatFilters = [];
 		this.module.FIELDS.filter((field) => {
-			if (field.NAME === 'REQUESTOR') {
+			if (field.NAME === 'REQUESTOR' && this.entry[field.NAME]) {
 				const filter = {
 					condition: field.FIELD_ID,
 					operator: 'EQUALS_TO',
@@ -3237,11 +3237,13 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 				chatFilters.push(filter);
 			}
 		});
-		this.chatDataService
-			.getChatsByUserId(this.module.MODULE_ID, chatFilters)
-			.subscribe((chats: any) => {
-				this.previousChats = chats.DATA;
-			});
+		if (chatFilters.length > 0) {
+			this.chatDataService
+				.getChatsByUserId(this.module.MODULE_ID, chatFilters)
+				.subscribe((chats: any) => {
+					this.previousChats = chats.DATA;
+				});
+		}
 	}
 
 	/** To Display Requester in chat filter */
