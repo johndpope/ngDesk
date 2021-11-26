@@ -66,6 +66,7 @@ public class FindAgentAndAssign {
 
 		String companyId = company.getId();
 		String customerRole = customer.get("ROLE").toString();
+		
 
 		Optional<Module> optionalChatModule = modulesRepository.findModuleByName("Chats", "modules_" + company.getId());
 		List<String> teamsWhoCanChat = company.getChatSettings().getTeamsWhoCanChat();
@@ -125,15 +126,18 @@ public class FindAgentAndAssign {
 			}
 			// Fetch the customer contactId
 			String customerContactId = null;
+			String customerName =null;
 			if (customer != null) {
 				Optional<Map<String, Object>> optionalCustomerContactEntry = entryRepository
 						.findById(customer.get("CONTACT").toString(), "Contacts_" + companyId);
 				if (optionalCustomerContactEntry.isPresent()) {
 					customerContactId = optionalCustomerContactEntry.get().get("_id").toString();
+					customerName = optionalCustomerContactEntry.get().get("FULL_NAME").toString();
 				}
 			}
 
 			String agentRole = agentUserEntry.get("ROLE").toString();
+			
 
 			List<String> teams = (List<String>) agentUserEntry.get("TEAMS");
 			Boolean isTeams = false;
@@ -179,8 +183,12 @@ public class FindAgentAndAssign {
 									chatModule.getModuleId(), existingChatEntry.get("_id").toString());
 							if (discussionFieldName != null) {
 								webSocketService.addDiscussionToEntry(discussionMessage, company.getCompanySubdomain(),
-										customer.get("_id").toString(), false);
+										agentUserEntry.get("_id").toString(), false);
 							}
+							
+							
+							
+							
 
 							// Add agents and requestor to entry
 							List<Map<String, Object>> agents = new ArrayList<Map<String, Object>>();
@@ -204,7 +212,27 @@ public class FindAgentAndAssign {
 									existingChatEntry.get("_id").toString(), agentUserEntry.get("_id").toString(),
 									new Date(), new Date(), false, "You have been assigned a new chat");
 							redisTemplate.convertAndSend("notification", notifyAgent);
+							 
+						
+							String messageForAgent = global.getFile("metadata_chat_agent_join.html");
+							Map<String, Object> metaDataMessageForAgent = new HashMap<String, Object>();
 
+							messageForAgent = messageForAgent.replace("NAME_REPLACE", customerName);
+							messageForAgent = messageForAgent.replace("DATE_TIME_REPLACE", new SimpleDateFormat("MMM d y h:mm:ss a")
+									.format(new Timestamp(new Date().getTime())));
+							String systemUserUUIDForCustomer = getSystemUser(companyId);
+							metaDataMessageForAgent.put("COMPANY_UUID", company.getCompanyUuid());
+							metaDataMessageForAgent.put("MESSAGE_ID", UUID.randomUUID().toString());
+							metaDataMessageForAgent.put("USER_UUID", systemUserUUIDForCustomer);
+							DiscussionMessage discussionMessageForAgent = buildMetaDataPayload(message, companyId,
+									chatModule.getModuleId(), existingChatEntry.get("_id").toString());
+							if (discussionFieldName != null) {
+								webSocketService.addDiscussionToEntry(discussionMessageForAgent, company.getCompanySubdomain(),
+										customer.get("_id").toString(), false);
+							}
+
+							
+							
 							AgentDetails agentDetails = new AgentDetails(companyId, agentFirstName, agentLastName,
 									agentUserEntry.get("_id").toString(), customer.get("_id").toString(), true,
 									chatUser.getSessionUUID(), new Date(), agentRole, customerRole,

@@ -1,5 +1,6 @@
 package com.ngdesk.websocket.channels.chat.dao;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,7 +10,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.TimeZone;
-
+import java.util.UUID;
+import com.ngdesk.data.dao.DiscussionMessage;
+import com.ngdesk.data.dao.MessageAttachment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
@@ -17,14 +20,16 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ngdesk.commons.Global;
 import com.ngdesk.commons.mail.SendMail;
-import com.ngdesk.data.dao.DiscussionMessage;
 import com.ngdesk.data.dao.Sender;
 import com.ngdesk.repositories.ChatChannelRepository;
 import com.ngdesk.repositories.CompaniesRepository;
 import com.ngdesk.repositories.ModuleEntryRepository;
 import com.ngdesk.repositories.ModulesRepository;
 import com.ngdesk.websocket.companies.dao.Company;
+import com.ngdesk.websocket.dao.WebSocketService;
+import com.ngdesk.websocket.modules.dao.DataType;
 import com.ngdesk.websocket.modules.dao.Module;
+import com.ngdesk.websocket.modules.dao.ModuleField;
 import com.ngdesk.websocket.notification.dao.AgentDetails;
 
 @Component
@@ -41,6 +46,9 @@ public class ChatService {
 
 	@Autowired
 	DataProxy dataProxy;
+
+	@Autowired
+	WebSocketService webSocketService;
 
 	@Autowired
 	ChatChannelRepository chatChannelRepository;
@@ -263,6 +271,7 @@ public class ChatService {
 							chatTranscipt = chatTranscipt.replace("CHAT_HISTORY_REPLACE", messageChat); // FETCHING DATA
 							Optional<Map<String, Object>> optionalUserEntry = moduleEntryRepository
 									.findById(optionalContactEntry.get().get("USER").toString(), "Users_" + companyId);
+
 							if (optionalUserEntry.isPresent()) {
 								String to = optionalUserEntry.get().get("EMAIL_ADDRESS").toString();
 								String from = "support@" + subdomain + ".ngdesk.com";
@@ -278,6 +287,7 @@ public class ChatService {
 							setStatusBrowsing(company, optionalContactEntry, chatEntry);
 						} else {
 							setStatusOffline(company, optionalContactEntry, chatEntry);
+
 						}
 					}
 				}
@@ -318,11 +328,13 @@ public class ChatService {
 				Optional<Map<String, Object>> optionalUserEntry = moduleEntryRepository
 						.findById(optionalContactEntry.get().get("USER").toString(), "Users_" + company.getId());
 				if (optionalUserEntry.isPresent()) {
+
 					HashMap<String, Object> updateChatEntry = new HashMap<String, Object>();
 					updateChatEntry.put("DATA_ID", chatEntry.get("_id").toString());
 					updateChatEntry.put("STATUS", "Offline");
 					dataProxy.putModuleEntry(updateChatEntry, optionalChatModule.get().getModuleId(), false,
 							company.getId(), optionalUserEntry.get().get("USER_UUID").toString());
+					addMetaData(company, optionalContactEntry, chatEntry);
 				}
 			}
 		}
@@ -379,5 +391,71 @@ public class ChatService {
 				}
 			}
 		}
+	}
+
+	public void addMetaData(Company company, Optional<Map<String, Object>> optionalContactEntry,
+			Map<String, Object> chatEntry) {
+
+		String companyId = company.getId();
+		String customerName = optionalContactEntry.get().get("FULL_NAME").toString();
+		String discussionFieldName = null;
+		Optional<Module> optionalChatModule = modulesRepository.findModuleByName("Chats", "modules_" + company.getId());
+		if (optionalChatModule.isPresent()) {
+			Module chatModule = optionalChatModule.get();
+			List<ModuleField> fields = chatModule.getFields();
+			for (ModuleField field : fields) {
+				DataType dataType = field.getDataType();
+				if (dataType.getDisplay().equalsIgnoreCase("Discussion")) {
+					discussionFieldName = field.getName();
+				}
+			}
+
+			String messageForAgent = global.getFile("metadata_customer_disconnected.html");
+
+			messageForAgent = messageForAgent.replace("NAME_REPLACE", customerName);
+			messageForAgent = messageForAgent.replace("DATE_TIME_REPLACE",
+					new SimpleDateFormat("MMM d y h:mm:ss a").format(new Timestamp(new Date().getTime())));
+
+			DiscussionMessage discussionMessageForAgent = buildMetaDataPayload(messageForAgent, companyId,
+					chatModule.getModuleId(), chatEntry.get("_id").toString());
+			if (discussionFieldName != null) {
+				webSocketService.addDiscussionToEntry(discussionMessageForAgent, company.getCompanySubdomain(),
+						optionalContactEntry.get().get("_id").toString(), false);
+			}
+		}
+	}
+
+	public DiscussionMessage buildMetaDataPayload(String message, String companyId, String moduleId, String dataId) {
+
+		Optional<Map<String, Object>> optionalUser = entryRepository.findUserByEmailAddress("system@ngdesk.com",
+				"Users_" + companyId);
+
+		Map<String, Object> systemUser = optionalUser.get();
+
+		String contactId = systemUser.get("CONTACT").toString();
+
+		Optional<Map<String, Object>> optionalContact = entryRepository.findById(contactId, "Contacts_" + companyId);
+		Map<String, Object> contact = optionalContact.get();
+
+		Sender sender = new Sender(contact.get("FIRST_NAME").toString(), contact.get("LAST_NAME").toString(),
+				systemUser.get("USER_UUID").toString(), systemUser.get("ROLE").toString());
+
+		return new DiscussionMessage(message, new Date(), UUID.randomUUID().toString(), "META_DATA",
+				new ArrayList<MessageAttachment>(), sender, moduleId, dataId, null);
+
+	}
+
+	public String getSystemUser(String companyId) {
+		String UUID = "";
+		try {
+
+			Optional<Map<String, Object>> optionalUser = entryRepository.findUserByEmailAddress("system@ngdesk.com",
+					"Users_" + companyId);
+			UUID = optionalUser.get().get("USER_UUID").toString();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return UUID;
 	}
 }
