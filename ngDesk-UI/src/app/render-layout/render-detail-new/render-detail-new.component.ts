@@ -401,6 +401,7 @@ export class RenderDetailNewComponent implements OnInit, OnDestroy {
 		this.receiptAttachments = [];
 		this.fileUloadCount = 0;
 		this.updatedFileCount = 0;
+		delete this.textEditorConfig['setup'];
 	}
 
 	public ngOnDestroy() {
