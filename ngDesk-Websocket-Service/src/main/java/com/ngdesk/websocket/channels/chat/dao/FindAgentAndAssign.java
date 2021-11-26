@@ -224,7 +224,7 @@ public class FindAgentAndAssign {
 							metaDataMessageForAgent.put("COMPANY_UUID", company.getCompanyUuid());
 							metaDataMessageForAgent.put("MESSAGE_ID", UUID.randomUUID().toString());
 							metaDataMessageForAgent.put("USER_UUID", systemUserUUIDForCustomer);
-							DiscussionMessage discussionMessageForAgent = buildMetaDataPayload(message, companyId,
+							DiscussionMessage discussionMessageForAgent = buildMetaDataPayload(messageForAgent, companyId,
 									chatModule.getModuleId(), existingChatEntry.get("_id").toString());
 							if (discussionFieldName != null) {
 								webSocketService.addDiscussionToEntry(discussionMessageForAgent, company.getCompanySubdomain(),

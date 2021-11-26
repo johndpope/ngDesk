@@ -396,7 +396,6 @@ public class ChatService {
 
 	public void addMetaData(Company company, Optional<Map<String, Object>> optionalContactEntry,
 			Map<String, Object> chatEntry) {
-
 		String companyId = company.getId();
 		String customerName = optionalContactEntry.get().get("FULL_NAME").toString();
 		String discussionFieldName = null;
@@ -420,8 +419,9 @@ public class ChatService {
 			DiscussionMessage discussionMessageForAgent = buildMetaDataPayload(messageForAgent, companyId,
 					chatModule.getModuleId(), chatEntry.get("_id").toString());
 			if (discussionFieldName != null) {
+				
 				webSocketService.addDiscussionToEntry(discussionMessageForAgent, company.getCompanySubdomain(),
-						optionalContactEntry.get().get("_id").toString(), false);
+						optionalContactEntry.get().get("USER").toString(), false);
 			}
 		}
 	}
