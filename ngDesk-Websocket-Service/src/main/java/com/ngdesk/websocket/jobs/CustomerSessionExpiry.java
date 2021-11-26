@@ -86,6 +86,10 @@ public class CustomerSessionExpiry {
 							}
 
 						}
+					} else {
+						isCustomerOffline = true;
+						usersMap.remove(timeDiff);
+
 					}
 
 					if (isCustomerOffline) {
@@ -111,36 +115,56 @@ public class CustomerSessionExpiry {
 						"Chats_" + companyId);
 				if (optionalChatEntry.isPresent() && !optionalChatEntry.get().get("STATUS").equals("Offline")) {
 					Map<String, Object> chatEntry = optionalChatEntry.get();
-					if (chatEntry.get("REQUESTOR") != null) {
+					Optional<Map<String, Object>> optionalSystemUser = moduleEntryRepository
+							.findUserByEmailAddress("system@ngdesk.com", "Users_" + companyId);
+
+					if (optionalSystemUser.isEmpty()) {
+						return;
+					}
+
+					Map<String, Object> systemUser = optionalSystemUser.get();
+
+					Optional<Map<String, Object>> optionalSystemContact = moduleEntryRepository
+							.findById(systemUser.get("CONTACT").toString(), "Contacts_" + companyId);
+
+					if (optionalSystemContact.isEmpty()) {
+						return;
+					}
+
+					Map<String, Object> systemContact = optionalSystemContact.get();
+
+					String firstName = systemContact.get("FIRST_NAME").toString();
+					String lastName = systemContact.get("LAST_NAME").toString();
+					String roleId = systemUser.get("ROLE").toString();
+					String userUuid = systemUser.get("USER_UUID").toString();
+					HashMap<String, Object> entry = new HashMap<String, Object>();
+					entry.put("STATUS", "Offline");
+					entry.put("DATA_ID", optionalChatEntry.get().get("_id").toString());
+					Sender sender = new Sender(firstName, lastName, userUuid, roleId);
+					List<DiscussionMessage> messages = new ArrayList<DiscussionMessage>();
+					String message = global.getFile("metadata_customer_disconnected.html");
+
+					if (chatEntry.containsKey("REQUESTOR") && chatEntry.get("REQUESTOR") != null) {
 						String customerId = chatEntry.get("REQUESTOR").toString();
 						Optional<Map<String, Object>> optionalCustomerContactEntry = moduleEntryRepository
 								.findById(customerId, "Contacts_" + companyId);
 						if (optionalCustomerContactEntry.isPresent()) {
-							String firstName = optionalCustomerContactEntry.get().get("FIRST_NAME").toString();
-							String lastName = optionalCustomerContactEntry.get().get("LAST_NAME").toString();
-							Map<String, Object> customerContactEntry = optionalCustomerContactEntry.get();
-							Optional<Map<String, Object>> optionalCustomerUserEntry = moduleEntryRepository
-									.findById(customerContactEntry.get("USER").toString(), "Users_" + companyId);
-							if (optionalCustomerUserEntry.isPresent()) {
-								String roleId = optionalCustomerUserEntry.get().get("ROLE").toString();
-								String userUuid = optionalCustomerUserEntry.get().get("USER_UUID").toString();
-								HashMap<String, Object> entry = new HashMap<String, Object>();
-								entry.put("STATUS", "Offline");
-								entry.put("DATA_ID", optionalChatEntry.get().get("_id").toString());
-								Sender sender = new Sender(firstName, lastName, userUuid, roleId);
-								List<DiscussionMessage> messages = new ArrayList<DiscussionMessage>();
-								String message = global.getFile("metadata_customer_disconnected.html");
-								message = message.replace("NAME_REPLACE", firstName + " " + lastName);
-								DiscussionMessage discussionMessage = new DiscussionMessage(message, new Date(),
-										UUID.randomUUID().toString(), "META_DATA", new ArrayList<MessageAttachment>(),
-										sender, null, null, null);
-								messages.add(discussionMessage);
-								entry.put("CHAT", messages);
-								dataProxy.putModuleEntry(entry, optionalChatModule.get().getModuleId(), false,
-										companyId, optionalCustomerUserEntry.get().get("USER_UUID").toString());
-							}
+							String customerFirstName = optionalCustomerContactEntry.get().get("FIRST_NAME").toString();
+							String customerLastName = optionalCustomerContactEntry.get().get("LAST_NAME").toString();
+							message = message.replace("NAME_REPLACE", customerFirstName + " " + customerLastName);
 						}
+					} else {
+
+						message = message.replace("NAME_REPLACE", "Requestor");
 					}
+
+					DiscussionMessage discussionMessage = new DiscussionMessage(message, new Date(),
+							UUID.randomUUID().toString(), "META_DATA", new ArrayList<MessageAttachment>(), sender, null,
+							null, null);
+					messages.add(discussionMessage);
+					entry.put("CHAT", messages);
+					dataProxy.putModuleEntry(entry, optionalChatModule.get().getModuleId(), false, companyId,
+							systemUser.get("USER_UUID").toString());
 				}
 			}
 		}
