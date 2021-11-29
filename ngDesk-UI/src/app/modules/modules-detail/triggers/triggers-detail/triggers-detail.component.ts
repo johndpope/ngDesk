@@ -40,6 +40,7 @@ import { UsersService } from '../../../../users/users.service';
 import { ModulesService } from '../../../modules.service';
 
 import { EscalationApiService } from '@ngdesk/escalation-api';
+import { EscalationsService } from '../../../../escalations/escalations.service';
 
 @Component({
 	selector: 'app-triggers-detail',
@@ -161,7 +162,8 @@ export class TriggersDetailComponent implements OnInit, OnDestroy {
 		private usersService: UsersService,
 		private translateService: TranslateService,
 		private bannerMessageService: BannerMessageService,
-		private escalationApiService: EscalationApiService
+		private escalationApiService: EscalationApiService,
+		public escalationService: EscalationsService
 	) {}
 
 	public ngOnInit() {
@@ -457,7 +459,7 @@ export class TriggersDetailComponent implements OnInit, OnDestroy {
 			.setValue('Start');
 
 		// gets list of escalation policies to select from
-		this.escalationApiService.getEscalations().subscribe(
+		this.escalationService.getAllEscalations(0, 10, 'name', 'asc').subscribe(
 			(escalationsResponse: any) => {
 				this.escalations = escalationsResponse.content;
 			},

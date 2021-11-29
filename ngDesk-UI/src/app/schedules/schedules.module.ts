@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { SharedModule } from '../shared-module/shared.module';
 import { LayerRestrictionComponent } from './schedules-detail/layer-restriction/layer-restriction.component';
@@ -39,6 +40,7 @@ import { SchedulesService } from './schedules.service';
 		MatInputModule,
 		MatButtonModule,
 		MatChipsModule,
+		MatTooltipModule,
 	],
 	// entryComponents: [
 	//   LayerRestrictionComponent

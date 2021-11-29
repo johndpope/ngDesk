@@ -6,6 +6,7 @@ import org.apache.commons.lang.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,9 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
 	
 	@Autowired
 	WhitelistService whitelistService;
+	
+	@Value("${jwt.secret}")
+	private String jwtSecret;
 	
 	private static final Logger logger = LoggerFactory.getLogger(AuthFilter.class);
 
@@ -50,7 +54,7 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
 				}
 
 				String jwt = exchange.getRequest().getHeaders().get("authentication_token").get(0);
-				Claims claims = Jwts.parser().setSigningKey(config.getSigningKey()).parseClaimsJws(jwt).getBody();
+				Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(jwt).getBody();
 				Date expirationDate = claims.getExpiration();
 				Date now = new Date();
 
@@ -73,11 +77,11 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
 	}
 
 	public static class Config {
-		private static String signingKey = "Vdu7IxJ5Lvcp0YUJ";
-
-		public static String getSigningKey() {
-			return signingKey;
-		}
+//		private  String signingKey = jwtSecret;
+//
+//		public String getSigningKey() {
+//			return signingKey;
+//		}
 
 	}
 }

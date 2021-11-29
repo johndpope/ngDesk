@@ -14,11 +14,10 @@
 					<ng-container matColumnDef="NAME">
 						<th class="custom-theme-icon-color" mat-header-cell *matHeaderCellDef>
 							<div fxLayout="row" fxLayoutGap="4%">
-								<div fxLayout="column" fxFlex="90" fxFlexAlign="center" class="trim-info"
-									matTooltip="{{module.PLURAL_NAME}}">
+								<div fxLayout="column" fxFlex="90" fxFlexAlign="center" class="trim-info" matTooltip="{{module.PLURAL_NAME}}">
 									{{ module.PLURAL_NAME | truncate : 15}}
 									{{'MODULE' | translate}}</div>
-								<div fxLayout="column" *ngIf="showSideNav" fxFlex="10">
+								<div class="module-detail-mat-icon" fxLayout="column" *ngIf="showSideNav" fxFlex="10">
 									<button mat-icon-button [ngStyle]="{'border': (showSideNav) ? '1px solid white' : '1px solid #3f51b5'}"
 										(click)="showSideNav = !showSideNav" style="border-radius: 3px;">
 										<mat-icon class="custom-theme-icon-color" style="margin-bottom: 15px;font-size: 20px;">
@@ -36,23 +35,22 @@
 					</tr>
 				</table>
 			</div>
-				<div>
-					<button mat-icon-button *ngIf="!showSideNav"
-						[ngStyle]="{'border': (showSideNav) ? '1px solid white' : '1px solid #3f51b5', 'margin-left' : (showSideNav) ? '-48px' : '0px'}"
-						(click)="showSideNav = !showSideNav" style="border-radius: 3px;">
-						<mat-icon color="primary" style="margin-bottom: 15px;font-size: 20px;">
-							keyboard_arrow_right</mat-icon>
-					</button>
-				</div>
-				<app-custom-table [templateRef]="columnTemplateRef" (rowClickedEvent)="rowClicked($event)"
-					noRecordsMessage="{{'NO_TASKS_FOUND' | translate}}" [actions]="taskActions.actions"
-					(sortData)="sortData();customTableService.isLoading = true"
-					(menuItemTrigger)="taskActions[$event.ACTION.NAME]($event.ROW_DATA);"
-					(pageChangeEmit)="pageChangeEmit($event);customTableService.isLoading = true" fxFlex>
-					<ng-template #columnTemplateRef let-element="element" let-col="col">
-						{{element[col.NAME]}}
-					</ng-template>
-				</app-custom-table>
+			<div class="module-detail-mat-icon">
+				<button mat-icon-button *ngIf="!showSideNav"
+					[ngStyle]="{'border': (showSideNav) ? '1px solid white' : '1px solid #3f51b5', 'margin-left' : (showSideNav) ? '-48px' : '0px'}"
+					(click)="showSideNav = !showSideNav" style="border-radius: 3px;">
+					<mat-icon color="primary" style="margin-bottom: 15px;font-size: 20px;">
+						keyboard_arrow_right</mat-icon>
+				</button>
+			</div>
+			<app-custom-table [templateRef]="columnTemplateRef" (rowClickedEvent)="rowClicked($event)"
+				noRecordsMessage="{{'NO_TASKS_FOUND' | translate}}" [actions]="taskActions.actions"
+				(sortData)="sortData();customTableService.isLoading = true" (menuItemTrigger)="taskActions[$event.ACTION.NAME]($event.ROW_DATA);"
+				(pageChangeEmit)="pageChangeEmit($event);customTableService.isLoading = true" fxFlex>
+				<ng-template #columnTemplateRef let-element="element" let-col="col">
+					{{element[col.NAME]}}
+				</ng-template>
+			</app-custom-table>
 		</div>
 	</ng-template>
 </div>

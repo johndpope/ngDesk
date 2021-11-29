@@ -487,10 +487,15 @@ export class DetailLayoutComponent implements OnInit {
 			this.titleBarFields.push({ FIELD_ID: fieldId });
 		}
 	}
+
 	public drop(event: CdkDragDrop<string[]>, div: string) {
 		let hasSection = false;
 		const fieldId = event.item.element.nativeElement.id;
-		if (this.fieldsMap[fieldId].NOT_EDITABLE && div === 'SIDE_BAR') {
+		if (
+			this.fieldsMap[fieldId].NOT_EDITABLE &&
+			div === 'SIDE_BAR' &&
+			this.layoutType != 'create_layouts'
+		) {
 			this.bannerMessageService.errorNotifications.push({
 				message: this.translateService.instant('NOT_EDITABLE_FIELDS'),
 			});
@@ -552,7 +557,7 @@ export class DetailLayoutComponent implements OnInit {
 
 	public newLayout() {
 		if (this.customLayout.indexOf('<mat-spinner></mat-spinner>') === -1) {
-			this.loadNewGridAndView(null);
+			this.loadNewGridAndView(null, 'new Panel');
 		}
 	}
 
@@ -1107,7 +1112,7 @@ export class DetailLayoutComponent implements OnInit {
 			.join(' ');
 	}
 
-	public loadNewGridAndView(value) {
+	public loadNewGridAndView(value, layoutType?) {
 		this.rowSize = 10;
 		if (this.customLayouts.length === 0) {
 			this.module.FIELDS = JSON.parse(JSON.stringify(this.fields));
@@ -1117,6 +1122,14 @@ export class DetailLayoutComponent implements OnInit {
 		let displayType = 'Panel';
 		let grids = [[]];
 		let settings = null;
+		if (layoutType === 'new Panel') {
+			this.discussionEncountered = false;
+			this.ImageEncountered = false;
+			this.receiptEncountered = false;
+			this.filePreviewEncountered = false;
+			this.listFormulaEncountered = false;
+			this.conditionEncountered = false;
+		}
 		if (value) {
 			this.rowSize = value.GRIDS.length;
 			grids = value.GRIDS.map((grids: any[]) => {
@@ -2381,6 +2394,12 @@ export class DetailLayoutComponent implements OnInit {
 			return 100;
 		} else if (
 			custom.listFormulaDropped &&
+			custom.listFormulaPosition.xPos === i &&
+			custom.listFormulaPosition.yPos === j
+		) {
+			return 50;
+		} else if (
+			custom.listFormulaDropped &&
 			i >= custom.listFormulaPosition.xPos &&
 			(custom.listFormulaPosition.yPos === 2 ||
 				custom.listFormulaPosition.yPos === 0)
@@ -2440,8 +2459,6 @@ export class DetailLayoutComponent implements OnInit {
 		) {
 			return 50;
 		} else if (custom.conditionDropped) {
-			return 100;
-		} else if (custom.listFormulaDropped) {
 			return 100;
 		}
 
@@ -2700,13 +2717,13 @@ export class DetailLayoutComponent implements OnInit {
 				if (custom.imagePosition.size === 3) {
 					this.loadLayoutWithListFormulaSection(
 						name,
-						custom.receiptPosition,
+						custom.listFormulaPosition,
 						2
 					);
 				} else {
 					this.loadLayoutWithListFormulaSection(
 						name,
-						custom.receiptPosition,
+						custom.listFormulaPosition,
 						3
 					);
 				}
@@ -3304,6 +3321,7 @@ export class DetailLayoutComponent implements OnInit {
 		}
 		return true;
 	}
+
 	public onDeleteReceiptCaptureField(name, i, j) {
 		const custom = this.customLayouts.find((f) => f.name === name);
 		const receiptRegex = new RegExp(
@@ -3365,7 +3383,6 @@ export class DetailLayoutComponent implements OnInit {
 		const settings = custom.grids[xPos][yPos].settings;
 		const endPos =
 			xPos + 3 > custom.grids.length ? custom.grids.length : xPos + 3;
-
 		if (custom.listFormulaPosition.size === 3) {
 			for (let x = xPos; x <= endPos; x++) {
 				for (let y = yPos; y < yPos + 3; y++) {
@@ -3464,6 +3481,7 @@ export class DetailLayoutComponent implements OnInit {
 			listFormulaPosition.xPos + 3 > custom.grids.length - 1
 				? custom.grids.length - 1
 				: listFormulaPosition.xPos + 3;
+
 		custom.customLayout = custom.customLayout.replace(
 			new RegExp(
 				`<div class='ROW_${removeDivFrom}([\\s\\S]*?)<!--END_ROW_${removeDivTo}-->`
@@ -3544,22 +3562,25 @@ export class DetailLayoutComponent implements OnInit {
 
 	public validateListFormulaPosition(name, i, j, size) {
 		const custom = this.customLayouts.find((f) => f.name === name);
-		const removeDivTo =
-			i + 4 > custom.grids.length ? custom.grids.length - 1 : i + 4;
+
 		if (!custom.listFormulaDropped) {
 			if (i < 12 && j !== 3) {
-				for (let x = i; x < removeDivTo; x++) {
-					for (let y = j; y < j + size; y++) {
-						if (!custom.grids[x][y].IS_EMPTY) {
-							return false;
+				for (let x = i; x < i + 4; x++) {
+					if (x < custom.grids.length) {
+						for (let y = j; y < j + size; y++) {
+							if (!custom.grids[x][y].IS_EMPTY) {
+								return false;
+							}
 						}
+					} else {
+						return false;
 					}
 				}
 			} else {
 				return false;
 			}
 		} else {
-			for (let x = i; x < removeDivTo; x++) {
+			for (let x = i; x < i + 4; x++) {
 				if (!custom.grids[x][j].IS_EMPTY) {
 					return false;
 				}
