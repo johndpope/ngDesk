@@ -185,6 +185,9 @@ public class Field {
 
 	@JsonProperty("CONDITIONS")
 	List<Condition> conditions;
+	
+	@JsonProperty("LIST_FORMULA")
+	private List<ListFormulaField> listFormula;
 
 	public Field() {
 	}
@@ -206,7 +209,8 @@ public class Field {
 			@Pattern(regexp = "sum", message = "NOT_VALID_AGGREGATION_TYPE") String aggregationType,
 			String aggregationField, String aggregationRelatedField, Map<String, String> inheritanceMapping,
 			Map<String, String> fieldsMapping, boolean unique, String prefix, String suffix, String numericFormat,
-			String toCurrency, String fromCurrency, String dateIncurred, List<Condition> conditions) {
+			String toCurrency, String fromCurrency, String dateIncurred, List<Condition> conditions,
+			List<com.ngdesk.modules.fields.ListFormulaField> listFormula) {
 		super();
 		this.fieldId = fieldId;
 		this.name = name;
@@ -262,6 +266,7 @@ public class Field {
 		this.fromCurrency = fromCurrency;
 		this.dateIncurred = dateIncurred;
 		this.conditions = conditions;
+		this.listFormula = listFormula;
 	}
 
 	public String getFieldId() {
@@ -696,4 +701,13 @@ public class Field {
 		this.conditions = conditions;
 	}
 
+	public List<ListFormulaField> getListFormula() {
+		return listFormula;
+	}
+
+	public void setListFormula(List<ListFormulaField> listFormula) {
+		this.listFormula = listFormula;
+	}
+
+		
 }
