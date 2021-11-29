@@ -21,6 +21,11 @@ public class RabbitConfig {
 	}
 
 	@Bean
+	public Queue publishAgentAvailabilityQueue() {
+		return new Queue("publish-agent-availability", true);
+	}
+
+	@Bean
 	public RabbitTemplate rabbitTemplate(final ConnectionFactory connectionFactory) {
 		final var rabbitTemplate = new RabbitTemplate(connectionFactory);
 		rabbitTemplate.setMessageConverter(producerJackson2MessageConverter());
