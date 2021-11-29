@@ -59,7 +59,7 @@ public class AgentSessionExpiry {
 	@Autowired
 	ChatService chatService;
 
-	@Scheduled(fixedRate = 60000)
+	@Scheduled(fixedRate = 1000)
 	public void run() {
 		try {
 			RMap<Long, Map<String, Object>> usersMap = redisson.getMap("disconnectedUsers");

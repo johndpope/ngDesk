@@ -109,7 +109,10 @@ public class ChatService {
 									chatNotification.setType("CHAT_NOTIFICATION");
 								} else {
 									entry.put("DATA_ID", optionalChatEntry.get().get("_id").toString());
-									entry.put("STATUS", "Browsing");
+									if (entry.get("STATUS") != null
+											&& !entry.get("STATUS").toString().equalsIgnoreCase("Chatting")) {
+										entry.put("STATUS", "Browsing");
+									}
 									chatEntry = dataProxy.putModuleEntry(entry, optionalChatModule.get().getModuleId(),
 											false, companyId, user.get("USER_UUID").toString());
 									chatNotification.setType("CHAT_NOTIFICATION");
@@ -419,7 +422,7 @@ public class ChatService {
 			DiscussionMessage discussionMessageForAgent = buildMetaDataPayload(messageForAgent, companyId,
 					chatModule.getModuleId(), chatEntry.get("_id").toString());
 			if (discussionFieldName != null) {
-				
+
 				webSocketService.addDiscussionToEntry(discussionMessageForAgent, company.getCompanySubdomain(),
 						optionalContactEntry.get().get("USER").toString(), false);
 			}

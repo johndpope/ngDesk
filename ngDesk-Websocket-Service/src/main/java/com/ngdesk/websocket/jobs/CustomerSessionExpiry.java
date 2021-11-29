@@ -54,7 +54,7 @@ public class CustomerSessionExpiry {
 	@Autowired
 	Global global;
 
-	@Scheduled(fixedRate = 60000)
+	@Scheduled(fixedRate = 1000)
 	public void run() {
 
 		try {
