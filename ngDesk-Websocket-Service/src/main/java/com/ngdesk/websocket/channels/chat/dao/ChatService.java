@@ -109,8 +109,8 @@ public class ChatService {
 									chatNotification.setType("CHAT_NOTIFICATION");
 								} else {
 									entry.put("DATA_ID", optionalChatEntry.get().get("_id").toString());
-									if (entry.get("STATUS") != null
-											&& !entry.get("STATUS").toString().equalsIgnoreCase("Chatting")) {
+									if (optionalChatEntry.get().get("STATUS") != null && !optionalChatEntry.get()
+											.get("STATUS").toString().equalsIgnoreCase("Chatting")) {
 										entry.put("STATUS", "Browsing");
 									}
 									chatEntry = dataProxy.putModuleEntry(entry, optionalChatModule.get().getModuleId(),
