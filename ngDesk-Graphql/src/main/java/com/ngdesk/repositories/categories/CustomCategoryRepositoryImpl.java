@@ -62,7 +62,7 @@ public class CustomCategoryRepositoryImpl implements CustomCategoryRepository {
 	public Optional<List<Category>> findCategoriesByVisibleTo(List<String> teamIds, Pageable pageable,
 			String collectionName) {
 		Criteria criteria = new Criteria();
-		criteria.andOperator(Criteria.where("visibleTo").in(teamIds));
+		criteria.andOperator(Criteria.where("visibleTo").in(teamIds), Criteria.where("isDraft").is(false));
 		Query query = new Query(criteria);
 		query.with(pageable);
 		return Optional.ofNullable(mongoOperations.find(query, Category.class, collectionName));

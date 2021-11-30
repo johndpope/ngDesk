@@ -56,7 +56,7 @@ public class Section {
 	private int order;
 
 	@Schema(description = "Is Section Draft", required = false)
-	private boolean isDraft;
+	private Boolean isDraft;
 
 	@Schema(description = "VisibleTo", required = true)
 	@CustomNotEmpty(message = "DAO_VARIABLE_REQUIRED", values = "SECTION_VISIBLETO")
@@ -73,7 +73,7 @@ public class Section {
 	public Section(String sectionId, @Size(min = 2, max = 2, message = "LANGUAGE_MUST_BE_2_CHAR") String language,
 			@Pattern(regexp = "^[a-zA-Z0-9_ ]*$", message = "INVALID_SECTION_NAME") String name, String description,
 			String sortBy, String category, Date dateCreated, Date dateUpdated, String lastUpdatedBy, String createdBy,
-			int order, boolean isDraft, List<String> visibleTo, List<String> managedBy) {
+			int order, Boolean isDraft, List<String> visibleTo, List<String> managedBy) {
 		super();
 		this.sectionId = sectionId;
 		this.language = language;
@@ -179,11 +179,11 @@ public class Section {
 		this.order = order;
 	}
 
-	public boolean isDraft() {
+	public Boolean getIsDraft() {
 		return isDraft;
 	}
 
-	public void setDraft(boolean isDraft) {
+	public void setIsDraft(Boolean isDraft) {
 		this.isDraft = isDraft;
 	}
 
