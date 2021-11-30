@@ -37,8 +37,19 @@
           "SUB_MENU_ITEMS": []
         },
         {
-          "ROUTE": "TEAMS_ID_REPLACE",
+          "ROUTE": "CHAT_ID_REPLACE",
           "ORDER": 3,
+          "MODULE": "CHAT_ID_REPLACE",
+          "IS_MODULE": true,
+          "PATH_PARAMETER": "",
+          "ICON": "chat",
+          "EDITABLE": true,
+          "NAME": "Chats",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "TEAMS_ID_REPLACE",
+          "ORDER": 4,
           "MODULE": "TEAMS_ID_REPLACE",
           "IS_MODULE": true,
           "PATH_PARAMETER": "",
@@ -49,7 +60,7 @@
         },
         {
           "ROUTE": "ACCOUNTS_ID_REPLACE",
-          "ORDER": 4,
+          "ORDER": 5,
           "MODULE": "ACCOUNTS_ID_REPLACE",
           "IS_MODULE": true,
           "PATH_PARAMETER": "",
@@ -60,7 +71,7 @@
         },
         {
           "ROUTE": "CONTACTS_ID_REPLACE",
-          "ORDER": 5,
+          "ORDER": 6,
           "MODULE": "CONTACTS_ID_REPLACE",
           "IS_MODULE": true,
           "PATH_PARAMETER": "",
@@ -71,7 +82,7 @@
         },
         {
           "ROUTE": "",
-          "ORDER": 6,
+          "ORDER": 7,
           "MODULE": "",
           "IS_MODULE": false,
           "PATH_PARAMETER": "",
@@ -133,7 +144,7 @@
         },
         {
           "ROUTE": "",
-          "ORDER": 7,
+          "ORDER": 8,
           "MODULE": "",
           "IS_MODULE": false,
           "PATH_PARAMETER": "",
@@ -195,7 +206,7 @@
         },
         {
           "ROUTE": "",
-          "ORDER": 8,
+          "ORDER": 9,
           "MODULE": "",
           "IS_MODULE": false,
           "ICON": "web_asset",
@@ -214,17 +225,6 @@
               "NAME": "Assets"
             }           
           ]
-        },
-        {
-          "ROUTE": "CHAT_ID_REPLACE",
-          "ORDER": 9,
-          "MODULE": "CHAT_ID_REPLACE",
-          "IS_MODULE": true,
-          "PATH_PARAMETER": "",
-          "ICON": "chat",
-          "EDITABLE": true,
-          "NAME": "Chats",
-          "SUB_MENU_ITEMS": []
         },
         {
           "ROUTE": "CHANGE_REQUEST_ID_REPLACE",
@@ -352,8 +352,19 @@
           "SUB_MENU_ITEMS": []
         },
         {
-          "ROUTE": "ACCOUNTS_ID_REPLACE",
+          "ROUTE": "CHAT_ID_REPLACE",
           "ORDER": 3,
+          "MODULE": "CHAT_ID_REPLACE",
+          "IS_MODULE": true,
+          "PATH_PARAMETER": "",
+          "ICON": "chat",
+          "EDITABLE": true,
+          "NAME": "Chats",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "ACCOUNTS_ID_REPLACE",
+          "ORDER": 4,
           "MODULE": "ACCOUNTS_ID_REPLACE",
           "IS_MODULE": true,
           "PATH_PARAMETER": "",
@@ -364,7 +375,7 @@
         },
         {
           "ROUTE": "guide",
-          "ORDER": 4,
+          "ORDER": 5,
           "MODULE": "",
           "IS_MODULE": false,
           "PATH_PARAMETER": "",
@@ -375,7 +386,7 @@
         },
         {
           "ROUTE": "",
-          "ORDER": 5,
+          "ORDER": 6,
           "MODULE": "",
           "IS_MODULE": false,
           "PATH_PARAMETER": "",
@@ -404,17 +415,6 @@
               "NAME": "SCHEDULES"
             }
           ]
-        },
-        {
-          "ROUTE": "CHAT_ID_REPLACE",
-          "ORDER": 6,
-          "MODULE": "CHAT_ID_REPLACE",
-          "IS_MODULE": true,
-          "PATH_PARAMETER": "",
-          "ICON": "chat",
-          "EDITABLE": true,
-          "NAME": "Chats",
-          "SUB_MENU_ITEMS": []
         }
       ]
     },

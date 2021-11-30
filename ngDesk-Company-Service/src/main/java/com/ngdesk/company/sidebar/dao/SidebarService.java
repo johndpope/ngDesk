@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -27,14 +28,11 @@ public class SidebarService {
 	@Autowired
 	ModuleService moduleService;
 
-	@Autowired
-	MenuItem menuItem;
-
 	@SuppressWarnings("unlikely-arg-type")
 	public void postDefaultSidebar(Company company, Map<String, String> rolesMap) {
 
 		try {
-			String sidebarJson = global.getFile("sidebar.json");
+			String sidebarJson = global.getFile("Sidebar.json");
 			for (String name : rolesMap.keySet()) {
 				String roleId = rolesMap.get(name);
 				name = name.toUpperCase().replaceAll("\\s+", "_");
@@ -48,15 +46,8 @@ public class SidebarService {
 			Sidebar sidebar = new ObjectMapper().readValue(sidebarJson, Sidebar.class);
 			List<String> userPlugins = company.getPlugins();
 
-			sidebar = removeUnwantedMenuItemsForSystemAdmin(rolesMap, sidebar, userPlugins);
+			sidebar = removeUnwantedMenuItems(rolesMap, sidebar, userPlugins);
 
-			if (!userPlugins.contains("Expenses")) {
-				sidebar = removeMenusOfExpensesRoles(sidebar);
-			}
-
-			if (!userPlugins.contains("Chats")) {
-				sidebar = removeChatsForAgent(rolesMap, sidebar);
-			}
 			CustomSidebar customSidebar = new CustomSidebar();
 			customSidebar.setCompanyId(company.getCompanyId());
 			customSidebar.setSidebar(sidebar);
@@ -68,67 +59,66 @@ public class SidebarService {
 		}
 	}
 
-	public Sidebar removeUnwantedMenuItemsForSystemAdmin(Map<String, String> rolesMap, Sidebar sidebar,
-			List<String> userPlugins) {
-		String systemAdminRoleId = rolesMap.get("SystemAdmin");
-		List<String> menuNamesToBeRemoved = new ArrayList<String>();
-		String plugins[] = { "CRM", "Expenses", "SAM", "Chats", "Change Requests", "Human Resource Management" };
-		for (String plugin : plugins) {
-			if (!userPlugins.contains(plugin)) {
-				menuNamesToBeRemoved.add(plugin);
-			}
-		}
-		if (sidebar.getSidebarMenu() != null) {
-			for (Menu menu : sidebar.getSidebarMenu()) {
-				List<MenuItem> menuItemsToBeRemoved = new ArrayList<MenuItem>();
-				if (menu.getRole().equals(systemAdminRoleId)) {
-					if (menu.getMenuItems() != null) {
-						for (MenuItem menuItem : menu.getMenuItems()) {
-							if (menuItem.getName() != null && menuNamesToBeRemoved.contains(menuItem.getName())) {
-								menuItemsToBeRemoved.add(menuItem);
+	public Sidebar removeUnwantedMenuItems(Map<String, String> rolesMap, Sidebar sidebar, List<String> userPlugins) {
 
+		for (String roleName : rolesMap.keySet()) {
+			List<String> menuNamesToBeRemoved = new ArrayList<String>();
+			if (roleName.equals("SystemAdmin")) {
+				String plugins[] = { "CRM", "Expenses", "SAM", "Chats", "Change Requests",
+						"Human Resource Management" };
+				for (String plugin : plugins) {
+					if (!userPlugins.contains(plugin)) {
+						menuNamesToBeRemoved.add(plugin);
+					}
+
+					if (sidebar.getSidebarMenu() != null) {
+						for (Menu menu : sidebar.getSidebarMenu()) {
+							List<MenuItem> menuItemsToBeRemoved = new ArrayList<MenuItem>();
+							if (menu.getRole().equals(rolesMap.get(roleName))) {
+								if (menu.getMenuItems() != null) {
+									for (MenuItem menuItem : menu.getMenuItems()) {
+										if (menuItem.getName() != null
+												&& menuNamesToBeRemoved.contains(menuItem.getName())) {
+											menuItemsToBeRemoved.add(menuItem);
+
+										}
+									}
+								}
 							}
+							menu.getMenuItems().removeAll(menuItemsToBeRemoved);
 						}
 					}
 				}
-				menu.getMenuItems().removeAll(menuItemsToBeRemoved);
 			}
-		}
-		return sidebar;
-	}
-
-	public Sidebar removeMenusOfExpensesRoles(Sidebar sidebar) {
-		String rolesToBeRemoved[] = { "ACCOUNTANT_ROLE_REPLACE", "SPENDER_ROLE_REPLACE",
-				"ACCOUNTING_MANAGER_ROLE_REPLACE" };
-		List<Menu> menusToBeRemoved = new ArrayList<Menu>();
-		for (Menu menu : sidebar.getSidebarMenu()) {
-			if (Arrays.asList(rolesToBeRemoved).contains(menu.getRole())) {
-				menusToBeRemoved.add(menu);
-			}
-		}
-		sidebar.getSidebarMenu().removeAll(menusToBeRemoved);
-
-		return sidebar;
-	}
-
-	public Sidebar removeChatsForAgent(Map<String, String> rolesMap, Sidebar sidebar) {
-		String agentRoleId = rolesMap.get("Agent");
-		if (sidebar.getSidebarMenu() != null) {
-			for (Menu menu : sidebar.getSidebarMenu()) {
-				List<MenuItem> menuItemsToBeRemoved = new ArrayList<MenuItem>();
-				if (menu.getRole().equals(agentRoleId)) {
-					if (menu.getMenuItems() != null) {
-						for (MenuItem menuItem : menu.getMenuItems()) {
-							if (menuItem.getName() != null && menuItem.getName().equals("Chats")) {
-								menuItemsToBeRemoved.add(menuItem);
-
-							}
+			if (roleName.equals("Agent") && !userPlugins.contains("Chats")) {
+				if (sidebar.getSidebarMenu() != null) {
+					Optional<Menu> optionalAgentMenu = sidebar.getSidebarMenu().stream()
+							.filter(menu -> menu.getRole().equals(rolesMap.get(roleName))).findFirst();
+					if (optionalAgentMenu.isPresent()) {
+						Optional<MenuItem> optionalChatsMenuItem = optionalAgentMenu.get().getMenuItems().stream()
+								.filter(menuItem -> menuItem.getName().equals("Chats")).findFirst();
+						if (optionalChatsMenuItem.isPresent()) {
+							List<MenuItem> menuItemsToBeRemoved = new ArrayList<MenuItem>();
+							menuItemsToBeRemoved.add(optionalChatsMenuItem.get());
+							optionalAgentMenu.get().getMenuItems().removeAll(menuItemsToBeRemoved);
 						}
 					}
 				}
-				menu.getMenuItems().removeAll(menuItemsToBeRemoved);
+
 			}
 		}
+		if (!userPlugins.contains("Expenses")) {
+			String rolesToBeRemoved[] = { "ACCOUNTANT_ROLE_REPLACE", "SPENDER_ROLE_REPLACE",
+					"ACCOUNTING_MANAGER_ROLE_REPLACE" };
+			List<Menu> menusToBeRemoved = new ArrayList<Menu>();
+			for (Menu menu : sidebar.getSidebarMenu()) {
+				if (Arrays.asList(rolesToBeRemoved).contains(menu.getRole())) {
+					menusToBeRemoved.add(menu);
+				}
+			}
+			sidebar.getSidebarMenu().removeAll(menusToBeRemoved);
+		}
+
 		return sidebar;
 	}
 
