@@ -9,6 +9,7 @@ import { BehaviorSubject } from 'rxjs';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { I } from '@angular/cdk/keycodes';
 import { ToolbarService } from './toolbar/toolbar.service';
+import { BannerMessageService } from './custom-components/banner-message/banner-message.service';
 
 @Injectable({
 	providedIn: 'root',
@@ -28,7 +29,9 @@ export class WebsocketService {
 		private modulesService: ModulesService,
 		private configService: ConfigService,
 		private applicationSetting: ApplicationSettings,
-		private toolbarService: ToolbarService
+		private toolbarService: ToolbarService,
+		private bannerMessageService: BannerMessageService
+
 	) {
 		if (!this.applicationSetting.isMobile()) {
 			this.webSocketUrl =
@@ -87,6 +90,10 @@ export class WebsocketService {
 				this.visitedPagesUpdated.next({
 					TYPE: message.type,
 					PAGES: message.visitedPages,
+				});
+			} else if (message.type === 'AGENT_CHATTING_STATUS') {
+				this.bannerMessageService.errorNotifications.push({
+					message: message.message
 				});
 			} else {
 				this.updateData(message);
