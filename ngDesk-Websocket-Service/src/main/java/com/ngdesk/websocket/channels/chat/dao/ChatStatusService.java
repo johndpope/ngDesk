@@ -9,6 +9,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import com.ngdesk.repositories.CompaniesRepository;
+import com.ngdesk.repositories.ModuleEntryRepository;
 import com.ngdesk.websocket.SessionService;
 import com.ngdesk.websocket.UserSessions;
 import com.ngdesk.websocket.companies.dao.ChatBusinessRules;
@@ -27,10 +28,16 @@ public class ChatStatusService {
 	RedisTemplate<String, ChatStatusMessage> redisTemplate;
 
 	@Autowired
+	RedisTemplate<String, AgentChattingStatusCheck> redisTemplateChatAgentStatusCheck;
+
+	@Autowired
 	AgentAvailabilityService agentAvailabilityService;
 
 	@Autowired
 	RabbitTemplate rabbitTemplate;
+
+	@Autowired
+	ModuleEntryRepository entryRepository;
 
 	public void updateChatStatus(ChatStatus chatStatus) {
 		if (chatStatus.getSubdomain() != null) {
@@ -48,16 +55,27 @@ public class ChatStatusService {
 					chatStatusMessage.setCompanyId(company.getId());
 					chatStatusMessage.setType("CHAT_STATUS");
 					chatStatusMessage.setUserId(chatStatus.getUserId());
+					addToQueue(chatStatusMessage);
+
 				} else {
-					userSessions.setChatStatus("not available");
-					chatStatusMessage.setChatStatus("not available");
-					chatStatusMessage.setCompanyId(company.getId());
-					chatStatusMessage.setType("CHAT_STATUS");
-					chatStatusMessage.setUserId(chatStatus.getUserId());
+					Integer chatEntries = entryRepository.findByAgentAndCollectionName(chatStatus.getUserId(),
+							"Chats_" + company.getId());
+					if (chatEntries > 0) {
+						AgentChattingStatusCheck agentChattingStatusCheck = new AgentChattingStatusCheck(
+								chatStatus.getUserId(), company.getCompanySubdomain(), "chatAgentStatus",
+								"You have active chat users");
+						addToQueueChatAgentStatusCheck(agentChattingStatusCheck);
+					} else {
+						userSessions.setChatStatus("not available");
+						chatStatusMessage.setChatStatus("not available");
+						chatStatusMessage.setCompanyId(company.getId());
+						chatStatusMessage.setType("CHAT_STATUS");
+						chatStatusMessage.setUserId(chatStatus.getUserId());
+						addToQueue(chatStatusMessage);
+					}
 				}
 				sessionMap.put(chatStatus.getUserId(), userSessions);
 				sessionService.sessions.put(company.getCompanySubdomain(), sessionMap);
-				addToQueue(chatStatusMessage);
 			}
 		}
 
@@ -67,8 +85,11 @@ public class ChatStatusService {
 		redisTemplate.convertAndSend("chat_status", chatStatusMessage);
 	}
 
-	public void publishOnChatStatusCheck(ChatStatusCheck chatStatusCheck) {
+	public void addToQueueChatAgentStatusCheck(AgentChattingStatusCheck agentChattingStatusCheck) {
+		redisTemplateChatAgentStatusCheck.convertAndSend("chat_agent_status_check", agentChattingStatusCheck);
+	}
 
+	public void publishOnChatStatusCheck(ChatStatusCheck chatStatusCheck) {
 		if (chatStatusCheck.getSubdomain() != null) {
 			Optional<Company> optionalComapny = companiesRepository
 					.findCompanyBySubdomain(chatStatusCheck.getSubdomain());

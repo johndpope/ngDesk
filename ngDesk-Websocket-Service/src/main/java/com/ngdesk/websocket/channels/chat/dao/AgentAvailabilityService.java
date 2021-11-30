@@ -104,11 +104,8 @@ public class AgentAvailabilityService {
 				ChatChannelMessage chatChannelMessage = new ChatChannelMessage(companyId,
 						agentAvailability.getSessionUUID(), optionalChatChannel.get(), "CHAT_CHANNEL");
 				addToChatChannelQueue(chatChannelMessage);
-
 			}
-
 		}
-
 	}
 
 	public void addToAgentAvailabilityQueue(AgentAvailability message) {
@@ -136,10 +133,14 @@ public class AgentAvailabilityService {
 		Calendar calendar = Calendar.getInstance();
 		int currentDay = calendar.get(Calendar.DAY_OF_WEEK);
 		String restrictionType = chatBuisnessRules.getRestrictionType();
+		Boolean isBusinessHour = false;
 		for (ChatRestrictions restriction : chatBuisnessRules.getChatRestrictions()) {
-			return isValidBusinessHour(restriction, currentHour, currentMinutes, currentDay, restrictionType);
+			if (!isBusinessHour) {
+				isBusinessHour = isValidBusinessHour(restriction, currentHour, currentMinutes, currentDay,
+						restrictionType);
+			}
 		}
-		return false;
+		return isBusinessHour;
 	}
 
 	private boolean isValidBusinessHour(ChatRestrictions restriction, int currentHour, int currentMinutes,

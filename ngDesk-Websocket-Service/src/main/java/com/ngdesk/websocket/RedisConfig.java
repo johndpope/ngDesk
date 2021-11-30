@@ -15,6 +15,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import com.ngdesk.data.dao.WorkflowPayload;
 import com.ngdesk.websocket.channels.chat.dao.AgentAvailability;
+import com.ngdesk.websocket.channels.chat.dao.AgentChattingStatusCheck;
 import com.ngdesk.websocket.channels.chat.dao.ChatChannelMessage;
 import com.ngdesk.websocket.channels.chat.dao.ChatNotification;
 import com.ngdesk.websocket.channels.chat.dao.ChatStatusMessage;
@@ -22,6 +23,7 @@ import com.ngdesk.websocket.channels.chat.dao.ChatTicketStatusMessage;
 import com.ngdesk.websocket.channels.chat.dao.ChatVisitedPagesNotification;
 import com.ngdesk.websocket.notification.dao.Notification;
 import com.ngdesk.websocket.subscribers.AgentAvailabilitySubscriber;
+import com.ngdesk.websocket.subscribers.AgentChattingStatusSubscriber;
 import com.ngdesk.websocket.subscribers.ChatChannelSubscriber;
 import com.ngdesk.websocket.subscribers.ChatNotificationSubscriber;
 import com.ngdesk.websocket.subscribers.ChatSettingsUpdateSubscriber;
@@ -69,6 +71,9 @@ public class RedisConfig {
 
 	@Autowired
 	AgentAvailabilitySubscriber agentAvailabilitySubscriber;
+
+	@Autowired
+	AgentChattingStatusSubscriber agentStatusSubscriber;
 
 	@Bean
 	public RedisTemplate<String, WorkflowPayload> redisTemplate(LettuceConnectionFactory redisConnectionFactory) {
@@ -156,6 +161,17 @@ public class RedisConfig {
 	}
 
 	@Bean
+	public RedisTemplate<String, AgentChattingStatusCheck> redisChatAgentStatusCheckTemplate(
+			LettuceConnectionFactory redisConnectionFactory) {
+		RedisTemplate<String, AgentChattingStatusCheck> redisAgentChattingStatusTemplate = new RedisTemplate<String, AgentChattingStatusCheck>();
+		redisAgentChattingStatusTemplate.setConnectionFactory(redisConnectionFactory);
+		redisAgentChattingStatusTemplate.setValueSerializer(
+				new Jackson2JsonRedisSerializer<AgentChattingStatusCheck>(AgentChattingStatusCheck.class));
+		redisAgentChattingStatusTemplate.setKeySerializer(new StringRedisSerializer());
+		return redisAgentChattingStatusTemplate;
+	}
+
+	@Bean
 	public LettuceConnectionFactory redisConnectionFactory() {
 		RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration(redisHost, redisPort);
 		configuration.setPassword(redisPassword);
@@ -209,6 +225,11 @@ public class RedisConfig {
 	}
 
 	@Bean
+	MessageListenerAdapter agentChattingStatusListener() {
+		return new MessageListenerAdapter(agentStatusSubscriber);
+	}
+
+	@Bean
 	public RedisMessageListenerContainer redisMessageListenerContainer(
 			LettuceConnectionFactory redisConnectionFactory) {
 		RedisMessageListenerContainer container = new RedisMessageListenerContainer();
@@ -222,6 +243,7 @@ public class RedisConfig {
 		container.addMessageListener(chatTicketStatusListener(), new PatternTopic("chat_ticket_status"));
 		container.addMessageListener(chatVisitedPagesListener(), new PatternTopic("chat_visited_pages"));
 		container.addMessageListener(agentAvailabilityListener(), new PatternTopic("agentAvailability_notification"));
+		container.addMessageListener(agentChattingStatusListener(), new PatternTopic("chat_agent_status_check"));
 
 		return container;
 	}

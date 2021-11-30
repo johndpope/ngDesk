@@ -33,6 +33,7 @@ import com.ngdesk.repositories.ModulesRepository;
 import com.ngdesk.websocket.SessionService;
 import com.ngdesk.websocket.UserSessions;
 import com.ngdesk.websocket.channels.chat.dao.AgentAvailability;
+import com.ngdesk.websocket.channels.chat.dao.AgentChattingStatusCheck;
 import com.ngdesk.websocket.channels.chat.dao.ChatChannelMessage;
 import com.ngdesk.websocket.channels.chat.dao.ChatDiscussionMessage;
 import com.ngdesk.websocket.channels.chat.dao.ChatNotification;
@@ -618,5 +619,38 @@ public class WebSocketService {
 			});
 		}
 
+	}
+
+	public void publishAgentChattingStatusNotification(Company company,
+			AgentChattingStatusCheck agentChattingStatusCheck) {
+
+		String companyId = company.getId();
+		ObjectMapper mapper = new ObjectMapper();
+
+		if (!sessionService.sessions.containsKey(company.getCompanySubdomain())) {
+			return;
+		}
+
+		ConcurrentHashMap<String, UserSessions> sessions = sessionService.sessions.get(company.getCompanySubdomain());
+
+		Optional<Map<String, Object>> optionalUser = entryRepository.findEntryById(agentChattingStatusCheck.getUserId(),
+				"Users_" + companyId);
+		if (optionalUser.isPresent()) {
+			ConcurrentLinkedQueue<WebSocketSession> userSessions = sessions.get(agentChattingStatusCheck.getUserId())
+					.getSessions();
+			userSessions.forEach(session -> {
+				try {
+					String payload = mapper.writeValueAsString(agentChattingStatusCheck);
+					session.sendMessage(new TextMessage(payload));
+				} catch (JsonProcessingException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+					userSessions.remove(session);
+				}
+			});
+		}
 	}
 }
