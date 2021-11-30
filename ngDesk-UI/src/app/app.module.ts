@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import { AngularFireMessagingModule } from '@angular/fire/messaging';
+import { AngularFireMessaging } from '@angular/fire/messaging';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -52,9 +52,9 @@ import { BASE_PATH as SIDEBAR_BASE_PATH } from '@ngdesk/sidebar-api';
 import { BASE_PATH as WORKFLOW_BASE_PATH } from '@ngdesk/workflow-api';
 import { BASE_PATH as AUTH_BASE_PATH } from '@ngdesk/auth-api';
 import { BASE_PATH as ZOOM_BASE_PATH } from '@ngdesk/integration-api';
-import { BASE_PATH as REPORT_BASE_PATH } from '@ngdesk/report-api'
-import { BASE_PATH as NOTIFICATION_BASE_PATH } from '@ngdesk/notification-api'
-import { BASE_PATH as COMPANY_BASE_PATH } from '@ngdesk/company-api'
+import { BASE_PATH as REPORT_BASE_PATH } from '@ngdesk/report-api';
+import { BASE_PATH as NOTIFICATION_BASE_PATH } from '@ngdesk/notification-api';
+import { BASE_PATH as COMPANY_BASE_PATH } from '@ngdesk/company-api';
 import {
 	MissingTranslationHandler,
 	TranslateLoader,
@@ -145,7 +145,7 @@ import { ConditionsDialogComponent } from './dialogs/conditions-dialog/condition
 import { DocumentViewerComponent } from './document-viewer/document-viewer.component';
 import { SignaturePadComponent } from './dialogs/signature-pad/signature-pad.component';
 import { DashboardEntriesComponent } from './dashboard-entries/dashboard-entries.component';
-import { ApprovalRejectDialogComponent  } from './dialogs/approval-reject-dialog/approval-reject-dialog.component';
+import { ApprovalRejectDialogComponent } from './dialogs/approval-reject-dialog/approval-reject-dialog.component';
 import { ApprovalRejectInformationDialogComponent } from './dialogs/approval-reject-information-dialog/approval-reject-information-dialog.component';
 import { OneToManyDialogComponent } from './dialogs/one-to-many-dialog/one-to-many-dialog.component';
 
@@ -218,7 +218,7 @@ const appConfig = (config: ConfigService) => {
 		DashboardEntriesComponent,
 		ApprovalRejectDialogComponent,
 		ApprovalRejectInformationDialogComponent,
-  OneToManyDialogComponent
+		OneToManyDialogComponent,
 	],
 	imports: [
 		NbCardModule,
@@ -255,7 +255,6 @@ const appConfig = (config: ConfigService) => {
 		MatTooltipModule,
 		AngularFireAuthModule,
 		AngularFireModule,
-		AngularFireMessagingModule,
 		FlexLayoutModule,
 		HttpClientModule,
 		TranslateModule.forRoot({
@@ -387,7 +386,7 @@ const appConfig = (config: ConfigService) => {
 		{
 			provide: COMPANY_BASE_PATH,
 			useValue: '/api/ngdesk-company-service-v1',
-		}
+		},
 	],
 	bootstrap: [AppComponent],
 	// entryComponents: [

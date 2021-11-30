@@ -6,12 +6,16 @@
 		"paths": {
 			"@angular/*": ["../node_modules/@angular/*"],
 			"moment": ["../node_modules/moment/min/moment.min.js"],
-			"@src/*": ["src/*.web", "src/*"]
+			"@src/*": ["src/*.web", "src/*"],
+			"crypto": ["node_modules/crypto-js"]
 		}
 	},
 	"exclude": ["test.ts", "**/*.spec.ts"],
 	"include": [],
-	"files": ["main.ts", "polyfills.ts", "../node_modules/@clientio/rappid/index.ts",
+	"files": [
+		"main.ts",
+		"polyfills.ts",
+		"../node_modules/@clientio/rappid/index.ts",
 		"../rappid/index.ts"
-]
+	]
 }
