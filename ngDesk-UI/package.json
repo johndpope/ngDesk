@@ -57,7 +57,7 @@
     "@ngdesk/sam-api": "file:ngdesk-swagger/sam-api/dist/ngdesk-sam-api-1.0.0.tgz",
     "@ngdesk/sidebar-api": "file:ngdesk-swagger/sidebar-api/dist/ngdesk-sidebar-api-1.0.0.tgz",
     "@ngdesk/workflow-api": "file:ngdesk-swagger/workflow-api/dist/ngdesk-workflow-api-1.0.0.tgz",
-    "@ngx-translate/core": "^11.0.1",
+    "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^4.0.0",
     "@nstudio/nativescript-checkbox": "^1.0.0",
     "@stomp/ng2-stompjs": "^7.2.0",
