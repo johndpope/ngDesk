@@ -167,6 +167,10 @@ public class SignatureDocumentNode extends Node {
 				String companyId = instance.getCompany().getCompanyId();
 				String subdomain = instance.getCompany().getCompanySubdomain();
 				Module module = instance.getModule();
+				List<ModuleField> fields = instance.getModule().getFields();
+				ModuleField discussionField = module.getFields().stream()
+						.filter(moduleField -> moduleField.getDataType().getDisplay().equals("Discussion")).findFirst()
+						.orElse(null);
 				Map<String, Object> entry = instance.getEntry();
 				String pdfTemplateId = node.getPdfTemplateId();
 				String toAddress = node.getTo();
@@ -227,6 +231,10 @@ public class SignatureDocumentNode extends Node {
 						Matcher matcherBody = pattern.matcher(message);
 						while (matcherBody.find()) {
 							String path = matcherBody.group(1).split("(?i)inputMessage\\.")[1];
+							if (discussionField != null && discussionField.getName().equalsIgnoreCase(path)) {
+								message = message.replaceAll("<p>\\{\\{" + matcherBody.group(1) + "\\}\\}</p>",
+										"\\{\\{" + matcherBody.group(1) + "\\}\\}");
+							}
 							String value = nodeOperations.getValue(instance, instance.getModule(), entry, path);
 							if (value != null) {
 								message = message.replaceAll("\\{\\{" + matcherBody.group(1) + "\\}\\}",
@@ -242,7 +250,6 @@ public class SignatureDocumentNode extends Node {
 							String fieldName = oneToManyMatcher.group(1);
 							String fieldsString = oneToManyMatcher.group(2);
 
-							List<ModuleField> fields = instance.getModule().getFields();
 							Optional<ModuleField> optionalField = fields.stream()
 									.filter(moduleField -> moduleField.getName().equals(fieldName)).findFirst();
 							if (optionalField.isPresent()) {
@@ -334,10 +341,6 @@ public class SignatureDocumentNode extends Node {
 					body = body.replaceAll("URL_REPLACE", URL);
 					Boolean emailSent = true;
 					emailSent = sendMail.send(toAddress, fromAddress, subject, body);
-
-					ModuleField discussionField = module.getFields().stream()
-							.filter(moduleField -> moduleField.getDataType().getDisplay().equals("Discussion"))
-							.findFirst().orElse(null);
 
 					if (discussionField != null) {
 						if (emailSent) {

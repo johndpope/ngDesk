@@ -2,7 +2,6 @@ package com.ngdesk.workflow.executor.dao;
 
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,14 +14,11 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.math.NumberUtils;
-import org.bson.Document;
 import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -30,8 +26,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ibm.icu.util.Calendar;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.model.Filters;
 import com.ngdesk.commons.Global;
 import com.ngdesk.data.dao.DiscussionMessage;
 import com.ngdesk.data.dao.MessageAttachment;
@@ -45,7 +39,6 @@ import com.ngdesk.repositories.ModuleEntryRepository;
 import com.ngdesk.repositories.ModulesRepository;
 import com.ngdesk.repositories.RoleRepository;
 import com.ngdesk.workflow.company.dao.Company;
-import com.ngdesk.workflow.dao.UpdateEntryNode;
 import com.ngdesk.workflow.data.dao.BasePhone;
 import com.ngdesk.workflow.module.dao.Module;
 import com.ngdesk.workflow.module.dao.ModuleField;
@@ -211,7 +204,8 @@ public class NodeOperations {
 					} else if (isDataType(module, section, "Chronometer")) {
 						int value = Integer.parseInt(inputMessage.get(section).toString());
 						return getUserReadableChronometerValue(value, "");
-					} else if (isDataType(module, section, "Currency") || isDataType(module, section, "Currency Exchange")) {
+					} else if (isDataType(module, section, "Currency")
+							|| isDataType(module, section, "Currency Exchange")) {
 						Double value = Double.parseDouble(inputMessage.get(section).toString());
 						ModuleField currencyField = module.getFields().stream()
 								.filter(field -> field.getName().equals(section)).findFirst().orElse(null);
@@ -486,7 +480,12 @@ public class NodeOperations {
 			Date parsedDate = new Date(Long.parseLong(value));
 			return new SimpleDateFormat("MMM dd, yyyy HH:mm a").format(parsedDate);
 		} catch (NumberFormatException e) {
-//			e.printStackTrace();
+			try {
+				Date parsedDate = new Date(Long.valueOf(value));
+				return new SimpleDateFormat("MMMM dd, yyyy HH:mm a").format(parsedDate);
+			} catch (NumberFormatException e1) {
+				e1.printStackTrace();
+			}
 		}
 		return "";
 	}
@@ -512,7 +511,12 @@ public class NodeOperations {
 			Date parsedDate = new Date(Long.valueOf(value));
 			return new SimpleDateFormat("HH:mm a").format(parsedDate);
 		} catch (NumberFormatException e) {
-//			e.printStackTrace();
+			try {
+				Date parsedDate = new Date(Long.valueOf(value));
+				return new SimpleDateFormat("HH:mm a").format(parsedDate);
+			} catch (NumberFormatException e1) {
+				e1.printStackTrace();
+			}
 		}
 		return "";
 	}
