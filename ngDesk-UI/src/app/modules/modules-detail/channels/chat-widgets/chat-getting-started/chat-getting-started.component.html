@@ -24,7 +24,7 @@
 			  </ol>
 			</pre>
 					</div>
-					<br>
+					<!-- <br>
 					<h3 class="mat-h3" style="text-align: center" [innerHTML]="'USE_PLUGIN' | translate"></h3>
 					<div id="chat-plugin" style="padding-left: 40%"
 						[ngClass]="{'z9999': fpos.hostElement === 'chat-plugin', 'white-background': fpos.hostElement === 'chat-plugin'}" #chatPlugin
@@ -43,8 +43,8 @@
 									<mat-icon aria-hidden="false">archive</mat-icon>
 								</button> </div>
 						</div>
-					</div>
-					<mat-divider style="margin-left: 25%; margin-right: 25%;"></mat-divider><br>
+					</div> -->
+					<!-- <mat-divider style="margin-left: 25%; margin-right: 25%;"></mat-divider><br>
 					<h3 class="mat-h3" style="text-align: center" [innerHTML]="'EMAIL_INSTRUCTIONS' | translate"></h3>
 					<div style="padding-left: 30%" id="chat-email-developers"
 						[ngClass]="{'z9999': fpos.hostElement === 'chat-email-developers', 'white-background': fpos.hostElement === 'chat-email-developers'}"
@@ -63,7 +63,7 @@
 							<mat-icon aria-hidden="false">send</mat-icon>
 						</button>
 					</div>
-					<h3 class="mat-small" style="text-align: center" [innerHTML]="'MULTIPLE_EMAIL' | translate"></h3>
+					<h3 class="mat-small" style="text-align: center" [innerHTML]="'MULTIPLE_EMAIL' | translate"></h3> -->
 				</div>
 			</mat-tab>
 
@@ -343,13 +343,15 @@
 								<div fxLayoutAlign="center start" fxFlex="30" fxLayoutGap="2%">
 									<div fxLayoutAlign="start center">
 										<label class="mat-body">{{'ENABLE_PRE_CHAT_SURVEY' | translate}}</label> </div>
-									<mat-slide-toggle class="mat-body" [color]="'primary'" [(ngModel)]="this.chatChannel.SETTINGS.PRE_SURVEY_REQUIRED">
+									<!-- <mat-slide-toggle class="mat-body" [color]="'primary'" [(ngModel)]="this.chatChannel.SETTINGS.PRE_SURVEY_REQUIRED">
+									</mat-slide-toggle> -->
+									<mat-slide-toggle class="mat-body" [color]="'primary'" [checked]="true" [disabled]="true">
 									</mat-slide-toggle>
 								</div>
 							</div>
 						</div>
 					</mat-expansion-panel>
-					<mat-expansion-panel style="padding-top: 1vh" id="chat-business-rules"
+					<!-- <mat-expansion-panel style="padding-top: 1vh" id="chat-business-rules"
 						[ngClass]="{'z9999': fpos.hostElement === 'chat-business-rules', 'white-background': fpos.hostElement === 'chat-business-rules'}"
 						#chatBusinessRules>
 						<mat-expansion-panel-header>
@@ -361,7 +363,7 @@
 							</mat-panel-description>
 						</mat-expansion-panel-header>
 						<div fxFlex fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="5%">
-							<!-- Operating Hours-->
+							Operating Hours
 							<div fxLayoutAlign="start start">
 								<label class="mat-body" style="color: #9e9e9e;">{{'BUSINESS_HOURS_SUBTITLE' | translate}}</label>
 							</div>
@@ -369,7 +371,7 @@
 								<div fxLayoutAlign="center start" fxFlex="50">
 									<img src="../../../../../../assets/images/work-hours.jpg" style="width:70%;height:50%;" alt="">
 								</div>
-								<!-- Operating hours settings display -->
+								Operating hours settings display
 								<div fxFlex="50" fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="2%" style="width: 100%;">
 									<div fxFlex="40" fxLayout="row" id="chat-operating-hours-switch"
 										[ngClass]="{'z9999': fpos.hostElement === 'chat-operating-hours-switch'}" #chatOperatingHoursSwitch
@@ -384,7 +386,7 @@
 											</div>
 										</div>
 									</div>
-									<!-- Timezone -->
+									Timezone
 									<div fxFlex="35" fxLayout="row" *ngIf="chatBusinessRule.ACTIVE" fxLayoutGap="5%" fxLayoutAlign="center center"
 										style="width: 100%;">
 										<label class="mat-body">Select Timezone </label>
@@ -413,7 +415,7 @@
 								</div>
 							</div>
 						</div>
-					</mat-expansion-panel>
+					</mat-expansion-panel> -->
 					<!-- Chat bot yet to be designed -->
 					<!-- <mat-expansion-panel style="padding-top: 1vh" id="chat-bot">
 						<mat-expansion-panel-header>
@@ -460,7 +462,7 @@
 			</mat-tab>
 
 			<!-- Prompt -->
-			<mat-tab label="Prompts">
+			<!-- <mat-tab label="Prompts">
 				<div fxLayout="column" fxLayoutGap="10px" class="pad10" id="chat-prompts-details"
 					[ngClass]="{'z9999': fpos.hostElement === 'chat-prompts-details', 'white-background': fpos.hostElement === 'chat-prompts-details'}"
 					#chatPromptsDetails>
@@ -476,7 +478,7 @@
 						</ng-template>
 					</app-custom-table>
 				</div>
-			</mat-tab>
+			</mat-tab> -->
 		</mat-tab-group>
 	</div>
 </div>
