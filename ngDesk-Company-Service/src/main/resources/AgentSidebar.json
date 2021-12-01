@@ -1,0 +1,103 @@
+{
+      "ROLE": "AGENT_ROLE_REPLACE",
+      "MENU_ITEMS": [
+        {
+          "ROUTE": "dashboards",
+          "ORDER": 0,
+          "MODULE": "",
+          "IS_MODULE": false,
+          "PATH_PARAMETER": "",
+          "ICON": "dashboard",
+          "EDITABLE": false,
+          "NAME": "DASHBOARDS",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "my-action-items",
+          "ORDER": 1,
+          "MODULE": "",
+          "IS_MODULE": false,
+          "PATH_PARAMETER": "",
+          "ICON": "account_box",
+          "EDITABLE": false,
+          "NAME": "MY_ACTION_ITEMS",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "TICKETS_ID_REPLACE",
+          "ORDER": 2,
+          "MODULE": "TICKETS_ID_REPLACE",
+          "IS_MODULE": true,
+          "PATH_PARAMETER": "",
+          "ICON": "assignment",
+          "EDITABLE": true,
+          "NAME": "Tickets",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "CHAT_ID_REPLACE",
+          "ORDER": 3,
+          "MODULE": "CHAT_ID_REPLACE",
+          "IS_MODULE": true,
+          "PATH_PARAMETER": "",
+          "ICON": "chat",
+          "EDITABLE": true,
+          "NAME": "Chats",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "ACCOUNTS_ID_REPLACE",
+          "ORDER": 4,
+          "MODULE": "ACCOUNTS_ID_REPLACE",
+          "IS_MODULE": true,
+          "PATH_PARAMETER": "",
+          "ICON": "business",
+          "EDITABLE": true,
+          "NAME": "Accounts",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "guide",
+          "ORDER": 5,
+          "MODULE": "",
+          "IS_MODULE": false,
+          "PATH_PARAMETER": "",
+          "ICON": "library_books",
+          "EDITABLE": false,
+          "NAME": "KNOWLEDGE_BASE",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "",
+          "ORDER": 6,
+          "MODULE": "",
+          "IS_MODULE": false,
+          "PATH_PARAMETER": "",
+          "ICON": "notifications",
+          "EDITABLE": false,
+          "NAME": "PAGER",
+          "SUB_MENU_ITEMS": [
+            {
+              "ROUTE": "escalations",
+              "ORDER": 0,
+              "MODULE": "",
+              "IS_MODULE": false,
+              "PATH_PARAMETER": "",
+              "ICON": "arrow_upward",
+              "EDITABLE": false,
+              "NAME": "ESCALATIONS"
+            },
+            {
+              "ROUTE": "schedules",
+              "ORDER": 1,
+              "MODULE": "",
+              "IS_MODULE": false,
+              "PATH_PARAMETER": "",
+              "ICON": "event",
+              "EDITABLE": false,
+              "NAME": "SCHEDULES"
+            }
+          ]
+        }
+      ]
+    }

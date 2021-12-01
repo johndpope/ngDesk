@@ -1,0 +1,27 @@
+{
+      "ROLE": "CUSTOMERS_ROLE_REPLACE",
+      "MENU_ITEMS": [
+        {
+          "ROUTE": "TICKETS_ID_REPLACE",
+          "ORDER": 0,
+          "MODULE": "TICKETS_ID_REPLACE",
+          "IS_MODULE": true,
+          "PATH_PARAMETER": "",
+          "ICON": "assignment",
+          "EDITABLE": true,
+          "NAME": "Tickets",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "guide",
+          "ORDER": 1,
+          "MODULE": "",
+          "IS_MODULE": false,
+          "PATH_PARAMETER": "",
+          "ICON": "library_books",
+          "EDITABLE": false,
+          "NAME": "KNOWLEDGE_BASE",
+          "SUB_MENU_ITEMS": []
+        }
+      ]
+    }

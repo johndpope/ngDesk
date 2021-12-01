@@ -1,0 +1,78 @@
+ {
+      "ROLE": "ACCOUNTANT_ROLE_REPLACE",
+      "MENU_ITEMS": [
+        {
+          "ROUTE": "TICKETS_ID_REPLACE",
+          "ORDER": 0,
+          "MODULE": "TICKETS_ID_REPLACE",
+          "IS_MODULE": true,
+          "PATH_PARAMETER": "",
+          "ICON": "assignment",
+          "EDITABLE": true,
+          "NAME": "Tickets",
+          "SUB_MENU_ITEMS": []
+        },
+        {
+          "ROUTE": "",
+          "ORDER": 1,
+          "MODULE": "",
+          "IS_MODULE": false,
+          "PATH_PARAMETER": "",
+          "ICON": "account_balance",
+          "EDITABLE": false,
+          "NAME": "Expenses",
+          "SUB_MENU_ITEMS": [
+            {
+              "ROUTE": "EXPENSE_REPORTS_ID_REPLACE",
+              "ORDER": 0,
+              "MODULE": "EXPENSE_REPORTS_ID_REPLACE",
+              "IS_MODULE": true,
+              "PATH_PARAMETER": "",
+              "ICON": "receipt",
+              "EDITABLE": false,
+              "NAME": "Expense Reports"
+            },
+            {
+              "ROUTE": "EXPENSES_ID_REPLACE",
+              "ORDER": 1,
+              "MODULE": "EXPENSES_ID_REPLACE",
+              "IS_MODULE": true,
+              "PATH_PARAMETER": "",
+              "ICON": "attach_money",
+              "EDITABLE": false,
+              "NAME": "Expenses"
+            },
+            {
+              "ROUTE": "CATEGORIES_ID_REPLACE",
+              "ORDER": 2,
+              "MODULE": "CATEGORIES_ID_REPLACE",
+              "IS_MODULE": true,
+              "PATH_PARAMETER": "",
+              "ICON": "view_agenda",
+              "EDITABLE": false,
+              "NAME": "Categories"
+            },
+            {
+              "ROUTE": "GL_CODES_ID_REPLACE",
+              "ORDER": 3,
+              "MODULE": "GL_CODES_ID_REPLACE",
+              "IS_MODULE": true,
+              "PATH_PARAMETER": "",
+              "ICON": "recent_actors",
+              "EDITABLE": false,
+              "NAME": "Gl Codes"
+            },
+            {
+              "ROUTE": "TAXES_ID_REPLACE",
+              "ORDER": 4,
+              "MODULE": "TAXES_ID_REPLACE",
+              "IS_MODULE": true,
+              "PATH_PARAMETER": "",
+              "ICON": "monetization_on",
+              "EDITABLE": false,
+              "NAME": "Taxes"
+            }
+          ]
+        }
+      ]
+    }
