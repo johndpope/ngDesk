@@ -1,5 +1,6 @@
 package com.ngdesk.repositories;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,13 @@ public class CustomPluginRepositoryImpl implements CustomPluginRepository {
 	@Override
 	public Optional<Plugin> findPluginByName(String name) {
 		Assert.notNull(name, "The given plugin name must not be null!");
-		return Optional.ofNullable(mongoOperations.findOne(new Query(Criteria.where("NAME").is(name)), Plugin.class, "plugins"));
+		return Optional.ofNullable(
+				mongoOperations.findOne(new Query(Criteria.where("NAME").is(name)), Plugin.class, "plugins"));
+	}
+
+	@Override
+	public Optional<List<Plugin>> findAllPlugins() {
+		return Optional.ofNullable(mongoOperations.find(new Query(), Plugin.class, "plugins"));
 	}
 
 }
