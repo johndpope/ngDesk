@@ -82,7 +82,6 @@ public class AgentAvailabilityService {
 					}
 				}
 			}
-
 			if (isBusinessHoursActive != null && !isBusinessHoursActive) {
 				message = "Inactive";
 			}
@@ -192,12 +191,12 @@ public class AgentAvailabilityService {
 					}
 				}
 				break;
-
 			case "Week":
 				String startDay = restriction.getStartDay();
 				String endDay = restriction.getEndDay();
 				int start = getDay(startDay);
 				int end = getDay(endDay);
+
 				if (start > end || (start == end && currentHour > endHour)) {
 					if (currentDay <= end) {
 						currentDay = currentDay + 7;
@@ -206,8 +205,10 @@ public class AgentAvailabilityService {
 				}
 
 				if (currentDay == start && currentDay == end) {
-					if (startHour <= currentHour && currentHour < endHour) {
+					if (currentHour >= startHour && currentHour <= endHour) {
 						if ((currentHour == endHour) && (currentMinutes > endMinute)) {
+							return false;
+						} else if ((currentHour == startHour) && (currentMinutes < startMinute)) {
 							return false;
 						}
 						return true;
@@ -221,13 +222,16 @@ public class AgentAvailabilityService {
 						return true;
 					} else if (currentDay == start) {
 						if (currentHour >= startHour) {
-							if ((currentHour == endHour) && (currentMinutes > endMinute)) {
+							if ((currentHour == startHour) && (currentMinutes < startMinute)) {
 								return false;
 							}
 							return true;
 						}
 					} else if (currentDay == end) {
-						if (currentHour < endHour) {
+						if (currentHour <= endHour) {
+							if ((currentHour == endHour) && (currentMinutes > endMinute)) {
+								return false;
+							}
 							return true;
 						}
 					} else {
@@ -240,7 +244,6 @@ public class AgentAvailabilityService {
 			}
 		} catch (ParseException e) {
 			e.printStackTrace();
-
 		}
 		return false;
 
@@ -248,25 +251,25 @@ public class AgentAvailabilityService {
 
 	private int getDay(String day) {
 		if (day.equals("Sun")) {
-			return 0;
-		}
-		if (day.equals("Mon")) {
 			return 1;
 		}
-		if (day.equals("Tue")) {
+		if (day.equals("Mon")) {
 			return 2;
 		}
-		if (day.equals("Wed")) {
+		if (day.equals("Tue")) {
 			return 3;
 		}
-		if (day.equals("Thu")) {
+		if (day.equals("Wed")) {
 			return 4;
 		}
-		if (day.equals("Fri")) {
+		if (day.equals("Thu")) {
 			return 5;
 		}
-		if (day.equals("Sat")) {
+		if (day.equals("Fri")) {
 			return 6;
+		}
+		if (day.equals("Sat")) {
+			return 7;
 		}
 		return -1;
 	}
