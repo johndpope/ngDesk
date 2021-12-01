@@ -287,12 +287,7 @@ public class ChatService {
 							}
 						}
 					} else {
-						if (closeChat.getIsAgentCloseChat()) {
-							setStatusBrowsing(company, optionalContactEntry, chatEntry);
-						} else {
-							setStatusOffline(company, optionalContactEntry, chatEntry);
-
-						}
+						setStatusOffline(company, optionalContactEntry, chatEntry);
 					}
 				}
 			}
@@ -301,25 +296,30 @@ public class ChatService {
 		}
 	}
 
-	public void setStatusBrowsing(Company company, Optional<Map<String, Object>> optionalContactEntry,
-			Map<String, Object> chatEntry) {
+	public void agentEndedTheChat(CloseChat closeChat) {
+		String subdomain = closeChat.getSubdomain();
+		Optional<Company> optionalCompany = companiesRepository.findCompanyBySubdomain(subdomain);
+		if (optionalCompany.isPresent()) {
+			Company company = optionalCompany.get();
+			String companyId = company.getId();
 
-		Optional<Module> optionalChatModule = modulesRepository.findModuleByName("Chats", "modules_" + company.getId());
+			Optional<Map<String, Object>> optionalChatEntry = moduleEntryRepository
+					.findBySessionUuid(closeChat.getSessionUUID(), "Chats_" + companyId);
 
-		if (optionalChatModule.isPresent()) {
-			if (optionalContactEntry.isPresent()) {
-				Optional<Map<String, Object>> optionalUserEntry = moduleEntryRepository
-						.findById(optionalContactEntry.get().get("USER").toString(), "Users_" + company.getId());
-				if (optionalUserEntry.isPresent()) {
-					HashMap<String, Object> updateChatEntry = new HashMap<String, Object>();
-					updateChatEntry.put("DATA_ID", chatEntry.get("_id").toString());
-					updateChatEntry.put("STATUS", "Browsing");
-					dataProxy.putModuleEntry(updateChatEntry, optionalChatModule.get().getModuleId(), false,
-							company.getId(), optionalUserEntry.get().get("USER_UUID").toString());
+			if (optionalChatEntry.isPresent()) {
+				Map<String, Object> chatEntry = optionalChatEntry.get();
+
+				Optional<Map<String, Object>> optionalContactEntry = moduleEntryRepository
+						.findById(chatEntry.get("REQUESTOR").toString(), "Contacts_" + companyId);
+
+				if (closeChat.getIsAgentCloseChat()) {
+					setStatusOffline(company, optionalContactEntry, chatEntry);
+					ChatTicketStatusMessage chatTicketStatusMessage = new ChatTicketStatusMessage(companyId,
+							closeChat.getSessionUUID(), "CLOSE_CHAT", "CLOSED", "AGENT_ENDED_THE_CHAT");
+					addToChatTicketStatusQueue(chatTicketStatusMessage);
 				}
 			}
 		}
-
 	}
 
 	public void setStatusOffline(Company company, Optional<Map<String, Object>> optionalContactEntry,
