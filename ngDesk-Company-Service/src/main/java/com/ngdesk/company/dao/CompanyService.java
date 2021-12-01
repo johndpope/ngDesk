@@ -1,6 +1,8 @@
 package com.ngdesk.company.dao;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -292,7 +294,7 @@ public class CompanyService {
 
 	}
 
-	public ChatSettings setChatSettings(Company company) {
+	public ChatSettings setChatSettings(Company company, String adminTeamId) {
 		if (company.getChatSettings() != null) {
 			ChatSettings chatSettings = company.getChatSettings();
 			if (chatSettings.getMaxChatsPerAgent() <= 0 || chatSettings.getMaxChatsPerAgent() > 5) {
@@ -302,6 +304,9 @@ public class CompanyService {
 		} else {
 			ChatSettings chatSettings = new ChatSettings();
 			chatSettings.setMaxChatsPerAgent(5);
+			List<String> teamsWhoCanChat = new ArrayList<String>();
+			teamsWhoCanChat.add(adminTeamId);
+			chatSettings.setTeamsWhoCanChat(teamsWhoCanChat);
 			return chatSettings;
 
 		}

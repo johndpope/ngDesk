@@ -137,7 +137,8 @@ public class CompanyAPI {
 		company.setForgotPasswordMessage(companyService.getForgotPasswordMessage(company));
 		company.setCompanyId(companyService.getNewObjectId().toString());
 		company.setVersion("v2");
-		company.setChatSettings(companyService.setChatSettings(company));
+		ObjectId adminTeamId = new ObjectId();
+		company.setChatSettings(companyService.setChatSettings(company,adminTeamId.toString()));
 
 		companyRepository.save(company, "companies");
 		Map<String, String> rolesMap = roleService.postDefaultRoles(company);
@@ -162,7 +163,6 @@ public class CompanyAPI {
 		}
 
 		ObjectId globalTeamId = new ObjectId();
-		ObjectId adminTeamId = new ObjectId();
 		ObjectId salesTeamId = new ObjectId();
 		ObjectId spenderId = new ObjectId();
 		ObjectId accountingManagerId = new ObjectId();
