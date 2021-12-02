@@ -20,6 +20,11 @@ export class AppGlobals {
 		window.location.hostname +
 		'/api/ngdesk-graphql-service-v1/reports/generate';
 
+	public readonly graphqlKBUrl =
+		'https://' +
+		window.location.hostname +
+		'/api/ngdesk-graphql-service-v1/noauth/query';
+
 	public s4() {
 		return Math.floor((1 + Math.random()) * 0x10000)
 			.toString(16)

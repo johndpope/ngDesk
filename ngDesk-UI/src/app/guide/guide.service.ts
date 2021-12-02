@@ -238,6 +238,8 @@ _id
 				DATA:  getKbCategories(pageNumber: 0, pageSize: 10, sortBy: "name",orderBy: "Asc") {
 					name
 					categoryId
+					order
+					isDraft
 					visibleTo {
 						_id
 						PRIMARY_DISPLAY_FIELD: NAME
@@ -245,6 +247,20 @@ _id
 				}
 			}`;
 		return this.http.post(`${this.globals.graphqlUrl}`, query);
+	}
+
+	public getNoAuthKbCategories() {
+		let query = '';
+		query = `{
+				DATA:  getKbCategories(pageNumber: 0, pageSize: 10, sortBy: "name",orderBy: "Asc") {
+					name
+					categoryId
+					order
+					isDraft
+					visibleTo 
+				}
+			}`;
+		return this.http.post(`${this.globals.graphqlKBUrl}`, query);
 	}
 
 	public getKbArticleById(articleId) {
