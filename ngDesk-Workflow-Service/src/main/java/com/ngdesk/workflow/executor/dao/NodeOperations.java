@@ -159,6 +159,7 @@ public class NodeOperations {
 					} else {
 						ids.add(inputMessage.get(section).toString());
 					}
+					List<String> values = new ArrayList<String>();
 					for (String id : ids) {
 						Optional<Map<String, Object>> optionalRelatedEntry = entryRepository.findEntryById(id,
 								relatedModule.getName() + "_" + company.getCompanyId());
@@ -168,13 +169,14 @@ public class NodeOperations {
 						relatedEntry = optionalRelatedEntry.get();
 						String dataId = relatedEntry.get("_id").toString();
 						relatedEntry.put("DATA_ID", dataId);
-
 						if (path.split("\\.").length > 1) {
-							return getValue(instance, relatedModule, relatedEntry, path.split(section + "\\.")[1]);
+							values.add(getValue(instance, relatedModule, relatedEntry, path.split(section + "\\.")[1]));
 						}
 					}
+					if (!values.isEmpty()) {
+						return mapper.writeValueAsString(values);
+					}
 					return mapper.writeValueAsString(relatedEntry);
-
 				}
 			} else if (isDataType(module, section, "Discussion")) {
 
