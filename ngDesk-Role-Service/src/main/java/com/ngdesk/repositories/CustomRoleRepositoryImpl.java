@@ -1,5 +1,7 @@
 package com.ngdesk.repositories;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,19 @@ public class CustomRoleRepositoryImpl implements CustomRoleRepository {
 		Criteria criteria = new Criteria();
 		criteria.andOperator(Criteria.where("NAME").is(name), Criteria.where("_id").ne(roleId));
 		return Optional.ofNullable(mongoOperations.findOne(new Query(criteria), Role.class, collectionName));
+	}
+
+	@Override
+	public Map saveDefaultTeams(Map hashMap, String collectionName) {
+		System.out.println(hashMap.get("NAME") + "=================================" + collectionName);
+		return mongoOperations.save(hashMap, collectionName);
+	}
+
+	@Override
+	public Optional<Map> findByTeamName(String name, String collectionName) {
+		System.out.println("--------------------" + name);
+		return Optional.ofNullable(
+				mongoOperations.findOne(new Query(Criteria.where("NAME").is(name)), Map.class, collectionName));
 	}
 
 }

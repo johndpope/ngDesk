@@ -65,6 +65,10 @@ public class BeforeSaveListener extends AbstractMongoEventListener<Role> {
 
 					throw new BadRequestException("MODULE_INVALID", null);
 				}
+				if (optionalPermission.get().getName().equals("Tickets")
+						&& (role.getId() == null || role.getId() == "")) {
+					addDefaultTicketModule(permission);
+				}
 				List<ModuleField> fields = optionalPermission.get().getFields();
 				List<FieldPermission> fieldPermissions = permission.getFieldPermissions();
 				for (FieldPermission fieldPermission : fieldPermissions) {
@@ -78,6 +82,16 @@ public class BeforeSaveListener extends AbstractMongoEventListener<Role> {
 				}
 			}
 		}
+	}
+
+	private void addDefaultTicketModule(Permission permission) {
+		ModuleLevelPermission moduleLevelPermission = new ModuleLevelPermission();
+		moduleLevelPermission.setAccess("Enabled");
+		moduleLevelPermission.setView("All");
+		moduleLevelPermission.setEdit("All");
+		moduleLevelPermission.setDelete("None");
+		moduleLevelPermission.setAccessType("Not Set");
+		permission.setModulePermission(moduleLevelPermission);
 	}
 
 	public void validateFieldPermission(Role role) {
