@@ -154,8 +154,7 @@ public class NodeOperations {
 					Module relatedModule = optionalRelatedModule.get();
 					List<String> ids = new ArrayList<String>();
 					Map<String, Object> relatedEntry = new HashMap<String, Object>();
-					if (field.getDataType().getDisplay().equals("Relationship")
-							&& field.getDataType().getBackend().equals("Array")) {
+					if (field.getRelationshipType().equals("Many to Many")) {
 						ids = mapper.readValue(mapper.writeValueAsString(inputMessage.get(section)), List.class);
 					} else {
 						ids.add(inputMessage.get(section).toString());
@@ -163,11 +162,9 @@ public class NodeOperations {
 					for (String id : ids) {
 						Optional<Map<String, Object>> optionalRelatedEntry = entryRepository.findEntryById(id,
 								relatedModule.getName() + "_" + company.getCompanyId());
-
 						if (optionalRelatedEntry.isEmpty()) {
 							return "";
 						}
-
 						relatedEntry = optionalRelatedEntry.get();
 						String dataId = relatedEntry.get("_id").toString();
 						relatedEntry.put("DATA_ID", dataId);
