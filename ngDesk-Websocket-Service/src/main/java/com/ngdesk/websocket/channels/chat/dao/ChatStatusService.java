@@ -64,7 +64,7 @@ public class ChatStatusService {
 						AgentChattingStatusCheck agentChattingStatusCheck = new AgentChattingStatusCheck(
 								chatStatus.getUserId(), company.getCompanySubdomain(), "AGENT_CHATTING_STATUS",
 								"Currently you have " + chatEntries
-										+ " active chats, so you cannot disable chats!");
+										+ " active chats, so you cannot go offline, please try when you don't have any chats!");
 						addToQueueChatAgentStatusCheck(agentChattingStatusCheck);
 					} else {
 						userSessions.setChatStatus("not available");
