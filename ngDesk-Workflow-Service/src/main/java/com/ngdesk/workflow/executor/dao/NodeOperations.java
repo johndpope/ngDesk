@@ -5,6 +5,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -151,22 +152,32 @@ public class NodeOperations {
 						return "";
 					}
 					Module relatedModule = optionalRelatedModule.get();
-					Optional<Map<String, Object>> optionalRelatedEntry = entryRepository.findEntryById(
-							inputMessage.get(section).toString(),
-							relatedModule.getName() + "_" + company.getCompanyId());
-
-					if (optionalRelatedEntry.isEmpty()) {
-						return "";
+					List<String> ids = new ArrayList<String>();
+					Map<String, Object> relatedEntry = new HashMap<String, Object>();
+					if (field.getDataType().getDisplay().equals("Relationship")
+							&& field.getDataType().getBackend().equals("Array")) {
+						ids = mapper.readValue(mapper.writeValueAsString(inputMessage.get(section)), List.class);
+					} else {
+						ids.add(inputMessage.get(section).toString());
 					}
+					for (String id : ids) {
+						Optional<Map<String, Object>> optionalRelatedEntry = entryRepository.findEntryById(id,
+								relatedModule.getName() + "_" + company.getCompanyId());
 
-					Map<String, Object> relatedEntry = optionalRelatedEntry.get();
-					String dataId = relatedEntry.get("_id").toString();
-					relatedEntry.put("DATA_ID", dataId);
+						if (optionalRelatedEntry.isEmpty()) {
+							return "";
+						}
 
-					if (path.split("\\.").length > 1) {
-						return getValue(instance, relatedModule, relatedEntry, path.split(section + "\\.")[1]);
+						relatedEntry = optionalRelatedEntry.get();
+						String dataId = relatedEntry.get("_id").toString();
+						relatedEntry.put("DATA_ID", dataId);
+
+						if (path.split("\\.").length > 1) {
+							return getValue(instance, relatedModule, relatedEntry, path.split(section + "\\.")[1]);
+						}
 					}
 					return mapper.writeValueAsString(relatedEntry);
+
 				}
 			} else if (isDataType(module, section, "Discussion")) {
 
@@ -259,12 +270,10 @@ public class NodeOperations {
 		try {
 			List<String> teamIds = (List<String>) inputMessage.get("TEAMS");
 			List<Map<String, Object>> users = entryRepository.findEntriesByTeamIds(teamIds, "Users_" + companyId);
-
 			List<String> emailAddresses = new ArrayList<String>();
 			for (Map<String, Object> user : users) {
 				emailAddresses.add(user.get("EMAIL_ADDRESS").toString());
 			}
-
 			return mapper.writeValueAsString(emailAddresses);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
@@ -535,7 +544,7 @@ public class NodeOperations {
 			if (displayDataType.equals("Relationship") && dataType.equals("Relationship")) {
 				if (field.getRelationshipType().equals("One to One")
 						|| field.getRelationshipType().equals("Many to One")
-						|| (field.getRelationshipType().equals("Many to Many") && field.getName().equals("TEAMS"))) {
+						|| (field.getRelationshipType().equals("Many to Many"))) {
 					return true;
 				}
 
