@@ -1,6 +1,5 @@
 package com.ngdesk.repositories;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -40,8 +39,10 @@ public class CustomRoleRepositoryImpl implements CustomRoleRepository {
 	@Override
 	public Optional<Map> findByTeamName(String name, String collectionName) {
 		System.out.println("--------------------" + name);
-		return Optional.ofNullable(
-				mongoOperations.findOne(new Query(Criteria.where("NAME").is(name)), Map.class, collectionName));
+		Criteria criteria = new Criteria();
+		criteria.andOperator(Criteria.where("NAME").is(name), Criteria.where("DELETED").is(false),
+				Criteria.where("IS_PERSONAL").is(false));
+		return Optional.ofNullable(mongoOperations.findOne(new Query(criteria), Map.class, collectionName));
 	}
 
 }

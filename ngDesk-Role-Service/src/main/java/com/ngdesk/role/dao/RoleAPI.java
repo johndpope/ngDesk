@@ -1,12 +1,13 @@
 package com.ngdesk.role.dao;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 import javax.validation.Valid;
-
+import com.ngdesk.commons.exceptions.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -48,11 +49,15 @@ public class RoleAPI {
 
 	private void addDefaultTeams(@Valid Role role, String companyId) {
 		Map hashMap = new HashMap<String, String>();
-		Optional<Map> optionalTeam = roleRepository.findByTeamName(role.getName(), "Teams_" + companyId);
 		hashMap.put("NAME", role.getName());
 		hashMap.put("DESCRIPTION", "Default team for " + role.getName());
 		hashMap.put("USERS", new ArrayList<String>());
 		hashMap.put("DELETED", false);
+		hashMap.put("IS_PERSONAL", false);
+		hashMap.put("DATE_CREATED", new Date());
+		hashMap.put("DATE_UPDATED", new Date());
+		hashMap.put("CREATED_BY", authManager.getUserDetails().getUserId());
+		hashMap.put("LAST_UPDATED_BY", authManager.getUserDetails().getUserId());
 		// Map<String, String> existingTeam = optionalTeam.get();
 
 		roleRepository.saveDefaultTeams(hashMap, "Teams_" + companyId);
@@ -82,6 +87,11 @@ public class RoleAPI {
 		if (optionalRole.isEmpty()) {
 			String vars[] = { "ROLE" };
 			throw new NotFoundException("DAO_NOT_FOUND", vars);
+		}
+		Optional<Map> optionalTeam = roleRepository.findByTeamName(optionalRole.get().getName(), "Teams_" + companyId);
+		// System.out.println("========================" + optionalTeam.get());
+		if (optionalTeam.isEmpty()) {
+			throw new BadRequestException("TEAMS_DOES_NOT_EXIST", null);
 		}
 	}
 

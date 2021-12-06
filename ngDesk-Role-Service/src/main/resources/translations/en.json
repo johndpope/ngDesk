@@ -25,5 +25,6 @@
 	"ORDER_BY_NOT_IN_SHOW_COLUMNS": "the field selected for order by in layout of module - '${1}' is not present in the columns to display, please try again",
 	"INVALID_CONDITION_FIELD": "the field which you have selected in conditions for layout of module '${1}' does not exist or might have been deleted, please try again",
 	"DEFAULT_DELETE": "Default layouts can't be deleted",
-	"NO_DEFAULT_FOR_ROLE": "There should be a default layout per role"
+	"NO_DEFAULT_FOR_ROLE": "There should be a default layout per role",
+	"TEAMS_DOES_NOT_EXIST": "Teams does not exists for this role"
 }

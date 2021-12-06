@@ -923,13 +923,13 @@ export class FieldViewComponent implements OnInit {
 			if (datatype.DISPLAY === 'Phone') {
 				field['DEFAULT_VALUE'] = this.fieldForm.value.DEFAULT_VALUE;
 			}
-			if (field.DATA_TYPE.DISPLAY === 'List Formula') {
-				field.LIST_FORMULA = this.listFormulaFormArray.getRawValue();
-				const formulaList: any[] = field.LIST_FORMULA;
-				for (let formula of formulaList) {
-					formula['FORMULA'] = formula.formulaString;
-				}
-			}
+			// if (field.DATA_TYPE.DISPLAY === 'List Formula') {
+			// 	field.LIST_FORMULA = this.listFormulaFormArray.getRawValue();
+			// 	const formulaList: any[] = field.LIST_FORMULA;
+			// 	for (let formula of formulaList) {
+			// 		formula['FORMULA'] = formula.formulaString;
+			// 	}
+			// }
 		}
 
 		if (
