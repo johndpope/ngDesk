@@ -20,6 +20,7 @@ export class DashboardsRenderComponent implements OnInit {
 	public currentRole;
 	public currentRoleId;
 	public isLoading = true;
+	public noLoading = false;
 	@ViewChild('sidenav')
 	public sidenav: MatSidenav;
 	public colorPallete = [];
@@ -35,6 +36,7 @@ export class DashboardsRenderComponent implements OnInit {
 
 	public ngOnInit(dashboardId?) {
 		this.isLoading = true;
+		this.noLoading = false;
 		let isSet = false;
 		if (dashboardId) {
 			this.dashboardId = dashboardId;
@@ -229,7 +231,14 @@ export class DashboardsRenderComponent implements OnInit {
 				this.dashboard = dashboard;
 			} else {
 				this.dashboard = this.dashboards[0];
-				this.dashboardId = this.dashboard.dashboardId;
+				if (this.dashboard) {
+					this.dashboardId = this.dashboard.dashboardId;
+				}
+				else {
+					console.log("1", "HELLO");
+					this.noLoading = true;
+				}
+				
 			}
 		}
 	}
