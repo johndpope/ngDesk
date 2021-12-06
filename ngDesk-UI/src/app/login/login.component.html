@@ -13,8 +13,8 @@
 							<div *ngIf="enableFacebook || enableGoogle || enableTwitter||enableMicrosoft" fxFlex="50" fxLayout="column"
 								style="padding-top: 15px;">
 								<div fxFlex="10" fxLayout="column" fxLayoutGap="10px">
-									<button *ngIf="enableFacebook" style="padding-top: 5px; padding-bottom: 5px; " fxFlex="none"
-										(click)="loginWithFacebook()" mat-raised-button>
+									<button *ngIf="enableFacebook" style="padding-top: 5px; padding-bottom: 5px; " fxFlex="none" (click)="loginWithFacebook()"
+										mat-raised-button>
 										<div>
 											<div fxFlex="20"> </div>
 											<div fxLayout="row" fxLayoutGap="15px">
@@ -27,8 +27,8 @@
 											</div>
 										</div>
 									</button>
-									<button *ngIf="enableGoogle" style="padding-top: 5px; padding-bottom: 5px; " color="basic"
-										(click)="loginWithGoogle()" fxFlex="none" mat-raised-button>
+									<button *ngIf="enableGoogle" style="padding-top: 5px; padding-bottom: 5px; " color="basic" (click)="loginWithGoogle()"
+										fxFlex="none" mat-raised-button>
 										<div>
 											<div fxFlex="20"> </div>
 											<div fxLayout="row" fxLayoutGap="15px">
@@ -41,8 +41,8 @@
 											</div>
 										</div>
 									</button>
-									<button *ngIf="enableTwitter" style="padding-top: 5px; padding-bottom: 5px; " color="basic"
-										fxFlex="none" (click)="loginWithTwitter()" mat-raised-button>
+									<button *ngIf="enableTwitter" style="padding-top: 5px; padding-bottom: 5px; " color="basic" fxFlex="none"
+										(click)="loginWithTwitter()" mat-raised-button>
 										<div>
 											<div fxFlex="20"> </div>
 											<div fxLayout="row" fxLayoutGap="15px">
@@ -97,7 +97,7 @@
 									<div fxLayout="column" fxLayoutAlign="center center" style="margin-top: 15px;">
 										<span (click)="forgotPassword()" style="cursor: pointer;" class="mat-h5 ">{{'FORGOT_PASSWORD' |
 											translate}}?</span>
-										<div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="3px">
+										<div *ngIf="enableSignup" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="3px">
 											<span class="mat-h5">Don't have an account?</span>
 											<span (click)="signup()" style="cursor: pointer;color: #3f51b5;font-weight: bolder;"
 												class="mat-h5">{{'SIGNUP' | translate}}</span>
