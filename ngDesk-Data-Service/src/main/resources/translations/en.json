@@ -110,5 +110,6 @@
 	"HEADER_CANNOT_BE_EMPTY": "The selected file have empty headers, please try again",
 	"INVALID_FORM" : "Selected Form doesnot exist or might have been deleted",
 	"FORMULA_NAME_INVALID" :"Formula Name ${1} is invalid or may have been deleted from list formula field, Please try again",
-	"RELATIONSHIP_FIELD_ALREADY_EXIST_IN_OTHER_ENTRY": "The ${1} may have been used in other existing entry, please try again"
+	"RELATIONSHIP_FIELD_ALREADY_EXIST_IN_OTHER_ENTRY": "The ${1} may have been used in other existing entry, please try again",
+	"INVALID_FIELD_SELECTED": "${1} cannot be selected, please try again with different field"
 }

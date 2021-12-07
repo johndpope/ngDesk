@@ -29,6 +29,7 @@ import com.ngdesk.commons.exceptions.BadRequestException;
 import com.ngdesk.commons.exceptions.ForbiddenException;
 import com.ngdesk.commons.managers.AuthManager;
 import com.ngdesk.data.modules.dao.Module;
+import com.ngdesk.data.modules.dao.ModuleField;
 import com.ngdesk.data.roles.dao.RolesService;
 import com.ngdesk.data.validator.Validator;
 import com.ngdesk.repositories.csvimport.CsvImportRepository;
@@ -80,8 +81,24 @@ public class CsvImportApi {
 			throw new BadRequestException("INVALID_MODULE", null);
 		}
 
-		List<CsvImportLog> logs = new ArrayList<CsvImportLog>();
+		Module module = optionalModule.get();
+		List<ModuleField> moduleFields = module.getFields();
 		CsvImportData csvImportData = csvImport.getCsvImportData();
+
+		List<String> defaultFields = List.of("DATE_CREATED", "DATE_UPDATED", "EFFECTIVE_TO", "EFFECTIVE_FROM",
+				"CREATED_BY", "LAST_UPDATED_BY", "DELETED");
+		List<CsvHeaders> csvHeaders = csvImportData.getHeaders();
+		for (CsvHeaders csvHeader : csvHeaders) {
+			String fieldId = csvHeader.getFieldId();
+			ModuleField moduleField = moduleFields.stream().filter(field -> field.getFieldId().equals(fieldId))
+					.findFirst().orElse(null);
+			if (defaultFields.contains(moduleField.getName())) {
+				String[] vars = new String[] { moduleField.getDisplayLabel()};
+				throw new BadRequestException("INVALID_FIELD_SELECTED", vars);
+			}
+		}
+
+		List<CsvImportLog> logs = new ArrayList<CsvImportLog>();
 		CsvFormat csvFormat = csvImport.getCsvFormat();
 		CsvImport entry = new CsvImport(null, "QUEUED", csvImportData, moduleId, logs,
 				authManager.getUserDetails().getCompanyId(), csvImportData.getFileName(), csvFormat, 0, 0, new Date(),
@@ -149,7 +166,7 @@ public class CsvImportApi {
 			String[] headersArray = Arrays.stream(list.get(0)).map(String::trim).toArray(String[]::new);
 			headers = Arrays.asList(headersArray);
 			boolean bool = headers.stream().anyMatch(header -> (header == null || header.equals("")));
-			if(bool) {
+			if (bool) {
 				throw new BadRequestException("HEADER_CANNOT_BE_EMPTY", null);
 			}
 		} else {

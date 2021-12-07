@@ -84,11 +84,9 @@ export class CsvImportDialogComponent implements OnInit {
 		const selectedFieldsDropdown = [];
 		this.data.csvData.MODULE.FIELDS.forEach((field) => {
 			if (
-				!field.NOT_EDITABLE &&
 				field.DATA_TYPE.DISPLAY !== 'Aggregate' &&
 				field.DATA_TYPE.DISPLAY !== 'Approval' &&
 				field.DATA_TYPE.DISPLAY !== 'Button' &&
-				field.DATA_TYPE.DISPLAY !== 'Checkbox' &&
 				field.DATA_TYPE.DISPLAY !== 'Currency Exchange' &&
 				field.DATA_TYPE.DISPLAY !== 'File Upload' &&
 				field.DATA_TYPE.DISPLAY !== 'File Preview' &&
@@ -124,7 +122,7 @@ export class CsvImportDialogComponent implements OnInit {
 			});
 		} else {
 			for (let [key, value] of Object.entries(this.headerMap)) {
-				if (`${value}` != undefined) {
+				if (`${value}` !== 'undefined') {
 					this.csvheaders = {
 						fieldId: `${key}`,
 						headerName: `${value}`,
