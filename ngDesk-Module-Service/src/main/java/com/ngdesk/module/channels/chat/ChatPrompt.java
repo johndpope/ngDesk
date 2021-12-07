@@ -5,12 +5,10 @@ import java.util.List;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.ngdesk.workflow.dao.Workflow;
 
 public class ChatPrompt {
 
@@ -32,9 +30,9 @@ public class ChatPrompt {
 	@Valid
 	private List<Conditions> conditions;
 
-	@JsonProperty("WORKFLOW")
-	@Field("WORKFLOW")
-	private Workflow workflow;
+	@JsonProperty("CHAT_PROMPT_ACTION")
+	@Field("CHAT_PROMPT_ACTION")
+	private ChatPromptAction chatPromptAction;
 
 	@JsonProperty("DATE_UPDATED")
 	@Field("DATE_UPDATED")
@@ -44,28 +42,21 @@ public class ChatPrompt {
 	@Field("LAST_UPDATED_BY")
 	private String lastUpdatedBy;
 
-	@NotNull(message = "TRIGGERS_NOT_NULL")
-	@JsonProperty("RUN_TRIGGER")
-	@Field("RUN_TRIGGER")
-	@Pattern(regexp = "LOADED_CHAT_WIDGET|REQUESTS_CHAT|MESSAGE_SENT", message = "INVALID_RUN_TRIGGER")
-	private String runTrigger;
-
 	public ChatPrompt() {
 
 	}
 
 	public ChatPrompt(@NotNull(message = "NAME_NOT_NULL") String promptName, String promptdescription, String promptId,
-			@Valid List<Conditions> conditions, Workflow workflow, Date dateUpdated, String lastUpdatedBy,
-			@NotNull(message = "TRIGGERS_NOT_NULL") @Pattern(regexp = "LOADED_CHAT_WIDGET|REQUESTS_CHAT|MESSAGE_SENT", message = "INVALID_RUN_TRIGGER") String runTrigger) {
+			@Valid List<Conditions> conditions, ChatPromptAction chatPromptAction, Date dateUpdated,
+			String lastUpdatedBy) {
 		super();
 		this.promptName = promptName;
 		this.promptdescription = promptdescription;
 		this.promptId = promptId;
 		this.conditions = conditions;
-		this.workflow = workflow;
+		this.chatPromptAction = chatPromptAction;
 		this.dateUpdated = dateUpdated;
 		this.lastUpdatedBy = lastUpdatedBy;
-		this.runTrigger = runTrigger;
 	}
 
 	public String getPromptName() {
@@ -100,12 +91,12 @@ public class ChatPrompt {
 		this.conditions = conditions;
 	}
 
-	public Workflow getWorkflow() {
-		return workflow;
+	public ChatPromptAction getChatPromptAction() {
+		return chatPromptAction;
 	}
 
-	public void setWorkflow(Workflow workflow) {
-		this.workflow = workflow;
+	public void setChatPromptAction(ChatPromptAction chatPromptAction) {
+		this.chatPromptAction = chatPromptAction;
 	}
 
 	public Date getDateUpdated() {
@@ -122,14 +113,6 @@ public class ChatPrompt {
 
 	public void setLastUpdatedBy(String lastUpdatedBy) {
 		this.lastUpdatedBy = lastUpdatedBy;
-	}
-
-	public String getRunTrigger() {
-		return runTrigger;
-	}
-
-	public void setRunTrigger(String runTrigger) {
-		this.runTrigger = runTrigger;
 	}
 
 }

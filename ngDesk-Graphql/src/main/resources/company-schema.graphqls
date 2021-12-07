@@ -836,11 +836,14 @@ type ChatPrompt{
 	promptdescription: String
 	promptId: String
 	conditions: [Condition]
-	workflow: ChatChannelWorkflow
+	chatPromptAction: ChatPromptAction
 	dateUpdated: DateTime
 	lastUpdatedBy: String
-	runTrigger: String
 
+}
+type ChatPromptAction{
+	actionName: String
+	actionValue: String
 }
 
 type ChatChannelWorkflow{

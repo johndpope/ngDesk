@@ -3,10 +3,11 @@ package com.ngdesk.websocket.channels.chat;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.ngdesk.websocket.workflow.dao.Workflow;
 
 public class ChatPrompt {
 
@@ -26,9 +27,9 @@ public class ChatPrompt {
 	@Field("CONDITIONS")
 	private List<Conditions> conditions;
 
-	@JsonProperty("WORKFLOW")
-	@Field("WORKFLOW")
-	private Workflow workflow;
+	@JsonProperty("CHAT_PROMPT_ACTION")
+	@Field("CHAT_PROMPT_ACTION")
+	private ChatPromptAction chatPromptAction;
 
 	@JsonProperty("DATE_UPDATED")
 	@Field("DATE_UPDATED")
@@ -38,25 +39,20 @@ public class ChatPrompt {
 	@Field("LAST_UPDATED_BY")
 	private String lastUpdatedBy;
 
-	@JsonProperty("RUN_TRIGGER")
-	@Field("RUN_TRIGGER")
-	private String runTrigger;
-
 	public ChatPrompt() {
 
 	}
 
-	public ChatPrompt(String promptName, String promptdescription, String promptId, List<Conditions> conditions,
-			Workflow workflow, Date dateUpdated, String lastUpdatedBy, String runTrigger) {
+	public ChatPrompt(String promptName, String promptdescription, String promptId, @Valid List<Conditions> conditions,
+			ChatPromptAction chatPromptAction, Date dateUpdated, String lastUpdatedBy) {
 		super();
 		this.promptName = promptName;
 		this.promptdescription = promptdescription;
 		this.promptId = promptId;
 		this.conditions = conditions;
-		this.workflow = workflow;
+		this.chatPromptAction = chatPromptAction;
 		this.dateUpdated = dateUpdated;
 		this.lastUpdatedBy = lastUpdatedBy;
-		this.runTrigger = runTrigger;
 	}
 
 	public String getPromptName() {
@@ -91,12 +87,12 @@ public class ChatPrompt {
 		this.conditions = conditions;
 	}
 
-	public Workflow getWorkflow() {
-		return workflow;
+	public ChatPromptAction getChatPromptAction() {
+		return chatPromptAction;
 	}
 
-	public void setWorkflow(Workflow workflow) {
-		this.workflow = workflow;
+	public void setChatPromptAction(ChatPromptAction chatPromptAction) {
+		this.chatPromptAction = chatPromptAction;
 	}
 
 	public Date getDateUpdated() {
@@ -113,14 +109,6 @@ public class ChatPrompt {
 
 	public void setLastUpdatedBy(String lastUpdatedBy) {
 		this.lastUpdatedBy = lastUpdatedBy;
-	}
-
-	public String getRunTrigger() {
-		return runTrigger;
-	}
-
-	public void setRunTrigger(String runTrigger) {
-		this.runTrigger = runTrigger;
 	}
 
 }

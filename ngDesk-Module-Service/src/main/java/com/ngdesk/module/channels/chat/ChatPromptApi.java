@@ -21,7 +21,6 @@ import com.ngdesk.commons.exceptions.ForbiddenException;
 import com.ngdesk.commons.managers.AuthManager;
 import com.ngdesk.module.role.dao.RoleService;
 import com.ngdesk.repositories.ChatChannelRepository;
-import com.ngdesk.workflow.dao.Workflow;
 
 @RestController
 @RefreshScope
@@ -72,11 +71,7 @@ public class ChatPromptApi {
 
 		chatPrompt.setDateUpdated(new Date());
 		chatPrompt.setLastUpdatedBy(authManager.getUserDetails().getUserId());
-		Workflow workflow = chatPrompt.getWorkflow();
-		if (workflow != null) {
-			workflow.setDateUpdated(new Date());
-			workflow.setLastUpdated(authManager.getUserDetails().getUserId());
-		}
+
 		chatChannelRepository.updateChatPrompt(chatChannelName, chatPrompt,
 				"channels_chat_" + authManager.getUserDetails().getCompanyId());
 		return chatPrompt;
@@ -123,11 +118,6 @@ public class ChatPromptApi {
 
 						chatPrompt.setDateUpdated(new Date());
 						chatPrompt.setLastUpdatedBy(authManager.getUserDetails().getUserId());
-						Workflow workflow = chatPrompt.getWorkflow();
-						if (workflow != null) {
-							workflow.setDateUpdated(new Date());
-							workflow.setLastUpdated(authManager.getUserDetails().getUserId());
-						}
 						chatPrompt.setPromptId(existingChatPrompt.getPromptId());
 						updatedPrompts.add(chatPrompt);
 

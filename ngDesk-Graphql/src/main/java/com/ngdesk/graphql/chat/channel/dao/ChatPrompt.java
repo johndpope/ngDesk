@@ -19,29 +19,29 @@ public class ChatPrompt {
 	@Field("CONDITIONS")
 	private List<Condition> conditions;
 
+	@Field("CHAT_PROMPT_ACTION")
+	private ChatPromptAction chatPromptAction;
+
 	@Field("DATE_UPDATED")
 	private Date dateUpdated;
 
 	@Field("LAST_UPDATED_BY")
 	private String lastUpdatedBy;
 
-	@Field("RUN_TRIGGER")
-	private String runTrigger;
-
 	public ChatPrompt() {
 
 	}
 
 	public ChatPrompt(String promptName, String promptdescription, String promptId, List<Condition> conditions,
-			Date dateUpdated, String lastUpdatedBy, String runTrigger) {
+			ChatPromptAction chatPromptAction, Date dateUpdated, String lastUpdatedBy) {
 		super();
 		this.promptName = promptName;
 		this.promptdescription = promptdescription;
 		this.promptId = promptId;
 		this.conditions = conditions;
+		this.chatPromptAction = chatPromptAction;
 		this.dateUpdated = dateUpdated;
 		this.lastUpdatedBy = lastUpdatedBy;
-		this.runTrigger = runTrigger;
 	}
 
 	public String getPromptName() {
@@ -76,6 +76,14 @@ public class ChatPrompt {
 		this.conditions = conditions;
 	}
 
+	public ChatPromptAction getChatPromptAction() {
+		return chatPromptAction;
+	}
+
+	public void setChatPromptAction(ChatPromptAction chatPromptAction) {
+		this.chatPromptAction = chatPromptAction;
+	}
+
 	public Date getDateUpdated() {
 		return dateUpdated;
 	}
@@ -90,14 +98,6 @@ public class ChatPrompt {
 
 	public void setLastUpdatedBy(String lastUpdatedBy) {
 		this.lastUpdatedBy = lastUpdatedBy;
-	}
-
-	public String getRunTrigger() {
-		return runTrigger;
-	}
-
-	public void setRunTrigger(String runTrigger) {
-		this.runTrigger = runTrigger;
 	}
 
 }
