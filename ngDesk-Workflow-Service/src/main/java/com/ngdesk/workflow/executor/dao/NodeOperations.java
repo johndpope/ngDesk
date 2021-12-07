@@ -246,6 +246,20 @@ public class NodeOperations {
 							return inputMessage.get(section).toString();
 
 						}
+					} else if (isDataType(module, section, "List Formula")) {
+						List<Map<String, Object>> formulaListValues = mapper.readValue(
+								mapper.writeValueAsString(inputMessage.get(section)),
+								mapper.getTypeFactory().constructCollectionType(List.class, Map.class));
+						List<String> formulaList = new ArrayList<String>();
+						// formula name and formula value concatenated
+						for (Map<String, Object> formulaListValue : formulaListValues) {
+							formulaList.add(String.join(" = ", formulaListValue.get("FORMULA_NAME").toString(),
+									formulaListValue.get("VALUE").toString()));
+						}
+						if (!formulaList.isEmpty()) {
+							return mapper.writeValueAsString(formulaList);
+						}
+						return "";
 					} else {
 						System.out.println(section);
 						System.out.println(inputMessage.get(section));
