@@ -247,12 +247,12 @@
   ::ng-deep .chat-bubble {
 	display: inline-block;
 	position: relative;
-	max-width: 500px;
+	max-width: fit-content;
 	height: auto;
 	border: 1px solid #dedede;
 	border-radius: 10px; 
 	padding: 10px; 
-	word-break: break-word;
+	word-wrap: break-word;
 }
 
 .chat-bubble-text{
