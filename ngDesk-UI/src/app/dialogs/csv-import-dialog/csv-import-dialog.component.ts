@@ -94,7 +94,14 @@ export class CsvImportDialogComponent implements OnInit {
 				field.DATA_TYPE.DISPLAY !== 'Password' &&
 				field.DATA_TYPE.DISPLAY !== 'Receipt Capture' &&
 				field.DATA_TYPE.DISPLAY !== 'Zoom' &&
-				field.NAME !== 'ROLE'
+				field.NAME !== 'ROLE' &&
+				field.NAME !== 'DATE_CREATED' &&
+				field.NAME !== 'DATE_UPDATED' &&
+				field.NAME !== 'EFFECTIVE_TO' &&
+				field.NAME !== 'EFFECTIVE_FROM' &&
+				field.NAME !== 'CREATED_BY' &&
+				field.NAME !== 'LAST_UPDATED_BY' &&
+				field.NAME !== 'DELETED'
 			) {
 				this.fields.push(field);
 				if (field.DATA_TYPE.DISPLAY === 'Date') {
@@ -121,6 +128,7 @@ export class CsvImportDialogComponent implements OnInit {
 				message: this.translateService.instant('EMPTY_MAPPING'),
 			});
 		} else {
+			this.csvImportData.headers = [];
 			for (let [key, value] of Object.entries(this.headerMap)) {
 				if (`${value}` !== 'undefined') {
 					this.csvheaders = {
