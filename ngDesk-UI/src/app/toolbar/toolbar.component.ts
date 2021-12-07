@@ -447,10 +447,10 @@ export class ToolbarComponent implements OnDestroy, OnInit {
 	}
 
 	public readAll() {
-		// this.notificationApiService.markAllNotificationsAsRead().subscribe(() => {
-		// 	this.notificationSubscription();
-		// 	console.log('Successfully read all notifications');
-		// });
+		this.notificationApiService.markAllNotificationsAsRead().subscribe(() => {
+			this.notificationSubscription();
+			console.log('Successfully read all notifications');
+		});
 	}
 
 	public openAutocomplete(event) {

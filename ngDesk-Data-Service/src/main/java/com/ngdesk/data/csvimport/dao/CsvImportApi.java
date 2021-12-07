@@ -92,7 +92,7 @@ public class CsvImportApi {
 			String fieldId = csvHeader.getFieldId();
 			ModuleField moduleField = moduleFields.stream().filter(field -> field.getFieldId().equals(fieldId))
 					.findFirst().orElse(null);
-			if (defaultFields.contains(moduleField.getName())) {
+			if (moduleField != null && defaultFields.contains(moduleField.getName())) {
 				String[] vars = new String[] { moduleField.getDisplayLabel()};
 				throw new BadRequestException("INVALID_FIELD_SELECTED", vars);
 			}
