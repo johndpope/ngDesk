@@ -143,8 +143,8 @@ export class DashboardsRenderComponent implements OnInit {
 							}
 						});
 					});
+				});
 			});
-		});
 	}
 
 	public graphqlQuery(query: string) {
@@ -199,15 +199,14 @@ export class DashboardsRenderComponent implements OnInit {
 			this.dashboards.forEach((dashboard) => {
 				if (dashboard.role.roleId === this.currentRoleId) {
 					newDashboardsList.push(dashboard);
-					
-						if (
-							(this.dashboard === undefined || this.dashboard === null) &&
-							!isSet
-						) {
-							this.dashboardId = dashboard.dashboardId;
-							this.dashboard = dashboard;
-						}
-					
+
+					if (
+						(this.dashboard === undefined || this.dashboard === null) &&
+						!isSet
+					) {
+						this.dashboardId = dashboard.dashboardId;
+						this.dashboard = dashboard;
+					}
 				}
 			});
 			this.dashboards = newDashboardsList;
@@ -231,14 +230,7 @@ export class DashboardsRenderComponent implements OnInit {
 				this.dashboard = dashboard;
 			} else {
 				this.dashboard = this.dashboards[0];
-				if (this.dashboard) {
-					this.dashboardId = this.dashboard.dashboardId;
-				}
-				else {
-					console.log("1", "HELLO");
-					this.noLoading = true;
-				}
-				
+				this.dashboardId = this.dashboard.dashboardId;
 			}
 		}
 	}

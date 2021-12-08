@@ -11,8 +11,8 @@
 
 			<!--TODO: till create is being developed-->
 			<div style="margin: 5px;">
-				<mat-card *ngIf="currentRole === 'SystemAdmin'" fxLayout="row" fxLayoutAlign="start center"
-					style="cursor: pointer;" (click)="newDashboard()">{{'ADD_NEW_DASHBOARD' | translate}}<mat-icon>add</mat-icon>
+				<mat-card *ngIf="currentRole === 'SystemAdmin'" fxLayout="row" fxLayoutAlign="start center" style="cursor: pointer;"
+					(click)="newDashboard()">{{'ADD_NEW_DASHBOARD' | translate}}<mat-icon>add</mat-icon>
 				</mat-card>
 			</div>
 		</div>
@@ -22,24 +22,23 @@
 		<ng-template #customTemplateRef>
 			<div fxLayoutAlign="space-between center" fxLayoutGap="10px">
 				<div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="center center">
-					<button (click)="sidenav.toggle()" mat-button style="min-width: 24px; padding: 0 10px; margin-right: 10px;"
-						id="layouts-button" #layoutButton>
+					<button (click)="sidenav.toggle()" mat-button style="min-width: 24px; padding: 0 10px; margin-right: 10px;" id="layouts-button"
+						#layoutButton>
 						<mat-icon class="pointer grey-balck-color" matTooltip="Dashboards">menu</mat-icon>
 					</button>
 					<div fxLayout="column">
-						<div *ngIf="dashboard" fxLayout="row" style="height:3vh"><span
-								class="mat-h3 grey-balck-color">{{dashboard.name}}</span></div>
+						<div *ngIf="dashboard" fxLayout="row" style="height:3vh"><span class="mat-h3 grey-balck-color">{{dashboard.name}}</span></div>
 						<div *ngIf="dashboard && dashboard.description" fxLayout="row" style="height:2vh;width:50vw;"><span
 								class="mat-h5 grey-balck-color">{{dashboard.description}}</span></div>
 					</div>
 				</div>
 				<div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="end center">
 					<!-- TODO: till create is being developed -->
-					<button type="button" *ngIf="!editEnabled && !isDefault && currentRole === 'SystemAdmin'"
-						(click)="editDashboard()" mat-raised-button color="primary">{{'EDIT' | translate}}</button>
+					<button type="button" *ngIf="!editEnabled && !isDefault && currentRole === 'SystemAdmin'" (click)="editDashboard()"
+						mat-raised-button color="primary">{{'EDIT' | translate}}</button>
 					<button type="submit" *ngIf="editEnabled" (click)="save()" mat-raised-button color="primary">{{'SAVE' | translate}}</button>
-					<button type="button" *ngIf="dashboardId !== 'new' && !isDefault  && currentRole === 'SystemAdmin'"
-						(click)="deleteDashboard()" mat-raised-button color="primary">{{'DELETE' | translate}}</button>
+					<button type="button" *ngIf="dashboardId !== 'new' && !isDefault  && currentRole === 'SystemAdmin'" (click)="deleteDashboard()"
+						mat-raised-button color="primary">{{'DELETE' | translate}}</button>
 					<button type="button" *ngIf="editEnabled" (click)="editDashboard(false); setDefaultBoard()" mat-raised-button
 						color="primary">{{'CANCEL' | translate}}</button>
 				</div>
@@ -48,39 +47,35 @@
 		<div *ngIf="dashboard" class="pad10 container" style="height: 100vh" fxFlex>
 			<div *ngFor="let widget of dashboard.widgets; let i = index" class="widgets" fxLayoutAlign="start start"
 				[ngStyle]="{ left: widget.positionX + 'px', top: widget.positionY + 'px', width: widget.width + 'px', height: widget.height + 'px' }">
-				<div style="cursor: pointer; width: 100%; height: 100%;"  (click)="onClick($event, widget.widgetId)" *ngIf="widget.type === 'score' && widgetValues[widget.widgetId]" fxLayout="column"
-					fxLayoutAlign="space-between start">
+				<div style="cursor: pointer; width: 100%; height: 100%;" (click)="onClick($event, widget.widgetId)"
+					*ngIf="widget.type === 'score' && widgetValues[widget.widgetId]" fxLayout="column" fxLayoutAlign="space-between start">
 					<label class="mat-h3">{{ widget.title }}</label>
 					<label class="mat-h2">{{ widgetValues[widget.widgetId].value }}</label>
 				</div>
-				<div *ngIf="widget.type === 'bar-horizontal' && widgetValues[widget.widgetId]" style="height: 100%;"
-					fxLayout="column" fxFlex>
+				<div *ngIf="widget.type === 'bar-horizontal' && widgetValues[widget.widgetId]" style="height: 100%;" fxLayout="column" fxFlex>
 					<nb-card style="height: 100%;">
 						<nb-card-header>{{ widget.title }}</nb-card-header>
 						<nb-card-body style="height: 100%;">
 							<ngx-charts-bar-vertical fxLayoutAlign="center center" *ngIf="widgetValues[widget.widgetId]"
-								[scheme]="widgetValues[widget.widgetId].colorScheme" [results]="widgetValues[widget.widgetId].value"
-								[gradient]="false" [xAxis]="true" [yAxis]="true" [legend]="false" [showXAxisLabel]="false"
-								[showYAxisLabel]="false" [xAxisLabel]="name" [yAxisLabel]="value" (select)="onSelect($event, widget.widgetId)">
+								[scheme]="widgetValues[widget.widgetId].colorScheme" [results]="widgetValues[widget.widgetId].value" [gradient]="false"
+								[xAxis]="true" [yAxis]="true" [legend]="false" [showXAxisLabel]="false" [showYAxisLabel]="false" [xAxisLabel]="name"
+								[yAxisLabel]="value" (select)="onSelect($event, widget.widgetId)">
 							</ngx-charts-bar-vertical>
 						</nb-card-body>
 					</nb-card>
 				</div>
-				<div *ngIf="widget.type === 'pie' && widgetValues[widget.widgetId]" style="height: 100%;" fxLayout="column"
-					fxFlex>
+				<div *ngIf="widget.type === 'pie' && widgetValues[widget.widgetId]" style="height: 100%;" fxLayout="column" fxFlex>
 					<nb-card style="height: 100%;">
 						<nb-card-header>{{ widget.title }}</nb-card-header>
 						<nb-card-body style="height: 100%;">
 							<ngx-charts-pie-chart fxLayoutAlign="center center" *ngIf="widgetValues[widget.widgetId]"
-								[scheme]="widgetValues[widget.widgetId].colorScheme" [results]="widgetValues[widget.widgetId].value"
-								[trimLabels]="true" [gradient]=false [legend]=true [labels]="true" [doughnut]="false"
-								(select)="onSelect($event, widget.widgetId)">
+								[scheme]="widgetValues[widget.widgetId].colorScheme" [results]="widgetValues[widget.widgetId].value" [trimLabels]="true"
+								[gradient]=false [legend]=true [labels]="true" [doughnut]="false" (select)="onSelect($event, widget.widgetId)">
 							</ngx-charts-pie-chart>
 						</nb-card-body>
 					</nb-card>
 				</div>
-				<div *ngIf="widget.type === 'advanced-pie' && widgetValues[widget.widgetId]" style="height: 100%;"
-					fxLayout="column" fxFlex>
+				<div *ngIf="widget.type === 'advanced-pie' && widgetValues[widget.widgetId]" style="height: 100%;" fxLayout="column" fxFlex>
 					<nb-card style="height: 100%;">
 						<nb-card-header>{{ widget.title }}</nb-card-header>
 						<nb-card-body style="height: 100%;">
@@ -108,4 +103,24 @@
 		</div>
 	</mat-sidenav-content>
 </mat-sidenav-container>
-<mat-spinner *ngIf="isLoading" style="position: absolute; left: 45vw; top: 45vh;"></mat-spinner>
+<span *ngIf="dashboards.length===0">
+	<app-toolbar [templateRef]="headerTemplateRef"></app-toolbar>
+	<ng-template #headerTemplateRef>
+		<app-title-bar title="{{'DASHBOARDS' | translate}}" buttonText="{{'NEW' | translate}}" (buttonRightOnClick)="newDashboard()">
+		</app-title-bar>
+	</ng-template>
+	<div class="mat-h1" fxLayout="row" fxLayoutAlign="center center" style="height: 90%">
+		<div fxFlex="50" fxLayoutAlign="end center">
+			<div fxLayout="column" fxFlex="25" fxLayoutGap="5px">
+				<div fxLayout="column">
+					<p class="mat-h3">{{'NO_DASHBOARDS_FOUND' | translate}}</p>
+				</div>
+			</div>
+		</div>
+		<div fxFlex="50" fxLayout="column">
+			<div fxFlex=50>
+			</div>
+			<img src="../../assets/images/notFoundImage.png" style="width:20%;" alt="">
+		</div>
+	</div>
+</span>
