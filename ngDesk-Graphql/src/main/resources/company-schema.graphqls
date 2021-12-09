@@ -797,7 +797,6 @@ type ChatChannel{
 	dateUpdated: DateTime
 	lastUpdated: Users
 	module: Module
-	workflow: ChatChannelWorkflow
 	chatPrompt :[ChatPrompt]
 }
 
@@ -836,23 +835,23 @@ type ChatPrompt{
 	promptdescription: String
 	promptId: String
 	conditions: [Condition]
+<<<<<<< Updated upstream
 	chatPromptAction: ChatPromptAction
+=======
+	action:ChatPromptAction
+>>>>>>> Stashed changes
 	dateUpdated: DateTime
 	lastUpdatedBy: String
 
+<<<<<<< Updated upstream
 }
 type ChatPromptAction{
 	actionName: String
 	actionValue: String
 }
+=======
+>>>>>>> Stashed changes
 
-type ChatChannelWorkflow{
-	type: String
-	name: String
-	description: String
-	conditions: [Condition]
-	stages: [ChatChannelStage]
-	order: Int
 }
 
 type ChatChannelStage{
@@ -1032,4 +1031,10 @@ type EmailList{
 	dateUpdated:DateTime
 	lastUpdatedBy:Users
 	createdBy:Users
+}
+
+type ChatPromptAction{
+    actionName: String
+	actionValue: String
+
 }

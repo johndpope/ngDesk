@@ -1,35 +1,18 @@
-package com.ngdesk.graphql.chat.channel.dao;
+package com.ngdesk.module.channels.chat;
 
 import org.springframework.data.mongodb.core.mapping.Field;
 
-<<<<<<< Updated upstream
-public class ChatPromptAction {
-
-	@Field("ACTION_NAME")
-	private String actionName;
-
-	@Field("ACTION_VALUE")
-	private String actionValue;
-
-	public ChatPromptAction() {
-		super();
-	}
-
-=======
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ChatPromptAction {
+public class Action {
 
-	@JsonProperty("ACTION_NAME")
 	@Field("ACTION_NAME")
 	private String actionName;
 
-	@JsonProperty("ACTION_VALUE")
 	@Field("ACTION_VALUE")
 	private String actionValue;
 
->>>>>>> Stashed changes
-	public ChatPromptAction(String actionName, String actionValue) {
+	public Action(String actionName, String actionValue) {
 		super();
 		this.actionName = actionName;
 		this.actionValue = actionValue;

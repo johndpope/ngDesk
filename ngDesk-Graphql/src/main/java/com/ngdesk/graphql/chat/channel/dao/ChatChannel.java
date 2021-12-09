@@ -7,8 +7,6 @@ import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import com.ngdesk.graphql.workflow.Workflow;
-
 public class ChatChannel {
 
 	@Field("NAME")
