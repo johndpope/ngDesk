@@ -71,10 +71,7 @@ public class ChatPromptApi {
 
 		chatPrompt.setDateUpdated(new Date());
 		chatPrompt.setLastUpdatedBy(authManager.getUserDetails().getUserId());
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
 		chatChannelRepository.updateChatPrompt(chatChannelName, chatPrompt,
 				"channels_chat_" + authManager.getUserDetails().getCompanyId());
 		return chatPrompt;

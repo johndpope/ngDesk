@@ -28,26 +28,12 @@ public class ChatPrompt {
 	@Field("LAST_UPDATED_BY")
 	private String lastUpdatedBy;
 
-<<<<<<< Updated upstream
-=======
-	@Field("RUN_TRIGGER")
-	private String runTrigger;
-
-	@Field("CHAT_PROMPT_ACTION")
-	private ChatPromptAction action;
-
->>>>>>> Stashed changes
 	public ChatPrompt() {
 
 	}
 
 	public ChatPrompt(String promptName, String promptdescription, String promptId, List<Condition> conditions,
-<<<<<<< Updated upstream
 			ChatPromptAction chatPromptAction, Date dateUpdated, String lastUpdatedBy) {
-=======
-			Date dateUpdated, String lastUpdatedBy, String runTrigger,
-			com.ngdesk.graphql.chat.channel.dao.ChatPromptAction action) {
->>>>>>> Stashed changes
 		super();
 		this.promptName = promptName;
 		this.promptdescription = promptdescription;
@@ -56,11 +42,6 @@ public class ChatPrompt {
 		this.chatPromptAction = chatPromptAction;
 		this.dateUpdated = dateUpdated;
 		this.lastUpdatedBy = lastUpdatedBy;
-<<<<<<< Updated upstream
-=======
-		this.runTrigger = runTrigger;
-		this.action = action;
->>>>>>> Stashed changes
 	}
 
 	public String getPromptName() {
@@ -119,23 +100,4 @@ public class ChatPrompt {
 		this.lastUpdatedBy = lastUpdatedBy;
 	}
 
-<<<<<<< Updated upstream
-=======
-	public String getRunTrigger() {
-		return runTrigger;
-	}
-
-	public void setRunTrigger(String runTrigger) {
-		this.runTrigger = runTrigger;
-	}
-
-	public ChatPromptAction getAction() {
-		return action;
-	}
-
-	public void setAction(ChatPromptAction action) {
-		this.action = action;
-	}
-
->>>>>>> Stashed changes
 }

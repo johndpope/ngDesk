@@ -2,7 +2,6 @@ package com.ngdesk.graphql.chat.channel.dao;
 
 import org.springframework.data.mongodb.core.mapping.Field;
 
-<<<<<<< Updated upstream
 public class ChatPromptAction {
 
 	@Field("ACTION_NAME")
@@ -15,20 +14,6 @@ public class ChatPromptAction {
 		super();
 	}
 
-=======
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-public class ChatPromptAction {
-
-	@JsonProperty("ACTION_NAME")
-	@Field("ACTION_NAME")
-	private String actionName;
-
-	@JsonProperty("ACTION_VALUE")
-	@Field("ACTION_VALUE")
-	private String actionValue;
-
->>>>>>> Stashed changes
 	public ChatPromptAction(String actionName, String actionValue) {
 		super();
 		this.actionName = actionName;
